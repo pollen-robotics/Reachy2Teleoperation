@@ -20,7 +20,7 @@ namespace TeleopReachy
         // private WebRTCRestartService restartService;
         private ConnectionStatus connectionStatus;
 
-        private Reachy reachy;
+        private Reachy.Reachy reachy;
 
         private bool has_right_arm;
         private bool has_left_arm;

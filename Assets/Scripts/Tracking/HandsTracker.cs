@@ -4,6 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TeleopReachy
 {
+    public enum ArmSide 
+    {
+        LEFT, RIGHT
+    }
     [System.Serializable]
     public class HandController
     {

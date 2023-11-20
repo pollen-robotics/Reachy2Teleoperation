@@ -98,6 +98,18 @@ namespace TeleopReachy
 
         private void SetRobotStiff(string partName = "")
         {
+            if(robotConfig.HasLeftArm())
+            {
+                dataController.TurnLeftArmOn();
+            }
+            if(robotConfig.HasRightArm())
+            {
+                dataController.TurnRightArmOn();
+            }
+            if(robotConfig.HasHead())
+            {
+                dataController.TurnHeadOn();
+            }
             // Debug.Log("[RobotJointCommands]: SetRobotStiff " + partName);
             // if (setSmoothCompliance != null)
             // {

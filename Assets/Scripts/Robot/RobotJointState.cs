@@ -14,7 +14,7 @@ namespace TeleopReachy
         private gRPCDataController dataController;
 
         [Tooltip("Robot that will be updated")]
-        public ReachyController reachy;
+        public ReachyController.ReachyController reachy;
 
         //private bool inTransitionRoom;
 
@@ -42,15 +42,15 @@ namespace TeleopReachy
 
         void UpdateModelRobot()
         {
-            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController>();
+            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
         }
 
-        protected void UpdateJointsState(Dictionary<JointId, float> PresentPositions)
-        {
-            if (reachy != null)
-            {
-                reachy.HandleCommand(PresentPositions);
-            }
-        }
+        // protected void UpdateJointsState(Dictionary<JointId, float> PresentPositions)
+        // {
+        //     if (reachy != null)
+        //     {
+        //         reachy.HandleCommand(PresentPositions);
+        //     }
+        // }
     }
 }
