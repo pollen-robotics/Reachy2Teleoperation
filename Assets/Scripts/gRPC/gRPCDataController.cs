@@ -24,11 +24,11 @@ namespace TeleopReachy
         private bool needUpdateCommandGripper;
         private bool needUpdateState;
 
-        private JointsId allJointsId;
+        private Reachy reachy;
 
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
 
-        public UnityEvent<JointsId> event_OnRobotJointsReceived;
+        public UnityEvent<Reachy> event_OnRobotPartsReceived;
 
         public UnityEvent<Dictionary<JointId, float>> event_OnStateUpdateTemperature;
 
@@ -65,13 +65,13 @@ namespace TeleopReachy
             event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
         }
 
-        private void GetJointsId()
+        private void GetReachyId()
         {
             try
             {
                 Debug.Log(reachyClient);
                 allJointsId = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
-                event_OnRobotJointsReceived.Invoke(allJointsId);
+                event_OnRobotPartsReceived.Invoke(allJointsId);
                 isRobotInRoom = true;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
                 needUpdateCommandBody = true;
@@ -162,6 +162,31 @@ namespace TeleopReachy
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
         }
+
+        public async void TurnLeftArmOff()
+        {
+
+        }
+
+        public async void TurnRightArmOff()
+        {
+
+        }
+
+        public async void TurnHeadOff()
+        {
+
+        }
+
+        public async void TurnLeftArmOn()
+        {
+            
+        }
+
+        public async void TurnRightArmOn()
+        {
+
+        } 
 
         // public async void SendImmediateBodyCommand(FullBodyCartesianCommand command)
         // {

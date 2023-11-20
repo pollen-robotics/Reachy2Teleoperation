@@ -20,7 +20,7 @@ namespace TeleopReachy
         // private WebRTCRestartService restartService;
         private ConnectionStatus connectionStatus;
 
-        private JointsId allJointsId;
+        private Reachy reachy;
 
         private bool has_right_arm;
         private bool has_left_arm;
@@ -45,7 +45,7 @@ namespace TeleopReachy
             mobileController = gRPCManager.Instance.gRPCMobileBaseController;
             connectionStatus = gRPCManager.Instance.ConnectionStatus;
 
-            dataController.event_OnRobotJointsReceived.AddListener(GetJointsId);
+            dataController.event_OnRobotPartsReceived.AddListener(GetPartsId);
             mobileController.event_OnMobileBaseDetected.AddListener(SetMobilePlatform);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
 
@@ -104,32 +104,32 @@ namespace TeleopReachy
         }
 
 
-        void GetJointsId(JointsId AllJointsIds)
+        void GetPartsId(Reachy reachy)
         {
-            allJointsId = AllJointsIds;
+            reachy = this.reachy;
             GetReachyConfig();
         }
 
         private void GetReachyConfig()
         {
             Debug.Log("[Robot config]: GetReachyConfig");
-            if (allJointsId.Names.Contains("r_shoulder_pitch"))
+            if (reachy.r_arm != null)
             {
                 has_right_arm = true;
             }
-            if (allJointsId.Names.Contains("l_shoulder_pitch"))
+            if (reachy.l_arm != null)
             {
                 has_left_arm = true;
             }
-            if (allJointsId.Names.Contains("neck_pitch"))
+            if (reachy.head != null)
             {
                 has_head = true;
             }
-            if (allJointsId.Names.Contains("l_gripper"))
+            if (reachy.l_hand != null)
             {
                 has_left_gripper = true;
             }
-            if (allJointsId.Names.Contains("r_gripper"))
+            if (reachy.r_hand != null)
             {
                 has_right_gripper = true;
             }

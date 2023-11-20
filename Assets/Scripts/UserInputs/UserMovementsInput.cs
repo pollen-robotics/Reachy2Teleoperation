@@ -78,7 +78,7 @@ namespace TeleopReachy
                 ArmIKRequest rightArmRequest = new ArmIKRequest { Target = rightEndEffector, Q0 = q0_right };
                 ArmIKRequest leftArmRequest = new ArmIKRequest { Target = leftEndEffector, Q0 = q0_left };
 
-                HeadIKRequest headTarget = headTracker.GetHeadTarget();
+                NeckGoal headTarget = headTracker.GetHeadTarget();
 
                 float pos_left_gripper = GetLeftGripperTarget();
                 float pos_right_gripper = GetRightGripperTarget();

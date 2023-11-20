@@ -14,7 +14,7 @@ namespace TeleopReachy
         public UnityEngine.Matrix4x4 handPose = UnityEngine.Matrix4x4.identity;
         [SerializeField]
         [HideInInspector]
-        public Reachy.Sdk.Kinematics.Matrix4x4 target_pos;
+        public Reachy.Kinematics.Matrix4x4 target_pos;
 
         [SerializeField]
         [HideInInspector]
@@ -117,7 +117,7 @@ namespace TeleopReachy
 
             hand.handPose.SetColumn(3, positionVect);
 
-            hand.target_pos = new Reachy.Sdk.Kinematics.Matrix4x4
+            hand.target_pos = new Reachy.Kinematics.Matrix4x4
             {
                 Data = { hand.handPose[0,0], hand.handPose[0,1], hand.handPose[0,2], hand.handPose[0,3],
                                                                                 hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2], hand.handPose[1,3],

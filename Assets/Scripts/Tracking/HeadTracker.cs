@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Grpc.Core;
-using Reachy;
+using Reachy.Part.Head;
 
 
 namespace TeleopReachy
@@ -10,7 +10,7 @@ namespace TeleopReachy
     public class HeadTracker : MonoBehaviour
     {
         private UnityEngine.Quaternion initialRotation;
-        private HeadIKRequest headTarget;
+        private NeckIKRequest headTarget;
 
         void Update()
         {
@@ -23,9 +23,9 @@ namespace TeleopReachy
             // Amplify rotation
             headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.5f);
 
-            headTarget = new HeadIKRequest
+            headTarget = new NeckIKRequest
             {
-                Q = new Reachy.Sdk.Kinematics.Quaternion
+                Q = new Reachy.Kinematics.Quaternion
                 {
                     W = headQuat.w,
                     X = -headQuat.z,
@@ -35,7 +35,7 @@ namespace TeleopReachy
             };
         }
 
-        public HeadIKRequest GetHeadTarget()
+        public NeckGoal GetHeadTarget()
         {
             return headTarget;
         }

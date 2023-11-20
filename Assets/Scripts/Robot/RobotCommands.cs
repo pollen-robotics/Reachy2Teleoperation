@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Grpc.Core;
+using Reachy.Part.Head;
 
 
 namespace TeleopReachy
@@ -43,26 +44,26 @@ namespace TeleopReachy
         }
 
         protected abstract void SendJointsCommands(JointsCommand jointsCommand);
-        protected abstract void ActualSendGrippersCommands(JointsCommand gripperCommand);
-        protected abstract void ActualSendBodyCommands(FullBodyCartesianCommand bodyCommand);
+        protected abstract void ActualSendGrippersCommands(HandPositionRequest gripperCommand);
+        protected abstract void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest);
 
-        public void SendFullBodyCommands(ArmIKRequest leftArmRequest, ArmIKRequest rightArmRequest, HeadIKRequest headRequest)
+        public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
         {
-            FullBodyCartesianCommand bodyCommand = new FullBodyCartesianCommand();
-            if (robotConfig.IsVirtual() || (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()))
-            {
-                bodyCommand.LeftArm = leftArmRequest;
-            }
-            if (robotConfig.IsVirtual() || (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()))
-            {
-                bodyCommand.RightArm = rightArmRequest;
-            }
-            if (robotConfig.IsVirtual() || robotConfig.HasHead() && robotStatus.IsHeadOn())
-            {
-                bodyCommand.Head = headRequest;
-            }
+            // FullBodyCartesianCommand bodyCommand = new FullBodyCartesianCommand();
+            // if (robotConfig.IsVirtual() || (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()))
+            // {
+            //     bodyCommand.LeftArm = leftArmRequest;
+            // }
+            // if (robotConfig.IsVirtual() || (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()))
+            // {
+            //     bodyCommand.RightArm = rightArmRequest;
+            // }
+            // if (robotConfig.IsVirtual() || robotConfig.HasHead() && robotStatus.IsHeadOn())
+            // {
+            //     bodyCommand.Head = neckRequest;
+            // }
 
-            ActualSendBodyCommands(bodyCommand);
+            ActualSendBodyCommands(leftArmRequest, rightArmRequest, neckRequest);
         }
 
         public void SendGrippersCommands(float leftGripperOpening, float rightGripperOpening)

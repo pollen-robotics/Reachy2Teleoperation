@@ -82,7 +82,7 @@ namespace TeleopReachy
             reachyFakeServer.SendFullBodyCartesianCommands(bodyCommand);
         }
 
-        protected override void ActualSendGrippersCommands(JointsCommand gripperCommand)
+        protected override void ActualSendGrippersCommands(HandPositionRequest gripperCommand)
         {
             reachyFakeServer.SendJointsCommands(gripperCommand);
         }

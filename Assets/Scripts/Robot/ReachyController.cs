@@ -7,7 +7,7 @@ using System;
 using Grpc.Core;
 
 
-namespace Reachy
+namespace ReachyController
 {
     [System.Serializable]
     public class Motor
@@ -321,61 +321,61 @@ namespace Reachy
             return motorsList;
         }
 
-        public List<SerializableSensor> GetCurrentSensorsState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Joint.SensorId> request)
-        {
-            List<Sensor> sensorRequest = new List<Sensor>();
+        // public List<SerializableSensor> GetCurrentSensorsState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Joint.SensorId> request)
+        // {
+        //     List<Sensor> sensorRequest = new List<Sensor>();
 
-            foreach (var sensor in request)
-            {
-                switch (sensor.IdCase)
-                {
-                    case SensorId.IdOneofCase.Name:
-                        sensorRequest.Add(name2sensor[sensor.Name]);
-                        break;
-                    case SensorId.IdOneofCase.Uid:
-                        sensorRequest.Add(sensors[sensor.Uid]);
-                        break;
-                }
-            }
+        //     foreach (var sensor in request)
+        //     {
+        //         switch (sensor.IdCase)
+        //         {
+        //             case SensorId.IdOneofCase.Name:
+        //                 sensorRequest.Add(name2sensor[sensor.Name]);
+        //                 break;
+        //             case SensorId.IdOneofCase.Uid:
+        //                 sensorRequest.Add(sensors[sensor.Uid]);
+        //                 break;
+        //         }
+        //     }
 
-            List<SerializableSensor> sensorsList = new List<SerializableSensor>();
+        //     List<SerializableSensor> sensorsList = new List<SerializableSensor>();
 
-            foreach (var sensor in sensorRequest)
-            {
-                float state = sensor.currentState;
-                sensorsList.Add(new SerializableSensor() { name = sensor.name, sensor_state = state });
-            }
+        //     foreach (var sensor in sensorRequest)
+        //     {
+        //         float state = sensor.currentState;
+        //         sensorsList.Add(new SerializableSensor() { name = sensor.name, sensor_state = state });
+        //     }
 
-            return sensorsList;
-        }
+        //     return sensorsList;
+        // }
 
-        public List<SerializableFan> GetCurrentFansState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Fan.FanId> request)
-        {
-            List<Fan> fanRequest = new List<Fan>();
+        // public List<SerializableFan> GetCurrentFansState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Fan.FanId> request)
+        // {
+        //     List<Fan> fanRequest = new List<Fan>();
 
-            foreach (var fan in request)
-            {
-                switch (fan.IdCase)
-                {
-                    case FanId.IdOneofCase.Name:
-                        fanRequest.Add(name2fan[fan.Name]);
-                        break;
-                    case FanId.IdOneofCase.Uid:
-                        fanRequest.Add(fans[fan.Uid]);
-                        break;
-                }
-            }
+        //     foreach (var fan in request)
+        //     {
+        //         switch (fan.IdCase)
+        //         {
+        //             case FanId.IdOneofCase.Name:
+        //                 fanRequest.Add(name2fan[fan.Name]);
+        //                 break;
+        //             case FanId.IdOneofCase.Uid:
+        //                 fanRequest.Add(fans[fan.Uid]);
+        //                 break;
+        //         }
+        //     }
 
-            List<SerializableFan> fansList = new List<SerializableFan>();
+        //     List<SerializableFan> fansList = new List<SerializableFan>();
 
-            foreach (var fan in fanRequest)
-            {
-                bool state = fan.state;
-                fansList.Add(new SerializableFan() { name = fan.name, fan_state = state });
-            }
+        //     foreach (var fan in fanRequest)
+        //     {
+        //         bool state = fan.state;
+        //         fansList.Add(new SerializableFan() { name = fan.name, fan_state = state });
+        //     }
 
-            return fansList;
-        }
+        //     return fansList;
+        // }
 
         public void HandleHeadOrientation(UnityEngine.Quaternion q)
         {
