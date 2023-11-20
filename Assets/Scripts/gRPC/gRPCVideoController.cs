@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Grpc.Core;
-using Reachy.Sdk.Camera;
 using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
@@ -66,7 +65,7 @@ namespace TeleopReachy
         {
             try
             {
-                await client.GetImageAsync(new ImageRequest { Camera = new Reachy.Sdk.Camera.Camera { Id = CameraId.Left }, });
+                // await client.GetImageAsync(new ImageRequest { Camera = new Reachy.Sdk.Camera.Camera { Id = CameraId.Left }, });
                 isRobotInRoom = true;
                 event_OnVideoRoomStatusHasChanged.Invoke(isRobotInRoom);
                 needUpdateEyeImage = true;
@@ -98,13 +97,13 @@ namespace TeleopReachy
             {
                 if (needUpdateEyeImage)
                 {
-                    needUpdateEyeImage = false;
-                    var reply = await client.GetImageAsync(new ImageRequest { Camera = new Reachy.Sdk.Camera.Camera { Id = side }, });
-                    byte[] imageBytes = reply.Data.ToByteArray();
+                    // needUpdateEyeImage = false;
+                    // var reply = await client.GetImageAsync(new ImageRequest { Camera = new Reachy.Sdk.Camera.Camera { Id = side }, });
+                    // byte[] imageBytes = reply.Data.ToByteArray();
 
-                    leftTexture.LoadImage(imageBytes);
+                    // leftTexture.LoadImage(imageBytes);
 
-                    leftEyeTexture.SetTexture("_MainTex", leftTexture);
+                    // leftEyeTexture.SetTexture("_MainTex", leftTexture);
 
                     ComputeMeanFPS();
                     needUpdateEyeImage = true;

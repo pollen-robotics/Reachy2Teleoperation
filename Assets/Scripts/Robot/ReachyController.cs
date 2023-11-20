@@ -6,9 +6,6 @@ using System;
 
 using Grpc.Core;
 
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Camera;
-using Reachy.Sdk.Fan;
 
 namespace Reachy
 {

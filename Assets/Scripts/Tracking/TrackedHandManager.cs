@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using UnityEngine.XR.Interaction.Toolkit;
-using Reachy.Sdk.Kinematics;
+
 
 namespace TeleopReachy
 {

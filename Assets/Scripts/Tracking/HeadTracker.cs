@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Grpc.Core;
 using Reachy;
-using Reachy.Sdk.Kinematics;
+
 
 namespace TeleopReachy
 {

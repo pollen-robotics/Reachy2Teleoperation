@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Grpc.Core;
-using Reachy.Sdk.Joint;
 using Reachy;
 
 namespace TeleopReachy

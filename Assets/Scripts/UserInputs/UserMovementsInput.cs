@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Kinematics;
+usingKinematics;
 
 
 namespace TeleopReachy

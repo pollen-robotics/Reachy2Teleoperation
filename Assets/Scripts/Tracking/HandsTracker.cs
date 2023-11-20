@@ -1,5 +1,4 @@
 using UnityEngine;
-using Reachy.Sdk.Kinematics;
 using UnityEngine.XR.Interaction.Toolkit;
 
 

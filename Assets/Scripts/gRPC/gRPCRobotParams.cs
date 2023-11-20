@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using System;
 
-using Reachy.Sdk.Config;
 
 namespace TeleopReachy
 {
@@ -30,8 +29,8 @@ namespace TeleopReachy
             InitChannel("server_data_port");
             if (channel != null)
             {
-                client = new ConfigService.ConfigServiceClient(channel);
-                Task.Run(() => GetRobotGeneration());
+                // client = new ConfigService.ConfigServiceClient(channel);
+                // Task.Run(() => GetRobotGeneration());
             }
         }
 
@@ -39,10 +38,10 @@ namespace TeleopReachy
         {
             try
             {
-                RobotGenerationCode robotGeneration;
-                Enum.TryParse<RobotGenerationCode>("V" + client.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).Generation.ToString(), out robotGeneration);
-                RobotGeneration = robotGeneration;
-                event_OnRobotGenerationReceived.Invoke();
+                // RobotGenerationCode robotGeneration;
+                // Enum.TryParse<RobotGenerationCode>("V" + client.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).Generation.ToString(), out robotGeneration);
+                // RobotGeneration = robotGeneration;
+                // event_OnRobotGenerationReceived.Invoke();
             }
             catch (RpcException e)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Grpc.Core;
-using Reachy.Sdk.Camera;
+
 
 namespace TeleopReachy
 {

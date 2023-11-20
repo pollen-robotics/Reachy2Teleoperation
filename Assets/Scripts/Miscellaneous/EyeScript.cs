@@ -9,8 +9,7 @@ using Grpc.Core;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 
-using Reachy.Sdk.Mobility;
-using Reachy.Sdk.Config;
+
 namespace TeleopReachy
 {
     public class EyeScript : MonoBehaviour

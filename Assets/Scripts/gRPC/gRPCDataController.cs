@@ -5,16 +5,20 @@ using UnityEngine.Events;
 using Grpc.Core;
 using System.Threading.Tasks;
 
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Kinematics;
+using Reachy;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Reachy.Part.Hand;
 
 
 namespace TeleopReachy
 {
     public class gRPCDataController : gRPCBase
     {
-        private JointService.JointServiceClient client = null;
-        private FullBodyCartesianCommandService.FullBodyCartesianCommandServiceClient clientCartesian = null;
+        private ReachyService.ReachyServiceClient reachyClient = null;
+        private ArmService.ArmServiceClient armClient = null;
+        private HeadService.HeadServiceClient headClient = null;
+        private HandService.HandServiceClient handClient = null;
 
         private bool needUpdateCommandBody;
         private bool needUpdateCommandGripper;
@@ -39,8 +43,11 @@ namespace TeleopReachy
             InitChannel("server_data_port");
             if (channel != null)
             {
-                client = new JointService.JointServiceClient(channel);
-                clientCartesian = new FullBodyCartesianCommandService.FullBodyCartesianCommandServiceClient(channel);
+                reachyClient = new ReachyService.ReachyServiceClient(channel);
+                armClient = new ArmService.ArmServiceClient(channel);
+                headClient = new HeadService.HeadServiceClient(channel);
+                handClient = new HandService.HandServiceClient(channel);
+
                 Task.Run(() => GetJointsId());
             }
         }
@@ -62,8 +69,8 @@ namespace TeleopReachy
         {
             try
             {
-                Debug.Log(client);
-                allJointsId = client.GetAllJointsId(new Google.Protobuf.WellKnownTypes.Empty());
+                Debug.Log(reachyClient);
+                allJointsId = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
                 event_OnRobotJointsReceived.Invoke(allJointsId);
                 isRobotInRoom = true;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
@@ -81,29 +88,29 @@ namespace TeleopReachy
         }
 
 
-        public async void SendJointsCommand(JointsCommand jointsCommand)
-        {
-            try
-            {
-                await client.SendJointsCommandsAsync(jointsCommand);
-            }
-            catch (RpcException e)
-            {
-                Debug.LogWarning("Communication RPC failed: in SendJointsPositions():" + e);
-                rpcException = "Error in SendJointsPositions():\n" + e.ToString();
-                isRobotInRoom = false;
-                event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-            }
-        }
+        // public async void SendJointsCommand(JointsCommand jointsCommand)
+        // {
+        //     try
+        //     {
+        //         await client.SendJointsCommandsAsync(jointsCommand);
+        //     }
+        //     catch (RpcException e)
+        //     {
+        //         Debug.LogWarning("Communication RPC failed: in SendJointsPositions():" + e);
+        //         rpcException = "Error in SendJointsPositions():\n" + e.ToString();
+        //         isRobotInRoom = false;
+        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
+        //     }
+        // }
 
-        public async void SendGrippersCommand(JointsCommand jointsCommand)
+        public async void SetHandPosition(HandPositionRequest grippersCommand)
         {
             try
             {
                 if (needUpdateCommandGripper)
                 {
                     needUpdateCommandGripper = false;
-                    await client.SendJointsCommandsAsync(jointsCommand);
+                    await handClient.SendJointsCommandsAsync(grippersCommand);
                     needUpdateCommandGripper = true;
                 }
             }
@@ -116,14 +123,14 @@ namespace TeleopReachy
             }
         }
 
-        public async void SendBodyCommand(FullBodyCartesianCommand command)
+        public async void SendArmCommand(ArmCartesianGoal command)
         {
             try
             {
                 if (needUpdateCommandBody)
                 {
                     needUpdateCommandBody = false;
-                    await clientCartesian.SendFullBodyCartesianCommandsAsync(command);
+                    await armClient.GoToCartesianPosition(command);
                     needUpdateCommandBody = true;
                 }
             }
@@ -136,72 +143,92 @@ namespace TeleopReachy
             }
         }
 
-        public async void SendImmediateBodyCommand(FullBodyCartesianCommand command)
+        public async void SendHeadCommand(NeckGoal command)
         {
             try
             {
-                await clientCartesian.SendFullBodyCartesianCommandsAsync(command);
-            }
-            catch (RpcException e)
-            {
-                Debug.LogWarning("GRPC failed: in SendImmediateBodyCommand():" + e);
-                rpcException = "Error in SendImmediateBodyCommand():\n" + e.ToString();
-                isRobotInRoom = false;
-                event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-            }
-        }
-
-        public async void GetJointsState()
-        {
-            try
-            {
-                if (needUpdateState)
+                if (needUpdateCommandBody)
                 {
-                    needUpdateState = false;
-
-                    List<JointId> ids = new List<JointId>();
-                    foreach (var item in allJointsId.Names)
-                    {
-                        var joint = new JointId();
-                        joint.Name = item;
-
-                        ids.Add(joint);
-                    };
-
-                    JointsStateRequest jointsRequest = new JointsStateRequest
-                    {
-                        Ids = { ids },
-                        RequestedFields = { JointField.Name, JointField.PresentPosition, JointField.GoalPosition, JointField.Temperature },
-                    };
-
-                    var reply = await client.GetJointsStateAsync(jointsRequest);
-
-                    Dictionary<JointId, float> present_positions = new Dictionary<JointId, float>();
-                    //Dictionary<JointId, float> goal_positions = new Dictionary<JointId, float>();
-                    Dictionary<JointId, float> temperatures = new Dictionary<JointId, float>();
-
-                    for (int i = 0; i < reply.States.Count; i++)
-                    {
-                        float command = Mathf.Rad2Deg * (float)reply.States[i].PresentPosition;
-                        present_positions.Add(reply.Ids[i], command);
-                        //float expectedcommand = Mathf.Rad2Deg * (float)reply.States[i].GoalPosition;
-                        //goal_positions.Add(reply.Ids[i], expectedcommand);
-                        float temperature = (float)reply.States[i].Temperature;
-                        temperatures.Add(reply.Ids[i], temperature);
-                    }
-                    //OnJointsStateReceivedEvent(new StateUpdateEventArgs(present_positions, goal_positions, temperatures));
-                    event_OnStateUpdateTemperature.Invoke(temperatures);
-                    event_OnStateUpdatePresentPositions.Invoke(present_positions);
-                    needUpdateState = true;
+                    needUpdateCommandBody = false;
+                    await headClient.GoToOrientation(command);
+                    needUpdateCommandBody = true;
                 }
             }
             catch (RpcException e)
             {
-                Debug.LogWarning("RPC failed: " + e);
-                rpcException = "Error in GetJointsState():\n" + e.ToString();
+                Debug.LogWarning("GRPC failed: in SendBodyCommand():" + e);
+                rpcException = "Error in SendBodyCommand():\n" + e.ToString();
                 isRobotInRoom = false;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
         }
+
+        // public async void SendImmediateBodyCommand(FullBodyCartesianCommand command)
+        // {
+        //     try
+        //     {
+        //         await clientCartesian.SendFullBodyCartesianCommandsAsync(command);
+        //     }
+        //     catch (RpcException e)
+        //     {
+        //         Debug.LogWarning("GRPC failed: in SendImmediateBodyCommand():" + e);
+        //         rpcException = "Error in SendImmediateBodyCommand():\n" + e.ToString();
+        //         isRobotInRoom = false;
+        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
+        //     }
+        // }
+
+        // public async void GetJointsState()
+        // {
+        //     try
+        //     {
+        //         if (needUpdateState)
+        //         {
+        //             needUpdateState = false;
+
+        //             List<JointId> ids = new List<JointId>();
+        //             foreach (var item in allJointsId.Names)
+        //             {
+        //                 var joint = new JointId();
+        //                 joint.Name = item;
+
+        //                 ids.Add(joint);
+        //             };
+
+        //             JointsStateRequest jointsRequest = new JointsStateRequest
+        //             {
+        //                 Ids = { ids },
+        //                 RequestedFields = { JointField.Name, JointField.PresentPosition, JointField.GoalPosition, JointField.Temperature },
+        //             };
+
+        //             var reply = await client.GetJointsStateAsync(jointsRequest);
+
+        //             Dictionary<JointId, float> present_positions = new Dictionary<JointId, float>();
+        //             //Dictionary<JointId, float> goal_positions = new Dictionary<JointId, float>();
+        //             Dictionary<JointId, float> temperatures = new Dictionary<JointId, float>();
+
+        //             for (int i = 0; i < reply.States.Count; i++)
+        //             {
+        //                 float command = Mathf.Rad2Deg * (float)reply.States[i].PresentPosition;
+        //                 present_positions.Add(reply.Ids[i], command);
+        //                 //float expectedcommand = Mathf.Rad2Deg * (float)reply.States[i].GoalPosition;
+        //                 //goal_positions.Add(reply.Ids[i], expectedcommand);
+        //                 float temperature = (float)reply.States[i].Temperature;
+        //                 temperatures.Add(reply.Ids[i], temperature);
+        //             }
+        //             //OnJointsStateReceivedEvent(new StateUpdateEventArgs(present_positions, goal_positions, temperatures));
+        //             event_OnStateUpdateTemperature.Invoke(temperatures);
+        //             event_OnStateUpdatePresentPositions.Invoke(present_positions);
+        //             needUpdateState = true;
+        //         }
+        //     }
+        //     catch (RpcException e)
+        //     {
+        //         Debug.LogWarning("RPC failed: " + e);
+        //         rpcException = "Error in GetJointsState():\n" + e.ToString();
+        //         isRobotInRoom = false;
+        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
+        //     }
+        // }
     }
 }

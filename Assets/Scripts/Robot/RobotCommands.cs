@@ -7,8 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Grpc.Core;
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Kinematics;
+
 
 namespace TeleopReachy
 {

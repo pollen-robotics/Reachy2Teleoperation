@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Kinematics;
 using Reachy;
 
 namespace TeleopReachy

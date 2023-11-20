@@ -5,8 +5,8 @@ using Grpc.Core;
 using System.Threading.Tasks;
 using System;
 
-using Reachy.Sdk.Mobility;
-using Reachy.Sdk.Config;
+using Mobile.Base.Sdk;
+
 
 namespace TeleopReachy
 {
@@ -91,9 +91,9 @@ namespace TeleopReachy
         {
             try
             {
-                var clientMobilityPresence = new MobileBasePresenceService.MobileBasePresenceServiceClient(channel);
-                bool mobileBaseIsPresent = clientMobilityPresence.GetMobileBasePresence(new Google.Protobuf.WellKnownTypes.Empty()).Presence.Value;
-                NotifyMobileBasePresence(mobileBaseIsPresent);
+                // var clientMobilityPresence = new MobileBasePresenceService.MobileBasePresenceServiceClient(channel);
+                // bool mobileBaseIsPresent = clientMobilityPresence.GetMobileBasePresence(new Google.Protobuf.WellKnownTypes.Empty()).Presence.Value;
+                // NotifyMobileBasePresence(mobileBaseIsPresent);
             }
             catch (RpcException e)
             {
@@ -106,9 +106,9 @@ namespace TeleopReachy
         {
             try
             {
-                var clientMobilityPresence = new ConfigService.ConfigServiceClient(channel);
-                bool mobileBaseIsPresent = clientMobilityPresence.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).MobileBasePresence;
-                NotifyMobileBasePresence(mobileBaseIsPresent);
+                // var clientMobilityPresence = new ConfigService.ConfigServiceClient(channel);
+                // bool mobileBaseIsPresent = clientMobilityPresence.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).MobileBasePresence;
+                // NotifyMobileBasePresence(mobileBaseIsPresent);
             }
             catch (RpcException e)
             {

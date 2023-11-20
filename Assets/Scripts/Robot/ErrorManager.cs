@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
-using Reachy.Sdk.Joint;
+
 
 namespace TeleopReachy
 {

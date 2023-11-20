@@ -6,10 +6,6 @@ using Reachy;
 
 using Grpc.Core;
 using Grpc.Core.Utils;
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Fan;
-using Reachy.Sdk.Kinematics;
-using Reachy.Sdk.Mobility;
 using System.Collections;
 using System.Collections.Generic;
 using System;
