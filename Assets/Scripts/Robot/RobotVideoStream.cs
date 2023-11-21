@@ -12,22 +12,22 @@ namespace TeleopReachy
 {
     public class RobotVideoStream : MonoBehaviour
     {
-        private gRPCVideoController videoController;
-        private RobotStatus robotStatus;
+        // private gRPCVideoController videoController;
+        // private RobotStatus robotStatus;
 
-        void Start()
-        {
-            videoController = gRPCManager.Instance.gRPCVideoController;
-            // videoController.OnVideoStreamReady += ResetOverlayTexture;
-            // videoController.OnVideoRoomStatusHasChanged += CheckCurrentStatus;
+        // void Start()
+        // {
+        //     videoController = gRPCManager.Instance.gRPCVideoController;
+        //     // videoController.OnVideoStreamReady += ResetOverlayTexture;
+        //     // videoController.OnVideoRoomStatusHasChanged += CheckCurrentStatus;
 
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-        }
+        //     robotStatus = RobotDataManager.Instance.RobotStatus;
+        // }
 
-        void Update()
-        {
-            videoController.GetImage(CameraId.Left);
-        }
+        // void Update()
+        // {
+        //     videoController.GetImage(CameraId.Left);
+        // }
 
     }
 }

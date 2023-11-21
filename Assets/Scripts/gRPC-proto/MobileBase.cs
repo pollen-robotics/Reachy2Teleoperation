@@ -26,82 +26,90 @@ namespace Mobile.Base.Sdk {
           string.Concat(
             "ChFtb2JpbGVfYmFzZS5wcm90bxIPbW9iaWxlLmJhc2Uuc2RrGhtnb29nbGUv",
             "cHJvdG9idWYvZW1wdHkucHJvdG8aHmdvb2dsZS9wcm90b2J1Zi93cmFwcGVy",
-            "cy5wcm90byKNAQoPRGlyZWN0aW9uVmVjdG9yEiYKAXgYASABKAsyGy5nb29n",
+            "cy5wcm90bxofZ29vZ2xlL3Byb3RvYnVmL3RpbWVzdGFtcC5wcm90bxoKcGFy",
+            "dC5wcm90byKNAQoPRGlyZWN0aW9uVmVjdG9yEiYKAXgYASABKAsyGy5nb29n",
             "bGUucHJvdG9idWYuRmxvYXRWYWx1ZRImCgF5GAIgASgLMhsuZ29vZ2xlLnBy",
             "b3RvYnVmLkZsb2F0VmFsdWUSKgoFdGhldGEYAyABKAsyGy5nb29nbGUucHJv",
-            "dG9idWYuRmxvYXRWYWx1ZSJNChZUYXJnZXREaXJlY3Rpb25Db21tYW5kEjMK",
-            "CWRpcmVjdGlvbhgBIAEoCzIgLm1vYmlsZS5iYXNlLnNkay5EaXJlY3Rpb25W",
-            "ZWN0b3IilwEKCkdvVG9WZWN0b3ISKwoGeF9nb2FsGAEgASgLMhsuZ29vZ2xl",
-            "LnByb3RvYnVmLkZsb2F0VmFsdWUSKwoGeV9nb2FsGAIgASgLMhsuZ29vZ2xl",
-            "LnByb3RvYnVmLkZsb2F0VmFsdWUSLwoKdGhldGFfZ29hbBgDIAEoCzIbLmdv",
-            "b2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlIsUBCg5TZXRTcGVlZFZlY3RvchIq",
-            "CgV4X3ZlbBgBIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEioK",
-            "BXlfdmVsGAIgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSLAoH",
-            "cm90X3ZlbBgDIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEi0K",
-            "CGR1cmF0aW9uGAQgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUi",
-            "jAEKDk9kb21ldHJ5VmVjdG9yEiYKAXgYASABKAsyGy5nb29nbGUucHJvdG9i",
-            "dWYuRmxvYXRWYWx1ZRImCgF5GAIgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZs",
-            "b2F0VmFsdWUSKgoFdGhldGEYAyABKAsyGy5nb29nbGUucHJvdG9idWYuRmxv",
-            "YXRWYWx1ZSLTAQoURGlzdGFuY2VUb0dvYWxWZWN0b3ISLAoHZGVsdGFfeBgB",
-            "IAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEiwKB2RlbHRhX3kY",
-            "AiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIwCgtkZWx0YV90",
-            "aGV0YRgDIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEi0KCGRp",
-            "c3RhbmNlGAQgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUiTAoS",
-            "Q29udHJvbE1vZGVDb21tYW5kEjYKBG1vZGUYASABKA4yKC5tb2JpbGUuYmFz",
-            "ZS5zZGsuQ29udHJvbE1vZGVQb3NzaWJsaXRpZXMiRgoPWnV1dU1vZGVDb21t",
-            "YW5kEjMKBG1vZGUYASABKA4yJS5tb2JpbGUuYmFzZS5zZGsuWnV1dU1vZGVQ",
-            "b3NzaWJsaXRpZXMiOgoMQmF0dGVyeUxldmVsEioKBWxldmVsGAEgASgLMhsu",
-            "Z29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUidgoSTW9iaWxlQmFzZVByZXNl",
-            "bmNlEiwKCHByZXNlbmNlGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLkJvb2xW",
-            "YWx1ZRIyCg1tb2RlbF92ZXJzaW9uGAIgASgLMhsuZ29vZ2xlLnByb3RvYnVm",
-            "LkZsb2F0VmFsdWUiRwoRTW9iaWxlQmFzZVZlcnNpb24SMgoNbW9kZWxfdmVy",
-            "c2lvbhgBIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlIqoBCgtM",
-            "aWRhclNhZmV0eRItCglzYWZldHlfb24YASABKAsyGi5nb29nbGUucHJvdG9i",
-            "dWYuQm9vbFZhbHVlEjQKD3NhZmV0eV9kaXN0YW5jZRgCIAEoCzIbLmdvb2ds",
-            "ZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjYKEWNyaXRpY2FsX2Rpc3RhbmNlGAMg",
-            "ASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUiQQoSTW9iaWxpdHlT",
-            "ZXJ2aWNlQWNrEisKB3N1Y2Nlc3MYASABKAsyGi5nb29nbGUucHJvdG9idWYu",
-            "Qm9vbFZhbHVlIhgKCExpZGFyTWFwEgwKBGRhdGEYASABKAwqSAoXQ29udHJv",
-            "bE1vZGVQb3NzaWJsaXRpZXMSFQoRTk9ORV9DT05UUk9MX01PREUQABINCglP",
-            "UEVOX0xPT1AQARIHCgNQSUQQAip7ChRadXV1TW9kZVBvc3NpYmxpdGllcxIS",
-            "Cg5OT05FX1pVVVVfTU9ERRAAEgsKB0NNRF9WRUwQARIJCgVCUkFLRRACEg4K",
-            "CkZSRUVfV0hFRUwQAxIJCgVTUEVFRBAEEggKBEdPVE8QBRISCg5FTUVSR0VO",
-            "Q1lfU1RPUBAGMsAJCg9Nb2JpbGl0eVNlcnZpY2USXQoNU2VuZERpcmVjdGlv",
-            "bhInLm1vYmlsZS5iYXNlLnNkay5UYXJnZXREaXJlY3Rpb25Db21tYW5kGiMu",
-            "bW9iaWxlLmJhc2Uuc2RrLk1vYmlsaXR5U2VydmljZUFjaxJUCgxTZW5kU2V0",
-            "U3BlZWQSHy5tb2JpbGUuYmFzZS5zZGsuU2V0U3BlZWRWZWN0b3IaIy5tb2Jp",
-            "bGUuYmFzZS5zZGsuTW9iaWxpdHlTZXJ2aWNlQWNrEkwKCFNlbmRHb1RvEhsu",
-            "bW9iaWxlLmJhc2Uuc2RrLkdvVG9WZWN0b3IaIy5tb2JpbGUuYmFzZS5zZGsu",
-            "TW9iaWxpdHlTZXJ2aWNlQWNrEk8KDkRpc3RhbmNlVG9Hb2FsEhYuZ29vZ2xl",
-            "LnByb3RvYnVmLkVtcHR5GiUubW9iaWxlLmJhc2Uuc2RrLkRpc3RhbmNlVG9H",
-            "b2FsVmVjdG9yEloKDlNldENvbnRyb2xNb2RlEiMubW9iaWxlLmJhc2Uuc2Rr",
-            "LkNvbnRyb2xNb2RlQ29tbWFuZBojLm1vYmlsZS5iYXNlLnNkay5Nb2JpbGl0",
-            "eVNlcnZpY2VBY2sSTQoOR2V0Q29udHJvbE1vZGUSFi5nb29nbGUucHJvdG9i",
-            "dWYuRW1wdHkaIy5tb2JpbGUuYmFzZS5zZGsuQ29udHJvbE1vZGVDb21tYW5k",
-            "ElQKC1NldFp1dXVNb2RlEiAubW9iaWxlLmJhc2Uuc2RrLlp1dXVNb2RlQ29t",
-            "bWFuZBojLm1vYmlsZS5iYXNlLnNkay5Nb2JpbGl0eVNlcnZpY2VBY2sSRwoL",
-            "R2V0WnV1dU1vZGUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaIC5tb2JpbGUu",
-            "YmFzZS5zZGsuWnV1dU1vZGVDb21tYW5kEkgKD0dldEJhdHRlcnlMZXZlbBIW",
-            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRodLm1vYmlsZS5iYXNlLnNkay5CYXR0",
-            "ZXJ5TGV2ZWwSRgoLR2V0T2RvbWV0cnkSFi5nb29nbGUucHJvdG9idWYuRW1w",
-            "dHkaHy5tb2JpbGUuYmFzZS5zZGsuT2RvbWV0cnlWZWN0b3ISTAoNUmVzZXRP",
-            "ZG9tZXRyeRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRojLm1vYmlsZS5iYXNl",
-            "LnNkay5Nb2JpbGl0eVNlcnZpY2VBY2sSUgoNU2V0WnV1dVNhZmV0eRIcLm1v",
-            "YmlsZS5iYXNlLnNkay5MaWRhclNhZmV0eRojLm1vYmlsZS5iYXNlLnNkay5N",
-            "b2JpbGl0eVNlcnZpY2VBY2sSRQoNR2V0WnV1dVNhZmV0eRIWLmdvb2dsZS5w",
-            "cm90b2J1Zi5FbXB0eRocLm1vYmlsZS5iYXNlLnNkay5MaWRhclNhZmV0eRJA",
-            "CgtHZXRMaWRhck1hcBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoZLm1vYmls",
-            "ZS5iYXNlLnNkay5MaWRhck1hcBJSChRHZXRNb2JpbGVCYXNlVmVyc2lvbhIW",
-            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoiLm1vYmlsZS5iYXNlLnNkay5Nb2Jp",
-            "bGVCYXNlVmVyc2lvbjJxChlNb2JpbGVCYXNlUHJlc2VuY2VTZXJ2aWNlElQK",
-            "FUdldE1vYmlsZUJhc2VQcmVzZW5jZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eRojLm1vYmlsZS5iYXNlLnNkay5Nb2JpbGVCYXNlUHJlc2VuY2ViBnByb3Rv",
-            "Mw=="));
+            "dG9idWYuRmxvYXRWYWx1ZSKMAQoKTW9iaWxlQmFzZRIkCgdwYXJ0X2lkGAEg",
+            "ASgLMhMucmVhY2h5LnBhcnQuUGFydElkEjMKB3ZlcnNpb24YAiABKAsyIi5t",
+            "b2JpbGUuYmFzZS5zZGsuTW9iaWxlQmFzZVZlcnNpb24SIwoEaW5mbxgFIAEo",
+            "CzIVLnJlYWNoeS5wYXJ0LlBhcnRJbmZvIk0KFlRhcmdldERpcmVjdGlvbkNv",
+            "bW1hbmQSMwoJZGlyZWN0aW9uGAEgASgLMiAubW9iaWxlLmJhc2Uuc2RrLkRp",
+            "cmVjdGlvblZlY3RvciJhCg9Nb2JpbGVCYXNlU3RhdGUSLQoJdGltZXN0YW1w",
+            "GAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIfCgJpZBgCIAEo",
+            "CzITLnJlYWNoeS5wYXJ0LlBhcnRJZCKXAQoKR29Ub1ZlY3RvchIrCgZ4X2dv",
+            "YWwYASABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIrCgZ5X2dv",
+            "YWwYAiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIvCgp0aGV0",
+            "YV9nb2FsGAMgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUixQEK",
+            "DlNldFNwZWVkVmVjdG9yEioKBXhfdmVsGAEgASgLMhsuZ29vZ2xlLnByb3Rv",
+            "YnVmLkZsb2F0VmFsdWUSKgoFeV92ZWwYAiABKAsyGy5nb29nbGUucHJvdG9i",
+            "dWYuRmxvYXRWYWx1ZRIsCgdyb3RfdmVsGAMgASgLMhsuZ29vZ2xlLnByb3Rv",
+            "YnVmLkZsb2F0VmFsdWUSLQoIZHVyYXRpb24YBCABKAsyGy5nb29nbGUucHJv",
+            "dG9idWYuRmxvYXRWYWx1ZSKMAQoOT2RvbWV0cnlWZWN0b3ISJgoBeBgBIAEo",
+            "CzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEiYKAXkYAiABKAsyGy5n",
+            "b29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIqCgV0aGV0YRgDIAEoCzIbLmdv",
+            "b2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlItMBChREaXN0YW5jZVRvR29hbFZl",
+            "Y3RvchIsCgdkZWx0YV94GAEgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0",
+            "VmFsdWUSLAoHZGVsdGFfeRgCIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9h",
+            "dFZhbHVlEjAKC2RlbHRhX3RoZXRhGAMgASgLMhsuZ29vZ2xlLnByb3RvYnVm",
+            "LkZsb2F0VmFsdWUSLQoIZGlzdGFuY2UYBCABKAsyGy5nb29nbGUucHJvdG9i",
+            "dWYuRmxvYXRWYWx1ZSJMChJDb250cm9sTW9kZUNvbW1hbmQSNgoEbW9kZRgB",
+            "IAEoDjIoLm1vYmlsZS5iYXNlLnNkay5Db250cm9sTW9kZVBvc3NpYmxpdGll",
+            "cyJGCg9adXV1TW9kZUNvbW1hbmQSMwoEbW9kZRgBIAEoDjIlLm1vYmlsZS5i",
+            "YXNlLnNkay5adXV1TW9kZVBvc3NpYmxpdGllcyI6CgxCYXR0ZXJ5TGV2ZWwS",
+            "KgoFbGV2ZWwYASABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZSJ2",
+            "ChJNb2JpbGVCYXNlUHJlc2VuY2USLAoIcHJlc2VuY2UYASABKAsyGi5nb29n",
+            "bGUucHJvdG9idWYuQm9vbFZhbHVlEjIKDW1vZGVsX3ZlcnNpb24YAiABKAsy",
+            "Gy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZSJHChFNb2JpbGVCYXNlVmVy",
+            "c2lvbhIyCg1tb2RlbF92ZXJzaW9uGAEgASgLMhsuZ29vZ2xlLnByb3RvYnVm",
+            "LkZsb2F0VmFsdWUiqgEKC0xpZGFyU2FmZXR5Ei0KCXNhZmV0eV9vbhgBIAEo",
+            "CzIaLmdvb2dsZS5wcm90b2J1Zi5Cb29sVmFsdWUSNAoPc2FmZXR5X2Rpc3Rh",
+            "bmNlGAIgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSNgoRY3Jp",
+            "dGljYWxfZGlzdGFuY2UYAyABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRW",
+            "YWx1ZSJBChJNb2JpbGl0eVNlcnZpY2VBY2sSKwoHc3VjY2VzcxgBIAEoCzIa",
+            "Lmdvb2dsZS5wcm90b2J1Zi5Cb29sVmFsdWUiGAoITGlkYXJNYXASDAoEZGF0",
+            "YRgBIAEoDCpIChdDb250cm9sTW9kZVBvc3NpYmxpdGllcxIVChFOT05FX0NP",
+            "TlRST0xfTU9ERRAAEg0KCU9QRU5fTE9PUBABEgcKA1BJRBACKnsKFFp1dXVN",
+            "b2RlUG9zc2libGl0aWVzEhIKDk5PTkVfWlVVVV9NT0RFEAASCwoHQ01EX1ZF",
+            "TBABEgkKBUJSQUtFEAISDgoKRlJFRV9XSEVFTBADEgkKBVNQRUVEEAQSCAoE",
+            "R09UTxAFEhIKDkVNRVJHRU5DWV9TVE9QEAYywAkKD01vYmlsaXR5U2Vydmlj",
+            "ZRJdCg1TZW5kRGlyZWN0aW9uEicubW9iaWxlLmJhc2Uuc2RrLlRhcmdldERp",
+            "cmVjdGlvbkNvbW1hbmQaIy5tb2JpbGUuYmFzZS5zZGsuTW9iaWxpdHlTZXJ2",
+            "aWNlQWNrElQKDFNlbmRTZXRTcGVlZBIfLm1vYmlsZS5iYXNlLnNkay5TZXRT",
+            "cGVlZFZlY3RvchojLm1vYmlsZS5iYXNlLnNkay5Nb2JpbGl0eVNlcnZpY2VB",
+            "Y2sSTAoIU2VuZEdvVG8SGy5tb2JpbGUuYmFzZS5zZGsuR29Ub1ZlY3Rvchoj",
+            "Lm1vYmlsZS5iYXNlLnNkay5Nb2JpbGl0eVNlcnZpY2VBY2sSTwoORGlzdGFu",
+            "Y2VUb0dvYWwSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaJS5tb2JpbGUuYmFz",
+            "ZS5zZGsuRGlzdGFuY2VUb0dvYWxWZWN0b3ISWgoOU2V0Q29udHJvbE1vZGUS",
+            "Iy5tb2JpbGUuYmFzZS5zZGsuQ29udHJvbE1vZGVDb21tYW5kGiMubW9iaWxl",
+            "LmJhc2Uuc2RrLk1vYmlsaXR5U2VydmljZUFjaxJNCg5HZXRDb250cm9sTW9k",
+            "ZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRojLm1vYmlsZS5iYXNlLnNkay5D",
+            "b250cm9sTW9kZUNvbW1hbmQSVAoLU2V0WnV1dU1vZGUSIC5tb2JpbGUuYmFz",
+            "ZS5zZGsuWnV1dU1vZGVDb21tYW5kGiMubW9iaWxlLmJhc2Uuc2RrLk1vYmls",
+            "aXR5U2VydmljZUFjaxJHCgtHZXRadXV1TW9kZRIWLmdvb2dsZS5wcm90b2J1",
+            "Zi5FbXB0eRogLm1vYmlsZS5iYXNlLnNkay5adXV1TW9kZUNvbW1hbmQSSAoP",
+            "R2V0QmF0dGVyeUxldmVsEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh0ubW9i",
+            "aWxlLmJhc2Uuc2RrLkJhdHRlcnlMZXZlbBJGCgtHZXRPZG9tZXRyeRIWLmdv",
+            "b2dsZS5wcm90b2J1Zi5FbXB0eRofLm1vYmlsZS5iYXNlLnNkay5PZG9tZXRy",
+            "eVZlY3RvchJMCg1SZXNldE9kb21ldHJ5EhYuZ29vZ2xlLnByb3RvYnVmLkVt",
+            "cHR5GiMubW9iaWxlLmJhc2Uuc2RrLk1vYmlsaXR5U2VydmljZUFjaxJSCg1T",
+            "ZXRadXV1U2FmZXR5EhwubW9iaWxlLmJhc2Uuc2RrLkxpZGFyU2FmZXR5GiMu",
+            "bW9iaWxlLmJhc2Uuc2RrLk1vYmlsaXR5U2VydmljZUFjaxJFCg1HZXRadXV1",
+            "U2FmZXR5EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhwubW9iaWxlLmJhc2Uu",
+            "c2RrLkxpZGFyU2FmZXR5EkAKC0dldExpZGFyTWFwEhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5GhkubW9iaWxlLmJhc2Uuc2RrLkxpZGFyTWFwElIKFEdldE1v",
+            "YmlsZUJhc2VWZXJzaW9uEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GiIubW9i",
+            "aWxlLmJhc2Uuc2RrLk1vYmlsZUJhc2VWZXJzaW9uMnEKGU1vYmlsZUJhc2VQ",
+            "cmVzZW5jZVNlcnZpY2USVAoVR2V0TW9iaWxlQmFzZVByZXNlbmNlEhYuZ29v",
+            "Z2xlLnByb3RvYnVmLkVtcHR5GiMubW9iaWxlLmJhc2Uuc2RrLk1vYmlsZUJh",
+            "c2VQcmVzZW5jZWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Mobile.Base.Sdk.ControlModePossiblities), typeof(global::Mobile.Base.Sdk.ZuuuModePossiblities), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.DirectionVector), global::Mobile.Base.Sdk.DirectionVector.Parser, new[]{ "X", "Y", "Theta" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.MobileBase), global::Mobile.Base.Sdk.MobileBase.Parser, new[]{ "PartId", "Version", "Info" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.TargetDirectionCommand), global::Mobile.Base.Sdk.TargetDirectionCommand.Parser, new[]{ "Direction" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.MobileBaseState), global::Mobile.Base.Sdk.MobileBaseState.Parser, new[]{ "Timestamp", "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.GoToVector), global::Mobile.Base.Sdk.GoToVector.Parser, new[]{ "XGoal", "YGoal", "ThetaGoal" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.SetSpeedVector), global::Mobile.Base.Sdk.SetSpeedVector.Parser, new[]{ "XVel", "YVel", "RotVel", "Duration" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Sdk.OdometryVector), global::Mobile.Base.Sdk.OdometryVector.Parser, new[]{ "X", "Y", "Theta" }, null, null, null, null),
@@ -413,6 +421,277 @@ namespace Mobile.Base.Sdk {
 
   }
 
+  public sealed partial class MobileBase : pb::IMessage<MobileBase>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<MobileBase> _parser = new pb::MessageParser<MobileBase>(() => new MobileBase());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MobileBase> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBase() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBase(MobileBase other) : this() {
+      partId_ = other.partId_ != null ? other.partId_.Clone() : null;
+      version_ = other.version_ != null ? other.version_.Clone() : null;
+      info_ = other.info_ != null ? other.info_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBase Clone() {
+      return new MobileBase(this);
+    }
+
+    /// <summary>Field number for the "part_id" field.</summary>
+    public const int PartIdFieldNumber = 1;
+    private global::Reachy.Part.PartId partId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Reachy.Part.PartId PartId {
+      get { return partId_; }
+      set {
+        partId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 2;
+    private global::Mobile.Base.Sdk.MobileBaseVersion version_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Mobile.Base.Sdk.MobileBaseVersion Version {
+      get { return version_; }
+      set {
+        version_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "info" field.</summary>
+    public const int InfoFieldNumber = 5;
+    private global::Reachy.Part.PartInfo info_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Reachy.Part.PartInfo Info {
+      get { return info_; }
+      set {
+        info_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MobileBase);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MobileBase other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(PartId, other.PartId)) return false;
+      if (!object.Equals(Version, other.Version)) return false;
+      if (!object.Equals(Info, other.Info)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (partId_ != null) hash ^= PartId.GetHashCode();
+      if (version_ != null) hash ^= Version.GetHashCode();
+      if (info_ != null) hash ^= Info.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (partId_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(PartId);
+      }
+      if (version_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Version);
+      }
+      if (info_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Info);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (partId_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(PartId);
+      }
+      if (version_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Version);
+      }
+      if (info_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Info);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (partId_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PartId);
+      }
+      if (version_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Version);
+      }
+      if (info_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Info);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MobileBase other) {
+      if (other == null) {
+        return;
+      }
+      if (other.partId_ != null) {
+        if (partId_ == null) {
+          PartId = new global::Reachy.Part.PartId();
+        }
+        PartId.MergeFrom(other.PartId);
+      }
+      if (other.version_ != null) {
+        if (version_ == null) {
+          Version = new global::Mobile.Base.Sdk.MobileBaseVersion();
+        }
+        Version.MergeFrom(other.Version);
+      }
+      if (other.info_ != null) {
+        if (info_ == null) {
+          Info = new global::Reachy.Part.PartInfo();
+        }
+        Info.MergeFrom(other.Info);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (partId_ == null) {
+              PartId = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(PartId);
+            break;
+          }
+          case 18: {
+            if (version_ == null) {
+              Version = new global::Mobile.Base.Sdk.MobileBaseVersion();
+            }
+            input.ReadMessage(Version);
+            break;
+          }
+          case 42: {
+            if (info_ == null) {
+              Info = new global::Reachy.Part.PartInfo();
+            }
+            input.ReadMessage(Info);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (partId_ == null) {
+              PartId = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(PartId);
+            break;
+          }
+          case 18: {
+            if (version_ == null) {
+              Version = new global::Mobile.Base.Sdk.MobileBaseVersion();
+            }
+            input.ReadMessage(Version);
+            break;
+          }
+          case 42: {
+            if (info_ == null) {
+              Info = new global::Reachy.Part.PartInfo();
+            }
+            input.ReadMessage(Info);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class TargetDirectionCommand : pb::IMessage<TargetDirectionCommand>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -425,7 +704,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -594,6 +873,232 @@ namespace Mobile.Base.Sdk {
 
   }
 
+  public sealed partial class MobileBaseState : pb::IMessage<MobileBaseState>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<MobileBaseState> _parser = new pb::MessageParser<MobileBaseState>(() => new MobileBaseState());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MobileBaseState> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBaseState() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBaseState(MobileBaseState other) : this() {
+      timestamp_ = other.timestamp_ != null ? other.timestamp_.Clone() : null;
+      id_ = other.id_ != null ? other.id_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MobileBaseState Clone() {
+      return new MobileBaseState(this);
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 1;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 2;
+    private global::Reachy.Part.PartId id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Reachy.Part.PartId Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MobileBaseState);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MobileBaseState other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
+      if (!object.Equals(Id, other.Id)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
+      if (id_ != null) hash ^= Id.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
+      if (id_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Id);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (timestamp_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Timestamp);
+      }
+      if (id_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Id);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
+      }
+      if (id_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MobileBaseState other) {
+      if (other == null) {
+        return;
+      }
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
+      }
+      if (other.id_ != null) {
+        if (id_ == null) {
+          Id = new global::Reachy.Part.PartId();
+        }
+        Id.MergeFrom(other.Id);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 18: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 18: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class GoToVector : pb::IMessage<GoToVector>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -606,7 +1111,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -874,7 +1379,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1186,7 +1691,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1454,7 +1959,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1766,7 +2271,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1938,7 +2443,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2110,7 +2615,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2290,7 +2795,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2514,7 +3019,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2694,7 +3199,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2962,7 +3467,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3142,7 +3647,7 @@ namespace Mobile.Base.Sdk {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Mobile.Base.Sdk.MobileBaseReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

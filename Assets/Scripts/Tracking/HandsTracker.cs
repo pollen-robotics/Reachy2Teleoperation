@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using Reachy.Kinematics;
 
 
 namespace TeleopReachy
@@ -18,7 +19,9 @@ namespace TeleopReachy
         public UnityEngine.Matrix4x4 handPose = UnityEngine.Matrix4x4.identity;
         [SerializeField]
         [HideInInspector]
-        public Reachy.Kinematics.Matrix4x4 target_pos;
+        public Reachy.Kinematics.Point target_position;
+        [HideInInspector]
+        public Reachy.Kinematics.Matrix3x3 target_rotation;
 
         [SerializeField]
         [HideInInspector]
@@ -49,12 +52,12 @@ namespace TeleopReachy
 
             if (handSide == "right")
             {
-                side_id = ArmSide.Right;
+                side_id = ArmSide.RIGHT;
                 VRHand = GameObject.Find("TrackedRightHand").transform;
             }
             else
             {
-                side_id = ArmSide.Left;
+                side_id = ArmSide.LEFT;
                 VRHand = GameObject.Find("TrackedLeftHand").transform;
             }
         }
@@ -106,7 +109,6 @@ namespace TeleopReachy
             // Position
             Vector3 positionHeadset = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * (hand.GetVRHand().position - transform.parent.position);
             Vector3 positionReachy = new Vector3(positionHeadset.z, -positionHeadset.x, positionHeadset.y);
-            Vector4 positionVect = new Vector4(positionReachy.x, positionReachy.y, positionReachy.z, 1);
 
             // Rotation
             UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
@@ -119,14 +121,11 @@ namespace TeleopReachy
                                             new Vector4(0, 0, 0, 1));
             hand.handPose = (mP * hand.handPose) * mP.inverse;
 
-            hand.handPose.SetColumn(3, positionVect);
-
-            hand.target_pos = new Reachy.Kinematics.Matrix4x4
-            {
-                Data = { hand.handPose[0,0], hand.handPose[0,1], hand.handPose[0,2], hand.handPose[0,3],
-                                                                                hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2], hand.handPose[1,3],
-                                                                                hand.handPose[2,0], hand.handPose[2,1], hand.handPose[2,2], hand.handPose[2,3],
-                                                                                hand.handPose[3,0], hand.handPose[3,1], hand.handPose[3,2], hand.handPose[3,3] }
+            hand.target_position = new Point { X = positionReachy[0], Y = positionReachy[1], Z = positionReachy[2]};
+            hand.target_rotation = new Matrix3x3 {
+                Data = { hand.handPose[0,0], hand.handPose[0,1], hand.handPose[0,2],
+                        hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2],
+                        hand.handPose[2,0], hand.handPose[2,1], hand.handPose[2,2], }
             };
         }
 

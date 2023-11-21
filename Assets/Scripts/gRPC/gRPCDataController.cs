@@ -6,9 +6,11 @@ using Grpc.Core;
 using System.Threading.Tasks;
 
 using Reachy;
+using Reachy.Part;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
+using Component;
 
 
 namespace TeleopReachy
@@ -22,23 +24,23 @@ namespace TeleopReachy
 
         private bool needUpdateCommandBody;
         private bool needUpdateCommandGripper;
-        private bool needUpdateState;
+        // private bool needUpdateState;
 
-        private Reachy reachy;
+        private Reachy.Reachy reachy;
 
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
 
-        public UnityEvent<Reachy> event_OnRobotPartsReceived;
+        public UnityEvent<Reachy.Reachy> event_OnRobotReceived;
 
-        public UnityEvent<Dictionary<JointId, float>> event_OnStateUpdateTemperature;
+        // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdateTemperature;
 
-        public UnityEvent<Dictionary<JointId, float>> event_OnStateUpdatePresentPositions;
+        // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdatePresentPositions;
 
         void Start()
         {
             needUpdateCommandBody = false;
             needUpdateCommandGripper = false;
-            needUpdateState = false;
+            // needUpdateState = false;
 
             InitChannel("server_data_port");
             if (channel != null)
@@ -48,13 +50,13 @@ namespace TeleopReachy
                 headClient = new HeadService.HeadServiceClient(channel);
                 handClient = new HandService.HandServiceClient(channel);
 
-                Task.Run(() => GetJointsId());
+                Task.Run(() => GetReachyId());
             }
         }
 
         protected override void RecoverFromNetWorkIssue()
         {
-            Task.Run(() => GetJointsId());
+            Task.Run(() => GetReachyId());
             gRPCManager.Instance.gRPCMobileBaseController.AskForMobilityReset();
         }
 
@@ -70,13 +72,13 @@ namespace TeleopReachy
             try
             {
                 Debug.Log(reachyClient);
-                allJointsId = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
-                event_OnRobotPartsReceived.Invoke(allJointsId);
+                reachy = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
+                event_OnRobotReceived.Invoke(reachy);
                 isRobotInRoom = true;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
                 needUpdateCommandBody = true;
                 needUpdateCommandGripper = true;
-                needUpdateState = true;
+                // needUpdateState = true;
             }
             catch (RpcException e)
             {
@@ -103,14 +105,15 @@ namespace TeleopReachy
         //     }
         // }
 
-        public async void SetHandPosition(HandPositionRequest grippersCommand)
+        public async void SetHandPosition(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
             try
             {
                 if (needUpdateCommandGripper)
                 {
                     needUpdateCommandGripper = false;
-                    await handClient.SendJointsCommandsAsync(grippersCommand);
+                    await handClient.SetHandPositionAsync(leftGripperCommand);
+                    await handClient.SetHandPositionAsync(rightGripperCommand);
                     needUpdateCommandGripper = true;
                 }
             }
@@ -123,14 +126,16 @@ namespace TeleopReachy
             }
         }
 
-        public async void SendArmCommand(ArmCartesianGoal command)
+        public async void SendBodyCommand(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
         {
             try
             {
                 if (needUpdateCommandBody)
                 {
                     needUpdateCommandBody = false;
-                    await armClient.GoToCartesianPosition(command);
+                    await armClient.GoToCartesianPositionAsync(leftArmRequest);
+                    await armClient.GoToCartesianPositionAsync(rightArmRequest);
+                    await headClient.GoToOrientationAsync(neckRequest);
                     needUpdateCommandBody = true;
                 }
             }
@@ -143,14 +148,14 @@ namespace TeleopReachy
             }
         }
 
-        public async void SendHeadCommand(NeckGoal command)
+        public async void SendHeadCommand(NeckGoal neckRequest)
         {
             try
             {
                 if (needUpdateCommandBody)
                 {
                     needUpdateCommandBody = false;
-                    await headClient.GoToOrientation(command);
+                    await headClient.GoToOrientationAsync(neckRequest);
                     needUpdateCommandBody = true;
                 }
             }
@@ -163,30 +168,27 @@ namespace TeleopReachy
             }
         }
 
-        public async void TurnLeftArmOff()
+        public async void TurnArmOff(PartId id)
         {
-
+            await armClient.TurnOffAsync(id);
         }
 
-        public async void TurnRightArmOff()
+        public async void TurnHeadOff(PartId id)
         {
-
+            await headClient.TurnOffAsync(id);
         }
 
-        public async void TurnHeadOff()
+        public async void TurnArmOn(PartId id)
         {
-
+            await armClient.TurnOnAsync(id);
         }
 
-        public async void TurnLeftArmOn()
+         public async void TurnHeadOn(PartId id)
         {
-            
+            await headClient.TurnOnAsync(id);
+
+
         }
-
-        public async void TurnRightArmOn()
-        {
-
-        } 
 
         // public async void SendImmediateBodyCommand(FullBodyCartesianCommand command)
         // {

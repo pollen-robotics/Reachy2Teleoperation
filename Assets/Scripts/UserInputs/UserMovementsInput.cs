@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
-usingKinematics;
+using Reachy.Kinematics;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Component.Orbita2D;
 
 
 namespace TeleopReachy
@@ -15,8 +18,8 @@ namespace TeleopReachy
         private HeadTracker headTracker;
         private HandsTracker handsTracker;
 
-        private JointPosition q0_left;
-        private JointPosition q0_right;
+        private ArmPosition q0_left;
+        private ArmPosition q0_right;
 
         private bool right_gripper_closed;
         private bool left_gripper_closed;
@@ -47,18 +50,18 @@ namespace TeleopReachy
 
         void Start()
         {
-            q0_left = new JointPosition
+            q0_left = new ArmPosition
             {
-                Ids = { new JointId{ Name = "l_shoulder_pitch"}, new JointId{ Name = "l_shoulder_roll"}, new JointId{ Name = "l_arm_yaw"},
-                new JointId{ Name = "l_elbow_pitch"}, new JointId{ Name = "l_forearm_yaw"}, new JointId{ Name = "l_wrist_pitch"}, new JointId{ Name = "l_wrist_roll"} },
-                Positions = { 0, 0, 0, -Mathf.PI / 2, 0, 0, 0 },
+                ShoulderPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)0},
+                ElbowPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)-Mathf.PI / 2},
+                WristPosition = new Rotation3d { Rpy = new ExtEulerAngles { Roll = 0, Pitch = 0 , Yaw = 0} },
             };
 
-            q0_right = new JointPosition
+            q0_right = new ArmPosition
             {
-                Ids = { new JointId{ Name = "r_shoulder_pitch"}, new JointId{ Name = "r_shoulder_roll"}, new JointId{ Name = "r_arm_yaw"},
-                new JointId{ Name = "r_elbow_pitch"}, new JointId{ Name = "r_forearm_yaw"}, new JointId{ Name = "r_wrist_pitch"}, new JointId{ Name = "r_wrist_roll"} },
-                Positions = { 0, 0, 0, -Mathf.PI / 2, 0, 0, 0 },
+                ShoulderPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)0},
+                ElbowPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)-Mathf.PI / 2},
+                WristPosition = new Rotation3d { Rpy = new ExtEulerAngles { Roll = 0, Pitch = 0 , Yaw = 0} },
             };
 
             right_gripper_closed = false;
@@ -72,59 +75,71 @@ namespace TeleopReachy
         {
             if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotCompliant() && !robotStatus.AreRobotMovementsSuspended())
             {
-                ArmEndEffector rightEndEffector = GetRightEndEffectorTarget();
-                ArmEndEffector leftEndEffector = GetLeftEndEffectorTarget();
+                ArmCartesianGoal leftEndEffector = GetLeftEndEffectorTarget();
+                ArmCartesianGoal rightEndEffector = GetRightEndEffectorTarget();
 
-                ArmIKRequest rightArmRequest = new ArmIKRequest { Target = rightEndEffector, Q0 = q0_right };
-                ArmIKRequest leftArmRequest = new ArmIKRequest { Target = leftEndEffector, Q0 = q0_left };
+                // leftEndEffector.Q0 = q0_left;
+                // rightEndEffector.Q0 = q0_right;
 
                 NeckGoal headTarget = headTracker.GetHeadTarget();
 
                 float pos_left_gripper = GetLeftGripperTarget();
                 float pos_right_gripper = GetRightGripperTarget();
 
-                jointsCommands.SendFullBodyCommands(leftArmRequest, rightArmRequest, headTarget);
+                jointsCommands.SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
                 jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
                 robotStatus.LeftGripperClosed(left_gripper_closed);
                 robotStatus.RightGripperClosed(right_gripper_closed);
             }
         }
 
-        public ArmEndEffector GetRightEndEffectorTarget()
+        public ArmCartesianGoal GetRightEndEffectorTarget()
         {
-            ArmEndEffector rightEndEffector;
+            ArmCartesianGoal rightEndEffector;
             if (UserSize.Instance.UserArmSize == 0)
             {
-                rightEndEffector = new ArmEndEffector { Side = handsTracker.rightHand.side_id, Pose = handsTracker.rightHand.target_pos };
+                rightEndEffector = new ArmCartesianGoal { 
+                    TargetPosition = handsTracker.rightHand.target_position,
+                    TargetOrientation = new Rotation3d { Matrix = handsTracker.rightHand.target_rotation }
+                };
             }
             else
             {
-                Reachy.Sdk.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
-                right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
-                right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
-                right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+                Point rightTargetPos_calibrated = handsTracker.rightHand.target_position;
+                rightTargetPos_calibrated.X = rightTargetPos_calibrated.X * reachyArmSize / UserSize.Instance.UserArmSize;
+                rightTargetPos_calibrated.Y = (rightTargetPos_calibrated.Y + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
+                rightTargetPos_calibrated.Z = rightTargetPos_calibrated.Z * reachyArmSize / UserSize.Instance.UserArmSize;
 
-                rightEndEffector = new ArmEndEffector { Side = handsTracker.rightHand.side_id, Pose = right_target_pos_calibrated };
+                rightEndEffector = new ArmCartesianGoal { 
+                    TargetPosition = rightTargetPos_calibrated,
+                    TargetOrientation = new Rotation3d { Matrix = handsTracker.rightHand.target_rotation }
+                };
             }
 
             return rightEndEffector;
         }
 
-        public ArmEndEffector GetLeftEndEffectorTarget()
+        public ArmCartesianGoal GetLeftEndEffectorTarget()
         {
-            ArmEndEffector leftEndEffector;
+            ArmCartesianGoal leftEndEffector;
             if (UserSize.Instance.UserArmSize == 0)
             {
-                leftEndEffector = new ArmEndEffector { Side = handsTracker.leftHand.side_id, Pose = handsTracker.leftHand.target_pos };
+                leftEndEffector = new ArmCartesianGoal { 
+                    TargetPosition = handsTracker.leftHand.target_position,
+                    TargetOrientation = new Rotation3d { Matrix = handsTracker.leftHand.target_rotation }
+                };
             }
             else
             {
-                Reachy.Sdk.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
-                left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
-                left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
-                left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+                Point leftTargetPos_calibrated = handsTracker.leftHand.target_position;
+                leftTargetPos_calibrated.X = leftTargetPos_calibrated.X * reachyArmSize / UserSize.Instance.UserArmSize;
+                leftTargetPos_calibrated.Y = (leftTargetPos_calibrated.Y + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
+                leftTargetPos_calibrated.Z = leftTargetPos_calibrated.Z * reachyArmSize / UserSize.Instance.UserArmSize;
 
-                leftEndEffector = new ArmEndEffector { Side = handsTracker.leftHand.side_id, Pose = left_target_pos_calibrated };
+                leftEndEffector = new ArmCartesianGoal { 
+                    TargetPosition = leftTargetPos_calibrated,
+                    TargetOrientation = new Rotation3d { Matrix = handsTracker.leftHand.target_rotation }
+                };
             }
 
             return leftEndEffector;

@@ -12,12 +12,10 @@ namespace TeleopReachy
         private gRPCDataController dataController;
         private gRPCMobileBaseController mobileBaseController;
 
-        private gRPCVideoController videoController;
-
         private RobotPingWatcher robotPing;
 
-        private List<JointId> warningHotMotors;
-        private List<JointId> errorOverheatingMotors;
+        // private List<JointId> warningHotMotors;
+        // private List<JointId> errorOverheatingMotors;
 
         private Queue<float> pingsQueue;
         private const int PINGS_QUEUE_SIZE = 20;
@@ -31,8 +29,8 @@ namespace TeleopReachy
         public UnityEvent event_OnWarningUnstablePing;
         public UnityEvent<float> event_OnWarningLowBattery;
         public UnityEvent<float> event_OnErrorLowBattery;
-        public UnityEvent<List<JointId>> event_OnWarningMotorsTemperatures;
-        public UnityEvent<List<JointId>> event_OnErrorMotorsTemperatures;
+        // public UnityEvent<List<JointId>> event_OnWarningMotorsTemperatures;
+        // public UnityEvent<List<JointId>> event_OnErrorMotorsTemperatures;
 
         public float previousBatteryLevel;
 
@@ -40,60 +38,58 @@ namespace TeleopReachy
         void Start()
         {
             dataController = gRPCManager.Instance.gRPCDataController;
-            dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
+            // dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
 
             mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
-
-            videoController = gRPCManager.Instance.gRPCVideoController;
+            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
             pingsQueue = new Queue<float>();
         }
 
-        void Update()
-        {
-            CheckPingQuality();
-            CheckVideoQuality();
-        }
+        // void Update()
+        // {
+        //     CheckPingQuality();
+        //     CheckVideoQuality();
+        // }
 
-        void CheckPingQuality()
-        {
-            if (robotPing.GetPing() > RobotPingWatcher.THRESHOLD_LOW_QUALITY_PING)
-                event_OnWarningHighLatency.Invoke();
-            else if (robotPing.GetIsUnstablePing())
-                event_OnWarningUnstablePing.Invoke();
-        }
+        // void CheckPingQuality()
+        // {
+        //     if (robotPing.GetPing() > RobotPingWatcher.THRESHOLD_LOW_QUALITY_PING)
+        //         event_OnWarningHighLatency.Invoke();
+        //     else if (robotPing.GetIsUnstablePing())
+        //         event_OnWarningUnstablePing.Invoke();
+        // }
 
-        void CheckVideoQuality()
-        {
-            float fps = videoController.GetMeanFPS();
-            if ((fps != -1) && (fps < FPS_MINIMUM)) {
-                event_OnWarningHighLatency.Invoke();
-            }
-        }
+        // void CheckVideoQuality()
+        // {
+        //     float fps = videoController.GetMeanFPS();
+        //     if ((fps != -1) && (fps < FPS_MINIMUM)) {
+        //         event_OnWarningHighLatency.Invoke();
+        //     }
+        // }
 
         public void NotifyNetworkUnstability()
         {
             event_OnWarningUnstablePing.Invoke();
         }
 
-        protected void CheckTemperatures(Dictionary<JointId, float> Temperatures)
-        {
-            warningHotMotors = new List<JointId>();
-            errorOverheatingMotors = new List<JointId>();
+        // protected void CheckTemperatures(Dictionary<JointId, float> Temperatures)
+        // {
+        //     warningHotMotors = new List<JointId>();
+        //     errorOverheatingMotors = new List<JointId>();
 
-            foreach (KeyValuePair<JointId, float> motor in Temperatures)
-            {
-                if (motor.Value >= THRESHOLD_ERROR_MOTOR_TEMPERATURE) errorOverheatingMotors.Add(motor.Key);
-                else if (motor.Value >= THRESHOLD_WARNING_MOTOR_TEMPERATURE) warningHotMotors.Add(motor.Key);
-            }
+        //     foreach (KeyValuePair<JointId, float> motor in Temperatures)
+        //     {
+        //         if (motor.Value >= THRESHOLD_ERROR_MOTOR_TEMPERATURE) errorOverheatingMotors.Add(motor.Key);
+        //         else if (motor.Value >= THRESHOLD_WARNING_MOTOR_TEMPERATURE) warningHotMotors.Add(motor.Key);
+        //     }
 
-            if (warningHotMotors.Count > 0)
-                event_OnWarningMotorsTemperatures.Invoke(warningHotMotors);
-            if (errorOverheatingMotors.Count > 0)
-                event_OnErrorMotorsTemperatures.Invoke(errorOverheatingMotors);
-        }
+        //     if (warningHotMotors.Count > 0)
+        //         event_OnWarningMotorsTemperatures.Invoke(warningHotMotors);
+        //     if (errorOverheatingMotors.Count > 0)
+        //         event_OnErrorMotorsTemperatures.Invoke(errorOverheatingMotors);
+        // }
 
         protected void CheckBatteryLevel(float batteryLevel)
         {

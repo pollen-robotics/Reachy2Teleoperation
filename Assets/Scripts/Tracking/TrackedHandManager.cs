@@ -25,7 +25,7 @@ namespace TeleopReachy
                     {
                         transform.localPosition = new Vector3(0, -0.05f, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        if (side_id == ArmSide.Left) targetRotation.eulerAngles = new Vector3(-60, 30, 0);
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-60, 30, 0);
                         else targetRotation.eulerAngles = new Vector3(-60, -30, 0);
                         transform.localRotation = targetRotation;
                         break;
@@ -34,7 +34,7 @@ namespace TeleopReachy
                     {
                         transform.localPosition = new Vector3(0, 0, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        if (side_id == ArmSide.Left) targetRotation.eulerAngles = new Vector3(0, 0, 20);
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(0, 0, 20);
                         else targetRotation.eulerAngles = new Vector3(0, 0, -20);
                         transform.localRotation = targetRotation;
                         break;
@@ -43,7 +43,7 @@ namespace TeleopReachy
                     {
                         transform.localPosition = new Vector3(0, 0, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        if (side_id == ArmSide.Left) targetRotation.eulerAngles = new Vector3(0, 0, 0);
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(0, 0, 0);
                         else targetRotation.eulerAngles = new Vector3(0, 0, 0);
                         transform.localRotation = targetRotation;
                         break;

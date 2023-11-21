@@ -32,7 +32,7 @@ namespace TeleopReachy
 
             if (channel != null)
             {
-                gRPCManager.Instance.gRPCRobotParams.event_OnRobotGenerationReceived.AddListener(AskForMobileBasePresence);
+                // gRPCManager.Instance.gRPCRobotParams.event_OnRobotGenerationReceived.AddListener(AskForMobileBasePresence);
             }
         }
 
@@ -58,24 +58,24 @@ namespace TeleopReachy
 
         private void AskForMobileBasePresence()
         {
-            switch (gRPCManager.Instance.gRPCRobotParams.RobotGeneration)
-            {
-                case RobotGenerationCode.V2021:
-                    {
-                        Task.Run(() => GetMobileBasePresence_2021());
-                        break;
-                    }
-                case RobotGenerationCode.V2023:
-                    {
-                        Task.Run(() => GetMobileBasePresence_2023());
-                        break;
-                    }
-                case RobotGenerationCode.UNDEFINED:
-                    {
-                        Debug.LogWarning("Robot version not defined for mobile base");
-                        break;
-                    }
-            }
+            // switch (gRPCManager.Instance.gRPCRobotParams.RobotGeneration)
+            // {
+            //     case RobotGenerationCode.V2021:
+            //         {
+            //             Task.Run(() => GetMobileBasePresence_2021());
+            //             break;
+            //         }
+            //     case RobotGenerationCode.V2023:
+            //         {
+            //             Task.Run(() => GetMobileBasePresence_2023());
+            //             break;
+            //         }
+            //     case RobotGenerationCode.UNDEFINED:
+            //         {
+            //             Debug.LogWarning("Robot version not defined for mobile base");
+            //             break;
+            //         }
+            // }
         }
 
         private void NotifyMobileBasePresence(bool mobileBaseIsPresent)

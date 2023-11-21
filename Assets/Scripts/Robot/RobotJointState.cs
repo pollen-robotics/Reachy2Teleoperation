@@ -14,14 +14,14 @@ namespace TeleopReachy
         private gRPCDataController dataController;
 
         [Tooltip("Robot that will be updated")]
-        public ReachyController.ReachyController reachy;
+        // public ReachyController.ReachyController reachy;
 
         //private bool inTransitionRoom;
 
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
-            dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
+            // dataController = gRPCManager.Instance.gRPCDataController;
+            // dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
 
             EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, UpdateModelRobot);
@@ -31,18 +31,18 @@ namespace TeleopReachy
 
         void Update()
         {
-            dataController.GetJointsState();
+            // dataController.GetJointsState();
         }
 
         void UpdateRobot()
         {
             // reachy = GameObject.Find("Reachy").GetComponent<ReachyController>();
-            reachy = null;
+            // reachy = null;
         }
 
         void UpdateModelRobot()
         {
-            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
+            // reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
         }
 
         // protected void UpdateJointsState(Dictionary<JointId, float> PresentPositions)
