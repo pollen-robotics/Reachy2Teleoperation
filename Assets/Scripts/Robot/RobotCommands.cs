@@ -51,6 +51,9 @@ namespace TeleopReachy
 
         public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
         {
+            leftArmRequest.Id = robotConfig.partsId["l_arm"];
+            rightArmRequest.Id = robotConfig.partsId["r_arm"];
+            neckRequest.Id = robotConfig.partsId["head"];
             // FullBodyCartesianCommand bodyCommand = new FullBodyCartesianCommand();
             // if (robotConfig.IsVirtual() || (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()))
             // {

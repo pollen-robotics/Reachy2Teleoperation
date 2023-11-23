@@ -83,7 +83,7 @@ namespace TeleopReachy
             catch (RpcException e)
             {
                 Debug.LogWarning("RPC failed: " + e);
-                rpcException = "Error in GetJointsId():\n" + e.ToString();
+                rpcException = "Error in GetReachyId():\n" + e.ToString();
                 isRobotInRoom = false;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
@@ -186,24 +186,7 @@ namespace TeleopReachy
          public async void TurnHeadOn(PartId id)
         {
             await headClient.TurnOnAsync(id);
-
-
         }
-
-        // public async void SendImmediateBodyCommand(FullBodyCartesianCommand command)
-        // {
-        //     try
-        //     {
-        //         await clientCartesian.SendFullBodyCartesianCommandsAsync(command);
-        //     }
-        //     catch (RpcException e)
-        //     {
-        //         Debug.LogWarning("GRPC failed: in SendImmediateBodyCommand():" + e);
-        //         rpcException = "Error in SendImmediateBodyCommand():\n" + e.ToString();
-        //         isRobotInRoom = false;
-        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-        //     }
-        // }
 
         // public async void GetJointsState()
         // {

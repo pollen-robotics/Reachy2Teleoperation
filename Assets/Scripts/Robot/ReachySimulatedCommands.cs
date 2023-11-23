@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Reachy;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Reachy.Part.Hand;
 
 namespace TeleopReachy
 {
-    // public class ReachySimulatedCommands : RobotCommands
-    // {
+    public class ReachySimulatedCommands : RobotCommands
+    {
     //     private HeadTracker headTracker;
     //     private HandsTracker handsTracker;
     //     private UserMovementsInput userMovementsInput;
@@ -77,15 +79,15 @@ namespace TeleopReachy
     //         SendGrippersCommands(pos_left_gripper, pos_right_gripper);
     //     }
 
-    //     protected override void ActualSendBodyCommands(FullBodyCartesianCommand bodyCommand)
-    //     {
-    //         reachyFakeServer.SendFullBodyCartesianCommands(bodyCommand);
-    //     }
+        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
+        {
+            // reachyFakeServer.SendFullBodyCartesianCommands(bodyCommand);
+        }
 
-    //     protected override void ActualSendGrippersCommands(HandPositionRequest gripperCommand)
-    //     {
-    //         reachyFakeServer.SendJointsCommands(gripperCommand);
-    //     }
+        protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
+        {
+            // reachyFakeServer.SendJointsCommands(gripperCommand);
+        }
 
     //     void SetHeadToModelPose()
     //     {
@@ -206,6 +208,6 @@ namespace TeleopReachy
     //         reachyFakeServer.SendJointsCommands(jointsCommand);
     //     }
 
-    // }
+    }
 }
 

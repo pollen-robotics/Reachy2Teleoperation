@@ -74,8 +74,8 @@ namespace ReachyController
     //     public List<MotorCommand> motors;
     // }
 
-    // public class ReachyController : MonoBehaviour
-    // {
+    public class ReachyController : MonoBehaviour
+    {
     //     public Motor[] motors;
     //     public Fan[] fans;
     //     public Sensor[] sensors;
@@ -386,5 +386,5 @@ namespace ReachyController
     //     {
     //         head.transform.localRotation = targetHeadRot;
     //     }
-    // }
+    }
 }
