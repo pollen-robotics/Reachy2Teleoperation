@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TeleopReachy
 {
-    public class Singleton<T> : MonoBehaviour where T : Component
+    public class Singleton<T> : MonoBehaviour where T : UnityEngine.Component
     {
         public static T Instance { get; protected set; }
 

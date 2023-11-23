@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Reachy.Sdk.Joint;
+
 
 namespace TeleopReachy
 {
@@ -30,7 +30,7 @@ namespace TeleopReachy
             }
 
             dataController = gRPCManager.Instance.gRPCDataController;
-            dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
+            // dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
 
             connectionStatus = gRPCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
@@ -46,8 +46,8 @@ namespace TeleopReachy
             isStatePanelStatusActive = true;
         }
 
-        private void UpdateTemperatures(Dictionary<JointId, float> Temperatures)
-        {
+        // private void UpdateTemperatures(Dictionary<JointId, float> Temperatures)
+        // {
             /*foreach(KeyValuePair<JointId, float> motor in Temperatures)
             {
                 string motorName = motor.Key.Name + "_temperature";
@@ -69,7 +69,7 @@ namespace TeleopReachy
                     }
                 }
             }  */  
-        }
+        // }
 
         private void CheckTemperatureInfo()
         {

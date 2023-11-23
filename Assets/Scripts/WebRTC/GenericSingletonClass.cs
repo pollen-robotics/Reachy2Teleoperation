@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GenericSingletonClass<T> : MonoBehaviour where T : Component
+public class GenericSingletonClass<T> : MonoBehaviour where T : UnityEngine.Component
 {
     private static T instance;
     public static T Instance {
