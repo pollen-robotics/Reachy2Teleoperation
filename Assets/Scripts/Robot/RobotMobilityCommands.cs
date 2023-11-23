@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Grpc.Core;
-using Reachy.Sdk.Mobility;
 using Reachy;
+using Mobile.Base.Sdk;
 
 namespace TeleopReachy
 {

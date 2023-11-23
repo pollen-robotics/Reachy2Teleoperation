@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Grpc.Core;
-using Reachy.Sdk.Joint;
 using Reachy;
 
 namespace TeleopReachy

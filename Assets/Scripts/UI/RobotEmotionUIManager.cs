@@ -14,7 +14,7 @@ namespace TeleopReachy
         private RobotJointCommands robotCommands;
         private RobotStatus robotStatus;
         private UserEmotionInput userEmotionInput;
-        private ReachySimulatedCommands robotSimulatedCommands;
+        // private ReachySimulatedCommands robotSimulatedCommands;
 
         void Awake()
         {
@@ -27,8 +27,8 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             userEmotionInput = UserInputManager.Instance.UserEmotionInput;
             robotCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
-            robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            robotSimulatedCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
+            // robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
+            // robotSimulatedCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
         }
 
         public void ShowSelectedEmotion(Emotion emotion)

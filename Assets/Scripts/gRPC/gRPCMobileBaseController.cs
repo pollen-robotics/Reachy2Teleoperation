@@ -5,8 +5,8 @@ using Grpc.Core;
 using System.Threading.Tasks;
 using System;
 
-using Reachy.Sdk.Mobility;
-using Reachy.Sdk.Config;
+using Mobile.Base.Sdk;
+
 
 namespace TeleopReachy
 {
@@ -32,7 +32,7 @@ namespace TeleopReachy
 
             if (channel != null)
             {
-                gRPCManager.Instance.gRPCRobotParams.event_OnRobotGenerationReceived.AddListener(AskForMobileBasePresence);
+                // gRPCManager.Instance.gRPCRobotParams.event_OnRobotGenerationReceived.AddListener(AskForMobileBasePresence);
             }
         }
 
@@ -58,24 +58,24 @@ namespace TeleopReachy
 
         private void AskForMobileBasePresence()
         {
-            switch (gRPCManager.Instance.gRPCRobotParams.RobotGeneration)
-            {
-                case RobotGenerationCode.V2021:
-                    {
-                        Task.Run(() => GetMobileBasePresence_2021());
-                        break;
-                    }
-                case RobotGenerationCode.V2023:
-                    {
-                        Task.Run(() => GetMobileBasePresence_2023());
-                        break;
-                    }
-                case RobotGenerationCode.UNDEFINED:
-                    {
-                        Debug.LogWarning("Robot version not defined for mobile base");
-                        break;
-                    }
-            }
+            // switch (gRPCManager.Instance.gRPCRobotParams.RobotGeneration)
+            // {
+            //     case RobotGenerationCode.V2021:
+            //         {
+            //             Task.Run(() => GetMobileBasePresence_2021());
+            //             break;
+            //         }
+            //     case RobotGenerationCode.V2023:
+            //         {
+            //             Task.Run(() => GetMobileBasePresence_2023());
+            //             break;
+            //         }
+            //     case RobotGenerationCode.UNDEFINED:
+            //         {
+            //             Debug.LogWarning("Robot version not defined for mobile base");
+            //             break;
+            //         }
+            // }
         }
 
         private void NotifyMobileBasePresence(bool mobileBaseIsPresent)
@@ -91,9 +91,9 @@ namespace TeleopReachy
         {
             try
             {
-                var clientMobilityPresence = new MobileBasePresenceService.MobileBasePresenceServiceClient(channel);
-                bool mobileBaseIsPresent = clientMobilityPresence.GetMobileBasePresence(new Google.Protobuf.WellKnownTypes.Empty()).Presence.Value;
-                NotifyMobileBasePresence(mobileBaseIsPresent);
+                // var clientMobilityPresence = new MobileBasePresenceService.MobileBasePresenceServiceClient(channel);
+                // bool mobileBaseIsPresent = clientMobilityPresence.GetMobileBasePresence(new Google.Protobuf.WellKnownTypes.Empty()).Presence.Value;
+                // NotifyMobileBasePresence(mobileBaseIsPresent);
             }
             catch (RpcException e)
             {
@@ -106,9 +106,9 @@ namespace TeleopReachy
         {
             try
             {
-                var clientMobilityPresence = new ConfigService.ConfigServiceClient(channel);
-                bool mobileBaseIsPresent = clientMobilityPresence.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).MobileBasePresence;
-                NotifyMobileBasePresence(mobileBaseIsPresent);
+                // var clientMobilityPresence = new ConfigService.ConfigServiceClient(channel);
+                // bool mobileBaseIsPresent = clientMobilityPresence.GetReachyConfig(new Google.Protobuf.WellKnownTypes.Empty()).MobileBasePresence;
+                // NotifyMobileBasePresence(mobileBaseIsPresent);
             }
             catch (RpcException e)
             {
