@@ -20,7 +20,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            // dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = gRPCManager.Instance.gRPCDataController;
             // dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
 
             EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);
@@ -31,7 +31,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            // dataController.GetJointsState();
+            dataController.GetJointsState();
         }
 
         void UpdateRobot()
