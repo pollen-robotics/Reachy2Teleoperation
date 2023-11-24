@@ -9,18 +9,18 @@ using Grpc.Core;
 
 namespace ReachyController
 {
-    // [System.Serializable]
-    // public class Motor
-    // {
-    //     public string name;
-    //     public int uid;
-    //     public GameObject gameObject;
-    //     public float targetPosition;
-    //     public float presentPosition;
-    //     public float offset;
-    //     public bool isDirect;
-    //     public bool isCompliant;
-    // }
+    [System.Serializable]
+    public class Motor
+    {
+        public string name;
+        public int uid;
+        public GameObject gameObject;
+        public float targetPosition;
+        public float presentPosition;
+        public float offset;
+        public bool isDirect;
+        public bool isCompliant;
+    }
 
     // [System.Serializable]
     // public class Sensor
@@ -76,90 +76,90 @@ namespace ReachyController
 
     public class ReachyController : MonoBehaviour
     {
-    //     public Motor[] motors;
+        public Motor[] motors;
     //     public Fan[] fans;
     //     public Sensor[] sensors;
-    //     public GameObject head;
+        public GameObject head;
 
-    //     private Dictionary<string, Motor> name2motor;
+        private Dictionary<string, Motor> name2motor;
     //     private Dictionary<string, Sensor> name2sensor;
     //     private Dictionary<string, Fan> name2fan;
 
-    //     UnityEngine.Quaternion baseHeadRot;
-    //     UnityEngine.Quaternion targetHeadRot;
-    //     public Vector3 headOrientation;
-    //     float headRotDuration;
+        UnityEngine.Quaternion baseHeadRot;
+        UnityEngine.Quaternion targetHeadRot;
+        public Vector3 headOrientation;
+        float headRotDuration;
 
-    //     void Awake()
-    //     {
-    //         name2motor = new Dictionary<string, Motor>();
+        void Awake()
+        {
+            name2motor = new Dictionary<string, Motor>();
 
-    //         name2sensor = new Dictionary<string, Sensor>();
+            // name2sensor = new Dictionary<string, Sensor>();
 
-    //         name2fan = new Dictionary<string, Fan>();
+            // name2fan = new Dictionary<string, Fan>();
 
-    //         for (int i = 0; i < motors.Length; i++)
-    //         {
-    //             Motor m = motors[i];
-    //             m.uid = i;
-    //             name2motor[m.name] = m;
-    //         }
+            for (int i = 0; i < motors.Length; i++)
+            {
+                Motor m = motors[i];
+                m.uid = i;
+                name2motor[m.name] = m;
+            }
 
-    //         for (int i = 0; i < sensors.Length; i++)
-    //         {
-    //             Sensor s = sensors[i];
-    //             name2sensor[s.name] = s;
-    //         }
+            // for (int i = 0; i < sensors.Length; i++)
+            // {
+            //     Sensor s = sensors[i];
+            //     name2sensor[s.name] = s;
+            // }
 
-    //         for (int i = 0; i < fans.Length; i++)
-    //         {
-    //             Fan f = fans[i];
-    //             name2fan[f.name] = f;
-    //         }
+            // for (int i = 0; i < fans.Length; i++)
+            // {
+            //     Fan f = fans[i];
+            //     name2fan[f.name] = f;
+            // }
 
-    //         headOrientation = new Vector3(0, 0, 0);
-    //         baseHeadRot = head.transform.localRotation;
-    //     }
+            headOrientation = new Vector3(0, 0, 0);
+            baseHeadRot = head.transform.localRotation;
+        }
 
-    //     void Update()
-    //     {
-    //         for (int i = 0; i < motors.Length; i++)
-    //         {
-    //             Motor m = motors[i];
+        void Update()
+        {
+            for (int i = 0; i < motors.Length; i++)
+            {
+                Motor m = motors[i];
 
-    //             if (!m.name.StartsWith("neck"))
-    //             {
-    //                 JointController joint = m.gameObject.GetComponent<JointController>();
-    //                 joint.RotateTo(m.targetPosition);
+                if (!m.name.StartsWith("head_neck"))
+                {
+                    JointController joint = m.gameObject.GetComponent<JointController>();
+                    joint.RotateTo(m.targetPosition);
 
-    //                 m.presentPosition = joint.GetPresentPosition();
-    //             }
-    //             else
-    //             {
-    //                 m.presentPosition = m.targetPosition;
-    //             }
-    //         }
+                    m.presentPosition = joint.GetPresentPosition();
+                }
+                else
+                {
+                    m.presentPosition = m.targetPosition;
+                }
+            }
 
-    //         for (int i = 0; i < sensors.Length; i++)
-    //         {
-    //             Sensor s = sensors[i];
+            // for (int i = 0; i < sensors.Length; i++)
+            // {
+            //     Sensor s = sensors[i];
 
-    //             ForceSensor fSensor = s.sensorObject.GetComponent<ForceSensor>();
-    //             s.currentState = fSensor.currentForce;
-    //         }
+            //     ForceSensor fSensor = s.sensorObject.GetComponent<ForceSensor>();
+            //     s.currentState = fSensor.currentForce;
+            // }
 
-    //         UpdateHeadOrientation();
-    //     }
+            UpdateHeadOrientation();
+        }
 
-    //     void SetMotorTargetPosition(string motorName, float targetPosition)
-    //     {
-    //         targetPosition += name2motor[motorName].offset;
-    //         if (!name2motor[motorName].isDirect)
-    //         {
-    //             targetPosition *= -1;
-    //         }
-    //         name2motor[motorName].targetPosition = targetPosition;
-    //     }
+        void SetMotorTargetPosition(string motorName, float targetPosition)
+        {
+            targetPosition += name2motor[motorName].offset;
+            if (!name2motor[motorName].isDirect)
+            {
+                targetPosition *= -1;
+            }
+            name2motor[motorName].targetPosition = targetPosition;
+        }
 
     //     void SetMotorCompliancy(string motorName, bool compliancy)
     //     {
@@ -174,54 +174,42 @@ namespace ReachyController
     //         }
     //     }
 
-    //     public void HandleCommand(Dictionary<JointId, float> commands)
-    //     {
-    //         bool containNeckCommand = false;
-    //         foreach (KeyValuePair<JointId, float> kvp in commands)
-    //         {
-    //             string motorName;
-    //             switch (kvp.Key.IdCase)
-    //             {
-    //                 case JointId.IdOneofCase.Name:
-    //                     motorName = kvp.Key.Name;
-    //                     break;
-    //                 case JointId.IdOneofCase.Uid:
-    //                     motorName = motors[kvp.Key.Uid].name;
-    //                     break;
-    //                 default:
-    //                     motorName = kvp.Key.Name;
-    //                     break;
-    //             }
-    //             if (!name2motor[motorName].isCompliant)
-    //             {
-    //                 SetMotorTargetPosition(motorName, kvp.Value);
-    //             }
+        public void HandleCommand(Dictionary<string, float> commands)
+        {
+            bool containNeckCommand = false;
+            foreach (KeyValuePair<string, float> kvp in commands)
+            {
+                string motorName;
+                motorName = kvp.Key;
+                // if (!name2motor[motorName].isCompliant)
+                // {
+                    SetMotorTargetPosition(motorName, kvp.Value);
+                // }
 
+                if (motorName == "head_neck_roll")
+                {
+                    containNeckCommand = true;
+                    headOrientation[0] = kvp.Value;
+                }
+                if (motorName == "head_neck_pitch")
+                {
+                    containNeckCommand = true;
+                    headOrientation[1] = kvp.Value;
+                }
+                if (motorName == "head_neck_yaw")
+                {
+                    containNeckCommand = true;
+                    headOrientation[2] = -kvp.Value;
+                }
+            }
 
-    //             if (motorName == "neck_roll")
-    //             {
-    //                 containNeckCommand = true;
-    //                 headOrientation[0] = kvp.Value;
-    //             }
-    //             if (motorName == "neck_pitch")
-    //             {
-    //                 containNeckCommand = true;
-    //                 headOrientation[1] = kvp.Value;
-    //             }
-    //             if (motorName == "neck_yaw")
-    //             {
-    //                 containNeckCommand = true;
-    //                 headOrientation[2] = -kvp.Value;
-    //             }
-    //         }
-
-    //         if (containNeckCommand)
-    //         {
-    //             //UnityEngine.Quaternion.Euler(); not properly working. Manually creating rotation
-    //             UnityEngine.Quaternion euler_request = UnityEngine.Quaternion.Euler(Vector3.forward * headOrientation[2]) * UnityEngine.Quaternion.Euler(Vector3.up * -headOrientation[0]) * UnityEngine.Quaternion.Euler(Vector3.right * headOrientation[1]);
-    //             HandleHeadOrientation(euler_request);
-    //         }
-    //     }
+            if (containNeckCommand)
+            {
+                //UnityEngine.Quaternion.Euler(); not properly working. Manually creating rotation
+                UnityEngine.Quaternion euler_request = UnityEngine.Quaternion.Euler(Vector3.forward * headOrientation[2]) * UnityEngine.Quaternion.Euler(Vector3.up * -headOrientation[0]) * UnityEngine.Quaternion.Euler(Vector3.right * headOrientation[1]);
+                HandleHeadOrientation(euler_request);
+            }
+        }
 
     //     public void HandleCompliancy(Dictionary<JointId, bool> commands)
     //     {
@@ -377,14 +365,14 @@ namespace ReachyController
     //     //     return fansList;
     //     // }
 
-    //     public void HandleHeadOrientation(UnityEngine.Quaternion q)
-    //     {
-    //         targetHeadRot = q;
-    //     }
+        public void HandleHeadOrientation(UnityEngine.Quaternion q)
+        {
+            targetHeadRot = q;
+        }
 
-    //     void UpdateHeadOrientation()
-    //     {
-    //         head.transform.localRotation = targetHeadRot;
-    //     }
+        void UpdateHeadOrientation()
+        {
+            head.transform.localRotation = targetHeadRot;
+        }
     }
 }
