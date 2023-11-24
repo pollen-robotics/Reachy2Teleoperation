@@ -26,9 +26,6 @@ namespace TeleopReachy
         private HeadService.HeadServiceClient headClient = null;
         private HandService.HandServiceClient handClient = null;
 
-        // private Orbita2dService.Orbita2dServiceClient orbita2DClient = null;
-        // private Orbita3dService.Orbita3dServiceClient orbita3DClient = null;
-
         private bool needUpdateCommandBody;
         private bool needUpdateCommandGripper;
         private bool needUpdateState;
@@ -38,7 +35,6 @@ namespace TeleopReachy
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
 
         public UnityEvent<Reachy.Reachy> event_OnRobotReceived;
-        // public UnityEvent<Dictionary<int, string>> event_OnJointsReceived;
 
         // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdateTemperature;
 
@@ -58,11 +54,7 @@ namespace TeleopReachy
                 headClient = new HeadService.HeadServiceClient(channel);
                 handClient = new HandService.HandServiceClient(channel);
 
-                // orbita2DClient = new Orbita2dService.Orbita2dServiceClient(channel);
-                // orbita3DClient = new Orbita3dService.Orbita3dServiceClient(channel);
-
                 Task.Run(() => GetReachyId());
-                // Task.Run(() => GetReachyComponents());
             }
         }
 
@@ -100,36 +92,6 @@ namespace TeleopReachy
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
         }
-
-        // private GetReachyComponents()
-        // {
-        //     try
-        //     {
-        //         var orbita2DList = await orbita2DClient.GetAllOrbita2dAsync(new Google.Protobuf.WellKnownTypes.Empty());
-        //         var orbita3DList = await orbita3DClient.GetAllOrbita3dAsync(new Google.Protobuf.WellKnownTypes.Empty());
-
-        //         Dictionary<int, string> joints_id = new Dictionary<int, string>();
-
-        //         for (int i = 0; i < reply.orbita2DList.Count; i++)
-        //         {
-        //             joints_id.Add(orbita2DList[i].Id.Id, orbita2DList[i].Id.Id)
-        //         }
-        //         event_OnComponentsReceived.Invoke(reachy);
-        //         isRobotInRoom = true;
-        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-        //         needUpdateCommandBody = true;
-        //         needUpdateCommandGripper = true;
-        //         needUpdateState = true;
-        //     }
-        //     catch (RpcException e)
-        //     {
-        //         Debug.LogWarning("RPC failed: " + e);
-        //         rpcException = "Error in GetReachyComponents():\n" + e.ToString();
-        //         isRobotInRoom = false;
-        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-        //     }
-        // }
-
 
         // public async void SendJointsCommand(JointsCommand jointsCommand)
         // {
@@ -270,12 +232,6 @@ namespace TeleopReachy
                                 if(componentState is Orbita3dState)
                                 {
                                     GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                    foreach(KeyValuePair<string,float> attachStat in present_position)
-                                    {
-                                        //Now you can access the key and value both separately from this attachStat as:
-                                        Debug.LogError(attachStat.Key);
-                                        Debug.LogError(attachStat.Value);
-                                    }
                                 }
                             }
                         }
@@ -283,13 +239,6 @@ namespace TeleopReachy
                         {
 
                         }
-                        // Debug.LogError(value);
-                        // var idField = value.Descriptor.FindFieldByName("part_id");
-                        // if (idField != null)
-                        // {
-                        //     PartId id = (PartId)idField.Accessor.GetValue(value);
-                        //     partsId.Add(field.Name, id);
-                        // }
                     }
                 }
                 event_OnStateUpdatePresentPositions.Invoke(present_position);
