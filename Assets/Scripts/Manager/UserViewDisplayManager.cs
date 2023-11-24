@@ -12,37 +12,37 @@ namespace TeleopReachy
 {
     public class UserViewDisplayManager : MonoBehaviour
     {
-        // [SerializeField]
-        // private Transform reachyEyeView;
+        [SerializeField]
+        private Transform reachyEyeView;
 
-        // private EyeScript eyeScript;
-        // private RobotStatus robotStatus;
+        private EyeScript eyeScript;
+        private RobotStatus robotStatus;
         // private gRPCVideoController videoController;
 
-        // void Start()
-        // {
-        //     robotStatus = RobotDataManager.Instance.RobotStatus;
-        //     robotStatus.event_OnStartTeleoperation.AddListener(ShowReachyView);
-        //     robotStatus.event_OnStopTeleoperation.AddListener(HideReachyView);
+        void Start()
+        {
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStartTeleoperation.AddListener(ShowReachyView);
+            robotStatus.event_OnStopTeleoperation.AddListener(HideReachyView);
 
-        //     videoController = gRPCManager.Instance.gRPCVideoController;
-        //     videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);
+            // videoController = gRPCManager.Instance.gRPCVideoController;
+            // videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);
 
-        //     eyeScript = reachyEyeView.GetComponent<EyeScript>();
+            eyeScript = reachyEyeView.GetComponent<EyeScript>();
 
-        //     reachyEyeView.gameObject.SetActive(false);
-        // }
+            reachyEyeView.gameObject.SetActive(false);
+        }
 
-        // void ShowReachyView()
-        // {
-        //     reachyEyeView.gameObject.SetActive(true);
-        // }
+        void ShowReachyView()
+        {
+            reachyEyeView.gameObject.SetActive(true);
+        }
 
-        // void HideReachyView()
-        // {
-        //     UnityEngine.Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
-        //     reachyEyeView.gameObject.SetActive(false);
-        // }
+        void HideReachyView()
+        {
+            UnityEngine.Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+            reachyEyeView.gameObject.SetActive(false);
+        }
 
         // void ModifyTextureTransparency(bool isRobotInVideoRoom)
         // {
