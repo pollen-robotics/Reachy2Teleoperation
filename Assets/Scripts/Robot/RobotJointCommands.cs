@@ -390,7 +390,7 @@ namespace TeleopReachy
             SetRobotCompliant("r_arm");
             robotStatus.SetRobotCompliant(true);
 
-            yield return new WaitForSeconds(0.1);
+            yield return new WaitForSeconds(0.1f);
         }
 
         private IEnumerator ResetReachyMotorsFullSpeed()
