@@ -36,13 +36,13 @@ namespace TeleopReachy
 
         void UpdateRobot()
         {
-            // reachy = GameObject.Find("Reachy").GetComponent<ReachyController>();
-            reachy = null;
+            reachy = GameObject.Find("Reachy").GetComponent<ReachyController.ReachyController>();
+            // reachy = null;
         }
 
         void UpdateModelRobot()
         {
-            // reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
+            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
         }
 
         protected void UpdateJointsState(Dictionary<string, float> PresentPositions)
