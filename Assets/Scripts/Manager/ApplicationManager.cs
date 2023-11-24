@@ -104,21 +104,21 @@ namespace TeleopReachy
         }
 
 
-        IEnumerator LoadTeleoperationScene()
-        {
-            ground.SetActive(false);
-            userInput.SetActive(true);
-            canvasOnlineMenu.SetActive(true);
-            UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-            uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
+        // IEnumerator LoadTeleoperationScene()
+        // {
+        //     ground.SetActive(false);
+        //     userInput.SetActive(true);
+        //     canvasOnlineMenu.SetActive(true);
+        //     UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
+        //     uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
 
-            userTracker.SetActive(true);
+        //     userTracker.SetActive(true);
 
-            SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
-            yield return null;
+        //     SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
+        //     yield return null;
 
-            EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
-        }
+        //     EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
+        // }
 
         private void ReturnToConnectionScene()
         {
