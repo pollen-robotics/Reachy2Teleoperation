@@ -41,7 +41,7 @@ namespace TeleopReachy
             // dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
 
             mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
+            mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
             pingsQueue = new Queue<float>();
