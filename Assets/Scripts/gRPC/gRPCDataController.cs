@@ -42,7 +42,7 @@ namespace TeleopReachy
 
         // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdateTemperature;
 
-        // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
 
         void Start()
         {
@@ -292,6 +292,7 @@ namespace TeleopReachy
                         // }
                     }
                 }
+                event_OnStateUpdatePresentPositions.Invoke(present_position);
             }
         }
 
@@ -317,7 +318,7 @@ namespace TeleopReachy
                     string joint_name = side[0] + component[0] + axisField.Name;
 
                     double value = (double)axisField.Accessor.GetValue(eulerAngles);
-                    dict.Add(joint_name, (float)value);
+                    dict.Add(joint_name, Mathf.Rad2Deg * (float)value);
                 }
             }
         }
@@ -343,7 +344,7 @@ namespace TeleopReachy
                     string joint_name = side[0] + component[0] + axisField.Name;
 
                     float value = (float)axisField.Accessor.GetValue(pose);
-                    dict.Add(joint_name, value);
+                    dict.Add(joint_name, Mathf.Rad2Deg * value);
                 }
             }
         }
