@@ -29,11 +29,6 @@ namespace TeleopReachy
             //inTransitionRoom = true;
         }
 
-        void Update()
-        {
-            dataController.GetJointsState();
-        }
-
         void UpdateRobot()
         {
             reachy = GameObject.Find("Reachy").GetComponent<ReachyController.ReachyController>();
@@ -47,6 +42,7 @@ namespace TeleopReachy
 
         protected void UpdateJointsState(Dictionary<string, float> PresentPositions)
         {
+            Debug.LogError("UpdateJointsState");
             if (reachy != null)
             {
                 reachy.HandleCommand(PresentPositions);
