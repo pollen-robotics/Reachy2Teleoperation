@@ -529,6 +529,22 @@ MonoBehaviour:
     offset: 0
     isDirect: 1
     isCompliant: 0
+  - name: l_hand
+    uid: 0
+    gameObject: {fileID: 3962830348483502071}
+    targetPosition: 0
+    presentPosition: 0
+    offset: 0
+    isDirect: 1
+    isCompliant: 0
+  - name: r_hand
+    uid: 0
+    gameObject: {fileID: 3962830348483501975}
+    targetPosition: 0
+    presentPosition: 0
+    offset: 0
+    isDirect: 1
+    isCompliant: 0
   head: {fileID: 3962830348483502049}
   headOrientation: {x: 0, y: 0, z: 0}
 --- !u!65 &3884292886794566606
