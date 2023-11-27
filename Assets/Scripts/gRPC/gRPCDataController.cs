@@ -234,7 +234,7 @@ namespace TeleopReachy
                                 if(componentState is Orbita3dState)
                                 {
                                     GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                    GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
+                                    GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                                 }
                             }
                         }
