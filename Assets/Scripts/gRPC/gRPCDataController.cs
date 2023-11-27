@@ -36,8 +36,7 @@ namespace TeleopReachy
 
         public UnityEvent<Reachy.Reachy> event_OnRobotReceived;
 
-        // public UnityEvent<Dictionary<ComponentId, float>> event_OnStateUpdateTemperature;
-
+        public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
 
         void Start()
@@ -198,6 +197,7 @@ namespace TeleopReachy
                 needUpdateState = false;
                 var reachyState = await reachyClient.GetReachyStateAsync(reachy.Id);
                 Dictionary<string, float> present_position = new Dictionary<string, float>();
+                Dictionary<string, float> temperatures = new Dictionary<string, float>();
 
                 var reachyDescriptor = ReachyState.Descriptor;
                 var armDescriptor = ArmState.Descriptor;
@@ -217,10 +217,12 @@ namespace TeleopReachy
                                 if(componentState is Orbita2dState)
                                 {
                                     GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
+                                    GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
                                 }
                                 if(componentState is Orbita3dState)
                                 {
                                     GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                                    GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                                 }
                             }
                         }
@@ -232,6 +234,7 @@ namespace TeleopReachy
                                 if(componentState is Orbita3dState)
                                 {
                                     GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                                    GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
                                 }
                             }
                         }
@@ -242,6 +245,7 @@ namespace TeleopReachy
                     }
                 }
                 event_OnStateUpdatePresentPositions.Invoke(present_position);
+                event_OnStateUpdateTemperature.Invoke(temperatures);
                 needUpdateState = true;
             }
         }
@@ -295,6 +299,58 @@ namespace TeleopReachy
 
                     float value = (float)axisField.Accessor.GetValue(pose);
                     dict.Add(joint_name, Mathf.Rad2Deg * value);
+                }
+            }
+        }
+
+        private void GetOrbita2D_Temperature(
+            Dictionary<string, float> dict,
+            IMessage componentState, 
+            Google.Protobuf.Reflection.FieldDescriptor partField,
+            Google.Protobuf.Reflection.FieldDescriptor componentField
+            )
+        {
+            var float2dDescriptor = Float2d.Descriptor;
+
+            var temp = componentState.Descriptor.FindFieldByName("temperature");
+            if (temp != null)
+            {
+                Float2d temperature = (Float2d)temp.Accessor.GetValue(componentState);
+
+                foreach (var motorField in float2dDescriptor.Fields.InDeclarationOrder())
+                {
+                    string[] side = partField.Name.Split("state");
+                    string[] component = componentField.Name.Split("state");
+                    string motor_name = side[0] + component[0] + motorField.Name;
+
+                    float value = (float)motorField.Accessor.GetValue(temperature);
+                    dict.Add(motor_name, value);
+                }
+            }
+        }
+
+        private void GetOrbita3D_Temperature(
+            Dictionary<string, float> dict,
+            IMessage componentState, 
+            Google.Protobuf.Reflection.FieldDescriptor partField,
+            Google.Protobuf.Reflection.FieldDescriptor componentField
+            )
+        {
+            var float3dDescriptor = Float3d.Descriptor;
+
+            var temp = componentState.Descriptor.FindFieldByName("temperature");
+            if (temp != null)
+            {
+                Float3d temperature = (Float3d)temp.Accessor.GetValue(componentState);
+
+                foreach (var motorField in float3dDescriptor.Fields.InDeclarationOrder())
+                {
+                    string[] side = partField.Name.Split("state");
+                    string[] component = componentField.Name.Split("state");
+                    string motor_name = side[0] + component[0] + motorField.Name;
+
+                    float value = (float)motorField.Accessor.GetValue(temperature);
+                    dict.Add(motor_name, value);
                 }
             }
         }
