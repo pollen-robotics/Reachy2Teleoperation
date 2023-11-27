@@ -192,61 +192,72 @@ namespace TeleopReachy
 
         public async void GetJointsState()
         {
-            if (needUpdateState)
+            try 
             {
-                needUpdateState = false;
-                var reachyState = await reachyClient.GetReachyStateAsync(reachy.Id);
-                Dictionary<string, float> present_position = new Dictionary<string, float>();
-                Dictionary<string, float> temperatures = new Dictionary<string, float>();
-
-                var reachyDescriptor = ReachyState.Descriptor;
-                var armDescriptor = ArmState.Descriptor;
-                var headDescriptor = HeadState.Descriptor;
-                var handDescriptor = HandState.Descriptor;
-
-                foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
+                if (needUpdateState)
                 {
-                    var partState = partField.Accessor.GetValue(reachyState) as IMessage;
-                    if (partState != null)
-                    {
-                        if(partState is ArmState)
-                        {
-                            foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
-                            {
-                                var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                                if(componentState is Orbita2dState)
-                                {
-                                    GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
-                                    GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
-                                }
-                                if(componentState is Orbita3dState)
-                                {
-                                    GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                    GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
-                                }
-                            }
-                        }
-                        if(partState is HeadState)
-                        {
-                            foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
-                            {
-                                var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                                if(componentState is Orbita3dState)
-                                {
-                                    GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                    GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
-                                }
-                            }
-                        }
-                        if(partState is HandState)
-                        {
+                    needUpdateState = false;
+                    var reachyState = await reachyClient.GetReachyStateAsync(reachy.Id);
+                    Dictionary<string, float> present_position = new Dictionary<string, float>();
+                    Dictionary<string, float> temperatures = new Dictionary<string, float>();
 
+                    var reachyDescriptor = ReachyState.Descriptor;
+                    var armDescriptor = ArmState.Descriptor;
+                    var headDescriptor = HeadState.Descriptor;
+                    var handDescriptor = HandState.Descriptor;
+
+                    foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
+                    {
+                        var partState = partField.Accessor.GetValue(reachyState) as IMessage;
+                        if (partState != null)
+                        {
+                            if(partState is ArmState)
+                            {
+                                foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                                {
+                                    var componentState = componentField.Accessor.GetValue(partState) as IMessage;
+                                    if(componentState is Orbita2dState)
+                                    {
+                                        GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
+                                        GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
+                                    }
+                                    if(componentState is Orbita3dState)
+                                    {
+                                        GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                                        GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
+                                    }
+                                }
+                            }
+                            if(partState is HeadState)
+                            {
+                                foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
+                                {
+                                    var componentState = componentField.Accessor.GetValue(partState) as IMessage;
+                                    if(componentState is Orbita3dState)
+                                    {
+                                        GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                                        GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
+                                    }
+                                }
+                            }
+                            if(partState is HandState)
+                            {
+                                GetParallelGripper_PresentPosition(present_position, partState, partField);
+                                GetParallelGripper_Temperature(temperatures, partState, partField);
+                            }
                         }
                     }
+                    event_OnStateUpdatePresentPositions.Invoke(present_position);
+                    event_OnStateUpdateTemperature.Invoke(temperatures);
+                    needUpdateState = true;
                 }
-                event_OnStateUpdatePresentPositions.Invoke(present_position);
-                event_OnStateUpdateTemperature.Invoke(temperatures);
-                needUpdateState = true;
+            }
+            catch (RpcException e)
+            {
+                Debug.LogWarning("RPC failed: " + e);
+                rpcException = "Error in GetJointsState():\n" + e.ToString();
+                isRobotInRoom = false;
+                event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
         }
 
@@ -355,57 +366,47 @@ namespace TeleopReachy
             }
         }
 
-        // public async void GetJointsState()
-        // {
-        //     try
-        //     {
-        //         if (needUpdateState)
-        //         {
-        //             needUpdateState = false;
+        private void GetParallelGripper_PresentPosition(
+            Dictionary<string, float> dict,
+            IMessage partState, 
+            Google.Protobuf.Reflection.FieldDescriptor partField
+            )
+        {
+            var pres_pos = partState.Descriptor.FindFieldByName("present_position");
+            if (pres_pos != null)
+            {
+                HandPosition pp = (HandPosition)pres_pos.Accessor.GetValue(partState);
 
-        //             List<JointId> ids = new List<JointId>();
-        //             foreach (var item in allJointsId.Names)
-        //             {
-        //                 var joint = new JointId();
-        //                 joint.Name = item;
+                string[] side = partField.Name.Split("_state");
+                string joint_name = side[0];
 
-        //                 ids.Add(joint);
-        //             };
+                float value = (float)pp.ParallelGripper.Position;
+                dict.Add(joint_name, Mathf.Rad2Deg * value);
+            }
+        }
 
-        //             JointsStateRequest jointsRequest = new JointsStateRequest
-        //             {
-        //                 Ids = { ids },
-        //                 RequestedFields = { JointField.Name, JointField.PresentPosition, JointField.GoalPosition, JointField.Temperature },
-        //             };
+        private void GetParallelGripper_Temperature(
+            Dictionary<string, float> dict,
+            IMessage partState, 
+            Google.Protobuf.Reflection.FieldDescriptor partField
+            )
+        {
+            var temperaturesDescriptor = Temperatures.Descriptor;
 
-        //             var reply = await client.GetJointsStateAsync(jointsRequest);
+            var temp = partState.Descriptor.FindFieldByName("temperature");
+            if (temp != null)
+            {
+                HandTemperatures temperature = (HandTemperatures)temp.Accessor.GetValue(partState);
 
-        //             Dictionary<JointId, float> present_positions = new Dictionary<JointId, float>();
-        //             //Dictionary<JointId, float> goal_positions = new Dictionary<JointId, float>();
-        //             Dictionary<JointId, float> temperatures = new Dictionary<JointId, float>();
+                foreach (var motorField in temperaturesDescriptor.Fields.InDeclarationOrder())
+                {
+                    string[] side = partField.Name.Split("state");
+                    string element_name = side[0] + motorField.Name;
 
-        //             for (int i = 0; i < reply.States.Count; i++)
-        //             {
-        //                 float command = Mathf.Rad2Deg * (float)reply.States[i].PresentPosition;
-        //                 present_positions.Add(reply.Ids[i], command);
-        //                 //float expectedcommand = Mathf.Rad2Deg * (float)reply.States[i].GoalPosition;
-        //                 //goal_positions.Add(reply.Ids[i], expectedcommand);
-        //                 float temperature = (float)reply.States[i].Temperature;
-        //                 temperatures.Add(reply.Ids[i], temperature);
-        //             }
-        //             //OnJointsStateReceivedEvent(new StateUpdateEventArgs(present_positions, goal_positions, temperatures));
-        //             event_OnStateUpdateTemperature.Invoke(temperatures);
-        //             event_OnStateUpdatePresentPositions.Invoke(present_positions);
-        //             needUpdateState = true;
-        //         }
-        //     }
-        //     catch (RpcException e)
-        //     {
-        //         Debug.LogWarning("RPC failed: " + e);
-        //         rpcException = "Error in GetJointsState():\n" + e.ToString();
-        //         isRobotInRoom = false;
-        //         event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-        //     }
-        // }
+                    float value = (float)motorField.Accessor.GetValue(temperature.ParallelGripper);
+                    dict.Add(element_name, value);
+                }
+            }
+        }
     }
 }

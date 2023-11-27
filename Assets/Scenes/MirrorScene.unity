@@ -508,7 +508,7 @@ PrefabInstance:
     - target: {fileID: 3884292885015161316, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
         type: 3}
       propertyPath: motors.Array.data[17].name
-      value: r_gripper_finger
+      value: l_hand
       objectReference: {fileID: 0}
     - target: {fileID: 3884292885313813232, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
         type: 3}
