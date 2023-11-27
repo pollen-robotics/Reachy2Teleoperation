@@ -242,6 +242,7 @@ namespace TeleopReachy
                     }
                 }
                 event_OnStateUpdatePresentPositions.Invoke(present_position);
+                needUpdateState = true;
             }
         }
 
