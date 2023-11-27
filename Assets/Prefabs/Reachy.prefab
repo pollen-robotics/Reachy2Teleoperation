@@ -425,7 +425,7 @@ MonoBehaviour:
     offset: 0
     isDirect: 0
     isCompliant: 0
-  - name: r_arm_wrist_roll
+  - name: r_arm_wrist_yaw
     uid: 0
     gameObject: {fileID: 3962830348483501969}
     targetPosition: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
     offset: 0
     isDirect: 0
     isCompliant: 0
-  - name: r_arm_wrist_yaw
+  - name: r_arm_wrist_roll
     uid: 0
     gameObject: {fileID: 3962830348483501983}
     targetPosition: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
     offset: 0
     isDirect: 0
     isCompliant: 0
-  - name: l_arm_wrist_roll
+  - name: l_arm_wrist_yaw
     uid: 0
     gameObject: {fileID: 3962830348483502065}
     targetPosition: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
     offset: 0
     isDirect: 0
     isCompliant: 0
-  - name: l_arm_wrist_yaw
+  - name: l_arm_wrist_roll
     uid: 0
     gameObject: {fileID: 3962830348483502077}
     targetPosition: 0

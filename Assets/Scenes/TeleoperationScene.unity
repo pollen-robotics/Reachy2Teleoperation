@@ -2125,7 +2125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &803308014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2592,6 +2592,9 @@ MonoBehaviour:
   event_OnRobotReceived:
     m_PersistentCalls:
       m_Calls: []
+  event_OnStateUpdatePresentPositions:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &888243804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2861,6 +2864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299365401b7ea3408d597e8d48f9b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reachy: {fileID: 0}
 --- !u!1 &935331309
 GameObject:
   m_ObjectHideFlags: 0

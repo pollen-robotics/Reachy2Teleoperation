@@ -483,12 +483,12 @@ PrefabInstance:
     - target: {fileID: 3884292885015161316, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
         type: 3}
       propertyPath: motors.Array.data[4].name
-      value: r_arm_wrist_roll
+      value: r_arm_wrist_yaw
       objectReference: {fileID: 0}
     - target: {fileID: 3884292885015161316, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
         type: 3}
       propertyPath: motors.Array.data[6].name
-      value: r_arm_wrist_yaw
+      value: r_arm_wrist_roll
       objectReference: {fileID: 0}
     - target: {fileID: 3884292885015161316, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
         type: 3}
