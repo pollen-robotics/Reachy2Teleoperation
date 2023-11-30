@@ -29,11 +29,6 @@ namespace TeleopReachy
             //inTransitionRoom = true;
         }
 
-        void Update()
-        {
-            dataController.GetJointsState();
-        }
-
         void UpdateRobot()
         {
             reachy = GameObject.Find("Reachy").GetComponent<ReachyController.ReachyController>();
