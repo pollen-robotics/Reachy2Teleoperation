@@ -2592,6 +2592,9 @@ MonoBehaviour:
   event_OnRobotReceived:
     m_PersistentCalls:
       m_Calls: []
+  event_OnStateUpdateTemperature:
+    m_PersistentCalls:
+      m_Calls: []
   event_OnStateUpdatePresentPositions:
     m_PersistentCalls:
       m_Calls: []
@@ -6133,6 +6136,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   event_OnErrorLowBattery:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnWarningMotorsTemperatures:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnErrorMotorsTemperatures:
     m_PersistentCalls:
       m_Calls: []
   previousBatteryLevel: 0
