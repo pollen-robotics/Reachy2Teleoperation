@@ -42,7 +42,6 @@ namespace TeleopReachy
 
         protected void UpdateJointsState(Dictionary<string, float> PresentPositions)
         {
-            Debug.LogError("UpdateJointsState");
             if (reachy != null)
             {
                 reachy.HandleCommand(PresentPositions);

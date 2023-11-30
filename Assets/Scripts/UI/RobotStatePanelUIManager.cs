@@ -18,7 +18,10 @@ namespace TeleopReachy
 
         private List<GameObject> actuators;
 
+        private Dictionary<string, float> panelTemperature;
+
         private bool isStatePanelStatusActive;
+        private bool needUpdatePanel;
 
         void Awake()
         {
@@ -44,10 +47,12 @@ namespace TeleopReachy
             CheckTemperatureInfo();
 
             isStatePanelStatusActive = true;
+            needUpdatePanel = false;
         }
 
         private void UpdateTemperatures(Dictionary<string, float> Temperatures)
         {
+            panelTemperature = new Dictionary<string, float>();
             foreach(KeyValuePair<string, float> motor in Temperatures)
             {
                 if(motor.Key.Contains("hand"))
@@ -55,51 +60,21 @@ namespace TeleopReachy
                     string[] nameParsed = motor.Key.Split("_hand_");
                     string actuatorName = nameParsed[0] + "_hand_temperature";
 
-                    GameObject currentActuator = actuators.Find(act => act.name == actuatorName);
-                    Transform currentMotor = currentActuator.transform.Find(nameParsed[1]+"_temperature");
-                    currentMotor.GetComponent<Text>().text = char.ToUpper(nameParsed[1][0]) + nameParsed[1].Substring(1) + ": " + Mathf.Round(motor.Value).ToString();
-                    if(motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
-                    {
-                        currentActuator.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        if(motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(true);
-                        }
-                        else 
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                    }
+                    string panelName = actuatorName + "_child_" + nameParsed[1] + "_temperature";
+
+                    panelTemperature.Add(panelName, motor.Value);
                 }
                 else
                 {
                     string[] nameParsed = motor.Key.Split("_motor_");
                     string actuatorName = nameParsed[0] + "_temperature";
 
-                    GameObject currentActuator = actuators.Find(act => act.name == actuatorName);
-                    Transform currentMotor = currentActuator.transform.Find("motor_"+nameParsed[1]+"_temperature");
-                    currentMotor.GetComponent<Text>().text = "Motor " + nameParsed[1] + ": " + Mathf.Round(motor.Value).ToString();
-                    if(motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
-                    {
-                        currentActuator.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        if(motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(true);
-                        }
-                        else 
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                    }
-                }
-                
+                    string panelName = actuatorName + "_child_" + "motor_" + nameParsed[1] + "_temperature";
+
+                    panelTemperature.Add(panelName, motor.Value);     
+                }           
             }
+            needUpdatePanel = true;
         }
 
         private void CheckTemperatureInfo()
@@ -129,6 +104,48 @@ namespace TeleopReachy
         private void UpdateStatePanelStatus()
         {
             transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
+        }
+
+        void Update()
+        {
+            if(needUpdatePanel)
+            {
+                needUpdatePanel = false;
+
+                foreach(KeyValuePair<string, float> motor in panelTemperature)
+                {
+                    string[] nameParsed = motor.Key.Split("_child_");
+
+                    GameObject currentActuator = actuators.Find(act => act.name == nameParsed[0]);
+                    Transform currentMotor = currentActuator.transform.Find(nameParsed[1]);
+
+                    string[] typeParsed = nameParsed[1].Split("_");
+                    if(nameParsed[0].Contains("hand"))
+                    {
+                        currentMotor.GetComponent<Text>().text = typeParsed[0] + ": " + Mathf.Round(motor.Value).ToString();
+                    }
+                    else
+                    {
+                        currentMotor.GetComponent<Text>().text = typeParsed[0] + " " + typeParsed[1] + ": " + Mathf.Round(motor.Value).ToString();
+                    }
+
+                    if(motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
+                    {
+                        currentActuator.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        if(motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
+                        {
+                            currentActuator.transform.GetChild(0).gameObject.SetActive(true);
+                        }
+                        else 
+                        {
+                            currentActuator.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
         }
     }
 }

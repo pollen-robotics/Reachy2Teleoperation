@@ -108,15 +108,10 @@ namespace TeleopReachy
 
                 while (await reachyState.ResponseStream.MoveNext())
                 {
-                    Debug.LogError("new state !");
-
                     if(!needUpdateState)
                     {
                         break;
                     }
-
-                    Debug.LogError("coucou !");
-
 
                     Dictionary<string, float> present_position = new Dictionary<string, float>();
                     Dictionary<string, float> temperatures = new Dictionary<string, float>();
