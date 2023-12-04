@@ -21,12 +21,15 @@ public class WebRTCData : WebRTCBase
 
     private TeleopReachy.DataMessageManager dataMessageManager = TeleopReachy.DataMessageManager.Instance;
 
-    bool _streamCommands = false;
+    public UnityEvent<bool> event_DataControllerStatusHasChanged;
+    private bool isRobotInRoom = false;
+
+    // bool _streamCommands = false;
 
     protected override void Start()
     {
         base.Start();
-        _streamCommands = false;
+        // _streamCommands = false;
         _commands = new Bridge.AnyCommands
         {
             Commands = {
@@ -96,7 +99,7 @@ public class WebRTCData : WebRTCBase
     void SetupCommandChannel(RTCDataChannel channel)
     {
         _reachyCommandChannel = channel;
-        _streamCommands = true;
+        // _streamCommands = true;
     }
 
     void SetupConnection(RTCDataChannel channel)
@@ -123,10 +126,12 @@ public class WebRTCData : WebRTCBase
             if (response.ConnectionStatus.Connected)
             {
                 dataMessageManager.GetReachyId(response.ConnectionStatus.Reachy);
+                isRobotInRoom = true;
+                event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
 
             //For testing purposes
-            _commands.Commands[0].HandCommand.HandGoal.Id = _connectionStatus.Reachy.RHand.PartId;
+            // _commands.Commands[0].HandCommand.HandGoal.Id = _connectionStatus.Reachy.RHand.PartId;
 
             var req = new ServiceRequest
             {

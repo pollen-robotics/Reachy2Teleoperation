@@ -25,7 +25,7 @@ namespace TeleopReachy
         {
             Init();
             dataController = DataMessageManager.Instance;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             robotStatus.event_OnInitializeRobotStateRequested.AddListener(InitializeRobotState);
             robotStatus.event_OnRobotStiffRequested.AddListener(SetRobotStiff);

@@ -22,28 +22,21 @@ namespace TeleopReachy
 {
     public class DataMessageManager : Singleton<DataMessageManager>
     {
-
-        private Reachy.Reachy reachy;
-
         public UnityEvent<Reachy.Reachy> event_OnRobotReceived;
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
 
-        private WebRTCData webRTCDataController = WebRTCManager.Instance.webRTCDataController;
+        private WebRTCData webRTCDataController;
 
         void Start()
         {
-           
+            webRTCDataController = WebRTCManager.Instance.webRTCDataController;
         }
-
-       
 
         public void GetReachyId(Reachy.Reachy reachy)
         {
            event_OnRobotReceived.Invoke(reachy);
-                // isRobotInRoom = true;
-                // event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
         }
 
         public void StreamReachyState(ReachyState reachyState)
