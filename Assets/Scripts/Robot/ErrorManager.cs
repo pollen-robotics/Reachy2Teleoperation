@@ -9,8 +9,8 @@ namespace TeleopReachy
 {
     public class ErrorManager : MonoBehaviour
     {
-        private gRPCDataController dataController;
-        private gRPCMobileBaseController mobileBaseController;
+        private DataMessageManager dataController;
+        // private gRPCMobileBaseController mobileBaseController;
 
         private RobotPingWatcher robotPing;
 
@@ -37,11 +37,11 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
 
-            mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
+            // mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
+            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
             pingsQueue = new Queue<float>();

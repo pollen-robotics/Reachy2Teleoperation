@@ -11,7 +11,7 @@ namespace TeleopReachy
 {
     public class RobotJointState : MonoBehaviour
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
 
         [Tooltip("Robot that will be updated")]
         public ReachyController.ReachyController reachy;
@@ -20,7 +20,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
 
             EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);

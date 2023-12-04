@@ -12,14 +12,14 @@ namespace TeleopReachy
 {
     public class RobotMobilityCommands : MonoBehaviour
     {
-        private gRPCMobileBaseController mobileController;
+        // private gRPCMobileBaseController mobileController;
 
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
 
         void Start()
         {
-            mobileController = gRPCManager.Instance.gRPCMobileBaseController;
+            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
 
             robotConfig = transform.GetComponent<RobotConfig>();
             robotStatus = transform.GetComponent<RobotStatus>();
@@ -47,7 +47,7 @@ namespace TeleopReachy
         private void SendZuuuVelocityMode()
         {
             ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
-            mobileController.SendZuuuMode(zuuuMode);
+            // mobileController.SendZuuuMode(zuuuMode);
         }
 
 
@@ -62,7 +62,7 @@ namespace TeleopReachy
                     Theta = direction[2],
                 }
             };
-            mobileController.SendMobilityCommand(command);
+            // mobileController.SendMobilityCommand(command);
         }
 
         void StopMobileBaseMovements()

@@ -56,7 +56,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }
 

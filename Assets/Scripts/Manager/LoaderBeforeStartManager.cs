@@ -26,7 +26,7 @@ namespace TeleopReachy
 
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             connectionStatus.event_OnRobotUnready.AddListener(HideLoader);
             TransitionRoomManager.Instance.event_OnReadyForTeleop.AddListener(ShowLoader);

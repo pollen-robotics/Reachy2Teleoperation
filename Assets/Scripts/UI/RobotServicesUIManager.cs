@@ -21,7 +21,7 @@ namespace TeleopReachy
             }
             else
             {
-                connectionStatus = gRPCManager.Instance.ConnectionStatus;
+                connectionStatus = WebRTCManager.Instance.ConnectionStatus;
                 connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckServices);
 
                 CheckServices();
