@@ -2115,10 +2115,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 803308015}
+  - component: {fileID: 803308020}
   - component: {fileID: 803308014}
   - component: {fileID: 803308017}
   - component: {fileID: 803308018}
   - component: {fileID: 803308016}
+  - component: {fileID: 803308019}
   m_Layer: 0
   m_Name: WebRTCManager
   m_TagString: Untagged
@@ -2166,6 +2168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _producer: 1
+  remote_producer_name: robot
   inputAudioSource: {fileID: 0}
 --- !u!114 &803308017
 MonoBehaviour:
@@ -2180,6 +2183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _producer: 0
+  remote_producer_name: robot
   screen: {fileID: 224850607}
   outputAudioSource: {fileID: 224850610}
   event_OnVideoRoomStatusHasChanged:
@@ -2281,6 +2285,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &803308019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803308013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd6eff1c5880aa547ad7484748f1ae0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _producer: 0
+  remote_producer_name: robot
+--- !u!114 &803308020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803308013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cc4045b4807dc408e2b3787a0d1e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &804350694
 GameObject:
   m_ObjectHideFlags: 0

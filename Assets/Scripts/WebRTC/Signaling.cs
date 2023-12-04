@@ -68,13 +68,19 @@ public class Signaling
 
     private string _peer_id;
     private string _session_id;
+    private string _remote_producer_name;
 
     private SessionStatus sessionStatus;
     private Thread askForList_thread;
     private bool thread_running;
 
-    public Signaling(string url, bool producer)
+    public Signaling(string url, bool producer, string remote_producer_name = "")
     {
+        if (!producer && remote_producer_name == "")
+            Debug.LogError("Remote producer name should be set for a consumer role");
+
+        _remote_producer_name = remote_producer_name;
+
         event_OnConnectionStatus = new UnityEvent<ConnectionStatus>();
         event_OnOffer = new UnityEvent<RTCSessionDescription>();
         event_OnAnswer = new UnityEvent<RTCSessionDescription>();
@@ -111,7 +117,7 @@ public class Signaling
                 else if (msg.type == MessageType.PeerStatusChanged.ToString())
                 {
                     Debug.Log(msg.ToString());
-                    if (msg.meta?.name == "robot" && msg.roles.Contains(MessageRole.Producer.ToString()))
+                    if (msg.meta?.name == _remote_producer_name && msg.roles.Contains(MessageRole.Producer.ToString()))
                     {
                         SendStartSession(msg.peerId);
                     }
@@ -121,7 +127,7 @@ public class Signaling
                     Debug.Log("processing list..");
                     foreach (var p in msg.producers)
                     {
-                        if (p.meta.name == "robot")
+                        if (p.meta.name == _remote_producer_name)
                         {
                             SendStartSession(p.id);
                             break;
@@ -232,7 +238,6 @@ public class Signaling
             },
         });
         await webSocket.SendText(msg);
-        Debug.LogWarning(desc);
     }
     public async void SendICECandidate(RTCIceCandidate candidate)
     {
@@ -242,6 +247,7 @@ public class Signaling
             sessionId = _session_id,
             ice = new ICECandidateMessage(candidate),
         });
+        Debug.Log(msg);
         await webSocket.SendText(msg);
     }
 

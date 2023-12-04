@@ -1,8 +1,10 @@
 using UnityEngine;
 using Unity.WebRTC;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Bridge;
 using Reachy;
 
@@ -16,6 +18,8 @@ public class WebRTCData : WebRTCBase
     private Bridge.ConnectionStatus _connectionStatus = null;
 
     private ReachyState _reachyState = null;
+
+    private TeleopReachy.DataMessageManager dataMessageManager = TeleopReachy.DataMessageManager.Instance;
 
     bool _streamCommands = false;
 
@@ -85,6 +89,8 @@ public class WebRTCData : WebRTCBase
     {
         _reachyState = ReachyState.Parser.ParseFrom(data);
         Debug.Log(_reachyState.ToString());
+
+        dataMessageManager.StreamReachyState(_reachyState);
     }
 
     void SetupCommandChannel(RTCDataChannel channel)
@@ -114,6 +120,11 @@ public class WebRTCData : WebRTCBase
             _connectionStatus = response.ConnectionStatus;
             Debug.Log(_connectionStatus.ToString());
 
+            if (response.ConnectionStatus.Connected)
+            {
+                dataMessageManager.GetReachyId(response.ConnectionStatus.Reachy);
+            }
+
             //For testing purposes
             _commands.Commands[0].HandCommand.HandGoal.Id = _connectionStatus.Reachy.RHand.PartId;
 
@@ -135,17 +146,22 @@ public class WebRTCData : WebRTCBase
 
     }
 
-    void FixedUpdate()
+    public void SendCommandMessage(Bridge.AnyCommands _commands)
     {
-        if (_streamCommands)
-        {
-            //Get controller position and send it
-            float target = 0.5f - 0.5f * Mathf.Sin(2 * Mathf.PI * 1 * Time.time);
-            _commands.Commands[0].HandCommand.HandGoal.Position.ParallelGripper.Position = target;
-            _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
-            Debug.Log("Send: " + _commands.ToString());
-        }
+        _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
     }
+
+    // void FixedUpdate()
+    // {
+    //     if (_streamCommands)
+    //     {
+    //         //Get controller position and send it
+    //         float target = 0.5f - 0.5f * Mathf.Sin(2 * Mathf.PI * 1 * Time.time);
+    //         _commands.Commands[0].HandCommand.HandGoal.Position.ParallelGripper.Position = target;
+    //         _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
+    //         Debug.Log("Send: " + _commands.ToString());
+    //     }
+    // }
 
 }
 
