@@ -144,9 +144,15 @@ public class WebRTCData : WebRTCBase
 
     }
 
+    void OnDestroy()
+    {
+        _reachyCommandChannel = null;
+    }
+
     public void SendCommandMessage(Bridge.AnyCommands _commands)
     {
-        _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
+        Debug.LogError(_reachyCommandChannel == null);
+        if(_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
     }
 }
 
