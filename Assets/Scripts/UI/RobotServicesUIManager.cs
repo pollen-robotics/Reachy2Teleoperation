@@ -33,11 +33,11 @@ namespace TeleopReachy
             transform.GetChild(0).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInVideoRoom());
             transform.GetChild(0).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInVideoRoom());
 
-            transform.GetChild(1).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInDataRoom());
-            transform.GetChild(1).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInDataRoom());
+            transform.GetChild(1).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInAudioReceiverRoom());
+            transform.GetChild(1).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInAudioReceiverRoom());
 
-            transform.GetChild(2).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInMobileRoom());
-            transform.GetChild(2).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInMobileRoom());
+            transform.GetChild(2).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInDataRoom());
+            transform.GetChild(2).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInDataRoom());
 
             /*transform.GetChild(3).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInRestartRoom());
             transform.GetChild(3).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInRestartRoom());*/
@@ -54,8 +54,11 @@ namespace TeleopReachy
             transform.GetChild(2).GetChild(0).gameObject.SetActive(false);
             transform.GetChild(2).GetChild(1).gameObject.SetActive(false);
 
-            /* transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
-             transform.GetChild(3).GetChild(1).gameObject.SetActive(false);*/
+            transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(3).GetChild(1).gameObject.SetActive(false);
+
+            /* transform.GetChild(4).GetChild(0).gameObject.SetActive(false);
+             transform.GetChild(4).GetChild(1).gameObject.SetActive(false);*/
         }
     }
 }
