@@ -25,7 +25,7 @@ namespace TeleopReachy
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMobileBasePresence);
             robotConfig.event_OnConfigChanged.AddListener(CheckMobileBasePresence);

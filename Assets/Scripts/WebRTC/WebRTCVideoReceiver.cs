@@ -7,7 +7,7 @@ namespace TeleopReachy
     public class WebRTCVideoReceiver : WebRTCBase
     {
         private MediaStream _receiveStream;
-        private bool isRobotInRoom = true;
+        private bool isRobotInRoom = false;
         
         public Renderer screen;
         public Material image;

@@ -55,10 +55,15 @@ public class WebRTCAVReceiver : WebRTCBase
             {
                 if (e.Track.Id == right_track_id_name)
                 {
-                    screen.material.SetTexture("_RightTex", tex);
+                    GameObject miniViewer = GameObject.Find("VideoStreamMini");
+                    if(miniViewer != null) {
+                        miniViewer.GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
+                        miniViewer.GetComponent<Renderer>().material.SetTexture("_RightTex", tex);
+                    }
+                    screen.material.SetTexture("_LeftTex", tex);
                 }
                 else
-                    screen.material.SetTexture("_LeftTex", tex);
+                    screen.material.SetTexture("_RightTex", tex);
             };
         }
         else if (e.Track is AudioStreamTrack audio)

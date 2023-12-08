@@ -32,7 +32,7 @@ namespace TeleopReachy
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotConfig.event_OnConfigChanged.AddListener(ConfigChanged);
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             CheckConfig();
         }

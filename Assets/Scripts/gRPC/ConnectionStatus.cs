@@ -21,12 +21,13 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private gRPCDataController dataController;
+        // private gRPCDataController dataController;
         // private gRPCVideoController videoController;
-        private gRPCMobileBaseController mobileController;
+        // private gRPCMobileBaseController mobileController;
 
+        private WebRTCVideoReceiver videoController;
+        private WebRTCData dataController;
 
-        public WebRTCVideoReceiver webRTCVideoController;
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
 
@@ -40,9 +41,9 @@ namespace TeleopReachy
 
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
-            // videoController = gRPCManager.Instance.gRPCVideoController;
-            mobileController = gRPCManager.Instance.gRPCMobileBaseController;
+            dataController = WebRTCManager.Instance.webRTCDataController;
+            videoController = WebRTCManager.Instance.webRTCVideoController;
+            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -51,7 +52,7 @@ namespace TeleopReachy
             //isServerConnected = false;
             isRobotConfigReady = false;
             isRobotInDataRoom = false;
-            isRobotInVideoRoom = true;
+            isRobotInVideoRoom = false;
             isRobotInMobileRoom = false;
             isRobotInRestartRoom = false;
 
@@ -63,9 +64,9 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (webRTCVideoController != null) webRTCVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+            if (videoController != null) videoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            if (mobileController != null) mobileController.event_OnMobileRoomStatusHasChanged.AddListener(MobileControllerStatusHasChanged);
+            // if (mobileController != null) mobileController.event_OnMobileRoomStatusHasChanged.AddListener(MobileControllerStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }

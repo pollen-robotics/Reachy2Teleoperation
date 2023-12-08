@@ -16,7 +16,7 @@ namespace TeleopReachy
         private RawImage batteryIcon;
 
         private ErrorManager errorManager;
-        private gRPCMobileBaseController mobileBaseController;
+        // private gRPCMobileBaseController mobileBaseController;
 
         private Coroutine warningEnd;
 
@@ -42,9 +42,9 @@ namespace TeleopReachy
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
             errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
 
-            mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(UpdateBatteryLevel);
-            mobileBaseController.event_OnMobileRoomStatusHasChanged.AddListener(CheckServicePresence);
+            // mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
+            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(UpdateBatteryLevel);
+            // mobileBaseController.event_OnMobileRoomStatusHasChanged.AddListener(CheckServicePresence);
 
             needUpdateUI = true;
             hasWarningActivated = false;
@@ -132,7 +132,7 @@ namespace TeleopReachy
 
         private void CheckServicePresence()
         {
-            if(gRPCManager.Instance.ConnectionStatus.IsRobotInMobileRoom())
+            if(WebRTCManager.Instance.ConnectionStatus.IsRobotInMobileRoom())
             {
                 CheckServicePresence(true);
             }

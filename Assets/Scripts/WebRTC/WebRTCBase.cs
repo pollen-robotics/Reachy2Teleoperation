@@ -12,6 +12,7 @@ public abstract class WebRTCBase : MonoBehaviour
     protected RTCPeerConnection _pc;
 
     public bool _producer = false;
+    public string remote_producer_name = "robot";
 
     private static RTCConfiguration _conf = new RTCConfiguration
     {
@@ -99,7 +100,7 @@ public abstract class WebRTCBase : MonoBehaviour
         {
             throw new System.Exception();
         }
-        _signaling = new Signaling(_signalingServerURL, _producer);
+        _signaling = new Signaling(_signalingServerURL, _producer, remote_producer_name);
 
         _signaling.event_OnConnectionStatus.AddListener(HandleConnectionStatus);
 

@@ -16,7 +16,7 @@ namespace TeleopReachy
         public UnityEvent event_OnMobileBaseDetected;
         public UnityEvent<float> event_OnMobileBaseBatteryLevelUpdate;
 
-        private MobilityService.MobilityServiceClient clientMobility;
+        // private MobilityService.MobilityServiceClient clientMobility;
 
         private bool needUpdateCommandMobileBase;
 
@@ -119,33 +119,33 @@ namespace TeleopReachy
 
         private void Update()
         {
-            if (needCreateChannel)
-            {
-                if(clientMobility == null)
-                {
-                    InitChannel("server_mobile_port");
-                    clientMobility = new MobilityService.MobilityServiceClient(channel);
-                    needUpdateBatteryLevel = true;
-                }
-                needCreateChannel = false;
-            }
-            if (needUpdateBatteryLevel)
-            {
-                needUpdateBatteryLevel = false;
-                StartCoroutine(TemporizeBatteryRequest());
-            }
+            // if (needCreateChannel)
+            // {
+            //     if(clientMobility == null)
+            //     {
+            //         InitChannel("server_mobile_port");
+            //         clientMobility = new MobilityService.MobilityServiceClient(channel);
+            //         needUpdateBatteryLevel = true;
+            //     }
+            //     needCreateChannel = false;
+            // }
+            // if (needUpdateBatteryLevel)
+            // {
+            //     needUpdateBatteryLevel = false;
+            //     StartCoroutine(TemporizeBatteryRequest());
+            // }
         }
 
         public async void SendMobilityCommand(TargetDirectionCommand command)
         {
             try
             {
-                if (needUpdateCommandMobileBase)
-                {
-                    needUpdateCommandMobileBase = false;
-                    await clientMobility.SendDirectionAsync(command);
-                    needUpdateCommandMobileBase = true;
-                }
+                // if (needUpdateCommandMobileBase)
+                // {
+                //     needUpdateCommandMobileBase = false;
+                //     await clientMobility.SendDirectionAsync(command);
+                //     needUpdateCommandMobileBase = true;
+                // }
             }
             catch (RpcException e)
             {
@@ -160,7 +160,7 @@ namespace TeleopReachy
         {
             try
             {
-                await clientMobility.SetZuuuModeAsync(mode);
+                // await clientMobility.SetZuuuModeAsync(mode);
             }
             catch (RpcException e)
             {
@@ -176,14 +176,14 @@ namespace TeleopReachy
         {
             try
             {
-                BatteryLevel batteryLevel = clientMobility.GetBatteryLevel(new Google.Protobuf.WellKnownTypes.Empty());
-                event_OnMobileBaseBatteryLevelUpdate.Invoke(batteryLevel.Level.Value);
-                if (!isRobotInRoom)
-                {
-                    isRobotInRoom = true;
-                    needUpdateCommandMobileBase = true;
-                    event_OnMobileRoomStatusHasChanged.Invoke(isRobotInRoom);
-                }
+                // BatteryLevel batteryLevel = clientMobility.GetBatteryLevel(new Google.Protobuf.WellKnownTypes.Empty());
+                // event_OnMobileBaseBatteryLevelUpdate.Invoke(batteryLevel.Level.Value);
+                // if (!isRobotInRoom)
+                // {
+                //     isRobotInRoom = true;
+                //     needUpdateCommandMobileBase = true;
+                //     event_OnMobileRoomStatusHasChanged.Invoke(isRobotInRoom);
+                // }
             }
             catch (RpcException e)
             {
@@ -197,7 +197,7 @@ namespace TeleopReachy
 
         IEnumerator TemporizeBatteryRequest()
         {
-            Task.Run(() => AskForBatteryLevel());
+            // Task.Run(() => AskForBatteryLevel());
             yield return new WaitForSeconds(10);
             needUpdateBatteryLevel = true;
         }

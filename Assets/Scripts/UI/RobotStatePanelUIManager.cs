@@ -11,7 +11,7 @@ namespace TeleopReachy
 {
     public class RobotStatePanelUIManager : MonoBehaviour
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
         private RobotStatus robotStatus;
@@ -32,10 +32,10 @@ namespace TeleopReachy
                 return;
             }
 
-            dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
 
             actuators = new List<GameObject>();

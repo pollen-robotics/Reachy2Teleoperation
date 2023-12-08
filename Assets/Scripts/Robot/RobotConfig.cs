@@ -21,8 +21,8 @@ namespace TeleopReachy
 {
     public class RobotConfig : MonoBehaviour
     {
-        private gRPCDataController dataController;
-        private gRPCMobileBaseController mobileController;
+        private DataMessageManager dataController;
+        // private gRPCMobileBaseController mobileController;
         // private WebRTCRestartService restartService;
         private ConnectionStatus connectionStatus;
 
@@ -45,12 +45,12 @@ namespace TeleopReachy
         // Awake is called before Start functions
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
-            mobileController = gRPCManager.Instance.gRPCMobileBaseController;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            dataController = DataMessageManager.Instance;
+            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             dataController.event_OnRobotReceived.AddListener(GetPartsId);
-            mobileController.event_OnMobileBaseDetected.AddListener(SetMobilePlatform);
+            // mobileController.event_OnMobileBaseDetected.AddListener(SetMobilePlatform);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
 
             has_robot_config = false;
