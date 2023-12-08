@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Concurrent;
 using Unity.WebRTC;
 using UnityEngine;
+using System.Threading.Tasks;
+
 
 [RequireComponent(typeof(WebRTCService))]
 public abstract class WebRTCBase : MonoBehaviour
@@ -52,9 +54,15 @@ public abstract class WebRTCBase : MonoBehaviour
 
     void OnDestroy()
     {
+        Task.Run(() => Disconnection());
+    }
+
+    private void Disconnection()
+    {
         WebRTCHangUp();
         _signaling?.Close();
     }
+
 
     void HandleConnectionStatus(ConnectionStatus status)
     {
