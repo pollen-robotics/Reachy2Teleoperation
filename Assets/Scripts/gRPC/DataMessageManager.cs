@@ -142,7 +142,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
-        public async void TurnArmOff(PartId id)
+        public void TurnArmOff(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
             {
@@ -158,7 +158,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(armCommand);
         }
 
-        public async void TurnHeadOff(PartId id)
+        public void TurnHeadOff(PartId id)
         {
             Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
             {
@@ -174,7 +174,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
-        public async void TurnArmOn(PartId id)
+        public void TurnArmOn(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
             {
@@ -190,7 +190,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(armCommand);
         }
 
-         public async void TurnHeadOn(PartId id)
+         public void TurnHeadOn(PartId id)
         {
             Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
             {
