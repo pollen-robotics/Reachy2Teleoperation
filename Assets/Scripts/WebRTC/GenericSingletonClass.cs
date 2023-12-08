@@ -21,7 +21,6 @@ public class GenericSingletonClass<T> : MonoBehaviour where T : UnityEngine.Comp
     {
        if (instance == null) {
          instance = this as T;
-         DontDestroyOnLoad (this.gameObject);
     } else {
       Destroy (gameObject);
     }
