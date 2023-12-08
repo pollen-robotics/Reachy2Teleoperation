@@ -12,6 +12,7 @@ public class WebRTCAVReceiver : WebRTCBase
     private string right_track_id_name = "";
 
     public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
+    public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
 
     protected override void WebRTCCall()
     {
@@ -40,6 +41,7 @@ public class WebRTCAVReceiver : WebRTCBase
                     _receiveStream.AddTrack(evt.Track);
                     if (outputAudioSource == null)
                         Debug.LogWarning("Output audio is not assigned. Sound won't be rendered");
+                    event_OnAudioReceiverRoomStatusHasChanged.Invoke(true);
                 }
             };
             var transceiver = _pc.AddTransceiver(TrackKind.Video);
