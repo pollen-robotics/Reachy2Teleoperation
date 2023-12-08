@@ -21,10 +21,10 @@ namespace TeleopReachy
 {
     public class gRPCDataController : gRPCBase
     {
-        private ReachyService.ReachyServiceClient reachyClient = null;
-        private ArmService.ArmServiceClient armClient = null;
-        private HeadService.HeadServiceClient headClient = null;
-        private HandService.HandServiceClient handClient = null;
+    //     private ReachyService.ReachyServiceClient reachyClient = null;
+    //     private ArmService.ArmServiceClient armClient = null;
+    //     private HeadService.HeadServiceClient headClient = null;
+    //     private HandService.HandServiceClient handClient = null;
 
         private bool needUpdateCommandBody;
         private bool needUpdateCommandGripper;
@@ -48,10 +48,10 @@ namespace TeleopReachy
             InitChannel("server_data_port");
             if (channel != null)
             {
-                reachyClient = new ReachyService.ReachyServiceClient(channel);
-                armClient = new ArmService.ArmServiceClient(channel);
-                headClient = new HeadService.HeadServiceClient(channel);
-                handClient = new HandService.HandServiceClient(channel);
+                // reachyClient = new ReachyService.ReachyServiceClient(channel);
+                // armClient = new ArmService.ArmServiceClient(channel);
+                // headClient = new HeadService.HeadServiceClient(channel);
+                // handClient = new HandService.HandServiceClient(channel);
 
                 Task.Run(() => GetReachyId());
             }
@@ -74,15 +74,15 @@ namespace TeleopReachy
         {
             try
             {
-                Debug.Log(reachyClient);
-                reachy = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
-                event_OnRobotReceived.Invoke(reachy);
-                isRobotInRoom = true;
-                event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
-                needUpdateCommandBody = true;
-                needUpdateCommandGripper = true;
-                needUpdateState = true;
-                StreamReachyState();
+                // Debug.Log(reachyClient);
+                // reachy = reachyClient.GetReachy(new Google.Protobuf.WellKnownTypes.Empty());
+                // event_OnRobotReceived.Invoke(reachy);
+                // isRobotInRoom = true;
+                // event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
+                // needUpdateCommandBody = true;
+                // needUpdateCommandGripper = true;
+                // needUpdateState = true;
+                // StreamReachyState();
             }
             catch (RpcException e)
             {
@@ -99,67 +99,67 @@ namespace TeleopReachy
             {
                 ReachyStreamStateRequest request = new ReachyStreamStateRequest { Id = reachy.Id, PublishFrequency = 60 };
 
-                using var reachyState = reachyClient.StreamReachyState(request);
+                // using var reachyState = reachyClient.StreamReachyState(request);
 
-                var reachyDescriptor = ReachyState.Descriptor;
-                var armDescriptor = ArmState.Descriptor;
-                var headDescriptor = HeadState.Descriptor;
-                var handDescriptor = HandState.Descriptor;
+                // var reachyDescriptor = ReachyState.Descriptor;
+                // var armDescriptor = ArmState.Descriptor;
+                // var headDescriptor = HeadState.Descriptor;
+                // var handDescriptor = HandState.Descriptor;
 
-                while (await reachyState.ResponseStream.MoveNext())
-                {
-                    if(!needUpdateState)
-                    {
-                        break;
-                    }
+                // while (await reachyState.ResponseStream.MoveNext())
+                // {
+                //     if(!needUpdateState)
+                //     {
+                //         break;
+                //     }
 
-                    Dictionary<string, float> present_position = new Dictionary<string, float>();
-                    Dictionary<string, float> temperatures = new Dictionary<string, float>();
+                //     Dictionary<string, float> present_position = new Dictionary<string, float>();
+                //     Dictionary<string, float> temperatures = new Dictionary<string, float>();
 
-                    foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
-                    {
-                        var partState = partField.Accessor.GetValue(reachyState.ResponseStream.Current) as IMessage;
-                        if (partState != null)
-                        {
-                            if(partState is ArmState)
-                            {
-                                foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
-                                {
-                                    var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                                    if(componentState is Orbita2dState)
-                                    {
-                                        GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
-                                        GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
-                                    }
-                                    if(componentState is Orbita3dState)
-                                    {
-                                        GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                        GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
-                                    }
-                                }
-                            }
-                            if(partState is HeadState)
-                            {
-                                foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
-                                {
-                                    var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                                    if(componentState is Orbita3dState)
-                                    {
-                                        GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
-                                        GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
-                                    }
-                                }
-                            }
-                            if(partState is HandState)
-                            {
-                                GetParallelGripper_PresentPosition(present_position, partState, partField);
-                                GetParallelGripper_Temperature(temperatures, partState, partField);
-                            }
-                        }
-                    }
-                    event_OnStateUpdatePresentPositions.Invoke(present_position);
-                    event_OnStateUpdateTemperature.Invoke(temperatures);
-                }
+                //     foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
+                //     {
+                //         var partState = partField.Accessor.GetValue(reachyState.ResponseStream.Current) as IMessage;
+                //         if (partState != null)
+                //         {
+                //             if(partState is ArmState)
+                //             {
+                //                 foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                //                 {
+                //                     var componentState = componentField.Accessor.GetValue(partState) as IMessage;
+                //                     if(componentState is Orbita2dState)
+                //                     {
+                //                         GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
+                //                         GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
+                //                     }
+                //                     if(componentState is Orbita3dState)
+                //                     {
+                //                         GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                //                         GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
+                //                     }
+                //                 }
+                //             }
+                //             if(partState is HeadState)
+                //             {
+                //                 foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
+                //                 {
+                //                     var componentState = componentField.Accessor.GetValue(partState) as IMessage;
+                //                     if(componentState is Orbita3dState)
+                //                     {
+                //                         GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
+                //                         GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
+                //                     }
+                //                 }
+                //             }
+                //             if(partState is HandState)
+                //             {
+                //                 GetParallelGripper_PresentPosition(present_position, partState, partField);
+                //                 GetParallelGripper_Temperature(temperatures, partState, partField);
+                //             }
+                //         }
+                //     }
+                //     event_OnStateUpdatePresentPositions.Invoke(present_position);
+                //     event_OnStateUpdateTemperature.Invoke(temperatures);
+                // }
             }
             catch (RpcException e)
             {
@@ -181,10 +181,10 @@ namespace TeleopReachy
             {
                 if (needUpdateCommandGripper)
                 {
-                    needUpdateCommandGripper = false;
-                    await handClient.SetHandPositionAsync(leftGripperCommand);
-                    await handClient.SetHandPositionAsync(rightGripperCommand);
-                    needUpdateCommandGripper = true;
+                    // needUpdateCommandGripper = false;
+                    // await handClient.SetHandPositionAsync(leftGripperCommand);
+                    // await handClient.SetHandPositionAsync(rightGripperCommand);
+                    // needUpdateCommandGripper = true;
                 }
             }
             catch (RpcException e)
@@ -202,11 +202,11 @@ namespace TeleopReachy
             {
                 if (needUpdateCommandBody)
                 {
-                    needUpdateCommandBody = false;
-                    await armClient.GoToCartesianPositionAsync(leftArmRequest);
-                    await armClient.GoToCartesianPositionAsync(rightArmRequest);
-                    await headClient.GoToOrientationAsync(neckRequest);
-                    needUpdateCommandBody = true;
+                    // needUpdateCommandBody = false;
+                    // await armClient.GoToCartesianPositionAsync(leftArmRequest);
+                    // await armClient.GoToCartesianPositionAsync(rightArmRequest);
+                    // await headClient.GoToOrientationAsync(neckRequest);
+                    // needUpdateCommandBody = true;
                 }
             }
             catch (RpcException e)
@@ -224,9 +224,9 @@ namespace TeleopReachy
             {
                 if (needUpdateCommandBody)
                 {
-                    needUpdateCommandBody = false;
-                    await headClient.GoToOrientationAsync(neckRequest);
-                    needUpdateCommandBody = true;
+                    // needUpdateCommandBody = false;
+                    // await headClient.GoToOrientationAsync(neckRequest);
+                    // needUpdateCommandBody = true;
                 }
             }
             catch (RpcException e)
@@ -240,22 +240,22 @@ namespace TeleopReachy
 
         public async void TurnArmOff(PartId id)
         {
-            await armClient.TurnOffAsync(id);
+            // await armClient.TurnOffAsync(id);
         }
 
         public async void TurnHeadOff(PartId id)
         {
-            await headClient.TurnOffAsync(id);
+            // await headClient.TurnOffAsync(id);
         }
 
         public async void TurnArmOn(PartId id)
         {
-            await armClient.TurnOnAsync(id);
+            // await armClient.TurnOnAsync(id);
         }
 
          public async void TurnHeadOn(PartId id)
         {
-            await headClient.TurnOnAsync(id);
+            // await headClient.TurnOnAsync(id);
         }
 
         private void GetOrbita3D_PresentPosition(

@@ -13,7 +13,7 @@ namespace TeleopReachy
 {
     public class RobotJointCommands : RobotCommands
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
         public Coroutine setSmoothCompliance;
@@ -24,8 +24,8 @@ namespace TeleopReachy
         void Start()
         {
             Init();
-            dataController = gRPCManager.Instance.gRPCDataController;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            dataController = DataMessageManager.Instance;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             robotStatus.event_OnInitializeRobotStateRequested.AddListener(InitializeRobotState);
             robotStatus.event_OnRobotStiffRequested.AddListener(SetRobotStiff);
@@ -53,12 +53,15 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            dataController.SetHandPosition(leftGripperCommand, rightGripperCommand);
+            dataController.SetHandPosition(leftGripperCommand);
+            dataController.SetHandPosition(rightGripperCommand);
         }
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
         {
-            dataController.SendBodyCommand(leftArmRequest, rightArmRequest, neckRequest);
+            dataController.SendArmCommand(leftArmRequest);
+            dataController.SendArmCommand(rightArmRequest);
+            dataController.SendNeckCommand(neckRequest);
         }
 
         private void SetRobotSmoothlyCompliant()
@@ -334,7 +337,7 @@ namespace TeleopReachy
             {
             
                 NeckGoal neckGoal = new NeckGoal { Id = robotConfig.partsId["head"], Rotation = new Rotation3d { Q = unitQ } };
-                dataController.SendHeadCommand(neckGoal);
+                dataController.SendNeckCommand(neckGoal);
             }
         }
 

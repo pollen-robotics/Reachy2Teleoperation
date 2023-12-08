@@ -6,5 +6,4 @@ public class WebRTCService : GenericSingletonClass<WebRTCService>
     {
         StartCoroutine(WebRTC.Update());
     }
-
 }
