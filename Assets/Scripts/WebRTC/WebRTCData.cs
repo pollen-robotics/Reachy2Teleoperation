@@ -19,17 +19,15 @@ public class WebRTCData : WebRTCBase
 
     private ReachyState _reachyState = null;
 
-    private TeleopReachy.DataMessageManager dataMessageManager = TeleopReachy.DataMessageManager.Instance;
+    private TeleopReachy.DataMessageManager dataMessageManager;
 
     public UnityEvent<bool> event_DataControllerStatusHasChanged;
     private bool isRobotInRoom = false;
 
-    // bool _streamCommands = false;
-
     protected override void Start()
     {
         base.Start();
-        // _streamCommands = false;
+        dataMessageManager = TeleopReachy.DataMessageManager.Instance;
         _commands = new Bridge.AnyCommands
         {
             Commands = {
@@ -91,7 +89,6 @@ public class WebRTCData : WebRTCBase
     void OnDataChannelStateMessage(byte[] data)
     {
         _reachyState = ReachyState.Parser.ParseFrom(data);
-        Debug.Log(_reachyState.ToString());
 
         dataMessageManager.StreamReachyState(_reachyState);
     }
@@ -99,7 +96,6 @@ public class WebRTCData : WebRTCBase
     void SetupCommandChannel(RTCDataChannel channel)
     {
         _reachyCommandChannel = channel;
-        // _streamCommands = true;
     }
 
     void SetupConnection(RTCDataChannel channel)
@@ -121,7 +117,7 @@ public class WebRTCData : WebRTCBase
         if (response.ConnectionStatus != null)
         {
             _connectionStatus = response.ConnectionStatus;
-            Debug.Log(_connectionStatus.ToString());
+            Debug.LogError(_connectionStatus.ToString());
 
             if (response.ConnectionStatus.Connected)
             {
@@ -129,9 +125,6 @@ public class WebRTCData : WebRTCBase
                 isRobotInRoom = true;
                 event_DataControllerStatusHasChanged.Invoke(isRobotInRoom);
             }
-
-            //For testing purposes
-            // _commands.Commands[0].HandCommand.HandGoal.Id = _connectionStatus.Reachy.RHand.PartId;
 
             var req = new ServiceRequest
             {
@@ -155,18 +148,5 @@ public class WebRTCData : WebRTCBase
     {
         _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
     }
-
-    // void FixedUpdate()
-    // {
-    //     if (_streamCommands)
-    //     {
-    //         //Get controller position and send it
-    //         float target = 0.5f - 0.5f * Mathf.Sin(2 * Mathf.PI * 1 * Time.time);
-    //         _commands.Commands[0].HandCommand.HandGoal.Position.ParallelGripper.Position = target;
-    //         _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
-    //         Debug.Log("Send: " + _commands.ToString());
-    //     }
-    // }
-
 }
 
