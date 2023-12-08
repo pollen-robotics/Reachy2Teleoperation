@@ -25,7 +25,7 @@ namespace TeleopReachy
         // private gRPCVideoController videoController;
         // private gRPCMobileBaseController mobileController;
 
-        private WebRTCVideoReceiver videoController;
+        private WebRTCAVReceiver videoController;
         private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
