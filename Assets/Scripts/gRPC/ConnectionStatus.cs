@@ -13,6 +13,7 @@ namespace TeleopReachy
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
+        private bool isRobotInAudioReceiverRoom;
         private bool isRobotInMobileRoom;
         private bool isRobotInRestartRoom;
         private bool hasRobotJustLeftDataRoom;
@@ -25,7 +26,7 @@ namespace TeleopReachy
         // private gRPCVideoController videoController;
         // private gRPCMobileBaseController mobileController;
 
-        private WebRTCAVReceiver videoController;
+        private WebRTCAVReceiver audioVideoController;
         private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
@@ -42,7 +43,7 @@ namespace TeleopReachy
         void Start()
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
-            videoController = WebRTCManager.Instance.webRTCVideoController;
+            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
             // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -53,6 +54,7 @@ namespace TeleopReachy
             isRobotConfigReady = false;
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
+            isRobotInAudioReceiverRoom = false;
             isRobotInMobileRoom = false;
             isRobotInRestartRoom = false;
 
@@ -64,7 +66,8 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (videoController != null) videoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+            if (audioVideoController != null) audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+            if (audioVideoController != null) audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
             // if (mobileController != null) mobileController.event_OnMobileRoomStatusHasChanged.AddListener(MobileControllerStatusHasChanged);
 
@@ -89,6 +92,11 @@ namespace TeleopReachy
         public bool IsRobotInVideoRoom()
         {
             return isRobotInVideoRoom;
+        }
+
+        public bool IsRobotInAudioReceiverRoom()
+        {
+            return isRobotInAudioReceiverRoom;
         }
 
         public bool IsRobotInRestartRoom()
@@ -128,6 +136,13 @@ namespace TeleopReachy
         {
             Debug.Log("[ConnectionStatus] VideoControllerStatusHasChanged");
             isRobotInVideoRoom = isRobotInRoom;
+            statusChanged = true;
+        }
+
+        void AudioReceiverControllerStatusHasChanged(bool isRobotInRoom)
+        {
+            Debug.Log("[ConnectionStatus] AudioReceiverControllerStatusHasChanged");
+            isRobotInAudioReceiverRoom = isRobotInRoom;
             statusChanged = true;
         }
 
