@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class LoaderToStopManager : MonoBehaviour
+    public class LoaderToStopManager : LazyFollow
     {
         [SerializeField]
         private Transform loaderA;
