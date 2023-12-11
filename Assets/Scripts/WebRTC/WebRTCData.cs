@@ -147,6 +147,7 @@ public class WebRTCData : WebRTCBase
     void OnDestroy()
     {
         _reachyCommandChannel = null;
+        base.OnDestroy();
     }
 
     public void SendCommandMessage(Bridge.AnyCommands _commands)

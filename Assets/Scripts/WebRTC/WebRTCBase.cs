@@ -52,7 +52,7 @@ public abstract class WebRTCBase : MonoBehaviour
 #endif
     }
 
-    void OnDestroy()
+    protected void OnDestroy()
     {
         Task.Run(() => Disconnection());
     }
