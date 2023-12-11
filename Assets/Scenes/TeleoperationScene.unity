@@ -2094,6 +2094,9 @@ MonoBehaviour:
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
+  event_OnAudioReceiverRoomStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &803308018
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2118,7 +2121,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
@@ -4676,7 +4679,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
+  BypassEffects: 1
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
