@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class TimerSpeedManager : MonoBehaviour
+    public class TimerSpeedManager : LazyFollow
     {
         private RobotStatus robotStatus;
 
