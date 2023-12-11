@@ -167,7 +167,7 @@
       }
     },
     "com.unity.webrtc": {
-      "version": "3.0.0-pre.6",
+      "version": "3.0.0-pre.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
