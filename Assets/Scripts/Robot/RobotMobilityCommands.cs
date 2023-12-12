@@ -30,7 +30,7 @@ namespace TeleopReachy
 
         private void StartMobility()
         {
-            if (robotConfig.HasMobilePlatform() && robotStatus.IsMobilityOn())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
             {
                 SendZuuuVelocityMode();
             }
@@ -38,7 +38,7 @@ namespace TeleopReachy
 
         private void StopMobility()
         {
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
             {
                 StopMobileBaseMovements();
             }

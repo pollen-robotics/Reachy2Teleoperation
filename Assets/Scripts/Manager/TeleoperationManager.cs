@@ -39,7 +39,7 @@ namespace TeleopReachy
             {
                 robotStatus.SetEmotionsActive(true);
             }*/
-            if (robotConfig.HasMobilePlatform() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase() && connectionStatus.IsRobotInMobileRoom())
             {
                 robotStatus.SetMobilityActive(true);
             }
@@ -85,7 +85,7 @@ namespace TeleopReachy
                 reachy.GetChild(1).switchRenderer(enabled);
             if (robotConfig.HasRightArm())
                 reachy.GetChild(3).switchRenderer(enabled);
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
                 reachy.GetChild(5).switchRenderer(enabled);
         }
 

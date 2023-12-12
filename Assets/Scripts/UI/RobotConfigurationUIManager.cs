@@ -121,7 +121,7 @@ namespace TeleopReachy
                 leftArmConfigColor = ColorsManager.red;
             }
 
-            if(robotConfig.HasMobilePlatform())
+            if(robotConfig.HasMobileBase())
             {
                 mobilePlaformConfigText = "Mobile platform detected";
                 mobilePlaformConfigColor = ColorsManager.green;
@@ -165,7 +165,7 @@ namespace TeleopReachy
             }
 
             // Handle mobile platform differently
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
             {
                 mobilePlaformConfigText = "Mobile platform detected";
                 mobilePlaformConfigColor = ColorsManager.green;
