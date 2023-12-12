@@ -65,9 +65,9 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            UpdateMobilityUI(robotConfig.HasMobilePlatform());
+            UpdateMobilityUI(robotConfig.HasMobileBase());
 
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
                 robotStatus.event_OnSwitchMobilityOn.AddListener(UpdateMobilityUI);
         }
 

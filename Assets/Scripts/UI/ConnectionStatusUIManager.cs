@@ -89,7 +89,7 @@ namespace TeleopReachy
                         connectionStatusColor = ColorsManager.yellow;
                         connectionStatusHelp = "Restart service is not available, but you can still teleoperate the robot. Enjoy!";
                     }
-                    if (robotConfig.HasMobilePlatform() && !connectionStatus.IsRobotInMobileRoom())
+                    if (robotConfig.HasMobileBase() && !connectionStatus.IsRobotInMobileRoom())
                     {
                         connectionStatusText = "Connected to Reachy. Mobile base unavailable";
                         connectionStatusColor = ColorsManager.purple;

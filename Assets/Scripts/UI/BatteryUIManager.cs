@@ -58,7 +58,7 @@ namespace TeleopReachy
         {
             if(needUpdateUI)
             {
-                if(robotConfig.HasMobilePlatform())
+                if(robotConfig.HasMobileBase())
                 {
                     if(isBatteryInfoAvailable)
                     {
