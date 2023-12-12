@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using Grpc.Core;
 using System.Threading.Tasks;
 
 using Google.Protobuf;
@@ -15,6 +14,8 @@ using Reachy.Kinematics;
 using Component;
 using Component.Orbita2D;
 using Component.Orbita3D;
+using Mobile.Base.Mobility;
+using Mobile.Base.Utility;
 using Bridge;
 
 
@@ -142,6 +143,22 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
+        public void SendMobileBaseCommand(TargetDirectionCommand direction)
+        {
+            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        MobileBaseCommand = new Bridge.MobileBaseCommand{
+                            TargetDirection = direction
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+        }
+
         public void TurnArmOff(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
@@ -174,6 +191,24 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
+        public void TurnMobileBaseOff()
+        {
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.FreeWheel };
+
+            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        MobileBaseCommand = new Bridge.MobileBaseCommand{
+                            MobileBaseMode = zuuuMode
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+        }
+
         public void TurnArmOn(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
@@ -190,7 +225,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(armCommand);
         }
 
-         public void TurnHeadOn(PartId id)
+        public void TurnHeadOn(PartId id)
         {
             Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
             {
@@ -204,6 +239,24 @@ namespace TeleopReachy
                 }
             };
             webRTCDataController.SendCommandMessage(neckCommand);
+        }
+
+        public void TurnMobileBaseOn()
+        {
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
+
+            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        MobileBaseCommand = new Bridge.MobileBaseCommand{
+                            MobileBaseMode = zuuuMode
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(mobileBaseCommand);
         }
 
         private void GetOrbita3D_PresentPosition(
