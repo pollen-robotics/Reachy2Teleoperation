@@ -10,6 +10,7 @@ namespace TeleopReachy
         public ConnectionStatus ConnectionStatus { get; private set; }
         public WebRTCData webRTCDataController { get; private set; }
         public WebRTCAVReceiver webRTCVideoController { get; private set; }
+        public WebRTCService webRTCService { get; private set; }
         // public gRPCMobileBaseController gRPCMobileBaseController { get; private set; }
 
         protected override void Init()
@@ -17,6 +18,7 @@ namespace TeleopReachy
             ConnectionStatus = GetComponent<ConnectionStatus>();
             webRTCDataController = GetComponent<WebRTCData>();
             webRTCVideoController = GetComponent<WebRTCAVReceiver>();
+            webRTCService = GetComponent<WebRTCService>();
             // gRPCMobileBaseController = GetComponent<gRPCMobileBaseController>();
         }
     }

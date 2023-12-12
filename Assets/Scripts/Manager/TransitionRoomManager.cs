@@ -200,6 +200,8 @@ namespace TeleopReachy
             RobotJointCommands robotJointsCommands = RobotDataManager.Instance.RobotJointCommands;
             if (robotJointsCommands.setSmoothCompliance != null) yield return robotJointsCommands.setSmoothCompliance;
             else yield return null;
+            WebRTCService webRTCService = WebRTCManager.Instance.webRTCService;
+            webRTCService.AskForWebRTCDisconnection();
             EventManager.TriggerEvent(EventNames.LoadConnectionScene);
         }
     }
