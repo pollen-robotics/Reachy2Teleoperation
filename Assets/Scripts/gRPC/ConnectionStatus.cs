@@ -22,10 +22,6 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        // private gRPCDataController dataController;
-        // private gRPCVideoController videoController;
-        // private gRPCMobileBaseController mobileController;
-
         private WebRTCAVReceiver audioVideoController;
         private WebRTCData dataController;
 
@@ -44,7 +40,6 @@ namespace TeleopReachy
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -72,7 +67,6 @@ namespace TeleopReachy
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            // if (mobileController != null) mobileController.event_OnMobileRoomStatusHasChanged.AddListener(MobileControllerStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }

@@ -22,7 +22,6 @@ namespace TeleopReachy
     public class RobotConfig : MonoBehaviour
     {
         private DataMessageManager dataController;
-        // private gRPCMobileBaseController mobileController;
         // private WebRTCRestartService restartService;
         private ConnectionStatus connectionStatus;
 
@@ -46,11 +45,9 @@ namespace TeleopReachy
         void Start()
         {
             dataController = DataMessageManager.Instance;
-            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             dataController.event_OnRobotReceived.AddListener(GetPartsId);
-            // mobileController.event_OnMobileBaseDetected.AddListener(SetMobilePlatform);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
 
             has_robot_config = false;
@@ -88,14 +85,6 @@ namespace TeleopReachy
                 ResetConfig();
             }
         }
-
-        void SetMobilePlatform()
-        {
-            Debug.Log("[Robot config]: SetMobilePlatform");
-            has_mobile_platform = true;
-            event_OnConfigChanged.Invoke();
-        }
-
 
         void GetPartsId(Reachy.Reachy reachy)
         {
@@ -160,14 +149,6 @@ namespace TeleopReachy
 
         public bool HasMobileBase()
         {
-            return has_mobile_platform;
-        }
-
-        public void SetMobilePlatform(bool mobile_platform_detected)
-        {
-            Debug.Log("[Robot config]: SetMobilePlatform");
-            has_mobile_platform = mobile_platform_detected;
-            event_OnConfigChanged.Invoke();
             return has_mobile_base;
         }
 
