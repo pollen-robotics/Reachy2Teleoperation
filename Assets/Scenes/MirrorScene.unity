@@ -9968,7 +9968,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Mobility OFF
+  m_Text: Mobile base OFF
 --- !u!222 &2026258763
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13962,7 +13962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &4575489517711869627
 BoxCollider:
   m_ObjectHideFlags: 0
