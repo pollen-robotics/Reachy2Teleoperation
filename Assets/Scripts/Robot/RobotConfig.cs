@@ -15,6 +15,7 @@ using Reachy.Part;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
+using Mobile.Base.Utility;
 using Component;
 
 namespace TeleopReachy
@@ -103,6 +104,11 @@ namespace TeleopReachy
                         partsId.Add(field.Name, id);
                     }
                 }
+                if (value != null && value is MobileBase)
+                {
+                    PartId id = new PartId { Name="mobile_base" };
+                    partsId.Add(field.Name, id);
+                }
             }
 
             GetReachyConfig();
@@ -117,6 +123,10 @@ namespace TeleopReachy
             has_right_gripper = partsId.ContainsKey("r_hand");
             has_left_gripper = partsId.ContainsKey("l_hand");
             has_mobile_base = partsId.ContainsKey("mobile_base");
+
+            Debug.LogError("Right arm: " + partsId.ContainsKey("r_arm"));
+            Debug.LogError("Right hand: " + partsId.ContainsKey("r_hand"));
+            Debug.LogError("Mobile base: " + partsId.ContainsKey("mobile_base"));
 
             has_robot_config = true;
 
