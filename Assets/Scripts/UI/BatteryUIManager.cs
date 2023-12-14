@@ -132,7 +132,7 @@ namespace TeleopReachy
 
         private void CheckServicePresence()
         {
-            if(WebRTCManager.Instance.ConnectionStatus.IsRobotInMobileRoom())
+            if(WebRTCManager.Instance.ConnectionStatus.IsRobotInDataRoom() && robotConfig.HasMobileBase())
             {
                 CheckServicePresence(true);
             }

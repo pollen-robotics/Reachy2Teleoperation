@@ -124,10 +124,6 @@ namespace TeleopReachy
             has_left_gripper = partsId.ContainsKey("l_hand");
             has_mobile_base = partsId.ContainsKey("mobile_base");
 
-            Debug.LogError("Right arm: " + partsId.ContainsKey("r_arm"));
-            Debug.LogError("Right hand: " + partsId.ContainsKey("r_hand"));
-            Debug.LogError("Mobile base: " + partsId.ContainsKey("mobile_base"));
-
             has_robot_config = true;
 
             event_OnConfigChanged.Invoke();

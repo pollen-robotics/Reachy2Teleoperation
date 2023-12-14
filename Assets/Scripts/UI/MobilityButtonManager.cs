@@ -67,7 +67,7 @@ namespace TeleopReachy
 
         void CheckMobileBasePresence()
         {
-            if (robotConfig.HasMobileBase() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase())
             {
                 isInteractable = true;
                 if (robotStatus.IsMobilityOn())
