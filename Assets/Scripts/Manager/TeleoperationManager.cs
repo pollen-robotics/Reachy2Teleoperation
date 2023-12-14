@@ -9,7 +9,6 @@ namespace TeleopReachy
         private TransitionRoomManager transitionRoomManager;
 
         private RobotStatus robotStatus;
-        private ConnectionStatus connectionStatus;
 
         [SerializeField]
         private Transform reachy;
@@ -24,8 +23,6 @@ namespace TeleopReachy
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckChanges);
         }
 
         void StartTeleoperation()
@@ -39,7 +36,7 @@ namespace TeleopReachy
             {
                 robotStatus.SetEmotionsActive(true);
             }*/
-            if (robotConfig.HasMobileBase() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase())
             {
                 robotStatus.SetMobilityActive(true);
             }
@@ -87,18 +84,6 @@ namespace TeleopReachy
                 reachy.GetChild(3).switchRenderer(enabled);
             if (robotConfig.HasMobileBase())
                 reachy.GetChild(5).switchRenderer(enabled);
-        }
-
-        void CheckChanges()
-        {
-            if (!connectionStatus.IsRobotInMobileRoom())
-            {
-                robotStatus.SetMobilityActive(false);
-            }
-            else
-            {
-                robotStatus.SetMobilityActive(true);
-            }
         }
     }
 }

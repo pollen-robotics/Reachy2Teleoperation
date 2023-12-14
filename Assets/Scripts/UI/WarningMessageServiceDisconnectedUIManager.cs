@@ -76,14 +76,7 @@ namespace TeleopReachy
                 }
                 else
                 {
-                    if(robotConfig.HasMobileBase() && !connectionStatus.IsRobotInMobileRoom())
-                    {
-                        onlyMobileServicesAffected = true;
-                        messageToDisplay = "Mobile services have been disconnected";
-                    }
-                    else{
-                        wantWarningMessageDisplayed = false;
-                    }
+                    wantWarningMessageDisplayed = false;
                 }
             }
             needUpdateWarningMessage = true;

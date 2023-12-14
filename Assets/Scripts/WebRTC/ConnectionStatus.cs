@@ -14,7 +14,6 @@ namespace TeleopReachy
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
-        private bool isRobotInMobileRoom;
         private bool isRobotInRestartRoom;
         private bool hasRobotJustLeftDataRoom;
 
@@ -50,7 +49,6 @@ namespace TeleopReachy
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
-            isRobotInMobileRoom = false;
             isRobotInRestartRoom = false;
 
             isRobotReady = false;
@@ -99,11 +97,6 @@ namespace TeleopReachy
         public bool IsRobotInRestartRoom()
         {
             return isRobotInRestartRoom;
-        }
-
-        public bool IsRobotInMobileRoom()
-        {
-            return isRobotInMobileRoom;
         }
 
         public bool IsRobotReady()
@@ -156,12 +149,6 @@ namespace TeleopReachy
             {
                 hasRobotJustLeftDataRoom = true;
             }
-            statusChanged = true;
-        }
-
-        void MobileControllerStatusHasChanged(bool isRobotInRoom)
-        {
-            isRobotInMobileRoom = isRobotInRoom;
             statusChanged = true;
         }
 
