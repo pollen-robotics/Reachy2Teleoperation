@@ -45,7 +45,6 @@ namespace TeleopReachy
 
         public void StreamReachyState(ReachyState reachyState)
         {
-            Debug.LogError(reachyState);
             var reachyDescriptor = ReachyState.Descriptor;
             var armDescriptor = ArmState.Descriptor;
             var headDescriptor = HeadState.Descriptor;
@@ -98,17 +97,19 @@ namespace TeleopReachy
                     if(partState is MobileBaseState)
                     {
                         var batteryField = partState.Descriptor.FindFieldByName("battery_level");
-                        if(batteryField != null)
+                        var batteryValue = batteryField.Accessor.GetValue(partState);
+                        if(batteryValue != null)
                         {
-                            BatteryLevel battery = (BatteryLevel)batteryField.Accessor.GetValue(partState);
+                            BatteryLevel battery = (BatteryLevel)batteryValue;
                             batteryLevel = (float)battery.Level;
                             event_OnBatteryUpdate.Invoke(batteryLevel);
                         }
 
                         var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
-                        if(lidarDetectionField != null)
+                        var lidarDetectionValue = lidarDetectionField.Accessor.GetValue(partState);
+                        if(lidarDetectionValue != null)
                         {
-                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionField.Accessor.GetValue(partState);
+                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionValue;
                             obstacleDetection = lidarDetectionStatus.Status;
                             if(obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
                             {

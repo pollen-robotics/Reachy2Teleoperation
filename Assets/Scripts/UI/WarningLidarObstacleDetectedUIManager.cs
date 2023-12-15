@@ -30,6 +30,7 @@ namespace TeleopReachy
 
         void Start()
         {
+            dataController = DataMessageManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -46,7 +47,7 @@ namespace TeleopReachy
         {
             if(lidarStatus == LidarObstacleDetectionEnum.ObjectDetectedSlowdown)
             {
-                messageToDisplay = "Close to obstacles: mobile base slowed down";
+                messageToDisplay = "Close to obstacle: mobile base slowed down";
             }
             else
             {
@@ -68,20 +69,19 @@ namespace TeleopReachy
                 {
                     if(limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
                     limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
+                    transform.ActivateChildren(true);
                 }
-                // else
-                // {
-                //     transform.ActivateChildren(false);
-                // }
+                else
+                {
+                    transform.ActivateChildren(false);
+                }
                 needUpdateWarningMessage = false;
             }
         }
 
         IEnumerator DisplayLimitedInTime()
         {
-            transform.ActivateChildren(true);
             yield return new WaitForSeconds(1);
-            transform.ActivateChildren(false);
             wantWarningMessageDisplayed = false;
             needUpdateWarningMessage = true;
         }
@@ -89,6 +89,7 @@ namespace TeleopReachy
         void HideWarningMessage()
         {
             wantWarningMessageDisplayed = false;
+            needUpdateWarningMessage = true;
         }
     }
 }
