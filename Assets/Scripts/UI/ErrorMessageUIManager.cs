@@ -48,14 +48,14 @@ namespace TeleopReachy
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
             robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);
 
-            // errorManager = RobotDataManager.Instance.ErrorManager;
-            // errorManager.event_OnWarningMotorsTemperatures.AddListener(WarningMotorTemperature);
+            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager.event_OnWarningMotorsTemperatures.AddListener(WarningMotorTemperature);
             // errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
             // errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);
-            // errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
+            errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
 
-            // errorManager.event_OnErrorMotorsTemperatures.AddListener(ErrorMotorTemperature);
-            // errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
+            errorManager.event_OnErrorMotorsTemperatures.AddListener(ErrorMotorTemperature);
+            errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
 
             HideWarningMessage();
         }
@@ -100,8 +100,8 @@ namespace TeleopReachy
                     motorsErrorPanel.GetChild(3).GetComponent<Text>().text = errorText;
                     motorsErrorPanel.GetChild(0).GetComponent<Image>().color = ColorsManager.error_red;
                 }
-                // if(wasWarningTemperature) motorsWarningValue = StartCoroutine(ReinitializeMotorsWarningValue(3));
-                // if(wasErrorTemperature) motorsErrorValue = StartCoroutine(ReinitializeMotorsErrorValue(3));
+                if(wasWarningTemperature) motorsWarningValue = StartCoroutine(ReinitializeMotorsWarningValue(3));
+                if(wasErrorTemperature) motorsErrorValue = StartCoroutine(ReinitializeMotorsErrorValue(3));
                 motorsErrorPanelDisplay = StartCoroutine(HidePanelAfterSeconds(3, motorsErrorPanel));
 
                 wasWarningTemperature = false;
@@ -116,43 +116,43 @@ namespace TeleopReachy
             previousBatteryLevel = 0;
         }
 
-        // void WarningMotorTemperature(List<JointId> motors)
-        // {
-        //     if (robotStatus.IsRobotTeleoperationActive())
-        //     {
-        //         if(motors.Count > nbMotorsWarning)
-        //         {
-        //             nbMotorsWarning = motors.Count;
-        //             wasWarningTemperature = true;
-        //             needMotorsUpdate = true;
-        //         }
-        //     }
-        // }
+        void WarningMotorTemperature(List<string> motors)
+        {
+            if (robotStatus.IsRobotTeleoperationActive())
+            {
+                if(motors.Count > nbMotorsWarning)
+                {
+                    nbMotorsWarning = motors.Count;
+                    wasWarningTemperature = true;
+                    needMotorsUpdate = true;
+                }
+            }
+        }
 
-        // IEnumerator ReinitializeMotorsWarningValue(int seconds)
-        // {
-        //     yield return new WaitForSeconds(3);
-        //     string warningText = "No motor is heating up";
-        //     motorsErrorPanel.GetChild(1).GetComponent<Text>().text = warningText;
-        // }
+        IEnumerator ReinitializeMotorsWarningValue(int seconds)
+        {
+            yield return new WaitForSeconds(3);
+            string warningText = "No motor is heating up";
+            motorsErrorPanel.GetChild(1).GetComponent<Text>().text = warningText;
+        }
 
-        // void ErrorMotorTemperature(List<JointId> motors)
-        // {
-        //     if (robotStatus.IsRobotTeleoperationActive())
-        //     {
-        //         nbMotorsError = motors.Count;
-        //         wasErrorTemperature = true;
-        //         needMotorsUpdate = true;
-        //     }
-        // }
+        void ErrorMotorTemperature(List<string> motors)
+        {
+            if (robotStatus.IsRobotTeleoperationActive())
+            {
+                nbMotorsError = motors.Count;
+                wasErrorTemperature = true;
+                needMotorsUpdate = true;
+            }
+        }
 
-        // IEnumerator ReinitializeMotorsErrorValue(int seconds)
-        // {
-        //     yield return new WaitForSeconds(3);
-        //     string warningText = "No motor in critical error";
-        //     motorsErrorPanel.GetChild(3).GetComponent<Text>().text = warningText;
-        //     motorsErrorPanel.GetChild(0).GetComponent<Image>().color = ColorsManager.error_black;
-        // }
+        IEnumerator ReinitializeMotorsErrorValue(int seconds)
+        {
+            yield return new WaitForSeconds(3);
+            string warningText = "No motor in critical error";
+            motorsErrorPanel.GetChild(3).GetComponent<Text>().text = warningText;
+            motorsErrorPanel.GetChild(0).GetComponent<Image>().color = ColorsManager.error_black;
+        }
 
         void WarningUnstablePing()
         {

@@ -10,7 +10,6 @@ namespace TeleopReachy
     public class ErrorManager : MonoBehaviour
     {
         private DataMessageManager dataController;
-        // private gRPCMobileBaseController mobileBaseController;
 
         private RobotPingWatcher robotPing;
 
@@ -39,9 +38,7 @@ namespace TeleopReachy
         {
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
-
-            // mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(CheckBatteryLevel);
+            dataController.event_OnBatteryUpdate.AddListener(CheckBatteryLevel);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
             pingsQueue = new Queue<float>();
