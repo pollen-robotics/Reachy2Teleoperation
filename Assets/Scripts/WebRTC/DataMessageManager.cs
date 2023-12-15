@@ -110,7 +110,10 @@ namespace TeleopReachy
                         {
                             LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionField.Accessor.GetValue(partState);
                             obstacleDetection = lidarDetectionStatus.Status;
-                            event_OnLidarDetectionUpdate.Invoke(obstacleDetection);
+                            if(obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
+                            {
+                                event_OnLidarDetectionUpdate.Invoke(obstacleDetection);
+                            }
                         }
                     }
                 }
