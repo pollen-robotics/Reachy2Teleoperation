@@ -33,9 +33,23 @@ namespace TeleopReachy
 
         private WebRTCData webRTCDataController;
 
+        private HandCommand lastRightHandCommand;
+        private HandCommand lastLeftHandCommand;
+        private ArmCommand lastRightArmCommand;
+        private ArmCommand lastLeftArmCommand;
+        private MobileBaseCommand lastMobileBaseCommand;
+
+        private AnyCommands commands = new AnyCommands{};
+
         void Start()
         {
             webRTCDataController = WebRTCManager.Instance.webRTCDataController;
+        }
+
+        void Update()
+        {
+            webRTCDataController.SendCommandMessage(commands);
+            commands = new AnyCommands{};
         }
 
         public void GetReachyId(Reachy.Reachy reachy)
@@ -125,63 +139,43 @@ namespace TeleopReachy
 
         public void SetHandPosition(HandPositionRequest gripperPosition)
         {
-            Bridge.AnyCommands handCommand = new Bridge.AnyCommands
+            Bridge.AnyCommand handCommand = new Bridge.AnyCommand
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        HandCommand = new Bridge.HandCommand{
-                            HandGoal = gripperPosition
-                        }
-                    }
+                HandCommand = new Bridge.HandCommand{
+                    HandGoal = gripperPosition
                 }
             };
-            webRTCDataController.SendCommandMessage(handCommand);
+            commands.Commands.Add(handCommand);
         }
 
         public void SendArmCommand(ArmCartesianGoal armGoal)
         {
-            Bridge.AnyCommands armCommand = new Bridge.AnyCommands
-            {
-                Commands = {
-                    new Bridge.AnyCommand
+            Bridge.AnyCommand armCommand = new Bridge.AnyCommand
                     {
                         ArmCommand = new Bridge.ArmCommand{
                             ArmCartesianGoal = armGoal
                         }
-                    }
-                }
-            };
-            webRTCDataController.SendCommandMessage(armCommand);
+                    };
+            commands.Commands.Add(armCommand);
         }
 
         public void SendNeckCommand(NeckGoal neckGoal)
         {
-            Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
+            Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        NeckCommand = new Bridge.NeckCommand{
-                            NeckGoal = neckGoal
-                        }
-                    }
+                NeckCommand = new Bridge.NeckCommand{
+                    NeckGoal = neckGoal
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            commands.Commands.Add(neckCommand);
         }
 
         public void SendMobileBaseCommand(TargetDirectionCommand direction)
         {
-            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            Bridge.AnyCommand mobileBaseCommand = new Bridge.AnyCommand
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        MobileBaseCommand = new Bridge.MobileBaseCommand{
-                            TargetDirection = direction
-                        }
-                    }
+                MobileBaseCommand = new Bridge.MobileBaseCommand{
+                    TargetDirection = direction
                 }
             };
             webRTCDataController.SendCommandMessage(mobileBaseCommand);
