@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class EmotionMessageUIManager : MonoBehaviour
+    public class EmotionMessageUIManager : LazyFollow
     {
         private RobotStatus robotStatus;
 
@@ -37,6 +38,8 @@ namespace TeleopReachy
 
         void Start()
         {
+            targetOffset = new Vector3(0, -0.24f, 0.50f);
+            maxDistanceAllowed = 0;
             transform.ActivateChildren(false);
             emotionImages = new Dictionary<Emotion, Texture>();
             emotionImages.Add(Emotion.Sad, sadImage);

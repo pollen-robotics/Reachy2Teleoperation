@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class WarningMessageServiceDisconnectedUIManager : MonoBehaviour
+    public class WarningMessageServiceDisconnectedUIManager : LazyFollow
     {
         private ConnectionStatus connectionStatus;
         private RobotStatus robotStatus;
@@ -30,6 +31,9 @@ namespace TeleopReachy
 
         void Start()
         {
+            targetOffset = new Vector3(0, -0.32f, 0.50f);
+            maxDistanceAllowed = 0;
+            
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;

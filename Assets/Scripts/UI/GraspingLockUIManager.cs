@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class GraspingLockUIManager : MonoBehaviour
+    public class GraspingLockUIManager : LazyFollow
     {
         private RobotStatus robotStatus;
 
@@ -16,6 +17,8 @@ namespace TeleopReachy
 
         void Start()
         {
+            targetOffset = new Vector3(0, -0.22f, 0.5f);
+            maxDistanceAllowed = 0;
             transform.ActivateChildren(false);
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnGraspingLock.AddListener(ShowMessage);
