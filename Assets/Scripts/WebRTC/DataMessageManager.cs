@@ -16,6 +16,7 @@ using Component.Orbita2D;
 using Component.Orbita3D;
 using Mobile.Base.Mobility;
 using Mobile.Base.Utility;
+using Mobile.Base.Lidar;
 using Bridge;
 
 
@@ -27,6 +28,8 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<float> event_OnBatteryUpdate;
+        public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
         private WebRTCData webRTCDataController;
 
@@ -42,6 +45,7 @@ namespace TeleopReachy
 
         public void StreamReachyState(ReachyState reachyState)
         {
+            Debug.LogError(reachyState);
             var reachyDescriptor = ReachyState.Descriptor;
             var armDescriptor = ArmState.Descriptor;
             var headDescriptor = HeadState.Descriptor;
@@ -49,6 +53,8 @@ namespace TeleopReachy
 
             Dictionary<string, float> present_position = new Dictionary<string, float>();
             Dictionary<string, float> temperatures = new Dictionary<string, float>();
+            float batteryLevel;
+            LidarObstacleDetectionEnum obstacleDetection;
 
             foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
             {
@@ -88,6 +94,24 @@ namespace TeleopReachy
                     {
                         GetParallelGripper_PresentPosition(present_position, partState, partField);
                         GetParallelGripper_Temperature(temperatures, partState, partField);
+                    }
+                    if(partState is MobileBaseState)
+                    {
+                        var batteryField = partState.Descriptor.FindFieldByName("battery_level");
+                        if(batteryField != null)
+                        {
+                            BatteryLevel battery = (BatteryLevel)batteryField.Accessor.GetValue(partState);
+                            batteryLevel = (float)battery.Level;
+                            event_OnBatteryUpdate.Invoke(batteryLevel);
+                        }
+
+                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
+                        if(lidarDetectionField != null)
+                        {
+                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionField.Accessor.GetValue(partState);
+                            obstacleDetection = lidarDetectionStatus.Status;
+                            event_OnLidarDetectionUpdate.Invoke(obstacleDetection);
+                        }
                     }
                 }
             }
