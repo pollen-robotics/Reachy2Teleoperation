@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Reachy;
-
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
@@ -56,6 +56,7 @@ namespace TeleopReachy
 
         void Start()
         {
+            // targetOffset = new Vector3(0, -0.35f, 0.74f);
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }

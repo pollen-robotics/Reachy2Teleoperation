@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.WebRTC;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.IO;
 
 public class WebRTCAVReceiver : WebRTCBase
 {
@@ -64,8 +65,9 @@ public class WebRTCAVReceiver : WebRTCBase
                     }
                     screen.material.SetTexture("_LeftTex", tex);
                 }
-                else
+                else{
                     screen.material.SetTexture("_RightTex", tex);
+                }
             };
         }
         else if (e.Track is AudioStreamTrack audio)

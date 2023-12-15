@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class ErrorMessageUIManager : MonoBehaviour
+    public class ErrorMessageUIManager : LazyFollow
     {
         [SerializeField]
         private Transform motorsErrorPanel;
@@ -44,6 +44,9 @@ namespace TeleopReachy
 
         void Start()
         {
+            targetOffset = new Vector3(0, -0.27f, 0.5f);
+            maxDistanceAllowed = 0;
+            
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
             robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);

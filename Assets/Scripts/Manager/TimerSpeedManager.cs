@@ -19,6 +19,9 @@ namespace TeleopReachy
 
         void Start()
         {
+            targetOffset = new Vector3(0, -0.15f, 0.50f);
+            maxDistanceAllowed = 0;
+
             timerCoroutine = null;
             rotateLoader = null;
 
