@@ -146,6 +146,7 @@ public class WebRTCData : WebRTCBase
 
     void OnDestroy()
     {
+        AskForDisconnection();
         _reachyCommandChannel = null;
         base.OnDestroy();
     }
@@ -153,6 +154,19 @@ public class WebRTCData : WebRTCBase
     public void SendCommandMessage(Bridge.AnyCommands _commands)
     {
         if(_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
+    }
+
+    public void AskForDisconnection()
+    {
+        Debug.LogError("AskFOrDisconnection");
+        var req = new ServiceRequest
+            {
+                Disconnect = new Disconnect
+                {
+                    ReachyId = _connectionStatus.Reachy.Id,
+                }
+            };
+            _serviceChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(req));
     }
 }
 
