@@ -28,27 +28,6 @@ public class WebRTCData : WebRTCBase
     {
         base.Start();
         dataMessageManager = TeleopReachy.DataMessageManager.Instance;
-        _commands = new Bridge.AnyCommands
-        {
-            Commands = {
-                new Bridge.AnyCommand
-                {
-                    HandCommand = new Bridge.HandCommand{
-                        HandGoal = new Reachy.Part.Hand.HandPositionRequest{
-                            Id = new Reachy.Part.PartId
-                            {
-                                Id = 5
-                            },
-                            Position = new Reachy.Part.Hand.HandPosition{
-                                ParallelGripper = new Reachy.Part.Hand.ParallelGripperPosition{
-                                    Position = 50.0f
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        };
     }
 
     protected override void WebRTCCall()
