@@ -63,7 +63,6 @@ public class WebRTCData : WebRTCBase
             int numVal = Int32.Parse(num) + 1;
             filePath = folder + "teleop_record__" + numVal + "__.txt";
         }
-        File.Create(filePath);
     }
 
     protected override void WebRTCCall()
@@ -165,17 +164,9 @@ public class WebRTCData : WebRTCBase
         base.OnDestroy();
     }
 
-    void Update()
-    {
-        using (StreamWriter writer = new StreamWriter(filePath))
-        {
-            writer.WriteLine("coucou");
-        }
-    }
-
     public void SendCommandMessage(Bridge.AnyCommands _commands)
     {
-        using (StreamWriter writer = new StreamWriter(filePath))
+        using (StreamWriter writer = File.AppendText(filePath))
         {
             writer.WriteLine(_commands.Commands);
         }
