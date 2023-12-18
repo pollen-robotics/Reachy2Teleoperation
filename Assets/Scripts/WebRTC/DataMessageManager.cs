@@ -178,7 +178,7 @@ namespace TeleopReachy
                     TargetDirection = direction
                 }
             };
-            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+            commands.Commands.Add(mobileBaseCommand);
         }
 
         public void TurnArmOff(PartId id)
