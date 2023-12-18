@@ -3,10 +3,12 @@ using Unity.WebRTC;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Bridge;
 using Reachy;
+
 
 public class WebRTCData : WebRTCBase
 {
@@ -23,6 +25,10 @@ public class WebRTCData : WebRTCBase
 
     public UnityEvent<bool> event_DataControllerStatusHasChanged;
     private bool isRobotInRoom = false;
+
+    string folder = @"C:\Users\Demo\Dev\save_teleop\";
+    string [] fileEntries;
+    string filePath;
 
     protected override void Start()
     {
@@ -49,6 +55,15 @@ public class WebRTCData : WebRTCBase
                 }
             }
         };
+
+        fileEntries = Directory.GetFiles(folder);
+        if(fileEntries.Length == 0) filePath = folder + "teleop_record__0__.txt";
+        else {
+            string num = fileEntries[fileEntries.Length-1].Split("__")[1];
+            int numVal = Int32.Parse(num) + 1;
+            filePath = folder + "teleop_record__" + numVal + "__.txt";
+        }
+        File.Create(filePath);
     }
 
     protected override void WebRTCCall()
@@ -150,8 +165,20 @@ public class WebRTCData : WebRTCBase
         base.OnDestroy();
     }
 
+    void Update()
+    {
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            writer.WriteLine("coucou");
+        }
+    }
+
     public void SendCommandMessage(Bridge.AnyCommands _commands)
     {
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            writer.WriteLine(_commands.Commands);
+        }
         if(_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
     }
 }
