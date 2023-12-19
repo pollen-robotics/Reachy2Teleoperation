@@ -48,7 +48,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            webRTCDataController.SendCommandMessage(commands);
+            if(commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
             commands = new AnyCommands{};
         }
 
