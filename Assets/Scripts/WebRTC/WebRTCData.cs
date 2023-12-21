@@ -158,7 +158,7 @@ public class WebRTCData : WebRTCBase
 
     }
 
-    void OnDestroy()
+    new void OnDestroy()
     {
         _reachyCommandChannel = null;
         base.OnDestroy();
