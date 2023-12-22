@@ -26,7 +26,7 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
-            targetOffset = new Vector3(0, -0.13f, 0.5f);
+            targetOffset = new Vector3(0, -0.13f, 0.8f);
             maxDistanceAllowed = 0;
             
             robotStatus = RobotDataManager.Instance.RobotStatus;
