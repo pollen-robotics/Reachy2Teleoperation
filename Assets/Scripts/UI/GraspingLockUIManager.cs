@@ -17,7 +17,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            targetOffset = new Vector3(0, -0.22f, 0.5f);
+            targetOffset = new Vector3(0, -0.22f, 0.8f);
             maxDistanceAllowed = 0;
             transform.ActivateChildren(false);
             robotStatus = RobotDataManager.Instance.RobotStatus;
