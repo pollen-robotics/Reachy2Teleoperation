@@ -30,10 +30,13 @@ public class WebRTCData : WebRTCBase
     string [] fileEntries;
     string filePath;
 
+    float current_time;
+
     protected override void Start()
     {
         base.Start();
         dataMessageManager = TeleopReachy.DataMessageManager.Instance;
+        current_time = 0;
         _commands = new Bridge.AnyCommands
         {
             Commands = {
@@ -168,7 +171,9 @@ public class WebRTCData : WebRTCBase
     {
         using (StreamWriter writer = File.AppendText(filePath))
         {
-            writer.WriteLine(_commands.Commands);
+            current_time += Time.deltaTime * 1000;
+            string toLog = "timestamp: " + System.Math.Round(current_time) + "; " + _commands.Commands;
+            writer.WriteLine(toLog);
         }
         if(_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
     }
