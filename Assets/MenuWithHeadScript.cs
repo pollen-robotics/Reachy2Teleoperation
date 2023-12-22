@@ -7,7 +7,7 @@ public class MenuWithHeadScript : LazyFollow
     // Start is called before the first frame update
     void Start()
     {
-        targetOffset = new Vector3(0.0f, 0.0f, 0.5f);   
+        targetOffset = new Vector3(0.0f, 0.0f, 0.8f);   
         maxDistanceAllowed = 0;
     }
 

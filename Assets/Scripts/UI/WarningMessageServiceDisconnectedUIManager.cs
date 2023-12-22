@@ -31,7 +31,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            targetOffset = new Vector3(0, -0.32f, 0.50f);
+            targetOffset = new Vector3(0, -0.32f, 0.8f);
             maxDistanceAllowed = 0;
             
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
