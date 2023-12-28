@@ -2,18 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
-public class MenuWithHeadScript : LazyFollow
+
+namespace TeleopReachy
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MenuWithHeadScript : LazyFollow
     {
-        targetOffset = new Vector3(0.0f, 0.0f, 0.8f);   
-        maxDistanceAllowed = 0;
+        // private ControllersManager controllers;
+        // Start is called before the first frame update
+        void Start()
+        {
+            // controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0.0f, 0.0f, 0.6f);   
+            // }
+            // else{
+            targetOffset = new Vector3(0.0f, 0.0f, 0.8f);   
+            // }
+            maxDistanceAllowed = 0;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
