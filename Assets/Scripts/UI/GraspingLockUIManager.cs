@@ -14,10 +14,20 @@ namespace TeleopReachy
 
         [SerializeField]
         private Text infoMessage;
+        
+        private ControllersManager controllers;
 
         void Start()
         {
-            targetOffset = new Vector3(0, -0.22f, 0.8f);
+            
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.22f, 0.6f);
+            }
+            else{
+                targetOffset = new Vector3(0, -0.22f, 0.8f);
+            }
             maxDistanceAllowed = 0;
             transform.ActivateChildren(false);
             robotStatus = RobotDataManager.Instance.RobotStatus;

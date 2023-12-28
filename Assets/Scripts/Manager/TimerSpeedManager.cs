@@ -17,9 +17,18 @@ namespace TeleopReachy
         Coroutine timerCoroutine;
         Coroutine rotateLoader;
 
+        // private ControllersManager controllers;
         void Start()
         {
+            
+            // controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0, -0.15f, 0.5f);
+            // }
+            // else{ // If oculus 3 or other
             targetOffset = new Vector3(0, -0.15f, 0.8f);
+            // }
             maxDistanceAllowed = 0;
 
             timerCoroutine = null;
