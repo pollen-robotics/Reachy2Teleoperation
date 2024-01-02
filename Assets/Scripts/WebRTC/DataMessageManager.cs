@@ -159,7 +159,7 @@ namespace TeleopReachy
             commands.Commands.Add(armCommand);
         }
 
-        public void SendNeckCommand(NeckGoal neckGoal)
+        public void SendNeckCommand(NeckJointGoal neckGoal)
         {
             Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
