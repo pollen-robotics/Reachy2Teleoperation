@@ -57,7 +57,7 @@ namespace TeleopReachy
             dataController.SetHandPosition(rightGripperCommand);
         }
 
-        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
+        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
             dataController.SendArmCommand(leftArmRequest);
             dataController.SendArmCommand(rightArmRequest);
@@ -336,7 +336,7 @@ namespace TeleopReachy
             if (robotConfig.HasHead())
             {
             
-                NeckGoal neckGoal = new NeckGoal { Id = robotConfig.partsId["head"], Rotation = new Rotation3d { Q = unitQ } };
+                NeckJointGoal neckGoal = new NeckJointGoal { Id = robotConfig.partsId["head"], JointsGoal = new NeckOrientation { Rotation = new Rotation3d { Q = unitQ } } };
                 dataController.SendNeckCommand(neckGoal);
             }
         }

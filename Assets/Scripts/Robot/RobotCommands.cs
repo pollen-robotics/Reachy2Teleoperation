@@ -47,9 +47,9 @@ namespace TeleopReachy
 
         // protected abstract void SendJointsCommands(JointsCommand jointsCommand);
         protected abstract void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand);
-        protected abstract void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest);
+        protected abstract void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest);
 
-        public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
+        public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
             leftArmRequest.Id = robotConfig.partsId["l_arm"];
             rightArmRequest.Id = robotConfig.partsId["r_arm"];
