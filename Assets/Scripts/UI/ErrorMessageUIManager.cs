@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class ErrorMessageUIManager : MonoBehaviour
+    public class ErrorMessageUIManager : LazyFollow
     {
         [SerializeField]
         private Transform motorsErrorPanel;
@@ -41,9 +41,21 @@ namespace TeleopReachy
         private string warningPingText;
         private string warningBatteryText;
         private Color32 warningBatteryColor;
+        private ControllersManager controllers;
 
         void Start()
         {
+            
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.27f, 0.8f);
+            }
+            else {
+                targetOffset = new Vector3(0, -0.27f, 0.7f);
+            }
+            maxDistanceAllowed = 0;
+            
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
             robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);
