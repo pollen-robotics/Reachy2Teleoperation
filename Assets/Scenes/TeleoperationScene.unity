@@ -1021,7 +1021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f093a8021ce9bc443a5de613579a73ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  error: {fileID: 1865267273}
 --- !u!1 &258652890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,6 +1720,18 @@ PrefabInstance:
       addedObject: {fileID: 1684531196}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b, type: 3}
+--- !u!114 &431102643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3884292885015161316, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
+    type: 3}
+  m_PrefabInstance: {fileID: 431102642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58dc7fcd30b834b47b3135c5d9750812, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &431102648 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3962830348483068899, guid: 38b5d0ddf75e8d042afa5cc2ae1d948b,
@@ -4133,7 +4144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c05f8e018cfcd1418aece362891f676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userMobilityInput: {fileID: 0}
+  reachyController: {fileID: 431102643}
   indicator: {fileID: 1216398767}
   arrow: {fileID: 277626011}
   arrowMobilityCommand: {fileID: 665542929}
