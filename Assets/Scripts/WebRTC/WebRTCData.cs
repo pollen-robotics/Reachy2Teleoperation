@@ -59,7 +59,7 @@ namespace TeleopReachy
                         }
                     }
                 }
-            }
+            };
             fileEntries = Directory.GetFiles(folder);
             if(fileEntries.Length == 0) filePath = folder + "teleop_record__0__.txt";
             else {
