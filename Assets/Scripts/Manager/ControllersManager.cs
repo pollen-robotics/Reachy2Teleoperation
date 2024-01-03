@@ -12,13 +12,15 @@ namespace TeleopReachy
     {
         public enum SupportedDevices
         {
-            Oculus, HTCVive, ValveIndex
+            Oculus, HTCVive, ValveIndex, MetaQuest3
         }
 
         public UnityEngine.XR.InputDevice rightHandDevice;
         public UnityEngine.XR.InputDevice leftHandDevice;
+        public UnityEngine.XR.InputDevice headDevice;
 
         public SupportedDevices controllerDeviceType;
+        public SupportedDevices headsetType;
 
         public UnityEvent event_OnDevicesUpdate;
 
@@ -38,13 +40,22 @@ namespace TeleopReachy
         {
             var rightDevices = new List<UnityEngine.XR.InputDevice>();
             var leftDevices = new List<UnityEngine.XR.InputDevice>();
+            var headDevices = new List<UnityEngine.XR.InputDevice>();
             UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.RightHand, rightDevices);
             UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, leftDevices);
+            UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.Head, headDevices);
 
             if (rightDevices.Count == 1) rightHandDevice = rightDevices[0];
             else if (rightDevices.Count > 1) Debug.LogError("Too many right controllers detected");
             if (leftDevices.Count == 1) leftHandDevice = leftDevices[0];
             else if (leftDevices.Count > 1) Debug.LogError("Too many left controllers detected");
+
+            if(headDevices.Count == 1) 
+            {
+                headDevice = headDevices[0];
+                if(headDevice.name.Contains("Oculus")) headsetType = SupportedDevices.Oculus;
+                if(headDevice.name.Contains("Meta")) headsetType = SupportedDevices.MetaQuest3;
+            }
 
             if(rightDevices.Count != 0)
             {

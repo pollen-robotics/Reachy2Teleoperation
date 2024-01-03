@@ -20,6 +20,21 @@ namespace TeleopReachy
 
         float alpha = 1.0f;
 
+        private ControllersManager controllers;
+
+        void Start()
+        {
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                Debug.Log("Oculus 2 detected");
+                transform.position = new Vector3(-159.0f, -595.0f, 18473.0f);
+            }
+            else{
+                Debug.Log("Oculus 3 or other detected");
+            }
+        }
+
         public void SetImageTransparent()
         {
             alpha = 0.5f;
