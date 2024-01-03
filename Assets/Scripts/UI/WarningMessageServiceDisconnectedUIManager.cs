@@ -28,20 +28,18 @@ namespace TeleopReachy
         private Coroutine limitDisplayInTime;
 
         private UserMobilityInput userMobilityInput;
-        // private ControllersManager controllers;
+        private ControllersManager controllers;
 
         void Start()
         {
-            
-            
-            // controllers = ActiveControllerManager.Instance.ControllersManager;
-            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            // {
-            //     targetOffset = new Vector3(0, -0.32f, 0.6f);
-            // }
-            // else{ // If oculus 3 or other
-            targetOffset = new Vector3(0, -0.32f, 0.8f);
-            // }
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.32f, 0.8f);
+            }
+            else{ // If oculus 3 or other
+                targetOffset = new Vector3(0, -0.32f, 0.7f);
+            }
             maxDistanceAllowed = 0;
             
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;

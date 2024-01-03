@@ -19,14 +19,13 @@ namespace TeleopReachy
 
         void Start()
         {
-            
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
-                targetOffset = new Vector3(0, -0.22f, 0.6f);
-            }
-            else{
                 targetOffset = new Vector3(0, -0.22f, 0.8f);
+            }
+            else {
+                targetOffset = new Vector3(0, -0.22f, 0.7f);
             }
             maxDistanceAllowed = 0;
             transform.ActivateChildren(false);

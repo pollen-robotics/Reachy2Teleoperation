@@ -41,19 +41,19 @@ namespace TeleopReachy
         private string warningPingText;
         private string warningBatteryText;
         private Color32 warningBatteryColor;
-        // private ControllersManager controllers;
+        private ControllersManager controllers;
 
         void Start()
         {
             
-            // controllers = ActiveControllerManager.Instance.ControllersManager;
-            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            // {
-            //     targetOffset = new Vector3(0, -0.27f, 0.6f);
-            // }
-            // else{
-            targetOffset = new Vector3(0, -0.27f, 0.8f);
-            // }
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.27f, 0.8f);
+            }
+            else {
+                targetOffset = new Vector3(0, -0.27f, 0.7f);
+            }
             maxDistanceAllowed = 0;
             
             robotStatus = RobotDataManager.Instance.RobotStatus;

@@ -44,6 +44,8 @@ namespace TeleopReachy
         [SerializeField]
         private Transform arrowLeftRotationCommand;
 
+        private ControllersManager controllers;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -56,7 +58,11 @@ namespace TeleopReachy
 
         void Start()
         {
-            // targetOffset = new Vector3(0, -0.35f, 0.74f);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                transform.localPosition = new Vector3(-6, -189, -479);
+            }
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }
