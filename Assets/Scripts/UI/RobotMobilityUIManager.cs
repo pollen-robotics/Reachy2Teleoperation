@@ -12,7 +12,7 @@ namespace TeleopReachy
     public class RobotMobilityUIManager : MonoBehaviour
     {
         [SerializeField]
-        // private ReachyController.ReachyController reachyController;
+        private ReachyController.ReachyController reachyController;
 
         private UserMobilityInput userMobilityInput = null;
         private RobotStatus robotStatus;
@@ -112,8 +112,7 @@ namespace TeleopReachy
             if (userMobilityInput == null)
                 return;
 
-            // float orbita_yaw = -reachyController.headOrientation[2];
-            float orbita_yaw = 0;
+            float orbita_yaw = -reachyController.headOrientation[2];
             if (orbita_yaw > 180)
             {
                 orbita_yaw -= 360;
