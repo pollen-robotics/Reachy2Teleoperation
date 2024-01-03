@@ -41,6 +41,7 @@ namespace TeleopReachy
             else {
                 targetOffset = new Vector3(0, -0.22f, 0.7f);
             }
+            maxDistanceAllowed = 0;
             dataController = DataMessageManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
