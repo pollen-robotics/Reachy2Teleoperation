@@ -79,7 +79,7 @@ namespace TeleopReachy
     //         SendGrippersCommands(pos_left_gripper, pos_right_gripper);
     //     }
 
-        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckGoal neckRequest)
+        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
             // reachyFakeServer.SendFullBodyCartesianCommands(bodyCommand);
         }
