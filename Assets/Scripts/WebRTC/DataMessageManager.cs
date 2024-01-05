@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using Grpc.Core;
 using System.Threading.Tasks;
 
 using Google.Protobuf;
@@ -15,6 +14,9 @@ using Reachy.Kinematics;
 using Component;
 using Component.Orbita2D;
 using Component.Orbita3D;
+using Mobile.Base.Mobility;
+using Mobile.Base.Utility;
+using Mobile.Base.Lidar;
 using Bridge;
 
 
@@ -26,12 +28,28 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<float> event_OnBatteryUpdate;
+        public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
         private WebRTCData webRTCDataController;
+
+        private HandCommand lastRightHandCommand;
+        private HandCommand lastLeftHandCommand;
+        private ArmCommand lastRightArmCommand;
+        private ArmCommand lastLeftArmCommand;
+        private MobileBaseCommand lastMobileBaseCommand;
+
+        private AnyCommands commands = new AnyCommands{};
 
         void Start()
         {
             webRTCDataController = WebRTCManager.Instance.webRTCDataController;
+        }
+
+        void Update()
+        {
+            if(commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
+            commands = new AnyCommands{};
         }
 
         public void GetReachyId(Reachy.Reachy reachy)
@@ -48,6 +66,8 @@ namespace TeleopReachy
 
             Dictionary<string, float> present_position = new Dictionary<string, float>();
             Dictionary<string, float> temperatures = new Dictionary<string, float>();
+            float batteryLevel;
+            LidarObstacleDetectionEnum obstacleDetection;
 
             foreach (var partField in reachyDescriptor.Fields.InDeclarationOrder())
             {
@@ -88,6 +108,29 @@ namespace TeleopReachy
                         GetParallelGripper_PresentPosition(present_position, partState, partField);
                         GetParallelGripper_Temperature(temperatures, partState, partField);
                     }
+                    if(partState is MobileBaseState)
+                    {
+                        var batteryField = partState.Descriptor.FindFieldByName("battery_level");
+                        var batteryValue = batteryField.Accessor.GetValue(partState);
+                        if(batteryValue != null)
+                        {
+                            BatteryLevel battery = (BatteryLevel)batteryValue;
+                            batteryLevel = (float)battery.Level;
+                            event_OnBatteryUpdate.Invoke(batteryLevel);
+                        }
+
+                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
+                        var lidarDetectionValue = lidarDetectionField.Accessor.GetValue(partState);
+                        if(lidarDetectionValue != null)
+                        {
+                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionValue;
+                            obstacleDetection = lidarDetectionStatus.Status;
+                            if(obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
+                            {
+                                event_OnLidarDetectionUpdate.Invoke(obstacleDetection);
+                            }
+                        }
+                    }
                 }
             }
             event_OnStateUpdatePresentPositions.Invoke(present_position);
@@ -96,50 +139,46 @@ namespace TeleopReachy
 
         public void SetHandPosition(HandPositionRequest gripperPosition)
         {
-            Bridge.AnyCommands handCommand = new Bridge.AnyCommands
+            Bridge.AnyCommand handCommand = new Bridge.AnyCommand
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        HandCommand = new Bridge.HandCommand{
-                            HandGoal = gripperPosition
-                        }
-                    }
+                HandCommand = new Bridge.HandCommand{
+                    HandGoal = gripperPosition
                 }
             };
-            webRTCDataController.SendCommandMessage(handCommand);
+            commands.Commands.Add(handCommand);
         }
 
         public void SendArmCommand(ArmCartesianGoal armGoal)
         {
-            Bridge.AnyCommands armCommand = new Bridge.AnyCommands
-            {
-                Commands = {
-                    new Bridge.AnyCommand
+            Bridge.AnyCommand armCommand = new Bridge.AnyCommand
                     {
                         ArmCommand = new Bridge.ArmCommand{
                             ArmCartesianGoal = armGoal
                         }
-                    }
-                }
-            };
-            webRTCDataController.SendCommandMessage(armCommand);
+                    };
+            commands.Commands.Add(armCommand);
         }
 
         public void SendNeckCommand(NeckGoal neckGoal)
         {
-            Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
+            Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        NeckCommand = new Bridge.NeckCommand{
-                            NeckGoal = neckGoal
-                        }
-                    }
+                NeckCommand = new Bridge.NeckCommand{
+                    NeckGoal = neckGoal
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            commands.Commands.Add(neckCommand);
+        }
+
+        public void SendMobileBaseCommand(TargetDirectionCommand direction)
+        {
+            Bridge.AnyCommand mobileBaseCommand = new Bridge.AnyCommand
+            {
+                MobileBaseCommand = new Bridge.MobileBaseCommand{
+                    TargetDirection = direction
+                }
+            };
+            commands.Commands.Add(mobileBaseCommand);
         }
 
         public void TurnArmOff(PartId id)
@@ -174,6 +213,24 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
+        public void TurnMobileBaseOff()
+        {
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.FreeWheel };
+
+            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        MobileBaseCommand = new Bridge.MobileBaseCommand{
+                            MobileBaseMode = zuuuMode
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+        }
+
         public void TurnArmOn(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
@@ -190,7 +247,7 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(armCommand);
         }
 
-         public void TurnHeadOn(PartId id)
+        public void TurnHeadOn(PartId id)
         {
             Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
             {
@@ -204,6 +261,24 @@ namespace TeleopReachy
                 }
             };
             webRTCDataController.SendCommandMessage(neckCommand);
+        }
+
+        public void TurnMobileBaseOn()
+        {
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
+
+            Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        MobileBaseCommand = new Bridge.MobileBaseCommand{
+                            MobileBaseMode = zuuuMode
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(mobileBaseCommand);
         }
 
         private void GetOrbita3D_PresentPosition(

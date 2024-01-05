@@ -45,12 +45,12 @@ namespace TeleopReachy
             if (robotStatus.IsMobilityOn())
             {
                 mobilityButton.colors = ColorsManager.colorsActivated;
-                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobility ON";
+                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobile base ON";
             }
             else
             {
                 mobilityButton.colors = ColorsManager.colorsDeactivated;
-                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobility OFF";
+                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobile base OFF";
             }
         }
 
@@ -67,24 +67,24 @@ namespace TeleopReachy
 
         void CheckMobileBasePresence()
         {
-            if (robotConfig.HasMobilePlatform() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase())
             {
                 isInteractable = true;
                 if (robotStatus.IsMobilityOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
-                    buttonText = "Mobility ON";
+                    buttonText = "Mobile base ON";
                 }
                 else
                 {
                     buttonColor = ColorsManager.colorsDeactivated;
-                    buttonText = "Mobility OFF";
+                    buttonText = "Mobile base OFF";
                 }
             }
             else
             {
                 buttonColor = ColorsManager.colorsDeactivated;
-                buttonText = "Mobility OFF";
+                buttonText = "Mobile base OFF";
                 isInteractable = false;
             }
             needUpdateButton = true;

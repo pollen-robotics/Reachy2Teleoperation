@@ -16,7 +16,7 @@ namespace TeleopReachy
         private RawImage batteryIcon;
 
         private ErrorManager errorManager;
-        // private gRPCMobileBaseController mobileBaseController;
+        private DataMessageManager dataController;
 
         private Coroutine warningEnd;
 
@@ -42,15 +42,14 @@ namespace TeleopReachy
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
             errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
 
-            // mobileBaseController = gRPCManager.Instance.gRPCMobileBaseController;
-            // mobileBaseController.event_OnMobileBaseBatteryLevelUpdate.AddListener(UpdateBatteryLevel);
-            // mobileBaseController.event_OnMobileRoomStatusHasChanged.AddListener(CheckServicePresence);
+            dataController = DataMessageManager.Instance;
+            dataController.event_OnBatteryUpdate.AddListener(UpdateBatteryLevel);
 
             needUpdateUI = true;
             hasWarningActivated = false;
             isBatteryInfoAvailable = false;
 
-            CheckServicePresence();
+            ConfigChanged();
         }
 
         // Update is called once per frame
@@ -58,7 +57,7 @@ namespace TeleopReachy
         {
             if(needUpdateUI)
             {
-                if(robotConfig.HasMobilePlatform())
+                if(robotConfig.HasMobileBase())
                 {
                     if(isBatteryInfoAvailable)
                     {
@@ -130,23 +129,6 @@ namespace TeleopReachy
             needUpdateUI = true;
         }
 
-        private void CheckServicePresence()
-        {
-            if(WebRTCManager.Instance.ConnectionStatus.IsRobotInMobileRoom())
-            {
-                CheckServicePresence(true);
-            }
-        }
-
-        private void CheckServicePresence(bool isPresent)
-        {
-            isBatteryInfoAvailable = isPresent;
-            batteryLevelValue = errorManager.previousBatteryLevel;
-            errorManager.CheckBatteryStatus();
-            needUpdateUI = true;
-        }
-
-
         IEnumerator KeepOneSecond()
         {
             yield return new WaitForSeconds(1);
@@ -155,6 +137,12 @@ namespace TeleopReachy
 
         void ConfigChanged()
         {
+            if(robotConfig.HasMobileBase())
+            {
+                isBatteryInfoAvailable = true;
+            }
+            batteryLevelValue = errorManager.previousBatteryLevel;
+            errorManager.CheckBatteryStatus();
             needUpdateUI = true;
         }
     }
