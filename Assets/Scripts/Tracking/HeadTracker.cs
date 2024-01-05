@@ -11,7 +11,7 @@ namespace TeleopReachy
     public class HeadTracker : MonoBehaviour
     {
         private UnityEngine.Quaternion initialRotation;
-        private NeckGoal headTarget;
+        private NeckJointGoal headTarget;
 
         void Update()
         {
@@ -24,21 +24,23 @@ namespace TeleopReachy
             // Amplify rotation
             headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.5f);
 
-            headTarget = new NeckGoal
+            headTarget = new NeckJointGoal
             {
-                Rotation = new Rotation3d {
-                    Q = new Reachy.Kinematics.Quaternion
-                    {
-                        W = headQuat.w,
-                        X = -headQuat.z,
-                        Y = headQuat.x,
-                        Z = -headQuat.y,
+                JointsGoal = new NeckOrientation {
+                    Rotation = new Rotation3d {
+                        Q = new Reachy.Kinematics.Quaternion
+                        {
+                            W = headQuat.w,
+                            X = -headQuat.z,
+                            Y = headQuat.x,
+                            Z = -headQuat.y,
+                        }
                     }
                 }
             };
         }
 
-        public NeckGoal GetHeadTarget()
+        public NeckJointGoal GetHeadTarget()
         {
             return headTarget;
         }
