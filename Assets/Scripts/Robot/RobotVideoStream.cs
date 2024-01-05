@@ -12,22 +12,24 @@ namespace TeleopReachy
 {
     public class RobotVideoStream : MonoBehaviour
     {
-        // private gRPCVideoController videoController;
-        // private RobotStatus robotStatus;
+        private WebRTCAVReceiver audioVideoController;
 
-        // void Start()
-        // {
-        //     videoController = gRPCManager.Instance.gRPCVideoController;
-        //     // videoController.OnVideoStreamReady += ResetOverlayTexture;
-        //     // videoController.OnVideoRoomStatusHasChanged += CheckCurrentStatus;
+        private Texture leftEyeStream;
 
-        //     robotStatus = RobotDataManager.Instance.RobotStatus;
-        // }
+        void Start()
+        {
+            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
+            audioVideoController.event_OnVideoTextureReceived.AddListener(UpdateVideoStream);
+        }
 
-        // void Update()
-        // {
-        //     videoController.GetImage(CameraId.Left);
-        // }
+        void UpdateVideoStream (Texture tex) 
+        {
+            leftEyeStream = tex;
+        }
 
+        public Texture GetLeftEyeTexture() 
+        {
+            return leftEyeStream;
+        }
     }
 }
