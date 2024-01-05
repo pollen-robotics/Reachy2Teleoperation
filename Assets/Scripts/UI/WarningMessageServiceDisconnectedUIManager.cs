@@ -5,11 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class WarningMessageServiceDisconnectedUIManager : MonoBehaviour
+    public class WarningMessageServiceDisconnectedUIManager : LazyFollow
     {
         private ConnectionStatus connectionStatus;
         private RobotStatus robotStatus;
@@ -27,9 +28,20 @@ namespace TeleopReachy
         private Coroutine limitDisplayInTime;
 
         private UserMobilityInput userMobilityInput;
+        private ControllersManager controllers;
 
         void Start()
         {
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.32f, 0.8f);
+            }
+            else{ // If oculus 3 or other
+                targetOffset = new Vector3(0, -0.32f, 0.7f);
+            }
+            maxDistanceAllowed = 0;
+            
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;

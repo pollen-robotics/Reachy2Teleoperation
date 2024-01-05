@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class LoaderToStopManager : MonoBehaviour
+    public class LoaderToStopManager : LazyFollow
     {
         [SerializeField]
         private Transform loaderA;
@@ -21,10 +22,21 @@ namespace TeleopReachy
         private OfflineMenuManager offlineMenuManager;
 
         private OfflineMenuManager.OfflineMenuItem previousItem;
+        // private ControllersManager controllers;
 
         // Start is called before the first frame update
         void Start()
         {
+            // controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0, -0.13f, 0.6f);
+            // }
+            // else{
+            targetOffset = new Vector3(0, -0.13f, 0.8f);
+            // }
+            maxDistanceAllowed = 0;
+            
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideMenu);
 
