@@ -37,23 +37,6 @@ namespace TeleopReachy
             CheckConfig();
         }
 
-        // private void UpdateConfig()
-        // {
-        //     Debug.LogError("expected text : " + mobilePlaformConfigText);
-        //     transform.GetChild(0).GetComponent<Text>().color = rightArmConfigColor;
-        //     transform.GetChild(0).GetComponent<Text>().text = rightArmConfigText;
-        //     transform.GetChild(0).GetChild(0).GetComponent<Image>().color = rightArmConfigColor;
-        //     transform.GetChild(1).GetComponent<Text>().color = leftArmConfigColor;
-        //     transform.GetChild(1).GetComponent<Text>().text = leftArmConfigText;
-        //     transform.GetChild(1).GetChild(0).GetComponent<Image>().color = leftArmConfigColor;
-        //     transform.GetChild(2).GetComponent<Text>().color = headConfigColor;
-        //     transform.GetChild(2).GetComponent<Text>().text = headConfigText;
-        //     transform.GetChild(2).GetChild(0).GetComponent<Image>().color = headConfigColor;
-        //     transform.GetChild(3).GetComponent<Text>().color = mobilePlaformConfigColor;
-        //     transform.GetChild(3).GetComponent<Text>().text = mobilePlaformConfigText;
-        //     transform.GetChild(3).GetChild(0).GetComponent<Image>().color = mobilePlaformConfigColor;
-        // }
-
         private void Update()
         {
             if(needUpdateConfig)
@@ -110,6 +93,17 @@ namespace TeleopReachy
                     leftArmConfigText = "No left arm";
                     leftArmConfigColor = ColorsManager.white;
                 }
+
+                if (robotConfig.HasMobileBase())
+                {
+                    mobilePlaformConfigText = "Mobile base detected";
+                    mobilePlaformConfigColor = ColorsManager.green;
+                }
+                else
+                {
+                    mobilePlaformConfigText = "No mobile base";
+                    mobilePlaformConfigColor = ColorsManager.white;
+                }
             }
             else
             {
@@ -119,18 +113,10 @@ namespace TeleopReachy
                 rightArmConfigColor = ColorsManager.red;
                 leftArmConfigText = "No left arm status";
                 leftArmConfigColor = ColorsManager.red;
+                mobilePlaformConfigText = "No mobile base status";
+                mobilePlaformConfigColor = ColorsManager.red;
             }
 
-            if(robotConfig.HasMobilePlatform())
-            {
-                mobilePlaformConfigText = "Mobile platform detected";
-                mobilePlaformConfigColor = ColorsManager.green;
-            }
-            else
-            {
-                mobilePlaformConfigText = "No mobile platform";
-                mobilePlaformConfigColor = ColorsManager.white;
-            }
             needUpdateConfig = true;
         }
 
@@ -150,6 +136,8 @@ namespace TeleopReachy
                     rightArmConfigColor = ColorsManager.blue;
                     leftArmConfigText = "Getting left arm status...";
                     leftArmConfigColor = ColorsManager.blue;
+                    mobilePlaformConfigText = "Getting mobile base status...";
+                    mobilePlaformConfigColor = ColorsManager.blue;
                 }
                 else
                 {
@@ -161,26 +149,6 @@ namespace TeleopReachy
                     leftArmConfigColor = ColorsManager.red;
                     mobilePlaformConfigText = "No mobile platform status";
                     mobilePlaformConfigColor = ColorsManager.red;
-                }
-            }
-
-            // Handle mobile platform differently
-            if (robotConfig.HasMobilePlatform())
-            {
-                mobilePlaformConfigText = "Mobile platform detected";
-                mobilePlaformConfigColor = ColorsManager.green;
-            }
-            else
-            {
-                if (connectionStatus.AreRobotServicesRestarting() && !robotConfig.GotReachyConfig())
-                {
-                    mobilePlaformConfigText = "Getting mobile platform status...";
-                    mobilePlaformConfigColor = ColorsManager.blue;
-                }
-                else
-                {
-                    mobilePlaformConfigText = "No mobile platform";
-                    mobilePlaformConfigColor = ColorsManager.white;
                 }
             }
             needUpdateConfig = true;

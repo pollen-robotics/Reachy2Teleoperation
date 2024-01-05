@@ -14,17 +14,12 @@ namespace TeleopReachy
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
-        private bool isRobotInMobileRoom;
         private bool isRobotInRestartRoom;
         private bool hasRobotJustLeftDataRoom;
 
         private bool isRobotReady;
 
         private bool areRobotServicesRestarting;
-
-        // private gRPCDataController dataController;
-        // private gRPCVideoController videoController;
-        // private gRPCMobileBaseController mobileController;
 
         private WebRTCAVReceiver audioVideoController;
         private WebRTCData dataController;
@@ -44,7 +39,6 @@ namespace TeleopReachy
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            // mobileController = gRPCManager.Instance.gRPCMobileBaseController;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -55,7 +49,6 @@ namespace TeleopReachy
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
-            isRobotInMobileRoom = false;
             isRobotInRestartRoom = false;
 
             isRobotReady = false;
@@ -72,7 +65,6 @@ namespace TeleopReachy
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            // if (mobileController != null) mobileController.event_OnMobileRoomStatusHasChanged.AddListener(MobileControllerStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }
@@ -105,11 +97,6 @@ namespace TeleopReachy
         public bool IsRobotInRestartRoom()
         {
             return isRobotInRestartRoom;
-        }
-
-        public bool IsRobotInMobileRoom()
-        {
-            return isRobotInMobileRoom;
         }
 
         public bool IsRobotReady()
@@ -162,12 +149,6 @@ namespace TeleopReachy
             {
                 hasRobotJustLeftDataRoom = true;
             }
-            statusChanged = true;
-        }
-
-        void MobileControllerStatusHasChanged(bool isRobotInRoom)
-        {
-            isRobotInMobileRoom = isRobotInRoom;
             statusChanged = true;
         }
 
