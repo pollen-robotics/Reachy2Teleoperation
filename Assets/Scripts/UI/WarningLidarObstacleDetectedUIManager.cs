@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Mobile.Base.Lidar;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class WarningLidarObstacleDetectedUIManager : MonoBehaviour
+    public class WarningLidarObstacleDetectedUIManager : LazyFollow
     {
         private DataMessageManager dataController;
         private RobotStatus robotStatus;
@@ -28,8 +29,19 @@ namespace TeleopReachy
 
         private UserMobilityInput userMobilityInput;
 
+        private ControllersManager controllers;
+
         void Start()
         {
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.22f, 0.8f);
+            }
+            else {
+                targetOffset = new Vector3(0, -0.22f, 0.7f);
+            }
+            maxDistanceAllowed = 0;
             dataController = DataMessageManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;

@@ -5,14 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Reachy;
-
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
     public class RobotMobilityUIManager : MonoBehaviour
     {
         [SerializeField]
-        // private ReachyController.ReachyController reachyController;
+        private ReachyController.ReachyController reachyController;
 
         private UserMobilityInput userMobilityInput = null;
         private RobotStatus robotStatus;
@@ -44,6 +44,8 @@ namespace TeleopReachy
         [SerializeField]
         private Transform arrowLeftRotationCommand;
 
+        private ControllersManager controllers;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -56,6 +58,11 @@ namespace TeleopReachy
 
         void Start()
         {
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                transform.localPosition = new Vector3(-6, -189, -479);
+            }
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }
@@ -105,8 +112,7 @@ namespace TeleopReachy
             if (userMobilityInput == null)
                 return;
 
-            // float orbita_yaw = -reachyController.headOrientation[2];
-            float orbita_yaw = 0;
+            float orbita_yaw = -reachyController.headOrientation[2];
             if (orbita_yaw > 180)
             {
                 orbita_yaw -= 360;
