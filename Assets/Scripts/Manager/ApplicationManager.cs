@@ -91,9 +91,9 @@ namespace TeleopReachy
             yield return null;
 
             userInput.SetActive(true);
-            canvasOnlineMenu.SetActive(true);
-            UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-            uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
+            // canvasOnlineMenu.SetActive(true);
+            // UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
+            // uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
 
             EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
             SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);

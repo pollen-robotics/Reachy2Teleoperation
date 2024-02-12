@@ -58,8 +58,8 @@ namespace TeleopReachy
 
         void Init()
         {
-            onlineMenuManager = GameObject.Find("CanvaOnlineMenu").GetComponent<OnlineMenuManager>();
-            onlineMenuManager.event_OnAskEmotion.AddListener(ShowMessage);
+            // onlineMenuManager = GameObject.Find("CanvaOnlineMenu").GetComponent<OnlineMenuManager>();
+            // onlineMenuManager.event_OnAskEmotion.AddListener(ShowMessage);
         }
 
 
