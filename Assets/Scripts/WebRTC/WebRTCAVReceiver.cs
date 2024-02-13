@@ -61,14 +61,8 @@ namespace TeleopReachy
                 {
                     if (e.Track.Id == right_track_id_name)
                     {
-                        GameObject miniViewer = GameObject.Find("VideoStreamMini");
                         screen.material.SetTexture("_LeftTex", tex);
                         event_OnVideoTextureReceived.Invoke(tex);
-
-                        if(miniViewer != null) {
-                            miniViewer.GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
-                            miniViewer.GetComponent<Renderer>().material.SetTexture("_RightTex", tex);
-                        }
                     }
                     else
                     {
