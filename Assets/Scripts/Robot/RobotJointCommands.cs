@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using Grpc.Core;
 using Reachy.Part.Hand;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
@@ -105,29 +104,33 @@ namespace TeleopReachy
 
         private void SetRobotStiff(string partName = "")
         {
-            if(partName=="") {
-                if(robotConfig.HasLeftArm())
+            if (partName == "")
+            {
+                if (robotConfig.HasLeftArm())
                 {
                     dataController.TurnArmOn(robotConfig.partsId["l_arm"]);
                 }
-                if(robotConfig.HasRightArm())
+                if (robotConfig.HasRightArm())
                 {
                     dataController.TurnArmOn(robotConfig.partsId["r_arm"]);
                 }
-                if(robotConfig.HasHead())
+                if (robotConfig.HasHead())
                 {
                     dataController.TurnHeadOn(robotConfig.partsId["head"]);
                 }
             }
-            else{
-                if(partName=="head"){
+            else
+            {
+                if (partName == "head")
+                {
                     dataController.TurnHeadOn(robotConfig.partsId["head"]);
                 }
-                else {
+                else
+                {
                     dataController.TurnArmOn(robotConfig.partsId[partName]);
                 }
             }
-            
+
             // Debug.Log("[RobotJointCommands]: SetRobotStiff " + partName);
             // if (setSmoothCompliance != null)
             // {
@@ -170,26 +173,30 @@ namespace TeleopReachy
         private void SetRobotCompliant(string partName = "")
         {
             Debug.Log("[RobotJointCommands] SetRobotCompliant");
-            if(partName=="") {
-                if(robotConfig.HasLeftArm())
+            if (partName == "")
+            {
+                if (robotConfig.HasLeftArm())
                 {
                     dataController.TurnArmOff(robotConfig.partsId["l_arm"]);
                 }
-                if(robotConfig.HasRightArm())
+                if (robotConfig.HasRightArm())
                 {
                     dataController.TurnArmOff(robotConfig.partsId["r_arm"]);
                 }
-                if(robotConfig.HasHead())
+                if (robotConfig.HasHead())
                 {
                     dataController.TurnHeadOff(robotConfig.partsId["head"]);
                 }
             }
 
-            else{
-                if(partName=="head"){
+            else
+            {
+                if (partName == "head")
+                {
                     dataController.TurnHeadOff(robotConfig.partsId["head"]);
                 }
-                else {
+                else
+                {
                     dataController.TurnArmOff(robotConfig.partsId[partName]);
                 }
             }
@@ -335,7 +342,7 @@ namespace TeleopReachy
 
             if (robotConfig.HasHead())
             {
-            
+
                 NeckJointGoal neckGoal = new NeckJointGoal { Id = robotConfig.partsId["head"], JointsGoal = new NeckOrientation { Rotation = new Rotation3d { Q = unitQ } } };
                 dataController.SendNeckCommand(neckGoal);
             }

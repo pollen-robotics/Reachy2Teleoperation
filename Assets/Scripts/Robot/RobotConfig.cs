@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using Grpc.Core;
 
 using Google.Protobuf;
 using Reachy;
@@ -27,7 +26,7 @@ namespace TeleopReachy
         private ConnectionStatus connectionStatus;
 
         public Dictionary<string, PartId> partsId { get; private set; }
-        public Dictionary<string, ComponentId> componentsId{ get ; private set ; }
+        public Dictionary<string, ComponentId> componentsId { get; private set; }
 
         private bool has_right_arm;
         private bool has_left_arm;
@@ -106,7 +105,7 @@ namespace TeleopReachy
                 }
                 if (value != null && value is MobileBase)
                 {
-                    PartId id = new PartId { Name="mobile_base" };
+                    PartId id = new PartId { Name = "mobile_base" };
                     partsId.Add(field.Name, id);
                 }
             }
