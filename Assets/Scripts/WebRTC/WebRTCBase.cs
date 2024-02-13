@@ -64,10 +64,11 @@ namespace TeleopReachy
         //     taskA.Wait();
         // }
 
-        public void Disconnection()
+        public IEnumerator Disconnection()
         {
             WebRTCHangUp();
             _signaling?.Close();
+            yield return null;
         }
 
 
