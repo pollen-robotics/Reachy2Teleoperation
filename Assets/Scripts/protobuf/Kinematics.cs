@@ -24,21 +24,24 @@ namespace Reachy.Kinematics {
     static KinematicsReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChBraW5lbWF0aWNzLnByb3RvEhFyZWFjaHkua2luZW1hdGljcyIZCglNYXRy",
-            "aXg0eDQSDAoEZGF0YRgBIAMoASIZCglNYXRyaXgzeDMSDAoEZGF0YRgBIAMo",
-            "ASI4CgpRdWF0ZXJuaW9uEgkKAXcYASABKAESCQoBeBgCIAEoARIJCgF5GAMg",
-            "ASgBEgkKAXoYBCABKAEipgEKClJvdGF0aW9uM2QSKgoBcRgBIAEoCzIdLnJl",
-            "YWNoeS5raW5lbWF0aWNzLlF1YXRlcm5pb25IABIwCgNycHkYAiABKAsyIS5y",
-            "ZWFjaHkua2luZW1hdGljcy5FeHRFdWxlckFuZ2xlc0gAEi4KBm1hdHJpeBgD",
-            "IAEoCzIcLnJlYWNoeS5raW5lbWF0aWNzLk1hdHJpeDN4M0gAQgoKCHJvdGF0",
-            "aW9uIigKBVBvaW50EgkKAXgYASABKAESCQoBeRgCIAEoARIJCgF6GAMgASgB",
-            "IjoKDkV4dEV1bGVyQW5nbGVzEgwKBHJvbGwYASABKAESDQoFcGl0Y2gYAiAB",
-            "KAESCwoDeWF3GAMgASgBIkYKF1BvaW50RGlzdGFuY2VUb2xlcmFuY2VzEg0K",
-            "BXhfdG9sGAEgASgBEg0KBXlfdG9sGAIgASgBEg0KBXpfdG9sGAMgASgBIlAK",
-            "GEV4dEV1bGVyQW5nbGVzVG9sZXJhbmNlcxIQCghyb2xsX3RvbBgBIAEoARIR",
-            "CglwaXRjaF90b2wYAiABKAESDwoHeWF3X3RvbBgDIAEoAWIGcHJvdG8z"));
+            "ChBraW5lbWF0aWNzLnByb3RvEhFyZWFjaHkua2luZW1hdGljcxoeZ29vZ2xl",
+            "L3Byb3RvYnVmL3dyYXBwZXJzLnByb3RvIhkKCU1hdHJpeDR4NBIMCgRkYXRh",
+            "GAEgAygBIhkKCU1hdHJpeDN4MxIMCgRkYXRhGAEgAygBIjgKClF1YXRlcm5p",
+            "b24SCQoBdxgBIAEoARIJCgF4GAIgASgBEgkKAXkYAyABKAESCQoBehgEIAEo",
+            "ASKmAQoKUm90YXRpb24zZBIqCgFxGAEgASgLMh0ucmVhY2h5LmtpbmVtYXRp",
+            "Y3MuUXVhdGVybmlvbkgAEjAKA3JweRgCIAEoCzIhLnJlYWNoeS5raW5lbWF0",
+            "aWNzLkV4dEV1bGVyQW5nbGVzSAASLgoGbWF0cml4GAMgASgLMhwucmVhY2h5",
+            "LmtpbmVtYXRpY3MuTWF0cml4M3gzSABCCgoIcm90YXRpb24iKAoFUG9pbnQS",
+            "CQoBeBgBIAEoARIJCgF5GAIgASgBEgkKAXoYAyABKAEikQEKDkV4dEV1bGVy",
+            "QW5nbGVzEikKBHJvbGwYASABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRW",
+            "YWx1ZRIqCgVwaXRjaBgCIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZh",
+            "bHVlEigKA3lhdxgDIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVl",
+            "IkYKF1BvaW50RGlzdGFuY2VUb2xlcmFuY2VzEg0KBXhfdG9sGAEgASgBEg0K",
+            "BXlfdG9sGAIgASgBEg0KBXpfdG9sGAMgASgBIlAKGEV4dEV1bGVyQW5nbGVz",
+            "VG9sZXJhbmNlcxIQCghyb2xsX3RvbBgBIAEoARIRCglwaXRjaF90b2wYAiAB",
+            "KAESDwoHeWF3X3RvbBgDIAEoAWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Kinematics.Matrix4x4), global::Reachy.Kinematics.Matrix4x4.Parser, new[]{ "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Kinematics.Matrix3x3), global::Reachy.Kinematics.Matrix3x3.Parser, new[]{ "Data" }, null, null, null, null),
@@ -1349,9 +1352,9 @@ namespace Reachy.Kinematics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ExtEulerAngles(ExtEulerAngles other) : this() {
-      roll_ = other.roll_;
-      pitch_ = other.pitch_;
-      yaw_ = other.yaw_;
+      Roll = other.Roll;
+      Pitch = other.Pitch;
+      Yaw = other.Yaw;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1363,39 +1366,45 @@ namespace Reachy.Kinematics {
 
     /// <summary>Field number for the "roll" field.</summary>
     public const int RollFieldNumber = 1;
-    private double roll_;
+    private static readonly pb::FieldCodec<float?> _single_roll_codec = pb::FieldCodec.ForStructWrapper<float>(10);
+    private float? roll_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public double Roll {
+    public float? Roll {
       get { return roll_; }
       set {
         roll_ = value;
       }
     }
 
+
     /// <summary>Field number for the "pitch" field.</summary>
     public const int PitchFieldNumber = 2;
-    private double pitch_;
+    private static readonly pb::FieldCodec<float?> _single_pitch_codec = pb::FieldCodec.ForStructWrapper<float>(18);
+    private float? pitch_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public double Pitch {
+    public float? Pitch {
       get { return pitch_; }
       set {
         pitch_ = value;
       }
     }
 
+
     /// <summary>Field number for the "yaw" field.</summary>
     public const int YawFieldNumber = 3;
-    private double yaw_;
+    private static readonly pb::FieldCodec<float?> _single_yaw_codec = pb::FieldCodec.ForStructWrapper<float>(26);
+    private float? yaw_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public double Yaw {
+    public float? Yaw {
       get { return yaw_; }
       set {
         yaw_ = value;
       }
     }
+
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1412,9 +1421,9 @@ namespace Reachy.Kinematics {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Roll, other.Roll)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Pitch, other.Pitch)) return false;
-      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Yaw, other.Yaw)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Roll, other.Roll)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Pitch, other.Pitch)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Yaw, other.Yaw)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1422,9 +1431,9 @@ namespace Reachy.Kinematics {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Roll != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Roll);
-      if (Pitch != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Pitch);
-      if (Yaw != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Yaw);
+      if (roll_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Roll);
+      if (pitch_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Pitch);
+      if (yaw_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Yaw);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1443,17 +1452,14 @@ namespace Reachy.Kinematics {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Roll != 0D) {
-        output.WriteRawTag(9);
-        output.WriteDouble(Roll);
+      if (roll_ != null) {
+        _single_roll_codec.WriteTagAndValue(output, Roll);
       }
-      if (Pitch != 0D) {
-        output.WriteRawTag(17);
-        output.WriteDouble(Pitch);
+      if (pitch_ != null) {
+        _single_pitch_codec.WriteTagAndValue(output, Pitch);
       }
-      if (Yaw != 0D) {
-        output.WriteRawTag(25);
-        output.WriteDouble(Yaw);
+      if (yaw_ != null) {
+        _single_yaw_codec.WriteTagAndValue(output, Yaw);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1465,17 +1471,14 @@ namespace Reachy.Kinematics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Roll != 0D) {
-        output.WriteRawTag(9);
-        output.WriteDouble(Roll);
+      if (roll_ != null) {
+        _single_roll_codec.WriteTagAndValue(ref output, Roll);
       }
-      if (Pitch != 0D) {
-        output.WriteRawTag(17);
-        output.WriteDouble(Pitch);
+      if (pitch_ != null) {
+        _single_pitch_codec.WriteTagAndValue(ref output, Pitch);
       }
-      if (Yaw != 0D) {
-        output.WriteRawTag(25);
-        output.WriteDouble(Yaw);
+      if (yaw_ != null) {
+        _single_yaw_codec.WriteTagAndValue(ref output, Yaw);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1487,14 +1490,14 @@ namespace Reachy.Kinematics {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Roll != 0D) {
-        size += 1 + 8;
+      if (roll_ != null) {
+        size += _single_roll_codec.CalculateSizeWithTag(Roll);
       }
-      if (Pitch != 0D) {
-        size += 1 + 8;
+      if (pitch_ != null) {
+        size += _single_pitch_codec.CalculateSizeWithTag(Pitch);
       }
-      if (Yaw != 0D) {
-        size += 1 + 8;
+      if (yaw_ != null) {
+        size += _single_yaw_codec.CalculateSizeWithTag(Yaw);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1508,14 +1511,20 @@ namespace Reachy.Kinematics {
       if (other == null) {
         return;
       }
-      if (other.Roll != 0D) {
-        Roll = other.Roll;
+      if (other.roll_ != null) {
+        if (roll_ == null || other.Roll != 0F) {
+          Roll = other.Roll;
+        }
       }
-      if (other.Pitch != 0D) {
-        Pitch = other.Pitch;
+      if (other.pitch_ != null) {
+        if (pitch_ == null || other.Pitch != 0F) {
+          Pitch = other.Pitch;
+        }
       }
-      if (other.Yaw != 0D) {
-        Yaw = other.Yaw;
+      if (other.yaw_ != null) {
+        if (yaw_ == null || other.Yaw != 0F) {
+          Yaw = other.Yaw;
+        }
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1532,16 +1541,25 @@ namespace Reachy.Kinematics {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 9: {
-            Roll = input.ReadDouble();
+          case 10: {
+            float? value = _single_roll_codec.Read(input);
+            if (roll_ == null || value != 0F) {
+              Roll = value;
+            }
             break;
           }
-          case 17: {
-            Pitch = input.ReadDouble();
+          case 18: {
+            float? value = _single_pitch_codec.Read(input);
+            if (pitch_ == null || value != 0F) {
+              Pitch = value;
+            }
             break;
           }
-          case 25: {
-            Yaw = input.ReadDouble();
+          case 26: {
+            float? value = _single_yaw_codec.Read(input);
+            if (yaw_ == null || value != 0F) {
+              Yaw = value;
+            }
             break;
           }
         }
@@ -1559,16 +1577,25 @@ namespace Reachy.Kinematics {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 9: {
-            Roll = input.ReadDouble();
+          case 10: {
+            float? value = _single_roll_codec.Read(ref input);
+            if (roll_ == null || value != 0F) {
+              Roll = value;
+            }
             break;
           }
-          case 17: {
-            Pitch = input.ReadDouble();
+          case 18: {
+            float? value = _single_pitch_codec.Read(ref input);
+            if (pitch_ == null || value != 0F) {
+              Pitch = value;
+            }
             break;
           }
-          case 25: {
-            Yaw = input.ReadDouble();
+          case 26: {
+            float? value = _single_yaw_codec.Read(ref input);
+            if (yaw_ == null || value != 0F) {
+              Yaw = value;
+            }
             break;
           }
         }
