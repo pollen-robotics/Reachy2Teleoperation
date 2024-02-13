@@ -185,7 +185,6 @@ namespace TeleopReachy
 
         protected virtual void WebRTCHangUp()
         {
-            Debug.LogError("[WebRTCBase] WebRTCHangUp...");
             Debug.Log("[WebRTC] Closing...");
 
             _pc?.Dispose();
