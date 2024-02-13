@@ -2,15 +2,20 @@ using Unity.WebRTC;
 using UnityEngine;
 
 
-public class WebRTCService : GenericSingletonClass<WebRTCService>
-{
-    void Start()
+namespace TeleopReachy {
+    public class WebRTCService : GenericSingletonClass<WebRTCService>
     {
-        StartCoroutine(WebRTC.Update());
-    }
+        void Start()
+        {
+            StartCoroutine(WebRTC.Update());
+        }
 
-    public void AskForWebRTCDisconnection()
-    {
-        Destroy(gameObject);
+        public void AskForWebRTCDisconnection()
+        {
+            WebRTCManager.Instance.webRTCDataController.Disconnection();
+            WebRTCManager.Instance.webRTCVideoController.Disconnection();
+            WebRTCManager.Instance.webRTCAudioSender.Disconnection();
+            Destroy(gameObject);
+        }
     }
 }
