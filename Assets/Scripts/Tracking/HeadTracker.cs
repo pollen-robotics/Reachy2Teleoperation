@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Grpc.Core;
 using Reachy.Part.Head;
 using Reachy.Kinematics;
 
@@ -26,8 +25,10 @@ namespace TeleopReachy
 
             headTarget = new NeckJointGoal
             {
-                JointsGoal = new NeckOrientation {
-                    Rotation = new Rotation3d {
+                JointsGoal = new NeckOrientation
+                {
+                    Rotation = new Rotation3d
+                    {
                         Q = new Reachy.Kinematics.Quaternion
                         {
                             W = headQuat.w,
