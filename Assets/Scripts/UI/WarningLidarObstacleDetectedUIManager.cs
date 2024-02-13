@@ -67,8 +67,12 @@ namespace TeleopReachy
             }
             if (robotStatus.IsRobotTeleoperationActive())
             {
-                wantWarningMessageDisplayed = true;
-                needUpdateWarningMessage = true;
+                if (userMobilityInput == null) userMobilityInput = UserInputManager.Instance.UserMobilityInput;
+                if (userMobilityInput.GetMobileBaseDirection() != new Vector2(0, 0) || userMobilityInput.GetAngleDirection() != new Vector2(0, 0))
+                {
+                    wantWarningMessageDisplayed = true;
+                    needUpdateWarningMessage = true;
+                }
             }
         }
 
