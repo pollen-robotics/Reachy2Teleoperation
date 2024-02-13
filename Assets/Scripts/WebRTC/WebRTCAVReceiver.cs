@@ -16,7 +16,7 @@ namespace TeleopReachy
 
         public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
-        public UnityEvent<Texture> event_OnVideoTextureReceived; 
+        public UnityEvent<Texture> event_OnVideoTextureReceived;
 
         protected override void WebRTCCall()
         {
@@ -71,7 +71,9 @@ namespace TeleopReachy
                         }
                     }
                     else
+                    {
                         screen.material.SetTexture("_RightTex", tex);
+                    }
                 };
             }
             else if (e.Track is AudioStreamTrack audio)
