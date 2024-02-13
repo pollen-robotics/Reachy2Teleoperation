@@ -27,7 +27,7 @@ namespace Reachy {
             "CgxyZWFjaHkucHJvdG8SBnJlYWNoeRobZ29vZ2xlL3Byb3RvYnVmL2VtcHR5",
             "LnByb3RvGh9nb29nbGUvcHJvdG9idWYvdGltZXN0YW1wLnByb3RvGglhcm0u",
             "cHJvdG8aCmhlYWQucHJvdG8aCmhhbmQucHJvdG8aGW1vYmlsZV9iYXNlX3V0",
-            "aWxpdHkucHJvdG8aC3NvdW5kLnByb3RvGgt2aWRlby5wcm90byLQAwoGUmVh",
+            "aWxpdHkucHJvdG8aC3NvdW5kLnByb3RvGgt2aWRlby5wcm90byKaAwoGUmVh",
             "Y2h5EhwKAmlkGAEgASgLMhAucmVhY2h5LlJlYWNoeUlkEiMKBWxfYXJtGAIg",
             "ASgLMhQucmVhY2h5LnBhcnQuYXJtLkFybRIjCgVyX2FybRgDIAEoCzIULnJl",
             "YWNoeS5wYXJ0LmFybS5Bcm0SJAoEaGVhZBgEIAEoCzIWLnJlYWNoeS5wYXJ0",
@@ -36,31 +36,30 @@ namespace Reachy {
             "EjQKC21vYmlsZV9iYXNlGAcgASgLMh8ubW9iaWxlLmJhc2UudXRpbGl0eS5N",
             "b2JpbGVCYXNlEi8KCm1pY3JvcGhvbmUYCCABKAsyGy5jb21wb25lbnQuc291",
             "bmQuTWljcm9waG9uZRIpCgdzcGVha2VyGAkgASgLMhguY29tcG9uZW50LnNv",
-            "dW5kLlNwZWFrZXISNAoNc3RlcmVvX2NhbWVyYRgKIAEoCzIdLmNvbXBvbmVu",
-            "dC52aWRlby5TdGVyZW9DYW1lcmESIAoEaW5mbxgUIAEoCzISLnJlYWNoeS5S",
-            "ZWFjaHlJbmZvIiQKCFJlYWNoeUlkEgoKAmlkGAEgASgNEgwKBG5hbWUYAiAB",
-            "KAkiTwoKUmVhY2h5SW5mbxIVCg1zZXJpYWxfbnVtYmVyGAEgASgJEhQKDHZl",
-            "cnNpb25faGFyZBgCIAEoCRIUCgx2ZXJzaW9uX3NvZnQYAyABKAkikgMKC1Jl",
-            "YWNoeVN0YXRlEi0KCXRpbWVzdGFtcBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1",
-            "Zi5UaW1lc3RhbXASHAoCaWQYAiABKAsyEC5yZWFjaHkuUmVhY2h5SWQSLgoL",
-            "bF9hcm1fc3RhdGUYAyABKAsyGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUS",
-            "LgoLcl9hcm1fc3RhdGUYBCABKAsyGS5yZWFjaHkucGFydC5hcm0uQXJtU3Rh",
-            "dGUSLwoKaGVhZF9zdGF0ZRgFIAEoCzIbLnJlYWNoeS5wYXJ0LmhlYWQuSGVh",
-            "ZFN0YXRlEjEKDGxfaGFuZF9zdGF0ZRgGIAEoCzIbLnJlYWNoeS5wYXJ0Lmhh",
-            "bmQuSGFuZFN0YXRlEjEKDHJfaGFuZF9zdGF0ZRgHIAEoCzIbLnJlYWNoeS5w",
-            "YXJ0LmhhbmQuSGFuZFN0YXRlEj8KEW1vYmlsZV9iYXNlX3N0YXRlGAggASgL",
-            "MiQubW9iaWxlLmJhc2UudXRpbGl0eS5Nb2JpbGVCYXNlU3RhdGUiUwoYUmVh",
-            "Y2h5U3RyZWFtU3RhdGVSZXF1ZXN0EhwKAmlkGAEgASgLMhAucmVhY2h5LlJl",
-            "YWNoeUlkEhkKEXB1Ymxpc2hfZnJlcXVlbmN5GAIgASgCMssBCg1SZWFjaHlT",
-            "ZXJ2aWNlEjMKCUdldFJlYWNoeRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoO",
-            "LnJlYWNoeS5SZWFjaHkSNwoOR2V0UmVhY2h5U3RhdGUSEC5yZWFjaHkuUmVh",
-            "Y2h5SWQaEy5yZWFjaHkuUmVhY2h5U3RhdGUSTAoRU3RyZWFtUmVhY2h5U3Rh",
-            "dGUSIC5yZWFjaHkuUmVhY2h5U3RyZWFtU3RhdGVSZXF1ZXN0GhMucmVhY2h5",
-            "LlJlYWNoeVN0YXRlMAFiBnByb3RvMw=="));
+            "dW5kLlNwZWFrZXISIAoEaW5mbxgUIAEoCzISLnJlYWNoeS5SZWFjaHlJbmZv",
+            "IiQKCFJlYWNoeUlkEgoKAmlkGAEgASgNEgwKBG5hbWUYAiABKAkiTwoKUmVh",
+            "Y2h5SW5mbxIVCg1zZXJpYWxfbnVtYmVyGAEgASgJEhQKDHZlcnNpb25faGFy",
+            "ZBgCIAEoCRIUCgx2ZXJzaW9uX3NvZnQYAyABKAkikgMKC1JlYWNoeVN0YXRl",
+            "Ei0KCXRpbWVzdGFtcBgBIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3Rh",
+            "bXASHAoCaWQYAiABKAsyEC5yZWFjaHkuUmVhY2h5SWQSLgoLbF9hcm1fc3Rh",
+            "dGUYAyABKAsyGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUSLgoLcl9hcm1f",
+            "c3RhdGUYBCABKAsyGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUSLwoKaGVh",
+            "ZF9zdGF0ZRgFIAEoCzIbLnJlYWNoeS5wYXJ0LmhlYWQuSGVhZFN0YXRlEjEK",
+            "DGxfaGFuZF9zdGF0ZRgGIAEoCzIbLnJlYWNoeS5wYXJ0LmhhbmQuSGFuZFN0",
+            "YXRlEjEKDHJfaGFuZF9zdGF0ZRgHIAEoCzIbLnJlYWNoeS5wYXJ0LmhhbmQu",
+            "SGFuZFN0YXRlEj8KEW1vYmlsZV9iYXNlX3N0YXRlGAggASgLMiQubW9iaWxl",
+            "LmJhc2UudXRpbGl0eS5Nb2JpbGVCYXNlU3RhdGUiUwoYUmVhY2h5U3RyZWFt",
+            "U3RhdGVSZXF1ZXN0EhwKAmlkGAEgASgLMhAucmVhY2h5LlJlYWNoeUlkEhkK",
+            "EXB1Ymxpc2hfZnJlcXVlbmN5GAIgASgCMssBCg1SZWFjaHlTZXJ2aWNlEjMK",
+            "CUdldFJlYWNoeRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoOLnJlYWNoeS5S",
+            "ZWFjaHkSNwoOR2V0UmVhY2h5U3RhdGUSEC5yZWFjaHkuUmVhY2h5SWQaEy5y",
+            "ZWFjaHkuUmVhY2h5U3RhdGUSTAoRU3RyZWFtUmVhY2h5U3RhdGUSIC5yZWFj",
+            "aHkuUmVhY2h5U3RyZWFtU3RhdGVSZXF1ZXN0GhMucmVhY2h5LlJlYWNoeVN0",
+            "YXRlMAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, global::Component.Sound.SoundReflection.Descriptor, global::Component.Video.VideoReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Reachy), global::Reachy.Reachy.Parser, new[]{ "Id", "LArm", "RArm", "Head", "LHand", "RHand", "MobileBase", "Microphone", "Speaker", "StereoCamera", "Info" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Reachy), global::Reachy.Reachy.Parser, new[]{ "Id", "LArm", "RArm", "Head", "LHand", "RHand", "MobileBase", "Microphone", "Speaker", "Info" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.ReachyId), global::Reachy.ReachyId.Parser, new[]{ "Id", "Name" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.ReachyInfo), global::Reachy.ReachyInfo.Parser, new[]{ "SerialNumber", "VersionHard", "VersionSoft" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.ReachyState), global::Reachy.ReachyState.Parser, new[]{ "Timestamp", "Id", "LArmState", "RArmState", "HeadState", "LHandState", "RHandState", "MobileBaseState" }, null, null, null, null),
@@ -114,7 +113,6 @@ namespace Reachy {
       mobileBase_ = other.mobileBase_ != null ? other.mobileBase_.Clone() : null;
       microphone_ = other.microphone_ != null ? other.microphone_.Clone() : null;
       speaker_ = other.speaker_ != null ? other.speaker_.Clone() : null;
-      stereoCamera_ = other.stereoCamera_ != null ? other.stereoCamera_.Clone() : null;
       info_ = other.info_ != null ? other.info_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -233,21 +231,6 @@ namespace Reachy {
       }
     }
 
-    /// <summary>Field number for the "stereo_camera" field.</summary>
-    public const int StereoCameraFieldNumber = 10;
-    private global::Component.Video.StereoCamera stereoCamera_;
-    /// <summary>
-    /// component.video.DepthCamera depth_camera = 11;
-    /// </summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Component.Video.StereoCamera StereoCamera {
-      get { return stereoCamera_; }
-      set {
-        stereoCamera_ = value;
-      }
-    }
-
     /// <summary>Field number for the "info" field.</summary>
     public const int InfoFieldNumber = 20;
     private global::Reachy.ReachyInfo info_;
@@ -284,7 +267,6 @@ namespace Reachy {
       if (!object.Equals(MobileBase, other.MobileBase)) return false;
       if (!object.Equals(Microphone, other.Microphone)) return false;
       if (!object.Equals(Speaker, other.Speaker)) return false;
-      if (!object.Equals(StereoCamera, other.StereoCamera)) return false;
       if (!object.Equals(Info, other.Info)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -302,7 +284,6 @@ namespace Reachy {
       if (mobileBase_ != null) hash ^= MobileBase.GetHashCode();
       if (microphone_ != null) hash ^= Microphone.GetHashCode();
       if (speaker_ != null) hash ^= Speaker.GetHashCode();
-      if (stereoCamera_ != null) hash ^= StereoCamera.GetHashCode();
       if (info_ != null) hash ^= Info.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -358,10 +339,6 @@ namespace Reachy {
         output.WriteRawTag(74);
         output.WriteMessage(Speaker);
       }
-      if (stereoCamera_ != null) {
-        output.WriteRawTag(82);
-        output.WriteMessage(StereoCamera);
-      }
       if (info_ != null) {
         output.WriteRawTag(162, 1);
         output.WriteMessage(Info);
@@ -412,10 +389,6 @@ namespace Reachy {
         output.WriteRawTag(74);
         output.WriteMessage(Speaker);
       }
-      if (stereoCamera_ != null) {
-        output.WriteRawTag(82);
-        output.WriteMessage(StereoCamera);
-      }
       if (info_ != null) {
         output.WriteRawTag(162, 1);
         output.WriteMessage(Info);
@@ -456,9 +429,6 @@ namespace Reachy {
       }
       if (speaker_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Speaker);
-      }
-      if (stereoCamera_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(StereoCamera);
       }
       if (info_ != null) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(Info);
@@ -528,12 +498,6 @@ namespace Reachy {
           Speaker = new global::Component.Sound.Speaker();
         }
         Speaker.MergeFrom(other.Speaker);
-      }
-      if (other.stereoCamera_ != null) {
-        if (stereoCamera_ == null) {
-          StereoCamera = new global::Component.Video.StereoCamera();
-        }
-        StereoCamera.MergeFrom(other.StereoCamera);
       }
       if (other.info_ != null) {
         if (info_ == null) {
@@ -619,13 +583,6 @@ namespace Reachy {
             input.ReadMessage(Speaker);
             break;
           }
-          case 82: {
-            if (stereoCamera_ == null) {
-              StereoCamera = new global::Component.Video.StereoCamera();
-            }
-            input.ReadMessage(StereoCamera);
-            break;
-          }
           case 162: {
             if (info_ == null) {
               Info = new global::Reachy.ReachyInfo();
@@ -709,13 +666,6 @@ namespace Reachy {
               Speaker = new global::Component.Sound.Speaker();
             }
             input.ReadMessage(Speaker);
-            break;
-          }
-          case 82: {
-            if (stereoCamera_ == null) {
-              StereoCamera = new global::Component.Video.StereoCamera();
-            }
-            input.ReadMessage(StereoCamera);
             break;
           }
           case 162: {

@@ -27,73 +27,73 @@ namespace Component.Orbita2D {
             "Cg5vcmJpdGEyZC5wcm90bxISY29tcG9uZW50Lm9yYml0YTJkGh5nb29nbGUv",
             "cHJvdG9idWYvd3JhcHBlcnMucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90aW1l",
             "c3RhbXAucHJvdG8aG2dvb2dsZS9wcm90b2J1Zi9lbXB0eS5wcm90bxoPY29t",
-            "cG9uZW50LnByb3RvItUECg1PcmJpdGEyZFN0YXRlEi0KCXRpbWVzdGFtcBgB",
+            "cG9uZW50LnByb3RvItYECg1PcmJpdGEyZFN0YXRlEi0KCXRpbWVzdGFtcBgB",
             "IAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASIgoCaWQYAiABKAsy",
             "Fi5jb21wb25lbnQuQ29tcG9uZW50SWQSNAoQcHJlc2VudF9wb3NpdGlvbhgD",
             "IAEoCzIaLmNvbXBvbmVudC5vcmJpdGEyZC5Qb3NlMmQSMwoNcHJlc2VudF9z",
             "cGVlZBgEIAEoCzIcLmNvbXBvbmVudC5vcmJpdGEyZC5WZWN0b3IyZBIyCgxw",
             "cmVzZW50X2xvYWQYBSABKAsyHC5jb21wb25lbnQub3JiaXRhMmQuVmVjdG9y",
             "MmQSMAoLdGVtcGVyYXR1cmUYBiABKAsyGy5jb21wb25lbnQub3JiaXRhMmQu",
-            "RmxvYXQyZBIxCgtqb2ludF9saW1pdBgHIAEoCzIcLmNvbXBvbmVudC5vcmJp",
-            "dGEyZC5MaW1pdHMyZBItCgljb21wbGlhbnQYCCABKAsyGi5nb29nbGUucHJv",
-            "dG9idWYuQm9vbFZhbHVlEjEKDWdvYWxfcG9zaXRpb24YCSABKAsyGi5jb21w",
-            "b25lbnQub3JiaXRhMmQuUG9zZTJkEjAKC3NwZWVkX2xpbWl0GAogASgLMhsu",
-            "Y29tcG9uZW50Lm9yYml0YTJkLkZsb2F0MmQSMQoMdG9ycXVlX2xpbWl0GAsg",
-            "ASgLMhsuY29tcG9uZW50Lm9yYml0YTJkLkZsb2F0MmQSJgoDcGlkGAwgASgL",
-            "MhkuY29tcG9uZW50Lm9yYml0YTJkLlBJRDJkIm0KFE9yYml0YTJkU3RhdGVS",
-            "ZXF1ZXN0EjEKBmZpZWxkcxgBIAMoDjIhLmNvbXBvbmVudC5vcmJpdGEyZC5P",
-            "cmJpdGEyZEZpZWxkEiIKAmlkGAIgASgLMhYuY29tcG9uZW50LkNvbXBvbmVu",
-            "dElkImEKGk9yYml0YTJkU3RyZWFtU3RhdGVSZXF1ZXN0EjUKA3JlcRgBIAEo",
-            "CzIoLmNvbXBvbmVudC5vcmJpdGEyZC5PcmJpdGEyZFN0YXRlUmVxdWVzdBIM",
-            "CgRmcmVxGAIgASgCIlMKBVBJRDJkEiQKB21vdG9yXzEYASABKAsyEy5jb21w",
-            "b25lbnQuUElER2FpbnMSJAoHbW90b3JfMhgCIAEoCzITLmNvbXBvbmVudC5Q",
-            "SURHYWlucyJaCghMaW1pdHMyZBImCgZheGlzXzEYASABKAsyFi5jb21wb25l",
-            "bnQuSm9pbnRMaW1pdHMSJgoGYXhpc18yGAIgASgLMhYuY29tcG9uZW50Lkpv",
-            "aW50TGltaXRzImIKBlBvc2UyZBIrCgZheGlzXzEYASABKAsyGy5nb29nbGUu",
-            "cHJvdG9idWYuRmxvYXRWYWx1ZRIrCgZheGlzXzIYAiABKAsyGy5nb29nbGUu",
-            "cHJvdG9idWYuRmxvYXRWYWx1ZSJlCgdGbG9hdDJkEiwKB21vdG9yXzEYASAB",
-            "KAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIsCgdtb3Rvcl8yGAIg",
-            "ASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUiWgoIVmVjdG9yMmQS",
-            "JgoBeBgBIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEiYKAXkY",
-            "AiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZSKkAgoPT3JiaXRh",
-            "MmRDb21tYW5kEiIKAmlkGAEgASgLMhYuY29tcG9uZW50LkNvbXBvbmVudElk",
-            "Ei0KCWNvbXBsaWFudBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5Cb29sVmFs",
-            "dWUSMQoNZ29hbF9wb3NpdGlvbhgDIAEoCzIaLmNvbXBvbmVudC5vcmJpdGEy",
-            "ZC5Qb3NlMmQSMAoLc3BlZWRfbGltaXQYBCABKAsyGy5jb21wb25lbnQub3Ji",
-            "aXRhMmQuRmxvYXQyZBIxCgx0b3JxdWVfbGltaXQYBSABKAsyGy5jb21wb25l",
-            "bnQub3JiaXRhMmQuRmxvYXQyZBImCgNwaWQYDCABKAsyGS5jb21wb25lbnQu",
-            "b3JiaXRhMmQuUElEMmQiRAoQT3JiaXRhMmRzQ29tbWFuZBIwCgNjbWQYASAD",
-            "KAsyIy5jb21wb25lbnQub3JiaXRhMmQuT3JiaXRhMmRDb21tYW5kIpkBCghP",
-            "cmJpdGEyZBIiCgJpZBgBIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZBIV",
-            "Cg1zZXJpYWxfbnVtYmVyGAIgASgJEigKBmF4aXNfMRgDIAEoDjIYLmNvbXBv",
-            "bmVudC5vcmJpdGEyZC5BeGlzEigKBmF4aXNfMhgEIAEoDjIYLmNvbXBvbmVu",
-            "dC5vcmJpdGEyZC5BeGlzIkAKDkxpc3RPZk9yYml0YTJkEi4KCG9yYml0YTJk",
-            "GAEgAygLMhwuY29tcG9uZW50Lm9yYml0YTJkLk9yYml0YTJkIhAKDk9yYml0",
-            "YTJkU3RhdHVzKt8BCg1PcmJpdGEyZEZpZWxkEggKBE5PTkUQABIICgROQU1F",
-            "EAESBgoCSUQQAhIUChBQUkVTRU5UX1BPU0lUSU9OEAMSEQoNUFJFU0VOVF9T",
-            "UEVFRBAEEhAKDFBSRVNFTlRfTE9BRBAFEg8KC1RFTVBFUkFUVVJFEAYSDwoL",
-            "Sk9JTlRfTElNSVQQBxINCglDT01QTElBTlQQCBIRCg1HT0FMX1BPU0lUSU9O",
-            "EAkSDwoLU1BFRURfTElNSVQQChIQCgxUT1JRVUVfTElNSVQQCxIHCgNQSUQQ",
-            "DBIHCgNBTEwQDyokCgRBeGlzEggKBFJPTEwQABIJCgVQSVRDSBABEgcKA1lB",
-            "VxACMvcECg9PcmJpdGEyZFNlcnZpY2USTAoOR2V0QWxsT3JiaXRhMmQSFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHkaIi5jb21wb25lbnQub3JiaXRhMmQuTGlz",
-            "dE9mT3JiaXRhMmQSVwoIR2V0U3RhdGUSKC5jb21wb25lbnQub3JiaXRhMmQu",
-            "T3JiaXRhMmRTdGF0ZVJlcXVlc3QaIS5jb21wb25lbnQub3JiaXRhMmQuT3Ji",
-            "aXRhMmRTdGF0ZRJiCgtTdHJlYW1TdGF0ZRIuLmNvbXBvbmVudC5vcmJpdGEy",
-            "ZC5PcmJpdGEyZFN0cmVhbVN0YXRlUmVxdWVzdBohLmNvbXBvbmVudC5vcmJp",
-            "dGEyZC5PcmJpdGEyZFN0YXRlMAESSwoLU2VuZENvbW1hbmQSJC5jb21wb25l",
-            "bnQub3JiaXRhMmQuT3JiaXRhMmRzQ29tbWFuZBoWLmdvb2dsZS5wcm90b2J1",
-            "Zi5FbXB0eRJPCg1TdHJlYW1Db21tYW5kEiQuY29tcG9uZW50Lm9yYml0YTJk",
-            "Lk9yYml0YTJkc0NvbW1hbmQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkoARJD",
-            "CgVBdWRpdBIWLmNvbXBvbmVudC5Db21wb25lbnRJZBoiLmNvbXBvbmVudC5v",
-            "cmJpdGEyZC5PcmJpdGEyZFN0YXR1cxI7CglIZWFydEJlYXQSFi5jb21wb25l",
-            "bnQuQ29tcG9uZW50SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSOQoHUmVz",
-            "dGFydBIWLmNvbXBvbmVudC5Db21wb25lbnRJZBoWLmdvb2dsZS5wcm90b2J1",
-            "Zi5FbXB0eWIGcHJvdG8z"));
+            "RmxvYXQyZBIyCgxqb2ludF9saW1pdHMYByABKAsyHC5jb21wb25lbnQub3Ji",
+            "aXRhMmQuTGltaXRzMmQSLQoJY29tcGxpYW50GAggASgLMhouZ29vZ2xlLnBy",
+            "b3RvYnVmLkJvb2xWYWx1ZRIxCg1nb2FsX3Bvc2l0aW9uGAkgASgLMhouY29t",
+            "cG9uZW50Lm9yYml0YTJkLlBvc2UyZBIwCgtzcGVlZF9saW1pdBgKIAEoCzIb",
+            "LmNvbXBvbmVudC5vcmJpdGEyZC5GbG9hdDJkEjEKDHRvcnF1ZV9saW1pdBgL",
+            "IAEoCzIbLmNvbXBvbmVudC5vcmJpdGEyZC5GbG9hdDJkEiYKA3BpZBgMIAEo",
+            "CzIZLmNvbXBvbmVudC5vcmJpdGEyZC5QSUQyZCJtChRPcmJpdGEyZFN0YXRl",
+            "UmVxdWVzdBIxCgZmaWVsZHMYASADKA4yIS5jb21wb25lbnQub3JiaXRhMmQu",
+            "T3JiaXRhMmRGaWVsZBIiCgJpZBgCIAEoCzIWLmNvbXBvbmVudC5Db21wb25l",
+            "bnRJZCJhChpPcmJpdGEyZFN0cmVhbVN0YXRlUmVxdWVzdBI1CgNyZXEYASAB",
+            "KAsyKC5jb21wb25lbnQub3JiaXRhMmQuT3JiaXRhMmRTdGF0ZVJlcXVlc3QS",
+            "DAoEZnJlcRgCIAEoAiJTCgVQSUQyZBIkCgdtb3Rvcl8xGAEgASgLMhMuY29t",
+            "cG9uZW50LlBJREdhaW5zEiQKB21vdG9yXzIYAiABKAsyEy5jb21wb25lbnQu",
+            "UElER2FpbnMiWgoITGltaXRzMmQSJgoGYXhpc18xGAEgASgLMhYuY29tcG9u",
+            "ZW50LkpvaW50TGltaXRzEiYKBmF4aXNfMhgCIAEoCzIWLmNvbXBvbmVudC5K",
+            "b2ludExpbWl0cyJiCgZQb3NlMmQSKwoGYXhpc18xGAEgASgLMhsuZ29vZ2xl",
+            "LnByb3RvYnVmLkZsb2F0VmFsdWUSKwoGYXhpc18yGAIgASgLMhsuZ29vZ2xl",
+            "LnByb3RvYnVmLkZsb2F0VmFsdWUiZQoHRmxvYXQyZBIsCgdtb3Rvcl8xGAEg",
+            "ASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSLAoHbW90b3JfMhgC",
+            "IAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlIloKCFZlY3RvcjJk",
+            "EiYKAXgYASABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRImCgF5",
+            "GAIgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUipAIKD09yYml0",
+            "YTJkQ29tbWFuZBIiCgJpZBgBIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJ",
+            "ZBItCgljb21wbGlhbnQYAiABKAsyGi5nb29nbGUucHJvdG9idWYuQm9vbFZh",
+            "bHVlEjEKDWdvYWxfcG9zaXRpb24YAyABKAsyGi5jb21wb25lbnQub3JiaXRh",
+            "MmQuUG9zZTJkEjAKC3NwZWVkX2xpbWl0GAQgASgLMhsuY29tcG9uZW50Lm9y",
+            "Yml0YTJkLkZsb2F0MmQSMQoMdG9ycXVlX2xpbWl0GAUgASgLMhsuY29tcG9u",
+            "ZW50Lm9yYml0YTJkLkZsb2F0MmQSJgoDcGlkGAwgASgLMhkuY29tcG9uZW50",
+            "Lm9yYml0YTJkLlBJRDJkIkQKEE9yYml0YTJkc0NvbW1hbmQSMAoDY21kGAEg",
+            "AygLMiMuY29tcG9uZW50Lm9yYml0YTJkLk9yYml0YTJkQ29tbWFuZCKZAQoI",
+            "T3JiaXRhMmQSIgoCaWQYASABKAsyFi5jb21wb25lbnQuQ29tcG9uZW50SWQS",
+            "FQoNc2VyaWFsX251bWJlchgCIAEoCRIoCgZheGlzXzEYAyABKA4yGC5jb21w",
+            "b25lbnQub3JiaXRhMmQuQXhpcxIoCgZheGlzXzIYBCABKA4yGC5jb21wb25l",
+            "bnQub3JiaXRhMmQuQXhpcyJACg5MaXN0T2ZPcmJpdGEyZBIuCghvcmJpdGEy",
+            "ZBgBIAMoCzIcLmNvbXBvbmVudC5vcmJpdGEyZC5PcmJpdGEyZCIQCg5PcmJp",
+            "dGEyZFN0YXR1cyrgAQoNT3JiaXRhMmRGaWVsZBIICgROT05FEAASCAoETkFN",
+            "RRABEgYKAklEEAISFAoQUFJFU0VOVF9QT1NJVElPThADEhEKDVBSRVNFTlRf",
+            "U1BFRUQQBBIQCgxQUkVTRU5UX0xPQUQQBRIPCgtURU1QRVJBVFVSRRAGEhAK",
+            "DEpPSU5UX0xJTUlUUxAHEg0KCUNPTVBMSUFOVBAIEhEKDUdPQUxfUE9TSVRJ",
+            "T04QCRIPCgtTUEVFRF9MSU1JVBAKEhAKDFRPUlFVRV9MSU1JVBALEgcKA1BJ",
+            "RBAMEgcKA0FMTBAPKiQKBEF4aXMSCAoEUk9MTBAAEgkKBVBJVENIEAESBwoD",
+            "WUFXEAIy9wQKD09yYml0YTJkU2VydmljZRJMCg5HZXRBbGxPcmJpdGEyZBIW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoiLmNvbXBvbmVudC5vcmJpdGEyZC5M",
+            "aXN0T2ZPcmJpdGEyZBJXCghHZXRTdGF0ZRIoLmNvbXBvbmVudC5vcmJpdGEy",
+            "ZC5PcmJpdGEyZFN0YXRlUmVxdWVzdBohLmNvbXBvbmVudC5vcmJpdGEyZC5P",
+            "cmJpdGEyZFN0YXRlEmIKC1N0cmVhbVN0YXRlEi4uY29tcG9uZW50Lm9yYml0",
+            "YTJkLk9yYml0YTJkU3RyZWFtU3RhdGVSZXF1ZXN0GiEuY29tcG9uZW50Lm9y",
+            "Yml0YTJkLk9yYml0YTJkU3RhdGUwARJLCgtTZW5kQ29tbWFuZBIkLmNvbXBv",
+            "bmVudC5vcmJpdGEyZC5PcmJpdGEyZHNDb21tYW5kGhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5Ek8KDVN0cmVhbUNvbW1hbmQSJC5jb21wb25lbnQub3JiaXRh",
+            "MmQuT3JiaXRhMmRzQ29tbWFuZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSgB",
+            "EkMKBUF1ZGl0EhYuY29tcG9uZW50LkNvbXBvbmVudElkGiIuY29tcG9uZW50",
+            "Lm9yYml0YTJkLk9yYml0YTJkU3RhdHVzEjsKCUhlYXJ0QmVhdBIWLmNvbXBv",
+            "bmVudC5Db21wb25lbnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI5CgdS",
+            "ZXN0YXJ0EhYuY29tcG9uZW50LkNvbXBvbmVudElkGhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Component.ComponentReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Component.Orbita2D.Orbita2dField), typeof(global::Component.Orbita2D.Axis), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Component.Orbita2D.Orbita2dState), global::Component.Orbita2D.Orbita2dState.Parser, new[]{ "Timestamp", "Id", "PresentPosition", "PresentSpeed", "PresentLoad", "Temperature", "JointLimit", "Compliant", "GoalPosition", "SpeedLimit", "TorqueLimit", "Pid" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Component.Orbita2D.Orbita2dState), global::Component.Orbita2D.Orbita2dState.Parser, new[]{ "Timestamp", "Id", "PresentPosition", "PresentSpeed", "PresentLoad", "Temperature", "JointLimits", "Compliant", "GoalPosition", "SpeedLimit", "TorqueLimit", "Pid" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.Orbita2D.Orbita2dStateRequest), global::Component.Orbita2D.Orbita2dStateRequest.Parser, new[]{ "Fields", "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.Orbita2D.Orbita2dStreamStateRequest), global::Component.Orbita2D.Orbita2dStreamStateRequest.Parser, new[]{ "Req", "Freq" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.Orbita2D.PID2d), global::Component.Orbita2D.PID2d.Parser, new[]{ "Motor1", "Motor2" }, null, null, null, null),
@@ -120,7 +120,7 @@ namespace Component.Orbita2D {
     [pbr::OriginalName("PRESENT_SPEED")] PresentSpeed = 4,
     [pbr::OriginalName("PRESENT_LOAD")] PresentLoad = 5,
     [pbr::OriginalName("TEMPERATURE")] Temperature = 6,
-    [pbr::OriginalName("JOINT_LIMIT")] JointLimit = 7,
+    [pbr::OriginalName("JOINT_LIMITS")] JointLimits = 7,
     [pbr::OriginalName("COMPLIANT")] Compliant = 8,
     [pbr::OriginalName("GOAL_POSITION")] GoalPosition = 9,
     [pbr::OriginalName("SPEED_LIMIT")] SpeedLimit = 10,
@@ -178,7 +178,7 @@ namespace Component.Orbita2D {
       presentSpeed_ = other.presentSpeed_ != null ? other.presentSpeed_.Clone() : null;
       presentLoad_ = other.presentLoad_ != null ? other.presentLoad_.Clone() : null;
       temperature_ = other.temperature_ != null ? other.temperature_.Clone() : null;
-      jointLimit_ = other.jointLimit_ != null ? other.jointLimit_.Clone() : null;
+      jointLimits_ = other.jointLimits_ != null ? other.jointLimits_.Clone() : null;
       Compliant = other.Compliant;
       goalPosition_ = other.goalPosition_ != null ? other.goalPosition_.Clone() : null;
       speedLimit_ = other.speedLimit_ != null ? other.speedLimit_.Clone() : null;
@@ -265,15 +265,15 @@ namespace Component.Orbita2D {
       }
     }
 
-    /// <summary>Field number for the "joint_limit" field.</summary>
-    public const int JointLimitFieldNumber = 7;
-    private global::Component.Orbita2D.Limits2d jointLimit_;
+    /// <summary>Field number for the "joint_limits" field.</summary>
+    public const int JointLimitsFieldNumber = 7;
+    private global::Component.Orbita2D.Limits2d jointLimits_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Component.Orbita2D.Limits2d JointLimit {
-      get { return jointLimit_; }
+    public global::Component.Orbita2D.Limits2d JointLimits {
+      get { return jointLimits_; }
       set {
-        jointLimit_ = value;
+        jointLimits_ = value;
       }
     }
 
@@ -360,7 +360,7 @@ namespace Component.Orbita2D {
       if (!object.Equals(PresentSpeed, other.PresentSpeed)) return false;
       if (!object.Equals(PresentLoad, other.PresentLoad)) return false;
       if (!object.Equals(Temperature, other.Temperature)) return false;
-      if (!object.Equals(JointLimit, other.JointLimit)) return false;
+      if (!object.Equals(JointLimits, other.JointLimits)) return false;
       if (Compliant != other.Compliant) return false;
       if (!object.Equals(GoalPosition, other.GoalPosition)) return false;
       if (!object.Equals(SpeedLimit, other.SpeedLimit)) return false;
@@ -379,7 +379,7 @@ namespace Component.Orbita2D {
       if (presentSpeed_ != null) hash ^= PresentSpeed.GetHashCode();
       if (presentLoad_ != null) hash ^= PresentLoad.GetHashCode();
       if (temperature_ != null) hash ^= Temperature.GetHashCode();
-      if (jointLimit_ != null) hash ^= JointLimit.GetHashCode();
+      if (jointLimits_ != null) hash ^= JointLimits.GetHashCode();
       if (compliant_ != null) hash ^= Compliant.GetHashCode();
       if (goalPosition_ != null) hash ^= GoalPosition.GetHashCode();
       if (speedLimit_ != null) hash ^= SpeedLimit.GetHashCode();
@@ -427,9 +427,9 @@ namespace Component.Orbita2D {
         output.WriteRawTag(50);
         output.WriteMessage(Temperature);
       }
-      if (jointLimit_ != null) {
+      if (jointLimits_ != null) {
         output.WriteRawTag(58);
-        output.WriteMessage(JointLimit);
+        output.WriteMessage(JointLimits);
       }
       if (compliant_ != null) {
         _single_compliant_codec.WriteTagAndValue(output, Compliant);
@@ -484,9 +484,9 @@ namespace Component.Orbita2D {
         output.WriteRawTag(50);
         output.WriteMessage(Temperature);
       }
-      if (jointLimit_ != null) {
+      if (jointLimits_ != null) {
         output.WriteRawTag(58);
-        output.WriteMessage(JointLimit);
+        output.WriteMessage(JointLimits);
       }
       if (compliant_ != null) {
         _single_compliant_codec.WriteTagAndValue(ref output, Compliant);
@@ -535,8 +535,8 @@ namespace Component.Orbita2D {
       if (temperature_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Temperature);
       }
-      if (jointLimit_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JointLimit);
+      if (jointLimits_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JointLimits);
       }
       if (compliant_ != null) {
         size += _single_compliant_codec.CalculateSizeWithTag(Compliant);
@@ -601,11 +601,11 @@ namespace Component.Orbita2D {
         }
         Temperature.MergeFrom(other.Temperature);
       }
-      if (other.jointLimit_ != null) {
-        if (jointLimit_ == null) {
-          JointLimit = new global::Component.Orbita2D.Limits2d();
+      if (other.jointLimits_ != null) {
+        if (jointLimits_ == null) {
+          JointLimits = new global::Component.Orbita2D.Limits2d();
         }
-        JointLimit.MergeFrom(other.JointLimit);
+        JointLimits.MergeFrom(other.JointLimits);
       }
       if (other.compliant_ != null) {
         if (compliant_ == null || other.Compliant != false) {
@@ -694,10 +694,10 @@ namespace Component.Orbita2D {
             break;
           }
           case 58: {
-            if (jointLimit_ == null) {
-              JointLimit = new global::Component.Orbita2D.Limits2d();
+            if (jointLimits_ == null) {
+              JointLimits = new global::Component.Orbita2D.Limits2d();
             }
-            input.ReadMessage(JointLimit);
+            input.ReadMessage(JointLimits);
             break;
           }
           case 66: {
@@ -793,10 +793,10 @@ namespace Component.Orbita2D {
             break;
           }
           case 58: {
-            if (jointLimit_ == null) {
-              JointLimit = new global::Component.Orbita2D.Limits2d();
+            if (jointLimits_ == null) {
+              JointLimits = new global::Component.Orbita2D.Limits2d();
             }
-            input.ReadMessage(JointLimit);
+            input.ReadMessage(JointLimits);
             break;
           }
           case 66: {
