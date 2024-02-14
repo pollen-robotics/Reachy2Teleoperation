@@ -20,7 +20,7 @@ namespace TeleopReachy
             headQuat = UnityEngine.Quaternion.Inverse(RotZeroQuat) * headQuat;
 
             // Amplify rotation
-            headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.5f);
+            headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.2f);
 
             headTarget = new NeckJointGoal
             {
