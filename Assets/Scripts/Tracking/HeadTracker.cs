@@ -19,8 +19,6 @@ namespace TeleopReachy
             UnityEngine.Quaternion RotZeroQuat = transform.parent.rotation;
             headQuat = UnityEngine.Quaternion.Inverse(RotZeroQuat) * headQuat;
 
-            headQuat *= UnityEngine.Quaternion.Euler(Vector3.right * -10);
-
             // Amplify rotation
             headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.5f);
 
