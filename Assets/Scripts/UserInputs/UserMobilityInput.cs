@@ -83,10 +83,10 @@ namespace TeleopReachy
                     float r = Mathf.Sqrt(Mathf.Pow(mobileBaseTranslation[0], 2) + Mathf.Pow(mobileBaseTranslation[1], 2));
                     float phi = Mathf.Atan2(mobileBaseTranslation[1], mobileBaseTranslation[0]);
 
-                    if (Mathf.Abs(phi) < (Mathf.PI / 16)) mobileBaseTranslation[1] = 0;
-                    if ((phi > (Mathf.PI / 2 - Mathf.PI / 16)) && (phi < (Mathf.PI / 2 + Mathf.PI / 16))) mobileBaseTranslation[0] = 0;
-                    if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 16)) mobileBaseTranslation[1] = 0;
-                    if ((phi > (-Mathf.PI / 2 - Mathf.PI / 16)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 16))) mobileBaseTranslation[0] = 0;
+                    if (Mathf.Abs(phi) < (Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
+                    if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
+                    if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
+                    if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
 
                     direction = new Vector2(mobileBaseTranslation[0], mobileBaseTranslation[1]);
 
