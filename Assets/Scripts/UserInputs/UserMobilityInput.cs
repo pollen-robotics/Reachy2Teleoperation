@@ -29,6 +29,11 @@ namespace TeleopReachy
         public UnityEvent event_OnTriedToSendCommands;
         public UnityEvent<bool> event_DejaVu;
 
+        public float maxSpeed;
+        public float sensitivity;
+
+        private float speed = 0.0f;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -95,6 +100,13 @@ namespace TeleopReachy
                         translationSpeed = 1.0f;
 
                     mobilityCommands.SendMobileBaseDirection(new Vector3(direction[1] * translationSpeed, -direction[0] * translationSpeed, -mobileBaseRotation[0] * 1.5f));
+
+                    Vector3 directional_vector = transform.TransformDirection(new Vector3(direction[0], 0, direction[1]));
+                    speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
+                    speed = Mathf.Clamp(speed, 0, maxSpeed);
+                    Debug.LogError(speed);
+                    transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
+                    transform.Rotate(Vector3.up, Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f))* sensitivity);
                 }
                 else
                 {
