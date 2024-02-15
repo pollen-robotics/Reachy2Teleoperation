@@ -104,7 +104,6 @@ namespace TeleopReachy
                     Vector3 directional_vector = transform.TransformDirection(new Vector3(direction[0], 0, direction[1]));
                     speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
                     speed = Mathf.Clamp(speed, 0, maxSpeed);
-                    Debug.LogError(speed);
                     transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
                     transform.Rotate(Vector3.up, Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f))* sensitivity);
                 }
