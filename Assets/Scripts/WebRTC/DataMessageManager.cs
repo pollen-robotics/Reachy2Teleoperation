@@ -213,6 +213,22 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(neckCommand);
         }
 
+        public void TurnHandOff(PartId id)
+        {
+            Bridge.AnyCommands handCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        HandCommand = new Bridge.HandCommand{
+                            TurnOff = id
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(handCommand);
+        }
+
         public void TurnMobileBaseOff()
         {
             ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.FreeWheel };
@@ -261,6 +277,22 @@ namespace TeleopReachy
                 }
             };
             webRTCDataController.SendCommandMessage(neckCommand);
+        }
+
+        public void TurnHandOn(PartId id)
+        {
+            Bridge.AnyCommands handCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        HandCommand = new Bridge.HandCommand{
+                            TurnOn = id
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(handCommand);
         }
 
         public void TurnMobileBaseOn()
