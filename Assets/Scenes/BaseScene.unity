@@ -1056,8 +1056,6 @@ MonoBehaviour:
   event_DejaVu:
     m_PersistentCalls:
       m_Calls: []
-  maxSpeed: 10
-  sensitivity: 4
 --- !u!1 &4826978605613812945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,6 +1070,7 @@ GameObject:
   - component: {fileID: 4826978605613812944}
   - component: {fileID: 4826978605613812947}
   - component: {fileID: 6204403389353430909}
+  - component: {fileID: 9009280609215881307}
   m_Layer: 0
   m_Name: UserInput
   m_TagString: Untagged
@@ -2679,6 +2678,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba086ea56bf3e644bf781ad2e0b6493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9009280609215881307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826978605613812945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42181c45ea9bf344882e75845675110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 10
+  sensitivity: 4
 --- !u!114 &9073630071473511950
 MonoBehaviour:
   m_ObjectHideFlags: 0
