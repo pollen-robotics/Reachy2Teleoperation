@@ -13,7 +13,7 @@ namespace TeleopReachy
     public class ReticleUIManager : MonoBehaviour
     {
         private RobotStatus robotStatus;
-        private UserMobilityInput mobilityInput;
+        private UserMobilityFakeMovement mobilityFakeMovement;
 
         void Start()
         {
@@ -24,16 +24,14 @@ namespace TeleopReachy
 
         void Init()
         {
-            mobilityInput = UserInputManager.Instance.UserMobilityInput;
+            mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
         }
 
         void Update()
         {
             if(robotStatus.IsRobotTeleoperationActive())
             {
-                Vector2 mobileBaseTranslation = mobilityInput.GetMobileBaseDirection();
-                Vector2 mobileBaseRotation = mobilityInput.GetAngleDirection();
-                if(mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0))
+                if(mobilityFakeMovement.IsMoving())
                 {
                         transform.ActivateChildren(true);
                 }
