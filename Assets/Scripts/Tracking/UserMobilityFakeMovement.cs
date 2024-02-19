@@ -22,8 +22,10 @@ namespace TeleopReachy
         private Queue<float> previousRotationAngleQueue = new Queue<float>();
         Vector3 directional_vector;
 
-
         private float counterFakeMovement;
+
+        public UnityEvent event_OnStartMoving;
+        public UnityEvent event_OnStopMoving;
 
         private void OnEnable()
         {
@@ -92,12 +94,14 @@ namespace TeleopReachy
                     }
                     if (counterFakeMovement == 0)
                     {
+                        event_OnStopMoving.Invoke();
                         wasMoving = false;
                         ReinitCounter();
                     }
                 }
                 else
                 {
+                    if (!wasMoving) event_OnStartMoving.Invoke();
                     wasMoving = true;
                     AddToQueue(previousTranslationSpeedQueue, speed);
                     AddToQueue(previousRotationAngleQueue, rotationAngle);
