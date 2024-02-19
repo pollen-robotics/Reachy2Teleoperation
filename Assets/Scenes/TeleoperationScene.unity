@@ -2196,6 +2196,9 @@ MonoBehaviour:
   event_OnAudioReceiverRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
+  event_OnVideoTextureReceived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &803308018
 AudioSource:
   m_ObjectHideFlags: 0
