@@ -22,6 +22,19 @@ namespace TeleopReachy
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
+        private bool needUpdateButtons;
+
+        private float _timeElapsed;
+
+        private Vector3 lerpStartingScale;
+        private Vector3 lerpGoalScale;
+
+        private Vector3 fullScreenScale = new Vector3(55111, 31000, 1);
+        private Vector3 smallerScreenScale = new Vector3(27550, 15500, 1);
+
+        Coroutine blackScreenAppears;
+        public GameObject blackScreen;
+
         void Start()
         {
             controllers = ActiveControllerManager.Instance.ControllersManager;
@@ -40,8 +53,11 @@ namespace TeleopReachy
         void Init()
         {
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
-            mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageTransparent);
-            mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageOpaque);
+            // mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageTransparent);
+            // mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageOpaque);
+
+            mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
+            mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
         }
 
         public void SetImageTransparent()
@@ -65,6 +81,51 @@ namespace TeleopReachy
                 rend.material.SetColor("_Color", color);
                 needColorUpdate = false;
             }
+
+            if(needUpdateButtons)
+            {
+                // _timeElapsed += Time.deltaTime;
+                // if(_timeElapsed >= 0.7f)
+                // {
+                //     _timeElapsed = 0;
+                //     transform.localScale = lerpGoalScale;
+                //     needUpdateButtons = false;
+                // }
+                // else
+                // {
+                //     float fTime = _timeElapsed / 0.7f;
+                //     transform.localScale = Vector3.Lerp(lerpStartingScale, lerpGoalScale, fTime);
+                // }
+
+                needUpdateButtons = false;
+                StartCoroutine(BlackScreenAppears());
+                transform.localScale = lerpGoalScale;
+            }
         }
+
+        IEnumerator BlackScreenAppears()
+        {
+            blackScreen.GetComponent<MeshRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            blackScreen.GetComponent<MeshRenderer>().enabled = false;
+
+        }
+
+        void SetImageSmaller()
+        {
+            lerpStartingScale = transform.localScale;
+            _timeElapsed = 0;
+            lerpGoalScale = smallerScreenScale;
+            needUpdateButtons = true;
+        }
+
+        void SetImageFullScreen()
+        {
+            lerpStartingScale = transform.localScale;
+            _timeElapsed = 0;
+            lerpGoalScale = fullScreenScale;
+            needUpdateButtons = true;
+        }
+
     }
 }
