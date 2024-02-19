@@ -1016,7 +1016,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224850604}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f093a8021ce9bc443a5de613579a73ee, type: 3}
   m_Name: 
@@ -2196,6 +2196,9 @@ MonoBehaviour:
   event_OnAudioReceiverRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
+  event_OnVideoTextureReceived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!82 &803308018
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2220,7 +2223,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 1
+  BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
