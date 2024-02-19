@@ -101,9 +101,9 @@ namespace TeleopReachy
 
         protected override void WebRTCHangUp()
         {
-            if (_pc != null && _sender != null)
+            if (_pc != null && _sender != null) {
                 _pc.RemoveTrack(_sender);
-
+            }
             Microphone.End(_deviceName);
             m_audioTrack?.Dispose();
             _sendStream?.Dispose();

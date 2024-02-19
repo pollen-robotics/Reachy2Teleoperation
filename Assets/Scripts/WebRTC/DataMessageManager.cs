@@ -302,8 +302,8 @@ namespace TeleopReachy
                     string[] component = componentField.Name.Split("state");
                     string joint_name = side[0] + component[0] + axisField.Name;
 
-                    double value = (double)axisField.Accessor.GetValue(eulerAngles);
-                    dict.Add(joint_name, Mathf.Rad2Deg * (float)value);
+                    float value = (float)axisField.Accessor.GetValue(eulerAngles);
+                    dict.Add(joint_name, Mathf.Rad2Deg * value);
                 }
             }
         }

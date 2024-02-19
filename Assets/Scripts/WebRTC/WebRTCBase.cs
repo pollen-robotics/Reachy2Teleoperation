@@ -55,10 +55,16 @@ namespace TeleopReachy
 
         protected void OnDestroy()
         {
-            Task.Run(() => Disconnection());
+            // Task.Run(() => Disconnect());
         }
 
-        private void Disconnection()
+        // public async void Disconnect()
+        // {
+        //     Task taskA = Task.Run(() => Disconnection());
+        //     taskA.Wait();
+        // }
+
+        public void Disconnection()
         {
             WebRTCHangUp();
             _signaling?.Close();
