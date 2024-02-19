@@ -1,6 +1,5 @@
 using Unity.WebRTC;
 using UnityEngine;
-using System.Collections;
 
 
 namespace TeleopReachy {
