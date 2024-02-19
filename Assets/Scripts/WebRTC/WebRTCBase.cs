@@ -55,22 +55,9 @@ namespace TeleopReachy
 
         protected void OnDestroy()
         {
-            // Task.Run(() => Disconnect());
+            Task.Run(() => WebRTCHangUp());
+            Task.Run(() => _signaling?.Close());
         }
-
-        // public async void Disconnect()
-        // {
-        //     Task taskA = Task.Run(() => Disconnection());
-        //     taskA.Wait();
-        // }
-
-        public IEnumerator Disconnection()
-        {
-            WebRTCHangUp();
-            _signaling?.Close();
-            yield return null;
-        }
-
 
         void HandleConnectionStatus(WebRTCConnectionStatus status)
         {
