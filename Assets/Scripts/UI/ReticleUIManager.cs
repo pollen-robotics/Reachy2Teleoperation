@@ -12,33 +12,43 @@ namespace TeleopReachy
 {
     public class ReticleUIManager : MonoBehaviour
     {
-        private RobotStatus robotStatus;
         private UserMobilityFakeMovement mobilityFakeMovement;
+        private bool isReticleActive;
+        private bool needUpdate;
 
         void Start()
         {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-            transform.ActivateChildren(false);
+            isReticleActive = false;
+            transform.ActivateChildren(isReticleActive);
         }
 
         void Init()
         {
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
+            mobilityFakeMovement.event_OnStartMoving.AddListener(StartMoving);
+            mobilityFakeMovement.event_OnStopMoving.AddListener(StopMoving);
         }
 
         void Update()
         {
-            if(robotStatus.IsRobotTeleoperationActive())
+            if(needUpdate)
             {
-                if(mobilityFakeMovement.IsMoving())
-                {
-                        transform.ActivateChildren(true);
-                }
-                else {
-                        transform.ActivateChildren(false);
-                }
+                needUpdate = false;
+                transform.ActivateChildren(isReticleActive);
             }
+        }
+
+        void StartMoving()
+        {
+            isReticleActive = true;
+            needUpdate = true;
+        }
+
+        void StopMoving()
+        {
+            isReticleActive = false;
+            needUpdate = true;
         }
     }
 }
