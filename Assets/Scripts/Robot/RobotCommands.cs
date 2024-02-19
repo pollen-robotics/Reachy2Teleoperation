@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Grpc.Core;
 using Reachy.Part.Head;
 using Reachy.Part.Arm;
 using Reachy.Part.Hand;
@@ -100,11 +99,11 @@ namespace TeleopReachy
 
             HandPositionRequest leftHandPositionRequest = new HandPositionRequest();
             leftHandPositionRequest.Id = robotConfig.partsId["l_hand"];
-            leftHandPositionRequest.Position = new HandPosition { ParallelGripper=new ParallelGripperPosition { Position=leftGripperOpening }};
+            leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = leftGripperOpening } };
 
             HandPositionRequest rightHandPositionRequest = new HandPositionRequest();
             rightHandPositionRequest.Id = robotConfig.partsId["r_hand"];
-            rightHandPositionRequest.Position = new HandPosition { ParallelGripper=new ParallelGripperPosition { Position=rightGripperOpening }};
+            rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = rightGripperOpening } };
 
             ActualSendGrippersCommands(leftHandPositionRequest, rightHandPositionRequest);
         }

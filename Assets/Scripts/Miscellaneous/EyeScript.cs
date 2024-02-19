@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using Grpc.Core;
 
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
@@ -30,7 +29,8 @@ namespace TeleopReachy
                 Debug.Log("Oculus 2 detected");
                 transform.position = new Vector3(-159.0f, -595.0f, 18473.0f);
             }
-            else{
+            else
+            {
                 Debug.Log("Oculus 3 or other detected");
             }
         }
@@ -51,7 +51,7 @@ namespace TeleopReachy
         {
             if (needColorUpdate)
             {
-                rend = GetComponent<Renderer> ();
+                rend = GetComponent<Renderer>();
                 Color color = new Color(1, 1, 1, alpha);
                 rend.material.SetColor("_Color", color);
                 needColorUpdate = false;

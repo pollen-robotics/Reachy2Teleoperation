@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Grpc.Core;
 using Reachy.Part.Head;
 using Reachy.Kinematics;
 
@@ -19,15 +18,15 @@ namespace TeleopReachy
             UnityEngine.Quaternion RotZeroQuat = transform.parent.rotation;
             headQuat = UnityEngine.Quaternion.Inverse(RotZeroQuat) * headQuat;
 
-            headQuat *= UnityEngine.Quaternion.Euler(Vector3.right * -10);
-
             // Amplify rotation
-            headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.5f);
+            headQuat = UnityEngine.Quaternion.LerpUnclamped(UnityEngine.Quaternion.identity, headQuat, 1.2f);
 
             headTarget = new NeckJointGoal
             {
-                JointsGoal = new NeckOrientation {
-                    Rotation = new Rotation3d {
+                JointsGoal = new NeckOrientation
+                {
+                    Rotation = new Rotation3d
+                    {
                         Q = new Reachy.Kinematics.Quaternion
                         {
                             W = headQuat.w,
