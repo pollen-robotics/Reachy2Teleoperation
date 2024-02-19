@@ -81,7 +81,7 @@ namespace TeleopReachy
                     break;
 
                 case WebRTCConnectionStatus.Ready:
-                    WebRTCCall();
+                    Task.Run(() => WebRTCCall());
                     break;
 
                 case WebRTCConnectionStatus.Kicked:
