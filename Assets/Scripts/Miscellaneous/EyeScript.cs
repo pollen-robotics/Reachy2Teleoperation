@@ -20,6 +20,7 @@ namespace TeleopReachy
         float alpha = 1.0f;
 
         private ControllersManager controllers;
+        private UserMobilityFakeMovement mobilityFakeMovement;
 
         void Start()
         {
@@ -33,6 +34,14 @@ namespace TeleopReachy
             {
                 Debug.Log("Oculus 3 or other detected");
             }
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+        }
+
+        void Init()
+        {
+            mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
+            mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageTransparent);
+            mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageOpaque);
         }
 
         public void SetImageTransparent()
