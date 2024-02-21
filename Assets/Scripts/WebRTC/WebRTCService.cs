@@ -9,13 +9,5 @@ namespace TeleopReachy {
         {
             StartCoroutine(WebRTC.Update());
         }
-
-        public void AskForWebRTCDisconnection()
-        {
-            WebRTCManager.Instance.webRTCDataController.Disconnection();
-            WebRTCManager.Instance.webRTCVideoController.Disconnection();
-            WebRTCManager.Instance.webRTCAudioSender.Disconnection();
-            Destroy(gameObject);
-        }
     }
 }
