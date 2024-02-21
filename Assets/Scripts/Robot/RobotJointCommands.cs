@@ -110,9 +110,17 @@ namespace TeleopReachy
                 {
                     dataController.TurnArmOn(robotConfig.partsId["l_arm"]);
                 }
+                if (robotConfig.HasLeftGripper())
+                {
+                    dataController.TurnArmOn(robotConfig.partsId["l_hand"]);
+                }
                 if (robotConfig.HasRightArm())
                 {
                     dataController.TurnArmOn(robotConfig.partsId["r_arm"]);
+                }
+                 if (robotConfig.HasRightGripper())
+                {
+                    dataController.TurnArmOn(robotConfig.partsId["r_hand"]);
                 }
                 if (robotConfig.HasHead())
                 {
@@ -179,9 +187,17 @@ namespace TeleopReachy
                 {
                     dataController.TurnArmOff(robotConfig.partsId["l_arm"]);
                 }
+                if (robotConfig.HasLeftGripper())
+                {
+                    dataController.TurnHandOff(robotConfig.partsId["l_hand"]);
+                }
                 if (robotConfig.HasRightArm())
                 {
                     dataController.TurnArmOff(robotConfig.partsId["r_arm"]);
+                }
+                if (robotConfig.HasRightGripper())
+                {
+                    dataController.TurnHandOff(robotConfig.partsId["r_hand"]);
                 }
                 if (robotConfig.HasHead())
                 {
@@ -397,7 +413,9 @@ namespace TeleopReachy
 
             SetRobotCompliant("head");
             SetRobotCompliant("l_arm");
+            SetRobotCompliant("l_hand");
             SetRobotCompliant("r_arm");
+            SetRobotCompliant("r_hand");
             robotStatus.SetRobotCompliant(true);
 
             yield return new WaitForSeconds(0.1f);
