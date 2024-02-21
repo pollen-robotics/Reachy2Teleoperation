@@ -99,7 +99,7 @@ namespace TeleopReachy
             }
         }
 
-        protected override void WebRTCHangUp()
+        protected void OnDestroy()
         {
             if (_pc != null && _sender != null) {
                 _pc.RemoveTrack(_sender);
@@ -108,7 +108,7 @@ namespace TeleopReachy
             m_audioTrack?.Dispose();
             _sendStream?.Dispose();
             inputAudioSource.Stop();
-            base.WebRTCHangUp();
+            base.OnDestroy();
         }
     }
 }
