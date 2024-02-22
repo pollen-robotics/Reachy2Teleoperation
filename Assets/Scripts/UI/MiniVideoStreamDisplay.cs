@@ -27,8 +27,11 @@ namespace TeleopReachy
         void UpdateTexture()
         {
             Texture tex = videoStream.GetLeftEyeTexture();
-            GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
-            GetComponent<Renderer>().material.SetTexture("_RightTex", tex);
+            if(tex != null)
+            {
+                GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
+                GetComponent<Renderer>().material.SetTexture("_RightTex", tex);
+            }
         }
 
         void Update()
