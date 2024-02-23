@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 
 namespace TeleopReachy
@@ -12,8 +13,8 @@ namespace TeleopReachy
     public class RobotVideoStream : MonoBehaviour
     {
         private WebRTCAVReceiver audioVideoController;
-        private bool update_mini_viewer = false;
 
+        public UnityEvent event_OnVideoTextureReady;
         private Texture leftEyeStream;
 
         void Start()
@@ -25,21 +26,7 @@ namespace TeleopReachy
         void UpdateVideoStream(Texture tex)
         {
             leftEyeStream = tex;
-            update_mini_viewer = true;
-        }
-
-        void Update()
-        {
-            if (update_mini_viewer)
-            {
-                update_mini_viewer = false;
-                GameObject miniViewer = GameObject.Find("VideoStreamMini");
-                if (miniViewer != null)
-                {
-                    miniViewer.GetComponent<Renderer>().material.SetTexture("_LeftTex", leftEyeStream);
-                    miniViewer.GetComponent<Renderer>().material.SetTexture("_RightTex", leftEyeStream);
-                }
-            }
+            event_OnVideoTextureReady.Invoke();
         }
 
         public Texture GetLeftEyeTexture()
