@@ -84,8 +84,12 @@ namespace TeleopReachy
 
         public float GetPing()
         {
-            if(pingable) return mean_ping;
-            else return -1;
+            if(!has_received_ping)
+            {
+                if(pingable) return -1;
+                else return -1000;
+            } 
+            else return mean_ping;
         }
 
         public bool GetIsUnstablePing()

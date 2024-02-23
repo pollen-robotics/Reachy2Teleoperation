@@ -42,7 +42,7 @@ namespace TeleopReachy
 
             if (!hasWarningActivated)
             {
-                if(currentPing != -1)
+                if(currentPing >= 0)
                 {
                     if(pingQualityText != null)
                     {
@@ -58,12 +58,27 @@ namespace TeleopReachy
                 {
                     if(pingQualityText != null)
                     {
-                        pingQualityText.text = "Unable to reach robot";
-                        pingQualityText.color = ColorsManager.red;
+                        if(currentPing == -1000)
+                        {
+                            pingQualityText.text = "Unable to reach robot";
+                            pingQualityText.color = ColorsManager.red;
+                        }
+                        if(currentPing == -1)
+                        {
+                            pingQualityText.text = "Trying to reach robot...";
+                            pingQualityText.color = ColorsManager.blue;
+                        }
                     }
                     if(pingIcon != null)
                     {
-                        pingIcon.color = ColorsManager.red;
+                        if(currentPing == -1000)
+                        {
+                            pingIcon.color = ColorsManager.red;
+                        }
+                        if(currentPing == -1)
+                        {
+                            pingIcon.color = ColorsManager.blue;
+                        }
                     }
                 }
             }
