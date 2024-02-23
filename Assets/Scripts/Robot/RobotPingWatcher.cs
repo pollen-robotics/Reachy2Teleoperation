@@ -17,6 +17,8 @@ namespace TeleopReachy
 
         private bool isUnstable = false;
 
+        private bool has_received_ping = false;
+
         Coroutine pingCheck = null;
 
         // Start is called before the first frame update
@@ -45,6 +47,7 @@ namespace TeleopReachy
                 yield return new WaitForSeconds(REFRESH_REQ_SEC);
 
                 yield return new WaitUntil(() => p.isDone);
+                has_received_ping = true;
 
                 if (p.time > -1)
                 {
@@ -69,7 +72,8 @@ namespace TeleopReachy
 
         public float GetPing()
         {
-            return mean_ping;
+            if(has_received_ping) return mean_ping;
+            else return -1;
         }
 
         public bool GetIsUnstablePing()
