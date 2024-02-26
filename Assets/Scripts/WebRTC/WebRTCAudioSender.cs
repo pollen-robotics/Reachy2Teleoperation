@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
@@ -29,6 +30,9 @@ namespace TeleopReachy
         private RTCRtpSender _sender = null;
 
         string _deviceName;
+
+        public UnityEvent<bool> event_AudioSenderStatusHasChanged;
+        private bool isRobotInRoom = false;
 
 
         protected override void Start()
