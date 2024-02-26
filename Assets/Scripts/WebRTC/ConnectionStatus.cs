@@ -41,6 +41,7 @@ namespace TeleopReachy
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
+            microphoneController = WebRTCManager.Instance.webRTCAudioSender;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
