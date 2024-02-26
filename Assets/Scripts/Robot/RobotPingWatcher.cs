@@ -17,6 +17,9 @@ namespace TeleopReachy
 
         private bool isUnstable = false;
 
+        private bool has_received_ping = false;
+        private bool pingable = true;
+
         Coroutine pingCheck = null;
 
         // Start is called before the first frame update
@@ -25,7 +28,11 @@ namespace TeleopReachy
             //UnityEngine.Ping always return -1 on android
 #if !UNITY_ANDROID
             string robot_ip = PlayerPrefs.GetString("robot_ip");
-            if (robot_ip != "localhost" && robot_ip != Robot.VIRTUAL_ROBOT_IP) pingCheck = StartCoroutine(MeanPing(robot_ip));
+            if (robot_ip != "localhost" && robot_ip != Robot.VIRTUAL_ROBOT_IP)
+            {
+                pingCheck = StartCoroutine(MeanPing(robot_ip));
+                StartCoroutine(WaitForFirstPing());
+            }
 #endif
         }
 
@@ -33,6 +40,12 @@ namespace TeleopReachy
         {
             if (pingCheck != null)
                 StopCoroutine(pingCheck);
+        }
+
+        IEnumerator WaitForFirstPing()
+        {
+            yield return new WaitForSeconds(1);
+            if(!has_received_ping) pingable = false;
         }
 
         IEnumerator MeanPing(string ip)
@@ -45,6 +58,8 @@ namespace TeleopReachy
                 yield return new WaitForSeconds(REFRESH_REQ_SEC);
 
                 yield return new WaitUntil(() => p.isDone);
+                has_received_ping = true;
+                pingable = true;
 
                 if (p.time > -1)
                 {
@@ -69,7 +84,12 @@ namespace TeleopReachy
 
         public float GetPing()
         {
-            return mean_ping;
+            if(!has_received_ping)
+            {
+                if(pingable) return -1;
+                else return -1000;
+            } 
+            else return mean_ping;
         }
 
         public bool GetIsUnstablePing()
