@@ -44,19 +44,19 @@ namespace TeleopReachy
             pingsQueue = new Queue<float>();
         }
 
-        // void Update()
-        // {
-        //     CheckPingQuality();
-        //     CheckVideoQuality();
-        // }
+        void Update()
+        {
+            CheckPingQuality();
+            // CheckVideoQuality();
+        }
 
-        // void CheckPingQuality()
-        // {
-        //     if (robotPing.GetPing() > RobotPingWatcher.THRESHOLD_LOW_QUALITY_PING)
-        //         event_OnWarningHighLatency.Invoke();
-        //     else if (robotPing.GetIsUnstablePing())
-        //         event_OnWarningUnstablePing.Invoke();
-        // }
+        void CheckPingQuality()
+        {
+            if (robotPing.GetPing() > RobotPingWatcher.THRESHOLD_LOW_QUALITY_PING)
+                event_OnWarningHighLatency.Invoke();
+            else if (robotPing.GetIsUnstablePing())
+                event_OnWarningUnstablePing.Invoke();
+        }
 
         // void CheckVideoQuality()
         // {

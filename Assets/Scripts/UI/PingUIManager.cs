@@ -37,18 +37,49 @@ namespace TeleopReachy
         // Update is called once per frame
         void Update()
         {
-            if(pingValue != null) pingValue.text = "Ping : " + (int)pingWatcher.GetPing() + " ms";
+            float currentPing = pingWatcher.GetPing();
+            if(pingValue != null) pingValue.text = "Ping : " + (int)currentPing + " ms";
 
             if (!hasWarningActivated)
             {
-                if(pingQualityText != null)
+                if(currentPing >= 0)
                 {
-                    pingQualityText.text = "Good network connection";
-                    pingQualityText.color = ColorsManager.blue;
+                    if(pingQualityText != null)
+                    {
+                        pingQualityText.text = "Good network connection";
+                        pingQualityText.color = ColorsManager.blue;
+                    }
+                    if(pingIcon != null)
+                    {
+                        pingIcon.color = ColorsManager.blue;
+                    }
                 }
-                if(pingIcon != null)
+                else
                 {
-                    pingIcon.color = ColorsManager.blue;
+                    if(pingQualityText != null)
+                    {
+                        if(currentPing == -1000)
+                        {
+                            pingQualityText.text = "Unable to reach robot";
+                            pingQualityText.color = ColorsManager.red;
+                        }
+                        if(currentPing == -1)
+                        {
+                            pingQualityText.text = "Trying to reach robot...";
+                            pingQualityText.color = ColorsManager.blue;
+                        }
+                    }
+                    if(pingIcon != null)
+                    {
+                        if(currentPing == -1000)
+                        {
+                            pingIcon.color = ColorsManager.red;
+                        }
+                        if(currentPing == -1)
+                        {
+                            pingIcon.color = ColorsManager.blue;
+                        }
+                    }
                 }
             }
         }
