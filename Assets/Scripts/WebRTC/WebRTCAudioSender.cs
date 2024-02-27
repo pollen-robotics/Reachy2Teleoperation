@@ -43,24 +43,7 @@ namespace TeleopReachy
 
             m_audioTrack = new AudioStreamTrack(inputAudioSource);
             m_audioTrack.Loopback = false;
-
-            // Task.Run(() => AudioStart());
-
         }
-
-        // IEnumerator MicroStart()
-        // {
-        //     yield return null;
-        //     yield return new WaitForSeconds(2);
-
-
-        // }
-
-        // protected void AudioStart()
-        // {
-
-        // }
-
 
         protected override void WebRTCCall()
         {
