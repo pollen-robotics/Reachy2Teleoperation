@@ -23,13 +23,8 @@ namespace TeleopReachy
 
         private AudioStreamTrack m_audioTrack;
 
-        const int sampleRate = 48000;
-
-        private AudioClip m_clipInput;
-
         private RTCRtpSender _sender = null;
 
-        string _deviceName;
 
         public UnityEvent<bool> event_AudioSenderStatusHasChanged;
         private bool isRobotInRoom = false;
@@ -39,23 +34,32 @@ namespace TeleopReachy
         {
             base.Start();
             inputAudioSource = GetComponent<AudioSource>();
-            _deviceName = Microphone.devices[0];
-            Debug.Log("Microphone: " + _deviceName);
-            Microphone.GetDeviceCaps(_deviceName, out int minFreq, out int maxFreq);
 
-            int m_lengthSeconds = 1;
-
-            m_clipInput = Microphone.Start(_deviceName, true, m_lengthSeconds, sampleRate);
-              
-            while (!(Microphone.GetPosition(_deviceName) > 0)) { }
-
+            UserMicrophoneInput microphoneInput = UserMicrophoneInput.Instance;
+            AudioClip clipInput = microphoneInput.GetMicrophoneInput();
             inputAudioSource.loop = true;
-            inputAudioSource.clip = m_clipInput;
+            inputAudioSource.clip = clipInput;
             inputAudioSource.Play();
 
             m_audioTrack = new AudioStreamTrack(inputAudioSource);
             m_audioTrack.Loopback = false;
+            
+            // Task.Run(() => AudioStart());
+            
         }
+
+        // IEnumerator MicroStart()
+        // {
+        //     yield return null;
+        //     yield return new WaitForSeconds(2);
+            
+
+        // }
+
+        // protected void AudioStart()
+        // {
+           
+        // }
 
 
         protected override void WebRTCCall()
@@ -108,14 +112,20 @@ namespace TeleopReachy
 
         protected void OnDestroy()
         {
+            Task.Run(() => DisposeAll());
+           
+            base.OnDestroy();
+        }
+
+        protected void DisposeAll()
+        {
+            inputAudioSource.Stop();
+
             if (_pc != null && _sender != null) {
                 _pc.RemoveTrack(_sender);
             }
-            Microphone.End(_deviceName);
             m_audioTrack?.Dispose();
             _sendStream?.Dispose();
-            inputAudioSource.Stop();
-            base.OnDestroy();
         }
     }
 }
