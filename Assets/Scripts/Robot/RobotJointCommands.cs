@@ -37,6 +37,8 @@ namespace TeleopReachy
             robotStatus.event_OnStartTeleoperation.AddListener(StartTeleoperation);
             robotStatus.event_OnStopTeleoperation.AddListener(StopTeleoperation);
 
+            robotConfig = RobotDataManager.Instance.RobotConfig;
+
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
         }
@@ -52,15 +54,15 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            dataController.SetHandPosition(leftGripperCommand);
-            dataController.SetHandPosition(rightGripperCommand);
+            if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
+            if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
         }
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            dataController.SendArmCommand(leftArmRequest);
-            dataController.SendArmCommand(rightArmRequest);
-            dataController.SendNeckCommand(neckRequest);
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
         }
 
         private void SetRobotSmoothlyCompliant()
