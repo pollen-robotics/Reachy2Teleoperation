@@ -43,22 +43,22 @@ namespace TeleopReachy
 
             m_audioTrack = new AudioStreamTrack(inputAudioSource);
             m_audioTrack.Loopback = false;
-            
+
             // Task.Run(() => AudioStart());
-            
+
         }
 
         // IEnumerator MicroStart()
         // {
         //     yield return null;
         //     yield return new WaitForSeconds(2);
-            
+
 
         // }
 
         // protected void AudioStart()
         // {
-           
+
         // }
 
 
@@ -110,10 +110,10 @@ namespace TeleopReachy
             }
         }
 
-        protected void OnDestroy()
+        protected override void OnDestroy()
         {
             Task.Run(() => DisposeAll());
-           
+
             base.OnDestroy();
         }
 
@@ -121,7 +121,8 @@ namespace TeleopReachy
         {
             inputAudioSource.Stop();
 
-            if (_pc != null && _sender != null) {
+            if (_pc != null && _sender != null)
+            {
                 _pc.RemoveTrack(_sender);
             }
             m_audioTrack?.Dispose();
