@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TeleopReachy
 {
-    [RequireComponent(typeof(WebRTCService))]
     public abstract class WebRTCBase : MonoBehaviour
     {
         private string _signalingServerURL;
@@ -48,9 +47,9 @@ namespace TeleopReachy
 
         void Update()
         {
-    #if !UNITY_WEBGL || UNITY_EDITOR
+#if !UNITY_WEBGL || UNITY_EDITOR
             _signaling.UpdateMessages();
-    #endif
+#endif
         }
 
         protected void OnDestroy()
