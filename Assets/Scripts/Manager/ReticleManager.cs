@@ -24,11 +24,13 @@ namespace TeleopReachy
         private ColorBlock buttonColor;
         private string buttonText;
 
-        public bool IsReticleOn { get; private set; }
-        public bool IsReticleAlwaysShown { get; private set; }
+        private MotionSicknessManager motionSicknessManager;
 
-        void Awake()
+        void Start()
         {
+            motionSicknessManager = MotionSicknessManager.Instance;
+            ChooseButtonMode();
+
             reticleButton.onClick.AddListener(SwitchButtonMode);
             reticleToggle.onValueChanged.AddListener(SwitchToggleMode);
 
@@ -37,24 +39,12 @@ namespace TeleopReachy
 
             robotConfig.event_OnConfigChanged.AddListener(CheckToggleInteractibility);
 
-            IsReticleOn = true;
-            IsReticleAlwaysShown = false;
-            reticleButton.interactable = true;
-            reticleToggle.interactable = false;
-
             CheckToggleInteractibility();
         }
 
-        void SwitchToggleMode(bool value)
+        void ChooseButtonMode()
         {
-            IsReticleAlwaysShown = value;
-        }
-
-        void SwitchButtonMode()
-        {
-            IsReticleOn = !IsReticleOn;
-            
-            if(IsReticleOn)
+            if(motionSicknessManager.IsReticleOn)
             {
                 reticleButton.colors = ColorsManager.colorsActivated;
                 reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle ON";
@@ -64,6 +54,17 @@ namespace TeleopReachy
                 reticleButton.colors = ColorsManager.colorsDeactivated;
                 reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle OFF";
             }
+        }
+
+        void SwitchToggleMode(bool value)
+        {
+            motionSicknessManager.IsReticleAlwaysShown = value;
+        }
+
+        void SwitchButtonMode()
+        {
+            motionSicknessManager.IsReticleOn = !motionSicknessManager.IsReticleOn;
+            ChooseButtonMode();
             CheckToggleInteractibility();
         }
 
@@ -80,11 +81,11 @@ namespace TeleopReachy
 
         void CheckToggleInteractibility()
         {
-            if(IsReticleOn)
+            if(motionSicknessManager.IsReticleOn)
             {
                 if(robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
                 {
-                    reticleToggle.isOn = true;
+                    reticleToggle.isOn = motionSicknessManager.IsReticleAlwaysShown;
                     isToggleInteractable = true;
                 }
                 else

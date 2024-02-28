@@ -13,8 +13,11 @@ namespace TeleopReachy
     public class ReticleUIManager : MonoBehaviour
     {
         private UserMobilityFakeMovement mobilityFakeMovement;
+        private RobotStatus robotStatus;
         private bool isReticleActive;
         private bool needUpdate;
+
+        private MotionSicknessManager motionSicknessManager;
 
         void Start()
         {
@@ -28,6 +31,10 @@ namespace TeleopReachy
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
             mobilityFakeMovement.event_OnStartMoving.AddListener(StartMoving);
             mobilityFakeMovement.event_OnStopMoving.AddListener(StopMoving);
+            motionSicknessManager = MotionSicknessManager.Instance;
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
+            robotStatus.event_OnStopTeleoperation.AddListener(HideReticle);
         }
 
         void Update()
@@ -35,7 +42,10 @@ namespace TeleopReachy
             if(needUpdate)
             {
                 needUpdate = false;
-                transform.ActivateChildren(isReticleActive);
+                if(motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
+                {
+                    transform.ActivateChildren(isReticleActive);
+                }
             }
         }
 
@@ -49,6 +59,20 @@ namespace TeleopReachy
         {
             isReticleActive = false;
             needUpdate = true;
+        }
+
+        void CheckReticleState()
+        {
+            Debug.LogError(motionSicknessManager.IsReticleAlwaysShown);
+            if (motionSicknessManager.IsReticleOn && motionSicknessManager.IsReticleAlwaysShown)
+            {
+                transform.ActivateChildren(true);
+            }
+        }
+
+        void HideReticle()
+        {
+            transform.ActivateChildren(false);
         }
     }
 }
