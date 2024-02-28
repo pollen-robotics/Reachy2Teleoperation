@@ -19,6 +19,12 @@ namespace TeleopReachy
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
         public UnityEvent<Texture> event_OnVideoTextureReceived;
 
+        protected override void Start()
+        {
+            StartCoroutine(WebRTC.Update());
+            base.Start();
+        }
+
         protected override void WebRTCCall()
         {
             base.WebRTCCall();
@@ -63,11 +69,11 @@ namespace TeleopReachy
                     if (e.Track.Id == right_track_id_name)
                     {
                         screen.material.SetTexture("_MainTex_right", tex);
-                        screen.texture = tex;
                         event_OnVideoTextureReceived.Invoke(tex);
                     }
                     else
                     {
+                        screen.texture = tex;
                         screen.material.SetTexture("_MainTex", tex);
                     }
                 };

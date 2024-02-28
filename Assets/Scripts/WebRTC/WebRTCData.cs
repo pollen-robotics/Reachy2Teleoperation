@@ -1,10 +1,6 @@
 using UnityEngine;
 using Unity.WebRTC;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Bridge;
 using Reachy;
 

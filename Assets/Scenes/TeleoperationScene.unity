@@ -1995,7 +1995,6 @@ GameObject:
   m_Component:
   - component: {fileID: 803308015}
   - component: {fileID: 803308020}
-  - component: {fileID: 803308014}
   - component: {fileID: 803308021}
   - component: {fileID: 803308017}
   - component: {fileID: 803308018}
@@ -2009,18 +2008,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &803308014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803308013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ecaf72ba3496494abdecbcd95af4bd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &803308015
 Transform:
   m_ObjectHideFlags: 0
