@@ -6,8 +6,8 @@ namespace TeleopReachyXR
 {
     public class CanvasInit : MonoBehaviour
     {
-        [SerializeField]
-        private float PlaneDistance;
+        //[SerializeField]
+        //private float PlaneDistance;
 
         // Start is called before the first frame update
         void Start()
@@ -16,7 +16,7 @@ namespace TeleopReachyXR
             transform.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             transform.GetComponent<Canvas>().worldCamera = Camera.main;
 
-            if(PlaneDistance != 0) transform.GetComponent<Canvas>().planeDistance = PlaneDistance;
+            //if(PlaneDistance != 0) transform.GetComponent<Canvas>().planeDistance = PlaneDistance;
         }
 
     }

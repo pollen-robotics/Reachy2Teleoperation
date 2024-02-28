@@ -8,7 +8,8 @@ namespace TeleopReachy
 {
     public class WebRTCAVReceiver : WebRTCBase
     {
-        public Renderer screen;
+        //public Renderer screen;
+        public RawImage screen;
         public AudioSource outputAudioSource;
         private MediaStream _receiveStream;
 
@@ -61,12 +62,13 @@ namespace TeleopReachy
                 {
                     if (e.Track.Id == right_track_id_name)
                     {
-                        screen.material.SetTexture("_LeftTex", tex);
+                        screen.material.SetTexture("_MainTex_right", tex);
+                        screen.texture = tex;
                         event_OnVideoTextureReceived.Invoke(tex);
                     }
                     else
                     {
-                        screen.material.SetTexture("_RightTex", tex);
+                        screen.material.SetTexture("_MainTex", tex);
                     }
                 };
             }
