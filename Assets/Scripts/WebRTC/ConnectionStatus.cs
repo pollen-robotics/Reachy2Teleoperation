@@ -11,6 +11,7 @@ namespace TeleopReachy
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
+        private bool isRobotInAudioSenderRoom;
         private bool isRobotInRestartRoom;
         private bool hasRobotJustLeftDataRoom;
 
@@ -19,6 +20,7 @@ namespace TeleopReachy
         private bool areRobotServicesRestarting;
 
         private WebRTCAVReceiver audioVideoController;
+        private WebRTCAudioSender microphoneController;
         private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
@@ -36,6 +38,7 @@ namespace TeleopReachy
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
+            microphoneController = WebRTCManager.Instance.webRTCAudioSender;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -46,6 +49,7 @@ namespace TeleopReachy
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
+            isRobotInAudioSenderRoom = false;
             isRobotInRestartRoom = false;
 
             isRobotReady = false;
@@ -62,6 +66,7 @@ namespace TeleopReachy
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
+            if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }
@@ -89,6 +94,11 @@ namespace TeleopReachy
         public bool IsRobotInAudioReceiverRoom()
         {
             return isRobotInAudioReceiverRoom;
+        }
+
+        public bool IsRobotInAudioSenderRoom()
+        {
+            return isRobotInAudioSenderRoom;
         }
 
         public bool IsRobotInRestartRoom()
@@ -130,6 +140,13 @@ namespace TeleopReachy
         {
             Debug.Log("[ConnectionStatus] AudioReceiverControllerStatusHasChanged");
             isRobotInAudioReceiverRoom = isRobotInRoom;
+            statusChanged = true;
+        }
+
+        void AudioSenderStatusHasChanged(bool isRobotInRoom)
+        {
+            Debug.Log("[ConnectionStatus] AudioSenderStatusHasChanged");
+            isRobotInAudioSenderRoom = isRobotInRoom;
             statusChanged = true;
         }
 

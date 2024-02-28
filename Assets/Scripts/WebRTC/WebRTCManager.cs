@@ -7,7 +7,6 @@ namespace TeleopReachy
         public WebRTCData webRTCDataController { get; private set; }
         public WebRTCAVReceiver webRTCVideoController { get; private set; }
         public WebRTCAudioSender webRTCAudioSender { get; private set; }
-        // public gRPCMobileBaseController gRPCMobileBaseController { get; private set; }
 
         protected override void Init()
         {
@@ -15,7 +14,6 @@ namespace TeleopReachy
             webRTCDataController = GetComponent<WebRTCData>();
             webRTCVideoController = GetComponent<WebRTCAVReceiver>();
             webRTCAudioSender = GetComponent<WebRTCAudioSender>();
-            // gRPCMobileBaseController = GetComponent<gRPCMobileBaseController>();
         }
     }
 }

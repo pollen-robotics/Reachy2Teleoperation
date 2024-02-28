@@ -52,7 +52,7 @@ namespace TeleopReachy
 #endif
         }
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             Task.Run(() => WebRTCHangUp());
             Task.Run(() => _signaling?.Close());
