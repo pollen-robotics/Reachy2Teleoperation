@@ -36,8 +36,11 @@ namespace TeleopReachy
             transform.GetChild(1).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInAudioReceiverRoom());
             transform.GetChild(1).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInAudioReceiverRoom());
 
-            transform.GetChild(2).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInDataRoom());
-            transform.GetChild(2).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInDataRoom());
+            transform.GetChild(2).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInAudioSenderRoom());
+            transform.GetChild(2).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInAudioSenderRoom());
+
+            transform.GetChild(3).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInDataRoom());
+            transform.GetChild(3).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInDataRoom());
 
             /*transform.GetChild(3).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInRestartRoom());
             transform.GetChild(3).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInRestartRoom());*/

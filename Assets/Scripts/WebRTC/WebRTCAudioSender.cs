@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
@@ -22,27 +23,31 @@ namespace TeleopReachy
 
         private AudioStreamTrack m_audioTrack;
 
-        const int sampleRate = 48000;
-
-        private AudioClip m_clipInput;
-
         private RTCRtpSender _sender = null;
 
-        string _deviceName;
+
+        public UnityEvent<bool> event_AudioSenderStatusHasChanged;
+        private bool isRobotInRoom = false;
 
 
         protected override void Start()
         {
             base.Start();
             inputAudioSource = GetComponent<AudioSource>();
-            _deviceName = Microphone.devices[0];
-            Debug.Log("Microphone: " + _deviceName);
-            Microphone.GetDeviceCaps(_deviceName, out int minFreq, out int maxFreq);
-        }
 
+            UserMicrophoneInput microphoneInput = UserMicrophoneInput.Instance;
+            AudioClip clipInput = microphoneInput.GetMicrophoneInput();
+            inputAudioSource.loop = true;
+            inputAudioSource.clip = clipInput;
+            inputAudioSource.Play();
+
+            m_audioTrack = new AudioStreamTrack(inputAudioSource);
+            m_audioTrack.Loopback = false;
+        }
 
         protected override void WebRTCCall()
         {
+            Debug.Log("[WebRTCAudioSender] Call started");
             base.WebRTCCall();
             _sendStream = new MediaStream();
 
@@ -50,24 +55,10 @@ namespace TeleopReachy
             {
                 _pc.OnNegotiationNeeded = () =>
                 {
-                    Debug.Log($"[WebRTC] OnNegotiationNeeded");
+                    Debug.Log($"[WebRTCAudioSender] OnNegotiationNeeded");
                     StartCoroutine(PeerNegotiationNeeded(_pc));
                 };
 
-                int m_lengthSeconds = 1;
-
-                m_clipInput = Microphone.Start(_deviceName, true, m_lengthSeconds, sampleRate);
-                // set the latency to “0” samples before the audio starts to play.
-                while (!(Microphone.GetPosition(_deviceName) > 0)) { }
-
-                inputAudioSource.loop = true;
-                inputAudioSource.clip = m_clipInput;
-                inputAudioSource.Play();
-
-                m_audioTrack = new AudioStreamTrack(inputAudioSource);
-                m_audioTrack.Loopback = false;
-
-                Debug.Log("[WebRTCAudioSender] After AudioStreamTrack");
                 _sender = _pc.AddTrack(m_audioTrack, _sendStream);
 
                 Debug.Log(m_audioTrack.ReadyState);
@@ -88,6 +79,7 @@ namespace TeleopReachy
                     }*/
                 }
 
+
                 var transceiver1 = _pc.GetTransceivers().First();
                 Debug.Log("codec " + transceiver1 + " " + availableCodecs);
                 var error = transceiver1.SetCodecPreferences(availableCodecs.ToArray());
@@ -96,19 +88,28 @@ namespace TeleopReachy
                 //var transceiver1 = _pc.GetTransceivers().First();
                 transceiver1.Direction = RTCRtpTransceiverDirection.SendOnly;
 
+                isRobotInRoom = true;
+                event_AudioSenderStatusHasChanged.Invoke(isRobotInRoom);
             }
         }
 
-        protected void OnDestroy()
+        protected override void OnDestroy()
         {
-            if (_pc != null && _sender != null) {
+            Task.Run(() => DisposeAll());
+
+            base.OnDestroy();
+        }
+
+        protected void DisposeAll()
+        {
+            inputAudioSource.Stop();
+
+            if (_pc != null && _sender != null)
+            {
                 _pc.RemoveTrack(_sender);
             }
-            Microphone.End(_deviceName);
             m_audioTrack?.Dispose();
             _sendStream?.Dispose();
-            inputAudioSource.Stop();
-            base.OnDestroy();
         }
     }
 }
