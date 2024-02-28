@@ -6354,7 +6354,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.46666667, g: 0.73333335, b: 0.7254902, a: 1}
+    m_NormalColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
     m_PressedColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
     m_SelectedColor: {r: 0.4666667, g: 0.73333335, b: 0.7254902, a: 1}
@@ -8542,7 +8542,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.46666667, g: 0.73333335, b: 0.7254902, a: 1}
+    m_NormalColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
     m_HighlightedColor: {r: 0.31764707, g: 0.31764707, b: 0.31764707, a: 1}
     m_PressedColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
     m_SelectedColor: {r: 0.4666667, g: 0.73333335, b: 0.7254902, a: 1}
@@ -10704,6 +10704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1826704568}
+  - component: {fileID: 1826704569}
   m_Layer: 14
   m_Name: Effects
   m_TagString: Untagged
@@ -10735,6 +10736,22 @@ RectTransform:
   m_AnchoredPosition: {x: -36.99997, y: -65}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1826704569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826704567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc22750df9e6a648b4034a58341bca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noEffectButton: {fileID: 799549740}
+  tunnellingButton: {fileID: 1329094313}
+  reducedScreenButton: {fileID: 903417634}
+  onDemandToggle: {fileID: 1930241417}
 --- !u!1 &1844879799
 GameObject:
   m_ObjectHideFlags: 0
@@ -11685,7 +11702,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -605, y: 469.3}
+  m_AnchoredPosition: {x: -605, y: 568}
   m_SizeDelta: {x: 550, y: 840.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2008010111
