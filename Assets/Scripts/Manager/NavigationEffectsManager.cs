@@ -31,12 +31,14 @@ namespace TeleopReachy
         private ColorBlock tunnellingButtonColor;
         private ColorBlock reducedScreenButtonColor;
 
-        public bool IsTunnellingOn { get; private set; }
-        public bool IsReducedScreenOn { get; private set; }
-        public bool IsNavigationEffectOnDemand { get; private set; }
+        private MotionSicknessManager motionSicknessManager;
 
-        void Awake()
+        void Start()
         {
+            motionSicknessManager = MotionSicknessManager.Instance;
+            ChooseButtonsMode();
+            SwitchToggleMode(motionSicknessManager.IsNavigationEffectOnDemand);
+
             noEffectButton.onClick.AddListener(SwitchToNoEffectMode);
             tunnellingButton.onClick.AddListener(SwitchToTunnellingMode);
             reducedScreenButton.onClick.AddListener(SwitchToReducedScreenMode);
@@ -47,22 +49,27 @@ namespace TeleopReachy
 
             robotConfig.event_OnConfigChanged.AddListener(CheckMobileBasePresence);
 
-            IsTunnellingOn = false;
-            IsReducedScreenOn = false;
             onDemandToggle.interactable = false;
 
             CheckMobileBasePresence();
         }
 
+        void ChooseButtonsMode()
+        {
+            if(motionSicknessManager.IsTunnellingOn) SwitchToTunnellingMode();
+            else if (motionSicknessManager.IsReducedScreenOn) SwitchToReducedScreenMode();
+            else SwitchToNoEffectMode();
+        }
+
         void SwitchToggleMode(bool value)
         {
-            IsNavigationEffectOnDemand = value;
+            motionSicknessManager.IsNavigationEffectOnDemand = value;
         }
 
         void SwitchToNoEffectMode()
         {
-            IsTunnellingOn = false;
-            IsReducedScreenOn = false;
+            motionSicknessManager.IsTunnellingOn = false;
+            motionSicknessManager.IsReducedScreenOn = false;
             
             noEffectButton.colors = ColorsManager.colorsActivated;
             tunnellingButton.colors = ColorsManager.colorsDeactivated;
@@ -74,8 +81,8 @@ namespace TeleopReachy
 
         void SwitchToTunnellingMode()
         {
-            IsTunnellingOn = true;
-            IsReducedScreenOn = false;
+            motionSicknessManager.IsTunnellingOn = true;
+            motionSicknessManager.IsReducedScreenOn = false;
             
             noEffectButton.colors = ColorsManager.colorsDeactivated;
             tunnellingButton.colors = ColorsManager.colorsActivated;
@@ -87,8 +94,8 @@ namespace TeleopReachy
 
         void SwitchToReducedScreenMode()
         {
-            IsTunnellingOn = false;
-            IsReducedScreenOn = true;
+            motionSicknessManager.IsTunnellingOn = false;
+            motionSicknessManager.IsReducedScreenOn = true;
             
             noEffectButton.colors = ColorsManager.colorsDeactivated;
             tunnellingButton.colors = ColorsManager.colorsDeactivated;
@@ -120,21 +127,20 @@ namespace TeleopReachy
 
         void CheckMobileBasePresence()
         {
-            Debug.LogError("CheckMobileBasePresence");
-            if (robotConfig.HasMobileBase())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
             {
                 areButtonsInteractable = true;
             }
             else 
             {
                 areButtonsInteractable = false;
-                IsTunnellingOn = false;
-                IsReducedScreenOn = false;
+                motionSicknessManager.IsTunnellingOn = false;
+                motionSicknessManager.IsReducedScreenOn = false;
                 tunnellingButtonColor = ColorsManager.colorsDeactivated;
                 reducedScreenButtonColor = ColorsManager.colorsDeactivated;
                 noEffectButtonColor = ColorsManager.colorsActivated;
             }
-            if(IsTunnellingOn || IsReducedScreenOn)
+            if(motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
             {
                 isToggleInteractable = true;
             }

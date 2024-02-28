@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sigtrap.VrTunnellingPro;
 
 
 namespace TeleopReachy
@@ -10,7 +11,15 @@ namespace TeleopReachy
         public bool IsReticleOn { get; set; }
         public bool IsReticleAlwaysShown { get; set; }
 
-        public bool IsTunnellingOn { get; set; }
+        public bool IsTunnellingOn { 
+            get {
+                return IsTunnellingOn;
+            }
+            set { 
+                ActivateDeactivateTunnelling(value);
+                IsTunnellingOn = value;
+            }
+        }
         public bool IsReducedScreenOn { get; set; }
         public bool IsNavigationEffectOnDemand { get; set; }
 
@@ -24,6 +33,12 @@ namespace TeleopReachy
             IsTunnellingOn = false;
             IsReducedScreenOn = false;
             IsNavigationEffectOnDemand = false;
+        }
+
+        void ActivateDeactivateTunnelling(bool value)
+        {
+            GameObject camera = GameObject.Find("MainCamera");
+            camera.transform.GetComponent<TunnellingMobile>().enabled = value;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TeleopReachy
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
-        private bool needUpdateButtons;
+        private bool needUpdateScale;
 
         private float _timeElapsed;
 
@@ -34,6 +34,8 @@ namespace TeleopReachy
 
         Coroutine blackScreenAppears;
         public GameObject blackScreen;
+
+        private MotionSicknessManager motionSicknessManager;
 
         void Start()
         {
@@ -47,6 +49,7 @@ namespace TeleopReachy
             {
                 Debug.Log("Oculus 3 or other detected");
             }
+            motionSicknessManager = MotionSicknessManager.Instance;
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
         }
 
@@ -82,7 +85,7 @@ namespace TeleopReachy
                 needColorUpdate = false;
             }
 
-            if(needUpdateButtons)
+            if(needUpdateScale)
             {
                 // _timeElapsed += Time.deltaTime;
                 // if(_timeElapsed >= 0.7f)
@@ -97,7 +100,7 @@ namespace TeleopReachy
                 //     transform.localScale = Vector3.Lerp(lerpStartingScale, lerpGoalScale, fTime);
                 // }
 
-                needUpdateButtons = false;
+                needUpdateScale = false;
                 StartCoroutine(BlackScreenAppears());
                 transform.localScale = lerpGoalScale;
             }
@@ -113,18 +116,25 @@ namespace TeleopReachy
 
         void SetImageSmaller()
         {
-            lerpStartingScale = transform.localScale;
-            _timeElapsed = 0;
-            lerpGoalScale = smallerScreenScale;
-            needUpdateButtons = true;
+            if (motionSicknessManager.IsReducedScreenOn)
+            {
+                lerpStartingScale = transform.localScale;
+                _timeElapsed = 0;
+                lerpGoalScale = smallerScreenScale;
+                needUpdateScale = true;
+            }
+            
         }
 
         void SetImageFullScreen()
         {
-            lerpStartingScale = transform.localScale;
-            _timeElapsed = 0;
-            lerpGoalScale = fullScreenScale;
-            needUpdateButtons = true;
+            if (motionSicknessManager.IsReducedScreenOn)
+            {
+                lerpStartingScale = transform.localScale;
+                _timeElapsed = 0;
+                lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
+            }
         }
 
     }
