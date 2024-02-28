@@ -119,7 +119,7 @@ namespace TeleopReachy
             if (response.ConnectionStatus != null)
             {
                 _connectionStatus = response.ConnectionStatus;
-                Debug.LogError(_connectionStatus.ToString());
+                Debug.Log(_connectionStatus.ToString());
 
                 if (response.ConnectionStatus.Connected)
                 {
@@ -154,7 +154,7 @@ namespace TeleopReachy
 
         public void SendCommandMessage(Bridge.AnyCommands _commands)
         {
-            if(_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
+            if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
         }
     }
 }
