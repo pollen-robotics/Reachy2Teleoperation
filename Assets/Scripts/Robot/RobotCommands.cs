@@ -50,59 +50,21 @@ namespace TeleopReachy
 
         public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            leftArmRequest.Id = robotConfig.partsId["l_arm"];
-            rightArmRequest.Id = robotConfig.partsId["r_arm"];
-            neckRequest.Id = robotConfig.partsId["head"];
-            // FullBodyCartesianCommand bodyCommand = new FullBodyCartesianCommand();
-            // if (robotConfig.IsVirtual() || (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()))
-            // {
-            //     bodyCommand.LeftArm = leftArmRequest;
-            // }
-            // if (robotConfig.IsVirtual() || (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()))
-            // {
-            //     bodyCommand.RightArm = rightArmRequest;
-            // }
-            // if (robotConfig.IsVirtual() || robotConfig.HasHead() && robotStatus.IsHeadOn())
-            // {
-            //     bodyCommand.Head = neckRequest;
-            // }
+            if (robotConfig.HasLeftArm()) leftArmRequest.Id = robotConfig.partsId["l_arm"];
+            if (robotConfig.HasRightArm()) rightArmRequest.Id = robotConfig.partsId["r_arm"];
+            if (robotConfig.HasHead()) neckRequest.Id = robotConfig.partsId["head"];
 
             ActualSendBodyCommands(leftArmRequest, rightArmRequest, neckRequest);
         }
 
         public void SendGrippersCommands(float leftGripperOpening, float rightGripperOpening)
         {
-            // List<JointCommand> grippersCommand = new List<JointCommand>();
-
-            // if (robotConfig.IsVirtual() || robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn())
-            // {
-            //     var jointCom = new JointCommand();
-            //     jointCom.Id = new JointId { Name = "l_gripper" };
-            //     jointCom.GoalPosition = leftGripperOpening;
-
-            //     grippersCommand.Add(jointCom);
-            // }
-
-            // if (robotConfig.IsVirtual() || robotConfig.HasRightGripper() && robotStatus.IsRightArmOn())
-            // {
-            //     var jointCom = new JointCommand();
-            //     jointCom.Id = new JointId { Name = "r_gripper" };
-            //     jointCom.GoalPosition = rightGripperOpening;
-
-            //     grippersCommand.Add(jointCom);
-            // }
-
-            // JointsCommand gripperCommand = new JointsCommand
-            // {
-            //     Commands = { grippersCommand },
-            // };
-
             HandPositionRequest leftHandPositionRequest = new HandPositionRequest();
-            leftHandPositionRequest.Id = robotConfig.partsId["l_hand"];
+            if (robotConfig.HasLeftGripper()) leftHandPositionRequest.Id = robotConfig.partsId["l_hand"];
             leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = leftGripperOpening } };
 
             HandPositionRequest rightHandPositionRequest = new HandPositionRequest();
-            rightHandPositionRequest.Id = robotConfig.partsId["r_hand"];
+            if (robotConfig.HasRightGripper()) rightHandPositionRequest.Id = robotConfig.partsId["r_hand"];
             rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = rightGripperOpening } };
 
             ActualSendGrippersCommands(leftHandPositionRequest, rightHandPositionRequest);

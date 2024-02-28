@@ -48,12 +48,12 @@ namespace TeleopReachy
 
         void Update()
         {
-    #if !UNITY_WEBGL || UNITY_EDITOR
+#if !UNITY_WEBGL || UNITY_EDITOR
             _signaling.UpdateMessages();
-    #endif
+#endif
         }
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             Task.Run(() => WebRTCHangUp());
             Task.Run(() => _signaling?.Close());

@@ -2233,6 +2233,9 @@ MonoBehaviour:
   _producer: 1
   remote_producer_name: robot
   inputAudioSource: {fileID: 0}
+  event_AudioSenderStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &803308017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5044,7 +5047,7 @@ AudioSource:
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 1
+  BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
   rolloffCustomCurve:
@@ -6879,6 +6882,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88dec1e9fd6877438f1c69594a95841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  event_OnVideoTextureReady:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8407687714121525527
 MonoBehaviour:
   m_ObjectHideFlags: 0
