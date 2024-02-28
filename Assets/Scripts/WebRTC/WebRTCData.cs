@@ -12,12 +12,11 @@ namespace TeleopReachy
         private RTCDataChannel _reachyStateChannel = null;
         private RTCDataChannel _reachyCommandChannel = null;
 
-        private Bridge.AnyCommands _commands;
         private Bridge.ConnectionStatus _connectionStatus = null;
 
         private ReachyState _reachyState = null;
 
-        private TeleopReachy.DataMessageManager dataMessageManager;
+        private DataMessageManager dataMessageManager;
 
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
         private bool isRobotInRoom = false;
@@ -25,28 +24,7 @@ namespace TeleopReachy
         protected override void Start()
         {
             base.Start();
-            dataMessageManager = TeleopReachy.DataMessageManager.Instance;
-            _commands = new Bridge.AnyCommands
-            {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        HandCommand = new Bridge.HandCommand{
-                            HandGoal = new Reachy.Part.Hand.HandPositionRequest{
-                                Id = new Reachy.Part.PartId
-                                {
-                                    Id = 5
-                                },
-                                Position = new Reachy.Part.Hand.HandPosition{
-                                    ParallelGripper = new Reachy.Part.Hand.ParallelGripperPosition{
-                                        Position = 50.0f
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            };
+            dataMessageManager = DataMessageManager.Instance;
         }
 
         protected override void WebRTCCall()
@@ -148,9 +126,9 @@ namespace TeleopReachy
             base.OnDestroy();
         }
 
-        public void SendCommandMessage(Bridge.AnyCommands _commands)
+        public void SendCommandMessage(AnyCommands commands)
         {
-            if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(_commands));
+            if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(commands));
         }
     }
 }

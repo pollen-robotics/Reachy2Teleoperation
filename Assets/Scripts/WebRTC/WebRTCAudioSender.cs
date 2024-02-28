@@ -1,12 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 using UnityEngine;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
 
-using UnityEngine.UI;
 using Unity.WebRTC;
 
 using System.Linq;
@@ -101,7 +95,8 @@ namespace TeleopReachy
 
         protected void OnDestroy()
         {
-            if (_pc != null && _sender != null) {
+            if (_pc != null && _sender != null)
+            {
                 _pc.RemoveTrack(_sender);
             }
             Microphone.End(_deviceName);
