@@ -11,20 +11,20 @@ namespace TeleopReachy
         public bool IsReticleOn { get; set; }
         public bool IsReticleAlwaysShown { get; set; }
 
+        private bool _IsTunnellingOn { get; set; }
+
         public bool IsTunnellingOn { 
             get {
-                return IsTunnellingOn;
+                return _IsTunnellingOn;
             }
             set { 
                 ActivateDeactivateTunnelling(value);
-                IsTunnellingOn = value;
+                _IsTunnellingOn = value;
             }
         }
         public bool IsReducedScreenOn { get; set; }
         public bool IsNavigationEffectOnDemand { get; set; }
 
-
-        // Start is called before the first frame update
         protected override void Init()
         {
             IsReticleOn = true;
@@ -37,7 +37,7 @@ namespace TeleopReachy
 
         void ActivateDeactivateTunnelling(bool value)
         {
-            GameObject camera = GameObject.Find("MainCamera");
+            GameObject camera = GameObject.Find("Main Camera");
             camera.transform.GetComponent<TunnellingMobile>().enabled = value;
         }
     }
