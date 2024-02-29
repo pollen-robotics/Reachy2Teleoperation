@@ -118,10 +118,13 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                lerpStartingScale = transform.localScale;
-                _timeElapsed = 0;
-                lerpGoalScale = smallerScreenScale;
-                needUpdateScale = true;
+                if(!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                {
+                    lerpStartingScale = transform.localScale;
+                    _timeElapsed = 0;
+                    lerpGoalScale = smallerScreenScale;
+                    needUpdateScale = true;
+                }
             }
             
         }
@@ -130,10 +133,13 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                lerpStartingScale = transform.localScale;
-                _timeElapsed = 0;
-                lerpGoalScale = fullScreenScale;
-                needUpdateScale = true;
+                if(!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                {
+                    lerpStartingScale = transform.localScale;
+                    _timeElapsed = 0;
+                    lerpGoalScale = fullScreenScale;
+                    needUpdateScale = true;
+                }
             }
         }
 
