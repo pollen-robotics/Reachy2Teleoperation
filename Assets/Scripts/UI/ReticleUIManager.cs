@@ -63,7 +63,6 @@ namespace TeleopReachy
 
         void CheckReticleState()
         {
-            Debug.LogError(motionSicknessManager.IsReticleAlwaysShown);
             if (motionSicknessManager.IsReticleOn && motionSicknessManager.IsReticleAlwaysShown)
             {
                 transform.ActivateChildren(true);
