@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Sigtrap.VrTunnellingPro;
 
 
@@ -22,6 +23,8 @@ namespace TeleopReachy
 
         private bool rightJoystickButtonPreviouslyPressed;
         private bool leftJoystickButtonPreviouslyPressed;
+
+        public UnityEvent<bool> event_OnRequestNavigationEffect;
 
         protected override void Init()
         {
@@ -67,12 +70,14 @@ namespace TeleopReachy
                 if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
                 {
                     RequestNavigationEffect = !RequestNavigationEffect;
-                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect); 
+                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect);
+                    event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                 }
                 if (leftJoystickButtonPressed && !leftJoystickButtonPreviouslyPressed)
                 {
                     RequestNavigationEffect = !RequestNavigationEffect;
-                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect); 
+                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect);
+                    event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                 }
             }
 
