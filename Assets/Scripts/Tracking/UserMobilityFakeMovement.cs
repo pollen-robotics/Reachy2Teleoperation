@@ -27,8 +27,6 @@ namespace TeleopReachy
         public UnityEvent event_OnStartMoving;
         public UnityEvent event_OnStopMoving;
 
-        private MotionSicknessManager motionSicknessManager;
-
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -41,7 +39,6 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            motionSicknessManager = MotionSicknessManager.Instance;
         }
 
         private void ReinitCounter()
@@ -80,42 +77,39 @@ namespace TeleopReachy
         {
             if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if(!motionSicknessManager.IsNavigationEffectOnDemand)
+                Vector2 direction = userMobilityInput.GetMobileBaseDirection();
+                Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
+
+                speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
+                speed = Mathf.Clamp(speed, 0, maxSpeed);
+                rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f))* sensitivity;
+
+                if (speed == 0 && rotationAngle ==0)
                 {
-                    Vector2 direction = userMobilityInput.GetMobileBaseDirection();
-                    Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
-
-                    speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
-                    speed = Mathf.Clamp(speed, 0, maxSpeed);
-                    rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f))* sensitivity;
-
-                    if (speed == 0 && rotationAngle ==0)
+                    if (wasMoving)
                     {
-                        if (wasMoving)
-                        {
-                            counterFakeMovement -= 1.0f;
-                            speed = GetQueueMean(previousTranslationSpeedQueue);
-                            rotationAngle = GetQueueMean(previousRotationAngleQueue);
-                        }
-                        if (counterFakeMovement == 0)
-                        {
-                            event_OnStopMoving.Invoke();
-                            wasMoving = false;
-                            ReinitCounter();
-                        }
+                        counterFakeMovement -= 1.0f;
+                        speed = GetQueueMean(previousTranslationSpeedQueue);
+                        rotationAngle = GetQueueMean(previousRotationAngleQueue);
                     }
-                    else
+                    if (counterFakeMovement == 0)
                     {
-                        if (!wasMoving) event_OnStartMoving.Invoke();
-                        wasMoving = true;
-                        AddToQueue(previousTranslationSpeedQueue, speed);
-                        AddToQueue(previousRotationAngleQueue, rotationAngle);
+                        event_OnStopMoving.Invoke();
+                        wasMoving = false;
+                        ReinitCounter();
                     }
-                    
-                    transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
-                    transform.Rotate(Vector3.up, rotationAngle);
                 }
-            }
+                else
+                {
+                    if (!wasMoving) event_OnStartMoving.Invoke();
+                    wasMoving = true;
+                    AddToQueue(previousTranslationSpeedQueue, speed);
+                    AddToQueue(previousRotationAngleQueue, rotationAngle);
+                }
+                
+                transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
+                transform.Rotate(Vector3.up, rotationAngle);
+        }
         }
     }
 }
