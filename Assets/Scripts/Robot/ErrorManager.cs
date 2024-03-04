@@ -99,10 +99,13 @@ namespace TeleopReachy
 
         public void CheckBatteryStatus()
         {
-            if (previousBatteryLevel < THRESHOLD_ERROR_BATTERY_LEVEL)
-                event_OnErrorLowBattery.Invoke(previousBatteryLevel);
-            else if (previousBatteryLevel < THRESHOLD_WARNING_BATTERY_LEVEL)
-                event_OnWarningLowBattery.Invoke(previousBatteryLevel);
+            if (previousBatteryLevel > 0)
+            {
+                if (previousBatteryLevel < THRESHOLD_ERROR_BATTERY_LEVEL)
+                    event_OnErrorLowBattery.Invoke(previousBatteryLevel);
+                else if (previousBatteryLevel < THRESHOLD_WARNING_BATTERY_LEVEL)
+                    event_OnWarningLowBattery.Invoke(previousBatteryLevel);
+            }
         }
     }
 }
