@@ -7,9 +7,10 @@ namespace TeleopReachy
     public class TeleoperationSuspensionManager : Singleton<TeleoperationSuspensionManager>
     {
         private RobotStatus robotStatus;
-        private bool isActivateTeleoperationSuspension;
+        private bool isActivatedTeleoperationSuspension;
 
         private ControllersManager controllers;
+        private UserEmergencyStopInput userEmergencyStop;
 
         public float indicatorTimer = 0.0f;
         private float minIndicatorTimer = 0.0f;
@@ -18,6 +19,7 @@ namespace TeleopReachy
         void Start()
         {
             EventManager.StartListening(EventNames.HeadsetRemoved, CallSuspensionWarning);
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
 
             controllers = ControllersManager.Instance;
 
@@ -27,23 +29,29 @@ namespace TeleopReachy
             NoSuspensionWarning();
         }
 
+        void Init()
+        {
+            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
+            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(CallSuspensionWarning);
+        }
+
         // Update is called once per frame
         void CallSuspensionWarning()
         {
             if(robotStatus.IsRobotTeleoperationActive())
             {
-                isActivateTeleoperationSuspension = true;
+                isActivatedTeleoperationSuspension = true;
             }
         }
 
         void NoSuspensionWarning()
         {
-            isActivateTeleoperationSuspension = false;
+            isActivatedTeleoperationSuspension = false;
         }
 
         void Update()
         {
-            if (isActivateTeleoperationSuspension)
+            if (isActivatedTeleoperationSuspension)
             {
                 bool rightPrimaryButtonPressed = false;
                 controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
