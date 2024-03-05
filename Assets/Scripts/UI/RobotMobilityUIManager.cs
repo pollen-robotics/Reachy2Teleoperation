@@ -58,7 +58,7 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
-                transform.localPosition = new Vector3(-6, -189, -479);
+                transform.localPosition = new Vector3(0, -189, -479);
             }
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
