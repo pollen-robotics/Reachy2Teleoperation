@@ -18,6 +18,8 @@ namespace TeleopReachy
         bool rightGripPressed;
         bool leftGripPressed;
 
+        public UnityEvent event_OnEmergencyStopCalled;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -55,6 +57,7 @@ namespace TeleopReachy
                 if (rightGripPressed && leftGripPressed)
                 {
                     robotStatus.SuspendRobotTeleoperation();
+                    event_OnEmergencyStopCalled.Invoke();
                 }
             }
         }
