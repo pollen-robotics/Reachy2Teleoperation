@@ -1,8 +1,6 @@
 using UnityEngine;
 using Unity.WebRTC;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System.IO;
 
 namespace TeleopReachy
 {
@@ -18,6 +16,12 @@ namespace TeleopReachy
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
         public UnityEvent<Texture> event_OnVideoTextureReceived;
 
+
+        protected override void Start()
+        {
+            base.Start();
+            StartCoroutine(WebRTC.Update());
+        }
         protected override void WebRTCCall()
         {
             base.WebRTCCall();
