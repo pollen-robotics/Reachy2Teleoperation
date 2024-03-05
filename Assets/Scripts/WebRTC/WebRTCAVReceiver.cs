@@ -67,13 +67,13 @@ namespace TeleopReachy
                 {
                     if (e.Track.Id == right_track_id_name)
                     {
-                        screen.material.SetTexture("_MainTex_right", tex);
+                        screen.texture = tex;
+                        screen.material.SetTexture("_MainTex", tex);
                         event_OnVideoTextureReceived.Invoke(tex);
                     }
                     else
                     {
-                        screen.texture = tex;
-                        screen.material.SetTexture("_MainTex", tex);
+                        screen.material.SetTexture("_MainTex_right", tex);
                     }
                 };
             }
