@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace TeleopReachy
@@ -63,7 +60,7 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (audioVideoController != null) 
+            if (audioVideoController != null)
             {
                 audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
