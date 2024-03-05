@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 using System;
 
 namespace TeleopReachy
 {
-    public class TeleoperationSuspensionUIManager : MonoBehaviour
+    public class TeleoperationSuspensionUIManager : LazyFollow
     {
         [SerializeField]
         private Transform loaderA;
@@ -23,12 +24,24 @@ namespace TeleopReachy
 
         private bool needUpdateText = false;
         private string reasonString;
+        private ControllersManager controllers;
 
         // Start is called before the first frame update
         void Start()
         {
-            EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0, -0.15f, 0.8f);
 
+            // }
+            // else {
+                targetOffset = new Vector3(0, -0.15f, 0.8f);
+
+            // }
+            maxDistanceAllowed = 0;
+
+            EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;

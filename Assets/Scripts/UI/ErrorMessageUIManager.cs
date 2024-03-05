@@ -45,7 +45,6 @@ namespace TeleopReachy
 
         void Start()
         {
-            
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
