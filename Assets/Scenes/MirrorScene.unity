@@ -15059,8 +15059,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: The server is not responding, or you may not be connected to the right
-    address.
+  m_Text: The server is not responding, or you may not be connected to the right address.
 --- !u!222 &8185852573611614355
 CanvasRenderer:
   m_ObjectHideFlags: 0
