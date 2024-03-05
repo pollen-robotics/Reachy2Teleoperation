@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace TeleopReachy
 {
-    [RequireComponent(typeof(WebRTCService))]
     public abstract class WebRTCBase : MonoBehaviour
     {
         private string _signalingServerURL;

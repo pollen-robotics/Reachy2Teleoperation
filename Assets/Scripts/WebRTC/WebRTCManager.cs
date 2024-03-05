@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 
 namespace TeleopReachy
@@ -10,7 +7,6 @@ namespace TeleopReachy
         public ConnectionStatus ConnectionStatus { get; private set; }
         public WebRTCData webRTCDataController { get; private set; }
         public WebRTCAVReceiver webRTCVideoController { get; private set; }
-        public WebRTCService webRTCService { get; private set; }
         public WebRTCAudioSender webRTCAudioSender { get; private set; }
 
         protected override void Init()
@@ -18,7 +14,6 @@ namespace TeleopReachy
             ConnectionStatus = GetComponent<ConnectionStatus>();
             webRTCDataController = GetComponent<WebRTCData>();
             webRTCVideoController = GetComponent<WebRTCAVReceiver>();
-            webRTCService = GetComponent<WebRTCService>();
             webRTCAudioSender = GetComponent<WebRTCAudioSender>();
         }
     }
