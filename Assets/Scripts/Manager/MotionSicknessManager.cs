@@ -28,7 +28,7 @@ namespace TeleopReachy
 
         protected override void Init()
         {
-            IsReticleOn = true;
+            IsReticleOn = false;
             IsReticleAlwaysShown = false;
 
             IsTunnellingOn = false;
