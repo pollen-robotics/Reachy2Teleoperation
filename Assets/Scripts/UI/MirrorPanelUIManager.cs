@@ -36,8 +36,8 @@ namespace TeleopReachy
         private readonly Vector3 closedHelpPanelPosition = new Vector3(745, -367, 0);
         private readonly Vector3 openHelpPanelPosition = new Vector3(50, -367, 0);
 
-        private readonly Vector3 closedAdvancedOptionsPosition = new Vector3(-605, 568, 0);
-        private readonly Vector3 openAdvancedOptionsPosition = new Vector3(-50, 568, 0);
+        private readonly Vector3 closedAdvancedOptionsPosition = new Vector3(-605, 544, 0);
+        private readonly Vector3 openAdvancedOptionsPosition = new Vector3(-52, 544, 0);
 
         private Vector3 lerpStatusPanelStartingPosition;
         private Vector3 lerpStatusPanelGoalPosition;
