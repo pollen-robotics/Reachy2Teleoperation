@@ -1,8 +1,6 @@
 using UnityEngine;
 using Unity.WebRTC;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System.IO;
 
 namespace TeleopReachy
 {
