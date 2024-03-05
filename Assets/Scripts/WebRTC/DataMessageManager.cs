@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Threading.Tasks;
 
 using Google.Protobuf;
 using Reachy;
@@ -11,7 +9,6 @@ using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
 using Reachy.Kinematics;
-using Component;
 using Component.Orbita2D;
 using Component.Orbita3D;
 using Mobile.Base.Mobility;
@@ -39,7 +36,7 @@ namespace TeleopReachy
         private ArmCommand lastLeftArmCommand;
         private MobileBaseCommand lastMobileBaseCommand;
 
-        private AnyCommands commands = new AnyCommands{};
+        private AnyCommands commands = new AnyCommands { };
 
         void Start()
         {
@@ -48,13 +45,13 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
-            commands = new AnyCommands{};
+            if (commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
+            commands = new AnyCommands { };
         }
 
         public void GetReachyId(Reachy.Reachy reachy)
         {
-           event_OnRobotReceived.Invoke(reachy);
+            event_OnRobotReceived.Invoke(reachy);
         }
 
         public void StreamReachyState(ReachyState reachyState)
@@ -74,45 +71,45 @@ namespace TeleopReachy
                 var partState = partField.Accessor.GetValue(reachyState) as IMessage;
                 if (partState != null)
                 {
-                    if(partState is ArmState)
+                    if (partState is ArmState)
                     {
                         foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                            if(componentState is Orbita2dState)
+                            if (componentState is Orbita2dState)
                             {
                                 GetOrbita2D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita2D_Temperature(temperatures, componentState, partField, componentField);
                             }
-                            if(componentState is Orbita3dState)
+                            if (componentState is Orbita3dState)
                             {
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
                         }
                     }
-                    if(partState is HeadState)
+                    if (partState is HeadState)
                     {
                         foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentState = componentField.Accessor.GetValue(partState) as IMessage;
-                            if(componentState is Orbita3dState)
+                            if (componentState is Orbita3dState)
                             {
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
                         }
                     }
-                    if(partState is HandState)
+                    if (partState is HandState)
                     {
                         GetParallelGripper_PresentPosition(present_position, partState, partField);
                         GetParallelGripper_Temperature(temperatures, partState, partField);
                     }
-                    if(partState is MobileBaseState)
+                    if (partState is MobileBaseState)
                     {
                         var batteryField = partState.Descriptor.FindFieldByName("battery_level");
                         var batteryValue = batteryField.Accessor.GetValue(partState);
-                        if(batteryValue != null)
+                        if (batteryValue != null)
                         {
                             BatteryLevel battery = (BatteryLevel)batteryValue;
                             batteryLevel = (float)battery.Level;
@@ -121,11 +118,11 @@ namespace TeleopReachy
 
                         var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
                         var lidarDetectionValue = lidarDetectionField.Accessor.GetValue(partState);
-                        if(lidarDetectionValue != null)
+                        if (lidarDetectionValue != null)
                         {
                             LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionValue;
                             obstacleDetection = lidarDetectionStatus.Status;
-                            if(obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
+                            if (obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
                             {
                                 event_OnLidarDetectionUpdate.Invoke(obstacleDetection);
                             }
@@ -141,7 +138,8 @@ namespace TeleopReachy
         {
             Bridge.AnyCommand handCommand = new Bridge.AnyCommand
             {
-                HandCommand = new Bridge.HandCommand{
+                HandCommand = new Bridge.HandCommand
+                {
                     HandGoal = gripperPosition
                 }
             };
@@ -151,11 +149,12 @@ namespace TeleopReachy
         public void SendArmCommand(ArmCartesianGoal armGoal)
         {
             Bridge.AnyCommand armCommand = new Bridge.AnyCommand
-                    {
-                        ArmCommand = new Bridge.ArmCommand{
-                            ArmCartesianGoal = armGoal
-                        }
-                    };
+            {
+                ArmCommand = new Bridge.ArmCommand
+                {
+                    ArmCartesianGoal = armGoal
+                }
+            };
             commands.Commands.Add(armCommand);
         }
 
@@ -163,7 +162,8 @@ namespace TeleopReachy
         {
             Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
-                NeckCommand = new Bridge.NeckCommand{
+                NeckCommand = new Bridge.NeckCommand
+                {
                     NeckGoal = neckGoal
                 }
             };
@@ -174,7 +174,8 @@ namespace TeleopReachy
         {
             Bridge.AnyCommand mobileBaseCommand = new Bridge.AnyCommand
             {
-                MobileBaseCommand = new Bridge.MobileBaseCommand{
+                MobileBaseCommand = new Bridge.MobileBaseCommand
+                {
                     TargetDirection = direction
                 }
             };
@@ -315,7 +316,7 @@ namespace TeleopReachy
 
         private void GetOrbita3D_PresentPosition(
             Dictionary<string, float> dict,
-            IMessage componentState, 
+            IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
             Google.Protobuf.Reflection.FieldDescriptor componentField
             )
@@ -342,7 +343,7 @@ namespace TeleopReachy
 
         private void GetOrbita2D_PresentPosition(
             Dictionary<string, float> dict,
-            IMessage componentState, 
+            IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
             Google.Protobuf.Reflection.FieldDescriptor componentField
             )
@@ -368,7 +369,7 @@ namespace TeleopReachy
 
         private void GetOrbita2D_Temperature(
             Dictionary<string, float> dict,
-            IMessage componentState, 
+            IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
             Google.Protobuf.Reflection.FieldDescriptor componentField
             )
@@ -394,7 +395,7 @@ namespace TeleopReachy
 
         private void GetOrbita3D_Temperature(
             Dictionary<string, float> dict,
-            IMessage componentState, 
+            IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
             Google.Protobuf.Reflection.FieldDescriptor componentField
             )
@@ -420,7 +421,7 @@ namespace TeleopReachy
 
         private void GetParallelGripper_PresentPosition(
             Dictionary<string, float> dict,
-            IMessage partState, 
+            IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField
             )
         {
@@ -439,7 +440,7 @@ namespace TeleopReachy
 
         private void GetParallelGripper_Temperature(
             Dictionary<string, float> dict,
-            IMessage partState, 
+            IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField
             )
         {
