@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2511,7 +2511,6 @@ GameObject:
   m_Component:
   - component: {fileID: 803308015}
   - component: {fileID: 803308020}
-  - component: {fileID: 803308014}
   - component: {fileID: 803308021}
   - component: {fileID: 803308017}
   - component: {fileID: 803308018}
@@ -2525,18 +2524,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &803308014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803308013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ecaf72ba3496494abdecbcd95af4bd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &803308015
 Transform:
   m_ObjectHideFlags: 0
@@ -4079,7 +4066,7 @@ GameObject:
   - component: {fileID: 1244735975}
   - component: {fileID: 1244735974}
   m_Layer: 6
-  m_Name: HeadsetRemoved
+  m_Name: TeleoperationSuspension
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4094,7 +4081,7 @@ RectTransform:
   m_GameObject: {fileID: 1244735971}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2011720378}
@@ -4125,7 +4112,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f4d592fb3eb6f44a5a526798ed0a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
+  m_TargetOffset: {x: 0, y: 0, z: 0.5}
+  m_FollowInLocalSpace: 0
+  m_ApplyTargetInLocalSpace: 0
+  m_MovementSpeed: 6
+  m_MovementSpeedVariancePercentage: 0.25
+  m_SnapOnEnable: 1
+  m_PositionFollowMode: 1
+  m_MinDistanceAllowed: 0.01
+  m_MaxDistanceAllowed: 0.3
+  m_TimeUntilThresholdReachesMaxDistance: 3
+  m_RotationFollowMode: 1
+  m_MinAngleAllowed: 0.1
+  m_MaxAngleAllowed: 5
+  m_TimeUntilThresholdReachesMaxAngle: 3
   loaderA: {fileID: 1286382600}
+  suspensionReasonText: {fileID: 1277325909}
 --- !u!114 &1244735975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4252,8 +4255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.189201, y: 142.5}
-  m_SizeDelta: {x: 208.9074, y: 28.9337}
+  m_AnchoredPosition: {x: 26.3739, y: 142.5}
+  m_SizeDelta: {x: 222.6558, y: 28.9337}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1277325909
 MonoBehaviour:
@@ -4288,7 +4291,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Headset has been removed
+  m_Text: Emergency stop activated
 --- !u!222 &1277325910
 CanvasRenderer:
   m_ObjectHideFlags: 0
