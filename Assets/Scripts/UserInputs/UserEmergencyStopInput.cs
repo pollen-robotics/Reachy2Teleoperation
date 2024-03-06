@@ -17,6 +17,8 @@ namespace TeleopReachy
 
         bool rightGripPressed;
         bool leftGripPressed;
+        bool leftTriggerPressed;
+        bool leftPrimaryButtonPressed;
 
         public UnityEvent event_OnEmergencyStopCalled;
 
@@ -44,6 +46,8 @@ namespace TeleopReachy
         {
             rightGripPressed = false;
             leftGripPressed = false;
+            leftTriggerPressed = false;
+            leftPrimaryButtonPressed = false;
         }
 
         void Update()
@@ -51,10 +55,12 @@ namespace TeleopReachy
             // For joystick commands
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out rightGripPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out leftGripPressed);
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out leftTriggerPressed);
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
 
             if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if (rightGripPressed && leftGripPressed)
+                if (leftGripPressed && leftTriggerPressed && leftPrimaryButtonPressed)
                 {
                     robotStatus.SuspendRobotTeleoperation();
                     event_OnEmergencyStopCalled.Invoke();

@@ -20,6 +20,7 @@ namespace TeleopReachy
         {
             EventManager.StartListening(EventNames.HeadsetRemoved, CallSuspensionWarning);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            EventManager.StartListening(EventNames.BackToMirrorScene, ReinitValue);
 
             controllers = ControllersManager.Instance;
 
@@ -33,6 +34,11 @@ namespace TeleopReachy
         {
             userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
             userEmergencyStop.event_OnEmergencyStopCalled.AddListener(CallSuspensionWarning);
+        }
+
+        void ReinitValue()
+        {
+            indicatorTimer = minIndicatorTimer;
         }
 
         // Update is called once per frame

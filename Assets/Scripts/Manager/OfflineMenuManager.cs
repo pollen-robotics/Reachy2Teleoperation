@@ -26,6 +26,8 @@ namespace TeleopReachy
         private bool rightPrimaryButtonPreviouslyPressed;
         private bool leftPrimaryButtonPreviouslyPressed;
 
+        private UserEmergencyStopInput userEmergencyStop;
+
         public float indicatorTimer = 0.0f;
         private const float minIndicatorTimer = 0.0f;
 
@@ -39,11 +41,24 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(DeactivateOfflineMenu);
 
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+
             controllers = ControllersManager.Instance;
 
             selectedItem = OfflineMenuItem.Cancel;
 
             isOfflineMenuActive = false;
+        }
+
+        void Init()
+        {
+            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
+            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(EmergencyStopCalled);
+        }
+
+        void EmergencyStopCalled()
+        {
+            ExitOffLineMenu();
         }
 
         // Update is called once per frame
