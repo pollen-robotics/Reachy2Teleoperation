@@ -15,6 +15,10 @@ namespace TeleopReachy
         public float indicatorTimer = 0.0f;
         private float minIndicatorTimer = 0.0f;
 
+        private bool rightPrimaryButtonPressed = false;
+        private bool rightPrimaryButtonPreviouslyPressed = false;
+        private bool allowRightPrimaryButtonUse = true;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -46,6 +50,8 @@ namespace TeleopReachy
         {
             if(robotStatus.IsRobotTeleoperationActive())
             {
+                if (rightPrimaryButtonPressed) allowRightPrimaryButtonUse = false;
+                else allowRightPrimaryButtonUse = true;
                 isActivatedTeleoperationSuspension = true;
             }
         }
@@ -57,12 +63,11 @@ namespace TeleopReachy
 
         void Update()
         {
+            controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
+
             if (isActivatedTeleoperationSuspension)
             {
-                bool rightPrimaryButtonPressed = false;
-                controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
-
-                if (rightPrimaryButtonPressed)
+                if (rightPrimaryButtonPressed && allowRightPrimaryButtonUse)
                 {
                     indicatorTimer += Time.deltaTime;
 
@@ -75,8 +80,10 @@ namespace TeleopReachy
                 else
                 {
                     indicatorTimer = minIndicatorTimer;
+                    if (!rightPrimaryButtonPreviouslyPressed && rightPrimaryButtonPressed) allowRightPrimaryButtonUse = true;
                 }
             }
+            rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
         }
     }
 }
