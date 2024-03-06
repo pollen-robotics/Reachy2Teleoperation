@@ -137,7 +137,14 @@ namespace TeleopReachy
                 }
                 else
                 {
-                    dataController.TurnArmOn(robotConfig.partsId[partName]);
+                    if (partName.Contains("arm"))
+                    {
+                        dataController.TurnArmOn(robotConfig.partsId[partName]);
+                    }
+                    else if (partName.Contains("hand"))
+                    {
+                        dataController.TurnHandOn(robotConfig.partsId[partName]);
+                    }
                 }
             }
 
@@ -215,7 +222,14 @@ namespace TeleopReachy
                 }
                 else
                 {
-                    dataController.TurnArmOff(robotConfig.partsId[partName]);
+                    if (partName.Contains("arm"))
+                    {
+                        dataController.TurnArmOff(robotConfig.partsId[partName]);
+                    }
+                    else if (partName.Contains("hand"))
+                    {
+                        dataController.TurnHandOff(robotConfig.partsId[partName]);
+                    }
                 }
             }
 
