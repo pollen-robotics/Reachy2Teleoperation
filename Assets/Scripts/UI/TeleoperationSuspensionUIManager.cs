@@ -1,24 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 using System;
 
 namespace TeleopReachy
 {
-    public class TeleoperationSuspensionUIManager : MonoBehaviour
+    public class TeleoperationSuspensionUIManager : LazyFollow
     {
         [SerializeField]
         private Transform loaderA;
+
+        [SerializeField]
+        private Text suspensionReasonText;
+
+        private UserEmergencyStopInput userEmergencyStop;
 
         private bool isLoaderActive = false;
 
         private RobotStatus robotStatus;
         private TeleoperationSuspensionManager suspensionManager;
 
+        private bool needUpdateText = false;
+        private string reasonString;
+        private ControllersManager controllers;
+
         // Start is called before the first frame update
         void Start()
         {
-            EventManager.StartListening(EventNames.HeadsetRemoved, DisplaySuspensionWarning);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0, -0.15f, 0.8f);
+
+            // }
+            // else {
+                targetOffset = new Vector3(0, -0.15f, 0.8f);
+
+            // }
+            maxDistanceAllowed = 0;
+
+            EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideSuspensionWarning);
@@ -26,6 +50,26 @@ namespace TeleopReachy
             suspensionManager = TeleoperationSuspensionManager.Instance;
 
             HideSuspensionWarning();
+        }
+
+        void Init()
+        {
+            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
+            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(EmergencyStopCalled);
+        }
+
+        void HeadsetRemoved()
+        {
+            reasonString = "Headset has been removed";
+            needUpdateText = true;
+            DisplaySuspensionWarning();
+        }
+
+        void EmergencyStopCalled()
+        {
+            reasonString = "Emergency stop activated";
+            needUpdateText = true;
+            DisplaySuspensionWarning();
         }
 
         // Update is called once per frame
@@ -52,6 +96,11 @@ namespace TeleopReachy
             if (isLoaderActive)
             {
                 loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = suspensionManager.indicatorTimer;
+            }
+            if(needUpdateText)
+            {
+                needUpdateText = false;
+                suspensionReasonText.text = reasonString;
             }
         }
     }
