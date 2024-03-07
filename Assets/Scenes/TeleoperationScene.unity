@@ -628,7 +628,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -62}
-  m_SizeDelta: {x: 218.991, y: 30}
+  m_SizeDelta: {x: 355.689, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92447027
 MonoBehaviour:
@@ -3344,7 +3344,7 @@ GameObject:
   - component: {fileID: 924632579}
   - component: {fileID: 924632578}
   m_Layer: 9
-  m_Name: Text (Legacy)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3402,7 +3402,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back to transition room
+  m_Text: Click here to go back to transition room
 --- !u!222 &924632579
 CanvasRenderer:
   m_ObjectHideFlags: 0

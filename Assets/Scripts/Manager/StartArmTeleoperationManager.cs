@@ -43,8 +43,11 @@ namespace TeleopReachy
 
             if(robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotArmTeleoperationActive())
             {
-                
                 if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
+                {
+                    robotStatus.StartArmTeleoperation();
+                }
+                if (!robotConfig.HasLeftArm && !robotConfig.HasRightArm)
                 {
                     robotStatus.StartArmTeleoperation();
                 }
