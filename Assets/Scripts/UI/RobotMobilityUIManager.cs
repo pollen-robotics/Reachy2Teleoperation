@@ -27,9 +27,6 @@ namespace TeleopReachy
         private bool HideMobilityUIListenerSet = false;
 
         [SerializeField]
-        private Transform indicator;
-
-        [SerializeField]
         private Transform arrow;
 
         [SerializeField]
@@ -61,7 +58,7 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
-                transform.localPosition = new Vector3(-6, -189, -479);
+                transform.localPosition = new Vector3(0, -189, -479);
             }
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
@@ -118,9 +115,9 @@ namespace TeleopReachy
                 orbita_yaw -= 360;
             }
             float x_pos = Mathf.Abs(orbita_yaw * 4) < 360 ? orbita_yaw * 4 : (orbita_yaw > 0 ? 360 - Mathf.Abs(360 - Mathf.Abs(orbita_yaw * 4)) : -360 + Mathf.Abs(-360 + Mathf.Abs(orbita_yaw * 4)));
-            arrow.parent.localPosition = new Vector3(-x_pos, 0, 0);
+            arrow.parent.localPosition = new Vector3(x_pos, 0, 0);
 
-            arrow.localEulerAngles = new Vector3(0, 0, orbita_yaw);
+            arrow.localEulerAngles = new Vector3(0, 0, -orbita_yaw);
 
             if (userMobilityInput.CanGetUserMobilityInputs())
             {
@@ -142,7 +139,7 @@ namespace TeleopReachy
                 {
                     IsRobotStatic(false);
                     float phi = Mathf.Atan2(directionLeft[1], directionLeft[0]);
-                    circleMobilityCommand.localEulerAngles = new Vector3(0, 0, orbita_yaw) + new Vector3(0, 0, Mathf.Rad2Deg * phi);
+                    circleMobilityCommand.localEulerAngles = - new Vector3(0, 0, orbita_yaw) + new Vector3(0, 0, Mathf.Rad2Deg * phi);
                 }
             }
             else

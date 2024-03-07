@@ -28,7 +28,7 @@
 /[Aa]ssets/XR*
 /[Aa]ssets/TextMesh*
 /[Aa]ssets/Oculus*
-/[Aa]ssets/VrTunnellingPro*
+# /[Aa]ssets/VrTunnellingPro*
 
 # Visual Studio cache directory
 .vs/
