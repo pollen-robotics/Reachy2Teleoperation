@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1115,6 +1115,7 @@ GameObject:
   - component: {fileID: 4826978605613812947}
   - component: {fileID: 6204403389353430909}
   - component: {fileID: 9009280609215881307}
+  - component: {fileID: 9009280609215881308}
   m_Layer: 0
   m_Name: UserInput
   m_TagString: Untagged
@@ -2740,6 +2741,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   event_OnStopMoving:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &9009280609215881308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826978605613812945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4b7c4714532df4a8bde80ab93b2659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  event_OnEmergencyStopCalled:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &9073630071473511950
