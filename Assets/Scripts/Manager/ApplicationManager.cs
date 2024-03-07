@@ -55,7 +55,6 @@ namespace TeleopReachy
         {
             SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);
             yield return null;
-            ToogleXRRayInteractors(true);
             EventManager.TriggerEvent(EventNames.MirrorSceneLoaded);
         }
 
@@ -63,7 +62,6 @@ namespace TeleopReachy
         {
             SceneManager.UnloadSceneAsync("MirrorScene");
             ground.SetActive(false);
-            ToogleXRRayInteractors(false);
         }
 
         private void ShowXRay()

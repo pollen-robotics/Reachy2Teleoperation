@@ -59,7 +59,7 @@ namespace TeleopReachy
             if (robotDataManager != null)
             {
                 robotStatus = RobotDataManager.Instance.RobotStatus;
-                robotStatus.event_OnStartTeleoperation.AddListener(HideControllerLaser);
+                robotStatus.event_OnStartArmTeleoperation.AddListener(HideControllerLaser);
                 robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
             }
 
@@ -139,6 +139,9 @@ namespace TeleopReachy
         {
             XRRayInteractor xrRay = controller.GetComponent<XRRayInteractor>();
             xrRay.enabled = enable;
+
+            XRInteractorLineVisual xrlines = controller.GetComponent<XRInteractorLineVisual>();
+            xrlines.enabled = enable;
         }
 
         public UnityEngine.XR.InputDevice GetActiveController()
