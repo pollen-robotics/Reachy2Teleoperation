@@ -47,7 +47,7 @@ namespace TeleopReachy
                 {
                     robotStatus.StartArmTeleoperation();
                 }
-                if (!robotConfig.HasLeftArm && !robotConfig.HasRightArm)
+                if (!robotConfig.HasLeftArm() && !robotConfig.HasRightArm())
                 {
                     robotStatus.StartArmTeleoperation();
                 }
