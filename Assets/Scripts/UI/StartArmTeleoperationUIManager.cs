@@ -37,6 +37,7 @@ namespace TeleopReachy
 
             robotStatus.event_OnStartTeleoperation.AddListener(ShowInfoMessage);
             robotStatus.event_OnStartArmTeleoperation.AddListener(HideInfoMessage);
+            robotStatus.event_OnStopTeleoperation.AddListener(HideInfoMessage);
 
             needUpdateInfoMessage = false;
             wantInfoMessageDisplayed = false;
