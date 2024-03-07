@@ -20,6 +20,7 @@ namespace TeleopReachy
         public readonly static Color32 purple = new Color32(163, 74, 214, 255);
         public readonly static Color32 yellow = new Color32(140, 139, 37, 255);
         public readonly static Color32 black = new Color32(40, 40, 40, 255);
+        public readonly static Color32 grey = new Color32(150, 150, 150, 255);
         public readonly static Color32 error_black = new Color32(40, 40, 40, 200);
         public readonly static Color32 black_transparent = new Color32(0, 0, 0, 220);
         public readonly static Color32 white_transparent = new Color32(255, 255, 255, 220);
