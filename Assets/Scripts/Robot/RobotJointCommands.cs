@@ -54,14 +54,20 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
-            if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
+            if (robotStatus.IsRobotArmTeleoperationActive())
+            {
+                if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
+                if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
+            }
         }
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
-            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            if (robotStatus.IsRobotArmTeleoperationActive())
+            {
+                if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+                if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            }
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
         }
 

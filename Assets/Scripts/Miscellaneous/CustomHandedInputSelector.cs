@@ -56,15 +56,17 @@ namespace TeleopReachy
             }
             UnityEngine.XR.InputDevices.deviceConnected += CheckDevice;
 
-            if (robotDataManager != null)
-            {
-                robotStatus = RobotDataManager.Instance.RobotStatus;
-                robotStatus.event_OnStartTeleoperation.AddListener(HideControllerLaser);
-                robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
-            }
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, InitRobotStatus);
 
             EnableSteamLaserPointer(controllerLeft, false);
             allowActiveControllerChange = true;
+        }
+
+        void InitRobotStatus()
+        {
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStartArmTeleoperation.AddListener(HideControllerLaser);
+            robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
         }
 
         void Update()
@@ -137,6 +139,9 @@ namespace TeleopReachy
 
         private void EnableSteamLaserPointer(GameObject controller, bool enable)
         {
+            XRInteractorLineVisual xrlines = controller.GetComponent<XRInteractorLineVisual>();
+            xrlines.enabled = enable;
+
             XRRayInteractor xrRay = controller.GetComponent<XRRayInteractor>();
             xrRay.enabled = enable;
         }
