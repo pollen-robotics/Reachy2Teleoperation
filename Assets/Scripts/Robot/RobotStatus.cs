@@ -238,6 +238,7 @@ namespace TeleopReachy
         {
             Debug.Log("[RobotStatus]: Stop teleoperation");
             isRobotTeleoperationActive = false;
+            isRobotArmTeleoperationActive = false;
             event_OnStopTeleoperation.Invoke();
         }
 
