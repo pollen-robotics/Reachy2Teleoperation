@@ -41,8 +41,8 @@ namespace TeleopReachy
 
         protected virtual void Start()
         {
-            StartCoroutine(WebRTCUpdate());
             SignalingCall();
+            StartCoroutine(WebRTCUpdate());
         }
 
         void Update()
@@ -188,6 +188,10 @@ namespace TeleopReachy
                 if (_gotOffer)
                 {
                     _gotOffer = false;
+                    while (_pc == null)
+                    {
+                        yield return new WaitForEndOfFrame();
+                    }
                     yield return WebRTCGotOffer(_offer);
                 }
                 if (_gotAnswer)
