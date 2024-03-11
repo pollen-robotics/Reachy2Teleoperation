@@ -41,7 +41,7 @@ namespace TeleopReachy
             bool rightPrimaryButtonPressed = false;
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
 
-            if(robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotArmTeleoperationActive())
+            if(robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if ((!robotConfig.HasLeftArm() || !robotStatus.IsLeftArmOn()) && (!robotConfig.HasRightArm() || !robotStatus.IsRightArmOn()))
                 {
