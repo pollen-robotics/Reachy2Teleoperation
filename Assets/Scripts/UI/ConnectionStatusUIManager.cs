@@ -77,18 +77,18 @@ namespace TeleopReachy
                 Debug.Log("[ConnectionStatusUIManager]: IsRobotInVideoRoom: " + connectionStatus.IsRobotInVideoRoom());
                 if (connectionStatus.IsRobotInDataRoom() && connectionStatus.IsRobotInVideoRoom())
                 {
-                    if (connectionStatus.IsRobotInRestartRoom())
-                    {
+                    // if (connectionStatus.IsRobotInRestartRoom())
+                    // {
                         connectionStatusText = "Connected to Reachy";
                         connectionStatusColor = ColorsManager.green;
                         connectionStatusHelp = "Everything seems to work fine. Enjoy!";
-                    }
-                    else
-                    {
-                        connectionStatusText = "Connected to Reachy. No restart available";
-                        connectionStatusColor = ColorsManager.yellow;
-                        connectionStatusHelp = "Restart service is not available, but you can still teleoperate the robot. Enjoy!";
-                    }
+                    // }
+                    // else
+                    // {
+                    //     connectionStatusText = "Connected to Reachy. No restart available";
+                    //     connectionStatusColor = ColorsManager.yellow;
+                    //     connectionStatusHelp = "Restart service is not available, but you can still teleoperate the robot. Enjoy!";
+                    // }
                     // if (robotConfig.HasMobileBase() && !connectionStatus.IsRobotInMobileRoom())
                     // {
                     //     connectionStatusText = "Connected to Reachy. Mobile base unavailable";
