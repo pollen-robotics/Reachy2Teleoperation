@@ -185,26 +185,22 @@ namespace TeleopReachy
                 // Wait until all frame rendering is done
                 yield return new WaitForEndOfFrame();
 
-                if (_gotOffer)
+                if(_pc != null)
                 {
-                    _gotOffer = false;
-                    while (_pc == null)
+                    if (_gotOffer)
                     {
-                        yield return new WaitForEndOfFrame();
+                        _gotOffer = false;
+                        yield return WebRTCGotOffer(_offer);
                     }
-                    yield return WebRTCGotOffer(_offer);
-                }
-                if (_gotAnswer)
-                {
-                    _gotAnswer = false;
-                    yield return WebRTCGotAnswer(_answer);
-                }
-                if (!_candidates.IsEmpty)
-                {
-                    RTCIceCandidate candidate;
-                    if (_candidates.TryDequeue(out candidate))
+                    if (_gotAnswer)
                     {
-                        if (_pc != null)
+                        _gotAnswer = false;
+                        yield return WebRTCGotAnswer(_answer);
+                    }
+                    if (!_candidates.IsEmpty)
+                    {
+                        RTCIceCandidate candidate;
+                        if (_candidates.TryDequeue(out candidate))
                         {
                             var newCandidate_pc = _pc.AddIceCandidate(candidate);
                             yield return newCandidate_pc;
