@@ -11,7 +11,7 @@ namespace TeleopReachy
     public static class ColorsManager
     {
         // Declare all colors used in the app
-        public readonly static Color32 green = new Color32(32, 210, 9, 255);
+        public readonly static Color32 green = new Color32(26, 172, 48, 255);
         public readonly static Color32 orange = new Color32(227, 137, 68, 255);
         public readonly static Color32 red = new Color32(226, 67, 80, 255);
         public readonly static Color32 error_red = new Color32(226, 67, 80, 200);
