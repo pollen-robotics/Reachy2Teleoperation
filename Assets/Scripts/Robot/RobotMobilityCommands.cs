@@ -62,9 +62,12 @@ namespace TeleopReachy
         {
             try
             {
-                Vector2 direction = new Vector2(0, 0);
-                SendMobileBaseDirection(direction);
-                dataController.TurnMobileBaseOff();
+                if(robotConfig.HasMobileBase())
+                {
+                    Vector2 direction = new Vector2(0, 0);
+                    SendMobileBaseDirection(direction);
+                    dataController.TurnMobileBaseOff();
+                }
             }
             catch (Exception exc)
             {
