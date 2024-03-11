@@ -73,7 +73,7 @@ namespace TeleopReachy
             Vector2 leftJoystickValue;
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out leftJoystickValue);
 
-            if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                 {
@@ -106,7 +106,6 @@ namespace TeleopReachy
                             if (selectedItem == OfflineMenuItem.LockAndHome)
                                 robotStatus.LockRobotPosition();
                             EventManager.TriggerEvent(EventNames.BackToMirrorScene);
-
                         }
 
                         if (leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)

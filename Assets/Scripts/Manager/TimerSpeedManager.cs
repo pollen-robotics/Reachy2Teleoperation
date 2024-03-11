@@ -35,7 +35,7 @@ namespace TeleopReachy
             rotateLoader = null;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(StartTimer);
+            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTimer);
             robotStatus.event_OnStopTeleoperation.AddListener(StopTimer);
 
             transform.ActivateChildren(false);
