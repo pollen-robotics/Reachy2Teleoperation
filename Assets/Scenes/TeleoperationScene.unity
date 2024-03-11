@@ -5331,7 +5331,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437018699}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
-  m_LocalPosition: {x: 0, y: 0, z: -28.8}
+  m_LocalPosition: {x: 0, y: 0, z: -28.3}
   m_LocalScale: {x: 0.4, y: 0.4, z: 5.825243}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5343,7 +5343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -177.8}
+  m_AnchoredPosition: {x: 0, y: -177.9}
   m_SizeDelta: {x: 370, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1437018702
@@ -5453,19 +5453,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 0}
-  m_TargetOffset: {x: 0, y: 0, z: 0.5}
-  m_FollowInLocalSpace: 0
+  m_TargetOffset: {x: 0, y: -0.1, z: 0.7}
+  m_FollowInLocalSpace: 1
   m_ApplyTargetInLocalSpace: 0
   m_MovementSpeed: 6
   m_MovementSpeedVariancePercentage: 0.25
   m_SnapOnEnable: 1
   m_PositionFollowMode: 1
-  m_MinDistanceAllowed: 0.01
+  m_MinDistanceAllowed: 0
   m_MaxDistanceAllowed: 0
   m_TimeUntilThresholdReachesMaxDistance: 3
   m_RotationFollowMode: 1
-  m_MinAngleAllowed: 0.1
-  m_MaxAngleAllowed: 5
+  m_MinAngleAllowed: 0
+  m_MaxAngleAllowed: 0
   m_TimeUntilThresholdReachesMaxAngle: 3
   backToTransitionRoomButton: {fileID: 92447027}
 --- !u!1 &1458039699
