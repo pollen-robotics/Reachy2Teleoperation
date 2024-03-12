@@ -33,7 +33,6 @@ namespace TeleopReachy
 
         public float previousBatteryLevel;
 
-        // Start is called before the first frame update
         void Start()
         {
             dataController = DataMessageManager.Instance;
@@ -47,7 +46,6 @@ namespace TeleopReachy
         void Update()
         {
             CheckPingQuality();
-            // CheckVideoQuality();
         }
 
         void CheckPingQuality()
@@ -56,19 +54,6 @@ namespace TeleopReachy
                 event_OnWarningHighLatency.Invoke();
             else if (robotPing.GetIsUnstablePing())
                 event_OnWarningUnstablePing.Invoke();
-        }
-
-        // void CheckVideoQuality()
-        // {
-        //     float fps = videoController.GetMeanFPS();
-        //     if ((fps != -1) && (fps < FPS_MINIMUM)) {
-        //         event_OnWarningHighLatency.Invoke();
-        //     }
-        // }
-
-        public void NotifyNetworkUnstability()
-        {
-            event_OnWarningUnstablePing.Invoke();
         }
 
         protected void CheckTemperatures(Dictionary<string, float> Temperatures)
