@@ -207,10 +207,10 @@ namespace TeleopReachy
 
                             Debug.Log($"[WebRTC] Adding remote candidate {candidate}");
                         }
-                    }
-                    else
-                    {
-                        Debug.LogError("Deque fails!");
+                        else
+                        {
+                            Debug.LogError("Deque fails!");
+                        }
                     }
                 }
             }
