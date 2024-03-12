@@ -87,7 +87,7 @@ namespace TeleopReachy
             }
             else
             {
-                if(!connectionStatus.IsServerConnected() || !connectionStatus.IsRobotInDataRoom())
+                if(!connectionStatus.IsRobotInDataRoom())
                 {
                     transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No temperature information";
                     transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.red;

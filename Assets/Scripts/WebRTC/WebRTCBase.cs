@@ -30,11 +30,7 @@ namespace TeleopReachy
 
         protected virtual void Awake()
         {
-            //WebRTC.Initialize();
             string ip_address = PlayerPrefs.GetString("robot_ip");
-            // string ip_address="192.168.1.126";
-            // string ip_address="0.0.0.0";
-            //string ip_address = "192.168.1.108";
             _signalingServerURL = "ws://" + ip_address + ":8443";
             Debug.Log("Signaling server URL: " + _signalingServerURL);
         }
@@ -142,19 +138,6 @@ namespace TeleopReachy
                 {
                     Debug.Log($"[WebRTC] OnIceGatheringStateChange {status}");
                 };
-                /*_pc.OnNegotiationNeeded = () =>
-                {
-                    Debug.Log($"[WebRTC] OnNegotiationNeeded");
-                };*/
-                /*_pc.OnNegotiationNeeded = () =>
-                {
-                    Debug.Log($"[WebRTC] OnNegotiationNeeded");
-                    StartCoroutine(PeerNegotiationNeeded(_pc));
-                };*/
-                /*_pc.OnTrack = (evt) =>
-                {
-                    Debug.Log($"[WebRTCAudioSender] OnTrack {evt.Track}");
-                };*/
             }
         }
 
@@ -232,7 +215,6 @@ namespace TeleopReachy
 
             _signaling.SendLocalDescription(_pc.LocalDescription);
             _offerSent = true;
-            //_signaling.SendLocalDescription(answerDesc);
         }
         IEnumerator WebRTCGotAnswer(RTCSessionDescription answer)
         {
