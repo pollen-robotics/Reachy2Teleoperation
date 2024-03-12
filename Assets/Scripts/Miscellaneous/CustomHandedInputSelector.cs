@@ -8,7 +8,7 @@ using System;
 
 namespace TeleopReachy
 {
-    public class CustomHandedInputSelector : MonoBehaviour
+    public class CustomHandedInputSelector : Singleton<CustomHandedInputSelector>
     {
         // Controllers
         public GameObject controllerLeft;
@@ -28,18 +28,6 @@ namespace TeleopReachy
         private UnityEngine.XR.InputDevice rightHandDevice;
 
         private ControllersVibrations hapticController;
-
-        public static CustomHandedInputSelector Instance { get; private set; }
-        // Start is called before the first frame update
-        public void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-                return;
-            }
-            Instance = this;
-        }
 
         void Start()
         {

@@ -13,8 +13,6 @@ namespace TeleopReachy
 {
     public class EyeScript : MonoBehaviour
     {
-        private bool needColorUpdate = false;
-
         Renderer rend;
 
         float alpha = 1.0f;
@@ -56,50 +54,15 @@ namespace TeleopReachy
         void Init()
         {
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
-            // mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageTransparent);
-            // mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageOpaque);
 
             mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
             mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
         }
 
-        public void SetImageTransparent()
-        {
-            alpha = 0.5f;
-            needColorUpdate = true;
-        }
-
-        public void SetImageOpaque()
-        {
-            alpha = 1.0f;
-            needColorUpdate = true;
-        }
-
         void Update()
         {
-            if (needColorUpdate)
-            {
-                rend = GetComponent<Renderer>();
-                Color color = new Color(1, 1, 1, alpha);
-                rend.material.SetColor("_Color", color);
-                needColorUpdate = false;
-            }
-
             if(needUpdateScale)
             {
-                // _timeElapsed += Time.deltaTime;
-                // if(_timeElapsed >= 0.7f)
-                // {
-                //     _timeElapsed = 0;
-                //     transform.localScale = lerpGoalScale;
-                //     needUpdateButtons = false;
-                // }
-                // else
-                // {
-                //     float fTime = _timeElapsed / 0.7f;
-                //     transform.localScale = Vector3.Lerp(lerpStartingScale, lerpGoalScale, fTime);
-                // }
-
                 needUpdateScale = false;
                 StartCoroutine(BlackScreenAppears());
                 transform.localScale = lerpGoalScale;
