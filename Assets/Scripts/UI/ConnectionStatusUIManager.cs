@@ -39,7 +39,6 @@ namespace TeleopReachy
             {
 
                 connectionStatus = WebRTCManager.Instance.ConnectionStatus;
-                //connectionStatus.OnConnectionStatusHasChanged += CheckConnectionStatus;
                 connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConnectionStatus);
 
                 connectionStatusText = "Trying to connect to server...";
@@ -71,54 +70,30 @@ namespace TeleopReachy
         private void CheckConnectionStatus()
         {
             Debug.Log("[ConnectionStatusUIManager]: CheckConnectionStatus " + transform.parent);
-            if (connectionStatus.IsServerConnected())
+            Debug.Log("[ConnectionStatusUIManager]: isRobotInDataRoom: " + connectionStatus.IsRobotInDataRoom());
+            Debug.Log("[ConnectionStatusUIManager]: IsRobotInVideoRoom: " + connectionStatus.IsRobotInVideoRoom());
+            if (connectionStatus.IsRobotInDataRoom() && connectionStatus.IsRobotInVideoRoom())
             {
-                Debug.Log("[ConnectionStatusUIManager]: isRobotInDataRoom: " + connectionStatus.IsRobotInDataRoom());
-                Debug.Log("[ConnectionStatusUIManager]: IsRobotInVideoRoom: " + connectionStatus.IsRobotInVideoRoom());
-                if (connectionStatus.IsRobotInDataRoom() && connectionStatus.IsRobotInVideoRoom())
-                {
-                    // if (connectionStatus.IsRobotInRestartRoom())
-                    // {
-                        connectionStatusText = "Connected to Reachy";
-                        connectionStatusColor = ColorsManager.green;
-                        connectionStatusHelp = "Everything seems to work fine. Enjoy!";
-                    // }
-                    // else
-                    // {
-                    //     connectionStatusText = "Connected to Reachy. No restart available";
-                    //     connectionStatusColor = ColorsManager.yellow;
-                    //     connectionStatusHelp = "Restart service is not available, but you can still teleoperate the robot. Enjoy!";
-                    // }
-                    // if (robotConfig.HasMobileBase() && !connectionStatus.IsRobotInMobileRoom())
-                    // {
-                    //     connectionStatusText = "Connected to Reachy. Mobile base unavailable";
-                    //     connectionStatusColor = ColorsManager.purple;
-                    //     connectionStatusHelp = "Mobile base services are not available, but you can still teleoperate the robot. Enjoy!";
-                    // }
-                }
-                else
-                {
-                    if (connectionStatus.AreRobotServicesRestarting())
-                    {
-                        connectionStatusText = "Trying to connect...";
-                        connectionStatusColor = ColorsManager.blue;
-                        connectionStatusHelp = "Restarting the robot services...\n" +
-                            "Please wait.\n";
-                    }
-                    else
-                    {
-                        connectionStatusText = "Robot connection failed";
-                        connectionStatusColor = ColorsManager.orange;
-                        connectionStatusHelp = "Some required robot services are not available.\n" +
-                            "Teleoperation is not possible.\n";
-                    }
-                }
+                connectionStatusText = "Connected to Reachy";
+                connectionStatusColor = ColorsManager.green;
+                connectionStatusHelp = "Everything seems to work fine. Enjoy!";
             }
             else
             {
-                connectionStatusText = "Unable to connect to remote server";
-                connectionStatusColor = ColorsManager.red;
-                connectionStatusHelp = "The server is not responding, or you may not be connected to the right address.\n";
+                if (connectionStatus.AreRobotServicesRestarting())
+                {
+                    connectionStatusText = "Trying to connect...";
+                    connectionStatusColor = ColorsManager.blue;
+                    connectionStatusHelp = "Restarting the robot services...\n" +
+                        "Please wait.\n";
+                }
+                else
+                {
+                    connectionStatusText = "Robot connection failed";
+                    connectionStatusColor = ColorsManager.orange;
+                    connectionStatusHelp = "Some required robot services are not available.\n" +
+                        "Teleoperation is not possible.\n";
+                }
             }
             UpdateConnectionStatus();
         }

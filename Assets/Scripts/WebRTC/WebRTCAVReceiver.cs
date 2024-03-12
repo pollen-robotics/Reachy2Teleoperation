@@ -32,7 +32,7 @@ namespace TeleopReachy
             {
                 _pc.OnTrack = (evt) =>
                 {
-                    Debug.Log($"[WebRTC] OnTrack {evt.Track} id: {evt.Track.Id}");
+                    Debug.Log($"[WebRTCAVReceiver] OnTrack {evt.Track} id: {evt.Track.Id}");
 
                     if (evt.Track.Kind == TrackKind.Video)
                     {
@@ -41,14 +41,14 @@ namespace TeleopReachy
                             right_track_id_name = evt.Track.Id;
                         _receiveStream.AddTrack(evt.Track);
                         if (screen == null)
-                            Debug.LogError("Screen is not assigned. Image won't be rendered");
+                            Debug.LogError("[WebRTCAVReceiver] Screen is not assigned. Image won't be rendered");
                         event_OnVideoRoomStatusHasChanged.Invoke(true);
                     }
                     else if (evt.Track.Kind == TrackKind.Audio)
                     {
                         _receiveStream.AddTrack(evt.Track);
                         if (outputAudioSource == null)
-                            Debug.LogWarning("Output audio is not assigned. Sound won't be rendered");
+                            Debug.LogWarning("[WebRTCAVReceiver] Output audio is not assigned. Sound won't be rendered");
                         event_OnAudioReceiverRoomStatusHasChanged.Invoke(true);
                     }
                 };
@@ -76,7 +76,7 @@ namespace TeleopReachy
             }
             else if (e.Track is AudioStreamTrack audio)
             {
-                Debug.Log("playing audio track");
+                Debug.Log("[WebRTCAVReceiver] Playing audio track");
                 outputAudioSource.Stop();
                 outputAudioSource.SetTrack(audio);
                 outputAudioSource.loop = true;
