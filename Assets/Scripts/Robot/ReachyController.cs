@@ -75,13 +75,9 @@ namespace ReachyController
     public class ReachyController : MonoBehaviour
     {
         public Motor[] motors;
-        //     public Fan[] fans;
-        //     public Sensor[] sensors;
         public GameObject head;
 
         private Dictionary<string, Motor> name2motor;
-        //     private Dictionary<string, Sensor> name2sensor;
-        //     private Dictionary<string, Fan> name2fan;
 
         UnityEngine.Quaternion baseHeadRot;
         UnityEngine.Quaternion targetHeadRot;
@@ -92,10 +88,6 @@ namespace ReachyController
         {
             name2motor = new Dictionary<string, Motor>();
 
-            // name2sensor = new Dictionary<string, Sensor>();
-
-            // name2fan = new Dictionary<string, Fan>();
-
             for (int i = 0; i < motors.Length; i++)
             {
                 Motor m = motors[i];
@@ -103,17 +95,6 @@ namespace ReachyController
                 name2motor[m.name] = m;
             }
 
-            // for (int i = 0; i < sensors.Length; i++)
-            // {
-            //     Sensor s = sensors[i];
-            //     name2sensor[s.name] = s;
-            // }
-
-            // for (int i = 0; i < fans.Length; i++)
-            // {
-            //     Fan f = fans[i];
-            //     name2fan[f.name] = f;
-            // }
 
             headOrientation = new Vector3(0, 0, 0);
             baseHeadRot = head.transform.localRotation;
@@ -138,14 +119,6 @@ namespace ReachyController
                 }
             }
 
-            // for (int i = 0; i < sensors.Length; i++)
-            // {
-            //     Sensor s = sensors[i];
-
-            //     ForceSensor fSensor = s.sensorObject.GetComponent<ForceSensor>();
-            //     s.currentState = fSensor.currentForce;
-            // }
-
             UpdateHeadOrientation();
         }
 
@@ -162,14 +135,6 @@ namespace ReachyController
         //     void SetMotorCompliancy(string motorName, bool compliancy)
         //     {
         //         name2motor[motorName].isCompliant = compliancy;
-        //     }
-
-        //     void SetFanState(string fanName, bool targetState)
-        //     {
-        //         if (fanName != "neck_fan")
-        //         {
-        //             name2fan[fanName].state = targetState;
-        //         }
         //     }
 
         public void HandleCommand(Dictionary<string, float> commands)
@@ -230,27 +195,6 @@ namespace ReachyController
         //         }
         //     }
 
-        //     public void HandleFanCommand(Dictionary<FanId, bool> commands)
-        //     {
-        //         foreach (KeyValuePair<FanId, bool> kvp in commands)
-        //         {
-        //             string fanName;
-        //             switch (kvp.Key.IdCase)
-        //             {
-        //                 case FanId.IdOneofCase.Name:
-        //                     fanName = kvp.Key.Name;
-        //                     break;
-        //                 case FanId.IdOneofCase.Uid:
-        //                     fanName = fans[kvp.Key.Uid].name;
-        //                     break;
-        //                 default:
-        //                     fanName = kvp.Key.Name;
-        //                     break;
-        //             }
-        //             SetFanState(fanName, kvp.Value);
-        //         }
-        //     }
-
         //     public List<SerializableMotor> GetCurrentMotorsState(Dictionary<JointId, JointField> request)
         //     {
         //         List<SerializableMotor> motorsList = new List<SerializableMotor>();
@@ -306,62 +250,6 @@ namespace ReachyController
         //         }
         //         return motorsList;
         //     }
-
-        //     // public List<SerializableSensor> GetCurrentSensorsState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Joint.SensorId> request)
-        //     // {
-        //     //     List<Sensor> sensorRequest = new List<Sensor>();
-
-        //     //     foreach (var sensor in request)
-        //     //     {
-        //     //         switch (sensor.IdCase)
-        //     //         {
-        //     //             case SensorId.IdOneofCase.Name:
-        //     //                 sensorRequest.Add(name2sensor[sensor.Name]);
-        //     //                 break;
-        //     //             case SensorId.IdOneofCase.Uid:
-        //     //                 sensorRequest.Add(sensors[sensor.Uid]);
-        //     //                 break;
-        //     //         }
-        //     //     }
-
-        //     //     List<SerializableSensor> sensorsList = new List<SerializableSensor>();
-
-        //     //     foreach (var sensor in sensorRequest)
-        //     //     {
-        //     //         float state = sensor.currentState;
-        //     //         sensorsList.Add(new SerializableSensor() { name = sensor.name, sensor_state = state });
-        //     //     }
-
-        //     //     return sensorsList;
-        //     // }
-
-        //     // public List<SerializableFan> GetCurrentFansState(Google.Protobuf.Collections.RepeatedField<Reachy.Sdk.Fan.FanId> request)
-        //     // {
-        //     //     List<Fan> fanRequest = new List<Fan>();
-
-        //     //     foreach (var fan in request)
-        //     //     {
-        //     //         switch (fan.IdCase)
-        //     //         {
-        //     //             case FanId.IdOneofCase.Name:
-        //     //                 fanRequest.Add(name2fan[fan.Name]);
-        //     //                 break;
-        //     //             case FanId.IdOneofCase.Uid:
-        //     //                 fanRequest.Add(fans[fan.Uid]);
-        //     //                 break;
-        //     //         }
-        //     //     }
-
-        //     //     List<SerializableFan> fansList = new List<SerializableFan>();
-
-        //     //     foreach (var fan in fanRequest)
-        //     //     {
-        //     //         bool state = fan.state;
-        //     //         fansList.Add(new SerializableFan() { name = fan.name, fan_state = state });
-        //     //     }
-
-        //     //     return fansList;
-        //     // }
 
         public void HandleHeadOrientation(UnityEngine.Quaternion q)
         {
