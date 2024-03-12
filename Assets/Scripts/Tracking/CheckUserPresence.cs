@@ -11,7 +11,6 @@ namespace TeleopReachy
 
         private bool wasUserPresent;
 
-        // Start is called before the first frame update
         void Start()
         {
             headDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
