@@ -15,8 +15,6 @@ namespace TeleopReachy
         [Tooltip("Robot that will be updated")]
         public ReachyController.ReachyController reachy;
 
-        //private bool inTransitionRoom;
-
         void Start()
         {
             dataController = DataMessageManager.Instance;
@@ -24,14 +22,11 @@ namespace TeleopReachy
 
             EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, UpdateModelRobot);
-
-            //inTransitionRoom = true;
         }
 
         void UpdateRobot()
         {
             reachy = GameObject.Find("Reachy").GetComponent<ReachyController.ReachyController>();
-            // reachy = null;
         }
 
         void UpdateModelRobot()
