@@ -93,7 +93,7 @@ namespace TeleopReachy
             if (response.ConnectionStatus != null)
             {
                 _connectionStatus = response.ConnectionStatus;
-                Debug.LogError(_connectionStatus.ToString());
+                Debug.Log(_connectionStatus.ToString());
 
                 if (response.ConnectionStatus.Connected)
                 {
