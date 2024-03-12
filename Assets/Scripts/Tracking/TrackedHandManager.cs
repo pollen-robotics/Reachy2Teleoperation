@@ -30,6 +30,15 @@ namespace TeleopReachy
                         transform.localRotation = targetRotation;
                         break;
                     }
+                case ControllersManager.SupportedDevices.MetaQuest3:
+                    {
+                        transform.localPosition = new Vector3(0, -0.03f, 0);
+                        UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
+                        else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
+                        transform.localRotation = targetRotation;
+                        break;
+                    }
                 case ControllersManager.SupportedDevices.ValveIndex:
                     {
                         transform.localPosition = new Vector3(0, 0, 0);
