@@ -48,7 +48,6 @@ namespace TeleopReachy
         private Vector3 lerpAdvancedOptionsStartingPosition;
         private Vector3 lerpAdvancedOptionsGoalPosition;
 
-        // Start is called before the first frame update
         void Start()
         {
             isStatusPanelOpen = false;

@@ -9,7 +9,6 @@ namespace TeleopReachyXR
         [SerializeField]
         private float PlaneDistance;
 
-        // Start is called before the first frame update
         void Start()
         {
             // Assigne la caméra de Basescene au canva courant
