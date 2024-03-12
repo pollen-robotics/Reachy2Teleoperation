@@ -22,7 +22,6 @@ namespace TeleopReachy
 
         private bool hasWarningActivated;
 
-        // Start is called before the first frame update
         void Start()
         {
             pingWatcher = RobotDataManager.Instance.RobotPingWatcher;
@@ -34,7 +33,6 @@ namespace TeleopReachy
             hasWarningActivated = false;
         }
 
-        // Update is called once per frame
         void Update()
         {
             float currentPing = pingWatcher.GetPing();

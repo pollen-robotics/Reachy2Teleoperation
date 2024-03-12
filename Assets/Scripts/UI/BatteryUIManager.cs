@@ -32,7 +32,6 @@ namespace TeleopReachy
 
         private bool isBatteryInfoAvailable;
 
-        // Start is called before the first frame update
         void Start()
         {
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -52,7 +51,6 @@ namespace TeleopReachy
             ConfigChanged();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if(needUpdateUI)

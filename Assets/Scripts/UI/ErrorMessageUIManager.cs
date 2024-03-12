@@ -61,8 +61,8 @@ namespace TeleopReachy
 
             errorManager = RobotDataManager.Instance.ErrorManager;
             errorManager.event_OnWarningMotorsTemperatures.AddListener(WarningMotorTemperature);
-            // errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
-            // errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);
+            errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
+            errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
 
             errorManager.event_OnErrorMotorsTemperatures.AddListener(ErrorMotorTemperature);

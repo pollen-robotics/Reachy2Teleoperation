@@ -23,7 +23,6 @@ namespace TeleopReachy
         private string instructionsText;
         private string instructionsDetailsText;
 
-        // Start is called before the first frame update
         void Start()
         {
             instructions = transform.GetComponent<Text>();
