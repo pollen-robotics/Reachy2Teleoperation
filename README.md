@@ -44,7 +44,8 @@ Note that there is a built-in virtual robot for local testing of the application
 
 This step checks that the connection to the (virtual) robot is fine, and allows to set various parameters. Side menus (status, help, settings) can be opened by clicking on the related icons.
 
-Get familiar with the controls of the robot. Press X to play with the emotions or change the gripper grasping mode. Once you are ready, press the *Ready* button and button A to take control of the robot.
+Get familiar with the controls of the robot. Press X to play with the emotions or change the gripper grasping mode. (*not available yet*)  
+Once you are ready, press the *Ready* button and button A to take control of the robot.
 
 *Please not that A and X refers to the buttons of the Oculus controllers. They may differ on your device.*
 
@@ -56,6 +57,7 @@ You are then in the teleoperation view, but can only use the head and the mobile
 1. Check the robot surroudings to make sure there is no obstacle or people around. 
 2. Use the mobile base to get to a more appropriate location to start if needed.
 3. Finally press A to take control of the arms.
+
 You are now controlling Reachy! Press and hold A to return to the previous step. 
 
 ![alt text](Docs/img/teleop.jpg)
