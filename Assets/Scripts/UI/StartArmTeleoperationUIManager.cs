@@ -27,7 +27,7 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
-                targetOffset = new Vector3(0, -0.1f, 0.8f);
+                targetOffset = new Vector3(0, -0.1f, 0.5f);
             }
             else {
                 targetOffset = new Vector3(0, -0.1f, 0.7f);
