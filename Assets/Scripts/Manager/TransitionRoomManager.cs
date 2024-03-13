@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using MathNet.Numerics.LinearAlgebra;
+
 using System;
 
 namespace TeleopReachy
@@ -50,6 +52,14 @@ namespace TeleopReachy
         public UnityEvent event_OnWaitingForPosition;
         public UnityEvent event_OnExitTransitionRoomRequested;
 
+
+        // calibration variables 
+        public Vector3 leftShoulderCenter { get; private set; }
+        public Vector3 rightShoulderCenter { get; private set; }
+        public double meanArmSize;
+        private RotationCenterCalcul rotationCenterCalcul;
+
+
         // Start is called before the first frame update
         void Start()
         {
@@ -66,9 +76,13 @@ namespace TeleopReachy
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
 
+            rotationCenterCalcul = new RotationCenterCalcul(); //calibration
+
             HideReachy();
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
+            (meanArmSize, leftShoulderCenter, rightShoulderCenter) = CalibrationShoulders(); //calibration
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 readyButton.gameObject.SetActive(false);
@@ -78,6 +92,14 @@ namespace TeleopReachy
             {
                 robotStatus.SetEmotionsActive(true);
             }
+        }
+
+        //calibration
+        private (double armSize, Vector3 leftShoulderCenter, Vector3 rightShoulderCenter) CalibrationShoulders()
+        {
+            Transform trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
+            Transform trackedRightHand = GameObject.Find("TrackedRightHand").transform;
+            return rotationCenterCalcul.BothShoulderCalibration(trackedLeftHand, trackedRightHand);
         }
 
         public void ResetPosition()
