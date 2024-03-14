@@ -11,33 +11,54 @@ namespace TeleopReachy
         public Transform trackedLeftHand;
         public Transform trackedRightHand;
 
+        private Vector3 lastPointLeft;
+        private Vector3 lastPointRight;
+
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
+        private bool calibration_ok = false;
 
-        public IEnumerator CaptureAndCalibrate()
-        {
-            yield return StartCoroutine(CapturePoints(trackedLeftHand, leftCoordinates));
-            yield return StartCoroutine(CapturePoints(trackedRightHand, rightCoordinates));
-            (TransitionRoomManager.Instance.meanArmSize, TransitionRoomManager.Instance.midShoulderPoint) = UpperBodyFeatures(leftCoordinates, rightCoordinates);
-            Debug.Log("Calibration terminée.");
-        }
 
-        public IEnumerator CapturePoints(Transform trackedHand, List<Vector3> sideCoordinates)
+        public void Start()
         {
-            Debug.Log("Capture des points start.");
+            trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
+            trackedRightHand = GameObject.Find("TrackedRightHand").transform;
+
+            if (trackedLeftHand == null || trackedRightHand == null) {
+                Debug.Log("Manettes non trouvées."); 
+                return;
+            } 
+            lastPointLeft = trackedLeftHand.position;
+            lastPointRight = trackedRightHand.position;
+
             
-            float samplingFrequency = 100;
-            float samplingInterval = 1.0f / samplingFrequency;
-
-            while (sideCoordinates.Count < 70)
-            {
-                yield return new WaitForSeconds(samplingInterval);
-                sideCoordinates.Add(trackedHand.position);
             }
 
-            Debug.Log("Capture des points stop.");
+        public void Update()
+        { 
+            if (leftCoordinates.Count < 70 || rightCoordinates.Count < 70) 
+            {
+                if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.05f){
+                    leftCoordinates.Add(trackedLeftHand.position);
+                    lastPointLeft = trackedLeftHand.position;}
 
+                if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.05f){
+                    rightCoordinates.Add(trackedRightHand.position);
+                    lastPointRight = trackedRightHand.position;}
+            }
+
+            else {
+                if (calibration_ok == false) {
+                (TransitionRoomManager.Instance.meanArmSize, TransitionRoomManager.Instance.midShoulderPoint) = UpperBodyFeatures(leftCoordinates, rightCoordinates);
+                Debug.Log(TransitionRoomManager.Instance.meanArmSize);
+                TransitionRoomManager.Instance.FixNewPosition();
+                calibration_ok = true;}
+            }
+
+            
         }
+
+  
 
         public (double armSize, Vector3 midShoulderPoint) UpperBodyFeatures(List<Vector3>leftCoordinates, List<Vector3>rightCoordinates)
         {
