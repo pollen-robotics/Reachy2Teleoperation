@@ -12,19 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/ConnectionScene.unity
     guid: 163a2b56744d6e547b6310efc9890e42
   - enabled: 1
-    path: Assets/Scenes/TeleoperationScene.unity
-    guid: beec81ff035a3f347b87646c46367e9b
-  - enabled: 1
     path: Assets/Scenes/MirrorScene.unity
     guid: e4791a46b24fba844ad2bf64bc08b164
+  - enabled: 1
+    path: Assets/Scenes/TeleoperationScene.unity
+    guid: beec81ff035a3f347b87646c46367e9b
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7a2211f427eccad458eb4421b2f4fac3,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 540eec94b9a914e45be7a7ba463c5483,
       type: 2}
-    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 7ea6fe12418d246469db0bb6ae5c80a3,
-      type: 2}
-    com.unity.input.settings: {fileID: 11400000, guid: ea7fc94758f078e4d997bea81b41c8bd,
-      type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bf622c635fa581341964a64b43b1901d,
-      type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 2682d1e7f4c9e754790f21d4a0b6cb56,
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: ffac6a6601073ef489baecd83483edca,
       type: 2}

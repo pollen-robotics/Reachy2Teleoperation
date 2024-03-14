@@ -76,9 +76,9 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus; 
         
             HideReachy();
-            CalibrationShoulders(); //calibration
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
+            Debug.Log("1");
 
             if (Robot.IsCurrentRobotVirtual())
             {
@@ -91,22 +91,22 @@ namespace TeleopReachy
             }
         }
 
-        //calibration
-        private void CalibrationShoulders()
-        {
-            Debug.Log("Debut de la fonction de calibration du TransitionManager");
-            Transform trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
-            Transform trackedRightHand = GameObject.Find("TrackedRightHand").transform;
-            if (trackedLeftHand == null || trackedRightHand == null) {
-                Debug.Log("Manettes non trouvées."); 
-                return;
-            } else {
-                captureHandPoints = new CaptureHandPoints();
-                StartCoroutine(captureHandPoints.CaptureAndCalibrate());
-                Debug.Log("Fin de la fonction de calibration du TransitionManager");
-            }
+        // //calibration
+        // private void CalibrationShoulders()
+        // {
+        //     Debug.Log("Debut de la fonction de calibration du TransitionManager");
+        //     Transform trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
+        //     Transform trackedRightHand = GameObject.Find("TrackedRightHand").transform;
+        //     if (trackedLeftHand == null || trackedRightHand == null) {
+        //         Debug.Log("Manettes non trouvées."); 
+        //         return;
+        //     } else {
+        //         captureHandPoints = new CaptureHandPoints();
+        //         captureHandPoints.CaptureAndCalibrate();
+        //         Debug.Log("Fin de la fonction de calibration du TransitionManager");
+        //     }
             
-        }
+        // }
 
         public void ResetPosition()
         {
@@ -168,17 +168,31 @@ namespace TeleopReachy
             // Origin of the coordinate system is placed 15cm under the headset y position
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             userTracker.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
+            Debug.Log("ancienne :" + userTracker.position);
 
-            //modification pour calibration 
-            Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, systemRotation, Vector3.one); 
-            Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
-            Debug.Log("user transform initiale :" + userTracker.transform);
-            Debug.Log("user transform avec calib :" + userCenterMatrix);
+
+        }
+
+        //calibration
+        public void FixNewPosition()
+        {
+
+            userTracker.position = midShoulderPoint;
+            Debug.Log("nouvelle :" + userTracker.position);
+
+            // Debug.Log("Debut du NewFixUser");
+
+            // //modification pour calibration 
+            // Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, userTracker.rotation, Vector3.one); 
+            // Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
+            // Debug.Log("user transform initiale :" + userTracker.transform.position + userTracker.transform.rotation );
+            // Debug.Log("user transform avec calib :" + userCenterMatrix);
+
         }
 
         public void ValidateTracker()
         {
-            FixUserTrackerPosition();
+           // FixUserTrackerPosition();
             userTrackerOk = true;
             if (connectionStatus.IsRobotReady()) ReadyForTeleop();
             else AbortTeleop();
