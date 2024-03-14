@@ -54,10 +54,9 @@ namespace TeleopReachy
 
 
         // calibration variables 
-        public Vector3 leftShoulderCenter { get; private set; }
-        public Vector3 rightShoulderCenter { get; private set; }
-        public double meanArmSize;
-        private RotationCenterCalcul rotationCenterCalcul;
+        public double meanArmSize { get; set; }
+        public Vector3 midShoulderPoint { get; set; }
+        private CaptureHandPoints captureHandPoints;
 
 
         // Start is called before the first frame update
@@ -74,14 +73,12 @@ namespace TeleopReachy
             resetPositionButton.gameObject.SetActive(false);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-
-            rotationCenterCalcul = new RotationCenterCalcul(); //calibration
-
+            robotStatus = RobotDataManager.Instance.RobotStatus; 
+        
             HideReachy();
+            CalibrationShoulders(); //calibration
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
-            (meanArmSize, leftShoulderCenter, rightShoulderCenter) = CalibrationShoulders(); //calibration
 
             if (Robot.IsCurrentRobotVirtual())
             {
@@ -95,11 +92,20 @@ namespace TeleopReachy
         }
 
         //calibration
-        private (double armSize, Vector3 leftShoulderCenter, Vector3 rightShoulderCenter) CalibrationShoulders()
+        private void CalibrationShoulders()
         {
+            Debug.Log("Debut de la fonction de calibration du TransitionManager");
             Transform trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
             Transform trackedRightHand = GameObject.Find("TrackedRightHand").transform;
-            return rotationCenterCalcul.BothShoulderCalibration(trackedLeftHand, trackedRightHand);
+            if (trackedLeftHand == null || trackedRightHand == null) {
+                Debug.Log("Manettes non trouvées."); 
+                return;
+            } else {
+                captureHandPoints = new CaptureHandPoints();
+                StartCoroutine(captureHandPoints.CaptureAndCalibrate());
+                Debug.Log("Fin de la fonction de calibration du TransitionManager");
+            }
+            
         }
 
         public void ResetPosition()
@@ -151,6 +157,7 @@ namespace TeleopReachy
         void FixUserTrackerPosition()
         // Fix the position and orientation of Reachy's coordinate system of the user based on the headset position and orientation
         {
+            Debug.Log("Debut du FixUser");
             Quaternion rotation = headset.localRotation;
             Vector3 eulerAngles = rotation.eulerAngles;
 
@@ -161,6 +168,12 @@ namespace TeleopReachy
             // Origin of the coordinate system is placed 15cm under the headset y position
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             userTracker.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
+
+            //modification pour calibration 
+            Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, systemRotation, Vector3.one); 
+            Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
+            Debug.Log("user transform initiale :" + userTracker.transform);
+            Debug.Log("user transform avec calib :" + userCenterMatrix);
         }
 
         public void ValidateTracker()
