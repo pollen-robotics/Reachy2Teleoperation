@@ -17,6 +17,8 @@ namespace TeleopReachy
         private bool isReticleActive;
         private bool needUpdate;
 
+        private ControllersManager controllers;
+
         private MotionSicknessManager motionSicknessManager;
 
         void Start()
@@ -35,6 +37,15 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
             robotStatus.event_OnStopTeleoperation.AddListener(HideReticle);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
+            {
+                transform.localPosition = new Vector3(0, 0, -600);
+            }
+            else if (controllers.headsetType == ControllersManager.SupportedDevices.MetaQuest3)
+            {
+                transform.localPosition = new Vector3(0, -50, -750);
+            }
         }
 
         void Update()
