@@ -45,7 +45,7 @@ namespace TeleopReachy
                 transform.localPosition = new Vector3(-100, -140, -500);
             }
             else {
-                transform.localPosition = new Vector3(-100, -140, -500);
+                transform.localPosition = new Vector3(-120, -210, -650);
             }
 
             motionSicknessManager = MotionSicknessManager.Instance;
