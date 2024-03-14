@@ -51,6 +51,7 @@ namespace TeleopReachy
                 transform.localPosition = new Vector3(0f, -3266f, 15093f);
             }
             motionSicknessManager = MotionSicknessManager.Instance;
+            motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ResizeView);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
         }
 
@@ -130,6 +131,15 @@ namespace TeleopReachy
             
         }
 
+        void ResizeView(bool activate)
+        {
+            if (!activate)
+            {
+                lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
+            }
+        }
+
         void SetImageFullScreen()
         {
             if (motionSicknessManager.IsReducedScreenOn)
@@ -143,6 +153,5 @@ namespace TeleopReachy
                 }
             }
         }
-
     }
 }
