@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-
+using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
     public class RobotVideoStream : MonoBehaviour
     {
-        private WebRTCAVReceiver audioVideoController;
+        private GstreamerUnityGStreamerPlugin audioVideoController;
 
         public UnityEvent event_OnVideoTextureReady;
         private Texture leftEyeStream;
