@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
@@ -19,7 +20,7 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private WebRTCAVReceiver audioVideoController;
+        private GstreamerUnityGStreamerPlugin audioVideoController;
         private WebRTCAudioSender microphoneController;
         private WebRTCData dataController;
 
@@ -204,7 +205,7 @@ namespace TeleopReachy
                 }
                 else
                 {
-                    isRobotReady = false;
+                    isRobotReady = true;
                     event_OnRobotUnready.Invoke();
                 }
                 if (!isRobotInDataRoom)
