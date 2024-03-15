@@ -23,6 +23,28 @@ namespace TeleopReachy
         private string instructionsText;
         private string instructionsDetailsText;
 
+
+        // ajout calibration
+        private static InstructionsTextUIManager instance;
+
+        public static InstructionsTextUIManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<InstructionsTextUIManager>();
+                    if (instance == null)
+                    {
+                        GameObject obj = new GameObject();
+                        obj.name = typeof(InstructionsTextUIManager).Name;
+                        instance = obj.AddComponent<InstructionsTextUIManager>();
+                    }
+                }
+                return instance;
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +63,7 @@ namespace TeleopReachy
                 instructionsDetailsText = "";
                 transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
                 transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
+                //transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateInitialCalibration);
             }
 
             needUpdateText = true;
@@ -68,6 +91,22 @@ namespace TeleopReachy
         {
             instructionsText = "Reachy is not ready for teleop.";
             instructionsDetailsText = "Some required services are missing. Check the status panel for more details!";
+            needUpdateText = true;
+        }
+
+
+        //ajout calibration
+        public void IndicateInitialCalibration(string side)
+        {
+            instructionsText = "Calibration of your " + side + " arm : " ;
+            instructionsDetailsText = "Keep your " + side + " arm straight and move it in all directions.";
+            needUpdateText = true;
+        }
+
+        public void IndicateEndofCalibration()
+        {
+            instructionsText = "Calibration done. " ;
+            instructionsDetailsText = "";
             needUpdateText = true;
         }
     }
