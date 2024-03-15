@@ -19,12 +19,19 @@ namespace TeleopReachy
         private bool calib_right_side = false;
         private bool calib_left_side = false;
         private bool calibration_done = false;
+        private ControllersManager controllers;
+        private bool start_calib_keyboard = false;
+        private bool buttonX = false;
+
+        private Transform newUserCenter;
 
 
         public void Start()
         {
             trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
             trackedRightHand = GameObject.Find("TrackedRightHand").transform;
+            newUserCenter = GameObject.Find("NewUserCenter").transform;
+            controllers = ActiveControllerManager.Instance.ControllersManager;
 
             if (trackedLeftHand == null || trackedRightHand == null) {
                 Debug.Log("Manettes non trouvées."); 
@@ -38,37 +45,60 @@ namespace TeleopReachy
 
         public void Update()
         { 
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
+            if (buttonX)
+                start_calib_keyboard = true;
+
+            if (!start_calib_keyboard)
+                InstructionsTextUIManager.Instance.IndicateToPressX();
 
             // capturing points from right side, then left side
-            if (calib_right_side == false) {
+            if (!calib_right_side && start_calib_keyboard) {
                 InstructionsTextUIManager.Instance.IndicateInitialCalibration("right");
-                CapturePoints(trackedRightHand, rightCoordinates, lastPointRight, calib_right_side);}
-            else if (calib_left_side == false){
+                CapturePoints("right");}
+
+            else if (!calib_left_side && start_calib_keyboard){
                 InstructionsTextUIManager.Instance.IndicateInitialCalibration("left");
-                CapturePoints(trackedLeftHand, leftCoordinates, lastPointLeft, calib_left_side); }
-            else if (calibration_done == false) {
+                CapturePoints("left");}
+
+            else if (calib_left_side && !calibration_done) {
                 UpperBodyFeatures();
-                Debug.Log(TransitionRoomManager.Instance.meanArmSize);
                 TransitionRoomManager.Instance.FixNewPosition();
                 calibration_done = true;
                 // ajout du game object au centre de l'utilisateur 
-                Transform userCenter = Camera.main.transform.Find("UserCenter");
-                userCenter.position = TransitionRoomManager.Instance.midShoulderPoint;
-            } else 
+                newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;} 
+
+            else if (calibration_done){
                 InstructionsTextUIManager.Instance.IndicateEndofCalibration();
-
-
+                InstructionsTextUIManager.Instance.IndicateToPressA();
+                }
             
         }
 
-        private void CapturePoints (Transform trackedHand, List <Vector3> sideCoordinates, Vector3 lastPoint, bool calib_side)
+        private void CapturePoints (string side)
         {
-            if (sideCoordinates.Count < 70){
-                if (Vector3.Distance(lastPoint, trackedHand.position)> 0.05f){
-                    sideCoordinates.Add(trackedHand.position);
-                    lastPoint = trackedHand.position;}
-            } else 
-                calib_side = true;
+            if (side == "right"){
+                if (rightCoordinates.Count < 70){
+                    Debug.Log("last point" + lastPointRight);
+                    if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.07f){
+                        rightCoordinates.Add(trackedRightHand.position);
+                        lastPointRight = trackedRightHand.position;
+                        Debug.Log(rightCoordinates.Count);}
+                } else {
+                    calib_right_side = true;
+                    start_calib_keyboard = false;}
+            } else if (side == "left"){
+                if (leftCoordinates.Count < 70){
+                    Debug.Log("last point" + lastPointLeft);
+                    if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.07f){
+                        leftCoordinates.Add(trackedLeftHand.position);
+                        lastPointLeft = trackedLeftHand.position;
+                        Debug.Log(leftCoordinates.Count);}
+                } else  {
+                    calib_left_side = true;
+                    start_calib_keyboard = false;}
+            }
+            
         }
 
 

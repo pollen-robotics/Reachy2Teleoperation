@@ -54,6 +54,11 @@ namespace TeleopReachy
         {
             return primRightButton;
         }
+
+        public string GetPrimLeftButtonName()
+        { 
+            return primLeftButton;
+        }
     }
 
 }
