@@ -68,53 +68,54 @@ namespace Reachy.Part.Arm {
             "KAsyHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24icQoNQXJtSUtTb2x1",
             "dGlvbhIPCgdzdWNjZXNzGAEgASgIEjIKDGFybV9wb3NpdGlvbhgCIAEoCzIc",
             "LnJlYWNoeS5wYXJ0LmFybS5Bcm1Qb3NpdGlvbhIbCgVlcnJvchgDIAEoCzIM",
-            "LmVycm9yLkVycm9yIgsKCUFybVN0YXR1cyJgChFTcGVlZExpbWl0UmVxdWVz",
-            "dBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIqCgVsaW1pdBgC",
-            "IAEoDjIbLnJlYWNoeS5wYXJ0LmFybS5TcGVlZExpbWl0IqoBCglBcm1MaW1p",
-            "dHMSNQoPc2hvdWxkZXJfbGltaXRzGAEgASgLMhwuY29tcG9uZW50Lm9yYml0",
-            "YTJkLkxpbWl0czJkEjIKDGVsYm93X2xpbWl0cxgCIAEoCzIcLmNvbXBvbmVu",
-            "dC5vcmJpdGEyZC5MaW1pdHMyZBIyCgx3cmlzdF9saW1pdHMYAyABKAsyHC5j",
-            "b21wb25lbnQub3JiaXRhM2QuTGltaXRzM2QivAEKD0FybVRlbXBlcmF0dXJl",
-            "cxI5ChRzaG91bGRlcl90ZW1wZXJhdHVyZRgBIAEoCzIbLmNvbXBvbmVudC5v",
-            "cmJpdGEyZC5GbG9hdDJkEjYKEWVsYm93X3RlbXBlcmF0dXJlGAIgASgLMhsu",
-            "Y29tcG9uZW50Lm9yYml0YTJkLkZsb2F0MmQSNgoRd3Jpc3RfdGVtcGVyYXR1",
-            "cmUYAyABKAsyGy5jb21wb25lbnQub3JiaXRhM2QuRmxvYXQzZCrbAQoIQXJt",
-            "RmllbGQSCAoETk9ORRAAEggKBE5BTUUQARIGCgJJRBACEhQKEFBSRVNFTlRf",
-            "UE9TSVRJT04QAxIRCg1QUkVTRU5UX1NQRUVEEAQSEAoMUFJFU0VOVF9MT0FE",
-            "EAUSDwoLVEVNUEVSQVRVUkUQBhIQCgxKT0lOVF9MSU1JVFMQBxINCglDT01Q",
-            "TElBTlQQCBIRCg1HT0FMX1BPU0lUSU9OEAkSDwoLU1BFRURfTElNSVQQChIQ",
-            "CgxUT1JRVUVfTElNSVQQCxIHCgNQSUQQDBIHCgNBTEwQDyo6CgpTcGVlZExp",
-            "bWl0EgwKCE5PX0xJTUlUEAASCAoERkFTVBABEgoKBk5PUk1BTBACEggKBFNM",
-            "T1cQAzKRCQoKQXJtU2VydmljZRJACgpHZXRBbGxBcm1zEhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5GhoucmVhY2h5LnBhcnQuYXJtLkxpc3RPZkFybRI6CghH",
-            "ZXRTdGF0ZRITLnJlYWNoeS5wYXJ0LlBhcnRJZBoZLnJlYWNoeS5wYXJ0LmFy",
-            "bS5Bcm1TdGF0ZRJNCgxDb21wdXRlQXJtRksSHS5yZWFjaHkucGFydC5hcm0u",
-            "QXJtRktSZXF1ZXN0Gh4ucmVhY2h5LnBhcnQuYXJtLkFybUZLU29sdXRpb24S",
-            "TQoMQ29tcHV0ZUFybUlLEh0ucmVhY2h5LnBhcnQuYXJtLkFybUlLUmVxdWVz",
-            "dBoeLnJlYWNoeS5wYXJ0LmFybS5Bcm1JS1NvbHV0aW9uEkkKFEdldENhcnRl",
-            "c2lhblBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVhY2h5Lmtp",
-            "bmVtYXRpY3MuTWF0cml4NHg0EkUKEEdldEpvaW50UG9zaXRpb24SEy5yZWFj",
-            "aHkucGFydC5QYXJ0SWQaHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24S",
-            "OAoFQXVkaXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaGi5yZWFjaHkucGFydC5h",
-            "cm0uQXJtU3RhdHVzEjgKCUhlYXJ0QmVhdBITLnJlYWNoeS5wYXJ0LlBhcnRJ",
-            "ZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI2CgdSZXN0YXJ0EhMucmVhY2h5",
-            "LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EkEKElJlc2V0",
-            "RGVmYXVsdFZhbHVlcxITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5w",
-            "cm90b2J1Zi5FbXB0eRI1CgZUdXJuT24SEy5yZWFjaHkucGFydC5QYXJ0SWQa",
-            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkSNgoHVHVybk9mZhITLnJlYWNoeS5w",
-            "YXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJCCg9HZXRKb2lu",
-            "dHNMaW1pdHMSEy5yZWFjaHkucGFydC5QYXJ0SWQaGi5yZWFjaHkucGFydC5h",
-            "cm0uQXJtTGltaXRzEkgKD0dldFRlbXBlcmF0dXJlcxITLnJlYWNoeS5wYXJ0",
-            "LlBhcnRJZBogLnJlYWNoeS5wYXJ0LmFybS5Bcm1UZW1wZXJhdHVyZXMSSQoU",
-            "R2V0Sm9pbnRHb2FsUG9zaXRpb24SEy5yZWFjaHkucGFydC5QYXJ0SWQaHC5y",
-            "ZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24SSwoNU2V0U3BlZWRMaW1pdBIi",
-            "LnJlYWNoeS5wYXJ0LmFybS5TcGVlZExpbWl0UmVxdWVzdBoWLmdvb2dsZS5w",
-            "cm90b2J1Zi5FbXB0eRJRChRTZW5kQXJtQ2FydGVzaWFuR29hbBIhLnJlYWNo",
-            "eS5wYXJ0LmFybS5Bcm1DYXJ0ZXNpYW5Hb2FsGhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5YgZwcm90bzM="));
+            "LmVycm9yLkVycm9yIgsKCUFybVN0YXR1cyJDChFTcGVlZExpbWl0UmVxdWVz",
+            "dBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBINCgVsaW1pdBgC",
+            "IAEoDSJEChJUb3JxdWVMaW1pdFJlcXVlc3QSHwoCaWQYASABKAsyEy5yZWFj",
+            "aHkucGFydC5QYXJ0SWQSDQoFbGltaXQYAiABKA0iqgEKCUFybUxpbWl0cxI1",
+            "Cg9zaG91bGRlcl9saW1pdHMYASABKAsyHC5jb21wb25lbnQub3JiaXRhMmQu",
+            "TGltaXRzMmQSMgoMZWxib3dfbGltaXRzGAIgASgLMhwuY29tcG9uZW50Lm9y",
+            "Yml0YTJkLkxpbWl0czJkEjIKDHdyaXN0X2xpbWl0cxgDIAEoCzIcLmNvbXBv",
+            "bmVudC5vcmJpdGEzZC5MaW1pdHMzZCK8AQoPQXJtVGVtcGVyYXR1cmVzEjkK",
+            "FHNob3VsZGVyX3RlbXBlcmF0dXJlGAEgASgLMhsuY29tcG9uZW50Lm9yYml0",
+            "YTJkLkZsb2F0MmQSNgoRZWxib3dfdGVtcGVyYXR1cmUYAiABKAsyGy5jb21w",
+            "b25lbnQub3JiaXRhMmQuRmxvYXQyZBI2ChF3cmlzdF90ZW1wZXJhdHVyZRgD",
+            "IAEoCzIbLmNvbXBvbmVudC5vcmJpdGEzZC5GbG9hdDNkKtsBCghBcm1GaWVs",
+            "ZBIICgROT05FEAASCAoETkFNRRABEgYKAklEEAISFAoQUFJFU0VOVF9QT1NJ",
+            "VElPThADEhEKDVBSRVNFTlRfU1BFRUQQBBIQCgxQUkVTRU5UX0xPQUQQBRIP",
+            "CgtURU1QRVJBVFVSRRAGEhAKDEpPSU5UX0xJTUlUUxAHEg0KCUNPTVBMSUFO",
+            "VBAIEhEKDUdPQUxfUE9TSVRJT04QCRIPCgtTUEVFRF9MSU1JVBAKEhAKDFRP",
+            "UlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPMuAJCgpBcm1TZXJ2aWNl",
+            "EkAKCkdldEFsbEFybXMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGi5yZWFj",
+            "aHkucGFydC5hcm0uTGlzdE9mQXJtEjoKCEdldFN0YXRlEhMucmVhY2h5LnBh",
+            "cnQuUGFydElkGhkucmVhY2h5LnBhcnQuYXJtLkFybVN0YXRlEk0KDENvbXB1",
+            "dGVBcm1GSxIdLnJlYWNoeS5wYXJ0LmFybS5Bcm1GS1JlcXVlc3QaHi5yZWFj",
+            "aHkucGFydC5hcm0uQXJtRktTb2x1dGlvbhJNCgxDb21wdXRlQXJtSUsSHS5y",
+            "ZWFjaHkucGFydC5hcm0uQXJtSUtSZXF1ZXN0Gh4ucmVhY2h5LnBhcnQuYXJt",
+            "LkFybUlLU29sdXRpb24SSQoUR2V0Q2FydGVzaWFuUG9zaXRpb24SEy5yZWFj",
+            "aHkucGFydC5QYXJ0SWQaHC5yZWFjaHkua2luZW1hdGljcy5NYXRyaXg0eDQS",
+            "RQoQR2V0Sm9pbnRQb3NpdGlvbhITLnJlYWNoeS5wYXJ0LlBhcnRJZBocLnJl",
+            "YWNoeS5wYXJ0LmFybS5Bcm1Qb3NpdGlvbhI4CgVBdWRpdBITLnJlYWNoeS5w",
+            "YXJ0LlBhcnRJZBoaLnJlYWNoeS5wYXJ0LmFybS5Bcm1TdGF0dXMSOAoJSGVh",
+            "cnRCZWF0EhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVm",
+            "LkVtcHR5EjYKB1Jlc3RhcnQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29n",
+            "bGUucHJvdG9idWYuRW1wdHkSQQoSUmVzZXREZWZhdWx0VmFsdWVzEhMucmVh",
+            "Y2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjUKBlR1",
+            "cm5PbhITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5F",
+            "bXB0eRI2CgdUdXJuT2ZmEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5EkIKD0dldEpvaW50c0xpbWl0cxITLnJlYWNoeS5w",
+            "YXJ0LlBhcnRJZBoaLnJlYWNoeS5wYXJ0LmFybS5Bcm1MaW1pdHMSSAoPR2V0",
+            "VGVtcGVyYXR1cmVzEhMucmVhY2h5LnBhcnQuUGFydElkGiAucmVhY2h5LnBh",
+            "cnQuYXJtLkFybVRlbXBlcmF0dXJlcxJJChRHZXRKb2ludEdvYWxQb3NpdGlv",
+            "bhITLnJlYWNoeS5wYXJ0LlBhcnRJZBocLnJlYWNoeS5wYXJ0LmFybS5Bcm1Q",
+            "b3NpdGlvbhJLCg1TZXRTcGVlZExpbWl0EiIucmVhY2h5LnBhcnQuYXJtLlNw",
+            "ZWVkTGltaXRSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ek0KDlNl",
+            "dFRvcnF1ZUxpbWl0EiMucmVhY2h5LnBhcnQuYXJtLlRvcnF1ZUxpbWl0UmVx",
+            "dWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJRChRTZW5kQXJtQ2FydGVz",
+            "aWFuR29hbBIhLnJlYWNoeS5wYXJ0LmFybS5Bcm1DYXJ0ZXNpYW5Hb2FsGhYu",
+            "Z29vZ2xlLnByb3RvYnVmLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.Kinematics.KinematicsReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Component.Orbita2D.Orbita2DReflection.Descriptor, global::Component.Orbita3D.Orbita3DReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Arm.ArmField), typeof(global::Reachy.Part.Arm.SpeedLimit), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Arm.ArmField), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmState), global::Reachy.Part.Arm.ArmState.Parser, new[]{ "Timestamp", "Id", "Activated", "ShoulderState", "ElbowState", "WristState" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmDescription), global::Reachy.Part.Arm.ArmDescription.Parser, new[]{ "Shoulder", "Elbow", "Wrist" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.Arm), global::Reachy.Part.Arm.Arm.Parser, new[]{ "PartId", "Description", "Info" }, null, null, null, null),
@@ -129,6 +130,7 @@ namespace Reachy.Part.Arm {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmIKSolution), global::Reachy.Part.Arm.ArmIKSolution.Parser, new[]{ "Success", "ArmPosition", "Error" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmStatus), global::Reachy.Part.Arm.ArmStatus.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.SpeedLimitRequest), global::Reachy.Part.Arm.SpeedLimitRequest.Parser, new[]{ "Id", "Limit" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.TorqueLimitRequest), global::Reachy.Part.Arm.TorqueLimitRequest.Parser, new[]{ "Id", "Limit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmLimits), global::Reachy.Part.Arm.ArmLimits.Parser, new[]{ "ShoulderLimits", "ElbowLimits", "WristLimits" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmTemperatures), global::Reachy.Part.Arm.ArmTemperatures.Parser, new[]{ "ShoulderTemperature", "ElbowTemperature", "WristTemperature" }, null, null, null, null)
           }));
@@ -152,13 +154,6 @@ namespace Reachy.Part.Arm {
     [pbr::OriginalName("TORQUE_LIMIT")] TorqueLimit = 11,
     [pbr::OriginalName("PID")] Pid = 12,
     [pbr::OriginalName("ALL")] All = 15,
-  }
-
-  public enum SpeedLimit {
-    [pbr::OriginalName("NO_LIMIT")] NoLimit = 0,
-    [pbr::OriginalName("FAST")] Fast = 1,
-    [pbr::OriginalName("NORMAL")] Normal = 2,
-    [pbr::OriginalName("SLOW")] Slow = 3,
   }
 
   #endregion
@@ -3806,10 +3801,10 @@ namespace Reachy.Part.Arm {
 
     /// <summary>Field number for the "limit" field.</summary>
     public const int LimitFieldNumber = 2;
-    private global::Reachy.Part.Arm.SpeedLimit limit_ = global::Reachy.Part.Arm.SpeedLimit.NoLimit;
+    private uint limit_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Reachy.Part.Arm.SpeedLimit Limit {
+    public uint Limit {
       get { return limit_; }
       set {
         limit_ = value;
@@ -3841,7 +3836,7 @@ namespace Reachy.Part.Arm {
     public override int GetHashCode() {
       int hash = 1;
       if (id_ != null) hash ^= Id.GetHashCode();
-      if (Limit != global::Reachy.Part.Arm.SpeedLimit.NoLimit) hash ^= Limit.GetHashCode();
+      if (Limit != 0) hash ^= Limit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3864,9 +3859,9 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(10);
         output.WriteMessage(Id);
       }
-      if (Limit != global::Reachy.Part.Arm.SpeedLimit.NoLimit) {
+      if (Limit != 0) {
         output.WriteRawTag(16);
-        output.WriteEnum((int) Limit);
+        output.WriteUInt32(Limit);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -3882,9 +3877,9 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(10);
         output.WriteMessage(Id);
       }
-      if (Limit != global::Reachy.Part.Arm.SpeedLimit.NoLimit) {
+      if (Limit != 0) {
         output.WriteRawTag(16);
-        output.WriteEnum((int) Limit);
+        output.WriteUInt32(Limit);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -3899,8 +3894,8 @@ namespace Reachy.Part.Arm {
       if (id_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
       }
-      if (Limit != global::Reachy.Part.Arm.SpeedLimit.NoLimit) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Limit);
+      if (Limit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Limit);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -3920,7 +3915,7 @@ namespace Reachy.Part.Arm {
         }
         Id.MergeFrom(other.Id);
       }
-      if (other.Limit != global::Reachy.Part.Arm.SpeedLimit.NoLimit) {
+      if (other.Limit != 0) {
         Limit = other.Limit;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -3946,7 +3941,7 @@ namespace Reachy.Part.Arm {
             break;
           }
           case 16: {
-            Limit = (global::Reachy.Part.Arm.SpeedLimit) input.ReadEnum();
+            Limit = input.ReadUInt32();
             break;
           }
         }
@@ -3972,7 +3967,242 @@ namespace Reachy.Part.Arm {
             break;
           }
           case 16: {
-            Limit = (global::Reachy.Part.Arm.SpeedLimit) input.ReadEnum();
+            Limit = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class TorqueLimitRequest : pb::IMessage<TorqueLimitRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<TorqueLimitRequest> _parser = new pb::MessageParser<TorqueLimitRequest>(() => new TorqueLimitRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<TorqueLimitRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[14]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TorqueLimitRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TorqueLimitRequest(TorqueLimitRequest other) : this() {
+      id_ = other.id_ != null ? other.id_.Clone() : null;
+      limit_ = other.limit_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public TorqueLimitRequest Clone() {
+      return new TorqueLimitRequest(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private global::Reachy.Part.PartId id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.PartId Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "limit" field.</summary>
+    public const int LimitFieldNumber = 2;
+    private uint limit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Limit {
+      get { return limit_; }
+      set {
+        limit_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as TorqueLimitRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(TorqueLimitRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Id, other.Id)) return false;
+      if (Limit != other.Limit) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (id_ != null) hash ^= Id.GetHashCode();
+      if (Limit != 0) hash ^= Limit.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (id_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Id);
+      }
+      if (Limit != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Limit);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (id_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Id);
+      }
+      if (Limit != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Limit);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (id_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
+      }
+      if (Limit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Limit);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(TorqueLimitRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.id_ != null) {
+        if (id_ == null) {
+          Id = new global::Reachy.Part.PartId();
+        }
+        Id.MergeFrom(other.Id);
+      }
+      if (other.Limit != 0) {
+        Limit = other.Limit;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+          case 16: {
+            Limit = input.ReadUInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+          case 16: {
+            Limit = input.ReadUInt32();
             break;
           }
         }
@@ -3996,7 +4226,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4286,7 +4516,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
