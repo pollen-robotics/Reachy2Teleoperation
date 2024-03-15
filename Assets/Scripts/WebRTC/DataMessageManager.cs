@@ -314,6 +314,70 @@ namespace TeleopReachy
             webRTCDataController.SendCommandMessage(mobileBaseCommand);
         }
 
+        public void SetArmTorqueLimit(Reachy.Part.Arm.TorqueLimitRequest request)
+        {
+            Bridge.AnyCommands armCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        ArmCommand = new Bridge.ArmCommand{
+                            TorqueLimit = request
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(armCommand);
+        }
+
+        public void SetArmSpeedLimit(Reachy.Part.Arm.SpeedLimitRequest request)
+        {
+            Bridge.AnyCommands armCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        ArmCommand = new Bridge.ArmCommand{
+                            SpeedLimit = request
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(armCommand);
+        }
+
+        public void SetHeadSpeedLimit(Reachy.Part.Head.SpeedLimitRequest request)
+        {
+            Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        NeckCommand = new Bridge.NeckCommand{
+                            SpeedLimit = request
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(neckCommand);
+        }
+
+        public void SetHeadTorqueLimit(Reachy.Part.Head.TorqueLimitRequest request)
+        {
+            Bridge.AnyCommands neckCommand = new Bridge.AnyCommands
+            {
+                Commands = {
+                    new Bridge.AnyCommand
+                    {
+                        NeckCommand = new Bridge.NeckCommand{
+                            TorqueLimit = request
+                        }
+                    }
+                }
+            };
+            webRTCDataController.SendCommandMessage(neckCommand);
+        }
+
         private void GetOrbita3D_PresentPosition(
             Dictionary<string, float> dict,
             IMessage componentState,
