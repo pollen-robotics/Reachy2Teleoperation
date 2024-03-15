@@ -56,6 +56,8 @@ namespace TeleopReachy
         // calibration variables 
         public double meanArmSize { get; set; }
         public Vector3 midShoulderPoint { get; set; }
+        private Transform oldUserCenter;
+
 
 
         // Start is called before the first frame update
@@ -76,6 +78,11 @@ namespace TeleopReachy
         
             HideReachy();
             FixUserTrackerPosition();
+
+            //ajout calibration 
+            oldUserCenter = GameObject.Find("OldUserCenter").transform;
+            oldUserCenter.localPosition = userTracker.position;
+
             MakeMirrorFaceUser();
 
             if (Robot.IsCurrentRobotVirtual())
@@ -161,8 +168,8 @@ namespace TeleopReachy
             // Debug.Log("Debut du NewFixUser");
 
             // //modification pour calibration 
-            // Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, userTracker.rotation, Vector3.one); 
-            // Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
+            //Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, userTracker.rotation, Vector3.one); 
+            //Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
             // Debug.Log("user transform initiale :" + userTracker.transform.position + userTracker.transform.rotation );
             // Debug.Log("user transform avec calib :" + userCenterMatrix);
 

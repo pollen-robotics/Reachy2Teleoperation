@@ -79,7 +79,7 @@ namespace TeleopReachy
             }
         }
 
-        void IndicateToPressA()
+        public void IndicateToPressA()
         {
             instructionsText = "Press and hold " + textButtonControllerModifier.GetPrimRightButtonName() + " to start";
             instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
@@ -96,6 +96,13 @@ namespace TeleopReachy
 
 
         //ajout calibration
+        public void IndicateToPressX()
+        {
+            instructionsText = "Place arms on either side of body then Press " + textButtonControllerModifier.GetPrimLeftButtonName() + " to start the calibration";
+            instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
+            instructionsDetailsText = "";
+            needUpdateText = true;
+        }
         public void IndicateInitialCalibration(string side)
         {
             instructionsText = "Calibration of your " + side + " arm : " ;
