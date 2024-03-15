@@ -56,7 +56,6 @@ namespace TeleopReachy
         // calibration variables 
         public double meanArmSize { get; set; }
         public Vector3 midShoulderPoint { get; set; }
-        private CaptureHandPoints captureHandPoints;
 
 
         // Start is called before the first frame update
@@ -78,7 +77,6 @@ namespace TeleopReachy
             HideReachy();
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
-            Debug.Log("1");
 
             if (Robot.IsCurrentRobotVirtual())
             {
@@ -90,23 +88,6 @@ namespace TeleopReachy
                 robotStatus.SetEmotionsActive(true);
             }
         }
-
-        // //calibration
-        // private void CalibrationShoulders()
-        // {
-        //     Debug.Log("Debut de la fonction de calibration du TransitionManager");
-        //     Transform trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
-        //     Transform trackedRightHand = GameObject.Find("TrackedRightHand").transform;
-        //     if (trackedLeftHand == null || trackedRightHand == null) {
-        //         Debug.Log("Manettes non trouvées."); 
-        //         return;
-        //     } else {
-        //         captureHandPoints = new CaptureHandPoints();
-        //         captureHandPoints.CaptureAndCalibrate();
-        //         Debug.Log("Fin de la fonction de calibration du TransitionManager");
-        //     }
-            
-        // }
 
         public void ResetPosition()
         {
@@ -157,7 +138,6 @@ namespace TeleopReachy
         void FixUserTrackerPosition()
         // Fix the position and orientation of Reachy's coordinate system of the user based on the headset position and orientation
         {
-            Debug.Log("Debut du FixUser");
             Quaternion rotation = headset.localRotation;
             Vector3 eulerAngles = rotation.eulerAngles;
 
@@ -169,8 +149,6 @@ namespace TeleopReachy
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             userTracker.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
             Debug.Log("ancienne :" + userTracker.position);
-
-
         }
 
         //calibration

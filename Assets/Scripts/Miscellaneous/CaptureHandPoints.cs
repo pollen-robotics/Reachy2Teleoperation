@@ -16,7 +16,9 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
-        private bool calibration_ok = false;
+        private bool calib_right_side = false;
+        private bool calib_left_side = false;
+        private bool calibration_done = false;
 
 
         public void Start()
@@ -36,31 +38,41 @@ namespace TeleopReachy
 
         public void Update()
         { 
-            if (leftCoordinates.Count < 70 || rightCoordinates.Count < 70) 
-            {
-                if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.05f){
-                    leftCoordinates.Add(trackedLeftHand.position);
-                    lastPointLeft = trackedLeftHand.position;}
 
-                if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.05f){
-                    rightCoordinates.Add(trackedRightHand.position);
-                    lastPointRight = trackedRightHand.position;}
-            }
-
-            else {
-                if (calibration_ok == false) {
-                (TransitionRoomManager.Instance.meanArmSize, TransitionRoomManager.Instance.midShoulderPoint) = UpperBodyFeatures(leftCoordinates, rightCoordinates);
+            // capturing points from right side, then left side
+            if (calib_right_side == false) {
+                InstructionsTextUIManager.Instance.IndicateInitialCalibration("right");
+                CapturePoints(trackedRightHand, rightCoordinates, lastPointRight, calib_right_side);}
+            else if (calib_left_side == false){
+                InstructionsTextUIManager.Instance.IndicateInitialCalibration("left");
+                CapturePoints(trackedLeftHand, leftCoordinates, lastPointLeft, calib_left_side); }
+            else if (calibration_done == false) {
+                UpperBodyFeatures();
                 Debug.Log(TransitionRoomManager.Instance.meanArmSize);
                 TransitionRoomManager.Instance.FixNewPosition();
-                calibration_ok = true;}
-            }
+                calibration_done = true;
+                // ajout du game object au centre de l'utilisateur 
+                Transform userCenter = Camera.main.transform.Find("UserCenter");
+                userCenter.position = TransitionRoomManager.Instance.midShoulderPoint;
+            } else 
+                InstructionsTextUIManager.Instance.IndicateEndofCalibration();
+
 
             
         }
 
-  
+        private void CapturePoints (Transform trackedHand, List <Vector3> sideCoordinates, Vector3 lastPoint, bool calib_side)
+        {
+            if (sideCoordinates.Count < 70){
+                if (Vector3.Distance(lastPoint, trackedHand.position)> 0.05f){
+                    sideCoordinates.Add(trackedHand.position);
+                    lastPoint = trackedHand.position;}
+            } else 
+                calib_side = true;
+        }
 
-        public (double armSize, Vector3 midShoulderPoint) UpperBodyFeatures(List<Vector3>leftCoordinates, List<Vector3>rightCoordinates)
+
+        public void UpperBodyFeatures()
         {
  
             (double leftArmSize, Vector3 leftShoulderCenter) = CenterRotationLSM(leftCoordinates);
@@ -71,8 +83,8 @@ namespace TeleopReachy
             Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
 
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
-
-            return (meanArmSize, midShoulderPoint);
+            TransitionRoomManager.Instance.meanArmSize = meanArmSize;
+            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
         }
 
         private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
@@ -97,7 +109,7 @@ namespace TeleopReachy
             var aMatrix = Matrix<double>.Build.DenseOfArray(A);
 		    var fMatrix = Matrix<double>.Build.DenseOfArray(f);
             var rotCenter = MultipleRegression.NormalEquations(aMatrix, fMatrix);
-            Debug.Log("Multiple regression ok");
+            Debug.Log("rotCenter = " + rotCenter);
 
             double t = (rotCenter[0, 0] * rotCenter[0, 0]) + (rotCenter[1, 0] * rotCenter[1, 0]) + (rotCenter[2, 0] * rotCenter[2, 0]) + rotCenter[3, 0];
             double radius = System.Math.Sqrt(t);
