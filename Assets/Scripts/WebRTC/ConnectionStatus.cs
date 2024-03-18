@@ -39,6 +39,7 @@ namespace TeleopReachy
 
         void Start()
         {
+            Debug.Log("start connection status");
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
             microphoneController = WebRTCManager.Instance.webRTCAudioSender;
@@ -208,14 +209,11 @@ namespace TeleopReachy
 
         void Update()
         {
-            isRobotCalibrated = robotCalib.IsCalibrated(); // ajout calibration 
-
             if (statusChanged)
             {
                 statusChanged = false;
                 
                 if (isRobotInDataRoom && isRobotCalibrated && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
-                //if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
                 {
                     if (!isRobotReady)
                     {
@@ -223,6 +221,7 @@ namespace TeleopReachy
                         if (waitForConnection != null) StopCoroutine(waitForConnection);
                         areRobotServicesRestarting = false;
                         event_OnRobotReady.Invoke();
+                        Debug.Log("event onRobotReady");
                     }
                 }
                 else

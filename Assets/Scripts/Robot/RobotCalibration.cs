@@ -25,12 +25,38 @@ namespace TeleopReachy
         private bool start_calib_keyboard = false;
         private bool buttonX = false;
         public UnityEvent event_OnCalibChanged;
+        public UnityEvent event_WaitForCalib;
+        public UnityEvent event_StartRightCalib;
+        public UnityEvent event_StartLeftCalib;
+
+        private  InstructionsTextUIManager instructionsTextUIManager;
+
+
+        private static RobotCalibration instance;
+
+        public static RobotCalibration Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = FindObjectOfType<RobotCalibration>();
+                    if (instance == null)
+                    {
+                        GameObject obj = new GameObject();
+                        obj.name = typeof(RobotCalibration).Name;
+                        instance = obj.AddComponent<RobotCalibration>();
+                    }
+                }
+                return instance;
+            }
+        }
 
      
 
-
         public void Start()
         {
+            Debug.Log("Start of RobotCalibration");
             trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
             trackedRightHand = GameObject.Find("TrackedRightHand").transform;
             newUserCenter = GameObject.Find("NewUserCenter").transform;
@@ -40,9 +66,13 @@ namespace TeleopReachy
                 Debug.Log("Manettes non trouvées."); 
                 return;
             } 
+
             lastPointLeft = trackedLeftHand.position;
             lastPointRight = trackedRightHand.position;
-
+            event_OnCalibChanged = new UnityEvent();
+            event_StartLeftCalib = new UnityEvent();
+            event_StartRightCalib = new UnityEvent();
+            event_WaitForCalib = new UnityEvent();
             
             }
 
@@ -52,30 +82,35 @@ namespace TeleopReachy
             if (buttonX)
                 start_calib_keyboard = true;
 
-            if (!start_calib_keyboard)
-                InstructionsTextUIManager.Instance.IndicateToPressX();
+            if (!start_calib_keyboard && !calibration_done)
+            {
+                Debug.Log("calib : press X");
+                event_WaitForCalib.Invoke();
+            }
 
             // capturing points from right side, then left side
             if (!calib_right_side && start_calib_keyboard) {
-                InstructionsTextUIManager.Instance.IndicateInitialCalibration("right");
+                Debug.Log("calib droite");
+
+                event_StartRightCalib.Invoke();
                 CapturePoints("right");}
 
             else if (!calib_left_side && start_calib_keyboard){
-                InstructionsTextUIManager.Instance.IndicateInitialCalibration("left");
+                Debug.Log("calib gauche");
+
+                event_StartLeftCalib.Invoke();
                 CapturePoints("left");}
 
             else if (calib_left_side && !calibration_done) {
-                InstructionsTextUIManager.Instance.IndicateEndofCalibration();
+                Debug.Log("calcul de calib");
                 UpperBodyFeatures();
                 TransitionRoomManager.Instance.FixNewPosition();
                 // ajout du game object au centre de l'utilisateur 
                 newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;
                 calibration_done = true;
-                event_OnCalibChanged.Invoke();} 
+                event_OnCalibChanged.Invoke();
+                Debug.Log("calib finie");} 
 
-            // else if (calibration_done){
-            //     InstructionsTextUIManager.Instance.IndicateToPressA();
-            //     }
             
         }
 
@@ -119,6 +154,8 @@ namespace TeleopReachy
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
             TransitionRoomManager.Instance.meanArmSize = meanArmSize;
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
+            TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
+            Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
         }
 
         private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)

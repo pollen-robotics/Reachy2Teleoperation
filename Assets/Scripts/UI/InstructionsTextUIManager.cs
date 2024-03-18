@@ -16,6 +16,9 @@ namespace TeleopReachy
         private ConnectionStatus connectionStatus;
         private TransitionRoomManager transitionRoomManager;
 
+        //ajout calibration
+        private RobotCalibration robotCalib;
+
         private TextButtonControllerModifier textButtonControllerModifier;
 
         private bool needUpdateText;
@@ -49,6 +52,9 @@ namespace TeleopReachy
             instructions = transform.GetComponent<Text>();
 
             transitionRoomManager = TransitionRoomManager.Instance;
+            Debug.Log("transitionroommanager instance = " + transitionRoomManager);
+            robotCalib = RobotCalibration.Instance; // calibration
+            Debug.Log("robotcalibration instance = " + robotCalib);
             textButtonControllerModifier = GetComponent<TextButtonControllerModifier>();
 
             if (Robot.IsCurrentRobotVirtual())
@@ -59,11 +65,14 @@ namespace TeleopReachy
             {
                 instructionsText = "Please face the mirror then press Ready";
                 instructionsDetailsText = "";
-                transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
-                transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
-                //transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateInitialCalibration);
             }
 
+            transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
+            transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
+            robotCalib.event_WaitForCalib.AddListener(IndicateToPressX);
+            robotCalib.event_StartRightCalib.AddListener(() => IndicateInitialCalibration("right"));
+            robotCalib.event_StartLeftCalib.AddListener(() => IndicateInitialCalibration("left"));
+            robotCalib.event_OnCalibChanged.AddListener(IndicateEndofCalibration);
             needUpdateText = true;
         }
 

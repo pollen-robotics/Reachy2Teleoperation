@@ -56,6 +56,7 @@ namespace TeleopReachy
         // calibration variables 
         public double meanArmSize { get; set; }
         public Vector3 midShoulderPoint { get; set; }
+        public double shoulderWidth { get; set; }
         private Transform oldUserCenter;
 
 
@@ -98,7 +99,8 @@ namespace TeleopReachy
 
         public void ResetPosition()
         {
-            FixUserTrackerPosition();
+            //FixUserTrackerPosition();
+            FixNewPosition();
             MakeMirrorFaceUser();
         }
 
