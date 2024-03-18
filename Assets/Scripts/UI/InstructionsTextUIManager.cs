@@ -23,8 +23,6 @@ namespace TeleopReachy
         private string instructionsText;
         private string instructionsDetailsText;
 
-
-        // ajout calibration
         private static InstructionsTextUIManager instance;
 
         public static InstructionsTextUIManager Instance

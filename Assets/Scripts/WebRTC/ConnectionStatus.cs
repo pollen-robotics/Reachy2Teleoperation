@@ -15,6 +15,8 @@ namespace TeleopReachy
         private bool isRobotInRestartRoom;
         private bool hasRobotJustLeftDataRoom;
 
+        private bool isRobotCalibrated; //calibration
+
         private bool isRobotReady;
 
         private bool areRobotServicesRestarting;
@@ -29,6 +31,7 @@ namespace TeleopReachy
         public UnityEvent event_OnRobotUnready;
 
         private bool statusChanged;
+        private RobotCalibration robotCalib; //calibration
 
         private RobotConfig robotConfig;
 
@@ -40,8 +43,10 @@ namespace TeleopReachy
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
             microphoneController = WebRTCManager.Instance.webRTCAudioSender;
 
+            robotCalib = RobotCalibration.Instance;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
+            robotCalib.event_OnCalibChanged.AddListener(RobotCalibrationChanged);
             robotConfig.event_OnConfigChanged.AddListener(RobotConfigurationChanged);
 
             //isServerConnected = false;
@@ -51,6 +56,7 @@ namespace TeleopReachy
             isRobotInAudioReceiverRoom = false;
             isRobotInAudioSenderRoom = false;
             isRobotInRestartRoom = false;
+            isRobotCalibrated = false; //calibration
 
             isRobotReady = false;
 
@@ -104,6 +110,12 @@ namespace TeleopReachy
         public bool IsRobotInRestartRoom()
         {
             return isRobotInRestartRoom;
+        }
+
+        //ajout calibration
+        public bool IsRobotCalibrated() 
+        {
+            return isRobotCalibrated;
         }
 
         public bool IsRobotReady()
@@ -180,6 +192,13 @@ namespace TeleopReachy
             statusChanged = true;
         }*/
 
+        //ajout calibration
+        void RobotCalibrationChanged()
+        {
+            Debug.Log("[ConnectionStatus] Calib Changed");
+            isRobotCalibrated = robotCalib.IsCalibrated();
+            statusChanged = true;
+        }
         void RobotConfigurationChanged()
         {
             Debug.Log("[ConnectionStatus] Config Changed");
@@ -189,10 +208,14 @@ namespace TeleopReachy
 
         void Update()
         {
+            isRobotCalibrated = robotCalib.IsCalibrated(); // ajout calibration 
+
             if (statusChanged)
             {
                 statusChanged = false;
-                if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                
+                if (isRobotInDataRoom && isRobotCalibrated && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                //if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
                 {
                     if (!isRobotReady)
                     {

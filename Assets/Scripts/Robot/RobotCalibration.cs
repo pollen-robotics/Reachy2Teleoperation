@@ -1,29 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearRegression;
 
 namespace TeleopReachy
 {
-    public class CaptureHandPoints : Singleton<CaptureHandPoints>
+    public class RobotCalibration : Singleton<RobotCalibration>
     {
-        public Transform trackedLeftHand;
-        public Transform trackedRightHand;
+        private Transform trackedLeftHand;
+        private Transform trackedRightHand;
 
         private Vector3 lastPointLeft;
         private Vector3 lastPointRight;
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
+        private Transform newUserCenter;
         private bool calib_right_side = false;
         private bool calib_left_side = false;
         private bool calibration_done = false;
         private ControllersManager controllers;
         private bool start_calib_keyboard = false;
         private bool buttonX = false;
+        public UnityEvent event_OnCalibChanged;
 
-        private Transform newUserCenter;
+     
 
 
         public void Start()
@@ -62,16 +65,17 @@ namespace TeleopReachy
                 CapturePoints("left");}
 
             else if (calib_left_side && !calibration_done) {
+                InstructionsTextUIManager.Instance.IndicateEndofCalibration();
                 UpperBodyFeatures();
                 TransitionRoomManager.Instance.FixNewPosition();
-                calibration_done = true;
                 // ajout du game object au centre de l'utilisateur 
-                newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;} 
+                newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;
+                calibration_done = true;
+                event_OnCalibChanged.Invoke();} 
 
-            else if (calibration_done){
-                InstructionsTextUIManager.Instance.IndicateEndofCalibration();
-                InstructionsTextUIManager.Instance.IndicateToPressA();
-                }
+            // else if (calibration_done){
+            //     InstructionsTextUIManager.Instance.IndicateToPressA();
+            //     }
             
         }
 
@@ -148,5 +152,10 @@ namespace TeleopReachy
 
             return (radius, rotationCenterPosition);
         }
+
+        public bool IsCalibrated (){
+            return calibration_done;
+        }
+
     }
 }
