@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Button
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,16 +11,16 @@ TagManager:
   - 
   - Water
   - UI
-  - LaserBeam
-  - ReachyGhostHead
-  - ReachyHead
-  - ReachyGhost
-  - LeftEye
-  - RightEye
-  - BlueRobotMirrorIndicator
-  - BlueRobotIndicator
-  - Mirror
-  - Reachy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

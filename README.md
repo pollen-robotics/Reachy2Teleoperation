@@ -6,7 +6,10 @@ Unity-based application that allows to control a [Reachy robot](https://www.poll
 
 The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2, and the Valve Index. The Oculus Quest 2 can be used in standalone mode or with the Oculus link.
 
-For any custom development we recommend to use Unity LTS 2020.3. Versions above 2020.3 will not work due to compatibility issues with the gRPC library.
+For any custom development we recommend to use Unity LTS 2022.3. 
+
+The project relies on GStreamer. Please install the [Windows Runtime](
+https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msvc-x86_64-1.24.0.msi). Check that the environment variable PATH contains *C:\gstreamer\1.0\msvc_x86_64\bin* (default installation).
 
 ## Installation
 
