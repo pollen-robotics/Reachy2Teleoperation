@@ -1,3 +1,4 @@
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
+        private float intervalTime=1/100 ; //fréquence de 100Hz
+        private float actualTime=0f;
         private Transform newUserCenter;
         private bool calib_right_side = false;
         private bool calib_left_side = false;
@@ -34,7 +37,7 @@ namespace TeleopReachy
 
         private static RobotCalibration instance;
 
-        public static RobotCalibration Instance
+        public new static RobotCalibration Instance // ajout du new, à voir si erreur 
         {
             get
             {
@@ -72,8 +75,7 @@ namespace TeleopReachy
             event_OnCalibChanged = new UnityEvent();
             event_StartLeftCalib = new UnityEvent();
             event_StartRightCalib = new UnityEvent();
-            event_WaitForCalib = new UnityEvent();
-            
+            event_WaitForCalib = new UnityEvent();            
             }
 
         public void Update()
@@ -86,59 +88,99 @@ namespace TeleopReachy
             {
                 Debug.Log("calib : press X");
                 event_WaitForCalib.Invoke();
+                actualTime = 0f;
             }
 
             // capturing points from right side, then left side
-            if (!calib_right_side && start_calib_keyboard) {
-                Debug.Log("calib droite");
+            // if (!calib_right_side && start_calib_keyboard) {
+            //     Debug.Log("calib droite");
+            //     event_StartRightCalib.Invoke();
+            //     CapturePoints("right");
+            //     actualTime += Time.deltaTime;}
 
-                event_StartRightCalib.Invoke();
-                CapturePoints("right");}
+            // else if (!calib_left_side && start_calib_keyboard){
+            //     Debug.Log("calib gauche");
+            //     event_StartLeftCalib.Invoke();
+            //     CapturePoints("left");
+            //     actualTime += Time.deltaTime;}
 
-            else if (!calib_left_side && start_calib_keyboard){
-                Debug.Log("calib gauche");
-
+            else if (!calibration_done && start_calib_keyboard)
+            {
+                Debug.Log("calib simultanée");
                 event_StartLeftCalib.Invoke();
-                CapturePoints("left");}
+                CapturePoints();
+                actualTime += Time.deltaTime;
 
-            else if (calib_left_side && !calibration_done) {
+
+            }
+
+            else if (calib_left_side && !calibration_done) 
+            {
                 Debug.Log("calcul de calib");
                 UpperBodyFeatures();
                 TransitionRoomManager.Instance.FixNewPosition();
                 // ajout du game object au centre de l'utilisateur 
                 newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;
+                ExportCoordinatesToCSV("C:/Users/User/Documents"); // à modifier
                 calibration_done = true;
                 event_OnCalibChanged.Invoke();
-                Debug.Log("calib finie");} 
-
-            
+                Debug.Log("calib finie");
+            }  
         }
 
-        private void CapturePoints (string side)
+        // private void CapturePoints (string side)
+        // {
+        //     if (side == "right"){
+        //         if (rightCoordinates.Count < 200){
+        //             Debug.Log("last point" + lastPointRight);
+                    
+        //             //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.07f)
+        //             if (actualTime % intervalTime == 0)
+        //             {
+        //                 rightCoordinates.Add(trackedRightHand.position);
+        //                 lastPointRight = trackedRightHand.position;
+        //                 Debug.Log(rightCoordinates.Count);}
+        //         } else {
+        //             calib_right_side = true;
+        //             start_calib_keyboard = false;}
+        //     } else if (side == "left"){
+        //         if (leftCoordinates.Count < 200)
+        //         {
+        //             Debug.Log("last point" + lastPointLeft);
+        //             //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.07f)
+        //             if (actualTime % intervalTime == 0 )
+        //             {
+        //                 leftCoordinates.Add(trackedLeftHand.position);
+        //                 lastPointLeft = trackedLeftHand.position;
+        //                 Debug.Log(leftCoordinates.Count);}
+        //         } else  {
+        //             calib_left_side = true;
+        //             start_calib_keyboard = false;}
+        //     }
+            
+        // }
+
+        private void CapturePoints () // version simultanée 
         {
-            if (side == "right"){
-                if (rightCoordinates.Count < 70){
-                    Debug.Log("last point" + lastPointRight);
-                    if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.07f){
+                if (rightCoordinates.Count < 200 || leftCoordinates.Count < 200){
+                    if (actualTime % intervalTime == 0)
+                    {
                         rightCoordinates.Add(trackedRightHand.position);
                         lastPointRight = trackedRightHand.position;
-                        Debug.Log(rightCoordinates.Count);}
-                } else {
-                    calib_right_side = true;
-                    start_calib_keyboard = false;}
-            } else if (side == "left"){
-                if (leftCoordinates.Count < 70){
-                    Debug.Log("last point" + lastPointLeft);
-                    if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.07f){
+                        Debug.Log("droit:" + rightCoordinates.Count);
+                        
                         leftCoordinates.Add(trackedLeftHand.position);
                         lastPointLeft = trackedLeftHand.position;
-                        Debug.Log(leftCoordinates.Count);}
-                } else  {
+                        Debug.Log("gauche :" + leftCoordinates.Count);}
+                
+                } else {
                     calib_left_side = true;
-                    start_calib_keyboard = false;}
+                    calib_right_side = true;
+                    start_calib_keyboard = false;
+                }
             }
             
-        }
+    
 
 
         public void UpperBodyFeatures()
@@ -192,6 +234,20 @@ namespace TeleopReachy
 
         public bool IsCalibrated (){
             return calibration_done;
+        }
+
+        public void ExportCoordinatesToCSV(string filePath)
+        {
+            string csvContent = "Side,X,Y,Z\n";
+            foreach (Vector3 point in leftCoordinates)
+                csvContent += "Left," + point.x + "," + point.y + "," + point.z + "\n";
+
+            foreach (Vector3 point in rightCoordinates)
+                csvContent += "Right," + point.x + "," + point.y + "," + point.z + "\n";
+
+            File.WriteAllText(filePath, csvContent);
+
+            Debug.Log("Coordonnées exportées dans fichier CSV : " + filePath);
         }
 
     }
