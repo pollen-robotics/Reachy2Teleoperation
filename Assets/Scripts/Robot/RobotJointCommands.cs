@@ -37,7 +37,7 @@ namespace TeleopReachy
             robotStatus.event_OnSuspendTeleoperation.AddListener(SuspendTeleoperation);
             robotStatus.event_OnResumeTeleoperation.AddListener(ResumeTeleoperation);
 
-            robotStatus.event_OnStartTeleoperation.AddListener(StartTeleoperation);
+            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTeleoperation);
             robotStatus.event_OnStopTeleoperation.AddListener(StopTeleoperation);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -59,8 +59,12 @@ namespace TeleopReachy
                             0, 0, 0, 1 }
             };
 
-            lArmZeroPose.GoalPose = lArmZeroTarget;
-            rArmZeroPose.GoalPose = rArmZeroTarget;
+            lArmZeroPose = new ArmCartesianGoal {
+                GoalPose = lArmZeroTarget
+            };
+            rArmZeroPose = new ArmCartesianGoal {
+                GoalPose = rArmZeroTarget
+            };
         }
 
         void OnDestroy()
@@ -236,7 +240,7 @@ namespace TeleopReachy
 
         private void StartTeleoperation()
         {
-            Debug.Log("[RobotJointCommands]: StartTeleoperation");
+            Debug.Log("[RobotJointCommands]: StartArmTeleoperation");
             waitToSetRobotFullSpeed = StartCoroutine(ResetReachyMotorsFullSpeed());
         }
 
@@ -274,6 +278,7 @@ namespace TeleopReachy
 
         private void ResetMotorsStartingSpeed()
         {
+            Debug.Log("[RobotJointCommands] ResetMotorsStartingSpeed");
             robotStatus.SetMotorsSpeedLimited(true);
             uint speedLimit = 10;
             ModifyArmSpeedLimit(speedLimit);
@@ -302,21 +307,20 @@ namespace TeleopReachy
             uint torqueLimitLow = 50;
             uint torqueLimitHigh = 100;
 
-            ModifyHeadSpeedLimit(50);
+            ModifyHeadSpeedLimit(10);
             ModifyArmTorqueLimit(torqueLimitLow);
 
             SetHeadLookingStraight();
             SendArmsToZeroPose();
 
-            yield return new WaitForSeconds(duration / 3);
-
-            ModifyArmTorqueLimit(torqueLimitLow / 2);
-
-            yield return new WaitForSeconds(duration / 3);
-
-            ModifyArmTorqueLimit(torqueLimitLow / 4);
-
-            yield return new WaitForSeconds(duration / 3);
+            int countingTime = 0;
+            while (countingTime <= duration)
+            {
+                yield return new WaitForSeconds(1);
+                torqueLimitLow -= 10;
+                ModifyArmTorqueLimit(torqueLimitLow);
+                countingTime += 1;
+            }
 
             SetRobotCompliant("head");
             SetRobotCompliant("l_arm");
