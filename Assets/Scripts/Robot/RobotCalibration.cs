@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,11 +19,12 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
-        private float intervalTime=1/100 ; //fréquence de 100Hz
+        private float intervalTime=0.1f ; //fréquence de 10Hz
         private float actualTime=0f;
         private Transform newUserCenter;
-        private bool calib_right_side = false;
-        private bool calib_left_side = false;
+        // private bool calib_right_side = false;
+        // private bool calib_left_side = false;
+        private bool capture_done = false;
         private bool calibration_done = false;
         private ControllersManager controllers;
         private bool start_calib_keyboard = false;
@@ -84,7 +86,7 @@ namespace TeleopReachy
             if (buttonX)
                 start_calib_keyboard = true;
 
-            if (!start_calib_keyboard && !calibration_done)
+            if (!start_calib_keyboard && !capture_done)
             {
                 Debug.Log("calib : press X");
                 event_WaitForCalib.Invoke();
@@ -104,7 +106,7 @@ namespace TeleopReachy
             //     CapturePoints("left");
             //     actualTime += Time.deltaTime;}
 
-            else if (!calibration_done && start_calib_keyboard)
+            else if (!capture_done && start_calib_keyboard)
             {
                 Debug.Log("calib simultanée");
                 event_StartLeftCalib.Invoke();
@@ -114,14 +116,14 @@ namespace TeleopReachy
 
             }
 
-            else if (calib_left_side && !calibration_done) 
+            else if (capture_done && !calibration_done) 
             {
                 Debug.Log("calcul de calib");
                 UpperBodyFeatures();
                 TransitionRoomManager.Instance.FixNewPosition();
                 // ajout du game object au centre de l'utilisateur 
                 newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;
-                ExportCoordinatesToCSV("C:/Users/User/Documents"); // à modifier
+                ExportCoordinatesToCSV(); 
                 calibration_done = true;
                 event_OnCalibChanged.Invoke();
                 Debug.Log("calib finie");
@@ -162,23 +164,28 @@ namespace TeleopReachy
 
         private void CapturePoints () // version simultanée 
         {
-                if (rightCoordinates.Count < 200 || leftCoordinates.Count < 200){
-                    if (actualTime % intervalTime == 0)
-                    {
-                        rightCoordinates.Add(trackedRightHand.position);
-                        lastPointRight = trackedRightHand.position;
-                        Debug.Log("droit:" + rightCoordinates.Count);
-                        
-                        leftCoordinates.Add(trackedLeftHand.position);
-                        lastPointLeft = trackedLeftHand.position;
-                        Debug.Log("gauche :" + leftCoordinates.Count);}
-                
-                } else {
-                    calib_left_side = true;
-                    calib_right_side = true;
-                    start_calib_keyboard = false;
+            Debug.Log("droit:" + rightCoordinates.Count + "gauche :" + leftCoordinates.Count);
+            if (rightCoordinates.Count < 200 || leftCoordinates.Count < 200){
+                //if (actualTime >= intervalTime)
+                if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.05f)
+                {
+                    leftCoordinates.Add(trackedLeftHand.position);
+                    lastPointLeft = trackedLeftHand.position;
                 }
-            }
+                if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.05f)
+                {
+                    rightCoordinates.Add(trackedRightHand.position);
+                    lastPointRight = trackedRightHand.position;
+                }
+                    //actualTime = 0f;}
+
+                else {
+                    Debug.Log("actual time :" + actualTime);
+                }
+            
+            } else 
+                capture_done = true;
+        }
             
     
 
@@ -221,6 +228,7 @@ namespace TeleopReachy
 
             var aMatrix = Matrix<double>.Build.DenseOfArray(A);
 		    var fMatrix = Matrix<double>.Build.DenseOfArray(f);
+            Debug.Log("A = " + aMatrix + "f= " + fMatrix);
             var rotCenter = MultipleRegression.NormalEquations(aMatrix, fMatrix);
             Debug.Log("rotCenter = " + rotCenter);
 
@@ -236,18 +244,28 @@ namespace TeleopReachy
             return calibration_done;
         }
 
-        public void ExportCoordinatesToCSV(string filePath)
+        public void ExportCoordinatesToCSV()
         {
-            string csvContent = "Side,X,Y,Z\n";
-            foreach (Vector3 point in leftCoordinates)
-                csvContent += "Left," + point.x + "," + point.y + "," + point.z + "\n";
+            
+            string dateTimeString = DateTime.Now.ToString("ddMM_HHmm");
+            string fileName = "DataCalib_" + dateTimeString + ".csv";
 
-            foreach (Vector3 point in rightCoordinates)
-                csvContent += "Right," + point.x + "," + point.y + "," + point.z + "\n";
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev", fileName)))
+            {
+                string csvContent = "Side,X,Y,Z\n";
+                foreach (Vector3 point in leftCoordinates)
+                    csvContent += "Left," + point.z + "," + -point.x + "," + point.y + "\n";
 
-            File.WriteAllText(filePath, csvContent);
+                foreach (Vector3 point in rightCoordinates)
+                    csvContent += "Right," + point.z + "," + -point.x + "," + point.y + "\n";
 
-            Debug.Log("Coordonnées exportées dans fichier CSV : " + filePath);
+                byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
+                fs.Write(csvBytes, 0, csvBytes.Length);
+
+                //File.WriteAllText(filePath, csvContent);
+            }
+
+            Debug.Log("Coordonnées exportées dans fichier CSV : " + fileName);
         }
 
     }
