@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
-using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace GstreamerWebRTC
@@ -93,6 +92,9 @@ namespace GstreamerWebRTC
 
         void Start()
         {
+#if PLATFORM_SWITCH && !UNITY_EDITOR
+        RegisterPlugin();
+#endif
             string ip_address = PlayerPrefs.GetString("robot_ip");
             //string ip_address = "10.0.1.36";
             // string ip_address="0.0.0.0";
@@ -103,13 +105,10 @@ namespace GstreamerWebRTC
 
             _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
 
-#if PLATFORM_SWITCH && !UNITY_EDITOR
-        RegisterPlugin();
-#endif
-
             CreateDevice();
             CreateRenderTexture(true, ref leftTextureNativePtr, "_LeftTex");
             CreateRenderTexture(false, ref rightTextureNativePtr, "_RightTex");
+
             _signalling.Connect();
         }
 
