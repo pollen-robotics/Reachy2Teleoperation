@@ -43,22 +43,28 @@ namespace Bridge {
             "YnJpZGdlLkFybUNvbW1hbmRIABIrCgxoYW5kX2NvbW1hbmQYAiABKAsyEy5i",
             "cmlkZ2UuSGFuZENvbW1hbmRIABIrCgxuZWNrX2NvbW1hbmQYAyABKAsyEy5i",
             "cmlkZ2UuTmVja0NvbW1hbmRIABI4ChNtb2JpbGVfYmFzZV9jb21tYW5kGAQg",
-            "ASgLMhkuYnJpZGdlLk1vYmlsZUJhc2VDb21tYW5kSABCCQoHY29tbWFuZCKY",
-            "AQoKQXJtQ29tbWFuZBI9ChJhcm1fY2FydGVzaWFuX2dvYWwYASABKAsyIS5y",
+            "ASgLMhkuYnJpZGdlLk1vYmlsZUJhc2VDb21tYW5kSABCCQoHY29tbWFuZCKM",
+            "AgoKQXJtQ29tbWFuZBI9ChJhcm1fY2FydGVzaWFuX2dvYWwYASABKAsyIS5y",
             "ZWFjaHkucGFydC5hcm0uQXJtQ2FydGVzaWFuR29hbBIkCgd0dXJuX29uGAIg",
             "ASgLMhMucmVhY2h5LnBhcnQuUGFydElkEiUKCHR1cm5fb2ZmGAMgASgLMhMu",
-            "cmVhY2h5LnBhcnQuUGFydElkIpQBCgtIYW5kQ29tbWFuZBI4CgloYW5kX2dv",
-            "YWwYASABKAsyJS5yZWFjaHkucGFydC5oYW5kLkhhbmRQb3NpdGlvblJlcXVl",
-            "c3QSJAoHdHVybl9vbhgCIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIlCgh0",
-            "dXJuX29mZhgDIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZCKOAQoLTmVja0Nv",
-            "bW1hbmQSMgoJbmVja19nb2FsGAEgASgLMh8ucmVhY2h5LnBhcnQuaGVhZC5O",
-            "ZWNrSm9pbnRHb2FsEiQKB3R1cm5fb24YAiABKAsyEy5yZWFjaHkucGFydC5Q",
-            "YXJ0SWQSJQoIdHVybl9vZmYYAyABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQi",
-            "mwEKEU1vYmlsZUJhc2VDb21tYW5kEkYKEHRhcmdldF9kaXJlY3Rpb24YASAB",
-            "KAsyLC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5UYXJnZXREaXJlY3Rpb25Db21t",
-            "YW5kEj4KEG1vYmlsZV9iYXNlX21vZGUYAiABKAsyJC5tb2JpbGUuYmFzZS51",
-            "dGlsaXR5Llp1dXVNb2RlQ29tbWFuZCIzCgtBbnlDb21tYW5kcxIkCghjb21t",
-            "YW5kcxgBIAMoCzISLmJyaWRnZS5BbnlDb21tYW5kYgZwcm90bzM="));
+            "cmVhY2h5LnBhcnQuUGFydElkEjcKC3NwZWVkX2xpbWl0GAQgASgLMiIucmVh",
+            "Y2h5LnBhcnQuYXJtLlNwZWVkTGltaXRSZXF1ZXN0EjkKDHRvcnF1ZV9saW1p",
+            "dBgFIAEoCzIjLnJlYWNoeS5wYXJ0LmFybS5Ub3JxdWVMaW1pdFJlcXVlc3Qi",
+            "lAEKC0hhbmRDb21tYW5kEjgKCWhhbmRfZ29hbBgBIAEoCzIlLnJlYWNoeS5w",
+            "YXJ0LmhhbmQuSGFuZFBvc2l0aW9uUmVxdWVzdBIkCgd0dXJuX29uGAIgASgL",
+            "MhMucmVhY2h5LnBhcnQuUGFydElkEiUKCHR1cm5fb2ZmGAMgASgLMhMucmVh",
+            "Y2h5LnBhcnQuUGFydElkIoQCCgtOZWNrQ29tbWFuZBIyCgluZWNrX2dvYWwY",
+            "ASABKAsyHy5yZWFjaHkucGFydC5oZWFkLk5lY2tKb2ludEdvYWwSJAoHdHVy",
+            "bl9vbhgCIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIlCgh0dXJuX29mZhgD",
+            "IAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBI4CgtzcGVlZF9saW1pdBgEIAEo",
+            "CzIjLnJlYWNoeS5wYXJ0LmhlYWQuU3BlZWRMaW1pdFJlcXVlc3QSOgoMdG9y",
+            "cXVlX2xpbWl0GAUgASgLMiQucmVhY2h5LnBhcnQuaGVhZC5Ub3JxdWVMaW1p",
+            "dFJlcXVlc3QimwEKEU1vYmlsZUJhc2VDb21tYW5kEkYKEHRhcmdldF9kaXJl",
+            "Y3Rpb24YASABKAsyLC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5UYXJnZXREaXJl",
+            "Y3Rpb25Db21tYW5kEj4KEG1vYmlsZV9iYXNlX21vZGUYAiABKAsyJC5tb2Jp",
+            "bGUuYmFzZS51dGlsaXR5Llp1dXVNb2RlQ29tbWFuZCIzCgtBbnlDb21tYW5k",
+            "cxIkCghjb21tYW5kcxgBIAMoCzISLmJyaWRnZS5BbnlDb21tYW5kYgZwcm90",
+            "bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.ReachyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -69,9 +75,9 @@ namespace Bridge {
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ConnectionStatus), global::Bridge.ConnectionStatus.Parser, new[]{ "Connected", "StateChannel", "CommandChannel", "Reachy" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ServiceResponse), global::Bridge.ServiceResponse.Parser, new[]{ "ConnectionStatus", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.AnyCommand), global::Bridge.AnyCommand.Parser, new[]{ "ArmCommand", "HandCommand", "NeckCommand", "MobileBaseCommand" }, new[]{ "Command" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ArmCommand), global::Bridge.ArmCommand.Parser, new[]{ "ArmCartesianGoal", "TurnOn", "TurnOff" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ArmCommand), global::Bridge.ArmCommand.Parser, new[]{ "ArmCartesianGoal", "TurnOn", "TurnOff", "SpeedLimit", "TorqueLimit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.HandCommand), global::Bridge.HandCommand.Parser, new[]{ "HandGoal", "TurnOn", "TurnOff" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.NeckCommand), global::Bridge.NeckCommand.Parser, new[]{ "NeckGoal", "TurnOn", "TurnOff" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.NeckCommand), global::Bridge.NeckCommand.Parser, new[]{ "NeckGoal", "TurnOn", "TurnOff", "SpeedLimit", "TorqueLimit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.MobileBaseCommand), global::Bridge.MobileBaseCommand.Parser, new[]{ "TargetDirection", "MobileBaseMode" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.AnyCommands), global::Bridge.AnyCommands.Parser, new[]{ "Commands" }, null, null, null, null)
           }));
@@ -2025,6 +2031,8 @@ namespace Bridge {
       armCartesianGoal_ = other.armCartesianGoal_ != null ? other.armCartesianGoal_.Clone() : null;
       turnOn_ = other.turnOn_ != null ? other.turnOn_.Clone() : null;
       turnOff_ = other.turnOff_ != null ? other.turnOff_.Clone() : null;
+      speedLimit_ = other.speedLimit_ != null ? other.speedLimit_.Clone() : null;
+      torqueLimit_ = other.torqueLimit_ != null ? other.torqueLimit_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2070,6 +2078,30 @@ namespace Bridge {
       }
     }
 
+    /// <summary>Field number for the "speed_limit" field.</summary>
+    public const int SpeedLimitFieldNumber = 4;
+    private global::Reachy.Part.Arm.SpeedLimitRequest speedLimit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Arm.SpeedLimitRequest SpeedLimit {
+      get { return speedLimit_; }
+      set {
+        speedLimit_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "torque_limit" field.</summary>
+    public const int TorqueLimitFieldNumber = 5;
+    private global::Reachy.Part.Arm.TorqueLimitRequest torqueLimit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Arm.TorqueLimitRequest TorqueLimit {
+      get { return torqueLimit_; }
+      set {
+        torqueLimit_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -2088,6 +2120,8 @@ namespace Bridge {
       if (!object.Equals(ArmCartesianGoal, other.ArmCartesianGoal)) return false;
       if (!object.Equals(TurnOn, other.TurnOn)) return false;
       if (!object.Equals(TurnOff, other.TurnOff)) return false;
+      if (!object.Equals(SpeedLimit, other.SpeedLimit)) return false;
+      if (!object.Equals(TorqueLimit, other.TorqueLimit)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2098,6 +2132,8 @@ namespace Bridge {
       if (armCartesianGoal_ != null) hash ^= ArmCartesianGoal.GetHashCode();
       if (turnOn_ != null) hash ^= TurnOn.GetHashCode();
       if (turnOff_ != null) hash ^= TurnOff.GetHashCode();
+      if (speedLimit_ != null) hash ^= SpeedLimit.GetHashCode();
+      if (torqueLimit_ != null) hash ^= TorqueLimit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2128,6 +2164,14 @@ namespace Bridge {
         output.WriteRawTag(26);
         output.WriteMessage(TurnOff);
       }
+      if (speedLimit_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(TorqueLimit);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2150,6 +2194,14 @@ namespace Bridge {
         output.WriteRawTag(26);
         output.WriteMessage(TurnOff);
       }
+      if (speedLimit_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(TorqueLimit);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2168,6 +2220,12 @@ namespace Bridge {
       }
       if (turnOff_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(TurnOff);
+      }
+      if (speedLimit_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(TorqueLimit);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2198,6 +2256,18 @@ namespace Bridge {
           TurnOff = new global::Reachy.Part.PartId();
         }
         TurnOff.MergeFrom(other.TurnOff);
+      }
+      if (other.speedLimit_ != null) {
+        if (speedLimit_ == null) {
+          SpeedLimit = new global::Reachy.Part.Arm.SpeedLimitRequest();
+        }
+        SpeedLimit.MergeFrom(other.SpeedLimit);
+      }
+      if (other.torqueLimit_ != null) {
+        if (torqueLimit_ == null) {
+          TorqueLimit = new global::Reachy.Part.Arm.TorqueLimitRequest();
+        }
+        TorqueLimit.MergeFrom(other.TorqueLimit);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2235,6 +2305,20 @@ namespace Bridge {
             input.ReadMessage(TurnOff);
             break;
           }
+          case 34: {
+            if (speedLimit_ == null) {
+              SpeedLimit = new global::Reachy.Part.Arm.SpeedLimitRequest();
+            }
+            input.ReadMessage(SpeedLimit);
+            break;
+          }
+          case 42: {
+            if (torqueLimit_ == null) {
+              TorqueLimit = new global::Reachy.Part.Arm.TorqueLimitRequest();
+            }
+            input.ReadMessage(TorqueLimit);
+            break;
+          }
         }
       }
     #endif
@@ -2269,6 +2353,20 @@ namespace Bridge {
               TurnOff = new global::Reachy.Part.PartId();
             }
             input.ReadMessage(TurnOff);
+            break;
+          }
+          case 34: {
+            if (speedLimit_ == null) {
+              SpeedLimit = new global::Reachy.Part.Arm.SpeedLimitRequest();
+            }
+            input.ReadMessage(SpeedLimit);
+            break;
+          }
+          case 42: {
+            if (torqueLimit_ == null) {
+              TorqueLimit = new global::Reachy.Part.Arm.TorqueLimitRequest();
+            }
+            input.ReadMessage(TorqueLimit);
             break;
           }
         }
@@ -2605,6 +2703,8 @@ namespace Bridge {
       neckGoal_ = other.neckGoal_ != null ? other.neckGoal_.Clone() : null;
       turnOn_ = other.turnOn_ != null ? other.turnOn_.Clone() : null;
       turnOff_ = other.turnOff_ != null ? other.turnOff_.Clone() : null;
+      speedLimit_ = other.speedLimit_ != null ? other.speedLimit_.Clone() : null;
+      torqueLimit_ = other.torqueLimit_ != null ? other.torqueLimit_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2650,6 +2750,30 @@ namespace Bridge {
       }
     }
 
+    /// <summary>Field number for the "speed_limit" field.</summary>
+    public const int SpeedLimitFieldNumber = 4;
+    private global::Reachy.Part.Head.SpeedLimitRequest speedLimit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Head.SpeedLimitRequest SpeedLimit {
+      get { return speedLimit_; }
+      set {
+        speedLimit_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "torque_limit" field.</summary>
+    public const int TorqueLimitFieldNumber = 5;
+    private global::Reachy.Part.Head.TorqueLimitRequest torqueLimit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Head.TorqueLimitRequest TorqueLimit {
+      get { return torqueLimit_; }
+      set {
+        torqueLimit_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -2668,6 +2792,8 @@ namespace Bridge {
       if (!object.Equals(NeckGoal, other.NeckGoal)) return false;
       if (!object.Equals(TurnOn, other.TurnOn)) return false;
       if (!object.Equals(TurnOff, other.TurnOff)) return false;
+      if (!object.Equals(SpeedLimit, other.SpeedLimit)) return false;
+      if (!object.Equals(TorqueLimit, other.TorqueLimit)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2678,6 +2804,8 @@ namespace Bridge {
       if (neckGoal_ != null) hash ^= NeckGoal.GetHashCode();
       if (turnOn_ != null) hash ^= TurnOn.GetHashCode();
       if (turnOff_ != null) hash ^= TurnOff.GetHashCode();
+      if (speedLimit_ != null) hash ^= SpeedLimit.GetHashCode();
+      if (torqueLimit_ != null) hash ^= TorqueLimit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2708,6 +2836,14 @@ namespace Bridge {
         output.WriteRawTag(26);
         output.WriteMessage(TurnOff);
       }
+      if (speedLimit_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(TorqueLimit);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2730,6 +2866,14 @@ namespace Bridge {
         output.WriteRawTag(26);
         output.WriteMessage(TurnOff);
       }
+      if (speedLimit_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(TorqueLimit);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2748,6 +2892,12 @@ namespace Bridge {
       }
       if (turnOff_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(TurnOff);
+      }
+      if (speedLimit_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SpeedLimit);
+      }
+      if (torqueLimit_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(TorqueLimit);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2778,6 +2928,18 @@ namespace Bridge {
           TurnOff = new global::Reachy.Part.PartId();
         }
         TurnOff.MergeFrom(other.TurnOff);
+      }
+      if (other.speedLimit_ != null) {
+        if (speedLimit_ == null) {
+          SpeedLimit = new global::Reachy.Part.Head.SpeedLimitRequest();
+        }
+        SpeedLimit.MergeFrom(other.SpeedLimit);
+      }
+      if (other.torqueLimit_ != null) {
+        if (torqueLimit_ == null) {
+          TorqueLimit = new global::Reachy.Part.Head.TorqueLimitRequest();
+        }
+        TorqueLimit.MergeFrom(other.TorqueLimit);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2815,6 +2977,20 @@ namespace Bridge {
             input.ReadMessage(TurnOff);
             break;
           }
+          case 34: {
+            if (speedLimit_ == null) {
+              SpeedLimit = new global::Reachy.Part.Head.SpeedLimitRequest();
+            }
+            input.ReadMessage(SpeedLimit);
+            break;
+          }
+          case 42: {
+            if (torqueLimit_ == null) {
+              TorqueLimit = new global::Reachy.Part.Head.TorqueLimitRequest();
+            }
+            input.ReadMessage(TorqueLimit);
+            break;
+          }
         }
       }
     #endif
@@ -2849,6 +3025,20 @@ namespace Bridge {
               TurnOff = new global::Reachy.Part.PartId();
             }
             input.ReadMessage(TurnOff);
+            break;
+          }
+          case 34: {
+            if (speedLimit_ == null) {
+              SpeedLimit = new global::Reachy.Part.Head.SpeedLimitRequest();
+            }
+            input.ReadMessage(SpeedLimit);
+            break;
+          }
+          case 42: {
+            if (torqueLimit_ == null) {
+              TorqueLimit = new global::Reachy.Part.Head.TorqueLimitRequest();
+            }
+            input.ReadMessage(TorqueLimit);
             break;
           }
         }
