@@ -205,7 +205,7 @@ namespace TeleopReachy
                 }
                 else
                 {
-                    isRobotReady = true;
+                    isRobotReady = false;
                     event_OnRobotUnready.Invoke();
                 }
                 if (!isRobotInDataRoom)
