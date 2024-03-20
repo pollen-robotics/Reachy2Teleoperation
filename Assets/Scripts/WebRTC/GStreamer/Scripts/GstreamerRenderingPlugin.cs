@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
@@ -41,7 +40,7 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern System.IntPtr GetTexturePtr(bool left);
+        private static extern IntPtr GetTexturePtr(bool left);
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -55,7 +54,7 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern void ReleaseTexture(System.IntPtr texture);
+        private static extern void ReleaseTexture(IntPtr texture);
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -69,15 +68,16 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern System.IntPtr GetTextureUpdateCallback();
+        private static extern IntPtr GetTextureUpdateCallback();
 
         private IntPtr leftTextureNativePtr;
+        private Texture leftTexture;
 
         public Renderer screen;
 
         private IntPtr rightTextureNativePtr;
+        private Texture rightTexture;
 
-        public UnityEvent<Texture> event_OnVideoTextureReceived;
         public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
 
@@ -96,9 +96,6 @@ namespace GstreamerWebRTC
         RegisterPlugin();
 #endif
             string ip_address = PlayerPrefs.GetString("robot_ip");
-            //string ip_address = "10.0.1.36";
-            // string ip_address="0.0.0.0";
-            //string ip_address = "192.168.1.108";
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
             _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
@@ -106,22 +103,21 @@ namespace GstreamerWebRTC
             _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
 
             CreateDevice();
-            CreateRenderTexture(true, ref leftTextureNativePtr, "_LeftTex");
-            CreateRenderTexture(false, ref rightTextureNativePtr, "_RightTex");
+            CreateRenderTexture(true, ref leftTextureNativePtr, "_LeftTex", ref leftTexture);
+            CreateRenderTexture(false, ref rightTextureNativePtr, "_RightTex", ref rightTexture);
 
             _signalling.Connect();
         }
 
-        void CreateRenderTexture(bool left, ref IntPtr textureNativePtr, string texturename)
+        void CreateRenderTexture(bool left, ref IntPtr textureNativePtr, string texturename, ref Texture texture)
         {
             CreateTexture(width, height, left);
             textureNativePtr = GetTexturePtr(left);
 
             if (textureNativePtr != IntPtr.Zero)
             {
-                var texture = Texture2D.CreateExternalTexture((int)width, (int)height, TextureFormat.RGBA32, mipChain: false, linear: true, textureNativePtr);
+                texture = Texture2D.CreateExternalTexture((int)width, (int)height, TextureFormat.RGBA32, mipChain: false, linear: true, textureNativePtr);
                 screen.material.SetTexture(texturename, texture);
-                event_OnVideoTextureReceived.Invoke(texture);
             }
             else
             {
@@ -159,6 +155,16 @@ namespace GstreamerWebRTC
             CommandBuffer _command = new CommandBuffer();
             _command.IssuePluginEvent(GetRenderEventFunc(), 1);
             Graphics.ExecuteCommandBuffer(_command);
+        }
+
+        public Texture GetLeftTexture()
+        {
+            return leftTexture;
+        }
+
+        public Texture GetRightTexture()
+        {
+            return rightTexture;
         }
 
     }
