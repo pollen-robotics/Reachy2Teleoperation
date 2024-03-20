@@ -69,4 +69,4 @@ You are now controlling Reachy! Press and hold A to return to the previous step.
 ## Issues / Contributions
 
 If you have any problem, you can create an issue or chat with us on our [discord server](https://discord.com/channels/519098054377340948/991321051835404409). 
-Finally, anyone is welcome to contribute to this project. Feel free to checkout the **develop** branch and to pull request any modifications.
+

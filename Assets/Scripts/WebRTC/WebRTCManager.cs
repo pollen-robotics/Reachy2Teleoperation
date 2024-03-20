@@ -15,7 +15,6 @@ namespace TeleopReachy
         {
             ConnectionStatus = GetComponent<ConnectionStatus>();
             webRTCDataController = GetComponent<WebRTCData>();
-            //webRTCVideoController = GetComponent<WebRTCAVReceiver>();
             webRTCVideoController = GetComponent<GstreamerUnityGStreamerPlugin>();
             webRTCAudioSender = GetComponent<WebRTCAudioSender>();
         }
