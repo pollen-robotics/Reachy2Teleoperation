@@ -27,8 +27,8 @@ namespace TeleopReachy
         private Vector3 lerpStartingScale;
         private Vector3 lerpGoalScale;
 
-        private Vector3 fullScreenScale = new Vector3(55111, 31000, 1);
-        private Vector3 smallerScreenScale = new Vector3(27550, 15500, 1);
+        private Vector3 fullScreenScale = new Vector3(41333, 31000, 1);
+        private Vector3 smallerScreenScale = new Vector3(20666, 15500, 1);
 
         Coroutine blackScreenAppears;
         public GameObject blackScreen;
@@ -41,13 +41,15 @@ namespace TeleopReachy
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
                 Debug.Log("Oculus 2 detected");
-                transform.position = new Vector3(-159.0f, -595.0f, 18473.0f);
+                transform.localPosition = new Vector3(0f, -595.0f, 18473.0f);
             }
             else
             {
                 Debug.Log("Oculus 3 or other detected");
+                transform.localPosition = new Vector3(0f, -3266f, 15093f);
             }
             motionSicknessManager = MotionSicknessManager.Instance;
+            motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ResizeView);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
         }
 
@@ -92,6 +94,15 @@ namespace TeleopReachy
             
         }
 
+        void ResizeView(bool activate)
+        {
+            if (!activate)
+            {
+                lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
+            }
+        }
+
         void SetImageFullScreen()
         {
             if (motionSicknessManager.IsReducedScreenOn)
@@ -105,6 +116,5 @@ namespace TeleopReachy
                 }
             }
         }
-
     }
 }
