@@ -976,7 +976,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 802029489}
-  - {fileID: 895005339}
   m_Father: {fileID: 1876506746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1012,11 +1011,6 @@ MonoBehaviour:
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
   navigationEffectInfoPanel: {fileID: 802029489}
-  navigationEffectIconPanel: {fileID: 895005339}
-  tunnellingIcon: {fileID: 2800000, guid: 188240fd918f4cc40af1bc0d9c8de245, type: 3}
-  reducedScreenIcon: {fileID: 2800000, guid: c1768e2640149634bb6e8eebd70fc1b9, type: 3}
-  requestedIcon: {fileID: 2800000, guid: ad4f0922027eac74a9ba82f931e75027, type: 3}
-  notRequestedIcon: {fileID: 2800000, guid: 7238c8a11d8977a4ba17b48398f9bcb1, type: 3}
 --- !u!1 &214522221
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,7 +2721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53.2, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &803308013
@@ -3233,6 +3227,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllers: {fileID: 0}
+--- !u!1 &863093989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 863093990}
+  - component: {fileID: 863093991}
+  m_Layer: 0
+  m_Name: NavigationEffectIcon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &863093990
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863093989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -50}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 895005339}
+  m_Father: {fileID: 1876506746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -98.9, y: -274.1}
+  m_SizeDelta: {x: 370, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &863093991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863093989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e86b5a99d7faf24fae9b6d60b615e94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navigationEffectIconPanel: {fileID: 895005339}
+  tunnellingIcon: {fileID: 2800000, guid: 188240fd918f4cc40af1bc0d9c8de245, type: 3}
+  reducedScreenIcon: {fileID: 2800000, guid: c1768e2640149634bb6e8eebd70fc1b9, type: 3}
+  requestedIcon: {fileID: 2800000, guid: ad4f0922027eac74a9ba82f931e75027, type: 3}
+  notRequestedIcon: {fileID: 2800000, guid: 7238c8a11d8977a4ba17b48398f9bcb1, type: 3}
 --- !u!1 &895005338
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,7 +3304,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895005338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3264,11 +3312,11 @@ RectTransform:
   - {fileID: 1143310598}
   - {fileID: 1420681871}
   - {fileID: 450957794}
-  m_Father: {fileID: 213409791}
+  m_Father: {fileID: 863093990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 0}
+  m_AnchoredPosition: {x: 16.00003, y: 0.000030517578}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &924632576
@@ -6723,6 +6771,7 @@ RectTransform:
   - {fileID: 1865267273}
   - {fileID: 1501744152}
   - {fileID: 213409791}
+  - {fileID: 863093990}
   - {fileID: 1244735972}
   - {fileID: 1383062756}
   - {fileID: 1365689280}
