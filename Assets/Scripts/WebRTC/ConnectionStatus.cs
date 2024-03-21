@@ -109,6 +109,13 @@ namespace TeleopReachy
             return isRobotReady;
         }
 
+        public bool IsServerConnected()
+        {
+            //return isServerConnected;
+            //Todo
+            return true;
+        }
+
         public bool AreRobotServicesRestarting()
         {
             return areRobotServicesRestarting;
