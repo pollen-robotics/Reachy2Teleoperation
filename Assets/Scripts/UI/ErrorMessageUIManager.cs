@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
@@ -50,11 +48,12 @@ namespace TeleopReachy
             {
                 targetOffset = new Vector3(0, -0.27f, 0.8f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.27f, 0.7f);
             }
             maxDistanceAllowed = 0;
-            
+
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
             robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);
@@ -70,10 +69,10 @@ namespace TeleopReachy
 
             HideWarningMessage();
         }
-        
+
         void Update()
         {
-            if(needBatteryUpdate)
+            if (needBatteryUpdate)
             {
                 if (batteryErrorPanelDisplay != null) StopCoroutine(batteryErrorPanelDisplay);
                 batteryErrorPanel.ActivateChildren(true);
@@ -84,7 +83,7 @@ namespace TeleopReachy
                 needBatteryUpdate = false;
             }
 
-            if(needPingUpdate)
+            if (needPingUpdate)
             {
                 if (pingErrorPanelDisplay != null) StopCoroutine(pingErrorPanelDisplay);
                 pingErrorPanel.ActivateChildren(true);
@@ -94,25 +93,25 @@ namespace TeleopReachy
                 needPingUpdate = false;
             }
 
-            if(needMotorsUpdate)
+            if (needMotorsUpdate)
             {
                 if (motorsWarningValue != null && wasWarningTemperature) StopCoroutine(motorsWarningValue);
                 if (motorsErrorValue != null && wasErrorTemperature) StopCoroutine(motorsErrorValue);
                 if (motorsErrorPanelDisplay != null) StopCoroutine(motorsErrorPanelDisplay);
                 motorsErrorPanel.ActivateChildren(true);
-                if(wasWarningTemperature)
+                if (wasWarningTemperature)
                 {
                     string warningText = nbMotorsWarning > 1 ? nbMotorsWarning + " Motors are heating up" : "1 Motor is heating up";
                     motorsErrorPanel.GetChild(1).GetComponent<Text>().text = warningText;
                 }
-                if(wasErrorTemperature)
+                if (wasErrorTemperature)
                 {
                     string errorText = nbMotorsError > 1 ? nbMotorsError + " Motors in critical error" : "1 Motor in critical error";
                     motorsErrorPanel.GetChild(3).GetComponent<Text>().text = errorText;
                     motorsErrorPanel.GetChild(0).GetComponent<Image>().color = ColorsManager.error_red;
                 }
-                if(wasWarningTemperature) motorsWarningValue = StartCoroutine(ReinitializeMotorsWarningValue(3));
-                if(wasErrorTemperature) motorsErrorValue = StartCoroutine(ReinitializeMotorsErrorValue(3));
+                if (wasWarningTemperature) motorsWarningValue = StartCoroutine(ReinitializeMotorsWarningValue(3));
+                if (wasErrorTemperature) motorsErrorValue = StartCoroutine(ReinitializeMotorsErrorValue(3));
                 motorsErrorPanelDisplay = StartCoroutine(HidePanelAfterSeconds(3, motorsErrorPanel));
 
                 wasWarningTemperature = false;
@@ -131,7 +130,7 @@ namespace TeleopReachy
         {
             if (robotStatus.IsRobotTeleoperationActive())
             {
-                if(motors.Count > nbMotorsWarning)
+                if (motors.Count > nbMotorsWarning)
                 {
                     nbMotorsWarning = motors.Count;
                     wasWarningTemperature = true;
@@ -186,7 +185,7 @@ namespace TeleopReachy
 
         void WarningLowBattery(float batteryLevel)
         {
-            if(previousBatteryLevel == 0 || (previousBatteryLevel - batteryLevel > 0.2f))
+            if (previousBatteryLevel == 0 || (previousBatteryLevel - batteryLevel > 0.2f))
             {
                 SetErrorBatteryMessage("Low battery", ColorsManager.error_black);
                 previousBatteryLevel = batteryLevel;

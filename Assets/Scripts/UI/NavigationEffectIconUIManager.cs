@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.UI;
+
 
 namespace TeleopReachy
 {
@@ -29,7 +25,7 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private MotionSicknessManager motionSicknessManager;
 
-        private bool needNavigationEffectUpdate;
+        //private bool needNavigationEffectUpdate;
         private bool needIconRequestedUpdate;
 
         private Texture displayedNavigationEffect;
@@ -44,27 +40,28 @@ namespace TeleopReachy
             {
                 transform.localPosition = new Vector3(-100, -140, -500);
             }
-            else {
+            else
+            {
                 transform.localPosition = new Vector3(-120, -210, -650);
             }
 
             motionSicknessManager = MotionSicknessManager.Instance;
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ShowInfoMessage);
-            
+
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(ShowIcon);
             robotStatus.event_OnStopTeleoperation.AddListener(HideIcon);
 
             HideIcon();
         }
-        
+
         void Update()
         {
-            if(needIconRequestedUpdate)
+            if (needIconRequestedUpdate)
             {
                 navigationEffectIconPanel.GetChild(1).GetComponent<RawImage>().texture = displayedNavigationEffect;
                 navigationEffectIconPanel.GetChild(2).GetComponent<RawImage>().texture = displayedNavigationRequest;
-                if(motionSicknessManager.IsNavigationEffectOnDemand)
+                if (motionSicknessManager.IsNavigationEffectOnDemand)
                 {
                     navigationEffectIconPanel.ActivateChildren(true);
                 }
@@ -76,20 +73,20 @@ namespace TeleopReachy
         {
             if (robotStatus.IsRobotTeleoperationActive())
             {
-                if(motionSicknessManager.IsTunnellingOn) 
+                if (motionSicknessManager.IsTunnellingOn)
                 {
-                    if(motionSicknessManager.RequestNavigationEffect)
+                    if (motionSicknessManager.RequestNavigationEffect)
                     {
                         displayedNavigationRequest = requestedIcon;
                     }
-                    else 
+                    else
                     {
                         displayedNavigationRequest = notRequestedIcon;
                     }
                 }
-                else if(motionSicknessManager.IsReducedScreenOn) 
+                else if (motionSicknessManager.IsReducedScreenOn)
                 {
-                    if(motionSicknessManager.RequestNavigationEffect)
+                    if (motionSicknessManager.RequestNavigationEffect)
                     {
                         displayedNavigationRequest = requestedIcon;
                     }
@@ -104,7 +101,7 @@ namespace TeleopReachy
 
         void ShowIcon()
         {
-            if(motionSicknessManager.IsTunnellingOn)
+            if (motionSicknessManager.IsTunnellingOn)
             {
                 displayedNavigationEffect = tunnellingIcon;
             }
@@ -113,11 +110,11 @@ namespace TeleopReachy
                 displayedNavigationEffect = reducedScreenIcon;
             }
 
-            if(motionSicknessManager.RequestNavigationEffect)
+            if (motionSicknessManager.RequestNavigationEffect)
             {
                 displayedNavigationRequest = requestedIcon;
             }
-            else 
+            else
             {
                 displayedNavigationRequest = notRequestedIcon;
             }

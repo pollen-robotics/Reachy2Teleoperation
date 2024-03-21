@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,8 +33,8 @@ namespace TeleopReachy
         void SwitchButtonMode()
         {
             robotStatus.SetRightArmOn(!robotStatus.IsRightArmOn());
-            
-            if(robotStatus.IsRightArmOn())
+
+            if (robotStatus.IsRightArmOn())
             {
                 rightArmButton.colors = ColorsManager.colorsActivated;
                 rightArmButton.transform.GetChild(0).GetComponent<Text>().text = "Right arm ON";
@@ -51,7 +48,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 rightArmButton.interactable = isInteractable;
                 rightArmButton.colors = buttonColor;
@@ -62,10 +59,10 @@ namespace TeleopReachy
 
         void CheckRightArmPresence()
         {
-            if(robotConfig.HasRightArm())
+            if (robotConfig.HasRightArm())
             {
                 isInteractable = true;
-                if(robotStatus.IsRightArmOn())
+                if (robotStatus.IsRightArmOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
                     buttonText = "Right arm ON";

@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,7 +34,7 @@ namespace TeleopReachy
 
         private void Update()
         {
-            if(needUpdateConfig)
+            if (needUpdateConfig)
             {
                 transform.GetChild(0).GetComponent<Text>().color = rightArmConfigColor;
                 transform.GetChild(0).GetComponent<Text>().text = rightArmConfigText;
@@ -122,7 +117,7 @@ namespace TeleopReachy
 
         private void ConfigChanged()
         {
-            if(robotConfig.GotReachyConfig())
+            if (robotConfig.GotReachyConfig())
             {
                 CheckConfig();
             }

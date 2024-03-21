@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,8 +33,8 @@ namespace TeleopReachy
         void SwitchButtonMode()
         {
             robotStatus.SetHeadOn(!robotStatus.IsHeadOn());
-            
-            if(robotStatus.IsHeadOn())
+
+            if (robotStatus.IsHeadOn())
             {
                 headButton.colors = ColorsManager.colorsActivated;
                 headButton.transform.GetChild(0).GetComponent<Text>().text = "Head ON";
@@ -51,7 +48,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 headButton.interactable = isInteractable;
                 headButton.colors = buttonColor;
@@ -62,10 +59,10 @@ namespace TeleopReachy
 
         void CheckHeadPresence()
         {
-            if(robotConfig.HasHead())
+            if (robotConfig.HasHead())
             {
                 isInteractable = true;
-                if(robotStatus.IsHeadOn())
+                if (robotStatus.IsHeadOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
                     buttonText = "Head ON";
