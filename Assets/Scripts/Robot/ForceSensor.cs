@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ForceSensor : MonoBehaviour
 {
     public float currentForce;
-    private float gain = 10000;
+    private static readonly float gain = 10000;
 
     void OnCollisionEnter(Collision collision)
     {
