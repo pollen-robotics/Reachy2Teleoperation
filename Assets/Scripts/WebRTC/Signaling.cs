@@ -6,7 +6,8 @@ using NativeWebSocket;
 using System.Linq;
 using UnityEngine.Events;
 
-namespace TeleopReachy {
+namespace TeleopReachy
+{
     public enum WebRTCConnectionStatus
     {
         Waiting,
@@ -98,7 +99,7 @@ namespace TeleopReachy {
             webSocket.OnMessage += (bytes) =>
             {
                 var message = System.Text.Encoding.UTF8.GetString(bytes);
-                Debug.LogWarning(message);
+                Debug.Log(message);
                 if (message != null)
                 {
                     var msg = JsonUtility.FromJson<SignalingMessage>(message);
