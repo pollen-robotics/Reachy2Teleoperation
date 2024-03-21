@@ -21,7 +21,7 @@ namespace TeleopReachy
         private bool areRobotServicesRestarting;
 
         private GstreamerUnityGStreamerPlugin audioVideoController;
-        private WebRTCAudioSender microphoneController;
+        //private WebRTCAudioSender microphoneController;
         private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
@@ -39,7 +39,7 @@ namespace TeleopReachy
         {
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            microphoneController = WebRTCManager.Instance.webRTCAudioSender;
+            //microphoneController = WebRTCManager.Instance.webRTCAudioSender;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -65,9 +65,10 @@ namespace TeleopReachy
             {
                 audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+            //if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }

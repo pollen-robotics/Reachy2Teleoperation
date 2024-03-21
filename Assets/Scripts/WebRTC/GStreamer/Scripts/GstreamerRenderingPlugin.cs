@@ -80,6 +80,7 @@ namespace GstreamerWebRTC
 
         public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
+        public UnityEvent<bool> event_AudioSenderStatusHasChanged;
 
         private string _signallingServerURL;
         private Signalling _signalling;
@@ -132,10 +133,14 @@ namespace GstreamerWebRTC
             CreatePipeline(_signallingServerURL, remote_peer_id);
             event_OnVideoRoomStatusHasChanged.Invoke(true);
             event_OnAudioReceiverRoomStatusHasChanged.Invoke(true);
+            event_AudioSenderStatusHasChanged.Invoke(true);
         }
 
         void OnDisable()
         {
+            event_OnVideoRoomStatusHasChanged.Invoke(false);
+            event_OnAudioReceiverRoomStatusHasChanged.Invoke(false);
+            event_AudioSenderStatusHasChanged.Invoke(false);
             _signalling.Close();
             DestroyPipeline();
             if (leftTextureNativePtr != IntPtr.Zero)
