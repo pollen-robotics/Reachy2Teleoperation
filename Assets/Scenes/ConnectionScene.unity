@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: d7847f7a8498ff640aa5bd2e249dba05,
-    type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: d7847f7a8498ff640aa5bd2e249dba05, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -3022,8 +3021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanvaRobotSelection: {fileID: 509571141}
-  prefabRobotButton: {fileID: 999428515826380098, guid: 9b195be28168bc741829e95a97057258,
-    type: 3}
+  prefabRobotButton: {fileID: 999428515826380098, guid: 9b195be28168bc741829e95a97057258, type: 3}
   connectButton: {fileID: 1302906730}
   selectRobotButton: {fileID: 1475380335}
 --- !u!4 &1025611271
@@ -4924,8 +4922,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 217}
-  m_SizeDelta: {x: 250, y: 50}
+  m_AnchoredPosition: {x: 0, y: 207.4}
+  m_SizeDelta: {x: 250, y: 117}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1417966997
 MonoBehaviour:
@@ -4947,7 +4945,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 87dc748bfb065e94da6c1125b8ea320e, type: 3}
+  m_Texture: {fileID: 2800000, guid: 25949e88f47b20a4c9cbc0659cd184ab, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
