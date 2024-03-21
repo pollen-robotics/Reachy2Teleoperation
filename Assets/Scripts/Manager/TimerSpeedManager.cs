@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
@@ -20,7 +16,7 @@ namespace TeleopReachy
         // private ControllersManager controllers;
         void Start()
         {
-            
+
             // controllers = ActiveControllerManager.Instance.ControllersManager;
             // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             // {

@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Mobile.Base.Lidar;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
@@ -18,13 +12,13 @@ namespace TeleopReachy
 
         private ControllersManager controllers;
 
-        private bool needUpdateInfoMessage;
-        private bool wantInfoMessageDisplayed;
+        //private bool needUpdateInfoMessage;
+        //private bool wantInfoMessageDisplayed;
 
         [SerializeField]
         private Button backToTransitionRoomButton;
 
-        bool rightPrimaryButtonPressed = false;
+        //bool rightPrimaryButtonPressed = false;
         bool rightPrimaryButtonPreviouslyPressed = false;
 
         void Start()
@@ -41,7 +35,7 @@ namespace TeleopReachy
             bool rightPrimaryButtonPressed = false;
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
 
-            if(robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if ((!robotConfig.HasLeftArm() || !robotStatus.IsLeftArmOn()) && (!robotConfig.HasRightArm() || !robotStatus.IsRightArmOn()))
                 {
@@ -51,7 +45,7 @@ namespace TeleopReachy
                 {
                     robotStatus.StartArmTeleoperation();
                 }
-                
+
             }
 
             rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
