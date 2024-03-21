@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TeleopReachy
@@ -23,7 +21,7 @@ namespace TeleopReachy
         void Start()
         {
             EventManager.StartListening(EventNames.HeadsetRemoved, CallSuspensionWarning);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
             EventManager.StartListening(EventNames.BackToMirrorScene, ReinitValue);
 
             controllers = ControllersManager.Instance;
@@ -34,7 +32,7 @@ namespace TeleopReachy
             NoSuspensionWarning();
         }
 
-        void Init()
+        void Init_EmergencyStop()
         {
             userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
             userEmergencyStop.event_OnEmergencyStopCalled.AddListener(CallSuspensionWarning);
@@ -48,7 +46,7 @@ namespace TeleopReachy
         // Update is called once per frame
         void CallSuspensionWarning()
         {
-            if(robotStatus.IsRobotTeleoperationActive())
+            if (robotStatus.IsRobotTeleoperationActive())
             {
                 if (rightPrimaryButtonPressed) allowRightPrimaryButtonUse = false;
                 else allowRightPrimaryButtonUse = true;
