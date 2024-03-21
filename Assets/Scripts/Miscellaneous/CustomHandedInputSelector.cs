@@ -1,10 +1,6 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
-using System;
 
 namespace TeleopReachy
 {
