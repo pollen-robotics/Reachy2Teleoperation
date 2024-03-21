@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Reachy.Part.Hand;
@@ -45,24 +44,28 @@ namespace TeleopReachy
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
 
-            Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4 {
+            Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4
+            {
                 Data = { 0.966f, 0.198f, -0.166f, 0.048f,
                             -0.135f, 0.934f, 0.330f, -0.356f,
                             0.221f, -0.296f, 0.929f, -0.603f,
                             0, 0, 0, 1 }
             };
 
-            Reachy.Kinematics.Matrix4x4 lArmZeroTarget = new Reachy.Kinematics.Matrix4x4 {
+            Reachy.Kinematics.Matrix4x4 lArmZeroTarget = new Reachy.Kinematics.Matrix4x4
+            {
                 Data = { 0.981f, 0.029f, -0.189f, 0.048f,
                             -0.060f, 0.986f, -0.158f, 0.356f,
                             0.181f, 0.166f, 0.969f, -0.603f,
                             0, 0, 0, 1 }
             };
 
-            lArmZeroPose = new ArmCartesianGoal {
+            lArmZeroPose = new ArmCartesianGoal
+            {
                 GoalPose = lArmZeroTarget
             };
-            rArmZeroPose = new ArmCartesianGoal {
+            rArmZeroPose = new ArmCartesianGoal
+            {
                 GoalPose = rArmZeroTarget
             };
         }
@@ -155,7 +158,7 @@ namespace TeleopReachy
                 {
                     dataController.TurnArmOn(robotConfig.partsId["r_arm"]);
                 }
-                 if (robotConfig.HasRightGripper())
+                if (robotConfig.HasRightGripper())
                 {
                     dataController.TurnArmOn(robotConfig.partsId["r_hand"]);
                 }
@@ -271,7 +274,6 @@ namespace TeleopReachy
             yield return new WaitForSeconds(1);
             if (setSmoothCompliance != null) yield return setSmoothCompliance;
 
-            uint limit = 100;
             ModifyArmTorqueLimit(100);
             ModifyHeadTorqueLimit(100);
         }
@@ -339,7 +341,8 @@ namespace TeleopReachy
         {
             if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
             {
-                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
                     Id = robotConfig.partsId["l_arm"],
                     Limit = torqueLimit,
                 };
@@ -347,7 +350,8 @@ namespace TeleopReachy
             }
             if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
             {
-                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
                     Id = robotConfig.partsId["r_arm"],
                     Limit = torqueLimit,
                 };
@@ -359,7 +363,8 @@ namespace TeleopReachy
         {
             if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
             {
-                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest {
+                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
+                {
                     Id = robotConfig.partsId["l_arm"],
                     Limit = speedLimit,
                 };
@@ -367,7 +372,8 @@ namespace TeleopReachy
             }
             if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
             {
-                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest {
+                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
+                {
                     Id = robotConfig.partsId["r_arm"],
                     Limit = speedLimit,
                 };
@@ -379,7 +385,8 @@ namespace TeleopReachy
         {
             if (robotConfig.HasHead() && robotStatus.IsHeadOn())
             {
-                Reachy.Part.Head.SpeedLimitRequest headSpeed = new Reachy.Part.Head.SpeedLimitRequest {
+                Reachy.Part.Head.SpeedLimitRequest headSpeed = new Reachy.Part.Head.SpeedLimitRequest
+                {
                     Limit = speedLimit,
                     Id = robotConfig.partsId["head"]
                 };
@@ -391,7 +398,8 @@ namespace TeleopReachy
         {
             if (robotConfig.HasHead() && robotStatus.IsHeadOn())
             {
-                Reachy.Part.Head.TorqueLimitRequest headTorque = new Reachy.Part.Head.TorqueLimitRequest {
+                Reachy.Part.Head.TorqueLimitRequest headTorque = new Reachy.Part.Head.TorqueLimitRequest
+                {
                     Limit = torqueLimit,
                     Id = robotConfig.partsId["head"]
                 };
@@ -401,11 +409,13 @@ namespace TeleopReachy
 
         private void SendArmsToZeroPose()
         {
-            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) {
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+            {
                 lArmZeroPose.Id = robotConfig.partsId["l_arm"];
                 dataController.SendArmCommand(lArmZeroPose);
             }
-            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) {
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
                 rArmZeroPose.Id = robotConfig.partsId["r_arm"];
                 dataController.SendArmCommand(rArmZeroPose);
             }
