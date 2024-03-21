@@ -1,13 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
-using UnityEngine.UI;
-using Reachy.Kinematics;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
-using Component.Orbita2D;
-
 
 namespace TeleopReachy
 {
@@ -78,7 +71,8 @@ namespace TeleopReachy
             ArmCartesianGoal rightEndEffector;
             if (UserSize.Instance.UserArmSize == 0)
             {
-                rightEndEffector = new ArmCartesianGoal { 
+                rightEndEffector = new ArmCartesianGoal
+                {
                     GoalPose = handsTracker.rightHand.target_pos,
                 };
             }
@@ -100,7 +94,8 @@ namespace TeleopReachy
             ArmCartesianGoal leftEndEffector;
             if (UserSize.Instance.UserArmSize == 0)
             {
-                leftEndEffector = new ArmCartesianGoal { 
+                leftEndEffector = new ArmCartesianGoal
+                {
                     GoalPose = handsTracker.leftHand.target_pos,
                 };
             }

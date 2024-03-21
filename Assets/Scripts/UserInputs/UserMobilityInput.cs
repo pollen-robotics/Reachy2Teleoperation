@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
 
 
@@ -103,13 +98,13 @@ namespace TeleopReachy
             }
             else
             {
-                if(robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobilityOn()))
+                if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobilityOn()))
                 {
                     if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
                     {
-                        if((mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0))) 
+                        if ((mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0)))
                         {
-                            if(!mobilityInputsDisableTry)
+                            if (!mobilityInputsDisableTry)
                             {
                                 event_OnTriedToSendCommands.Invoke();
                                 mobilityInputsDisableTry = true;
