@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using Reachy;
 using Mobile.Base.Mobility;
 
 
@@ -62,7 +57,7 @@ namespace TeleopReachy
         {
             try
             {
-                if(robotConfig.HasMobileBase())
+                if (robotConfig.HasMobileBase())
                 {
                     Vector2 direction = new Vector2(0, 0);
                     SendMobileBaseDirection(direction);
