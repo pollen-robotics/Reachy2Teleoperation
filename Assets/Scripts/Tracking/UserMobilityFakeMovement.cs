@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -51,9 +50,9 @@ namespace TeleopReachy
         private float GetQueueMean(Queue<float> queue)
         {
             float sum = 0;
-            foreach(float value in queue)
+            foreach (float value in queue)
             {
-                sum +=value;
+                sum += value;
             }
             sum /= queue.Count;
             return sum;
@@ -61,7 +60,7 @@ namespace TeleopReachy
 
         private void AddToQueue(Queue<float> queue, float element)
         {
-            if(queue.Count == queueSize)
+            if (queue.Count == queueSize)
             {
                 queue.Dequeue();
             }
@@ -82,9 +81,9 @@ namespace TeleopReachy
 
                 speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
                 speed = Mathf.Clamp(speed, 0, maxSpeed);
-                rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f))* sensitivity;
+                rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
 
-                if (speed == 0 && rotationAngle ==0)
+                if (speed == 0 && rotationAngle == 0)
                 {
                     if (wasMoving)
                     {
@@ -106,10 +105,10 @@ namespace TeleopReachy
                     AddToQueue(previousTranslationSpeedQueue, speed);
                     AddToQueue(previousRotationAngleQueue, rotationAngle);
                 }
-                
+
                 transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
                 transform.Rotate(Vector3.up, rotationAngle);
-        }
+            }
         }
     }
 }

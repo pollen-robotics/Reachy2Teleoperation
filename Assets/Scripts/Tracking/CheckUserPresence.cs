@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -25,11 +23,11 @@ namespace TeleopReachy
                 bool presenceFeatureSupported = headDevice.TryGetFeatureValue(CommonUsages.userPresence, out userPresent);
                 if (presenceFeatureSupported)
                 {
-                    if (!userPresent && wasUserPresent) 
+                    if (!userPresent && wasUserPresent)
                     {
                         EventManager.TriggerEvent(EventNames.HeadsetRemoved);
                     }
-                    if (userPresent && !wasUserPresent) 
+                    if (userPresent && !wasUserPresent)
                     {
                         EventManager.TriggerEvent(EventNames.HeadsetReset);
                     }
