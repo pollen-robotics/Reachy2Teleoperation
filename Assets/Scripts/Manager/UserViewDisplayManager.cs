@@ -1,11 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 namespace TeleopReachy
 {
@@ -14,7 +7,7 @@ namespace TeleopReachy
         [SerializeField]
         private Transform reachyEyeView;
 
-        private EyeScript eyeScript;
+        //private EyeScript eyeScript;
         private RobotStatus robotStatus;
         // private gRPCVideoController videoController;
 
@@ -27,7 +20,7 @@ namespace TeleopReachy
             // videoController = gRPCManager.Instance.gRPCVideoController;
             // videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);
 
-            eyeScript = reachyEyeView.GetComponent<EyeScript>();
+            //eyeScript = reachyEyeView.GetComponent<EyeScript>();
 
             reachyEyeView.gameObject.SetActive(false);
         }
@@ -39,7 +32,7 @@ namespace TeleopReachy
 
         void HideReachyView()
         {
-            UnityEngine.Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+            Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
             reachyEyeView.gameObject.SetActive(false);
         }
 

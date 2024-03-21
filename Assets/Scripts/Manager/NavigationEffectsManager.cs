@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +16,7 @@ namespace TeleopReachy
 
         [SerializeField]
         public Toggle onDemandToggle;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
@@ -56,7 +53,7 @@ namespace TeleopReachy
 
         void ChooseButtonsMode()
         {
-            if(motionSicknessManager.IsTunnellingOn) SwitchToTunnellingMode();
+            if (motionSicknessManager.IsTunnellingOn) SwitchToTunnellingMode();
             else if (motionSicknessManager.IsReducedScreenOn) SwitchToReducedScreenMode();
             else SwitchToNoEffectMode();
         }
@@ -70,7 +67,7 @@ namespace TeleopReachy
         {
             motionSicknessManager.IsTunnellingOn = false;
             motionSicknessManager.IsReducedScreenOn = false;
-            
+
             noEffectButtonColor = ColorsManager.colorsActivated;
             tunnellingButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenButtonColor = ColorsManager.colorsDeactivated;
@@ -84,11 +81,11 @@ namespace TeleopReachy
         {
             motionSicknessManager.IsTunnellingOn = true;
             motionSicknessManager.IsReducedScreenOn = false;
-            
+
             noEffectButtonColor = ColorsManager.colorsDeactivated;
             tunnellingButtonColor = ColorsManager.colorsActivated;
             reducedScreenButtonColor = ColorsManager.colorsDeactivated;
-            
+
             isToggleInteractable = true;
             needUpdateToggle = true;
             needUpdateButtons = true;
@@ -98,11 +95,11 @@ namespace TeleopReachy
         {
             motionSicknessManager.IsTunnellingOn = false;
             motionSicknessManager.IsReducedScreenOn = true;
-            
+
             noEffectButtonColor = ColorsManager.colorsDeactivated;
             tunnellingButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenButtonColor = ColorsManager.colorsActivated;
-            
+
             isToggleInteractable = true;
             needUpdateToggle = true;
             needUpdateButtons = true;
@@ -110,14 +107,14 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateToggle)
+            if (needUpdateToggle)
             {
                 onDemandToggle.interactable = isToggleInteractable;
-                if(!isToggleInteractable) onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
+                if (!isToggleInteractable) onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
                 else onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
                 needUpdateToggle = false;
             }
-            if(needUpdateButtons)
+            if (needUpdateButtons)
             {
                 tunnellingButton.interactable = areButtonsInteractable;
                 tunnellingButton.colors = tunnellingButtonColor;
@@ -134,7 +131,7 @@ namespace TeleopReachy
             {
                 areButtonsInteractable = true;
             }
-            else 
+            else
             {
                 areButtonsInteractable = false;
                 motionSicknessManager.IsTunnellingOn = false;
@@ -143,7 +140,7 @@ namespace TeleopReachy
                 reducedScreenButtonColor = ColorsManager.colorsDeactivated;
                 noEffectButtonColor = ColorsManager.colorsActivated;
             }
-            if(motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
+            if (motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
             {
                 isToggleInteractable = true;
             }
