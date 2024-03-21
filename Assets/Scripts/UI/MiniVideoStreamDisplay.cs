@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 
-namespace TeleopReachy 
+
+namespace TeleopReachy
 {
     public class MiniVideoStreamDisplay : MonoBehaviour
     {
         private RobotVideoStream videoStream;
         private bool need_update_mini_viewer = false;
-        
+
         // Used to update display when going back in mirror scene
         void Start()
         {
@@ -27,7 +25,7 @@ namespace TeleopReachy
         void UpdateTexture()
         {
             Texture tex = videoStream.GetLeftEyeTexture();
-            if(tex != null)
+            if (tex != null)
             {
                 GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
                 GetComponent<Renderer>().material.SetTexture("_RightTex", tex);

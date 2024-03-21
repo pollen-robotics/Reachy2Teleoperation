@@ -1,12 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.UI;
-
 
 namespace TeleopReachy
 {
@@ -50,10 +42,10 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdate)
+            if (needUpdate)
             {
                 needUpdate = false;
-                if(motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
+                if (motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
                 {
                     transform.ActivateChildren(isReticleActive);
                 }

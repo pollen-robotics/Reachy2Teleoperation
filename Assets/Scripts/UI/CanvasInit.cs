@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TeleopReachyXR
@@ -15,7 +13,7 @@ namespace TeleopReachyXR
             transform.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
             transform.GetComponent<Canvas>().worldCamera = Camera.main;
 
-            if(PlaneDistance != 0) transform.GetComponent<Canvas>().planeDistance = PlaneDistance;
+            if (PlaneDistance != 0) transform.GetComponent<Canvas>().planeDistance = PlaneDistance;
         }
 
     }
