@@ -88,7 +88,7 @@ namespace TeleopReachy
         void OnDataChannelServiceMessage(byte[] data)
         {
             ServiceResponse response = ServiceResponse.Parser.ParseFrom(data);
-            Debug.LogWarning(response);
+            Debug.Log(response);
 
             if (response.ConnectionStatus != null)
             {
