@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace TeleopReachy
@@ -10,6 +6,8 @@ namespace TeleopReachy
     public class RobotStatus : MonoBehaviour
     {
         private bool isRobotTeleoperationActive;
+
+        private bool isRobotArmTeleoperationActive;
 
         private bool areRobotMovementsSuspended;
 
@@ -45,6 +43,7 @@ namespace TeleopReachy
         public bool IsRobotPositionLocked { get; private set; }
 
         public UnityEvent event_OnStartTeleoperation;
+        public UnityEvent event_OnStartArmTeleoperation;
         public UnityEvent event_OnStopTeleoperation;
         public UnityEvent event_OnSuspendTeleoperation;
         public UnityEvent event_OnResumeTeleoperation;
@@ -81,6 +80,11 @@ namespace TeleopReachy
         public bool IsRobotTeleoperationActive()
         {
             return isRobotTeleoperationActive;
+        }
+
+        public bool IsRobotArmTeleoperationActive()
+        {
+            return isRobotArmTeleoperationActive;
         }
 
         public bool AreRobotMovementsSuspended()
@@ -219,10 +223,18 @@ namespace TeleopReachy
             event_OnStartTeleoperation.Invoke();
         }
 
+        public void StartArmTeleoperation()
+        {
+            Debug.Log("[RobotStatus]: Start arm teleoperation");
+            isRobotArmTeleoperationActive = true;
+            event_OnStartArmTeleoperation.Invoke();
+        }
+
         public void StopRobotTeleoperation()
         {
             Debug.Log("[RobotStatus]: Stop teleoperation");
             isRobotTeleoperationActive = false;
+            isRobotArmTeleoperationActive = false;
             event_OnStopTeleoperation.Invoke();
         }
 

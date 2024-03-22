@@ -1,28 +1,32 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
-using Grpc.Core;
-using Reachy.Sdk.Joint;
-using Reachy.Sdk.Kinematics;
+using Reachy.Part.Hand;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Reachy.Kinematics;
+
 
 namespace TeleopReachy
 {
     public class RobotJointCommands : RobotCommands
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
         public Coroutine setSmoothCompliance;
         public Coroutine waitToSetRobotFullSpeed;
+
+        private ArmCartesianGoal lArmZeroPose;
+        private ArmCartesianGoal rArmZeroPose;
 
 
         // Start is called before the first frame update
         void Start()
         {
             Init();
-            dataController = gRPCManager.Instance.gRPCDataController;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            dataController = DataMessageManager.Instance;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             robotStatus.event_OnInitializeRobotStateRequested.AddListener(InitializeRobotState);
             robotStatus.event_OnRobotStiffRequested.AddListener(SetRobotStiff);
@@ -32,11 +36,38 @@ namespace TeleopReachy
             robotStatus.event_OnSuspendTeleoperation.AddListener(SuspendTeleoperation);
             robotStatus.event_OnResumeTeleoperation.AddListener(ResumeTeleoperation);
 
-            robotStatus.event_OnStartTeleoperation.AddListener(StartTeleoperation);
+            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTeleoperation);
             robotStatus.event_OnStopTeleoperation.AddListener(StopTeleoperation);
+
+            robotConfig = RobotDataManager.Instance.RobotConfig;
 
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
+
+            Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4
+            {
+                Data = { 0.966f, 0.198f, -0.166f, 0.048f,
+                            -0.135f, 0.934f, 0.330f, -0.356f,
+                            0.221f, -0.296f, 0.929f, -0.603f,
+                            0, 0, 0, 1 }
+            };
+
+            Reachy.Kinematics.Matrix4x4 lArmZeroTarget = new Reachy.Kinematics.Matrix4x4
+            {
+                Data = { 0.981f, 0.029f, -0.189f, 0.048f,
+                            -0.060f, 0.986f, -0.158f, 0.356f,
+                            0.181f, 0.166f, 0.969f, -0.603f,
+                            0, 0, 0, 1 }
+            };
+
+            lArmZeroPose = new ArmCartesianGoal
+            {
+                GoalPose = lArmZeroTarget
+            };
+            rArmZeroPose = new ArmCartesianGoal
+            {
+                GoalPose = rArmZeroTarget
+            };
         }
 
         void OnDestroy()
@@ -48,14 +79,23 @@ namespace TeleopReachy
                 SetRobotCompliant();
         }
 
-        protected override void ActualSendGrippersCommands(JointsCommand gripperCommand)
+        protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            dataController.SendGrippersCommand(gripperCommand);
+            if (robotStatus.IsRobotArmTeleoperationActive())
+            {
+                if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
+                if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
+            }
         }
 
-        protected override void ActualSendBodyCommands(FullBodyCartesianCommand bodyCommand)
+        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            dataController.SendBodyCommand(bodyCommand);
+            if (robotStatus.IsRobotArmTeleoperationActive())
+            {
+                if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+                if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            }
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
         }
 
         private void SetRobotSmoothlyCompliant()
@@ -75,60 +115,76 @@ namespace TeleopReachy
             if (robotConfig.HasLeftArm())
             {
                 if (robotStatus.IsLeftArmOn())
-                    SetRobotStiff("l_");
+                    SetRobotStiff("l_arm");
                 else
-                    SetRobotCompliant("l_");
+                    SetRobotCompliant("l_arm");
             }
             if (robotConfig.HasRightArm())
             {
                 if (robotStatus.IsRightArmOn())
-                    SetRobotStiff("r_");
+                    SetRobotStiff("r_arm");
                 else
-                    SetRobotCompliant("r_");
+                    SetRobotCompliant("r_arm");
             }
             if (robotConfig.HasHead())
             {
                 if (robotStatus.IsHeadOn())
-                    SetRobotStiff("neck_");
+                    SetRobotStiff("head");
                 else
-                    SetRobotCompliant("neck_");
+                    SetRobotCompliant("head");
             }
         }
 
         //partName should be l_, r_ or neck_
-
         private void SetRobotStiff(string partName = "")
         {
-            Debug.Log("[RobotJointCommands]: SetRobotStiff " + partName);
             if (setSmoothCompliance != null)
             {
                 StopCoroutine(setSmoothCompliance);
             }
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
+
+            Debug.Log("[RobotJointCommands] SetRobotStiff " + partName);
+            if (partName == "")
             {
-                if (partName == "" || item.StartsWith(partName))
+                if (robotConfig.HasLeftArm())
                 {
-                    var jointCom = new JointCommand();
-                    jointCom.Id = new JointId { Name = item };
-                    jointCom.Compliant = false;
-                    jointCom.TorqueLimit = 100;
-
-                    if (item.Contains("antenna"))
-                    {
-                        jointCom.GoalPosition = Mathf.Deg2Rad * (0);
-                    }
-
-                    listCommand.Add(jointCom);
+                    dataController.TurnArmOn(robotConfig.partsId["l_arm"]);
                 }
-            };
-
-            JointsCommand armsCommand = new JointsCommand
+                if (robotConfig.HasLeftGripper())
+                {
+                    dataController.TurnArmOn(robotConfig.partsId["l_hand"]);
+                }
+                if (robotConfig.HasRightArm())
+                {
+                    dataController.TurnArmOn(robotConfig.partsId["r_arm"]);
+                }
+                if (robotConfig.HasRightGripper())
+                {
+                    dataController.TurnArmOn(robotConfig.partsId["r_hand"]);
+                }
+                if (robotConfig.HasHead())
+                {
+                    dataController.TurnHeadOn(robotConfig.partsId["head"]);
+                }
+            }
+            else
             {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(armsCommand);
+                if (partName == "head")
+                {
+                    dataController.TurnHeadOn(robotConfig.partsId["head"]);
+                }
+                else
+                {
+                    if (partName.Contains("arm"))
+                    {
+                        dataController.TurnArmOn(robotConfig.partsId[partName]);
+                    }
+                    else if (partName.Contains("hand"))
+                    {
+                        dataController.TurnHandOn(robotConfig.partsId[partName]);
+                    }
+                }
+            }
         }
 
         private void SetRobotCompliant()
@@ -140,40 +196,54 @@ namespace TeleopReachy
         //partName should be l_, r_ or neck_
         private void SetRobotCompliant(string partName = "")
         {
-            Debug.Log("[RobotJointCommands]: SetRobotCompliant " + partName);
-            if (setSmoothCompliance != null)
+            Debug.Log("[RobotJointCommands] SetRobotCompliant " + partName);
+            if (partName == "")
             {
-                StopCoroutine(setSmoothCompliance);
-            }
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
-            {
-                if (partName == "" || item.StartsWith(partName))
+                if (robotConfig.HasLeftArm())
                 {
-                    var jointCom = new JointCommand();
-                    jointCom.Id = new JointId { Name = item };
-                    jointCom.Compliant = true;
-
-                    if (item.Contains("antenna"))
-                    {
-                        jointCom.GoalPosition = Mathf.Deg2Rad * (0);
-                    }
-
-                    listCommand.Add(jointCom);
+                    dataController.TurnArmOff(robotConfig.partsId["l_arm"]);
                 }
-            };
+                if (robotConfig.HasLeftGripper())
+                {
+                    dataController.TurnHandOff(robotConfig.partsId["l_hand"]);
+                }
+                if (robotConfig.HasRightArm())
+                {
+                    dataController.TurnArmOff(robotConfig.partsId["r_arm"]);
+                }
+                if (robotConfig.HasRightGripper())
+                {
+                    dataController.TurnHandOff(robotConfig.partsId["r_hand"]);
+                }
+                if (robotConfig.HasHead())
+                {
+                    dataController.TurnHeadOff(robotConfig.partsId["head"]);
+                }
+            }
 
-            JointsCommand armsCommand = new JointsCommand
+            else
             {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(armsCommand);
+                if (partName == "head")
+                {
+                    dataController.TurnHeadOff(robotConfig.partsId["head"]);
+                }
+                else
+                {
+                    if (partName.Contains("arm"))
+                    {
+                        dataController.TurnArmOff(robotConfig.partsId[partName]);
+                    }
+                    else if (partName.Contains("hand"))
+                    {
+                        dataController.TurnHandOff(robotConfig.partsId[partName]);
+                    }
+                }
+            }
         }
 
         private void StartTeleoperation()
         {
-            Debug.Log("[RobotJointCommands]: StartTeleoperation");
+            Debug.Log("[RobotJointCommands]: StartArmTeleoperation");
             waitToSetRobotFullSpeed = StartCoroutine(ResetReachyMotorsFullSpeed());
         }
 
@@ -201,76 +271,24 @@ namespace TeleopReachy
 
         IEnumerator ResetTorqueMax()
         {
+            yield return new WaitForSeconds(1);
             if (setSmoothCompliance != null) yield return setSmoothCompliance;
 
-            float limit = 100;
-
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
-            {
-                var jointCom = new JointCommand();
-                jointCom.Id = new JointId { Name = item };
-                jointCom.TorqueLimit = limit;
-
-                if (item.Contains("antenna"))
-                {
-                    jointCom.GoalPosition = Mathf.Deg2Rad * (0);
-                }
-
-                listCommand.Add(jointCom);
-            };
-
-            JointsCommand command = new JointsCommand
-            {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(command);
+            ModifyArmTorqueLimit(100);
+            ModifyHeadTorqueLimit(100);
         }
 
         private void ResetMotorsStartingSpeed()
         {
+            Debug.Log("[RobotJointCommands] ResetMotorsStartingSpeed");
             robotStatus.SetMotorsSpeedLimited(true);
-
-            float speedLimit = Mathf.Deg2Rad * 35;
-
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
-            {
-                if (!item.StartsWith("neck"))
-                {
-                    var jointCom = new JointCommand();
-                    jointCom.Id = new JointId { Name = item };
-                    if (!item.Contains("antenna"))
-                    {
-                        jointCom.SpeedLimit = speedLimit;
-                        if (item.Contains("gripper"))
-                        {
-                            jointCom.SpeedLimit = 0;
-                        }
-                    }
-                    else
-                    {
-                        jointCom.Id = new JointId { Name = item };
-                        jointCom.SpeedLimit = 0;
-                        jointCom.GoalPosition = 0;
-                    }
-
-                    listCommand.Add(jointCom);
-                }
-            };
-
-            JointsCommand speedCommand = new JointsCommand
-            {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(speedCommand);
+            uint speedLimit = 10;
+            ModifyArmSpeedLimit(speedLimit);
         }
 
         private void SetHeadLookingStraight()
         {
-            Reachy.Sdk.Kinematics.Quaternion unitQ = new Reachy.Sdk.Kinematics.Quaternion
+            Reachy.Kinematics.Quaternion unitQ = new Reachy.Kinematics.Quaternion
             {
                 W = 1,
                 X = 0,
@@ -278,63 +296,129 @@ namespace TeleopReachy
                 Z = 0,
             };
 
-            FullBodyCartesianCommand bodyCommand = new FullBodyCartesianCommand();
-            if (robotConfig.HasHead())
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn())
             {
-                bodyCommand.Head = new HeadIKRequest { Q = unitQ };
-            }
 
-            dataController.SendImmediateBodyCommand(bodyCommand);
+                NeckJointGoal neckGoal = new NeckJointGoal { Id = robotConfig.partsId["head"], JointsGoal = new NeckOrientation { Rotation = new Rotation3d { Q = unitQ } } };
+                dataController.SendNeckCommand(neckGoal);
+            }
         }
 
         private IEnumerator SmoothCompliance(int duration)
         {
-            float lowLimit = 1;
-            float highLimit = 100;
+            uint torqueLimitLow = 50;
+            uint torqueLimitHigh = 100;
+
+            ModifyHeadSpeedLimit(10);
+            ModifyArmTorqueLimit(torqueLimitLow);
 
             SetHeadLookingStraight();
+            SendArmsToZeroPose();
 
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
+            int countingTime = 0;
+            while (countingTime <= duration)
             {
-                var jointCom = new JointCommand();
-                jointCom.Id = new JointId { Name = item };
-                if (!item.Contains("neck") && !item.Contains("antenna"))
-                {
-                    jointCom.TorqueLimit = lowLimit;
+                yield return new WaitForSeconds(1);
+                torqueLimitLow -= 10;
+                ModifyArmTorqueLimit(torqueLimitLow);
+                countingTime += 1;
+            }
 
-                }
-                listCommand.Add(jointCom);
-            };
-
-            JointsCommand torqueCommand = new JointsCommand
-            {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(torqueCommand);
-
-            yield return new WaitForSeconds(duration);
-
-            listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Uids)
-            {
-                var jointCom = new JointCommand();
-                jointCom.Id = new JointId { Uid = item };
-                jointCom.Compliant = true;
-                jointCom.TorqueLimit = highLimit;
-
-                listCommand.Add(jointCom);
-            };
-
-            JointsCommand complianceCommand = new JointsCommand
-            {
-                Commands = { listCommand },
-            };
-
-            // SendJointsCommands(complianceCommand);
-
+            SetRobotCompliant("head");
+            SetRobotCompliant("l_arm");
+            SetRobotCompliant("l_hand");
+            SetRobotCompliant("r_arm");
+            SetRobotCompliant("r_hand");
             robotStatus.SetRobotCompliant(true);
+
+            ModifyHeadSpeedLimit(100);
+            ModifyArmTorqueLimit(torqueLimitHigh);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        private void ModifyArmTorqueLimit(uint torqueLimit)
+        {
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+            {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
+                    Id = robotConfig.partsId["l_arm"],
+                    Limit = torqueLimit,
+                };
+                dataController.SetArmTorqueLimit(torqueRequest);
+            }
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
+                    Id = robotConfig.partsId["r_arm"],
+                    Limit = torqueLimit,
+                };
+                dataController.SetArmTorqueLimit(torqueRequest);
+            }
+        }
+
+        private void ModifyArmSpeedLimit(uint speedLimit)
+        {
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+            {
+                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
+                {
+                    Id = robotConfig.partsId["l_arm"],
+                    Limit = speedLimit,
+                };
+                dataController.SetArmSpeedLimit(speedRequest);
+            }
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
+                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
+                {
+                    Id = robotConfig.partsId["r_arm"],
+                    Limit = speedLimit,
+                };
+                dataController.SetArmSpeedLimit(speedRequest);
+            }
+        }
+
+        private void ModifyHeadSpeedLimit(uint speedLimit)
+        {
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn())
+            {
+                Reachy.Part.Head.SpeedLimitRequest headSpeed = new Reachy.Part.Head.SpeedLimitRequest
+                {
+                    Limit = speedLimit,
+                    Id = robotConfig.partsId["head"]
+                };
+                dataController.SetHeadSpeedLimit(headSpeed);
+            }
+        }
+
+        private void ModifyHeadTorqueLimit(uint torqueLimit)
+        {
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn())
+            {
+                Reachy.Part.Head.TorqueLimitRequest headTorque = new Reachy.Part.Head.TorqueLimitRequest
+                {
+                    Limit = torqueLimit,
+                    Id = robotConfig.partsId["head"]
+                };
+                dataController.SetHeadTorqueLimit(headTorque);
+            }
+        }
+
+        private void SendArmsToZeroPose()
+        {
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+            {
+                lArmZeroPose.Id = robotConfig.partsId["l_arm"];
+                dataController.SendArmCommand(lArmZeroPose);
+            }
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
+                rArmZeroPose.Id = robotConfig.partsId["r_arm"];
+                dataController.SendArmCommand(rArmZeroPose);
+            }
         }
 
         private IEnumerator ResetReachyMotorsFullSpeed()
@@ -342,45 +426,9 @@ namespace TeleopReachy
             Debug.Log("[RobotJointCommands]: ResetReachyMotorsFullSpeed");
             yield return new WaitForSeconds(3);
 
-            float speedLimit = Mathf.Deg2Rad * 0;
-
-            List<JointCommand> listCommand = new List<JointCommand>();
-            foreach (var item in robotConfig.GetAllJointsId().Names)
-            {
-                if (!item.StartsWith("neck"))
-                {
-                    var jointCom = new JointCommand();
-                    jointCom.Id = new JointId { Name = item };
-                    jointCom.SpeedLimit = speedLimit;
-
-                    if (item.Contains("gripper"))
-                    {
-                        jointCom.SpeedLimit = 0;
-                    }
-
-                    if (item.Contains("antenna"))
-                    {
-                        jointCom.SpeedLimit = 0;
-                        jointCom.GoalPosition = 0;
-                    }
-
-                    listCommand.Add(jointCom);
-                }
-
-            };
-
-            JointsCommand speedCommand = new JointsCommand
-            {
-                Commands = { listCommand },
-            };
-
-            SendJointsCommands(speedCommand);
+            uint speedLimit = 100;
+            ModifyArmSpeedLimit(speedLimit);
             robotStatus.SetMotorsSpeedLimited(false);
-        }
-
-        protected override void SendJointsCommands(JointsCommand jointsCommand)
-        {
-            dataController.SendJointsCommand(jointsCommand);
         }
 
         void SuspendTeleoperation()

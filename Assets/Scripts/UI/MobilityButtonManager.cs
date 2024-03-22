@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,7 @@ namespace TeleopReachy
     public class MobilityButtonManager : MonoBehaviour
     {
         public Button mobilityButton;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
         private ConnectionStatus connectionStatus;
@@ -25,7 +23,7 @@ namespace TeleopReachy
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMobileBasePresence);
             robotConfig.event_OnConfigChanged.AddListener(CheckMobileBasePresence);
@@ -45,18 +43,18 @@ namespace TeleopReachy
             if (robotStatus.IsMobilityOn())
             {
                 mobilityButton.colors = ColorsManager.colorsActivated;
-                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobility ON";
+                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobile base ON";
             }
             else
             {
                 mobilityButton.colors = ColorsManager.colorsDeactivated;
-                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobility OFF";
+                mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobile base OFF";
             }
         }
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 mobilityButton.interactable = isInteractable;
                 mobilityButton.colors = buttonColor;
@@ -67,24 +65,24 @@ namespace TeleopReachy
 
         void CheckMobileBasePresence()
         {
-            if (robotConfig.HasMobilePlatform() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase())
             {
                 isInteractable = true;
                 if (robotStatus.IsMobilityOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
-                    buttonText = "Mobility ON";
+                    buttonText = "Mobile base ON";
                 }
                 else
                 {
                     buttonColor = ColorsManager.colorsDeactivated;
-                    buttonText = "Mobility OFF";
+                    buttonText = "Mobile base OFF";
                 }
             }
             else
             {
                 buttonColor = ColorsManager.colorsDeactivated;
-                buttonText = "Mobility OFF";
+                buttonText = "Mobile base OFF";
                 isInteractable = false;
             }
             needUpdateButton = true;

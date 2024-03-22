@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +6,7 @@ namespace TeleopReachy
     public static class ColorsManager
     {
         // Declare all colors used in the app
-        public readonly static Color32 green = new Color32(32, 210, 9, 255);
+        public readonly static Color32 green = new Color32(26, 172, 48, 255);
         public readonly static Color32 orange = new Color32(227, 137, 68, 255);
         public readonly static Color32 red = new Color32(226, 67, 80, 255);
         public readonly static Color32 error_red = new Color32(226, 67, 80, 200);
@@ -20,6 +15,7 @@ namespace TeleopReachy
         public readonly static Color32 purple = new Color32(163, 74, 214, 255);
         public readonly static Color32 yellow = new Color32(140, 139, 37, 255);
         public readonly static Color32 black = new Color32(40, 40, 40, 255);
+        public readonly static Color32 grey = new Color32(150, 150, 150, 255);
         public readonly static Color32 error_black = new Color32(40, 40, 40, 200);
         public readonly static Color32 black_transparent = new Color32(0, 0, 0, 220);
         public readonly static Color32 white_transparent = new Color32(255, 255, 255, 220);

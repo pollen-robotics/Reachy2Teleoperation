@@ -1,40 +1,35 @@
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityEngine.UI;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using Grpc.Core;
-using Reachy.Sdk.Joint;
-using Reachy;
+
+using Google.Protobuf;
+using Reachy.Part;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Reachy.Part.Hand;
+using Mobile.Base.Utility;
+using Component;
 
 namespace TeleopReachy
 {
     public class RobotConfig : MonoBehaviour
     {
-        private gRPCRobotParams gRPCRobotParams;
-        private gRPCDataController dataController;
-        private gRPCMobileBaseController mobileController;
+        private DataMessageManager dataController;
         // private WebRTCRestartService restartService;
         private ConnectionStatus connectionStatus;
 
-        private JointsId allJointsId;
+        public Dictionary<string, PartId> partsId { get; private set; }
+        public Dictionary<string, ComponentId> componentsId { get; private set; }
 
         private bool has_right_arm;
         private bool has_left_arm;
         private bool has_head;
         private bool has_left_gripper;
         private bool has_right_gripper;
-        private bool has_mobile_platform;
+        private bool has_mobile_base;
 
         private bool is_virtual;
 
-        public RobotGenerationCode RobotGeneration { get; private set; }
-
-        public bool HasRobotGeneration { get; private set; }
         private bool has_robot_config;
 
         public UnityEvent event_OnConfigChanged;
@@ -42,28 +37,21 @@ namespace TeleopReachy
         // Awake is called before Start functions
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
-            mobileController = gRPCManager.Instance.gRPCMobileBaseController;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            dataController = DataMessageManager.Instance;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
-            dataController.event_OnRobotJointsReceived.AddListener(GetJointsId);
-            mobileController.event_OnMobileBaseDetected.AddListener(SetMobilePlatform);
+            dataController.event_OnRobotReceived.AddListener(GetPartsId);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
 
-            gRPCRobotParams = gRPCManager.Instance.gRPCRobotParams;
-            gRPCRobotParams.event_OnRobotGenerationReceived.AddListener(UpdateRobotGeneration);
-
             has_robot_config = false;
-            HasRobotGeneration = false;
 
             has_right_arm = false;
             has_left_arm = false;
             has_head = false;
-            has_mobile_platform = false;
+            has_mobile_base = false;
             has_left_gripper = false;
             has_right_gripper = false;
 
-            UpdateRobotGeneration();
             is_virtual = Robot.IsCurrentRobotVirtual();
         }
 
@@ -73,7 +61,7 @@ namespace TeleopReachy
             has_right_arm = false;
             has_left_arm = false;
             has_head = false;
-            has_mobile_platform = false;
+            has_mobile_base = false;
             has_left_gripper = false;
             has_right_gripper = false;
 
@@ -91,49 +79,43 @@ namespace TeleopReachy
             }
         }
 
-        void UpdateRobotGeneration()
+        void GetPartsId(Reachy.Reachy reachy)
         {
-            RobotGeneration = gRPCRobotParams.RobotGeneration;
-            if (RobotGeneration != RobotGenerationCode.UNDEFINED) HasRobotGeneration = true;
-        }
+            partsId = new Dictionary<string, PartId>();
+            var descriptor = Reachy.Reachy.Descriptor;
 
-        void SetMobilePlatform()
-        {
-            Debug.Log("[Robot config]: SetMobilePlatform");
-            has_mobile_platform = true;
-            event_OnConfigChanged.Invoke();
-        }
+            foreach (var field in descriptor.Fields.InDeclarationOrder())
+            {
+                var value = field.Accessor.GetValue(reachy) as IMessage;
+                if (value != null && (value is Arm || value is Head || value is Hand))
+                {
+                    var idField = value.Descriptor.FindFieldByName("part_id");
+                    if (idField != null)
+                    {
+                        PartId id = (PartId)idField.Accessor.GetValue(value);
+                        partsId.Add(field.Name, id);
+                    }
+                }
+                if (value != null && value is MobileBase)
+                {
+                    PartId id = new PartId { Name = "mobile_base" };
+                    partsId.Add(field.Name, id);
+                }
+            }
 
-
-        void GetJointsId(JointsId AllJointsIds)
-        {
-            allJointsId = AllJointsIds;
             GetReachyConfig();
         }
 
         private void GetReachyConfig()
         {
             Debug.Log("[Robot config]: GetReachyConfig");
-            if (allJointsId.Names.Contains("r_shoulder_pitch"))
-            {
-                has_right_arm = true;
-            }
-            if (allJointsId.Names.Contains("l_shoulder_pitch"))
-            {
-                has_left_arm = true;
-            }
-            if (allJointsId.Names.Contains("neck_pitch"))
-            {
-                has_head = true;
-            }
-            if (allJointsId.Names.Contains("l_gripper"))
-            {
-                has_left_gripper = true;
-            }
-            if (allJointsId.Names.Contains("r_gripper"))
-            {
-                has_right_gripper = true;
-            }
+            has_right_arm = partsId.ContainsKey("r_arm");
+            has_left_arm = partsId.ContainsKey("l_arm");
+            has_head = partsId.ContainsKey("head");
+            has_right_gripper = partsId.ContainsKey("r_hand");
+            has_left_gripper = partsId.ContainsKey("l_hand");
+            has_mobile_base = partsId.ContainsKey("mobile_base");
+
             has_robot_config = true;
 
             event_OnConfigChanged.Invoke();
@@ -163,21 +145,19 @@ namespace TeleopReachy
             return has_right_gripper;
         }
 
-        public bool HasMobilePlatform()
+        public bool HasMobileBase()
         {
-            return has_mobile_platform;
+            return has_mobile_base;
         }
 
-        public void SetMobilePlatform(bool mobile_platform_detected)
+        public Dictionary<string, PartId> GetAllPartsId()
         {
-            Debug.Log("[Robot config]: SetMobilePlatform");
-            has_mobile_platform = mobile_platform_detected;
-            event_OnConfigChanged.Invoke();
+            return partsId;
         }
 
-        public JointsId GetAllJointsId()
+        public Dictionary<string, ComponentId> GetAllComponentsId()
         {
-            return allJointsId;
+            return componentsId;
         }
 
         public bool GotReachyConfig()
@@ -195,11 +175,11 @@ namespace TeleopReachy
             return string.Format(@"has_right_arm = {0},
             has_left_arm= {1},
             has_head= {2},
-            has_mobile_platform= {3},
+            has_mobile_base= {3},
             has_left_gripper= {4},
             has_right_gripper= {5},
             has_robot_config= {6}",
-            has_right_arm, has_left_arm, has_head, has_mobile_platform, has_left_gripper,
+            has_right_arm, has_left_arm, has_head, has_mobile_base, has_left_gripper,
             has_right_gripper, has_robot_config);
         }
 

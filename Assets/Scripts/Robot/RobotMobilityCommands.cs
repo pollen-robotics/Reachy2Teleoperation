@@ -1,25 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using Grpc.Core;
-using Reachy.Sdk.Mobility;
-using Reachy;
+using Mobile.Base.Mobility;
+
 
 namespace TeleopReachy
 {
     public class RobotMobilityCommands : MonoBehaviour
     {
-        private gRPCMobileBaseController mobileController;
+        private DataMessageManager dataController;
 
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
 
         void Start()
         {
-            mobileController = gRPCManager.Instance.gRPCMobileBaseController;
+            dataController = DataMessageManager.Instance;
 
             robotConfig = transform.GetComponent<RobotConfig>();
             robotStatus = transform.GetComponent<RobotStatus>();
@@ -30,26 +25,19 @@ namespace TeleopReachy
 
         private void StartMobility()
         {
-            if (robotConfig.HasMobilePlatform() && robotStatus.IsMobilityOn())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
             {
-                SendZuuuVelocityMode();
+                dataController.TurnMobileBaseOn();
             }
         }
 
         private void StopMobility()
         {
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
             {
                 StopMobileBaseMovements();
             }
         }
-
-        private void SendZuuuVelocityMode()
-        {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
-            mobileController.SendZuuuMode(zuuuMode);
-        }
-
 
         public void SendMobileBaseDirection(Vector3 direction)
         {
@@ -62,15 +50,19 @@ namespace TeleopReachy
                     Theta = direction[2],
                 }
             };
-            mobileController.SendMobilityCommand(command);
+            dataController.SendMobileBaseCommand(command);
         }
 
         void StopMobileBaseMovements()
         {
             try
             {
-                Vector2 direction = new Vector2(0, 0);
-                SendMobileBaseDirection(direction);
+                if (robotConfig.HasMobileBase())
+                {
+                    Vector2 direction = new Vector2(0, 0);
+                    SendMobileBaseDirection(direction);
+                    dataController.TurnMobileBaseOff();
+                }
             }
             catch (Exception exc)
             {

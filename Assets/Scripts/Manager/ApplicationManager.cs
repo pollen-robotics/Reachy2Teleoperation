@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -55,7 +54,6 @@ namespace TeleopReachy
         {
             SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);
             yield return null;
-            ToogleXRRayInteractors(true);
             EventManager.TriggerEvent(EventNames.MirrorSceneLoaded);
         }
 
@@ -63,7 +61,6 @@ namespace TeleopReachy
         {
             SceneManager.UnloadSceneAsync("MirrorScene");
             ground.SetActive(false);
-            ToogleXRRayInteractors(false);
         }
 
         private void ShowXRay()
@@ -91,9 +88,9 @@ namespace TeleopReachy
             yield return null;
 
             userInput.SetActive(true);
-            canvasOnlineMenu.SetActive(true);
-            UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-            uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
+            // canvasOnlineMenu.SetActive(true);
+            // UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
+            // uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
 
             EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
             SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);
@@ -104,21 +101,21 @@ namespace TeleopReachy
         }
 
 
-        IEnumerator LoadTeleoperationScene()
-        {
-            ground.SetActive(false);
-            userInput.SetActive(true);
-            canvasOnlineMenu.SetActive(true);
-            UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-            uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
+        // IEnumerator LoadTeleoperationScene()
+        // {
+        //     ground.SetActive(false);
+        //     userInput.SetActive(true);
+        //     canvasOnlineMenu.SetActive(true);
+        //     UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
+        //     uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
 
-            userTracker.SetActive(true);
+        //     userTracker.SetActive(true);
 
-            SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
-            yield return null;
+        //     SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
+        //     yield return null;
 
-            EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
-        }
+        //     EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
+        // }
 
         private void ReturnToConnectionScene()
         {

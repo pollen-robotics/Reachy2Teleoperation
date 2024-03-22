@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
+
 
 namespace TeleopReachy
 {
@@ -57,7 +56,7 @@ namespace TeleopReachy
             userTracker = UserTrackerManager.Instance.transform;
             State = TransitionState.WaitingForTracker;
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
             connectionStatus.event_OnRobotUnready.AddListener(AbortTeleop);
 

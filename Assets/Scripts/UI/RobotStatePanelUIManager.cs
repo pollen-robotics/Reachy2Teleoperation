@@ -1,24 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Reachy.Sdk.Joint;
+
 
 namespace TeleopReachy
 {
     public class RobotStatePanelUIManager : MonoBehaviour
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
-        private RobotStatus robotStatus;
+        //private RobotStatus robotStatus;
 
-        private List<GameObject> motors;
+        private List<GameObject> actuators;
+
+        private Dictionary<string, float> panelTemperature;
 
         private bool isStatePanelStatusActive;
+        private bool needUpdatePanel;
 
         void Awake()
         {
@@ -29,51 +28,54 @@ namespace TeleopReachy
                 return;
             }
 
-            dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
 
-            motors = new List<GameObject>();
+            actuators = new List<GameObject>();
             foreach (Transform child in transform.GetChild(1))
             {
-                motors.Add(child.gameObject);
+                actuators.Add(child.gameObject);
             }
 
             CheckTemperatureInfo();
 
             isStatePanelStatusActive = true;
+            needUpdatePanel = false;
         }
 
-        private void UpdateTemperatures(Dictionary<JointId, float> Temperatures)
+        private void UpdateTemperatures(Dictionary<string, float> Temperatures)
         {
-            /*foreach(KeyValuePair<JointId, float> motor in Temperatures)
+            panelTemperature = new Dictionary<string, float>();
+            foreach (KeyValuePair<string, float> motor in Temperatures)
             {
-                string motorName = motor.Key.Name + "_temperature";
-                GameObject currentMotor = motors.Find(m => m.name == motorName);
-                currentMotor.transform.GetComponent<Text>().text = motor.Key.Name + ": " + Mathf.Round(motor.Value).ToString();
-                if(motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
+                if (motor.Key.Contains("hand"))
                 {
-                    currentMotor.transform.GetChild(1).gameObject.SetActive(true);
+                    string[] nameParsed = motor.Key.Split("_hand_");
+                    string actuatorName = nameParsed[0] + "_hand_temperature";
+
+                    string panelName = actuatorName + "_child_" + nameParsed[1] + "_temperature";
+
+                    panelTemperature.Add(panelName, motor.Value);
                 }
                 else
                 {
-                    if(motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
-                    {
-                        currentMotor.transform.GetChild(0).gameObject.SetActive(true);
-                    }
-                    else 
-                    {
-                        currentMotor.transform.GetChild(0).gameObject.SetActive(false);
-                    }
+                    string[] nameParsed = motor.Key.Split("_motor_");
+                    string actuatorName = nameParsed[0] + "_temperature";
+
+                    string panelName = actuatorName + "_child_" + "motor_" + nameParsed[1] + "_temperature";
+
+                    panelTemperature.Add(panelName, motor.Value);
                 }
-            }  */  
+            }
+            needUpdatePanel = true;
         }
 
         private void CheckTemperatureInfo()
         {
-            if(connectionStatus.AreRobotServicesRestarting())
+            if (connectionStatus.AreRobotServicesRestarting())
             {
                 transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "Waiting for temperatures...";
                 transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
@@ -81,7 +83,7 @@ namespace TeleopReachy
             }
             else
             {
-                if(!connectionStatus.IsServerConnected() || !connectionStatus.IsRobotInDataRoom())
+                if (!connectionStatus.IsRobotInDataRoom())
                 {
                     transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No temperature information";
                     transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
@@ -98,6 +100,48 @@ namespace TeleopReachy
         private void UpdateStatePanelStatus()
         {
             transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
+        }
+
+        void Update()
+        {
+            if (needUpdatePanel)
+            {
+                needUpdatePanel = false;
+
+                foreach (KeyValuePair<string, float> motor in panelTemperature)
+                {
+                    string[] nameParsed = motor.Key.Split("_child_");
+
+                    GameObject currentActuator = actuators.Find(act => act.name == nameParsed[0]);
+                    Transform currentMotor = currentActuator.transform.Find(nameParsed[1]);
+
+                    string[] typeParsed = nameParsed[1].Split("_");
+                    if (nameParsed[0].Contains("hand"))
+                    {
+                        currentMotor.GetComponent<Text>().text = typeParsed[0] + ": " + Mathf.Round(motor.Value).ToString();
+                    }
+                    else
+                    {
+                        currentMotor.GetComponent<Text>().text = typeParsed[0] + " " + typeParsed[1] + ": " + Mathf.Round(motor.Value).ToString();
+                    }
+
+                    if (motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
+                    {
+                        currentActuator.transform.GetChild(1).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        if (motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
+                        {
+                            currentActuator.transform.GetChild(0).gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            currentActuator.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
+                }
+            }
         }
     }
 }

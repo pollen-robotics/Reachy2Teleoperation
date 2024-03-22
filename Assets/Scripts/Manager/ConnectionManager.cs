@@ -1,16 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 
 namespace TeleopReachy
 {
     public class ConnectionManager : MonoBehaviour
     {
         public GameObject CanvaRobotSelection;
-        public ConnectionServerManager connectionServerManager;
 
         public GameObject prefabRobotButton;
         private Transform contentRobotList;
@@ -70,9 +66,6 @@ namespace TeleopReachy
             if (has_robot_selected)
             {
                 PlayerPrefs.SetString("robot_ip", selectedRobot.ip);
-                PlayerPrefs.SetString("server_data_port", connectionServerManager.server_data_port);
-                PlayerPrefs.SetString("server_camera_port", connectionServerManager.server_camera_port);
-                PlayerPrefs.SetString("server_mobile_port", connectionServerManager.server_mobile_port);
 
                 EventManager.TriggerEvent(EventNames.StartMirrorScene);
             }
