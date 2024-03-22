@@ -1,12 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using Grpc.Core;
-using Reachy.Sdk.Camera;
 
 namespace TeleopReachy
 {
@@ -15,9 +7,9 @@ namespace TeleopReachy
         [SerializeField]
         private Transform reachyEyeView;
 
-        private EyeScript eyeScript;
+        //private EyeScript eyeScript;
         private RobotStatus robotStatus;
-        private gRPCVideoController videoController;
+        // private gRPCVideoController videoController;
 
         void Start()
         {
@@ -25,10 +17,10 @@ namespace TeleopReachy
             robotStatus.event_OnStartTeleoperation.AddListener(ShowReachyView);
             robotStatus.event_OnStopTeleoperation.AddListener(HideReachyView);
 
-            videoController = gRPCManager.Instance.gRPCVideoController;
-            videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);
+            // videoController = gRPCManager.Instance.gRPCVideoController;
+            // videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);
 
-            eyeScript = reachyEyeView.GetComponent<EyeScript>();
+            //eyeScript = reachyEyeView.GetComponent<EyeScript>();
 
             reachyEyeView.gameObject.SetActive(false);
         }
@@ -40,23 +32,23 @@ namespace TeleopReachy
 
         void HideReachyView()
         {
-            UnityEngine.Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+            Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
             reachyEyeView.gameObject.SetActive(false);
         }
 
-        void ModifyTextureTransparency(bool isRobotInVideoRoom)
-        {
-            if(isRobotInVideoRoom)
-            {
-                eyeScript.SetImageOpaque();
-            }
-            else
-            {
-                if(robotStatus.IsRobotTeleoperationActive())
-                {
-                    eyeScript.SetImageTransparent();
-                }
-            }
-        }
+        // void ModifyTextureTransparency(bool isRobotInVideoRoom)
+        // {
+        //     if(isRobotInVideoRoom)
+        //     {
+        //         eyeScript.SetImageOpaque();
+        //     }
+        //     else
+        //     {
+        //         if(robotStatus.IsRobotTeleoperationActive())
+        //         {
+        //             eyeScript.SetImageTransparent();
+        //         }
+        //     }
+        // }
     }
 }

@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Reachy.Sdk.Joint;
+
 
 namespace TeleopReachy
 {

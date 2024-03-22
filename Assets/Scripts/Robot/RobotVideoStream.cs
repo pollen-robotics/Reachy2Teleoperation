@@ -1,33 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using Grpc.Core;
-using Reachy.Sdk.Camera;
+using UnityEngine.Events;
+
 
 namespace TeleopReachy
 {
     public class RobotVideoStream : MonoBehaviour
     {
-        private gRPCVideoController videoController;
-        private RobotStatus robotStatus;
+        private WebRTCAVReceiver audioVideoController;
+
+        public UnityEvent event_OnVideoTextureReady;
+        private Texture leftEyeStream;
 
         void Start()
         {
-            videoController = gRPCManager.Instance.gRPCVideoController;
-            // videoController.OnVideoStreamReady += ResetOverlayTexture;
-            // videoController.OnVideoRoomStatusHasChanged += CheckCurrentStatus;
-
-            robotStatus = RobotDataManager.Instance.RobotStatus;
+            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
+            audioVideoController.event_OnVideoTextureReceived.AddListener(UpdateVideoStream);
         }
 
-        void Update()
+        void UpdateVideoStream(Texture tex)
         {
-            videoController.GetImage(CameraId.Left);
+            leftEyeStream = tex;
+            event_OnVideoTextureReady.Invoke();
         }
 
+        public Texture GetLeftEyeTexture()
+        {
+            return leftEyeStream;
+        }
     }
 }

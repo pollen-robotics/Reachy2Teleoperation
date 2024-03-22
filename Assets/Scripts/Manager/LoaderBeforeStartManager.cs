@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace TeleopReachy
 {
@@ -26,7 +23,7 @@ namespace TeleopReachy
 
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
 
             connectionStatus.event_OnRobotUnready.AddListener(HideLoader);
             TransitionRoomManager.Instance.event_OnReadyForTeleop.AddListener(ShowLoader);
@@ -35,7 +32,7 @@ namespace TeleopReachy
 
         void ShowLoader()
         {
-            if(connectionStatus.IsRobotReady())
+            if (connectionStatus.IsRobotReady())
             {
                 loaderA.gameObject.SetActive(true);
                 isLoaderActive = true;

@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,9 +7,9 @@ namespace TeleopReachy
     public class RobotEmotionUIManager : MonoBehaviour
     {
         private RobotJointCommands robotCommands;
-        private RobotStatus robotStatus;
-        private UserEmotionInput userEmotionInput;
-        private ReachySimulatedCommands robotSimulatedCommands;
+        //private RobotStatus robotStatus;
+        //private UserEmotionInput userEmotionInput;
+        // private ReachySimulatedCommands robotSimulatedCommands;
 
         void Awake()
         {
@@ -24,11 +19,11 @@ namespace TeleopReachy
         private void Init()
         {
             robotCommands = RobotDataManager.Instance.RobotJointCommands;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            userEmotionInput = UserInputManager.Instance.UserEmotionInput;
+            //robotStatus = RobotDataManager.Instance.RobotStatus;
+            //userEmotionInput = UserInputManager.Instance.UserEmotionInput;
             robotCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
-            robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            robotSimulatedCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
+            // robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
+            // robotSimulatedCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
         }
 
         public void ShowSelectedEmotion(Emotion emotion)

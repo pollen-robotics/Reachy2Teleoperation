@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TeleopReachy
 {
@@ -17,7 +13,7 @@ namespace TeleopReachy
         private ControllersManager controllers;
 
         private RobotStatus robotStatus;
-        private RobotConfig robotConfig;
+        //private RobotConfig robotConfig;
 
         public OfflineMenuItem selectedItem;
 
@@ -25,6 +21,8 @@ namespace TeleopReachy
 
         private bool rightPrimaryButtonPreviouslyPressed;
         private bool leftPrimaryButtonPreviouslyPressed;
+
+        private UserEmergencyStopInput userEmergencyStop;
 
         public float indicatorTimer = 0.0f;
         private const float minIndicatorTimer = 0.0f;
@@ -35,15 +33,28 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
-            robotConfig = RobotDataManager.Instance.RobotConfig;
+            //robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(DeactivateOfflineMenu);
+
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
 
             controllers = ControllersManager.Instance;
 
             selectedItem = OfflineMenuItem.Cancel;
 
             isOfflineMenuActive = false;
+        }
+
+        void Init_EmergencyStop()
+        {
+            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
+            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(EmergencyStopCalled);
+        }
+
+        void EmergencyStopCalled()
+        {
+            ExitOffLineMenu();
         }
 
         // Update is called once per frame
@@ -58,7 +69,7 @@ namespace TeleopReachy
             Vector2 leftJoystickValue;
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out leftJoystickValue);
 
-            if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                 {
@@ -76,11 +87,11 @@ namespace TeleopReachy
                     {
                         float r = Mathf.Sqrt(Mathf.Pow(leftJoystickValue[0], 2) + Mathf.Pow(leftJoystickValue[1], 2));
 
-                        if(r != 0)
+                        if (r != 0)
                         {
                             indicatorTimer += Time.deltaTime * 2 * r;
                         }
-                        else 
+                        else
                         {
                             indicatorTimer += Time.deltaTime / 2;
                         }
@@ -91,7 +102,6 @@ namespace TeleopReachy
                             if (selectedItem == OfflineMenuItem.LockAndHome)
                                 robotStatus.LockRobotPosition();
                             EventManager.TriggerEvent(EventNames.BackToMirrorScene);
-
                         }
 
                         if (leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)

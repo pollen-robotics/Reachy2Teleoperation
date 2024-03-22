@@ -1,14 +1,10 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
-using System;
 
 namespace TeleopReachy
 {
-    public class CustomHandedInputSelector : MonoBehaviour
+    public class CustomHandedInputSelector : Singleton<CustomHandedInputSelector>
     {
         // Controllers
         public GameObject controllerLeft;
@@ -29,18 +25,6 @@ namespace TeleopReachy
 
         private ControllersVibrations hapticController;
 
-        public static CustomHandedInputSelector Instance { get; private set; }
-        // Start is called before the first frame update
-        public void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-                return;
-            }
-            Instance = this;
-        }
-
         void Start()
         {
             activeController = controllerRight;
@@ -56,15 +40,17 @@ namespace TeleopReachy
             }
             UnityEngine.XR.InputDevices.deviceConnected += CheckDevice;
 
-            if (robotDataManager != null)
-            {
-                robotStatus = RobotDataManager.Instance.RobotStatus;
-                robotStatus.event_OnStartTeleoperation.AddListener(HideControllerLaser);
-                robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
-            }
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, InitRobotStatus);
 
             EnableSteamLaserPointer(controllerLeft, false);
             allowActiveControllerChange = true;
+        }
+
+        void InitRobotStatus()
+        {
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStartArmTeleoperation.AddListener(HideControllerLaser);
+            robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
         }
 
         void Update()
@@ -137,6 +123,9 @@ namespace TeleopReachy
 
         private void EnableSteamLaserPointer(GameObject controller, bool enable)
         {
+            XRInteractorLineVisual xrlines = controller.GetComponent<XRInteractorLineVisual>();
+            xrlines.enabled = enable;
+
             XRRayInteractor xrRay = controller.GetComponent<XRRayInteractor>();
             xrRay.enabled = enable;
         }

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
 using UnityEngine.UI;
 
 namespace TeleopReachy
@@ -34,10 +30,10 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButtons)
+            if (needUpdateButtons)
             {
                 _timeElapsed += Time.deltaTime;
-                if(_timeElapsed >= 0.3f)
+                if (_timeElapsed >= 0.3f)
                 {
                     _timeElapsed = 0;
                     buttonsPanel.localPosition = lerpGoalPosition;

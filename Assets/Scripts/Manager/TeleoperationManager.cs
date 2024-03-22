@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace TeleopReachy
 {
@@ -9,7 +7,6 @@ namespace TeleopReachy
         private TransitionRoomManager transitionRoomManager;
 
         private RobotStatus robotStatus;
-        private ConnectionStatus connectionStatus;
 
         [SerializeField]
         private Transform reachy;
@@ -24,8 +21,6 @@ namespace TeleopReachy
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckChanges);
         }
 
         void StartTeleoperation()
@@ -39,7 +34,7 @@ namespace TeleopReachy
             {
                 robotStatus.SetEmotionsActive(true);
             }*/
-            if (robotConfig.HasMobilePlatform() && connectionStatus.IsRobotInMobileRoom())
+            if (robotConfig.HasMobileBase())
             {
                 robotStatus.SetMobilityActive(true);
             }
@@ -85,20 +80,8 @@ namespace TeleopReachy
                 reachy.GetChild(1).switchRenderer(enabled);
             if (robotConfig.HasRightArm())
                 reachy.GetChild(3).switchRenderer(enabled);
-            if (robotConfig.HasMobilePlatform())
+            if (robotConfig.HasMobileBase())
                 reachy.GetChild(5).switchRenderer(enabled);
-        }
-
-        void CheckChanges()
-        {
-            if (!connectionStatus.IsRobotInMobileRoom())
-            {
-                robotStatus.SetMobilityActive(false);
-            }
-            else
-            {
-                robotStatus.SetMobilityActive(true);
-            }
         }
     }
 }

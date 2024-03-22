@@ -1,15 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class WarningMessageServiceDisconnectedUIManager : MonoBehaviour
+    public class WarningMessageServiceDisconnectedUIManager : LazyFollow
     {
         private ConnectionStatus connectionStatus;
         private RobotStatus robotStatus;
@@ -27,10 +24,22 @@ namespace TeleopReachy
         private Coroutine limitDisplayInTime;
 
         private UserMobilityInput userMobilityInput;
+        private ControllersManager controllers;
 
         void Start()
         {
-            connectionStatus = gRPCManager.Instance.ConnectionStatus;
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, -0.32f, 0.8f);
+            }
+            else
+            { // If oculus 3 or other
+                targetOffset = new Vector3(0, -0.32f, 0.7f);
+            }
+            maxDistanceAllowed = 0;
+
+            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -57,9 +66,9 @@ namespace TeleopReachy
         void CheckNewStatus()
         {
             onlyMobileServicesAffected = false;
-            if(!connectionStatus.IsRobotInDataRoom())
+            if (!connectionStatus.IsRobotInDataRoom())
             {
-                if(!connectionStatus.IsRobotInVideoRoom())
+                if (!connectionStatus.IsRobotInVideoRoom())
                 {
                     messageToDisplay = "Robot services have been disconnected";
                 }
@@ -70,20 +79,13 @@ namespace TeleopReachy
             }
             else
             {
-                if(!connectionStatus.IsRobotInVideoRoom())
+                if (!connectionStatus.IsRobotInVideoRoom())
                 {
                     messageToDisplay = "Video stream has been disconnected";
                 }
                 else
                 {
-                    if(robotConfig.HasMobilePlatform() && !connectionStatus.IsRobotInMobileRoom())
-                    {
-                        onlyMobileServicesAffected = true;
-                        messageToDisplay = "Mobile services have been disconnected";
-                    }
-                    else{
-                        wantWarningMessageDisplayed = false;
-                    }
+                    wantWarningMessageDisplayed = false;
                 }
             }
             needUpdateWarningMessage = true;
@@ -91,21 +93,21 @@ namespace TeleopReachy
 
         void DisplayMessageForMobility()
         {
-            if(!wantWarningMessageDisplayed)
+            if (!wantWarningMessageDisplayed)
             {
                 onlyMobileServicesAffected = true;
-                if(robotConfig.HasMobilePlatform())
+                if (robotConfig.HasMobileBase())
                 {
-                    if(!robotStatus.IsMobilityActive())
+                    if (!robotStatus.IsMobilityActive())
                     {
                         messageToDisplay = "Mobile services have been disconnected";
                     }
                     else
                     {
-                        if(!robotStatus.IsMobilityOn()) messageToDisplay = "Mobile base has been disabled in options";
+                        if (!robotStatus.IsMobilityOn()) messageToDisplay = "Mobile base has been disabled in options";
                     }
                     ShowWarningMessage();
-                }            
+                }
             }
         }
 
@@ -120,21 +122,21 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateWarningMessage)
+            if (needUpdateWarningMessage)
             {
                 warningMessage.text = messageToDisplay;
-                if(onlyMobileServicesAffected)
+                if (onlyMobileServicesAffected)
                 {
-                    if(wantWarningMessageDisplayed) 
+                    if (wantWarningMessageDisplayed)
                     {
-                        if(limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
+                        if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
                         limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
                     }
                 }
                 else
                 {
-                    if(limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
-                    if(wantWarningMessageDisplayed) transform.ActivateChildren(true);
+                    if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
+                    if (wantWarningMessageDisplayed) transform.ActivateChildren(true);
                     else { transform.ActivateChildren(false); }
                 }
                 needUpdateWarningMessage = false;

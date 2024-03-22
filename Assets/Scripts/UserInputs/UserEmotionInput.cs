@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+
 
 namespace TeleopReachy
 {
@@ -19,7 +17,7 @@ namespace TeleopReachy
         private RobotConfig robotConfig;
         private RobotJointCommands robotCommands;
 
-        private ReachySimulatedCommands robotSimulatedCommands;
+        // private ReachySimulatedCommands robotSimulatedCommands;
         private RobotStatus robotStatus;
 
 
@@ -37,8 +35,8 @@ namespace TeleopReachy
         {
             robotCommands = RobotDataManager.Instance.RobotJointCommands;
             robotCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
-            robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            robotSimulatedCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
+            // robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
+            // robotSimulatedCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
             onlineMenuManager.event_OnAskEmotion.AddListener(AskToPlayEmotion);
@@ -54,26 +52,26 @@ namespace TeleopReachy
             }
             else
             {
-                robot = robotSimulatedCommands;
+                // robot = robotSimulatedCommands;
             }
             robotStatus.SetEmotionPlaying(true);
-            switch (emotion)
-            {
-                case Emotion.Sad:
-                    robot.ReachySad();
-                    break;
+            // switch (emotion)
+            // {
+            //     case Emotion.Sad:
+            //         robot.ReachySad();
+            //         break;
 
-                case Emotion.Happy:
-                    robot.ReachyHappy();
-                    break;
-                case Emotion.Angry:
-                    robot.ReachyAngry();
-                    break;
+            //     case Emotion.Happy:
+            //         robot.ReachyHappy();
+            //         break;
+            //     case Emotion.Angry:
+            //         robot.ReachyAngry();
+            //         break;
 
-                case Emotion.Confused:
-                    robot.ReachyConfused();
-                    break;
-            }
+            //     case Emotion.Confused:
+            //         robot.ReachyConfused();
+            //         break;
+            // }
         }
 
         public void EmotionIsOver(Emotion emotion)

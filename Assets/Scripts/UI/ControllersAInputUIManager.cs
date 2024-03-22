@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
 
 
@@ -16,8 +12,8 @@ namespace TeleopReachy
         private ControllersManager controllersManager;
 
         [SerializeField]
-        private Texture oculusAInputImage; 
-        
+        private Texture oculusAInputImage;
+
         [SerializeField]
         private Texture viveAInputImage;
 
@@ -29,7 +25,7 @@ namespace TeleopReachy
         private void OnEnable()
         {
             controllersManager = ControllersManager.Instance;
-            controllersImages = new List<Texture> {oculusAInputImage, viveAInputImage, valveAInputImage}; 
+            controllersImages = new List<Texture> { oculusAInputImage, viveAInputImage, valveAInputImage };
             transform.GetComponent<RawImage>().texture = controllersImages[(int)controllersManager.controllerDeviceType];
         }
     }

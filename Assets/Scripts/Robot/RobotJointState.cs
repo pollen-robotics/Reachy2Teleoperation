@@ -1,52 +1,35 @@
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using Grpc.Core;
-using Reachy.Sdk.Joint;
-using Reachy;
 
 namespace TeleopReachy
 {
     public class RobotJointState : MonoBehaviour
     {
-        private gRPCDataController dataController;
+        private DataMessageManager dataController;
 
         [Tooltip("Robot that will be updated")]
-        public ReachyController reachy;
-
-        //private bool inTransitionRoom;
+        public ReachyController.ReachyController reachy;
 
         void Start()
         {
-            dataController = gRPCManager.Instance.gRPCDataController;
+            dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
 
             EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, UpdateModelRobot);
-
-            //inTransitionRoom = true;
-        }
-
-        void Update()
-        {
-            dataController.GetJointsState();
         }
 
         void UpdateRobot()
         {
-            // reachy = GameObject.Find("Reachy").GetComponent<ReachyController>();
-            reachy = null;
+            reachy = GameObject.Find("Reachy").GetComponent<ReachyController.ReachyController>();
         }
 
         void UpdateModelRobot()
         {
-            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController>();
+            reachy = GameObject.Find("ReachyGhost").GetComponent<ReachyController.ReachyController>();
         }
 
-        protected void UpdateJointsState(Dictionary<JointId, float> PresentPositions)
+        protected void UpdateJointsState(Dictionary<string, float> PresentPositions)
         {
             if (reachy != null)
             {

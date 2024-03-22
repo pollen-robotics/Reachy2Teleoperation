@@ -1,10 +1,11 @@
 using UnityEngine;
-using Reachy.Sdk.Kinematics;
-using UnityEngine.XR.Interaction.Toolkit;
-
 
 namespace TeleopReachy
 {
+    public enum ArmSide
+    {
+        LEFT, RIGHT
+    }
     [System.Serializable]
     public class HandController
     {
@@ -15,7 +16,7 @@ namespace TeleopReachy
         public UnityEngine.Matrix4x4 handPose = UnityEngine.Matrix4x4.identity;
         [SerializeField]
         [HideInInspector]
-        public Reachy.Sdk.Kinematics.Matrix4x4 target_pos;
+        public Reachy.Kinematics.Matrix4x4 target_pos;
 
         [SerializeField]
         [HideInInspector]
@@ -46,12 +47,12 @@ namespace TeleopReachy
 
             if (handSide == "right")
             {
-                side_id = ArmSide.Right;
+                side_id = ArmSide.RIGHT;
                 VRHand = GameObject.Find("TrackedRightHand").transform;
             }
             else
             {
-                side_id = ArmSide.Left;
+                side_id = ArmSide.LEFT;
                 VRHand = GameObject.Find("TrackedLeftHand").transform;
             }
         }
@@ -118,12 +119,12 @@ namespace TeleopReachy
 
             hand.handPose.SetColumn(3, positionVect);
 
-            hand.target_pos = new Reachy.Sdk.Kinematics.Matrix4x4
+            hand.target_pos = new Reachy.Kinematics.Matrix4x4
             {
                 Data = { hand.handPose[0,0], hand.handPose[0,1], hand.handPose[0,2], hand.handPose[0,3],
-                                                                                hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2], hand.handPose[1,3],
-                                                                                hand.handPose[2,0], hand.handPose[2,1], hand.handPose[2,2], hand.handPose[2,3],
-                                                                                hand.handPose[3,0], hand.handPose[3,1], hand.handPose[3,2], hand.handPose[3,3] }
+                            hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2], hand.handPose[1,3],
+                            hand.handPose[2,0], hand.handPose[2,1], hand.handPose[2,2], hand.handPose[2,3],
+                            hand.handPose[3,0], hand.handPose[3,1], hand.handPose[3,2], hand.handPose[3,3] }
             };
         }
 

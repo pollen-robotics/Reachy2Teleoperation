@@ -1,28 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
 namespace TeleopReachy
 {
-    public class TimerSpeedManager : MonoBehaviour
+    public class TimerSpeedManager : LazyFollow
     {
         private RobotStatus robotStatus;
 
         Coroutine timerCoroutine;
         Coroutine rotateLoader;
 
+        // private ControllersManager controllers;
         void Start()
         {
+
+            // controllers = ActiveControllerManager.Instance.ControllersManager;
+            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            // {
+            //     targetOffset = new Vector3(0, -0.15f, 0.5f);
+            // }
+            // else{ // If oculus 3 or other
+            targetOffset = new Vector3(0, -0.15f, 0.8f);
+            // }
+            maxDistanceAllowed = 0;
+
             timerCoroutine = null;
             rotateLoader = null;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(StartTimer);
+            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTimer);
             robotStatus.event_OnStopTeleoperation.AddListener(StopTimer);
 
             transform.ActivateChildren(false);
