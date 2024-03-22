@@ -1,11 +1,14 @@
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Events;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearRegression;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace TeleopReachy
 {
@@ -19,11 +22,11 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
-        private float intervalTime=0.1f ; //fréquence de 10Hz
+        private float intervalTime=0.04f ; 
         private float actualTime=0f;
         private Transform newUserCenter;
-        // private bool calib_right_side = false;
-        // private bool calib_left_side = false;
+        private bool calib_right_side = false;
+        private bool calib_left_side = false;
         private bool capture_done = false;
         private bool calibration_done = false;
         private ControllersManager controllers;
@@ -35,6 +38,8 @@ namespace TeleopReachy
         public UnityEvent event_StartLeftCalib;
 
         private  InstructionsTextUIManager instructionsTextUIManager;
+
+
 
 
         private static RobotCalibration instance;
@@ -86,37 +91,39 @@ namespace TeleopReachy
             if (buttonX)
                 start_calib_keyboard = true;
 
-            if (!start_calib_keyboard && !capture_done)
+            if (!start_calib_keyboard && !calibration_done) 
+             //if (!start_calib_keyboard && !capture_done)
             {
                 Debug.Log("calib : press X");
                 event_WaitForCalib.Invoke();
                 actualTime = 0f;
             }
 
-            // capturing points from right side, then left side
-            // if (!calib_right_side && start_calib_keyboard) {
-            //     Debug.Log("calib droite");
-            //     event_StartRightCalib.Invoke();
-            //     CapturePoints("right");
-            //     actualTime += Time.deltaTime;}
+            //capturing points from right side, then left side
+            if (!calib_right_side && start_calib_keyboard) {
+                Debug.Log("calib droite");
+                event_StartRightCalib.Invoke();
+                CapturePoints("right");
+                actualTime += Time.deltaTime;}
 
-            // else if (!calib_left_side && start_calib_keyboard){
-            //     Debug.Log("calib gauche");
-            //     event_StartLeftCalib.Invoke();
-            //     CapturePoints("left");
-            //     actualTime += Time.deltaTime;}
-
-            else if (!capture_done && start_calib_keyboard)
-            {
-                Debug.Log("calib simultanée");
+            else if (!calib_left_side && start_calib_keyboard){
+                Debug.Log("calib gauche");
                 event_StartLeftCalib.Invoke();
-                CapturePoints();
-                actualTime += Time.deltaTime;
+                CapturePoints("left");
+                actualTime += Time.deltaTime;}
+
+            // else if (!capture_done && start_calib_keyboard)
+            // {
+            //     Debug.Log("calib simultanée");
+            //     event_StartLeftCalib.Invoke();
+            //     CapturePoints();
+            //     actualTime += Time.deltaTime;
 
 
-            }
+            // }
 
-            else if (capture_done && !calibration_done) 
+            //else if (capture_done && !calibration_done)
+            else if (calib_left_side && !calibration_done)  
             {
                 Debug.Log("calcul de calib");
                 UpperBodyFeatures();
@@ -130,71 +137,78 @@ namespace TeleopReachy
             }  
         }
 
-        // private void CapturePoints (string side)
-        // {
-        //     if (side == "right"){
-        //         if (rightCoordinates.Count < 200){
-        //             Debug.Log("last point" + lastPointRight);
-                    
-        //             //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.07f)
-        //             if (actualTime % intervalTime == 0)
-        //             {
-        //                 rightCoordinates.Add(trackedRightHand.position);
-        //                 lastPointRight = trackedRightHand.position;
-        //                 Debug.Log(rightCoordinates.Count);}
-        //         } else {
-        //             calib_right_side = true;
-        //             start_calib_keyboard = false;}
-        //     } else if (side == "left"){
-        //         if (leftCoordinates.Count < 200)
-        //         {
-        //             Debug.Log("last point" + lastPointLeft);
-        //             //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.07f)
-        //             if (actualTime % intervalTime == 0 )
-        //             {
-        //                 leftCoordinates.Add(trackedLeftHand.position);
-        //                 lastPointLeft = trackedLeftHand.position;
-        //                 Debug.Log(leftCoordinates.Count);}
-        //         } else  {
-        //             calib_left_side = true;
-        //             start_calib_keyboard = false;}
-        //     }
-            
-        // }
-
-        private void CapturePoints () // version simultanée 
+        private void CapturePoints (string side) //bras séparés
         {
-            Debug.Log("droit:" + rightCoordinates.Count + "gauche :" + leftCoordinates.Count);
-            if (rightCoordinates.Count < 200 || leftCoordinates.Count < 200){
-                //if (actualTime >= intervalTime)
-                if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.05f)
+            Debug.Log("actualTime=" + actualTime);
+            if (side == "right"){
+                if (rightCoordinates.Count < 400){
+                    Debug.Log("last point" + lastPointRight);
+                    
+                    //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.03f)
+                    if (actualTime >= intervalTime)
+                    {
+                        Debug.Log(rightCoordinates.Count);
+                        rightCoordinates.Add(trackedRightHand.position);
+                        lastPointRight = trackedRightHand.position;
+                        Debug.Log(rightCoordinates.Count);
+                        actualTime=0f;}
+                } else {
+                    calib_right_side = true;
+                    start_calib_keyboard = false;}
+            } else if (side == "left"){
+                if (leftCoordinates.Count < 400)
                 {
-                    leftCoordinates.Add(trackedLeftHand.position);
-                    lastPointLeft = trackedLeftHand.position;
-                }
-                if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.05f)
-                {
-                    rightCoordinates.Add(trackedRightHand.position);
-                    lastPointRight = trackedRightHand.position;
-                }
-                    //actualTime = 0f;}
+                    Debug.Log("last point" + lastPointLeft);
+                    //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
+                    if (actualTime >= intervalTime)
+                    {
+                        Debug.Log(leftCoordinates.Count);
 
-                else {
-                    Debug.Log("actual time :" + actualTime);
-                }
+                        leftCoordinates.Add(trackedLeftHand.position);
+                        lastPointLeft = trackedLeftHand.position;
+                        Debug.Log(leftCoordinates.Count);
+                        actualTime=0f;}
+                } else  {
+                    calib_left_side = true;
+                    start_calib_keyboard = false;}
+            }
             
-            } else 
-                capture_done = true;
         }
+
+        // private void CapturePoints () // version simultanée 
+        // {
+        //     Debug.Log("droit:" + rightCoordinates.Count + "gauche :" + leftCoordinates.Count);
+        //     if (rightCoordinates.Count < 350 || leftCoordinates.Count < 350){
+        //         //if (actualTime >= intervalTime)
+        //         if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
+        //         {
+        //             leftCoordinates.Add(trackedLeftHand.position);
+        //             lastPointLeft = trackedLeftHand.position;
+        //             rightCoordinates.Add(trackedRightHand.position);
+        //             lastPointRight = trackedRightHand.position;
+        //             actualTime = 0f;
+
+        //         }
+
+        //         else {
+        //             Debug.Log("actual time :" + actualTime);
+        //         }
+            
+        //     } else 
+        //         capture_done = true;
+        // }
             
     
 
 
         public void UpperBodyFeatures()
         {
+            Vector3 initialPosition = TransitionRoomManager.Instance.userTracker.position;
  
-            (double leftArmSize, Vector3 leftShoulderCenter) = CenterRotationLSM(leftCoordinates);
-            (double rightArmSize, Vector3 rightShoulderCenter) = CenterRotationLSM(rightCoordinates);
+            // (double leftArmSize, Vector3 leftShoulderCenter) = CenterRotationLSM(leftCoordinates);
+            // (double rightArmSize, Vector3 rightShoulderCenter) = CenterRotationLSM(rightCoordinates);
+            (double leftArmSize, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
+            (double rightArmSize, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
             
             double meanArmSize = (leftArmSize + rightArmSize) / 2f;
@@ -205,6 +219,31 @@ namespace TeleopReachy
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
             TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
             Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
+
+            // get the minimum of rightCoordinates and leftCoordinates together
+            double x_min = rightCoordinates.Select(c => c.x).Concat(leftCoordinates.Select(c => c.x)).Min();
+            double x_max = rightCoordinates.Select(c => c.x).Concat(leftCoordinates.Select(c => c.x)).Max();
+            double y_min = rightCoordinates.Select(c => c.y).Concat(leftCoordinates.Select(c => c.y)).Min();
+            double y_max = rightCoordinates.Select(c => c.y).Concat(leftCoordinates.Select(c => c.y)).Max();
+            double z_min = rightCoordinates.Select(c => c.z).Concat(leftCoordinates.Select(c => c.z)).Min();
+            double z_max = rightCoordinates.Select(c => c.z).Concat(leftCoordinates.Select(c => c.z)).Max();
+
+            double x_approx = (x_min + x_max) / 2;
+            double y_approx = (y_min + y_max) / 2;
+            double z_approx = (z_min + z_max) / 2;
+            
+
+            //ajout des data dans un .csv
+            var filePath = @"C:\Users\robot\Dev\dataunity_exhaustif.csv";
+            var currentTime = DateTime.Now.ToString("ddMM_HHmm", CultureInfo.InvariantCulture);
+            var data = $"{currentTime},{leftArmSize},{leftShoulderCenter.x},{leftShoulderCenter.y},{leftShoulderCenter.z},{rightArmSize},{rightShoulderCenter.x},{rightShoulderCenter.y},{rightShoulderCenter.z},{TransitionRoomManager.Instance.shoulderWidth},{meanArmSize},{midShoulderPoint.x},{midShoulderPoint.y},{midShoulderPoint.z},";
+            using (var writer = new StreamWriter(filePath, true))
+            {writer.WriteLine(data);}
+
+            filePath = @"C:\Users\robot\Dev\dataunity_center.csv";
+            data = $"{currentTime},{midShoulderPoint.x},{x_approx},{initialPosition.x},{midShoulderPoint.y},{y_approx},{initialPosition.y},{midShoulderPoint.z},{z_approx},{initialPosition.z},";
+            using (var writer = new StreamWriter(filePath, true))
+            {writer.WriteLine(data);}
         }
 
         private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
@@ -240,6 +279,7 @@ namespace TeleopReachy
             return (radius, rotationCenterPosition);
         }
 
+
         public bool IsCalibrated (){
             return calibration_done;
         }
@@ -268,5 +308,61 @@ namespace TeleopReachy
             Debug.Log("Coordonnées exportées dans fichier CSV : " + fileName);
         }
 
+ 
+
+        public static (double, Vector3) EllipsoidFitAleksander(List<Vector3> points)
+        {
+            // var X = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.x));
+            // var Y = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.y));
+            // var Z = Vector<double>.Build.DenseOfEnumerable(points.Select(p => (double) p.z));
+
+            var D = Matrix<double>.Build.DenseOfRowArrays(points.Select(p => new double[] {
+                p.x * p.x + p.y * p.y - 2 * p.z * p.z,
+                p.x * p.x + p.z * p.z - 2 * p.y * p.y,
+                2 * p.x, 2 * p.y, 2 * p.z,
+                1
+            }).ToArray());
+            Debug.Log("D = " + D);
+
+            var d2 = Vector<double>.Build.DenseOfEnumerable(points.Select(p => (double)p.x * p.x + (double)p.y * p.y + (double)p.z * p.z));
+            Debug.Log("d2 = " + d2);
+            var u = D.TransposeThisAndMultiply(D).Solve(D.TransposeThisAndMultiply(d2));
+            Debug.Log("u = " + u);
+            double a = u[0] + u[1] - 1;
+            double b = u[0] - 2 * u[1] - 1;
+            double c = u[1] - 2 * u[0] - 1;
+            var zs = Vector<double>.Build.Dense(3);
+            var v = Vector<double>.Build.DenseOfEnumerable(new double[] {a, b, c}.Concat(zs).Concat(u.SubVector(2, u.Count - 2)));
+
+            var A = Matrix<double>.Build.DenseOfRowArrays(
+                new double[] {v[0], v[3], v[4], v[6]},
+                new double[] {v[3], v[1], v[5], v[7]},
+                new double[] {v[4], v[5], v[2], v[8]},
+                new double[] {v[6], v[7], v[8], v[9]});
+            Debug.Log("A = " + A);
+
+            var centre = (-A.SubMatrix(0, 3, 0, 3)).Solve(v.SubVector(6, 3));
+            var T = DenseMatrix.CreateIdentity(4);
+            Debug.Log("T init = " + T);
+            T[3, 0] = centre[0];
+            T[3, 1] = centre[1];
+            T[3, 2] = centre[2];            
+            Debug.Log("T = " + T);
+
+            var R = T.Multiply(A).Multiply(T.Transpose());
+            Debug.Log("R = " + R);
+            var eig = R.SubMatrix(0, 3, 0, 3).Divide(-R[3, 3]).Evd();
+            Debug.Log("eig = " + eig);
+            var evals = eig.EigenValues.Real();
+            Debug.Log("evals = " + evals);
+
+            var radii = evals.Map(value => Math.Sqrt(1 / Math.Abs(value)));
+            Debug.Log("radii =" + radii);
+            double meanRadius = radii.Average();
+            Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
+
+            return (meanRadius, centreVector3);
+
+        }
     }
 }
