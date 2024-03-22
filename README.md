@@ -8,6 +8,10 @@ The app should run with any VR headset compatible with Unity. It has been tested
 
 For any custom development we recommend to use Unity LTS 2022.3, which has been used for development.
 
+
+The project relies on GStreamer. Please install the [Windows Runtime](
+https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msvc-x86_64-1.24.0.msi) (complete install). Check that the environment variable PATH contains *C:\gstreamer\1.0\msvc_x86_64\bin* (default installation). Reboot after the installation.
+
 ## Installation
 
 ### Using a [release build](https://github.com/pollen-robotics/ReachyTeleoperation/releases) [recommended]
@@ -65,4 +69,4 @@ You are now controlling Reachy! Press and hold A to return to the previous step.
 ## Issues / Contributions
 
 If you have any problem, you can create an issue or chat with us on our [discord server](https://discord.com/channels/519098054377340948/991321051835404409). 
-Finally, anyone is welcome to contribute to this project. Feel free to checkout the **develop** branch and to pull request any modifications.
+
