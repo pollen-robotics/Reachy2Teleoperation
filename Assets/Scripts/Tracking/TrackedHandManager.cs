@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
-using UnityEngine.XR.Interaction.Toolkit;
-
 
 namespace TeleopReachy
 {
@@ -22,6 +16,15 @@ namespace TeleopReachy
             switch (ControllersManager.Instance.controllerDeviceType)
             {
                 case ControllersManager.SupportedDevices.Oculus:
+                    {
+                        transform.localPosition = new Vector3(0, -0.03f, 0);
+                        UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
+                        else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
+                        transform.localRotation = targetRotation;
+                        break;
+                    }
+                case ControllersManager.SupportedDevices.MetaQuest3:
                     {
                         transform.localPosition = new Vector3(0, -0.03f, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();

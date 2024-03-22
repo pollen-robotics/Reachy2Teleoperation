@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TeleopReachy
 {
@@ -17,7 +13,7 @@ namespace TeleopReachy
         private ControllersManager controllers;
 
         private RobotStatus robotStatus;
-        private RobotConfig robotConfig;
+        //private RobotConfig robotConfig;
 
         public OfflineMenuItem selectedItem;
 
@@ -37,11 +33,11 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
-            robotConfig = RobotDataManager.Instance.RobotConfig;
+            //robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(DeactivateOfflineMenu);
 
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
 
             controllers = ControllersManager.Instance;
 
@@ -50,7 +46,7 @@ namespace TeleopReachy
             isOfflineMenuActive = false;
         }
 
-        void Init()
+        void Init_EmergencyStop()
         {
             userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
             userEmergencyStop.event_OnEmergencyStopCalled.AddListener(EmergencyStopCalled);
@@ -91,11 +87,11 @@ namespace TeleopReachy
                     {
                         float r = Mathf.Sqrt(Mathf.Pow(leftJoystickValue[0], 2) + Mathf.Pow(leftJoystickValue[1], 2));
 
-                        if(r != 0)
+                        if (r != 0)
                         {
                             indicatorTimer += Time.deltaTime * 2 * r;
                         }
-                        else 
+                        else
                         {
                             indicatorTimer += Time.deltaTime / 2;
                         }

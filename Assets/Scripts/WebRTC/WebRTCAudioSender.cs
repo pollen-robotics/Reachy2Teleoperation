@@ -66,11 +66,6 @@ namespace TeleopReachy
                 {
                     if (excludeCodecTypes.Count(type => codec.mimeType.Contains(type)) > 0)
                         continue;
-                    /*if (codec.mimeType.Contains("audio/opus"))
-                    {
-                        //to force opus
-                        availableCodecs.Add(codec);
-                    }*/
                 }
 
 
@@ -79,7 +74,6 @@ namespace TeleopReachy
                 var error = transceiver1.SetCodecPreferences(availableCodecs.ToArray());
                 if (error != RTCErrorType.None)
                     Debug.LogError(error);
-                //var transceiver1 = _pc.GetTransceivers().First();
                 transceiver1.Direction = RTCRtpTransceiverDirection.SendOnly;
 
                 isRobotInRoom = true;
