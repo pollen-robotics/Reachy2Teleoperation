@@ -30,11 +30,11 @@ namespace TeleopReachy
 
         private WebRTCData webRTCDataController;
 
-        private HandCommand lastRightHandCommand;
-        private HandCommand lastLeftHandCommand;
-        private ArmCommand lastRightArmCommand;
-        private ArmCommand lastLeftArmCommand;
-        private MobileBaseCommand lastMobileBaseCommand;
+        //private HandCommand lastRightHandCommand;
+        //private HandCommand lastLeftHandCommand;
+        //private ArmCommand lastRightArmCommand;
+        //private ArmCommand lastLeftArmCommand;
+        //private MobileBaseCommand lastMobileBaseCommand;
 
         private AnyCommands commands = new AnyCommands { };
 

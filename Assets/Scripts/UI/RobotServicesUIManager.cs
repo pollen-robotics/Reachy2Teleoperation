@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 namespace TeleopReachy
@@ -41,9 +35,6 @@ namespace TeleopReachy
 
             transform.GetChild(3).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInDataRoom());
             transform.GetChild(3).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInDataRoom());
-
-            /*transform.GetChild(3).GetChild(0).gameObject.SetActive(!connectionStatus.IsRobotInRestartRoom());
-            transform.GetChild(3).GetChild(1).gameObject.SetActive(connectionStatus.IsRobotInRestartRoom());*/
         }
 
         private void HideServices()
@@ -59,9 +50,6 @@ namespace TeleopReachy
 
             transform.GetChild(3).GetChild(0).gameObject.SetActive(false);
             transform.GetChild(3).GetChild(1).gameObject.SetActive(false);
-
-            /* transform.GetChild(4).GetChild(0).gameObject.SetActive(false);
-             transform.GetChild(4).GetChild(1).gameObject.SetActive(false);*/
         }
     }
 }
