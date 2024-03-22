@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +7,7 @@ namespace TeleopReachy
     {
         [SerializeField]
         public Button leftArmButton;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
@@ -36,8 +33,8 @@ namespace TeleopReachy
         void SwitchButtonMode()
         {
             robotStatus.SetLeftArmOn(!robotStatus.IsLeftArmOn());
-            
-            if(robotStatus.IsLeftArmOn())
+
+            if (robotStatus.IsLeftArmOn())
             {
                 leftArmButton.colors = ColorsManager.colorsActivated;
                 leftArmButton.transform.GetChild(0).GetComponent<Text>().text = "Left arm ON";
@@ -51,7 +48,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 leftArmButton.interactable = isInteractable;
                 leftArmButton.colors = buttonColor;
@@ -62,10 +59,10 @@ namespace TeleopReachy
 
         void CheckLeftArmPresence()
         {
-            if(robotConfig.HasLeftArm())
+            if (robotConfig.HasLeftArm())
             {
                 isInteractable = true;
-                if(robotStatus.IsLeftArmOn())
+                if (robotStatus.IsLeftArmOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
                     buttonText = "Left arm ON";

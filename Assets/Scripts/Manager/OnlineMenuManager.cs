@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TeleopReachy
 {
@@ -33,7 +30,7 @@ namespace TeleopReachy
 
         private Vector2 rightJoystickDirection;
 
-        private int nbEnum;
+        //private int nbEnum;
 
         public UnityEvent<Emotion> event_OnAskEmotion;
 
@@ -70,7 +67,7 @@ namespace TeleopReachy
             selectedItem = OnlineMenuItem.Cancel;
             selectedEmotion = Emotion.NoEmotion;
 
-            nbEnum = Enum.GetNames(typeof(OnlineMenuItem)).Length;
+            //nbEnum = Enum.GetNames(typeof(OnlineMenuItem)).Length;
         }
 
         // Update is called once per frame

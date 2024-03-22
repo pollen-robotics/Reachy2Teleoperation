@@ -8,14 +8,14 @@ namespace TeleopReachy
 {
     public class EmotionMessageUIManager : LazyFollow
     {
-        private RobotStatus robotStatus;
+        //private RobotStatus robotStatus;
 
         private Coroutine limitDisplayInTime;
 
         [SerializeField]
         private Text infoMessage;
 
-        private OnlineMenuManager onlineMenuManager;
+        //private OnlineMenuManager onlineMenuManager;
 
         [SerializeField]
         private Texture sadImage;
@@ -43,7 +43,8 @@ namespace TeleopReachy
             {
                 targetOffset = new Vector3(0, -0.24f, 0.8f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.24f, 0.7f);
             }
             maxDistanceAllowed = 0;

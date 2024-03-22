@@ -1,5 +1,3 @@
-
-
 namespace TeleopReachy
 {
     public class WebRTCManager : Singleton<WebRTCManager>

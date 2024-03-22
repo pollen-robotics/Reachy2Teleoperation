@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace TeleopReachy
 {
@@ -35,7 +32,7 @@ namespace TeleopReachy
 
         void ShowLoader()
         {
-            if(connectionStatus.IsRobotReady())
+            if (connectionStatus.IsRobotReady())
             {
                 loaderA.gameObject.SetActive(true);
                 isLoaderActive = true;

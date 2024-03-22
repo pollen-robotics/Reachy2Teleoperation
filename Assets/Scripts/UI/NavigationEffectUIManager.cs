@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
@@ -31,23 +27,24 @@ namespace TeleopReachy
             {
                 targetOffset = new Vector3(0, -0.27f, 0.8f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.27f, 0.7f);
             }
             maxDistanceAllowed = 0;
 
             motionSicknessManager = MotionSicknessManager.Instance;
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ShowInfoMessage);
-            
+
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideInfoMessage);
 
             HideInfoMessage();
         }
-        
+
         void Update()
         {
-            if(needNavigationEffectUpdate)
+            if (needNavigationEffectUpdate)
             {
                 if (navigationEffectPanelDisplay != null) StopCoroutine(navigationEffectPanelDisplay);
                 navigationEffectInfoPanel.ActivateChildren(true);
@@ -62,20 +59,20 @@ namespace TeleopReachy
         {
             if (robotStatus.IsRobotTeleoperationActive())
             {
-                if(motionSicknessManager.IsTunnellingOn) 
+                if (motionSicknessManager.IsTunnellingOn)
                 {
-                    if(motionSicknessManager.RequestNavigationEffect)
+                    if (motionSicknessManager.RequestNavigationEffect)
                     {
                         navigationEffectText = "Activate tunnelling";
                     }
-                    else 
+                    else
                     {
                         navigationEffectText = "Deactivate tunnelling";
                     }
                 }
-                else if(motionSicknessManager.IsReducedScreenOn) 
+                else if (motionSicknessManager.IsReducedScreenOn)
                 {
-                    if(motionSicknessManager.RequestNavigationEffect)
+                    if (motionSicknessManager.RequestNavigationEffect)
                     {
                         navigationEffectText = "Activate reduced screen";
                     }

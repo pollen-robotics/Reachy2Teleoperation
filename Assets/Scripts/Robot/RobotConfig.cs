@@ -1,15 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
-using System;
-using UnityEngine.UI;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 using Google.Protobuf;
-using Reachy;
 using Reachy.Part;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;

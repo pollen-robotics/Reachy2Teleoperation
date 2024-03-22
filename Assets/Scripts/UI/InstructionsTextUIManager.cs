@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace TeleopReachy
 {
@@ -13,7 +10,7 @@ namespace TeleopReachy
         [SerializeField]
         private Text instructionsDetails;
 
-        private ConnectionStatus connectionStatus;
+        //private ConnectionStatus connectionStatus;
         private TransitionRoomManager transitionRoomManager;
 
         private TextButtonControllerModifier textButtonControllerModifier;
@@ -23,7 +20,6 @@ namespace TeleopReachy
         private string instructionsText;
         private string instructionsDetailsText;
 
-        // Start is called before the first frame update
         void Start()
         {
             instructions = transform.GetComponent<Text>();
