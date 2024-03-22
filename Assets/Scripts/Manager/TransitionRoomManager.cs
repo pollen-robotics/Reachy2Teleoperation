@@ -31,7 +31,7 @@ namespace TeleopReachy
         [SerializeField]
         private Transform ghostReachyIndicator;
 
-        private Transform userTracker;
+        public Transform userTracker;
 
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
