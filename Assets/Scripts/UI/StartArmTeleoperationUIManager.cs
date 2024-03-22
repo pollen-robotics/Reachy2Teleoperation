@@ -1,11 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using Mobile.Base.Lidar;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
@@ -14,7 +7,7 @@ namespace TeleopReachy
     public class StartArmTeleoperationUIManager : LazyFollow
     {
         private RobotStatus robotStatus;
-        private RobotConfig robotConfig;
+        //private RobotConfig robotConfig;
 
         private ControllersManager controllers;
         private UserEmergencyStopInput userEmergencyStop;
@@ -27,14 +20,15 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
-                targetOffset = new Vector3(0, -0.1f, 0.8f);
+                targetOffset = new Vector3(0, -0.1f, 0.5f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.1f, 0.7f);
             }
             maxDistanceAllowed = 0;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
+            //robotConfig = RobotDataManager.Instance.RobotConfig;
 
             robotStatus.event_OnStartTeleoperation.AddListener(ShowInfoMessage);
             robotStatus.event_OnStartArmTeleoperation.AddListener(HideInfoMessage);
@@ -62,7 +56,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateInfoMessage)
+            if (needUpdateInfoMessage)
             {
                 transform.ActivateChildren(wantInfoMessageDisplayed);
                 needUpdateInfoMessage = false;

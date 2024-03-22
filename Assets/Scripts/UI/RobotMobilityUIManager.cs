@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using Reachy;
-using UnityEngine.XR.Interaction.Toolkit.UI;
+
 
 namespace TeleopReachy
 {
@@ -139,7 +133,7 @@ namespace TeleopReachy
                 {
                     IsRobotStatic(false);
                     float phi = Mathf.Atan2(directionLeft[1], directionLeft[0]);
-                    circleMobilityCommand.localEulerAngles = - new Vector3(0, 0, orbita_yaw) + new Vector3(0, 0, Mathf.Rad2Deg * phi);
+                    circleMobilityCommand.localEulerAngles = -new Vector3(0, 0, orbita_yaw) + new Vector3(0, 0, Mathf.Rad2Deg * phi);
                 }
             }
             else

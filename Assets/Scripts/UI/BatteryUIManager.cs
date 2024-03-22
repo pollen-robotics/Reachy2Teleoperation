@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 
 namespace TeleopReachy
 {
@@ -32,7 +30,6 @@ namespace TeleopReachy
 
         private bool isBatteryInfoAvailable;
 
-        // Start is called before the first frame update
         void Start()
         {
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -52,16 +49,15 @@ namespace TeleopReachy
             ConfigChanged();
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if(needUpdateUI)
+            if (needUpdateUI)
             {
-                if(robotConfig.HasMobileBase())
+                if (robotConfig.HasMobileBase())
                 {
-                    if(isBatteryInfoAvailable)
+                    if (isBatteryInfoAvailable)
                     {
-                        if(batteryValue != null) batteryValue.text = "Voltage : " + batteryLevelValue + " V";
+                        if (batteryValue != null) batteryValue.text = "Voltage : " + batteryLevelValue + " V";
 
                         if (!hasWarningActivated)
                         {
@@ -76,14 +72,14 @@ namespace TeleopReachy
                     }
                     else
                     {
-                        if(batteryValue != null) batteryValue.text = "No voltage information";
+                        if (batteryValue != null) batteryValue.text = "No voltage information";
                         statusText = "Missing mobility service";
                         statusColor = ColorsManager.purple;
                     }
                 }
                 else
                 {
-                    if(batteryValue != null) batteryValue.text = "No voltage information";
+                    if (batteryValue != null) batteryValue.text = "No voltage information";
                     statusText = "No battery information";
                     statusColor = ColorsManager.black;
                 }
@@ -94,12 +90,12 @@ namespace TeleopReachy
 
         void UpdateUI()
         {
-            if(batteryStatusText != null)
+            if (batteryStatusText != null)
             {
                 batteryStatusText.text = statusText;
                 batteryStatusText.color = statusColor;
             }
-            if(batteryIcon != null)
+            if (batteryIcon != null)
             {
                 batteryIcon.color = statusColor;
             }
@@ -137,7 +133,7 @@ namespace TeleopReachy
 
         void ConfigChanged()
         {
-            if(robotConfig.HasMobileBase())
+            if (robotConfig.HasMobileBase())
             {
                 isBatteryInfoAvailable = true;
             }

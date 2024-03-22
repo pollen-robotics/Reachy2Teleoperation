@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +10,7 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
 
         [SerializeField]
-        private Transform canvaWarningLockPosition;  
+        private Transform canvaWarningLockPosition;
 
         void Awake()
         {
@@ -25,9 +22,10 @@ namespace TeleopReachy
 
         void QuitTransitionRoom()
         {
-            if(!robotStatus.IsRobotPositionLocked)
+            if (!robotStatus.IsRobotPositionLocked)
                 TransitionRoomManager.Instance.BackToConnectionScene();
-            else {
+            else
+            {
                 canvaWarningLockPosition.ActivateChildren(true);
             }
         }

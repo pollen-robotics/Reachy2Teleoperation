@@ -6,7 +6,6 @@ namespace TeleopReachy
 {
     public class ConnectionStatus : MonoBehaviour
     {
-        //private bool isServerConnected;
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
@@ -44,7 +43,6 @@ namespace TeleopReachy
 
             robotConfig.event_OnConfigChanged.AddListener(RobotConfigurationChanged);
 
-            //isServerConnected = false;
             isRobotConfigReady = false;
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
@@ -165,20 +163,6 @@ namespace TeleopReachy
             }
             statusChanged = true;
         }
-
-        /*void RestartServiceStatusHasChanged(object sender, RobotRoomStatusEventArgs e)
-        {
-            isServerConnected = RobotRoomStatusEventArgs.isServerConnected;
-            isRobotInRestartRoom = e.isRobotInRoom;
-            statusChanged = true;
-        }*/
-
-        /*void RestartServiceRequestedByUser(object sender, EventArgs e)
-        {
-            isRobotInDataRoom = false;
-            isRobotInVideoRoom = false;
-            statusChanged = true;
-        }*/
 
         void RobotConfigurationChanged()
         {
