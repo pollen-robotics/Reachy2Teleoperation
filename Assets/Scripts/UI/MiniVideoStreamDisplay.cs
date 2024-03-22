@@ -14,7 +14,7 @@ namespace TeleopReachy
             screen = GetComponent<Renderer>();
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
             screen.material.SetTexture("_LeftTex", audioVideoController.GetLeftTexture());
-            screen.material.SetTexture("_RightTex", audioVideoController.GetRightTexture());
+            screen.material.SetTexture("_RightTex", audioVideoController.GetLeftTexture());
         }
 
     }
