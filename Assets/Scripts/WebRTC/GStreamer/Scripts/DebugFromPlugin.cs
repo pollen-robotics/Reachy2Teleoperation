@@ -30,17 +30,17 @@ namespace GstreamerWebRTC
             {
                 case (int)Level.info:
                     {
-                        Debug.Log(debug_string);
+                        Debug.Log("UnityGStreamerPlugin: " + debug_string);
                         break;
                     }
                 case (int)Level.warning:
                     {
-                        Debug.LogWarning(debug_string);
+                        Debug.LogWarning("UnityGStreamerPlugin: " + debug_string);
                         break;
                     }
                 case (int)Level.error:
                     {
-                        Debug.LogError(debug_string);
+                        Debug.LogError("UnityGStreamerPlugin: " + debug_string);
                         break;
                     }
             }
