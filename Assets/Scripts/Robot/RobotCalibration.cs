@@ -16,6 +16,7 @@ namespace TeleopReachy
     {
         private Transform trackedLeftHand;
         private Transform trackedRightHand;
+        private Transform userTrackerTransform;
 
         private Vector3 lastPointLeft;
         private Vector3 lastPointRight;
@@ -67,8 +68,9 @@ namespace TeleopReachy
         public void Start()
         {
             Debug.Log("Start of RobotCalibration");
-            trackedLeftHand = GameObject.Find("TrackedLeftHand").transform;
-            trackedRightHand = GameObject.Find("TrackedRightHand").transform;
+            trackedLeftHand = GameObject.Find("LeftHand Controller").transform;
+            trackedRightHand = GameObject.Find("RightHand Controller").transform;
+            userTrackerTransform = GameObject.Find("UserTracker").transform;
             newUserCenter = GameObject.Find("NewUserCenter").transform;
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
@@ -79,6 +81,8 @@ namespace TeleopReachy
 
             lastPointLeft = trackedLeftHand.position;
             lastPointRight = trackedRightHand.position;
+            // lastPointLeft = userTrackerTransform.InverseTransformPoint(trackedLeftHand.position);
+            // lastPointRight = userTrackerTransform.InverseTransformPoint(trackedRightHand.position);
             event_OnCalibChanged = new UnityEvent();
             event_StartLeftCalib = new UnityEvent();
             event_StartRightCalib = new UnityEvent();
@@ -129,7 +133,8 @@ namespace TeleopReachy
                 UpperBodyFeatures();
                 TransitionRoomManager.Instance.FixNewPosition();
                 // ajout du game object au centre de l'utilisateur 
-                newUserCenter.localPosition = TransitionRoomManager.Instance.midShoulderPoint;
+                newUserCenter.position = TransitionRoomManager.Instance.midShoulderPoint;
+                newUserCenter.rotation = TransitionRoomManager.Instance.userTracker.rotation;
                 ExportCoordinatesToCSV(); 
                 calibration_done = true;
                 event_OnCalibChanged.Invoke();
@@ -148,8 +153,10 @@ namespace TeleopReachy
                     if (actualTime >= intervalTime)
                     {
                         Debug.Log(rightCoordinates.Count);
-                        rightCoordinates.Add(trackedRightHand.position);
-                        lastPointRight = trackedRightHand.position;
+                        // rightCoordinates.Add(trackedRightHand.position);
+                        // lastPointRight = trackedRightHand.position;
+                        rightCoordinates.Add(trackedRightHand.localPosition);
+                        lastPointRight = trackedRightHand.localPosition;
                         Debug.Log(rightCoordinates.Count);
                         actualTime=0f;}
                 } else {
@@ -164,8 +171,10 @@ namespace TeleopReachy
                     {
                         Debug.Log(leftCoordinates.Count);
 
-                        leftCoordinates.Add(trackedLeftHand.position);
-                        lastPointLeft = trackedLeftHand.position;
+                        // leftCoordinates.Add(trackedLeftHand.position);
+                        // lastPointLeft = trackedLeftHand.position;
+                        leftCoordinates.Add(trackedLeftHand.localPosition);
+                        lastPointLeft = trackedLeftHand.localPosition;
                         Debug.Log(leftCoordinates.Count);
                         actualTime=0f;}
                 } else  {
