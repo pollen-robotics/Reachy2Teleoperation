@@ -298,14 +298,30 @@ namespace TeleopReachy
             
             string dateTimeString = DateTime.Now.ToString("ddMM_HHmm");
             string fileName = "DataCalib_" + dateTimeString + ".csv";
+            List<Vector3> rightHandPositionsUserSpace = new List<Vector3>();
+            List<Vector3> leftHandPositionsUserSpace = new List<Vector3>();
+
+            foreach (Vector3 handPosition in leftCoordinates)
+            {
+                // Convertissez la position en position par rapport au UserTracker
+                //Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                leftHandPositionsUserSpace.Add(Vector 3 handPosition - userTrackerTransform.position);
+            }
+
+            foreach (Vector3 handPosition in rightCoordinates)
+            {
+                // Convertissez la position en position par rapport au UserTracker
+                //Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                rightHandPositionsUserSpace.Add(Vector 3 handPosition - userTrackerTransform.position);
+            }
 
             using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
-                foreach (Vector3 point in leftCoordinates)
+                foreach (Vector3 point in leftHandPositionsUserSpace)
                     csvContent += "Left," + point.z + "," + -point.x + "," + point.y + "\n";
 
-                foreach (Vector3 point in rightCoordinates)
+                foreach (Vector3 point in rightHandPositionsUserSpace)
                     csvContent += "Right," + point.z + "," + -point.x + "," + point.y + "\n";
 
                 byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
