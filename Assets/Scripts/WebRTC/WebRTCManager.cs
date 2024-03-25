@@ -9,14 +9,14 @@ namespace TeleopReachy
         public ConnectionStatus ConnectionStatus { get; private set; }
         public WebRTCData webRTCDataController { get; private set; }
         public GstreamerUnityGStreamerPlugin webRTCVideoController { get; private set; }
-        public WebRTCAudioSender webRTCAudioSender { get; private set; }
+        //public WebRTCAudioSender webRTCAudioSender { get; private set; }
 
         protected override void Init()
         {
             ConnectionStatus = GetComponent<ConnectionStatus>();
             webRTCDataController = GetComponent<WebRTCData>();
             webRTCVideoController = GetComponent<GstreamerUnityGStreamerPlugin>();
-            webRTCAudioSender = GetComponent<WebRTCAudioSender>();
+            //webRTCAudioSender = GetComponent<WebRTCAudioSender>();
         }
     }
 }
