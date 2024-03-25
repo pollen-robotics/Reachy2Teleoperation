@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
@@ -36,7 +33,7 @@ namespace TeleopReachy
             targetOffset = new Vector3(0, -0.13f, 0.8f);
             // }
             maxDistanceAllowed = 0;
-            
+
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(HideMenu);
 

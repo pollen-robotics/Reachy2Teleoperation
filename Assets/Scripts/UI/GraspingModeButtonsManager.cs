@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,14 +7,14 @@ namespace TeleopReachy
     {
         public Button modeFullControlButton;
         public Button modeLockedButton;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
         private bool needUpdateButton;
         private bool isInteractable = false;
-        private ColorBlock buttonColorFullControl;
-        private ColorBlock buttonColorLocked;
+        //private ColorBlock buttonColorFullControl;
+        //private ColorBlock buttonColorLocked;
 
         void Awake()
         {
@@ -46,7 +43,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 modeFullControlButton.interactable = isInteractable;
                 modeLockedButton.interactable = isInteractable;
