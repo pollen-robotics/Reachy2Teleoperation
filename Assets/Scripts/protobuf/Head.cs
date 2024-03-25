@@ -66,49 +66,54 @@ namespace Reachy.Part.Head {
             "YXRpb24SKQoCcTAYAyABKAsyHS5yZWFjaHkua2luZW1hdGljcy5Sb3RhdGlv",
             "bjNkIm8KDk5lY2tJS1NvbHV0aW9uEg8KB3N1Y2Nlc3MYASABKAgSLwoIcG9z",
             "aXRpb24YAiABKAsyHS5yZWFjaHkua2luZW1hdGljcy5Sb3RhdGlvbjNkEhsK",
-            "BWVycm9yGAMgASgLMgwuZXJyb3IuRXJyb3IiDAoKSGVhZFN0YXR1cyJDChFT",
-            "cGVlZExpbWl0UmVxdWVzdBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBh",
-            "cnRJZBINCgVsaW1pdBgCIAEoDSJEChJUb3JxdWVMaW1pdFJlcXVlc3QSHwoC",
-            "aWQYASABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQSDQoFbGltaXQYAiABKA0i",
-            "pQEKDEpvaW50c0xpbWl0cxIxCgtuZWNrX2xpbWl0cxgBIAEoCzIcLmNvbXBv",
-            "bmVudC5vcmJpdGEzZC5MaW1pdHMzZBIwChBsX2FudGVubmFfbGltaXRzGAIg",
-            "ASgLMhYuY29tcG9uZW50LkpvaW50TGltaXRzEjAKEHJfYW50ZW5uYV9saW1p",
-            "dHMYAyABKAsyFi5jb21wb25lbnQuSm9pbnRMaW1pdHMihwEKEEhlYWRUZW1w",
-            "ZXJhdHVyZXMSNQoQbmVja190ZW1wZXJhdHVyZRgBIAEoCzIbLmNvbXBvbmVu",
-            "dC5vcmJpdGEzZC5GbG9hdDNkEh0KFWxfYW50ZW5uYV90ZW1wZXJhdHVyZRgC",
-            "IAEoAhIdChVyX2FudGVubmFfdGVtcGVyYXR1cmUYAyABKAIq3AEKCUhlYWRG",
-            "aWVsZBIICgROT05FEAASCAoETkFNRRABEgYKAklEEAISFAoQUFJFU0VOVF9Q",
-            "T1NJVElPThADEhEKDVBSRVNFTlRfU1BFRUQQBBIQCgxQUkVTRU5UX0xPQUQQ",
-            "BRIPCgtURU1QRVJBVFVSRRAGEhAKDEpPSU5UX0xJTUlUUxAHEg0KCUNPTVBM",
-            "SUFOVBAIEhEKDUdPQUxfUE9TSVRJT04QCRIPCgtTUEVFRF9MSU1JVBAKEhAK",
-            "DFRPUlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPMqoJCgtIZWFkU2Vy",
-            "dmljZRJDCgtHZXRBbGxIZWFkcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoc",
-            "LnJlYWNoeS5wYXJ0LmhlYWQuTGlzdE9mSGVhZBI8CghHZXRTdGF0ZRITLnJl",
-            "YWNoeS5wYXJ0LlBhcnRJZBobLnJlYWNoeS5wYXJ0LmhlYWQuSGVhZFN0YXRl",
-            "ElIKDUNvbXB1dGVOZWNrRksSHy5yZWFjaHkucGFydC5oZWFkLk5lY2tGS1Jl",
-            "cXVlc3QaIC5yZWFjaHkucGFydC5oZWFkLk5lY2tGS1NvbHV0aW9uElIKDUNv",
-            "bXB1dGVOZWNrSUsSHy5yZWFjaHkucGFydC5oZWFkLk5lY2tJS1JlcXVlc3Qa",
-            "IC5yZWFjaHkucGFydC5oZWFkLk5lY2tJS1NvbHV0aW9uEkQKDkdldE9yaWVu",
-            "dGF0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGh0ucmVhY2h5LmtpbmVtYXRp",
-            "Y3MuUm90YXRpb24zZBI6CgVBdWRpdBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoc",
-            "LnJlYWNoeS5wYXJ0LmhlYWQuSGVhZFN0YXR1cxI4CglIZWFydEJlYXQSEy5y",
-            "ZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSNgoH",
-            "UmVzdGFydBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1",
-            "Zi5FbXB0eRJBChJSZXNldERlZmF1bHRWYWx1ZXMSEy5yZWFjaHkucGFydC5Q",
-            "YXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSNQoGVHVybk9uEhMucmVh",
-            "Y2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjYKB1R1",
-            "cm5PZmYSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYu",
-            "RW1wdHkSRgoPR2V0Sm9pbnRzTGltaXRzEhMucmVhY2h5LnBhcnQuUGFydElk",
-            "Gh4ucmVhY2h5LnBhcnQuaGVhZC5Kb2ludHNMaW1pdHMSSgoPR2V0VGVtcGVy",
-            "YXR1cmVzEhMucmVhY2h5LnBhcnQuUGFydElkGiIucmVhY2h5LnBhcnQuaGVh",
-            "ZC5IZWFkVGVtcGVyYXR1cmVzEkoKFEdldEpvaW50R29hbFBvc2l0aW9uEhMu",
-            "cmVhY2h5LnBhcnQuUGFydElkGh0ucmVhY2h5LmtpbmVtYXRpY3MuUm90YXRp",
-            "b24zZBJMCg1TZXRTcGVlZExpbWl0EiMucmVhY2h5LnBhcnQuaGVhZC5TcGVl",
-            "ZExpbWl0UmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJOCg5TZXRU",
-            "b3JxdWVMaW1pdBIkLnJlYWNoeS5wYXJ0LmhlYWQuVG9ycXVlTGltaXRSZXF1",
-            "ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EkwKEVNlbmROZWNrSm9pbnRH",
-            "b2FsEh8ucmVhY2h5LnBhcnQuaGVhZC5OZWNrSm9pbnRHb2FsGhYuZ29vZ2xl",
-            "LnByb3RvYnVmLkVtcHR5YgZwcm90bzM="));
+            "BWVycm9yGAMgASgLMgwuZXJyb3IuRXJyb3Ii2wEKCkhlYWRTdGF0dXMSNwoL",
+            "bmVja19zdGF0dXMYASABKAsyIi5jb21wb25lbnQub3JiaXRhM2QuT3JiaXRh",
+            "M2RTdGF0dXMSSQoQbF9hbnRlbm5hX3N0YXR1cxgCIAEoCzIvLmNvbXBvbmVu",
+            "dC5keW5hbWl4ZWxfbW90b3IuRHluYW1peGVsTW90b3JTdGF0dXMSSQoQcl9h",
+            "bnRlbm5hX3N0YXR1cxgDIAEoCzIvLmNvbXBvbmVudC5keW5hbWl4ZWxfbW90",
+            "b3IuRHluYW1peGVsTW90b3JTdGF0dXMiQwoRU3BlZWRMaW1pdFJlcXVlc3QS",
+            "HwoCaWQYASABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQSDQoFbGltaXQYAiAB",
+            "KA0iRAoSVG9ycXVlTGltaXRSZXF1ZXN0Eh8KAmlkGAEgASgLMhMucmVhY2h5",
+            "LnBhcnQuUGFydElkEg0KBWxpbWl0GAIgASgNIqUBCgxKb2ludHNMaW1pdHMS",
+            "MQoLbmVja19saW1pdHMYASABKAsyHC5jb21wb25lbnQub3JiaXRhM2QuTGlt",
+            "aXRzM2QSMAoQbF9hbnRlbm5hX2xpbWl0cxgCIAEoCzIWLmNvbXBvbmVudC5K",
+            "b2ludExpbWl0cxIwChByX2FudGVubmFfbGltaXRzGAMgASgLMhYuY29tcG9u",
+            "ZW50LkpvaW50TGltaXRzIocBChBIZWFkVGVtcGVyYXR1cmVzEjUKEG5lY2tf",
+            "dGVtcGVyYXR1cmUYASABKAsyGy5jb21wb25lbnQub3JiaXRhM2QuRmxvYXQz",
+            "ZBIdChVsX2FudGVubmFfdGVtcGVyYXR1cmUYAiABKAISHQoVcl9hbnRlbm5h",
+            "X3RlbXBlcmF0dXJlGAMgASgCKtwBCglIZWFkRmllbGQSCAoETk9ORRAAEggK",
+            "BE5BTUUQARIGCgJJRBACEhQKEFBSRVNFTlRfUE9TSVRJT04QAxIRCg1QUkVT",
+            "RU5UX1NQRUVEEAQSEAoMUFJFU0VOVF9MT0FEEAUSDwoLVEVNUEVSQVRVUkUQ",
+            "BhIQCgxKT0lOVF9MSU1JVFMQBxINCglDT01QTElBTlQQCBIRCg1HT0FMX1BP",
+            "U0lUSU9OEAkSDwoLU1BFRURfTElNSVQQChIQCgxUT1JRVUVfTElNSVQQCxIH",
+            "CgNQSUQQDBIHCgNBTEwQDzKqCQoLSGVhZFNlcnZpY2USQwoLR2V0QWxsSGVh",
+            "ZHMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHC5yZWFjaHkucGFydC5oZWFk",
+            "Lkxpc3RPZkhlYWQSPAoIR2V0U3RhdGUSEy5yZWFjaHkucGFydC5QYXJ0SWQa",
+            "Gy5yZWFjaHkucGFydC5oZWFkLkhlYWRTdGF0ZRJSCg1Db21wdXRlTmVja0ZL",
+            "Eh8ucmVhY2h5LnBhcnQuaGVhZC5OZWNrRktSZXF1ZXN0GiAucmVhY2h5LnBh",
+            "cnQuaGVhZC5OZWNrRktTb2x1dGlvbhJSCg1Db21wdXRlTmVja0lLEh8ucmVh",
+            "Y2h5LnBhcnQuaGVhZC5OZWNrSUtSZXF1ZXN0GiAucmVhY2h5LnBhcnQuaGVh",
+            "ZC5OZWNrSUtTb2x1dGlvbhJECg5HZXRPcmllbnRhdGlvbhITLnJlYWNoeS5w",
+            "YXJ0LlBhcnRJZBodLnJlYWNoeS5raW5lbWF0aWNzLlJvdGF0aW9uM2QSOgoF",
+            "QXVkaXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaHC5yZWFjaHkucGFydC5oZWFk",
+            "LkhlYWRTdGF0dXMSOAoJSGVhcnRCZWF0EhMucmVhY2h5LnBhcnQuUGFydElk",
+            "GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjYKB1Jlc3RhcnQSEy5yZWFjaHku",
+            "cGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSQQoSUmVzZXRE",
+            "ZWZhdWx0VmFsdWVzEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnBy",
+            "b3RvYnVmLkVtcHR5EjUKBlR1cm5PbhITLnJlYWNoeS5wYXJ0LlBhcnRJZBoW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI2CgdUdXJuT2ZmEhMucmVhY2h5LnBh",
+            "cnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EkYKD0dldEpvaW50",
+            "c0xpbWl0cxITLnJlYWNoeS5wYXJ0LlBhcnRJZBoeLnJlYWNoeS5wYXJ0Lmhl",
+            "YWQuSm9pbnRzTGltaXRzEkoKD0dldFRlbXBlcmF0dXJlcxITLnJlYWNoeS5w",
+            "YXJ0LlBhcnRJZBoiLnJlYWNoeS5wYXJ0LmhlYWQuSGVhZFRlbXBlcmF0dXJl",
+            "cxJKChRHZXRKb2ludEdvYWxQb3NpdGlvbhITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+            "ZBodLnJlYWNoeS5raW5lbWF0aWNzLlJvdGF0aW9uM2QSTAoNU2V0U3BlZWRM",
+            "aW1pdBIjLnJlYWNoeS5wYXJ0LmhlYWQuU3BlZWRMaW1pdFJlcXVlc3QaFi5n",
+            "b29nbGUucHJvdG9idWYuRW1wdHkSTgoOU2V0VG9ycXVlTGltaXQSJC5yZWFj",
+            "aHkucGFydC5oZWFkLlRvcnF1ZUxpbWl0UmVxdWVzdBoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eRJMChFTZW5kTmVja0pvaW50R29hbBIfLnJlYWNoeS5wYXJ0",
+            "LmhlYWQuTmVja0pvaW50R29hbBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eWIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.Kinematics.KinematicsReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Component.ComponentReflection.Descriptor, global::Component.Orbita3D.Orbita3DReflection.Descriptor, global::Component.DynamixelMotor.DynamixelMotorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Head.HeadField), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -124,7 +129,7 @@ namespace Reachy.Part.Head {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.NeckFKSolution), global::Reachy.Part.Head.NeckFKSolution.Parser, new[]{ "Success", "Orientation" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.NeckIKRequest), global::Reachy.Part.Head.NeckIKRequest.Parser, new[]{ "Id", "Target", "Q0" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.NeckIKSolution), global::Reachy.Part.Head.NeckIKSolution.Parser, new[]{ "Success", "Position", "Error" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.HeadStatus), global::Reachy.Part.Head.HeadStatus.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.HeadStatus), global::Reachy.Part.Head.HeadStatus.Parser, new[]{ "NeckStatus", "LAntennaStatus", "RAntennaStatus" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.SpeedLimitRequest), global::Reachy.Part.Head.SpeedLimitRequest.Parser, new[]{ "Id", "Limit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.TorqueLimitRequest), global::Reachy.Part.Head.TorqueLimitRequest.Parser, new[]{ "Id", "Limit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Head.JointsLimits), global::Reachy.Part.Head.JointsLimits.Parser, new[]{ "NeckLimits", "LAntennaLimits", "RAntennaLimits" }, null, null, null, null),
@@ -3480,6 +3485,9 @@ namespace Reachy.Part.Head {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public HeadStatus(HeadStatus other) : this() {
+      neckStatus_ = other.neckStatus_ != null ? other.neckStatus_.Clone() : null;
+      lAntennaStatus_ = other.lAntennaStatus_ != null ? other.lAntennaStatus_.Clone() : null;
+      rAntennaStatus_ = other.rAntennaStatus_ != null ? other.rAntennaStatus_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3487,6 +3495,42 @@ namespace Reachy.Part.Head {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public HeadStatus Clone() {
       return new HeadStatus(this);
+    }
+
+    /// <summary>Field number for the "neck_status" field.</summary>
+    public const int NeckStatusFieldNumber = 1;
+    private global::Component.Orbita3D.Orbita3dStatus neckStatus_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Component.Orbita3D.Orbita3dStatus NeckStatus {
+      get { return neckStatus_; }
+      set {
+        neckStatus_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "l_antenna_status" field.</summary>
+    public const int LAntennaStatusFieldNumber = 2;
+    private global::Component.DynamixelMotor.DynamixelMotorStatus lAntennaStatus_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Component.DynamixelMotor.DynamixelMotorStatus LAntennaStatus {
+      get { return lAntennaStatus_; }
+      set {
+        lAntennaStatus_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "r_antenna_status" field.</summary>
+    public const int RAntennaStatusFieldNumber = 3;
+    private global::Component.DynamixelMotor.DynamixelMotorStatus rAntennaStatus_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Component.DynamixelMotor.DynamixelMotorStatus RAntennaStatus {
+      get { return rAntennaStatus_; }
+      set {
+        rAntennaStatus_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3504,6 +3548,9 @@ namespace Reachy.Part.Head {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (!object.Equals(NeckStatus, other.NeckStatus)) return false;
+      if (!object.Equals(LAntennaStatus, other.LAntennaStatus)) return false;
+      if (!object.Equals(RAntennaStatus, other.RAntennaStatus)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3511,6 +3558,9 @@ namespace Reachy.Part.Head {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (neckStatus_ != null) hash ^= NeckStatus.GetHashCode();
+      if (lAntennaStatus_ != null) hash ^= LAntennaStatus.GetHashCode();
+      if (rAntennaStatus_ != null) hash ^= RAntennaStatus.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3529,6 +3579,18 @@ namespace Reachy.Part.Head {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (neckStatus_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(NeckStatus);
+      }
+      if (lAntennaStatus_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(LAntennaStatus);
+      }
+      if (rAntennaStatus_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(RAntennaStatus);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3539,6 +3601,18 @@ namespace Reachy.Part.Head {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (neckStatus_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(NeckStatus);
+      }
+      if (lAntennaStatus_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(LAntennaStatus);
+      }
+      if (rAntennaStatus_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(RAntennaStatus);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3549,6 +3623,15 @@ namespace Reachy.Part.Head {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (neckStatus_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(NeckStatus);
+      }
+      if (lAntennaStatus_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LAntennaStatus);
+      }
+      if (rAntennaStatus_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RAntennaStatus);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -3560,6 +3643,24 @@ namespace Reachy.Part.Head {
     public void MergeFrom(HeadStatus other) {
       if (other == null) {
         return;
+      }
+      if (other.neckStatus_ != null) {
+        if (neckStatus_ == null) {
+          NeckStatus = new global::Component.Orbita3D.Orbita3dStatus();
+        }
+        NeckStatus.MergeFrom(other.NeckStatus);
+      }
+      if (other.lAntennaStatus_ != null) {
+        if (lAntennaStatus_ == null) {
+          LAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+        }
+        LAntennaStatus.MergeFrom(other.LAntennaStatus);
+      }
+      if (other.rAntennaStatus_ != null) {
+        if (rAntennaStatus_ == null) {
+          RAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+        }
+        RAntennaStatus.MergeFrom(other.RAntennaStatus);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3576,6 +3677,27 @@ namespace Reachy.Part.Head {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            if (neckStatus_ == null) {
+              NeckStatus = new global::Component.Orbita3D.Orbita3dStatus();
+            }
+            input.ReadMessage(NeckStatus);
+            break;
+          }
+          case 18: {
+            if (lAntennaStatus_ == null) {
+              LAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+            }
+            input.ReadMessage(LAntennaStatus);
+            break;
+          }
+          case 26: {
+            if (rAntennaStatus_ == null) {
+              RAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+            }
+            input.ReadMessage(RAntennaStatus);
+            break;
+          }
         }
       }
     #endif
@@ -3591,6 +3713,27 @@ namespace Reachy.Part.Head {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            if (neckStatus_ == null) {
+              NeckStatus = new global::Component.Orbita3D.Orbita3dStatus();
+            }
+            input.ReadMessage(NeckStatus);
+            break;
+          }
+          case 18: {
+            if (lAntennaStatus_ == null) {
+              LAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+            }
+            input.ReadMessage(LAntennaStatus);
+            break;
+          }
+          case 26: {
+            if (rAntennaStatus_ == null) {
+              RAntennaStatus = new global::Component.DynamixelMotor.DynamixelMotorStatus();
+            }
+            input.ReadMessage(RAntennaStatus);
+            break;
+          }
         }
       }
     }
