@@ -304,15 +304,15 @@ namespace TeleopReachy
             foreach (Vector3 handPosition in leftCoordinates)
             {
                 // Convertissez la position en position par rapport au UserTracker
-                //Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
-                leftHandPositionsUserSpace.Add(Vector 3 handPosition - userTrackerTransform.position);
+                Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                leftHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
             foreach (Vector3 handPosition in rightCoordinates)
             {
                 // Convertissez la position en position par rapport au UserTracker
-                //Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
-                rightHandPositionsUserSpace.Add(Vector 3 handPosition - userTrackerTransform.position);
+                Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
             using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev", fileName)))
