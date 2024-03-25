@@ -26,19 +26,21 @@ namespace Reachy.Part.Hand {
           string.Concat(
             "CgpoYW5kLnByb3RvEhByZWFjaHkucGFydC5oYW5kGh5nb29nbGUvcHJvdG9i",
             "dWYvd3JhcHBlcnMucHJvdG8aG2dvb2dsZS9wcm90b2J1Zi9lbXB0eS5wcm90",
-            "bxoKcGFydC5wcm90byJRCgRIYW5kEiQKB3BhcnRfaWQYASABKAsyEy5yZWFj",
-            "aHkucGFydC5QYXJ0SWQSIwoEaW5mbxgFIAEoCzIVLnJlYWNoeS5wYXJ0LlBh",
-            "cnRJbmZvIjIKCkxpc3RPZkhhbmQSJAoEaGFuZBgBIAMoCzIWLnJlYWNoeS5w",
-            "YXJ0LmhhbmQuSGFuZCL7AgoJSGFuZFN0YXRlEiwKB29wZW5pbmcYASABKAsy",
-            "Gy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIqCgVmb3JjZRgCIAEoCzIb",
-            "Lmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjIKDmhvbGRpbmdfb2JqZWN0",
-            "GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLkJvb2xWYWx1ZRI1Cg1qb2ludHNf",
-            "bGltaXRzGAQgASgLMh4ucmVhY2h5LnBhcnQuaGFuZC5Kb2ludHNMaW1pdHMS",
-            "OAoMdGVtcGVyYXR1cmVzGAUgASgLMiIucmVhY2h5LnBhcnQuaGFuZC5IYW5k",
-            "VGVtcGVyYXR1cmVzEjgKEHByZXNlbnRfcG9zaXRpb24YBiABKAsyHi5yZWFj",
-            "aHkucGFydC5oYW5kLkhhbmRQb3NpdGlvbhI1Cg1nb2FsX3Bvc2l0aW9uGAcg",
-            "ASgLMh4ucmVhY2h5LnBhcnQuaGFuZC5IYW5kUG9zaXRpb24iDAoKSGFuZFN0",
-            "YXR1cyIHCgVGb3JjZSInCgtKb2ludExpbWl0cxILCgNtaW4YASABKAISCwoD",
+            "bxoLZXJyb3IucHJvdG8aCnBhcnQucHJvdG8iUQoESGFuZBIkCgdwYXJ0X2lk",
+            "GAEgASgLMhMucmVhY2h5LnBhcnQuUGFydElkEiMKBGluZm8YBSABKAsyFS5y",
+            "ZWFjaHkucGFydC5QYXJ0SW5mbyIyCgpMaXN0T2ZIYW5kEiQKBGhhbmQYASAD",
+            "KAsyFi5yZWFjaHkucGFydC5oYW5kLkhhbmQiqgMKCUhhbmRTdGF0ZRIsCgdv",
+            "cGVuaW5nGAEgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSKgoF",
+            "Zm9yY2UYAiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIyCg5o",
+            "b2xkaW5nX29iamVjdBgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5Cb29sVmFs",
+            "dWUSNQoNam9pbnRzX2xpbWl0cxgEIAEoCzIeLnJlYWNoeS5wYXJ0LmhhbmQu",
+            "Sm9pbnRzTGltaXRzEjgKDHRlbXBlcmF0dXJlcxgFIAEoCzIiLnJlYWNoeS5w",
+            "YXJ0LmhhbmQuSGFuZFRlbXBlcmF0dXJlcxI4ChBwcmVzZW50X3Bvc2l0aW9u",
+            "GAYgASgLMh4ucmVhY2h5LnBhcnQuaGFuZC5IYW5kUG9zaXRpb24SNQoNZ29h",
+            "bF9wb3NpdGlvbhgHIAEoCzIeLnJlYWNoeS5wYXJ0LmhhbmQuSGFuZFBvc2l0",
+            "aW9uEi0KCWNvbXBsaWFudBgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5Cb29s",
+            "VmFsdWUiKgoKSGFuZFN0YXR1cxIcCgZlcnJvcnMYASADKAsyDC5lcnJvci5F",
+            "cnJvciIHCgVGb3JjZSInCgtKb2ludExpbWl0cxILCgNtaW4YASABKAISCwoD",
             "bWF4GAIgASgCIkYKFVBhcmFsbGVsR3JpcHBlckxpbWl0cxItCgZsaW1pdHMY",
             "ASABKAsyHS5yZWFjaHkucGFydC5oYW5kLkpvaW50TGltaXRzIl0KDEpvaW50",
             "c0xpbWl0cxJDChBwYXJhbGxlbF9ncmlwcGVyGAEgASgLMicucmVhY2h5LnBh",
@@ -82,12 +84,12 @@ namespace Reachy.Part.Hand {
             "LkVtcHR5EjgKCEdldEZvcmNlEhMucmVhY2h5LnBhcnQuUGFydElkGhcucmVh",
             "Y2h5LnBhcnQuaGFuZC5Gb3JjZWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Hand.SpeedLimit), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.Hand), global::Reachy.Part.Hand.Hand.Parser, new[]{ "PartId", "Info" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.ListOfHand), global::Reachy.Part.Hand.ListOfHand.Parser, new[]{ "Hand" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandState), global::Reachy.Part.Hand.HandState.Parser, new[]{ "Opening", "Force", "HoldingObject", "JointsLimits", "Temperatures", "PresentPosition", "GoalPosition" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandStatus), global::Reachy.Part.Hand.HandStatus.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandState), global::Reachy.Part.Hand.HandState.Parser, new[]{ "Opening", "Force", "HoldingObject", "JointsLimits", "Temperatures", "PresentPosition", "GoalPosition", "Compliant" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandStatus), global::Reachy.Part.Hand.HandStatus.Parser, new[]{ "Errors" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.Force), global::Reachy.Part.Hand.Force.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.JointLimits), global::Reachy.Part.Hand.JointLimits.Parser, new[]{ "Min", "Max" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.ParallelGripperLimits), global::Reachy.Part.Hand.ParallelGripperLimits.Parser, new[]{ "Limits" }, null, null, null, null),
@@ -578,6 +580,7 @@ namespace Reachy.Part.Hand {
       temperatures_ = other.temperatures_ != null ? other.temperatures_.Clone() : null;
       presentPosition_ = other.presentPosition_ != null ? other.presentPosition_.Clone() : null;
       goalPosition_ = other.goalPosition_ != null ? other.goalPosition_.Clone() : null;
+      Compliant = other.Compliant;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -677,6 +680,20 @@ namespace Reachy.Part.Hand {
       }
     }
 
+    /// <summary>Field number for the "compliant" field.</summary>
+    public const int CompliantFieldNumber = 8;
+    private static readonly pb::FieldCodec<bool?> _single_compliant_codec = pb::FieldCodec.ForStructWrapper<bool>(66);
+    private bool? compliant_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool? Compliant {
+      get { return compliant_; }
+      set {
+        compliant_ = value;
+      }
+    }
+
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -699,6 +716,7 @@ namespace Reachy.Part.Hand {
       if (!object.Equals(Temperatures, other.Temperatures)) return false;
       if (!object.Equals(PresentPosition, other.PresentPosition)) return false;
       if (!object.Equals(GoalPosition, other.GoalPosition)) return false;
+      if (Compliant != other.Compliant) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -713,6 +731,7 @@ namespace Reachy.Part.Hand {
       if (temperatures_ != null) hash ^= Temperatures.GetHashCode();
       if (presentPosition_ != null) hash ^= PresentPosition.GetHashCode();
       if (goalPosition_ != null) hash ^= GoalPosition.GetHashCode();
+      if (compliant_ != null) hash ^= Compliant.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -756,6 +775,9 @@ namespace Reachy.Part.Hand {
         output.WriteRawTag(58);
         output.WriteMessage(GoalPosition);
       }
+      if (compliant_ != null) {
+        _single_compliant_codec.WriteTagAndValue(output, Compliant);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -791,6 +813,9 @@ namespace Reachy.Part.Hand {
         output.WriteRawTag(58);
         output.WriteMessage(GoalPosition);
       }
+      if (compliant_ != null) {
+        _single_compliant_codec.WriteTagAndValue(ref output, Compliant);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -821,6 +846,9 @@ namespace Reachy.Part.Hand {
       }
       if (goalPosition_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(GoalPosition);
+      }
+      if (compliant_ != null) {
+        size += _single_compliant_codec.CalculateSizeWithTag(Compliant);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -872,6 +900,11 @@ namespace Reachy.Part.Hand {
           GoalPosition = new global::Reachy.Part.Hand.HandPosition();
         }
         GoalPosition.MergeFrom(other.GoalPosition);
+      }
+      if (other.compliant_ != null) {
+        if (compliant_ == null || other.Compliant != false) {
+          Compliant = other.Compliant;
+        }
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -935,6 +968,13 @@ namespace Reachy.Part.Hand {
               GoalPosition = new global::Reachy.Part.Hand.HandPosition();
             }
             input.ReadMessage(GoalPosition);
+            break;
+          }
+          case 66: {
+            bool? value = _single_compliant_codec.Read(input);
+            if (compliant_ == null || value != false) {
+              Compliant = value;
+            }
             break;
           }
         }
@@ -1001,6 +1041,13 @@ namespace Reachy.Part.Hand {
             input.ReadMessage(GoalPosition);
             break;
           }
+          case 66: {
+            bool? value = _single_compliant_codec.Read(ref input);
+            if (compliant_ == null || value != false) {
+              Compliant = value;
+            }
+            break;
+          }
         }
       }
     }
@@ -1042,6 +1089,7 @@ namespace Reachy.Part.Hand {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public HandStatus(HandStatus other) : this() {
+      errors_ = other.errors_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1049,6 +1097,17 @@ namespace Reachy.Part.Hand {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public HandStatus Clone() {
       return new HandStatus(this);
+    }
+
+    /// <summary>Field number for the "errors" field.</summary>
+    public const int ErrorsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Error.Error> _repeated_errors_codec
+        = pb::FieldCodec.ForMessage(10, global::Error.Error.Parser);
+    private readonly pbc::RepeatedField<global::Error.Error> errors_ = new pbc::RepeatedField<global::Error.Error>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Error.Error> Errors {
+      get { return errors_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1066,6 +1125,7 @@ namespace Reachy.Part.Hand {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if(!errors_.Equals(other.errors_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1073,6 +1133,7 @@ namespace Reachy.Part.Hand {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      hash ^= errors_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1091,6 +1152,7 @@ namespace Reachy.Part.Hand {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      errors_.WriteTo(output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1101,6 +1163,7 @@ namespace Reachy.Part.Hand {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      errors_.WriteTo(ref output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1111,6 +1174,7 @@ namespace Reachy.Part.Hand {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      size += errors_.CalculateSize(_repeated_errors_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1123,6 +1187,7 @@ namespace Reachy.Part.Hand {
       if (other == null) {
         return;
       }
+      errors_.Add(other.errors_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1138,6 +1203,10 @@ namespace Reachy.Part.Hand {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     #endif
@@ -1153,6 +1222,10 @@ namespace Reachy.Part.Hand {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(ref input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     }

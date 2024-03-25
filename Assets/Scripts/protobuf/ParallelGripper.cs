@@ -26,44 +26,45 @@ namespace Component.ParallelGripper {
           string.Concat(
             "ChZwYXJhbGxlbF9ncmlwcGVyLnByb3RvEhpjb21wb25lbnQucGFyYWxsZWxf",
             "Z3JpcHBlchofZ29vZ2xlL3Byb3RvYnVmL3RpbWVzdGFtcC5wcm90bxobZ29v",
-            "Z2xlL3Byb3RvYnVmL2VtcHR5LnByb3RvGg9jb21wb25lbnQucHJvdG8iRQoU",
-            "UGFyYWxsZWxHcmlwcGVyU3RhdGUSLQoJdGltZXN0YW1wGA8gASgLMhouZ29v",
-            "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcCKDAQobUGFyYWxsZWxHcmlwcGVyU3Rh",
-            "dGVSZXF1ZXN0EkAKBmZpZWxkcxgBIAMoDjIwLmNvbXBvbmVudC5wYXJhbGxl",
-            "bF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlckZpZWxkEiIKAmlkGAIgASgLMhYu",
-            "Y29tcG9uZW50LkNvbXBvbmVudElkIncKIVBhcmFsbGVsR3JpcHBlclN0cmVh",
-            "bVN0YXRlUmVxdWVzdBJECgNyZXEYASABKAsyNy5jb21wb25lbnQucGFyYWxs",
-            "ZWxfZ3JpcHBlci5QYXJhbGxlbEdyaXBwZXJTdGF0ZVJlcXVlc3QSDAoEZnJl",
-            "cRgCIAEoAiIYChZQYXJhbGxlbEdyaXBwZXJDb21tYW5kIlAKE1BhcmFsbGVs",
-            "R3JpcHBlckluZm8SIgoCaWQYASABKAsyFi5jb21wb25lbnQuQ29tcG9uZW50",
-            "SWQSFQoNc2VyaWFsX251bWJlchgCIAEoCSJrChlMaXN0T2ZQYXJhbGxlbEdy",
-            "aXBwZXJJbmZvEk4KFXBhcmFsbGVsX2dyaXBwZXJfaW5mbxgBIAMoCzIvLmNv",
-            "bXBvbmVudC5wYXJhbGxlbF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlckluZm8i",
-            "FwoVUGFyYWxsZWxHcmlwcGVyU3RhdHVzKucBChRQYXJhbGxlbEdyaXBwZXJG",
-            "aWVsZBIICgROT05FEAASCAoETkFNRRABEgYKAklEEAISFAoQUFJFU0VOVF9Q",
-            "T1NJVElPThADEhEKDVBSRVNFTlRfU1BFRUQQBBIQCgxQUkVTRU5UX0xPQUQQ",
-            "BRIPCgtURU1QRVJBVFVSRRAGEhAKDEZPUkNFX1NFTlNPUhAHEg0KCUNPTVBM",
-            "SUFOVBAIEhEKDUdPQUxfUE9TSVRJT04QCRIPCgtTUEVFRF9MSU1JVBAKEhAK",
-            "DFRPUlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPMvgFCg5HcmlwcGVy",
-            "U2VydmljZRJmChVHZXRBbGxQYXJhbGxlbEdyaXBwZXISFi5nb29nbGUucHJv",
-            "dG9idWYuRW1wdHkaNS5jb21wb25lbnQucGFyYWxsZWxfZ3JpcHBlci5MaXN0",
-            "T2ZQYXJhbGxlbEdyaXBwZXJJbmZvEnUKCEdldFN0YXRlEjcuY29tcG9uZW50",
-            "LnBhcmFsbGVsX2dyaXBwZXIuUGFyYWxsZWxHcmlwcGVyU3RhdGVSZXF1ZXN0",
-            "GjAuY29tcG9uZW50LnBhcmFsbGVsX2dyaXBwZXIuUGFyYWxsZWxHcmlwcGVy",
-            "U3RhdGUSgAEKC1N0cmVhbVN0YXRlEj0uY29tcG9uZW50LnBhcmFsbGVsX2dy",
-            "aXBwZXIuUGFyYWxsZWxHcmlwcGVyU3RyZWFtU3RhdGVSZXF1ZXN0GjAuY29t",
-            "cG9uZW50LnBhcmFsbGVsX2dyaXBwZXIuUGFyYWxsZWxHcmlwcGVyU3RhdGUw",
-            "ARJZCgtTZW5kQ29tbWFuZBIyLmNvbXBvbmVudC5wYXJhbGxlbF9ncmlwcGVy",
-            "LlBhcmFsbGVsR3JpcHBlckNvbW1hbmQaFi5nb29nbGUucHJvdG9idWYuRW1w",
-            "dHkSXQoNU3RyZWFtQ29tbWFuZBIyLmNvbXBvbmVudC5wYXJhbGxlbF9ncmlw",
-            "cGVyLlBhcmFsbGVsR3JpcHBlckNvbW1hbmQaFi5nb29nbGUucHJvdG9idWYu",
-            "RW1wdHkoARJSCgVBdWRpdBIWLmNvbXBvbmVudC5Db21wb25lbnRJZBoxLmNv",
-            "bXBvbmVudC5wYXJhbGxlbF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlclN0YXR1",
-            "cxI7CglIZWFydEJlYXQSFi5jb21wb25lbnQuQ29tcG9uZW50SWQaFi5nb29n",
-            "bGUucHJvdG9idWYuRW1wdHkSOQoHUmVzdGFydBIWLmNvbXBvbmVudC5Db21w",
-            "b25lbnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eWIGcHJvdG8z"));
+            "Z2xlL3Byb3RvYnVmL2VtcHR5LnByb3RvGg9jb21wb25lbnQucHJvdG8aC2Vy",
+            "cm9yLnByb3RvIkUKFFBhcmFsbGVsR3JpcHBlclN0YXRlEi0KCXRpbWVzdGFt",
+            "cBgPIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAigwEKG1BhcmFs",
+            "bGVsR3JpcHBlclN0YXRlUmVxdWVzdBJACgZmaWVsZHMYASADKA4yMC5jb21w",
+            "b25lbnQucGFyYWxsZWxfZ3JpcHBlci5QYXJhbGxlbEdyaXBwZXJGaWVsZBIi",
+            "CgJpZBgCIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZCJ3CiFQYXJhbGxl",
+            "bEdyaXBwZXJTdHJlYW1TdGF0ZVJlcXVlc3QSRAoDcmVxGAEgASgLMjcuY29t",
+            "cG9uZW50LnBhcmFsbGVsX2dyaXBwZXIuUGFyYWxsZWxHcmlwcGVyU3RhdGVS",
+            "ZXF1ZXN0EgwKBGZyZXEYAiABKAIiGAoWUGFyYWxsZWxHcmlwcGVyQ29tbWFu",
+            "ZCJQChNQYXJhbGxlbEdyaXBwZXJJbmZvEiIKAmlkGAEgASgLMhYuY29tcG9u",
+            "ZW50LkNvbXBvbmVudElkEhUKDXNlcmlhbF9udW1iZXIYAiABKAkiawoZTGlz",
+            "dE9mUGFyYWxsZWxHcmlwcGVySW5mbxJOChVwYXJhbGxlbF9ncmlwcGVyX2lu",
+            "Zm8YASADKAsyLy5jb21wb25lbnQucGFyYWxsZWxfZ3JpcHBlci5QYXJhbGxl",
+            "bEdyaXBwZXJJbmZvIjUKFVBhcmFsbGVsR3JpcHBlclN0YXR1cxIcCgZlcnJv",
+            "cnMYASADKAsyDC5lcnJvci5FcnJvcirnAQoUUGFyYWxsZWxHcmlwcGVyRmll",
+            "bGQSCAoETk9ORRAAEggKBE5BTUUQARIGCgJJRBACEhQKEFBSRVNFTlRfUE9T",
+            "SVRJT04QAxIRCg1QUkVTRU5UX1NQRUVEEAQSEAoMUFJFU0VOVF9MT0FEEAUS",
+            "DwoLVEVNUEVSQVRVUkUQBhIQCgxGT1JDRV9TRU5TT1IQBxINCglDT01QTElB",
+            "TlQQCBIRCg1HT0FMX1BPU0lUSU9OEAkSDwoLU1BFRURfTElNSVQQChIQCgxU",
+            "T1JRVUVfTElNSVQQCxIHCgNQSUQQDBIHCgNBTEwQDzL4BQoOR3JpcHBlclNl",
+            "cnZpY2USZgoVR2V0QWxsUGFyYWxsZWxHcmlwcGVyEhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5GjUuY29tcG9uZW50LnBhcmFsbGVsX2dyaXBwZXIuTGlzdE9m",
+            "UGFyYWxsZWxHcmlwcGVySW5mbxJ1CghHZXRTdGF0ZRI3LmNvbXBvbmVudC5w",
+            "YXJhbGxlbF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlclN0YXRlUmVxdWVzdBow",
+            "LmNvbXBvbmVudC5wYXJhbGxlbF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlclN0",
+            "YXRlEoABCgtTdHJlYW1TdGF0ZRI9LmNvbXBvbmVudC5wYXJhbGxlbF9ncmlw",
+            "cGVyLlBhcmFsbGVsR3JpcHBlclN0cmVhbVN0YXRlUmVxdWVzdBowLmNvbXBv",
+            "bmVudC5wYXJhbGxlbF9ncmlwcGVyLlBhcmFsbGVsR3JpcHBlclN0YXRlMAES",
+            "WQoLU2VuZENvbW1hbmQSMi5jb21wb25lbnQucGFyYWxsZWxfZ3JpcHBlci5Q",
+            "YXJhbGxlbEdyaXBwZXJDb21tYW5kGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5",
+            "El0KDVN0cmVhbUNvbW1hbmQSMi5jb21wb25lbnQucGFyYWxsZWxfZ3JpcHBl",
+            "ci5QYXJhbGxlbEdyaXBwZXJDb21tYW5kGhYuZ29vZ2xlLnByb3RvYnVmLkVt",
+            "cHR5KAESUgoFQXVkaXQSFi5jb21wb25lbnQuQ29tcG9uZW50SWQaMS5jb21w",
+            "b25lbnQucGFyYWxsZWxfZ3JpcHBlci5QYXJhbGxlbEdyaXBwZXJTdGF0dXMS",
+            "OwoJSGVhcnRCZWF0EhYuY29tcG9uZW50LkNvbXBvbmVudElkGhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5EjkKB1Jlc3RhcnQSFi5jb21wb25lbnQuQ29tcG9u",
+            "ZW50SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Component.ComponentReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Component.ComponentReflection.Descriptor, global::Error.ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Component.ParallelGripper.ParallelGripperField), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperState), global::Component.ParallelGripper.ParallelGripperState.Parser, new[]{ "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperStateRequest), global::Component.ParallelGripper.ParallelGripperStateRequest.Parser, new[]{ "Fields", "Id" }, null, null, null, null),
@@ -71,7 +72,7 @@ namespace Component.ParallelGripper {
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperCommand), global::Component.ParallelGripper.ParallelGripperCommand.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperInfo), global::Component.ParallelGripper.ParallelGripperInfo.Parser, new[]{ "Id", "SerialNumber" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ListOfParallelGripperInfo), global::Component.ParallelGripper.ListOfParallelGripperInfo.Parser, new[]{ "ParallelGripperInfo" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperStatus), global::Component.ParallelGripper.ParallelGripperStatus.Parser, null, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Component.ParallelGripper.ParallelGripperStatus), global::Component.ParallelGripper.ParallelGripperStatus.Parser, new[]{ "Errors" }, null, null, null, null)
           }));
     }
     #endregion
@@ -1356,6 +1357,7 @@ namespace Component.ParallelGripper {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ParallelGripperStatus(ParallelGripperStatus other) : this() {
+      errors_ = other.errors_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1363,6 +1365,17 @@ namespace Component.ParallelGripper {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ParallelGripperStatus Clone() {
       return new ParallelGripperStatus(this);
+    }
+
+    /// <summary>Field number for the "errors" field.</summary>
+    public const int ErrorsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Error.Error> _repeated_errors_codec
+        = pb::FieldCodec.ForMessage(10, global::Error.Error.Parser);
+    private readonly pbc::RepeatedField<global::Error.Error> errors_ = new pbc::RepeatedField<global::Error.Error>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Error.Error> Errors {
+      get { return errors_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1380,6 +1393,7 @@ namespace Component.ParallelGripper {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if(!errors_.Equals(other.errors_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1387,6 +1401,7 @@ namespace Component.ParallelGripper {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      hash ^= errors_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1405,6 +1420,7 @@ namespace Component.ParallelGripper {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      errors_.WriteTo(output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1415,6 +1431,7 @@ namespace Component.ParallelGripper {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      errors_.WriteTo(ref output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1425,6 +1442,7 @@ namespace Component.ParallelGripper {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      size += errors_.CalculateSize(_repeated_errors_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -1437,6 +1455,7 @@ namespace Component.ParallelGripper {
       if (other == null) {
         return;
       }
+      errors_.Add(other.errors_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -1452,6 +1471,10 @@ namespace Component.ParallelGripper {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     #endif
@@ -1467,6 +1490,10 @@ namespace Component.ParallelGripper {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(ref input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     }
