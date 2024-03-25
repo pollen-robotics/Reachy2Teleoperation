@@ -37,6 +37,7 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
 
         private ConnectionStatus connectionStatus;
+        private RobotCalibration robotCalib;
 
         private Transform headset;
 
@@ -58,6 +59,8 @@ namespace TeleopReachy
         public Vector3 midShoulderPoint { get; set; }
         public double shoulderWidth { get; set; }
         private Transform oldUserCenter;
+        private Transform newUserCenter;
+
 
 
 
@@ -74,18 +77,19 @@ namespace TeleopReachy
 
             resetPositionButton.gameObject.SetActive(false);
 
+            robotCalib = RobotCalibration.Instance;
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus; 
-        
-            HideReachy();
-            FixUserTrackerPosition();
 
             //ajout calibration 
             oldUserCenter = GameObject.Find("OldUserCenter").transform;
-            oldUserCenter.position = userTracker.position;
-            oldUserCenter.rotation = userTracker.rotation;
-
+            newUserCenter = GameObject.Find("NewUserCenter").transform;
+        
+            HideReachy();
+            FixUserTrackerPosition();
             MakeMirrorFaceUser();
+
+            robotCalib.event_OnCalibChanged.AddListener(FixNewPosition);
 
             if (Robot.IsCurrentRobotVirtual())
             {
@@ -159,6 +163,9 @@ namespace TeleopReachy
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             userTracker.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
             Debug.Log("ancienne :" + userTracker.position);
+            oldUserCenter.position = userTracker.position;
+            oldUserCenter.rotation = userTracker.rotation;
+
         }
 
         //calibration
@@ -166,14 +173,13 @@ namespace TeleopReachy
         {
             Quaternion rotation = headset.rotation;
             Vector3 eulerAngles = rotation.eulerAngles;
-
             // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
             Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
-
             userTracker.rotation = systemRotation;
-
             userTracker.position = midShoulderPoint;
             Debug.Log("nouvelle :" + userTracker.position);
+            newUserCenter.rotation = userTracker.rotation;
+            newUserCenter.position = userTracker.position;
 
         }
 

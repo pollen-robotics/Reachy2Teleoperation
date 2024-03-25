@@ -25,7 +25,6 @@ namespace TeleopReachy
         private List<Vector3> rightCoordinates = new List<Vector3>();
         private float intervalTime=0.04f ; 
         private float actualTime=0f;
-        private Transform newUserCenter;
         private bool calib_right_side = false;
         private bool calib_left_side = false;
         private bool capture_done = false;
@@ -71,7 +70,6 @@ namespace TeleopReachy
             trackedLeftHand = GameObject.Find("LeftHand Controller").transform;
             trackedRightHand = GameObject.Find("RightHand Controller").transform;
             userTrackerTransform = GameObject.Find("UserTracker").transform;
-            newUserCenter = GameObject.Find("NewUserCenter").transform;
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
             if (trackedLeftHand == null || trackedRightHand == null) {
@@ -131,13 +129,11 @@ namespace TeleopReachy
             {
                 Debug.Log("calcul de calib");
                 UpperBodyFeatures();
-                TransitionRoomManager.Instance.FixNewPosition();
+                event_OnCalibChanged.Invoke();
+                //TransitionRoomManager.Instance.FixNewPosition();
                 // ajout du game object au centre de l'utilisateur 
-                newUserCenter.position = TransitionRoomManager.Instance.midShoulderPoint;
-                newUserCenter.rotation = TransitionRoomManager.Instance.userTracker.rotation;
                 ExportCoordinatesToCSV(); 
                 calibration_done = true;
-                event_OnCalibChanged.Invoke();
                 Debug.Log("calib finie");
             }  
         }
@@ -305,6 +301,7 @@ namespace TeleopReachy
             {
                 // Convertissez la position en position par rapport au UserTracker
                 Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                handPositionUserSpace.y += userTrackerTransform.position.y;
                 leftHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
@@ -312,10 +309,11 @@ namespace TeleopReachy
             {
                 // Convertissez la position en position par rapport au UserTracker
                 Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                handPositionUserSpace.y += userTrackerTransform.position.y;
                 rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev", fileName)))
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
                 foreach (Vector3 point in leftHandPositionsUserSpace)
