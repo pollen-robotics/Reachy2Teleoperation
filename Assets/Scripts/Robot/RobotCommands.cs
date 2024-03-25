@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 using Reachy.Part.Head;
 using Reachy.Part.Arm;
 using Reachy.Part.Hand;

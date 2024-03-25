@@ -1,11 +1,8 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using Reachy.Kinematics;
-
 
 namespace TeleopReachy
 {
-    public enum ArmSide 
+    public enum ArmSide
     {
         LEFT, RIGHT
     }

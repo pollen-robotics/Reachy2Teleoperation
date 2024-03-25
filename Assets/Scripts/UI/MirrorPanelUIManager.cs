@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
 
 namespace TeleopReachy
 {
@@ -48,7 +44,6 @@ namespace TeleopReachy
         private Vector3 lerpAdvancedOptionsStartingPosition;
         private Vector3 lerpAdvancedOptionsGoalPosition;
 
-        // Start is called before the first frame update
         void Start()
         {
             isStatusPanelOpen = false;
