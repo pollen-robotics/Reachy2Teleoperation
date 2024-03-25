@@ -82,7 +82,8 @@ namespace TeleopReachy
 
             //ajout calibration 
             oldUserCenter = GameObject.Find("OldUserCenter").transform;
-            oldUserCenter.localPosition = userTracker.position;
+            oldUserCenter.position = userTracker.position;
+            oldUserCenter.rotation = userTracker.rotation;
 
             MakeMirrorFaceUser();
 
@@ -163,17 +164,16 @@ namespace TeleopReachy
         //calibration
         public void FixNewPosition()
         {
+            Quaternion rotation = headset.rotation;
+            Vector3 eulerAngles = rotation.eulerAngles;
+
+            // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
+            Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
+
+            userTracker.rotation = systemRotation;
 
             userTracker.position = midShoulderPoint;
             Debug.Log("nouvelle :" + userTracker.position);
-
-            // Debug.Log("Debut du NewFixUser");
-
-            // //modification pour calibration 
-            //Matrix4x4 midShoulderTransform = Matrix4x4.TRS(midShoulderPoint, userTracker.rotation, Vector3.one); 
-            //Matrix4x4 userCenterMatrix = midShoulderTransform * headset.transform.worldToLocalMatrix;
-            // Debug.Log("user transform initiale :" + userTracker.transform.position + userTracker.transform.rotation );
-            // Debug.Log("user transform avec calib :" + userCenterMatrix);
 
         }
 
