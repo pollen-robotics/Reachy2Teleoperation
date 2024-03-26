@@ -69,7 +69,6 @@ namespace TeleopReachy
             Debug.Log("Start of RobotCalibration");
             trackedLeftHand = GameObject.Find("LeftHand Controller").transform;
             trackedRightHand = GameObject.Find("RightHand Controller").transform;
-            userTrackerTransform = GameObject.Find("UserTracker").transform;
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
             if (trackedLeftHand == null || trackedRightHand == null) {
@@ -130,8 +129,6 @@ namespace TeleopReachy
                 Debug.Log("calcul de calib");
                 UpperBodyFeatures();
                 event_OnCalibChanged.Invoke();
-                //TransitionRoomManager.Instance.FixNewPosition();
-                // ajout du game object au centre de l'utilisateur 
                 ExportCoordinatesToCSV(); 
                 calibration_done = true;
                 Debug.Log("calib finie");
@@ -149,10 +146,10 @@ namespace TeleopReachy
                     if (actualTime >= intervalTime)
                     {
                         Debug.Log(rightCoordinates.Count);
-                        // rightCoordinates.Add(trackedRightHand.position);
-                        // lastPointRight = trackedRightHand.position;
-                        rightCoordinates.Add(trackedRightHand.localPosition);
-                        lastPointRight = trackedRightHand.localPosition;
+                        rightCoordinates.Add(trackedRightHand.position);
+                        lastPointRight = trackedRightHand.position;
+                        // rightCoordinates.Add(trackedRightHand.localPosition);
+                        // lastPointRight = trackedRightHand.localPosition;
                         Debug.Log(rightCoordinates.Count);
                         actualTime=0f;}
                 } else {
@@ -167,10 +164,10 @@ namespace TeleopReachy
                     {
                         Debug.Log(leftCoordinates.Count);
 
-                        // leftCoordinates.Add(trackedLeftHand.position);
-                        // lastPointLeft = trackedLeftHand.position;
-                        leftCoordinates.Add(trackedLeftHand.localPosition);
-                        lastPointLeft = trackedLeftHand.localPosition;
+                        leftCoordinates.Add(trackedLeftHand.position);
+                        lastPointLeft = trackedLeftHand.position;
+                        // leftCoordinates.Add(trackedLeftHand.localPosition);
+                        // lastPointLeft = trackedLeftHand.localPosition;
                         Debug.Log(leftCoordinates.Count);
                         actualTime=0f;}
                 } else  {
@@ -291,7 +288,9 @@ namespace TeleopReachy
 
         public void ExportCoordinatesToCSV()
         {
-            
+            userTrackerTransform = GameObject.Find("UserTracker").transform;
+            Matrix4x4 userTrackerInverseTransform = userTrackerTransform.worldToLocalMatrix;
+
             string dateTimeString = DateTime.Now.ToString("ddMM_HHmm");
             string fileName = "DataCalib_" + dateTimeString + ".csv";
             List<Vector3> rightHandPositionsUserSpace = new List<Vector3>();
@@ -300,7 +299,7 @@ namespace TeleopReachy
             foreach (Vector3 handPosition in leftCoordinates)
             {
                 // Convertissez la position en position par rapport au UserTracker
-                Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                Vector3 handPositionUserSpace = userTrackerInverseTransform.MultiplyPoint(handPosition);
                 handPositionUserSpace.y += userTrackerTransform.position.y;
                 leftHandPositionsUserSpace.Add(handPositionUserSpace);
             }
@@ -308,12 +307,12 @@ namespace TeleopReachy
             foreach (Vector3 handPosition in rightCoordinates)
             {
                 // Convertissez la position en position par rapport au UserTracker
-                Vector3 handPositionUserSpace = handPosition - userTrackerTransform.position;
+                Vector3 handPositionUserSpace = userTrackerInverseTransform.MultiplyPoint(handPosition);
                 handPositionUserSpace.y += userTrackerTransform.position.y;
                 rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data", fileName)))
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Claire", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
                 foreach (Vector3 point in leftHandPositionsUserSpace)
