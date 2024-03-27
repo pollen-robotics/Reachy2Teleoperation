@@ -306,7 +306,7 @@ namespace TeleopReachy
 
         private IEnumerator SmoothCompliance(int duration)
         {
-            uint torqueLimitLow = 50;
+            uint torqueLimitLow = 35;
             uint torqueLimitHigh = 100;
 
             ModifyHeadSpeedLimit(10);
@@ -330,6 +330,8 @@ namespace TeleopReachy
             SetRobotCompliant("r_arm");
             SetRobotCompliant("r_hand");
             robotStatus.SetRobotCompliant(true);
+
+            yield return new WaitForSeconds(0.2f);
 
             ModifyHeadSpeedLimit(100);
             ModifyArmTorqueLimit(torqueLimitHigh);
