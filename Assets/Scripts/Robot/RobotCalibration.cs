@@ -209,14 +209,16 @@ namespace TeleopReachy
  
             // (double leftArmSize, Vector3 leftShoulderCenter) = CenterRotationLSM(leftCoordinates);
             // (double rightArmSize, Vector3 rightShoulderCenter) = CenterRotationLSM(rightCoordinates);
-            (double leftArmSize, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
-            (double rightArmSize, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
+            (double leftArmSize, double approxleftarmsize, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
+            (double rightArmSize, double approxrightarmsize, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
             
             double meanArmSize = (leftArmSize + rightArmSize) / 2f;
+            double approxarmsize = (approxleftarmsize + approxrightarmsize) / 2f;
             Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
 
-            Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
+            Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : ");
+            Debug.Log("bras G meanrad=" + leftArmSize + "approx=" + approxleftarmsize + "/ bras D meanrad=" + rightArmSize + "approx=" + approxrightarmsize + "/ mean=" + meanArmSize + "approx=" + approxarmsize);
             TransitionRoomManager.Instance.meanArmSize = meanArmSize;
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
             TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
@@ -244,6 +246,11 @@ namespace TeleopReachy
 
             filePath = @"C:\Users\robot\Dev\dataunity_center.csv";
             data = $"{currentTime},{midShoulderPoint.x},{x_approx},{initialPosition.x},{midShoulderPoint.y},{y_approx},{initialPosition.y},{midShoulderPoint.z},{z_approx},{initialPosition.z},";
+            using (var writer = new StreamWriter(filePath, true))
+            {writer.WriteLine(data);}
+
+            filePath = @"C:\Users\robot\Dev\armsize.csv";
+            data = $"{currentTime},{leftArmSize},{approxleftarmsize},{rightArmSize},{approxrightarmsize},{meanArmSize},{approxarmsize},";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
         }
@@ -332,7 +339,7 @@ namespace TeleopReachy
 
  
 
-        public static (double, Vector3) EllipsoidFitAleksander(List<Vector3> points)
+        public static (double, double, Vector3) EllipsoidFitAleksander(List<Vector3> points)
         {
             // var X = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.x));
             // var Y = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.y));
@@ -382,8 +389,14 @@ namespace TeleopReachy
             Debug.Log("radii =" + radii);
             double meanRadius = radii.Average();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
+            
+            //approximate center by distances of points of the same y as the center
+            double yThreshold = 0.02 * centre[1];
+            var filteredPoints = points.Where(p => Math.Abs(p.y - centre[1]) <= yThreshold);
+            var distances = filteredPoints.Select(p => Vector3.Distance(centreVector3, p));
+            double approxRadius = distances.Average();
 
-            return (meanRadius, centreVector3);
+            return (meanRadius, approxRadius, centreVector3);
 
         }
     }
