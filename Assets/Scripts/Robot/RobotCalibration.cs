@@ -171,8 +171,7 @@ namespace TeleopReachy
                         Debug.Log(leftCoordinates.Count);
                         actualTime=0f;}
                 } else  {
-                    calib_left_side = true;
-                    start_calib_keyboard = false;}
+                    calib_left_side = true;;}
             }
             
         }
@@ -254,6 +253,8 @@ namespace TeleopReachy
             data = $"{currentTime},{leftArmSize},{approxleftarmsizex},{approxleftarmsizey},{approxleftarmsizexy},{rightArmSize},{approxrightarmsizex},{approxrightarmsizey},{approxrightarmsizexy},{meanArmSize},{approxarmsizex},{approxarmsizey},{approxarmsizexy}";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
+
+            return;
         }
 
         private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
@@ -320,7 +321,7 @@ namespace TeleopReachy
                 rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Claire", fileName)))
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Simon", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
                 foreach (Vector3 point in leftHandPositionsUserSpace)
@@ -390,20 +391,30 @@ namespace TeleopReachy
             Debug.Log("radii =" + radii);
             double meanRadius = radii.Average();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
+            Debug.Log("centre = " + centreVector3);
             
-            double xThreshold = 0.05 * centre[0];
+            double xThreshold = 0.05;
             var filteredPointsx = points.Where(p => Math.Abs(p.x - centre[0]) <= xThreshold);
             var distancesx = filteredPointsx.Select(p => Vector3.Distance(centreVector3, p));
-            double approxRadiusx = distancesx.Average();
 
-            double yThreshold = 0.05 * centre[1];
+            double yThreshold = 0.05;
             var filteredPointsy = points.Where(p => Math.Abs(p.y - centre[1]) <= yThreshold);
             var distancesy = filteredPointsy.Select(p => Vector3.Distance(centreVector3, p));
-            double approxRadiusy = distancesy.Average();
 
-            var filteredPointsxy = points.Where(p => Math.Abs(p.x - centre[0]) <= xThreshold && Math.Abs(p.y - centre[1]) <= yThreshold);
+            var filteredPointsxy = points.Where(p => 
+                p.x >= centre[0] - xThreshold && p.x <= centre[0] + xThreshold &&
+                p.y >= centre[1] - yThreshold && p.y <= centre[1] + yThreshold
+            );   
             var distancesxy = filteredPointsxy.Select(p => Vector3.Distance(centreVector3, p));
-            double approxRadiusxy = distancesxy.Average();
+
+            // Calcul de approxRadiusx
+            double approxRadiusx = filteredPointsx.Any() ? distancesx.Average() : 0.0;
+
+            // Calcul de approxRadiusy
+            double approxRadiusy = filteredPointsy.Any() ? distancesy.Average() : 0.0;
+
+            // Calcul de approxRadiusxy
+            double approxRadiusxy = filteredPointsxy.Any() ? distancesxy.Average() : 0.0;
 
             return (meanRadius, approxRadiusx, approxRadiusy, approxRadiusxy, centreVector3);
 
