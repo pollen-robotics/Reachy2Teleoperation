@@ -46,17 +46,17 @@ namespace TeleopReachy
 
             Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4
             {
-                Data = { 0.966f, 0.198f, -0.166f, 0.048f,
-                            -0.135f, 0.934f, 0.330f, -0.356f,
-                            0.221f, -0.296f, 0.929f, -0.603f,
+                Data = { 0.800f, 0.537f, 0.266f, -0.021f,
+                            -0.597f, 0.673f, 0.436f, -0.326f,
+                            0.055f, -0.507f, 0.859f, -0.639f,
                             0, 0, 0, 1 }
             };
 
             Reachy.Kinematics.Matrix4x4 lArmZeroTarget = new Reachy.Kinematics.Matrix4x4
             {
-                Data = { 0.981f, 0.029f, -0.189f, 0.048f,
-                            -0.060f, 0.986f, -0.158f, 0.356f,
-                            0.181f, 0.166f, 0.969f, -0.603f,
+                Data = { 0.966f, -0.246f, 0.081f, 0.003f,
+                            0.232f, 0.678f, -0.697f, 0.364f,
+                            0.117f, 0.692f, 0.712f, -0.621f,
                             0, 0, 0, 1 }
             };
 
