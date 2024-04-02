@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearRegression;
 using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.Statistics;
 
 namespace TeleopReachy
 {
@@ -38,6 +39,8 @@ namespace TeleopReachy
         public UnityEvent event_StartLeftCalib;
 
         private  InstructionsTextUIManager instructionsTextUIManager;
+        int ite_right = 0;
+        int ite_left = 0; 
 
 
 
@@ -83,7 +86,7 @@ namespace TeleopReachy
             event_OnCalibChanged = new UnityEvent();
             event_StartLeftCalib = new UnityEvent();
             event_StartRightCalib = new UnityEvent();
-            event_WaitForCalib = new UnityEvent();            
+            event_WaitForCalib = new UnityEvent();           
             }
 
         public void Update()
@@ -101,13 +104,13 @@ namespace TeleopReachy
             }
 
             //capturing points from right side, then left side
-            if (!calib_right_side && start_calib_keyboard) {
+            if (!calib_right_side && start_calib_keyboard && ite_right<2) {
                 Debug.Log("calib droite");
                 event_StartRightCalib.Invoke();
                 CapturePoints("right");
                 actualTime += Time.deltaTime;}
 
-            else if (!calib_left_side && start_calib_keyboard){
+            else if (!calib_left_side && start_calib_keyboard && ite_left<2){
                 Debug.Log("calib gauche");
                 event_StartLeftCalib.Invoke();
                 CapturePoints("left");
@@ -138,7 +141,7 @@ namespace TeleopReachy
         private void CapturePoints (string side) //bras séparés
         {
             Debug.Log("actualTime=" + actualTime);
-            if (side == "right"){
+            if (side == "right" && ite_right<2){
                 if (rightCoordinates.Count < 400){
                     Debug.Log("last point" + lastPointRight);
                     
@@ -154,6 +157,7 @@ namespace TeleopReachy
                         actualTime=0f;}
                 } else {
                     calib_right_side = true;
+                    calib_left_side = false;
                     start_calib_keyboard = false;}
             } else if (side == "left"){
                 if (leftCoordinates.Count < 400)
@@ -171,7 +175,9 @@ namespace TeleopReachy
                         Debug.Log(leftCoordinates.Count);
                         actualTime=0f;}
                 } else  {
-                    calib_left_side = true;;}
+                    ite_left +=1;
+                    calib_left_side = true;
+                    calib_right_side = false;}
             }
             
         }
@@ -321,7 +327,7 @@ namespace TeleopReachy
                 rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Simon", fileName)))
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Claire", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
                 foreach (Vector3 point in leftHandPositionsUserSpace)
@@ -389,7 +395,7 @@ namespace TeleopReachy
 
             var radii = evals.Map(value => Math.Sqrt(1 / Math.Abs(value)));
             Debug.Log("radii =" + radii);
-            double meanRadius = radii.Average();
+            double meanRadius = radii.Median();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
             Debug.Log("centre = " + centreVector3);
             
