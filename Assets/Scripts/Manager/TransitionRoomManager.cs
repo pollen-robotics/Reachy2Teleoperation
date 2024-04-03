@@ -50,7 +50,6 @@ namespace TeleopReachy
         public UnityEvent event_OnWaitingForPosition;
         public UnityEvent event_OnExitTransitionRoomRequested;
 
-
         // calibration variables 
         public double meanArmSize { get; set; }
         public Vector3 midShoulderPoint { get; set; }
@@ -68,15 +67,15 @@ namespace TeleopReachy
             userTracker = UserTrackerManager.Instance.transform;
             State = TransitionState.WaitingForTracker;
 
+            robotCalib = RobotCalibration.Instance;
+            robotConfig = RobotDataManager.Instance.RobotConfig;
+            robotStatus = RobotDataManager.Instance.RobotStatus; 
+
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
             connectionStatus.event_OnRobotUnready.AddListener(AbortTeleop);
 
             resetPositionButton.gameObject.SetActive(false);
-
-            robotCalib = RobotCalibration.Instance;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotStatus = RobotDataManager.Instance.RobotStatus; 
 
             //ajout calibration 
             oldUserCenter = GameObject.Find("OldUserCenter").transform;
@@ -219,6 +218,7 @@ namespace TeleopReachy
                 readyButton.gameObject.SetActive(false);
                 resetPositionButton.gameObject.SetActive(true);
                 event_OnReadyForTeleop.Invoke();
+                Debug.Log("event onReadyForTeleop");
             }
         }
 
