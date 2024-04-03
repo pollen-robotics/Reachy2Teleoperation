@@ -38,9 +38,6 @@ namespace TeleopReachy
         public UnityEvent event_StartRightCalib;
         public UnityEvent event_StartLeftCalib;
 
-        private  InstructionsTextUIManager instructionsTextUIManager;
-        int ite_right = 0;
-        int ite_left = 0; 
 
 
 
@@ -98,20 +95,17 @@ namespace TeleopReachy
             if (!start_calib_keyboard && !calibration_done) 
              //if (!start_calib_keyboard && !capture_done)
             {
-                Debug.Log("calib : press X");
                 event_WaitForCalib.Invoke();
                 actualTime = 0f;
             }
 
             //capturing points from right side, then left side
-            if (!calib_right_side && start_calib_keyboard && ite_right<2) {
-                Debug.Log("calib droite");
+            if (!calib_right_side && start_calib_keyboard) {
                 event_StartRightCalib.Invoke();
                 CapturePoints("right");
                 actualTime += Time.deltaTime;}
 
-            else if (!calib_left_side && start_calib_keyboard && ite_left<2){
-                Debug.Log("calib gauche");
+            else if (!calib_left_side && start_calib_keyboard){
                 event_StartLeftCalib.Invoke();
                 CapturePoints("left");
                 actualTime += Time.deltaTime;}
@@ -129,40 +123,31 @@ namespace TeleopReachy
             //else if (capture_done && !calibration_done)
             else if (calib_left_side && !calibration_done)  
             {
-                Debug.Log("calcul de calib");
                 UpperBodyFeatures();
+                calibration_done = true;
                 event_OnCalibChanged.Invoke();
                 ExportCoordinatesToCSV(); 
-                calibration_done = true;
-                Debug.Log("calib finie");
             }  
         }
 
         private void CapturePoints (string side) //bras séparés
         {
             Debug.Log("actualTime=" + actualTime);
-            if (side == "right" && ite_right<2){
+            if (side == "right"){
                 if (rightCoordinates.Count < 400){
-                    Debug.Log("last point" + lastPointRight);
                     
                     //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
                     {
-                        Debug.Log(rightCoordinates.Count);
                         rightCoordinates.Add(trackedRightHand.position);
                         lastPointRight = trackedRightHand.position;
-                        // rightCoordinates.Add(trackedRightHand.localPosition);
-                        // lastPointRight = trackedRightHand.localPosition;
-                        Debug.Log(rightCoordinates.Count);
                         actualTime=0f;}
                 } else {
                     calib_right_side = true;
-                    calib_left_side = false;
                     start_calib_keyboard = false;}
             } else if (side == "left"){
                 if (leftCoordinates.Count < 400)
                 {
-                    Debug.Log("last point" + lastPointLeft);
                     //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
                     {
@@ -170,14 +155,11 @@ namespace TeleopReachy
 
                         leftCoordinates.Add(trackedLeftHand.position);
                         lastPointLeft = trackedLeftHand.position;
-                        // leftCoordinates.Add(trackedLeftHand.localPosition);
-                        // lastPointLeft = trackedLeftHand.localPosition;
-                        Debug.Log(leftCoordinates.Count);
                         actualTime=0f;}
                 } else  {
-                    ite_left +=1;
                     calib_left_side = true;
-                    calib_right_side = false;}
+                    //calib_right_side = false;}
+                }
             }
             
         }
@@ -212,8 +194,6 @@ namespace TeleopReachy
         {
             Vector3 initialPosition = TransitionRoomManager.Instance.userTracker.position;
  
-            // (double leftArmSize, Vector3 leftShoulderCenter) = CenterRotationLSM(leftCoordinates);
-            // (double rightArmSize, Vector3 rightShoulderCenter) = CenterRotationLSM(rightCoordinates);
             (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
             (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
@@ -349,10 +329,6 @@ namespace TeleopReachy
 
         public static (double, double, double, double, Vector3) EllipsoidFitAleksander(List<Vector3> points)
         {
-            // var X = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.x));
-            // var Y = Vector<double>.Build.DenseOfEnumerable(points.Select(p =>(double) p.y));
-            // var Z = Vector<double>.Build.DenseOfEnumerable(points.Select(p => (double) p.z));
-
             var D = Matrix<double>.Build.DenseOfRowArrays(points.Select(p => new double[] {
                 p.x * p.x + p.y * p.y - 2 * p.z * p.z,
                 p.x * p.x + p.z * p.z - 2 * p.y * p.y,
@@ -399,11 +375,11 @@ namespace TeleopReachy
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
             Debug.Log("centre = " + centreVector3);
             
-            double xThreshold = 0.05;
+            double xThreshold = 0.07;
             var filteredPointsx = points.Where(p => Math.Abs(p.x - centre[0]) <= xThreshold);
             var distancesx = filteredPointsx.Select(p => Vector3.Distance(centreVector3, p));
 
-            double yThreshold = 0.05;
+            double yThreshold = 0.07;
             var filteredPointsy = points.Where(p => Math.Abs(p.y - centre[1]) <= yThreshold);
             var distancesy = filteredPointsy.Select(p => Vector3.Distance(centreVector3, p));
 

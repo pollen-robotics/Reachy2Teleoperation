@@ -68,7 +68,6 @@ namespace TeleopReachy
             robotCalib.event_WaitForCalib.AddListener(IndicateToPressX);
             robotCalib.event_StartRightCalib.AddListener(() => IndicateInitialCalibration("right"));
             robotCalib.event_StartLeftCalib.AddListener(() => IndicateInitialCalibration("left"));
-            robotCalib.event_OnCalibChanged.AddListener(IndicateEndofCalibration);
             needUpdateText = true;
         }
 

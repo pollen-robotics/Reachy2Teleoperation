@@ -77,6 +77,7 @@ namespace TeleopReachy
             {
                 ResetConfig();
             }
+            Debug.Log("[Robot config]:has_robot_config: " + has_robot_config);
         }
 
         void GetPartsId(Reachy.Reachy reachy)
