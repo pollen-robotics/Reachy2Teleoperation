@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
@@ -17,7 +15,7 @@ namespace TeleopReachy
             //     targetOffset = new Vector3(0.0f, 0.0f, 0.6f);   
             // }
             // else{
-            targetOffset = new Vector3(0.0f, 0.0f, 0.8f);   
+            targetOffset = new Vector3(0.0f, 0.0f, 0.8f);
             // }
             maxDistanceAllowed = 0;
         }
@@ -25,7 +23,7 @@ namespace TeleopReachy
         // Update is called once per frame
         void Update()
         {
-            
+
         }
     }
 

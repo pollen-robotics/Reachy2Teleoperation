@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using MathNet.Numerics.LinearAlgebra;
-
 using System;
 
 namespace TeleopReachy

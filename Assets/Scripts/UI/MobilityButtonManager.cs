@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +7,7 @@ namespace TeleopReachy
     public class MobilityButtonManager : MonoBehaviour
     {
         public Button mobilityButton;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
         private ConnectionStatus connectionStatus;
@@ -56,7 +54,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateButton)
+            if (needUpdateButton)
             {
                 mobilityButton.interactable = isInteractable;
                 mobilityButton.colors = buttonColor;

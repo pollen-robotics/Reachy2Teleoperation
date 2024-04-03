@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
-using System;
+
 
 namespace TeleopReachy
 {
@@ -24,19 +22,19 @@ namespace TeleopReachy
 
         private bool needUpdateText = false;
         private string reasonString;
-        private ControllersManager controllers;
+        //private ControllersManager controllers;
 
         // Start is called before the first frame update
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
+            //controllers = ActiveControllerManager.Instance.ControllersManager;
             // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             // {
             //     targetOffset = new Vector3(0, -0.15f, 0.8f);
 
             // }
             // else {
-                targetOffset = new Vector3(0, -0.15f, 0.8f);
+            targetOffset = new Vector3(0, -0.15f, 0.8f);
 
             // }
             maxDistanceAllowed = 0;
@@ -75,7 +73,7 @@ namespace TeleopReachy
         // Update is called once per frame
         void DisplaySuspensionWarning()
         {
-            if(robotStatus.IsRobotTeleoperationActive())
+            if (robotStatus.IsRobotTeleoperationActive())
             {
                 isLoaderActive = true;
                 transform.ActivateChildren(true);
@@ -97,7 +95,7 @@ namespace TeleopReachy
             {
                 loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = suspensionManager.indicatorTimer;
             }
-            if(needUpdateText)
+            if (needUpdateText)
             {
                 needUpdateText = false;
                 suspensionReasonText.text = reasonString;

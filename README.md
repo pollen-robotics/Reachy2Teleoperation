@@ -1,18 +1,22 @@
 # ReachyTeleoperationXR
 
-Unity-based application that allows to control a [Reachy robot](https://www.pollen-robotics.com/reachy/) (version 2021+), or a [virtual one](https://github.com/pollen-robotics/reachy2021-unity-package), with a VR headset. The user documentation is available [here](https://docs.pollen-robotics.com/vr/introduction/introduction/).
+Unity-based application that allows to control a Reachy 2 robot with a VR headset. The user documentation is available [here](https://docs.pollen-robotics.com/vr/introduction/introduction/).
 
 ## Requirements
 
-The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2, and the Valve Index. The Oculus Quest 2 can be used in standalone mode or with the Oculus link.
+The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2 and 3. The Oculus Quest headsets can be used in standalone mode or with the Oculus link.
 
-For any custom development we recommend to use Unity LTS 2020.3. Versions above 2020.3 will not work due to compatibility issues with the gRPC library.
+For any custom development we recommend to use Unity LTS 2022.3, which has been used for development.
+
+
+The project relies on GStreamer. Please install the [Windows Runtime](
+https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msvc-x86_64-1.24.0.msi) (complete install). Check that the environment variable PATH contains *C:\gstreamer\1.0\msvc_x86_64\bin* (default installation). Reboot after the installation.
 
 ## Installation
 
 ### Using a [release build](https://github.com/pollen-robotics/ReachyTeleoperation/releases) [recommended]
 
-For the Oculus Quest 2, you may ask to join the list of beta users to install the app directly from the app store. Please contact us on our [discord channel](https://discord.com/channels/519098054377340948/991321051835404409)!
+For the Oculus Quest 2 or 3, you may ask to join the list of beta users to install the app directly from the app store. Please contact us on our [discord channel](https://discord.com/channels/519098054377340948/991321051835404409)!
 
 For Windows and Android platforms, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). The Windows package is a zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used. The Android package is an *.apk that should be installed on your device.
 
@@ -21,10 +25,10 @@ For Windows and Android platforms, the simplest way to use the application is to
 
 Clone the **main** branch of the repo. Make sure that git lfs is enabled. If you want to contribue to the project please see the *Issues/Contribution* section.
 ```
-git clone -b main https://github.com/pollen-robotics/ReachyTeleoperation.git
+git clone -b main https://github.com/pollen-robotics/Reachy2Teleoperation.git
 ```
 
-Download the [grpc_unity_package](https://packages.grpc.io/archive/2022/04/67538122780f8a081c774b66884289335c290cbe-f15a2c1c-582b-4c51-acf2-ab6d711d2c59/csharp/grpc_unity_package.2.47.0-dev202204190851.zip) from the [gRPC daily builds](https://packages.grpc.io/archive/2022/04/67538122780f8a081c774b66884289335c290cbe-f15a2c1c-582b-4c51-acf2-ab6d711d2c59/index.xml). Unzip it in the **Assets/Plugins** folder. You can now run the app from Unity or build an executable for your platform.
+Make sure you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your computer.
 
 ## Usage
 
@@ -38,19 +42,25 @@ The first step is to select the robot you want to control. For that you'll need 
 
 ![alt text](Docs/img/connection.jpg)
 
-Note that there is a built-in virtual robot for local testing of the application.
+Note that there is a built-in virtual robot for local testing of the application (*not available yet*).
 
 ### 2. Get ready for the teleoperation
 
 This step checks that the connection to the (virtual) robot is fine, and allows to set various parameters. Side menus (status, help, settings) can be opened by clicking on the related icons.
 
-Get familiar with the controls of the robot. Press X to play with the emotions or change the gripper grasping mode. Once you are ready, press the *Ready* button and button A to take control of the robot.
+Get familiar with the controls of the robot. Press X to play with the emotions or change the gripper grasping mode. (*not available yet*)  
+Once you are ready, press the *Ready* button and button A to take control of the robot.
 
 *Please not that A and X refers to the buttons of the Oculus controllers. They may differ on your device.*
 
 ![alt text](Docs/img/mirror.jpg)
 
 ### 3. Take control!
+
+You are then in the teleoperation view, but can only use the head and the mobile base.
+1. Check the robot surroudings to make sure there is no obstacle or people around. 
+2. Use the mobile base to get to a more appropriate location to start if needed.
+3. Finally press A to take control of the arms.
 
 You are now controlling Reachy! Press and hold A to return to the previous step. 
 
@@ -59,4 +69,4 @@ You are now controlling Reachy! Press and hold A to return to the previous step.
 ## Issues / Contributions
 
 If you have any problem, you can create an issue or chat with us on our [discord server](https://discord.com/channels/519098054377340948/991321051835404409). 
-Finally, anyone is welcome to contribute to this project. Feel free to checkout the **develop** branch and to pull request any modifications.
+

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 namespace TeleopReachy
 {
     public class RobotDataManager : Singleton<RobotDataManager>
@@ -9,7 +6,6 @@ namespace TeleopReachy
         public RobotStatus RobotStatus { get; private set; }
         public RobotConfig RobotConfig { get; private set; }
         public RobotMobilityCommands RobotMobilityCommands { get; private set; }
-        public RobotVideoStream RobotVideoStream { get; private set; }
         public RobotPingWatcher RobotPingWatcher { get; private set; }
         public ErrorManager ErrorManager { get; private set; }
 
@@ -18,7 +14,6 @@ namespace TeleopReachy
             RobotJointCommands = GetComponent<RobotJointCommands>();
             RobotStatus = GetComponent<RobotStatus>();
             RobotMobilityCommands = GetComponent<RobotMobilityCommands>();
-            RobotVideoStream = GetComponent<RobotVideoStream>();
             RobotConfig = GetComponent<RobotConfig>();
             RobotPingWatcher = GetComponent<RobotPingWatcher>();
             ErrorManager = GetComponent<ErrorManager>();

@@ -1,13 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
-using UnityEngine.UI;
-using Reachy.Kinematics;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
-using Component.Orbita2D;
-
 
 namespace TeleopReachy
 {
@@ -17,9 +10,6 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private HeadTracker headTracker;
         private HandsTracker handsTracker;
-
-        private ArmPosition q0_left;
-        private ArmPosition q0_right;
 
         private bool right_gripper_closed;
         private bool left_gripper_closed;
@@ -51,21 +41,7 @@ namespace TeleopReachy
         }
 
         void Start()
-        { 
-            q0_left = new ArmPosition
-            {
-                ShoulderPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)0},
-                ElbowPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)-Mathf.PI / 2},
-                WristPosition = new Rotation3d { Rpy = new ExtEulerAngles { Roll = 0, Pitch = 0 , Yaw = 0} },
-            };
-
-            q0_right = new ArmPosition
-            {
-                ShoulderPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)0},
-                ElbowPosition = new Pose2d { Axis1 = (float?)0, Axis2 = (float?)-Mathf.PI / 2},
-                WristPosition = new Rotation3d { Rpy = new ExtEulerAngles { Roll = 0, Pitch = 0 , Yaw = 0} },
-            };
-
+        {
             right_gripper_closed = false;
             left_gripper_closed = false;
 
@@ -79,9 +55,6 @@ namespace TeleopReachy
             {
                 ArmCartesianGoal leftEndEffector = GetLeftEndEffectorTarget();
                 ArmCartesianGoal rightEndEffector = GetRightEndEffectorTarget();
-
-                // leftEndEffector.Q0 = q0_left;
-                // rightEndEffector.Q0 = q0_right;
 
                 NeckJointGoal headTarget = headTracker.GetHeadTarget();
 
@@ -110,7 +83,8 @@ namespace TeleopReachy
            
             if (userArmSize == 0.0)
             {
-                rightEndEffector = new ArmCartesianGoal { 
+                rightEndEffector = new ArmCartesianGoal
+                {
                     GoalPose = handsTracker.rightHand.target_pos,
                 };
             }
@@ -145,7 +119,8 @@ namespace TeleopReachy
             //if (UserSize.Instance.UserArmSize == 0)
             if (userArmSize == 0)
             {
-                leftEndEffector = new ArmCartesianGoal { 
+                leftEndEffector = new ArmCartesianGoal
+                {
                     GoalPose = handsTracker.leftHand.target_pos,
                 };
             }

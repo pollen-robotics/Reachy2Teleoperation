@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
     public class ConnectionStatus : MonoBehaviour
     {
-        //private bool isServerConnected;
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
@@ -21,8 +21,8 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private WebRTCAVReceiver audioVideoController;
-        private WebRTCAudioSender microphoneController;
+        private GstreamerUnityGStreamerPlugin audioVideoController;
+        //private WebRTCAudioSender microphoneController;
         private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
@@ -42,7 +42,7 @@ namespace TeleopReachy
             Debug.Log("start connection status");
             dataController = WebRTCManager.Instance.webRTCDataController;
             audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            microphoneController = WebRTCManager.Instance.webRTCAudioSender;
+            //microphoneController = WebRTCManager.Instance.webRTCAudioSender;
 
             robotCalib = RobotCalibration.Instance;
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -50,7 +50,6 @@ namespace TeleopReachy
             robotCalib.event_OnCalibChanged.AddListener(RobotCalibrationChanged);
             robotConfig.event_OnConfigChanged.AddListener(RobotConfigurationChanged);
 
-            //isServerConnected = false;
             isRobotConfigReady = false;
             isRobotInDataRoom = false;
             isRobotInVideoRoom = false;
@@ -71,9 +70,10 @@ namespace TeleopReachy
             {
                 audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+            //if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }
@@ -178,20 +178,6 @@ namespace TeleopReachy
             }
             statusChanged = true;
         }
-
-        /*void RestartServiceStatusHasChanged(object sender, RobotRoomStatusEventArgs e)
-        {
-            isServerConnected = RobotRoomStatusEventArgs.isServerConnected;
-            isRobotInRestartRoom = e.isRobotInRoom;
-            statusChanged = true;
-        }*/
-
-        /*void RestartServiceRequestedByUser(object sender, EventArgs e)
-        {
-            isRobotInDataRoom = false;
-            isRobotInVideoRoom = false;
-            statusChanged = true;
-        }*/
 
         //ajout calibration
         void RobotCalibrationChanged()

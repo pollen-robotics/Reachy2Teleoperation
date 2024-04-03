@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Mobile.Base.Lidar;
@@ -15,7 +11,7 @@ namespace TeleopReachy
     {
         private DataMessageManager dataController;
         private RobotStatus robotStatus;
-        private RobotConfig robotConfig;
+        //private RobotConfig robotConfig;
 
         [SerializeField]
         private Text warningMessage;
@@ -38,13 +34,14 @@ namespace TeleopReachy
             {
                 targetOffset = new Vector3(0, -0.22f, 0.8f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.22f, 0.7f);
             }
             maxDistanceAllowed = 0;
             dataController = DataMessageManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
+            //robotConfig = RobotDataManager.Instance.RobotConfig;
 
             dataController.event_OnLidarDetectionUpdate.AddListener(ShowWarningMessage);
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
@@ -57,7 +54,7 @@ namespace TeleopReachy
 
         void ShowWarningMessage(LidarObstacleDetectionEnum lidarStatus)
         {
-            if(lidarStatus == LidarObstacleDetectionEnum.ObjectDetectedSlowdown)
+            if (lidarStatus == LidarObstacleDetectionEnum.ObjectDetectedSlowdown)
             {
                 messageToDisplay = "Close to obstacle: mobile base slowed down";
             }
@@ -78,12 +75,12 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateWarningMessage)
+            if (needUpdateWarningMessage)
             {
                 warningMessage.text = messageToDisplay;
-                if(wantWarningMessageDisplayed) 
+                if (wantWarningMessageDisplayed)
                 {
-                    if(limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
+                    if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
                     limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
                     transform.ActivateChildren(true);
                 }
