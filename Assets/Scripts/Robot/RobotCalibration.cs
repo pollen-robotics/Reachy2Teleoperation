@@ -24,6 +24,8 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
+        public double meanArmSize { get; set; }
+        public double shoulderWidth { get; set; }
         private float intervalTime=0.04f ; 
         private float actualTime=0f;
         private bool calib_right_side = false;
@@ -126,6 +128,7 @@ namespace TeleopReachy
                 UpperBodyFeatures();
                 calibration_done = true;
                 event_OnCalibChanged.Invoke();
+                UserSize.Instance.UpdateUserSizeafterCalibration(meanArmSize, shoulderWidth);
                 ExportCoordinatesToCSV(); 
             }  
         }
@@ -198,16 +201,18 @@ namespace TeleopReachy
             (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
             
-            double meanArmSize = (leftArmSize + rightArmSize) / 2f;
+            meanArmSize = (leftArmSize + rightArmSize) / 2f;
             double approxarmsizex = (approxleftarmsizex + approxrightarmsizex) / 2f;
             double approxarmsizey = (approxleftarmsizey + approxrightarmsizey) / 2f;
             double approxarmsizexy = (approxleftarmsizexy + approxrightarmsizexy) / 2f;
             Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
 
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : ");
-            TransitionRoomManager.Instance.meanArmSize = meanArmSize;
+        
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
-            TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
+            shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
+            // TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
+            // TransitionRoomManager.Instance.meanArmSize = meanArmSize;
             Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
 
             // get the minimum of rightCoordinates and leftCoordinates together
@@ -226,7 +231,7 @@ namespace TeleopReachy
             //ajout des data dans un .csv
             var filePath = @"C:\Users\robot\Dev\dataunity_exhaustif.csv";
             var currentTime = DateTime.Now.ToString("ddMM_HHmm", CultureInfo.InvariantCulture);
-            var data = $"{currentTime},{leftArmSize},{leftShoulderCenter.x},{leftShoulderCenter.y},{leftShoulderCenter.z},{rightArmSize},{rightShoulderCenter.x},{rightShoulderCenter.y},{rightShoulderCenter.z},{TransitionRoomManager.Instance.shoulderWidth},{meanArmSize},{midShoulderPoint.x},{midShoulderPoint.y},{midShoulderPoint.z},";
+            var data = $"{currentTime},{leftArmSize},{leftShoulderCenter.x},{leftShoulderCenter.y},{leftShoulderCenter.z},{rightArmSize},{rightShoulderCenter.x},{rightShoulderCenter.y},{rightShoulderCenter.z},{shoulderWidth},{meanArmSize},{midShoulderPoint.x},{midShoulderPoint.y},{midShoulderPoint.z},";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
 

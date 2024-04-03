@@ -2912,6 +2912,9 @@ MonoBehaviour:
   event_OnAudioReceiverRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
+  event_AudioSenderStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
   producer: 0
   remote_producer_name: robot
 --- !u!1 &804350694
@@ -3714,6 +3717,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960465531}
   m_CullTransparentMesh: 1
+--- !u!1 &962562496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 962562498}
+  - component: {fileID: 962562497}
+  m_Layer: 0
+  m_Name: SwitchCalibrationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &962562497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962562496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0ba8e7cd3233c4aa1f09ebccc89d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &962562498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962562496}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7975054, y: 0.80568457, z: 0.31972122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1091350868
 GameObject:
   m_ObjectHideFlags: 0
@@ -8015,3 +8062,4 @@ SceneRoots:
   - {fileID: 803308015}
   - {fileID: 1792293515}
   - {fileID: 605895845}
+  - {fileID: 962562498}

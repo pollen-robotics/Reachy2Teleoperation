@@ -51,9 +51,7 @@ namespace TeleopReachy
         public UnityEvent event_OnExitTransitionRoomRequested;
 
         // calibration variables 
-        public double meanArmSize { get; set; }
         public Vector3 midShoulderPoint { get; set; }
-        public double shoulderWidth { get; set; }
         private Transform oldUserCenter;
         private Transform newUserCenter;
 
@@ -204,7 +202,7 @@ namespace TeleopReachy
                 DisplayReachy();
                 readyButton.gameObject.SetActive(false);
                 event_OnAbortTeleop.Invoke();
-                // WaitingForPosition();
+                //WaitingForPosition();
             }
         }
 
