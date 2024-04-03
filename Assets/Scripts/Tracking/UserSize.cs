@@ -6,13 +6,21 @@ namespace TeleopReachy
     public class UserSize : Singleton<UserSize>
     {
         public float UserShoulderHeadDistance { get; private set; }
-        public float UserArmSize { get; private set; }
+        public float UserArmSize { get; set; }
         public float UserShoulderWidth { get; private set; }
 
         protected override void Init()
         {
             UserShoulderHeadDistance = 0.15f;
         }
+
+        public void UpdateUserSizeafterCalibration(double userArmSize, double userShoulderWidth)
+        {
+            UserArmSize = (float)userArmSize;
+            UserShoulderWidth = (float) userShoulderWidth;
+            UpdateUserSizeEvent(EventArgs.Empty);
+        }
+
 
         public void UpdateUserSize(float userSize)
         {

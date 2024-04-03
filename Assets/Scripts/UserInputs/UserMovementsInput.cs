@@ -70,13 +70,6 @@ namespace TeleopReachy
 
         public ArmCartesianGoal GetRightEndEffectorTarget()
         {
-            if (TransitionRoomManager.Instance != null) {
-                userArmSize = TransitionRoomManager.Instance.meanArmSize;
-                userShoulderWidth = TransitionRoomManager.Instance.shoulderWidth;
-            } else {
-                userArmSize = UserSize.Instance.UserArmSize;
-                userShoulderWidth = UserSize.Instance.UserShoulderWidth;
-            }
 
             ArmCartesianGoal rightEndEffector;
            
@@ -107,13 +100,6 @@ namespace TeleopReachy
 
         public ArmCartesianGoal GetLeftEndEffectorTarget()
         {
-            if (TransitionRoomManager.Instance != null) {
-                userArmSize = TransitionRoomManager.Instance.meanArmSize;
-                userShoulderWidth = TransitionRoomManager.Instance.shoulderWidth;
-            } else {
-                userArmSize = UserSize.Instance.UserArmSize;
-                userShoulderWidth = UserSize.Instance.UserShoulderWidth;
-            }
 
             ArmCartesianGoal leftEndEffector;
             //if (UserSize.Instance.UserArmSize == 0)
