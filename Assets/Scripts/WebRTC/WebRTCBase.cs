@@ -30,19 +30,15 @@ namespace TeleopReachy
 
         protected virtual void Awake()
         {
-            //WebRTC.Initialize();
             string ip_address = PlayerPrefs.GetString("robot_ip");
-            // string ip_address="192.168.1.126";
-            // string ip_address="0.0.0.0";
-            //string ip_address = "192.168.1.108";
             _signalingServerURL = "ws://" + ip_address + ":8443";
             Debug.Log("Signaling server URL: " + _signalingServerURL);
         }
 
         protected virtual void Start()
         {
-            StartCoroutine(WebRTCUpdate());
             SignalingCall();
+            StartCoroutine(WebRTCUpdate());
         }
 
         void Update()
@@ -142,19 +138,6 @@ namespace TeleopReachy
                 {
                     Debug.Log($"[WebRTC] OnIceGatheringStateChange {status}");
                 };
-                /*_pc.OnNegotiationNeeded = () =>
-                {
-                    Debug.Log($"[WebRTC] OnNegotiationNeeded");
-                };*/
-                /*_pc.OnNegotiationNeeded = () =>
-                {
-                    Debug.Log($"[WebRTC] OnNegotiationNeeded");
-                    StartCoroutine(PeerNegotiationNeeded(_pc));
-                };*/
-                /*_pc.OnTrack = (evt) =>
-                {
-                    Debug.Log($"[WebRTCAudioSender] OnTrack {evt.Track}");
-                };*/
             }
         }
 
@@ -185,32 +168,32 @@ namespace TeleopReachy
                 // Wait until all frame rendering is done
                 yield return new WaitForEndOfFrame();
 
-                if (_gotOffer)
+                if(_pc != null)
                 {
-                    _gotOffer = false;
-                    yield return WebRTCGotOffer(_offer);
-                }
-                if (_gotAnswer)
-                {
-                    _gotAnswer = false;
-                    yield return WebRTCGotAnswer(_answer);
-                }
-                if (!_candidates.IsEmpty)
-                {
-                    RTCIceCandidate candidate;
-                    if (_candidates.TryDequeue(out candidate))
+                    if (_gotOffer)
                     {
-                        if (_pc != null)
+                        _gotOffer = false;
+                        yield return WebRTCGotOffer(_offer);
+                    }
+                    if (_gotAnswer)
+                    {
+                        _gotAnswer = false;
+                        yield return WebRTCGotAnswer(_answer);
+                    }
+                    if (!_candidates.IsEmpty)
+                    {
+                        RTCIceCandidate candidate;
+                        if (_candidates.TryDequeue(out candidate))
                         {
                             var newCandidate_pc = _pc.AddIceCandidate(candidate);
                             yield return newCandidate_pc;
 
                             Debug.Log($"[WebRTC] Adding remote candidate {candidate}");
                         }
-                    }
-                    else
-                    {
-                        Debug.LogError("Deque fails!");
+                        else
+                        {
+                            Debug.LogError("Deque fails!");
+                        }
                     }
                 }
             }
@@ -232,7 +215,6 @@ namespace TeleopReachy
 
             _signaling.SendLocalDescription(_pc.LocalDescription);
             _offerSent = true;
-            //_signaling.SendLocalDescription(answerDesc);
         }
         IEnumerator WebRTCGotAnswer(RTCSessionDescription answer)
         {

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using System;
 
 
 namespace TeleopReachy
@@ -16,11 +14,11 @@ namespace TeleopReachy
         private List<string> warningHotMotors;
         private List<string> errorOverheatingMotors;
 
-        private Queue<float> pingsQueue;
-        private const int PINGS_QUEUE_SIZE = 20;
+        //private Queue<float> pingsQueue;
+        //private const int PINGS_QUEUE_SIZE = 20;
         private const float THRESHOLD_WARNING_BATTERY_LEVEL = 24.5f;
         private const float THRESHOLD_ERROR_BATTERY_LEVEL = 23.1f;
-        private const float FPS_MINIMUM = 15f;
+        //private const float FPS_MINIMUM = 15f;
         public const float THRESHOLD_ERROR_MOTOR_TEMPERATURE = 54.0f;
         public const float THRESHOLD_WARNING_MOTOR_TEMPERATURE = 50.0f;
 
@@ -33,7 +31,6 @@ namespace TeleopReachy
 
         public float previousBatteryLevel;
 
-        // Start is called before the first frame update
         void Start()
         {
             dataController = DataMessageManager.Instance;
@@ -41,13 +38,12 @@ namespace TeleopReachy
             dataController.event_OnBatteryUpdate.AddListener(CheckBatteryLevel);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
-            pingsQueue = new Queue<float>();
+            //pingsQueue = new Queue<float>();
         }
 
         void Update()
         {
             CheckPingQuality();
-            // CheckVideoQuality();
         }
 
         void CheckPingQuality()
@@ -56,19 +52,6 @@ namespace TeleopReachy
                 event_OnWarningHighLatency.Invoke();
             else if (robotPing.GetIsUnstablePing())
                 event_OnWarningUnstablePing.Invoke();
-        }
-
-        // void CheckVideoQuality()
-        // {
-        //     float fps = videoController.GetMeanFPS();
-        //     if ((fps != -1) && (fps < FPS_MINIMUM)) {
-        //         event_OnWarningHighLatency.Invoke();
-        //     }
-        // }
-
-        public void NotifyNetworkUnstability()
-        {
-            event_OnWarningUnstablePing.Invoke();
         }
 
         protected void CheckTemperatures(Dictionary<string, float> Temperatures)

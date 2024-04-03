@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.UI;
@@ -14,7 +13,7 @@ namespace TeleopReachy
 
         [SerializeField]
         private Text infoMessage;
-        
+
         private ControllersManager controllers;
 
         void Start()
@@ -24,7 +23,8 @@ namespace TeleopReachy
             {
                 targetOffset = new Vector3(0, -0.22f, 0.8f);
             }
-            else {
+            else
+            {
                 targetOffset = new Vector3(0, -0.22f, 0.7f);
             }
             maxDistanceAllowed = 0;

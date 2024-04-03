@@ -1,10 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.XR.Interaction.Toolkit;
 
 
 namespace TeleopReachy
@@ -13,7 +9,7 @@ namespace TeleopReachy
     {
 
         private CustomHandedInputSelector inputSelector;
-        
+
         void Start()
         {
             inputSelector = CustomHandedInputSelector.Instance;
@@ -21,7 +17,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(inputSelector != null)
+            if (inputSelector != null)
             {
                 Vector2 joystickInput;
                 float scrollValue;
@@ -29,7 +25,7 @@ namespace TeleopReachy
 
                 scrollValue = joystickInput[1];
 
-                if(scrollValue != 0)
+                if (scrollValue != 0)
                 {
                     OnScroll(new PointerEventData(EventSystem.current), scrollValue);
                 }
@@ -38,8 +34,8 @@ namespace TeleopReachy
 
         void OnScroll(PointerEventData eventData, float value)
         {
-            eventData.delta = new Vector2(0.0f, value*2);
-            eventData.scrollDelta = new Vector2(0.0f, value*2);
+            eventData.delta = new Vector2(0.0f, value * 2);
+            eventData.scrollDelta = new Vector2(0.0f, value * 2);
             transform.GetComponent<ScrollRect>().OnBeginDrag(eventData);
             transform.GetComponent<ScrollRect>().OnScroll(eventData);
         }

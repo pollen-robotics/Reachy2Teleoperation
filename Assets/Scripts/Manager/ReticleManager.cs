@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +10,16 @@ namespace TeleopReachy
 
         [SerializeField]
         public Toggle reticleToggle;
-        
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
-        private bool needUpdateButton = false;
+        //private bool needUpdateButton = false;
         private bool needUpdateToggle = false;
-        private bool isButtonInteractable = false;
+        //private bool isButtonInteractable = false;
         private bool isToggleInteractable = false;
-        private ColorBlock buttonColor;
-        private string buttonText;
+        //private ColorBlock buttonColor;
+        //private string buttonText;
 
         private MotionSicknessManager motionSicknessManager;
 
@@ -44,7 +41,7 @@ namespace TeleopReachy
 
         void ChooseButtonMode()
         {
-            if(motionSicknessManager.IsReticleOn)
+            if (motionSicknessManager.IsReticleOn)
             {
                 reticleButton.colors = ColorsManager.colorsActivated;
                 reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle ON";
@@ -70,10 +67,10 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(needUpdateToggle)
+            if (needUpdateToggle)
             {
                 reticleToggle.interactable = isToggleInteractable;
-                if(!isToggleInteractable) reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
+                if (!isToggleInteractable) reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
                 else reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
                 needUpdateToggle = false;
             }
@@ -81,9 +78,9 @@ namespace TeleopReachy
 
         void CheckToggleInteractibility()
         {
-            if(motionSicknessManager.IsReticleOn)
+            if (motionSicknessManager.IsReticleOn)
             {
-                if(robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
+                if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
                 {
                     reticleToggle.isOn = motionSicknessManager.IsReticleAlwaysShown;
                     isToggleInteractable = true;

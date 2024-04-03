@@ -1,12 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.UI;
-
 
 namespace TeleopReachy
 {
@@ -16,6 +8,8 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private bool isReticleActive;
         private bool needUpdate;
+
+        private ControllersManager controllers;
 
         private MotionSicknessManager motionSicknessManager;
 
@@ -35,14 +29,23 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
             robotStatus.event_OnStopTeleoperation.AddListener(HideReticle);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
+            {
+                transform.localPosition = new Vector3(0, 0, -600);
+            }
+            else if (controllers.headsetType == ControllersManager.SupportedDevices.MetaQuest3)
+            {
+                transform.localPosition = new Vector3(0, -50, -750);
+            }
         }
 
         void Update()
         {
-            if(needUpdate)
+            if (needUpdate)
             {
                 needUpdate = false;
-                if(motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
+                if (motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
                 {
                     transform.ActivateChildren(isReticleActive);
                 }
