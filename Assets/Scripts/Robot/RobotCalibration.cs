@@ -137,7 +137,7 @@ namespace TeleopReachy
         {
             Debug.Log("actualTime=" + actualTime);
             if (side == "right"){
-                if (rightCoordinates.Count < 400){
+                if (rightCoordinates.Count < 200){
                     
                     //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
@@ -149,7 +149,7 @@ namespace TeleopReachy
                     calib_right_side = true;
                     start_calib_keyboard = false;}
             } else if (side == "left"){
-                if (leftCoordinates.Count < 400)
+                if (leftCoordinates.Count < 200)
                 {
                     //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
