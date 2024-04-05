@@ -20,8 +20,8 @@ namespace TeleopReachy
         //private Vector3 lerpStartingScale;
         private Vector3 lerpGoalScale;
 
-        private Vector3 fullScreenScale = new Vector3(41333, 31000, 1);
-        private Vector3 smallerScreenScale = new Vector3(20666, 15500, 1);
+        private Vector3 fullScreenScale = new Vector3(41333, -31000, 1);
+        private Vector3 smallerScreenScale = new Vector3(20666, -15500, 1);
 
         //Coroutine blackScreenAppears;
         public GameObject blackScreen;
