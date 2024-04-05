@@ -197,6 +197,7 @@ namespace TeleopReachy
         {
             if (statusChanged)
             {
+                Debug.Log("indataroom : " + isRobotInDataRoom + " calib : " + isRobotCalibrated + " config : " + isRobotConfigReady + " invidroom : " + isRobotInVideoRoom + "has head : " + robotConfig.HasHead() + " robot ready : " + isRobotReady);
                 statusChanged = false;
                 
                 if (isRobotInDataRoom && isRobotCalibrated && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))

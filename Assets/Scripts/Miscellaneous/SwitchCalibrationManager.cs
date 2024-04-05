@@ -9,29 +9,32 @@ namespace TeleopReachy
     {
         private RobotCalibration robotCalib;
         private RobotStatus robotStatus;
-        public float armSizeWithCalib;
-        public Transform userTracker;
-        public Transform headset;
-        public char buttonPressed;
-        // public UnityEvent event_onbuttonXPressed;
-        // public UnityEvent event_onbuttonYPressed;
-        // public UnityEvent event_onbuttonBPressed;
+        private float armSizeWithCalib;
+        private Transform userTracker;
+        private Transform headset;
+        private char buttonPressed;
         public UnityEvent event_onbuttonPressed;
 
         
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("[switchcalib manager] start");
-            userTracker = GameObject.Find("UserTracker").transform;
-            headset = GameObject.Find("Main Camera").transform;
-            robotCalib = new RobotCalibration();
-            robotStatus = new RobotStatus();
-            robotCalib.event_OnCalibChanged.AddListener(SetUserArmSize); 
-            
-            // event_onbuttonBPressed.AddListener(OnButtonBPressed);
-            // event_onbuttonXPressed.AddListener(OnButtonXPressed);
-            // event_onbuttonYPressed.AddListener(OnButtonYPressed);
+            if (RobotDataManager.Instance != null)
+            {
+                robotStatus = RobotDataManager.Instance.RobotStatus;
+                if (robotStatus != null)
+                {
+                    robotStatus.event_OnStartTeleoperation.AddListener(SetUserArmSize);
+                }
+                else
+                {
+                    Debug.LogError("RobotStatus is null in RobotDataManager.");
+                }
+            }
+            else
+            {
+                Debug.LogError("RobotDataManager.Instance is null.");
+            }
             event_onbuttonPressed.AddListener(OnButtonPressed);
             
         }
@@ -43,14 +46,12 @@ namespace TeleopReachy
             {
             if (Input.GetKeyDown(KeyCode.B))
                 {
-                    // event_onbuttonBPressed.Invoke();
                     buttonPressed = 'B';
                     event_onbuttonPressed.Invoke();
                     Debug.Log("[switchcalib manager] button B pressed");
                 }
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    // event_onbuttonXPressed.Invoke();
                     buttonPressed = 'X';
                     event_onbuttonPressed.Invoke();
                     Debug.Log("[switchcalib manager] button X pressed");
@@ -66,6 +67,9 @@ namespace TeleopReachy
 
         void SetUserArmSize()
         {
+            Debug.Log("[switchcalib manager] setuserarmsize");
+            userTracker = GameObject.Find("UserTracker").transform;
+            headset = GameObject.Find("Main Camera").transform;
             armSizeWithCalib = UserSize.Instance.UserArmSize;
         }
 
