@@ -46,7 +46,7 @@ namespace TeleopReachy
 
         private static RobotCalibration instance;
 
-        public new static RobotCalibration Instance // ajout du new, à voir si erreur 
+        public new static RobotCalibration Instance
         {
             get
             {
@@ -80,8 +80,6 @@ namespace TeleopReachy
 
             lastPointLeft = trackedLeftHand.position;
             lastPointRight = trackedRightHand.position;
-            // lastPointLeft = userTrackerTransform.InverseTransformPoint(trackedLeftHand.position);
-            // lastPointRight = userTrackerTransform.InverseTransformPoint(trackedRightHand.position);
             event_OnCalibChanged = new UnityEvent();
             event_StartLeftCalib = new UnityEvent();
             event_StartRightCalib = new UnityEvent();
@@ -137,7 +135,7 @@ namespace TeleopReachy
         {
             Debug.Log("actualTime=" + actualTime);
             if (side == "right"){
-                if (rightCoordinates.Count < 200){
+                if (rightCoordinates.Count < 400){
                     
                     //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
@@ -148,14 +146,14 @@ namespace TeleopReachy
                 } else {
                     calib_right_side = true;
                     start_calib_keyboard = false;}
+
             } else if (side == "left"){
-                if (leftCoordinates.Count < 200)
+                if (leftCoordinates.Count < 400)
                 {
                     //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
                     {
                         Debug.Log(leftCoordinates.Count);
-
                         leftCoordinates.Add(trackedLeftHand.position);
                         lastPointLeft = trackedLeftHand.position;
                         actualTime=0f;}
@@ -209,7 +207,9 @@ namespace TeleopReachy
 
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : ");
         
-            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
+            // ajout d'une translation de 2cm vers l'arrière 0804
+            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint + new Vector3(0, 0, -0.02f);
+
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
             // TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
             // TransitionRoomManager.Instance.meanArmSize = meanArmSize;
