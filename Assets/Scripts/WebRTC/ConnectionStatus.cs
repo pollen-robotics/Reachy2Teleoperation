@@ -208,6 +208,7 @@ namespace TeleopReachy
                         if (waitForConnection != null) StopCoroutine(waitForConnection);
                         areRobotServicesRestarting = false;
                         event_OnRobotReady.Invoke();
+                        Debug.Log("[connection status] robot is ready");
                     }
                 }
                 else

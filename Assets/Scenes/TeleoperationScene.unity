@@ -6359,6 +6359,9 @@ MonoBehaviour:
   event_onbuttonPressed:
     m_PersistentCalls:
       m_Calls: []
+  audioCalib_B: {fileID: 8300000, guid: 44b54665f0c5b8e4c8f4960139543af7, type: 3}
+  audioCalib_X: {fileID: 8300000, guid: 83608913c5c2108448848b40b9fed6d7, type: 3}
+  audioCalib_Y: {fileID: 8300000, guid: 87b0c44703f2ffd4fb051c2e31be9392, type: 3}
 --- !u!4 &1688287965
 Transform:
   m_ObjectHideFlags: 0

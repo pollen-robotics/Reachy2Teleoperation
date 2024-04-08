@@ -68,6 +68,7 @@ namespace TeleopReachy
             robotCalib.event_WaitForCalib.AddListener(IndicateToPressX);
             robotCalib.event_StartRightCalib.AddListener(() => IndicateInitialCalibration("right"));
             robotCalib.event_StartLeftCalib.AddListener(() => IndicateInitialCalibration("left"));
+            robotCalib.event_OnCalibChanged.AddListener(IndicateRobotReady);
             needUpdateText = true;
         }
 
@@ -81,6 +82,12 @@ namespace TeleopReachy
             }
         }
 
+        public void IndicateRobotReady()
+        {
+            instructionsText = "Reachy is ready for teleop, you can press 'Ready' to start";
+            instructionsDetailsText = "";
+            needUpdateText = true;
+        }
         public void IndicateToPressA()
         {
             instructionsText = "Press and hold " + textButtonControllerModifier.GetPrimRightButtonName() + " to start";

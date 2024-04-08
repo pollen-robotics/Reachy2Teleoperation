@@ -7,7 +7,7 @@ namespace TeleopReachy
 {
     public enum TransitionState
     {
-        WaitingForTracker, WaitingForPosition, ReadyForTeleop, WaitingForRobot
+        WaitingForTracker, WaitingForPosition, ReadyForTeleop, WaitingForRobot //WaitingForCalibration, 
     }
 
     public class TransitionRoomManager : Singleton<TransitionRoomManager>
@@ -72,6 +72,7 @@ namespace TeleopReachy
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
             connectionStatus.event_OnRobotUnready.AddListener(AbortTeleop);
+            // robotCalib.event_WaitForCalib.AddListener(WaitingForCalibration);
 
             resetPositionButton.gameObject.SetActive(false);
 
@@ -194,6 +195,15 @@ namespace TeleopReachy
             event_OnWaitingForPosition.Invoke();
         }
 
+        // public void WaitingForCalibration()
+        // {
+        //     readyButton.gameObject.SetActive(false);
+        //     DisplayReachy();
+        //     resetPositionButton.gameObject.SetActive(true);
+        //     State = TransitionState.WaitingForCalibration;
+        // }
+
+
         public void AbortTeleop()
         {
             if (userTrackerOk)
@@ -202,13 +212,14 @@ namespace TeleopReachy
                 DisplayReachy();
                 readyButton.gameObject.SetActive(false);
                 event_OnAbortTeleop.Invoke();
-                //WaitingForPosition();
+                WaitingForPosition();
             }
         }
 
         public void ReadyForTeleop()
         {
             robotStatus.InitializeRobotState();
+            Debug.Log("[transition room manager] ReadyForTeleop : usertrackerok = " + userTrackerOk);
             if (userTrackerOk)
             {
                 State = TransitionState.ReadyForTeleop;
