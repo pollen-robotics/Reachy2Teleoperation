@@ -208,7 +208,7 @@ namespace TeleopReachy
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : ");
         
             // ajout d'une translation de 2cm vers l'arrière 0804
-            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint + new Vector3(0, 0, -0.02f);
+            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint; //+ new Vector3(0, 0, -0.02f);
 
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
             // TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
