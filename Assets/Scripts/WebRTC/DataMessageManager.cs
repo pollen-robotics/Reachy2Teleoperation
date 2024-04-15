@@ -298,7 +298,7 @@ namespace TeleopReachy
 
         public void TurnMobileBaseOn()
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdGoto };
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
             {
