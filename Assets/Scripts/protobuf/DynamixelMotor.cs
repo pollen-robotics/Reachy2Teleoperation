@@ -27,44 +27,45 @@ namespace Component.DynamixelMotor {
             "ChVkeW5hbWl4ZWxfbW90b3IucHJvdG8SGWNvbXBvbmVudC5keW5hbWl4ZWxf",
             "bW90b3IaH2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAucHJvdG8aG2dvb2ds",
             "ZS9wcm90b2J1Zi9lbXB0eS5wcm90bxoeZ29vZ2xlL3Byb3RvYnVmL3dyYXBw",
-            "ZXJzLnByb3RvGg9jb21wb25lbnQucHJvdG8izwQKE0R5bmFtaXhlbE1vdG9y",
-            "U3RhdGUSLQoJdGltZXN0YW1wGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRp",
-            "bWVzdGFtcBIiCgJpZBgCIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZBI1",
-            "ChBwcmVzZW50X3Bvc2l0aW9uGAMgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZs",
-            "b2F0VmFsdWUSMgoNcHJlc2VudF9zcGVlZBgEIAEoCzIbLmdvb2dsZS5wcm90",
-            "b2J1Zi5GbG9hdFZhbHVlEjEKDHByZXNlbnRfbG9hZBgFIAEoCzIbLmdvb2ds",
-            "ZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjAKC3RlbXBlcmF0dXJlGAYgASgLMhsu",
-            "Z29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSKwoLam9pbnRfbGltaXQYByAB",
-            "KAsyFi5jb21wb25lbnQuSm9pbnRMaW1pdHMSLQoJY29tcGxpYW50GAggASgL",
-            "MhouZ29vZ2xlLnByb3RvYnVmLkJvb2xWYWx1ZRIyCg1nb2FsX3Bvc2l0aW9u",
-            "GAkgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSMAoLc3BlZWRf",
-            "bGltaXQYCiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIxCgx0",
-            "b3JxdWVfbGltaXQYCyABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1",
-            "ZRIgCgNwaWQYDCABKAsyEy5jb21wb25lbnQuUElER2FpbnMigAEKGkR5bmFt",
-            "aXhlbE1vdG9yU3RhdGVSZXF1ZXN0Ej4KBmZpZWxkcxgBIAMoDjIuLmNvbXBv",
-            "bmVudC5keW5hbWl4ZWxfbW90b3IuRHluYW1peGVsTW90b3JGaWVsZBIiCgJp",
-            "ZBgCIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZCJ0CiBEeW5hbWl4ZWxN",
-            "b3RvclN0cmVhbVN0YXRlUmVxdWVzdBJCCgNyZXEYASABKAsyNS5jb21wb25l",
-            "bnQuZHluYW1peGVsX21vdG9yLkR5bmFtaXhlbE1vdG9yU3RhdGVSZXF1ZXN0",
-            "EgwKBGZyZXEYAiABKAIimwEKEkR5bmFtaXhlbE1vdG9yR29hbBIiCgJpZBgB",
-            "IAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZBIyCg1nb2FsX3Bvc2l0aW9u",
-            "GAIgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSLQoIZHVyYXRp",
-            "b24YAyABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZSKDAgoVRHlu",
-            "YW1peGVsTW90b3JDb21tYW5kEiIKAmlkGAEgASgLMhYuY29tcG9uZW50LkNv",
-            "bXBvbmVudElkEi0KCWNvbXBsaWFudBgCIAEoCzIaLmdvb2dsZS5wcm90b2J1",
-            "Zi5Cb29sVmFsdWUSMgoNZ29hbF9wb3NpdGlvbhgDIAEoCzIbLmdvb2dsZS5w",
-            "cm90b2J1Zi5GbG9hdFZhbHVlEjAKC3NwZWVkX2xpbWl0GAQgASgLMhsuZ29v",
-            "Z2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSMQoMdG9ycXVlX2xpbWl0GAUgASgL",
-            "MhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUiVwoWRHluYW1peGVsTW90",
-            "b3JzQ29tbWFuZBI9CgNjbWQYASADKAsyMC5jb21wb25lbnQuZHluYW1peGVs",
-            "X21vdG9yLkR5bmFtaXhlbE1vdG9yQ29tbWFuZCJLCg5EeW5hbWl4ZWxNb3Rv",
-            "chIiCgJpZBgBIAEoCzIWLmNvbXBvbmVudC5Db21wb25lbnRJZBIVCg1zZXJp",
-            "YWxfbnVtYmVyGAIgASgJIk8KFExpc3RPZkR5bmFtaXhlbE1vdG9yEjcKBGlu",
-            "Zm8YASADKAsyKS5jb21wb25lbnQuZHluYW1peGVsX21vdG9yLkR5bmFtaXhl",
-            "bE1vdG9yIhYKFER5bmFtaXhlbE1vdG9yU3RhdHVzKuUBChNEeW5hbWl4ZWxN",
-            "b3RvckZpZWxkEggKBE5PTkUQABIICgROQU1FEAESBgoCSUQQAhIUChBQUkVT",
-            "RU5UX1BPU0lUSU9OEAMSEQoNUFJFU0VOVF9TUEVFRBAEEhAKDFBSRVNFTlRf",
-            "TE9BRBAFEg8KC1RFTVBFUkFUVVJFEAYSDwoLSk9JTlRfTElNSVQQBxINCglD",
+            "ZXJzLnByb3RvGg9jb21wb25lbnQucHJvdG8aC2Vycm9yLnByb3RvItAEChNE",
+            "eW5hbWl4ZWxNb3RvclN0YXRlEi0KCXRpbWVzdGFtcBgBIAEoCzIaLmdvb2ds",
+            "ZS5wcm90b2J1Zi5UaW1lc3RhbXASIgoCaWQYAiABKAsyFi5jb21wb25lbnQu",
+            "Q29tcG9uZW50SWQSNQoQcHJlc2VudF9wb3NpdGlvbhgDIAEoCzIbLmdvb2ds",
+            "ZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjIKDXByZXNlbnRfc3BlZWQYBCABKAsy",
+            "Gy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIxCgxwcmVzZW50X2xvYWQY",
+            "BSABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIwCgt0ZW1wZXJh",
+            "dHVyZRgGIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEiwKDGpv",
+            "aW50X2xpbWl0cxgHIAEoCzIWLmNvbXBvbmVudC5Kb2ludExpbWl0cxItCglj",
+            "b21wbGlhbnQYCCABKAsyGi5nb29nbGUucHJvdG9idWYuQm9vbFZhbHVlEjIK",
+            "DWdvYWxfcG9zaXRpb24YCSABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRW",
+            "YWx1ZRIwCgtzcGVlZF9saW1pdBgKIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5G",
+            "bG9hdFZhbHVlEjEKDHRvcnF1ZV9saW1pdBgLIAEoCzIbLmdvb2dsZS5wcm90",
+            "b2J1Zi5GbG9hdFZhbHVlEiAKA3BpZBgMIAEoCzITLmNvbXBvbmVudC5QSURH",
+            "YWlucyKAAQoaRHluYW1peGVsTW90b3JTdGF0ZVJlcXVlc3QSPgoGZmllbGRz",
+            "GAEgAygOMi4uY29tcG9uZW50LmR5bmFtaXhlbF9tb3Rvci5EeW5hbWl4ZWxN",
+            "b3RvckZpZWxkEiIKAmlkGAIgASgLMhYuY29tcG9uZW50LkNvbXBvbmVudElk",
+            "InQKIER5bmFtaXhlbE1vdG9yU3RyZWFtU3RhdGVSZXF1ZXN0EkIKA3JlcRgB",
+            "IAEoCzI1LmNvbXBvbmVudC5keW5hbWl4ZWxfbW90b3IuRHluYW1peGVsTW90",
+            "b3JTdGF0ZVJlcXVlc3QSDAoEZnJlcRgCIAEoAiKbAQoSRHluYW1peGVsTW90",
+            "b3JHb2FsEiIKAmlkGAEgASgLMhYuY29tcG9uZW50LkNvbXBvbmVudElkEjIK",
+            "DWdvYWxfcG9zaXRpb24YAiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRW",
+            "YWx1ZRItCghkdXJhdGlvbhgDIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9h",
+            "dFZhbHVlIoMCChVEeW5hbWl4ZWxNb3RvckNvbW1hbmQSIgoCaWQYASABKAsy",
+            "Fi5jb21wb25lbnQuQ29tcG9uZW50SWQSLQoJY29tcGxpYW50GAIgASgLMhou",
+            "Z29vZ2xlLnByb3RvYnVmLkJvb2xWYWx1ZRIyCg1nb2FsX3Bvc2l0aW9uGAMg",
+            "ASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSMAoLc3BlZWRfbGlt",
+            "aXQYBCABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIxCgx0b3Jx",
+            "dWVfbGltaXQYBSABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZSJX",
+            "ChZEeW5hbWl4ZWxNb3RvcnNDb21tYW5kEj0KA2NtZBgBIAMoCzIwLmNvbXBv",
+            "bmVudC5keW5hbWl4ZWxfbW90b3IuRHluYW1peGVsTW90b3JDb21tYW5kIksK",
+            "DkR5bmFtaXhlbE1vdG9yEiIKAmlkGAEgASgLMhYuY29tcG9uZW50LkNvbXBv",
+            "bmVudElkEhUKDXNlcmlhbF9udW1iZXIYAiABKAkiTwoUTGlzdE9mRHluYW1p",
+            "eGVsTW90b3ISNwoEaW5mbxgBIAMoCzIpLmNvbXBvbmVudC5keW5hbWl4ZWxf",
+            "bW90b3IuRHluYW1peGVsTW90b3IiNAoURHluYW1peGVsTW90b3JTdGF0dXMS",
+            "HAoGZXJyb3JzGAEgAygLMgwuZXJyb3IuRXJyb3Iq5gEKE0R5bmFtaXhlbE1v",
+            "dG9yRmllbGQSCAoETk9ORRAAEggKBE5BTUUQARIGCgJJRBACEhQKEFBSRVNF",
+            "TlRfUE9TSVRJT04QAxIRCg1QUkVTRU5UX1NQRUVEEAQSEAoMUFJFU0VOVF9M",
+            "T0FEEAUSDwoLVEVNUEVSQVRVUkUQBhIQCgxKT0lOVF9MSU1JVFMQBxINCglD",
             "T01QTElBTlQQCBIRCg1HT0FMX1BPU0lUSU9OEAkSDwoLU1BFRURfTElNSVQQ",
             "ChIQCgxUT1JRVUVfTElNSVQQCxIHCgNQSUQQDBIHCgNBTEwQDzLBBgoVRHlu",
             "YW1peGVsTW90b3JTZXJ2aWNlEl8KFEdldEFsbER5bmFtaXhlbE1vdG9yEhYu",
@@ -87,9 +88,9 @@ namespace Component.DynamixelMotor {
             "bXB0eRI5CgdSZXN0YXJ0EhYuY29tcG9uZW50LkNvbXBvbmVudElkGhYuZ29v",
             "Z2xlLnByb3RvYnVmLkVtcHR5YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Component.ComponentReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Component.ComponentReflection.Descriptor, global::Error.ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Component.DynamixelMotor.DynamixelMotorField), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorState), global::Component.DynamixelMotor.DynamixelMotorState.Parser, new[]{ "Timestamp", "Id", "PresentPosition", "PresentSpeed", "PresentLoad", "Temperature", "JointLimit", "Compliant", "GoalPosition", "SpeedLimit", "TorqueLimit", "Pid" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorState), global::Component.DynamixelMotor.DynamixelMotorState.Parser, new[]{ "Timestamp", "Id", "PresentPosition", "PresentSpeed", "PresentLoad", "Temperature", "JointLimits", "Compliant", "GoalPosition", "SpeedLimit", "TorqueLimit", "Pid" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorStateRequest), global::Component.DynamixelMotor.DynamixelMotorStateRequest.Parser, new[]{ "Fields", "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorStreamStateRequest), global::Component.DynamixelMotor.DynamixelMotorStreamStateRequest.Parser, new[]{ "Req", "Freq" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorGoal), global::Component.DynamixelMotor.DynamixelMotorGoal.Parser, new[]{ "Id", "GoalPosition", "Duration" }, null, null, null, null),
@@ -97,7 +98,7 @@ namespace Component.DynamixelMotor {
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorsCommand), global::Component.DynamixelMotor.DynamixelMotorsCommand.Parser, new[]{ "Cmd" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotor), global::Component.DynamixelMotor.DynamixelMotor.Parser, new[]{ "Id", "SerialNumber" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.ListOfDynamixelMotor), global::Component.DynamixelMotor.ListOfDynamixelMotor.Parser, new[]{ "Info" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorStatus), global::Component.DynamixelMotor.DynamixelMotorStatus.Parser, null, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Component.DynamixelMotor.DynamixelMotorStatus), global::Component.DynamixelMotor.DynamixelMotorStatus.Parser, new[]{ "Errors" }, null, null, null, null)
           }));
     }
     #endregion
@@ -112,7 +113,7 @@ namespace Component.DynamixelMotor {
     [pbr::OriginalName("PRESENT_SPEED")] PresentSpeed = 4,
     [pbr::OriginalName("PRESENT_LOAD")] PresentLoad = 5,
     [pbr::OriginalName("TEMPERATURE")] Temperature = 6,
-    [pbr::OriginalName("JOINT_LIMIT")] JointLimit = 7,
+    [pbr::OriginalName("JOINT_LIMITS")] JointLimits = 7,
     [pbr::OriginalName("COMPLIANT")] Compliant = 8,
     [pbr::OriginalName("GOAL_POSITION")] GoalPosition = 9,
     [pbr::OriginalName("SPEED_LIMIT")] SpeedLimit = 10,
@@ -164,7 +165,7 @@ namespace Component.DynamixelMotor {
       PresentSpeed = other.PresentSpeed;
       PresentLoad = other.PresentLoad;
       Temperature = other.Temperature;
-      jointLimit_ = other.jointLimit_ != null ? other.jointLimit_.Clone() : null;
+      jointLimits_ = other.jointLimits_ != null ? other.jointLimits_.Clone() : null;
       Compliant = other.Compliant;
       GoalPosition = other.GoalPosition;
       SpeedLimit = other.SpeedLimit;
@@ -259,15 +260,15 @@ namespace Component.DynamixelMotor {
     }
 
 
-    /// <summary>Field number for the "joint_limit" field.</summary>
-    public const int JointLimitFieldNumber = 7;
-    private global::Component.JointLimits jointLimit_;
+    /// <summary>Field number for the "joint_limits" field.</summary>
+    public const int JointLimitsFieldNumber = 7;
+    private global::Component.JointLimits jointLimits_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Component.JointLimits JointLimit {
-      get { return jointLimit_; }
+    public global::Component.JointLimits JointLimits {
+      get { return jointLimits_; }
       set {
-        jointLimit_ = value;
+        jointLimits_ = value;
       }
     }
 
@@ -360,7 +361,7 @@ namespace Component.DynamixelMotor {
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(PresentSpeed, other.PresentSpeed)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(PresentLoad, other.PresentLoad)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Temperature, other.Temperature)) return false;
-      if (!object.Equals(JointLimit, other.JointLimit)) return false;
+      if (!object.Equals(JointLimits, other.JointLimits)) return false;
       if (Compliant != other.Compliant) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(GoalPosition, other.GoalPosition)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(SpeedLimit, other.SpeedLimit)) return false;
@@ -379,7 +380,7 @@ namespace Component.DynamixelMotor {
       if (presentSpeed_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(PresentSpeed);
       if (presentLoad_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(PresentLoad);
       if (temperature_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Temperature);
-      if (jointLimit_ != null) hash ^= JointLimit.GetHashCode();
+      if (jointLimits_ != null) hash ^= JointLimits.GetHashCode();
       if (compliant_ != null) hash ^= Compliant.GetHashCode();
       if (goalPosition_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(GoalPosition);
       if (speedLimit_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(SpeedLimit);
@@ -423,9 +424,9 @@ namespace Component.DynamixelMotor {
       if (temperature_ != null) {
         _single_temperature_codec.WriteTagAndValue(output, Temperature);
       }
-      if (jointLimit_ != null) {
+      if (jointLimits_ != null) {
         output.WriteRawTag(58);
-        output.WriteMessage(JointLimit);
+        output.WriteMessage(JointLimits);
       }
       if (compliant_ != null) {
         _single_compliant_codec.WriteTagAndValue(output, Compliant);
@@ -473,9 +474,9 @@ namespace Component.DynamixelMotor {
       if (temperature_ != null) {
         _single_temperature_codec.WriteTagAndValue(ref output, Temperature);
       }
-      if (jointLimit_ != null) {
+      if (jointLimits_ != null) {
         output.WriteRawTag(58);
-        output.WriteMessage(JointLimit);
+        output.WriteMessage(JointLimits);
       }
       if (compliant_ != null) {
         _single_compliant_codec.WriteTagAndValue(ref output, Compliant);
@@ -521,8 +522,8 @@ namespace Component.DynamixelMotor {
       if (temperature_ != null) {
         size += _single_temperature_codec.CalculateSizeWithTag(Temperature);
       }
-      if (jointLimit_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JointLimit);
+      if (jointLimits_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(JointLimits);
       }
       if (compliant_ != null) {
         size += _single_compliant_codec.CalculateSizeWithTag(Compliant);
@@ -583,11 +584,11 @@ namespace Component.DynamixelMotor {
           Temperature = other.Temperature;
         }
       }
-      if (other.jointLimit_ != null) {
-        if (jointLimit_ == null) {
-          JointLimit = new global::Component.JointLimits();
+      if (other.jointLimits_ != null) {
+        if (jointLimits_ == null) {
+          JointLimits = new global::Component.JointLimits();
         }
-        JointLimit.MergeFrom(other.JointLimit);
+        JointLimits.MergeFrom(other.JointLimits);
       }
       if (other.compliant_ != null) {
         if (compliant_ == null || other.Compliant != false) {
@@ -673,10 +674,10 @@ namespace Component.DynamixelMotor {
             break;
           }
           case 58: {
-            if (jointLimit_ == null) {
-              JointLimit = new global::Component.JointLimits();
+            if (jointLimits_ == null) {
+              JointLimits = new global::Component.JointLimits();
             }
-            input.ReadMessage(JointLimit);
+            input.ReadMessage(JointLimits);
             break;
           }
           case 66: {
@@ -772,10 +773,10 @@ namespace Component.DynamixelMotor {
             break;
           }
           case 58: {
-            if (jointLimit_ == null) {
-              JointLimit = new global::Component.JointLimits();
+            if (jointLimits_ == null) {
+              JointLimits = new global::Component.JointLimits();
             }
-            input.ReadMessage(JointLimit);
+            input.ReadMessage(JointLimits);
             break;
           }
           case 66: {
@@ -2572,6 +2573,7 @@ namespace Component.DynamixelMotor {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public DynamixelMotorStatus(DynamixelMotorStatus other) : this() {
+      errors_ = other.errors_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2579,6 +2581,17 @@ namespace Component.DynamixelMotor {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public DynamixelMotorStatus Clone() {
       return new DynamixelMotorStatus(this);
+    }
+
+    /// <summary>Field number for the "errors" field.</summary>
+    public const int ErrorsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Error.Error> _repeated_errors_codec
+        = pb::FieldCodec.ForMessage(10, global::Error.Error.Parser);
+    private readonly pbc::RepeatedField<global::Error.Error> errors_ = new pbc::RepeatedField<global::Error.Error>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Error.Error> Errors {
+      get { return errors_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2596,6 +2609,7 @@ namespace Component.DynamixelMotor {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if(!errors_.Equals(other.errors_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2603,6 +2617,7 @@ namespace Component.DynamixelMotor {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      hash ^= errors_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2621,6 +2636,7 @@ namespace Component.DynamixelMotor {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      errors_.WriteTo(output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2631,6 +2647,7 @@ namespace Component.DynamixelMotor {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      errors_.WriteTo(ref output, _repeated_errors_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2641,6 +2658,7 @@ namespace Component.DynamixelMotor {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      size += errors_.CalculateSize(_repeated_errors_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -2653,6 +2671,7 @@ namespace Component.DynamixelMotor {
       if (other == null) {
         return;
       }
+      errors_.Add(other.errors_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2668,6 +2687,10 @@ namespace Component.DynamixelMotor {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     #endif
@@ -2683,6 +2706,10 @@ namespace Component.DynamixelMotor {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
+          case 10: {
+            errors_.AddEntriesFrom(ref input, _repeated_errors_codec);
+            break;
+          }
         }
       }
     }
