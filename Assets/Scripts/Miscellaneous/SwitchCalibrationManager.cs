@@ -24,6 +24,7 @@ namespace TeleopReachy
         private Transform headset;
         private Transform newCalibTransform;
         private Transform oldCalibTransform;
+        private Transform floorTransform;
         public CalibrationType selectedCalibration = CalibrationType.NewCalib;
         private CalibrationType currentCalibration = CalibrationType.NewCalib;
 
@@ -47,7 +48,7 @@ namespace TeleopReachy
         public void RandomSequence() 
         {
             List<string> seq = new List<string>();
-            for (int i = 0; i < 4; i++) //nb de taches
+            for (int i = 0; i < 3; i++) //nb de taches
             {
                 for (int j = 0; j < 3; j++)  //nb de calibrations
                 {
@@ -68,6 +69,7 @@ namespace TeleopReachy
                 currentCalibration = selectedCalibration;
                 Debug.Log("[SwitchCalibrationManager] Calibration type changed to: " + currentCalibration.ToString());
                 ChangeCalibration();
+                ChangeOriginofRobot();
             }
         }
 
@@ -79,10 +81,12 @@ namespace TeleopReachy
             headset = GameObject.Find("Main Camera").transform;
             newCalibTransform = GameObject.Find("NewUserCenter").transform;
             oldCalibTransform = GameObject.Find("OldUserCenter").transform;
+            floorTransform = GameObject.Find("Floor").transform;
+            floorTransform.position = new Vector3(headset.position.x, 0.0f, headset.position.z);
+            floorTransform.rotation = Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0);
             armSizeWithCalib = UserSize.Instance.UserArmSize;
             controllers = ActiveControllerManager.Instance.ControllersManager;
             RandomSequence();
-            
             
         }
 
@@ -108,6 +112,12 @@ namespace TeleopReachy
                     UserSize.Instance.UserArmSize = armSizeWithCalib + 0.1f; //10cm more on the armsize
                     break;
             }
-        }   
+        }  
+
+        void ChangeOriginofRobot() 
+        {
+            floorTransform.position = new Vector3(headset.position.x, 0.0f, headset.position.z);
+            floorTransform.rotation = Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0);
+        }
     }
 }

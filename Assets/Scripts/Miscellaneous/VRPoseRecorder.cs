@@ -13,6 +13,7 @@ namespace TeleopReachy
         public float recordInterval = 0.2f;
         private float timer = 0f;
         private RobotStatus robotStatus ;
+        private Transform humanBase;
         private Transform headset;
         private Transform leftController;
         private Transform rightController;
@@ -25,6 +26,7 @@ namespace TeleopReachy
             headset = GameObject.Find("Main Camera").transform;
             leftController = GameObject.Find("LeftHand Controller").transform;
             rightController = GameObject.Find("RightHand Controller").transform;
+            humanBase = GameObject.Find("Floor").transform;
             robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
         }
 
@@ -44,13 +46,15 @@ namespace TeleopReachy
 
         void RecordPose()
         {
-            Vector3 headPosition = ConvertPosition(headset.position);
+            Matrix4x4 humanBaseInverse = humanBase.worldToLocalMatrix;
+
+            Vector3 headPosition = ConvertPosition(humanBaseInverse.MultiplyPoint(headset.position));
             Quaternion headRotation = ConvertRotation(headset.rotation);
 
-            Vector3 leftControllerPosition = ConvertPosition(leftController.position);
+            Vector3 leftControllerPosition = ConvertPosition(humanBaseInverse.MultiplyPoint(leftController.position));
             Quaternion leftControllerRotation = ConvertRotation(leftController.rotation);
 
-            Vector3 rightControllerPosition = ConvertPosition(rightController.position);
+            Vector3 rightControllerPosition = ConvertPosition(humanBaseInverse.MultiplyPoint(rightController.position));
             Quaternion rightControllerRotation = ConvertRotation(rightController.rotation);
 
             VRPoseData poseData = new VRPoseData(Time.time, headPosition, headRotation, leftControllerPosition, leftControllerRotation, rightControllerPosition, rightControllerRotation);
