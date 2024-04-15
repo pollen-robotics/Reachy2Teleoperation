@@ -6,24 +6,16 @@ namespace TeleopReachy
 {
     public class EyeScript : MonoBehaviour
     {
-        //Renderer rend;
-
-        //float alpha = 1.0f;
-
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
         private bool needUpdateScale;
 
-        //private float _timeElapsed;
-
-        //private Vector3 lerpStartingScale;
         private Vector3 lerpGoalScale;
 
         private Vector3 fullScreenScale = new Vector3(41333, -31000, 1);
         private Vector3 smallerScreenScale = new Vector3(20666, -15500, 1);
 
-        //Coroutine blackScreenAppears;
         public GameObject blackScreen;
 
         private MotionSicknessManager motionSicknessManager;
@@ -76,10 +68,9 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                if (!motionSicknessManager.IsNavigationEffectOnDemand)
                 {
-                    //lerpStartingScale = transform.localScale;
-                    //_timeElapsed = 0;
                     lerpGoalScale = smallerScreenScale;
                     needUpdateScale = true;
                 }
@@ -89,9 +80,15 @@ namespace TeleopReachy
 
         void ResizeView(bool activate)
         {
-            if (!activate)
+            Debug.LogError(activate);
+            if (motionSicknessManager.IsReducedScreenOn && !activate)
             {
                 lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
+            }
+            else if(motionSicknessManager.IsReducedScreenOn && activate)
+            {
+                lerpGoalScale = smallerScreenScale;
                 needUpdateScale = true;
             }
         }
@@ -100,10 +97,9 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
+                if (!motionSicknessManager.IsNavigationEffectOnDemand)
                 {
-                    //lerpStartingScale = transform.localScale;
-                    //_timeElapsed = 0;
                     lerpGoalScale = fullScreenScale;
                     needUpdateScale = true;
                 }
