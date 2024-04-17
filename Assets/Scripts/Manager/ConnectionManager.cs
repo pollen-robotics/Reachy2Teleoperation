@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,10 +66,28 @@ namespace TeleopReachy
             // If a robot is selected, load teleoperation scene with prefs set to selected info
             if (has_robot_selected)
             {
-                PlayerPrefs.SetString("robot_ip", selectedRobot.ip);
+                
+                PlayerPrefs.SetString("robot_ip", GetIpv4Address());
 
                 EventManager.TriggerEvent(EventNames.StartMirrorScene);
             }
+        }
+
+        private string GetIpv4Address()
+        {
+            if(selectedRobot.ip.EndsWith(".local"))
+            {
+                IPAddress[] ipAddresses = Dns.GetHostAddresses(selectedRobot.ip);
+                foreach (IPAddress ip in ipAddresses)
+                {
+                    // Check if the IP address is an IPv4 address
+                    if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        return(ip.ToString());
+                    }
+                }
+            }
+            return selectedRobot.ip;
         }
 
         bool IsVirtualRobotInList()
