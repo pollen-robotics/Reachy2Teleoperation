@@ -47,17 +47,34 @@ namespace TeleopReachy
 
         public void RandomSequence() 
         {
+            List<string> seq1 = new List<string>();
+            List<string> seq2 = new List<string>();
+            List<string> seq3 = new List<string>();
             List<string> seq = new List<string>();
-            for (int i = 0; i < 3; i++) //nb de taches
+
+            for (int i=1; i<4; i++)
             {
-                for (int j = 0; j < 3; j++)  //nb de calibrations
-                {
-                    seq.Add($"{i + 1}_{j + 1}");
-                }
-            
+                seq1.Add($"1_{i}");
+                seq2.Add($"2_{i}");
+                seq3.Add($"3_{i}");
             }
+
+            //select the calib to be done 2 times (different from task 2 and 3)
+            int k = UnityEngine.Random.Range(1, 4);
+            seq2.Add($"2_{k}");
+            int l = UnityEngine.Random.Range(1, 4);
+            seq3.Add($"3_{l}");
+
             System.Random rnd = new System.Random();
-            seq = seq.OrderBy(x => rnd.Next()).ToList();
+            seq1 = seq1.OrderBy(x => rnd.Next()).ToList();
+            seq2 = seq2.OrderBy(x => rnd.Next()).ToList();
+            seq3 = seq3.OrderBy(x => rnd.Next()).ToList();
+
+            //concatenate the 3 lists in a list called seq
+            seq.AddRange(seq1);
+            seq.AddRange(seq2);
+            seq.AddRange(seq3);
+
             Debug.Log("Random sequence for calib test : " + string.Join(", ", seq));
         }
 
@@ -108,7 +125,7 @@ namespace TeleopReachy
                     UserSize.Instance.UserArmSize = 0.0f;
                     break;
                 case CalibrationType.FakeCalib: //offset upside and forward
-                    userTracker.position = new Vector3(newCalibTransform.position.x, newCalibTransform.position.y + 0.07f, newCalibTransform.position.z + 0.07f);
+                    userTracker.position = new Vector3(newCalibTransform.position.x+0.05f, newCalibTransform.position.y + 0.1f, newCalibTransform.position.z + 0.1f);
                     UserSize.Instance.UserArmSize = armSizeWithCalib + 0.1f; //10cm more on the armsize
                     break;
             }

@@ -195,8 +195,10 @@ namespace TeleopReachy
         {
             Vector3 initialPosition = TransitionRoomManager.Instance.userTracker.position;
  
-            (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
-            (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
+            // (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
+            // (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
+            (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = RansacEllipsoidFit(leftCoordinates);
+            (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = RansacEllipsoidFit(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
             
             meanArmSize = (leftArmSize + rightArmSize) / 2f;
@@ -248,38 +250,38 @@ namespace TeleopReachy
             return;
         }
 
-        private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
-        {
-            Debug.Log("Debut de la LSM");
-            int numberOfPoints = sideCoordinates.Count;
-            Debug.Log(numberOfPoints);
+        // private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
+        // {
+        //     Debug.Log("Debut de la LSM");
+        //     int numberOfPoints = sideCoordinates.Count;
+        //     Debug.Log(numberOfPoints);
             
-            double[,] A = new double[numberOfPoints, 4];
-            double[,] f = new double[numberOfPoints, 1];
+        //     double[,] A = new double[numberOfPoints, 4];
+        //     double[,] f = new double[numberOfPoints, 1];
 
-            for (int i = 0; i < numberOfPoints; i++)
-            {
-                A[i, 0] = sideCoordinates[i].x * 2;
-                A[i, 1] = sideCoordinates[i].y * 2;
-                A[i, 2] = sideCoordinates[i].z * 2;
-                A[i, 3] = 1.0f;
-                f[i, 0] = sideCoordinates[i].x * sideCoordinates[i].x + sideCoordinates[i].y * sideCoordinates[i].y + sideCoordinates[i].z * sideCoordinates[i].z;
-            }
-            Debug.Log("Modif de A et f faites");
+        //     for (int i = 0; i < numberOfPoints; i++)
+        //     {
+        //         A[i, 0] = sideCoordinates[i].x * 2;
+        //         A[i, 1] = sideCoordinates[i].y * 2;
+        //         A[i, 2] = sideCoordinates[i].z * 2;
+        //         A[i, 3] = 1.0f;
+        //         f[i, 0] = sideCoordinates[i].x * sideCoordinates[i].x + sideCoordinates[i].y * sideCoordinates[i].y + sideCoordinates[i].z * sideCoordinates[i].z;
+        //     }
+        //     Debug.Log("Modif de A et f faites");
 
-            var aMatrix = Matrix<double>.Build.DenseOfArray(A);
-		    var fMatrix = Matrix<double>.Build.DenseOfArray(f);
-            Debug.Log("A = " + aMatrix + "f= " + fMatrix);
-            var rotCenter = MultipleRegression.NormalEquations(aMatrix, fMatrix);
-            Debug.Log("rotCenter = " + rotCenter);
+        //     var aMatrix = Matrix<double>.Build.DenseOfArray(A);
+		//     var fMatrix = Matrix<double>.Build.DenseOfArray(f);
+        //     Debug.Log("A = " + aMatrix + "f= " + fMatrix);
+        //     var rotCenter = MultipleRegression.NormalEquations(aMatrix, fMatrix);
+        //     Debug.Log("rotCenter = " + rotCenter);
 
-            double t = (rotCenter[0, 0] * rotCenter[0, 0]) + (rotCenter[1, 0] * rotCenter[1, 0]) + (rotCenter[2, 0] * rotCenter[2, 0]) + rotCenter[3, 0];
-            double radius = System.Math.Sqrt(t);
-            Vector3 rotationCenterPosition = new Vector3((float)rotCenter[0, 0], (float)rotCenter[1, 0], (float)rotCenter[2, 0]);
-            Debug.Log("r=" + radius + "x=" + rotationCenterPosition.x + "y="+ rotationCenterPosition.y+ "z=" +rotationCenterPosition.z);
+        //     double t = (rotCenter[0, 0] * rotCenter[0, 0]) + (rotCenter[1, 0] * rotCenter[1, 0]) + (rotCenter[2, 0] * rotCenter[2, 0]) + rotCenter[3, 0];
+        //     double radius = System.Math.Sqrt(t);
+        //     Vector3 rotationCenterPosition = new Vector3((float)rotCenter[0, 0], (float)rotCenter[1, 0], (float)rotCenter[2, 0]);
+        //     Debug.Log("r=" + radius + "x=" + rotationCenterPosition.x + "y="+ rotationCenterPosition.y+ "z=" +rotationCenterPosition.z);
 
-            return (radius, rotationCenterPosition);
-        }
+        //     return (radius, rotationCenterPosition);
+        // }
 
 
         public bool IsCalibrated (){
@@ -406,5 +408,44 @@ namespace TeleopReachy
             return (meanRadius, approxRadiusx, approxRadiusy, approxRadiusxy, centreVector3);
 
         }
+
+        //ajout d'un algorithme de RANSAC qui utilise la fonction EllipsoidFitAleksander avec des échantillons de points aléatoires pour la détection de l'épaule
+        public static (double, double, double, double, Vector3) RansacEllipsoidFit(List<Vector3> points)
+        {
+            int n = points.Count;
+            int maxIterations = 500;
+            int sampleSize = 200;
+            double threshold = 0.1;
+            double bestError = double.MaxValue;
+            (double, double, double, double, Vector3) bestModel = (0, 0, 0, 0, Vector3.zero);
+
+            for (int i = 0; i < maxIterations; i++)
+            {
+                List<Vector3> sample = new List<Vector3>();
+                for (int j = 0; j < sampleSize; j++)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, n);
+                    sample.Add(points[randomIndex]);
+                }
+
+                (double, double, double, double, Vector3) model = EllipsoidFitAleksander(sample);
+                double error = 0;
+                foreach (Vector3 point in points)
+                {
+                    double distance = Vector3.Distance(point, model.Item5);
+                    if (distance > threshold)
+                        error += distance;
+                }
+
+                if (error < bestError)
+                {
+                    bestError = error;
+                    bestModel = model;
+                }
+            }
+
+            return bestModel;
+        }
+
     }
 }
