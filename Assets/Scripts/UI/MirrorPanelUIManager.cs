@@ -57,7 +57,9 @@ namespace TeleopReachy
             statusPanel.ActivateChildren(false);
             statusPanel.GetChild(0).gameObject.SetActive(true);
             advancedOptions.ActivateChildren(false);
+            advancedOptions.GetChild(0).gameObject.SetActive(true);
             helpPanel.ActivateChildren(false);
+            helpPanel.GetChild(0).gameObject.SetActive(true);
         }
 
         private void OpenClosePanel(ref Vector3 lerpPanelStartingPosition, ref Transform panel, ref float timeElapsedPanel, ref Vector3 lerpPanelGoalPosition,
