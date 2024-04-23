@@ -166,11 +166,11 @@ namespace TeleopReachy
         //calibration
         public void FixNewPosition()
         {
-            Quaternion rotation = headset.rotation;
-            Vector3 eulerAngles = rotation.eulerAngles;
-            // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
-            Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
-            userTracker.rotation = systemRotation;
+            // Quaternion rotation = headset.rotation;
+            // Vector3 eulerAngles = rotation.eulerAngles;
+            // // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
+            // Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
+            // userTracker.rotation = systemRotation;
             userTracker.position = midShoulderPoint;
             Debug.Log("nouvelle :" + userTracker.position);
             newUserCenter.rotation = userTracker.rotation;

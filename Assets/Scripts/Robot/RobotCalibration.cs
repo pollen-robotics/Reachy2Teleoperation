@@ -197,24 +197,21 @@ namespace TeleopReachy
  
             // (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
             // (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
-            (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = RansacEllipsoidFit(leftCoordinates);
-            (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = RansacEllipsoidFit(rightCoordinates);
+            (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, Vector3 leftRadii, Vector3 leftShoulderCenter) = RansacEllipsoidFit(leftCoordinates);
+            (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, Vector3 rightRadii, Vector3 rightShoulderCenter) = RansacEllipsoidFit(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
             
             meanArmSize = (leftArmSize + rightArmSize) / 2f;
             double approxarmsizex = (approxleftarmsizex + approxrightarmsizex) / 2f;
             double approxarmsizey = (approxleftarmsizey + approxrightarmsizey) / 2f;
-            double approxarmsizexy = (approxleftarmsizexy + approxrightarmsizexy) / 2f;
             Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
 
-            Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : ");
+            Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
         
             // ajout d'une translation de 2cm vers l'arrière 0804
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint; //+ new Vector3(0, 0, -0.02f);
 
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
-            // TransitionRoomManager.Instance.shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
-            // TransitionRoomManager.Instance.meanArmSize = meanArmSize;
             Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
 
             // get the minimum of rightCoordinates and leftCoordinates together
@@ -243,7 +240,7 @@ namespace TeleopReachy
             {writer.WriteLine(data);}
 
             filePath = @"C:\Users\robot\Dev\armsize.csv";
-            data = $"{currentTime},{leftArmSize},{approxleftarmsizex},{approxleftarmsizey},{approxleftarmsizexy},{rightArmSize},{approxrightarmsizex},{approxrightarmsizey},{approxrightarmsizexy},{meanArmSize},{approxarmsizex},{approxarmsizey},{approxarmsizexy}";
+            data = $"{currentTime},{leftArmSize},{approxleftarmsizex},{approxleftarmsizey},\"{leftRadii.x},{leftRadii.y},{leftRadii.z}\",{rightArmSize},{approxrightarmsizex},{approxrightarmsizey},\"{rightRadii.x},{rightRadii.y},{rightRadii.z}\",{meanArmSize},{approxarmsizex},{approxarmsizey}";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
 
@@ -334,7 +331,7 @@ namespace TeleopReachy
 
  
 
-        public static (double, double, double, double, Vector3) EllipsoidFitAleksander(List<Vector3> points)
+        public static (double, double, double, Vector3, Vector3) EllipsoidFitAleksander(List<Vector3> points)
         {
             var D = Matrix<double>.Build.DenseOfRowArrays(points.Select(p => new double[] {
                 p.x * p.x + p.y * p.y - 2 * p.z * p.z,
@@ -378,7 +375,8 @@ namespace TeleopReachy
 
             var radii = evals.Map(value => Math.Sqrt(1 / Math.Abs(value)));
             Debug.Log("radii =" + radii);
-            double meanRadius = radii.Median();
+            Vector3 radiiVector3 = new Vector3((float)radii[0], (float)radii[1], (float)radii[2]);
+            double meanRadius = radii.Min();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
             Debug.Log("centre = " + centreVector3);
             
@@ -390,34 +388,25 @@ namespace TeleopReachy
             var filteredPointsy = points.Where(p => Math.Abs(p.y - centre[1]) <= yThreshold);
             var distancesy = filteredPointsy.Select(p => Vector3.Distance(centreVector3, p));
 
-            var filteredPointsxy = points.Where(p => 
-                p.x >= centre[0] - xThreshold && p.x <= centre[0] + xThreshold &&
-                p.y >= centre[1] - yThreshold && p.y <= centre[1] + yThreshold
-            );   
-            var distancesxy = filteredPointsxy.Select(p => Vector3.Distance(centreVector3, p));
-
             // Calcul de approxRadiusx
             double approxRadiusx = filteredPointsx.Any() ? distancesx.Average() : 0.0;
 
             // Calcul de approxRadiusy
-            double approxRadiusy = filteredPointsy.Any() ? distancesy.Average() : 0.0;
+            double approxRadiusy = filteredPointsy.Any() ? distancesy.Average() : 0.0;            
 
-            // Calcul de approxRadiusxy
-            double approxRadiusxy = filteredPointsxy.Any() ? distancesxy.Average() : 0.0;
-
-            return (meanRadius, approxRadiusx, approxRadiusy, approxRadiusxy, centreVector3);
+            return (meanRadius, approxRadiusx, approxRadiusy, radiiVector3, centreVector3);
 
         }
 
         //ajout d'un algorithme de RANSAC qui utilise la fonction EllipsoidFitAleksander avec des échantillons de points aléatoires pour la détection de l'épaule
-        public static (double, double, double, double, Vector3) RansacEllipsoidFit(List<Vector3> points)
+        public static (double, double, double, Vector3, Vector3) RansacEllipsoidFit(List<Vector3> points)
         {
             int n = points.Count;
             int maxIterations = 500;
-            int sampleSize = 200;
+            int sampleSize = 100;
             double threshold = 0.1;
             double bestError = double.MaxValue;
-            (double, double, double, double, Vector3) bestModel = (0, 0, 0, 0, Vector3.zero);
+            (double, double, double, Vector3, Vector3) bestModel = (0, 0, 0, Vector3.zero, Vector3.zero);
 
             for (int i = 0; i < maxIterations; i++)
             {
@@ -428,7 +417,7 @@ namespace TeleopReachy
                     sample.Add(points[randomIndex]);
                 }
 
-                (double, double, double, double, Vector3) model = EllipsoidFitAleksander(sample);
+                (double, double, double, Vector3, Vector3) model = EllipsoidFitAleksander(sample);
                 double error = 0;
                 foreach (Vector3 point in points)
                 {
