@@ -3013,6 +3013,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276249887}
   m_CullTransparentMesh: 1
+--- !u!1 &298084654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298084656}
+  - component: {fileID: 298084655}
+  m_Layer: 0
+  m_Name: WristCalibINCIA
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &298084655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298084654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e2ae1e1e8a522f4282346703df835b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfPoints: 300
+  event_OnWristCalibChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  event_WaitForWristCalib:
+    m_PersistentCalls:
+      m_Calls: []
+  event_StartRightWristCalib:
+    m_PersistentCalls:
+      m_Calls: []
+  event_StartLeftWristCalib:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &298084656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298084654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7975054, y: 0.80568457, z: 0.31972122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &300840966
 GameObject:
   m_ObjectHideFlags: 0
@@ -18131,3 +18188,4 @@ SceneRoots:
   - {fileID: 719493070}
   - {fileID: 506325951}
   - {fileID: 1223158833}
+  - {fileID: 298084656}
