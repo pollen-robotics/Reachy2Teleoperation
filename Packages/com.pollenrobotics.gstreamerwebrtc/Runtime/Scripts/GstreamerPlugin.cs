@@ -37,7 +37,7 @@ namespace GstreamerWebRTC
 
             if (ip_address == "")
             {
-                ip_address = PlayerPrefs.GetString("ip_address");
+                ip_address = PlayerPrefs.GetString("robot_ip");
                 Debug.Log("Set IP address to: " + ip_address);
             }
             Texture left = null, right = null;
