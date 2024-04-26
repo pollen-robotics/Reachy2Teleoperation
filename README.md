@@ -1,4 +1,4 @@
-# ReachyTeleoperationXR
+# Reachy2Teleoperation
 
 Unity-based application that allows to control a Reachy 2 robot with a VR headset. The user documentation is available [here](https://docs.pollen-robotics.com/vr/introduction/introduction/).
 
@@ -7,10 +7,8 @@ Unity-based application that allows to control a Reachy 2 robot with a VR headse
 The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2 and 3. The Oculus Quest headsets can be used in standalone mode or with the Oculus link.
 
 For any custom development we recommend to use Unity LTS 2022.3, which has been used for development.
-
-
 The project relies on GStreamer. Please install the [Windows Runtime](
-https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msvc-x86_64-1.24.0.msi) (complete install). Check that the environment variable PATH contains *C:\gstreamer\1.0\msvc_x86_64\bin* (default installation). Reboot after the installation.
+https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msvc-x86_64-1.24.0.msi) (complete install), and the [development files](https://gstreamer.freedesktop.org/data/pkg/windows/1.24.2/msvc/gstreamer-1.0-devel-msvc-x86_64-1.24.2.msi). Check that the environment variable PATH contains *C:\gstreamer\1.0\msvc_x86_64\bin* (default installation). Reboot after the installation.
 
 ## Installation
 
