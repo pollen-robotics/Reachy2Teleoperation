@@ -19,7 +19,7 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private GstreamerUnityGStreamerPlugin audioVideoController;
+        private GStreamerPluginCustom audioVideoController;
         //private WebRTCAudioSender microphoneController;
         private WebRTCData dataController;
 
