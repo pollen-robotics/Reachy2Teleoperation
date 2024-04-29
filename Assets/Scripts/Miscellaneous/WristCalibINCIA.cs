@@ -1,3 +1,4 @@
+
 using System;
 using System.Linq;
 using System.IO;
@@ -24,6 +25,8 @@ namespace TeleopReachy
         private List<Vector3> rightDistances;
         private Matrix<double> leftControllerRotations;
         private Matrix<double> rightControllerRotations;
+        public Vector3 rightWristCenter;
+        public Vector3 leftWristCenter;
         public float recordInterval = 0.1f;
         private float timer = 0f;
 
@@ -140,15 +143,10 @@ namespace TeleopReachy
                         };
                         rightDistances.Add(new Vector3((float)diffVector[0], (float)diffVector[1], (float)diffVector[2]));
 
-                        Quaternion rightControllerRotation = rightControllerTransform.rotation;
-                        Matrix<double> controllerRotationMatrix = DenseMatrix.OfArray(new double[,]
-                        {
-                            { rightControllerRotation.x, rightControllerRotation.y, rightControllerRotation.z },
-                            { -rightControllerRotation.y, rightControllerRotation.x, -rightControllerRotation.w },
-                            { -rightControllerRotation.z, rightControllerRotation.w, rightControllerRotation.x }
-                        });
-                        
-                        rightControllerRotations.SetSubMatrix(3 * rightDistances.Count - 3, 3, 0, 3, controllerRotationMatrix);
+                        Quaternion rightControllerQuat = rightControllerTransform.rotation;
+                        Quaternion HMDQuat = HMDTransform.rotation;
+                        Matrix<double> combinedMatrix = CombineRotationMatrices(rightControllerQuat, HMDQuat);
+                        rightControllerRotations.SetSubMatrix((rightDistances.Count-1)*3, 3, 0, 6, combinedMatrix);
                         timer = 0f;
                     }
                 }
@@ -174,15 +172,13 @@ namespace TeleopReachy
                         };
                         leftDistances.Add(new Vector3((float)diffVector[0], (float)diffVector[1], (float)diffVector[2]));
 
-                        Quaternion leftControllerRotation = leftControllerTransform.rotation;
-                        Matrix<double> controllerRotationMatrix = DenseMatrix.OfArray(new double[,]
-                        {
-                            { leftControllerRotation.x, leftControllerRotation.y, leftControllerRotation.z },
-                            { -leftControllerRotation.y, leftControllerRotation.x, -leftControllerRotation.w },
-                            { -leftControllerRotation.z, leftControllerRotation.w, leftControllerRotation.x }
-                        });
-                        
-                        leftControllerRotations.SetSubMatrix(3 * leftDistances.Count - 3, 3, 0, 3, controllerRotationMatrix);
+                        Quaternion leftControllerQuat = leftControllerTransform.rotation;
+                        Quaternion HMDQuat = HMDTransform.rotation;
+                        Matrix<double> combinedMatrix = CombineRotationMatrices(leftControllerQuat, HMDQuat);
+                        leftControllerRotations.SetSubMatrix((leftDistances.Count-1)*3, 3, 0, 6, combinedMatrix);
+
+
+
                         timer = 0f;
                     }
                 }
@@ -192,6 +188,47 @@ namespace TeleopReachy
                 }
             }
         }
+
+        private Matrix<double> CombineRotationMatrices(Quaternion controllerRotationQuat, Quaternion HMDRotationQuat)
+        {
+            // Convertir les quaternions en matrices de rotation
+            Matrix4x4 controllerRotationMatrix = Matrix4x4.Rotate(controllerRotationQuat);
+            Matrix4x4 HMDRotationMatrix = Matrix4x4.Rotate(HMDRotationQuat);
+
+            // Extraire les parties 3x3 des matrices de rotation
+            Matrix<double> controllerRotation3x3 = ExtractMatrix3x3(controllerRotationMatrix);
+            Matrix<double> HMDRotation3x3 = ExtractMatrix3x3(HMDRotationMatrix);
+
+            // Créer une nouvelle matrice 3x6
+            Matrix<double> combinedMatrix = Matrix<double>.Build.Dense(3, 6);
+
+            // Remplir la nouvelle matrice avec les parties 3x3
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    // Partie 3x3 de controllerRotationMatrix
+                    combinedMatrix[i, j] = controllerRotation3x3[i, j];
+
+                    // Partie 3x3 de -HMDRotationMatrix
+                    combinedMatrix[i, j + 3] = -HMDRotation3x3[i, j];
+                }
+            }
+
+            return combinedMatrix;
+        }
+
+        private Matrix<double> ExtractMatrix3x3(Matrix4x4 matrix)
+        {
+            // Extraction des parties 3x3 de la matrice 4x4
+            return Matrix<double>.Build.DenseOfArray(new double[,]
+            {
+                { matrix.m00, matrix.m01, matrix.m02 },
+                { matrix.m10, matrix.m11, matrix.m12 },
+                { matrix.m20, matrix.m21, matrix.m22 }
+            });
+        }
+
 
 
         public void EstimateWristCenter()
@@ -204,6 +241,10 @@ namespace TeleopReachy
             Vector<double> leftSolution = leftQinv * leftDistancesVector;
             Debug.Log("rightSolution = " + rightSolution);
             Debug.Log("leftSolution = " + leftSolution);
+
+            rightWristCenter = new Vector3((float)rightSolution[0], (float)rightSolution[1], (float)rightSolution[2]);
+            leftWristCenter = new Vector3((float)leftSolution[0], (float)leftSolution[1], (float)leftSolution[2]);
+            
         }
 
     }
