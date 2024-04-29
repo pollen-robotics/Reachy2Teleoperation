@@ -22,21 +22,24 @@ namespace TeleopReachy
 
         public void Start()
         {
-            Debug.Log("[Wrist Calibration] Start");
+            Debug.Log("[Wrist Calibration version User] Start");
             robotStatus = RobotDataManager.Instance.RobotStatus;
             leftController = GameObject.Find("LeftHand Controller").transform;
             rightController = GameObject.Find("RightHand Controller").transform;
+            //leftController = GameObject.Find("TrackedLeftHand").transform;
+            //rightController = GameObject.Find("TrackedRightHand").transform;
             userTrackerTransform = GameObject.Find("UserTracker").transform;
             event_onStartWristCalib = new UnityEvent();
             event_onStartWristCalib.AddListener(StartWristCalibration);
-            robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
+            //robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
+            robotStatus.event_OnStartTeleoperation.AddListener(SavePoseData);
             controllers = ActiveControllerManager.Instance.ControllersManager;
             
         }
 
         public void Update()
         {
-            if (robotStatus.IsRobotTeleoperationActive())
+            //if (robotStatus.IsRobotTeleoperationActive())
             timer += Time.deltaTime;
             if (timer >= recordInterval)
             {
@@ -80,9 +83,11 @@ namespace TeleopReachy
         public void SavePoseData()
         {
             Debug.Log("[Wrist Calibration] Saving Data");
-            // dans le dossier Dev de l'ordi
             string path = "C:/Users/robot/Dev/WristCalibrationData.csv";
-            File.WriteAllLines(path, capturedData);
+            string dataToAppend = string.Join("\n", capturedData);
+            dataToAppend += "\n";
+            
+            File.AppendAllText(path, dataToAppend);
         }
 
         private float NormalizeAngle(float angle)

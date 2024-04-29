@@ -12,7 +12,7 @@ namespace TeleopReachy
 
         //private ConnectionStatus connectionStatus;
         private TransitionRoomManager transitionRoomManager;
-        private WristCalibINCIA wristCalibINCIA;
+        // private WristCalibINCIA wristCalibINCIA;
 
         private TextButtonControllerModifier textButtonControllerModifier;
 
@@ -47,7 +47,7 @@ namespace TeleopReachy
             instructions = transform.GetComponent<Text>();
 
             transitionRoomManager = TransitionRoomManager.Instance;
-            wristCalibINCIA = WristCalibINCIA.Instance;
+            // wristCalibINCIA = WristCalibINCIA.Instance;
             textButtonControllerModifier = GetComponent<TextButtonControllerModifier>();
 
             if (Robot.IsCurrentRobotVirtual())
@@ -62,10 +62,10 @@ namespace TeleopReachy
             }
             transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
             transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
-            wristCalibINCIA.event_WaitForWristCalib.AddListener(IndicateToPressX);
-            wristCalibINCIA.event_StartRightWristCalib.AddListener(() => IndicateInitialCalibration("right"));
-            wristCalibINCIA.event_StartLeftWristCalib.AddListener(() => IndicateInitialCalibration("left"));
-            wristCalibINCIA.event_OnWristCalibChanged.AddListener(IndicateRobotReady);
+            // wristCalibINCIA.event_WaitForWristCalib.AddListener(IndicateToPressX);
+            // wristCalibINCIA.event_StartRightWristCalib.AddListener(() => IndicateInitialCalibration("right"));
+            // wristCalibINCIA.event_StartLeftWristCalib.AddListener(() => IndicateInitialCalibration("left"));
+            // wristCalibINCIA.event_OnWristCalibChanged.AddListener(IndicateRobotReady);
             needUpdateText = true;
         }
 
