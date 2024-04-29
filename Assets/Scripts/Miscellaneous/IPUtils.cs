@@ -11,11 +11,27 @@ namespace TeleopReachy
         {
             try
             {
+                IPAddress address;
                 if (ipAddress == "localhost" || ipAddress == Robot.VIRTUAL_ROBOT_IP)
                     return true;
-                // Create an instance of IPAddress for the specified address string (in
-                // dotted-quad, or colon-hexadecimal notation).
-                IPAddress address = IPAddress.Parse(ipAddress);
+                if (ipAddress.EndsWith(".local"))
+                {
+                    IPAddress[] ipAddresses = Dns.GetHostAddresses(ipAddress);
+                    foreach (IPAddress ip in ipAddresses)
+                    {
+                        // Check if the IP address is an IPv4 address
+                        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            address = ip;
+                        }
+                    }
+                }
+                else 
+                {
+                    // Create an instance of IPAddress for the specified address string (in
+                    // dotted-quad, or colon-hexadecimal notation).
+                    address = IPAddress.Parse(ipAddress);
+                }
                 return true;
             }
 
