@@ -3042,7 +3042,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2ae1e1e8a522f4282346703df835b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPoints: 300
+  numberOfPoints: 100
+  recordInterval: 0.1
   event_OnWristCalibChanged:
     m_PersistentCalls:
       m_Calls: []
