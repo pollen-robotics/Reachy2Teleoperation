@@ -6,33 +6,34 @@ using System.Collections.Generic;
 
 namespace TeleopReachy
 {
-    public class CaptureWristPose : MonoBehaviour
+    public class CaptureWristPose : Singleton<CaptureWristPose>
     {
         public float recordInterval = 1f;
         private float timer = 0f;
         private Transform leftController;
         private Transform rightController;
         private Transform userTrackerTransform;
+        public Quaternion rightNeutralOrientation;
+        public Quaternion leftNeutralOrientation;
         private List<string> capturedData = new List<string>();
         private bool buttonX;
+        private int nbPosition = 0;
         public UnityEvent event_onStartWristCalib;
         private ControllersManager controllers;
         private RobotStatus robotStatus ;
+        public UnityEvent event_NeutralPoseCaptured = new UnityEvent();
 
 
         public void Start()
         {
             Debug.Log("[Wrist Calibration version User] Start");
-            robotStatus = RobotDataManager.Instance.RobotStatus;
             leftController = GameObject.Find("LeftHand Controller").transform;
             rightController = GameObject.Find("RightHand Controller").transform;
             //leftController = GameObject.Find("TrackedLeftHand").transform;
             //rightController = GameObject.Find("TrackedRightHand").transform;
-            userTrackerTransform = GameObject.Find("UserTracker").transform;
             event_onStartWristCalib = new UnityEvent();
             event_onStartWristCalib.AddListener(StartWristCalibration);
             //robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
-            robotStatus.event_OnStartTeleoperation.AddListener(SavePoseData);
             controllers = ActiveControllerManager.Instance.ControllersManager;
             
         }
@@ -49,11 +50,17 @@ namespace TeleopReachy
                     event_onStartWristCalib.Invoke();
                 }
             }
-                
+
+            if (nbPosition ==7)
+                SavePoseData();
+                nbPosition = 0;
+                capturedData.Clear();
         }
 
         public void StartWristCalibration()
         {
+
+            userTrackerTransform = GameObject.Find("UserTracker").transform;
             Debug.Log("[Wrist Calibration] Start Calibration");
             Matrix4x4 userTrackerInverseTransform = userTrackerTransform.worldToLocalMatrix;
 
@@ -71,11 +78,21 @@ namespace TeleopReachy
             rightHandEulerAngles.y = NormalizeAngle(rightHandEulerAngles.y);
             rightHandEulerAngles.z = NormalizeAngle(rightHandEulerAngles.z);
 
+            nbPosition++;
+            buttonX = false;
+
+            if (nbPosition == 1)
+            {
+                rightNeutralOrientation = rightHandRotation;
+                leftNeutralOrientation = leftHandRotation;
+                event_NeutralPoseCaptured.Invoke();
+
+            }
+
             // Ajouter les données de position, rotation et rotation en Euler sur la même ligne
             capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
 
             // Réinitialiser le bouton et le minuteur
-            buttonX = false;
             timer = 0f;
         }
 
