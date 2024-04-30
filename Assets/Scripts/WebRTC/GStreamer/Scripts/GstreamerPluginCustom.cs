@@ -34,12 +34,18 @@ namespace GstreamerWebRTC
 
         override protected void PipelineStarted()
         {
-            Debug.Log("Pipeline started");
+            Debug.Log("Pipeline started Custom");
+            event_AudioSenderStatusHasChanged.Invoke(true);
+            event_OnAudioReceiverRoomStatusHasChanged.Invoke(true);
+            event_AudioSenderStatusHasChanged.Invoke(true);
         }
 
-        void OnDisable()
+        override protected void OnDisable()
         {
-            renderingPlugin.Cleanup();
+            event_AudioSenderStatusHasChanged.Invoke(false);
+            event_OnAudioReceiverRoomStatusHasChanged.Invoke(false);
+            event_AudioSenderStatusHasChanged.Invoke(false);
+            base.OnDisable();
         }
 
         void Update()
