@@ -53,7 +53,7 @@ namespace GstreamerWebRTC
             Debug.Log("Pipeline strated");
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             renderingPlugin.Cleanup();
         }
