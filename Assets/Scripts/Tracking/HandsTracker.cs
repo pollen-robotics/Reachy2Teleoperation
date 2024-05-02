@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace TeleopReachy
 {
@@ -67,6 +68,7 @@ namespace TeleopReachy
     {
         public HandController rightHand;
         public HandController leftHand;
+        public bool rescaleTransform = false;
 
         public ControllersManager controllers;
 
@@ -76,12 +78,14 @@ namespace TeleopReachy
             leftHand = new HandController("left", controllers.leftHandDevice);
 
             controllers.event_OnDevicesUpdate.AddListener(UpdateDevices);
+            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(ChangeTransforms);
+
         }
 
         void Start()
         {
-            GetTransforms(rightHand);
-            GetTransforms(leftHand);
+            GetTransforms(rightHand, rescaleTransform);
+            GetTransforms(leftHand, rescaleTransform);
         }
 
         private void UpdateDevices()
@@ -92,14 +96,19 @@ namespace TeleopReachy
 
         void Update()
         {
-            GetTransforms(rightHand);
-            GetTransforms(leftHand);
+            GetTransforms(rightHand, rescaleTransform);
+            GetTransforms(leftHand, rescaleTransform);
 
             AdaptativeCloseHand(rightHand);
             AdaptativeCloseHand(leftHand);
         }
 
-        private void GetTransforms(HandController hand)
+        private void ChangeTransforms()
+        {
+            //rescaleTransform = true;
+        }
+
+        private void GetTransforms(HandController hand, bool rescaleTransform)
         {
             // Position
             Vector3 positionHeadset = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * (hand.GetVRHand().position - transform.parent.position);
@@ -107,8 +116,18 @@ namespace TeleopReachy
             Vector4 positionVect = new Vector4(positionReachy.x, positionReachy.y, positionReachy.z, 1);
 
             // Rotation
-            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
-            hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
+            //ajout calib
+            if (rescaleTransform)
+            {
+                UnityEngine.Quaternion actualRotation=hand.GetVRHand().rotation;
+                UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand);
+                UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * rescaledRotation;
+                hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
+
+            } else {
+                UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
+                hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
+            }
 
             // matrice de passage
             UnityEngine.Matrix4x4 mP = new UnityEngine.Matrix4x4(new Vector4(0, -1, 0, 0),
@@ -127,6 +146,50 @@ namespace TeleopReachy
                             hand.handPose[3,0], hand.handPose[3,1], hand.handPose[3,2], hand.handPose[3,3] }
             };
         }
+
+        //ajout calib
+        private Quaternion RescaleRotation(Quaternion actualRotation, HandController hand) //Vector3 neutralpose, Vector3 minAngles, Vector3 maxAngles)
+        {
+
+            float new_x = 0, new_y = 0, new_z = 0;
+            Vector3 neutralPose = new Vector3();
+            List<LinearParameters> paramList = new List<LinearParameters>();
+            Vector3 actualEulerAngles = actualRotation.eulerAngles;
+            
+            if (hand == rightHand) 
+            {
+                paramList = CaptureWristPose.Instance.rightLinearParameters;
+                neutralPose = CaptureWristPose.Instance.rightNeutralOrientation.eulerAngles;
+            }
+            else {
+                paramList = CaptureWristPose.Instance.leftLinearParameters;
+                neutralPose = CaptureWristPose.Instance.leftNeutralOrientation.eulerAngles;
+            }
+
+            if (actualEulerAngles.x <= neutralPose.x)
+                new_x = LinearRescale(actualEulerAngles.x, paramList[0]);
+            else new_x = LinearRescale(actualEulerAngles.x, paramList[3]);
+
+            if (actualEulerAngles.y <= neutralPose.y)
+                new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
+            else new_y = LinearRescale(actualEulerAngles.y, paramList[4]);
+
+            if (actualEulerAngles.z <= neutralPose.z)
+                new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
+            else new_z = LinearRescale(actualEulerAngles.z, paramList[5]);
+
+            Vector3 rescaledEulerAngles = new Vector3 (new_x, new_y, new_z);
+            Quaternion rescaledRotation = Quaternion.Euler(rescaledEulerAngles);
+            
+            return rescaledRotation;
+        }
+
+        private float LinearRescale (float originalValue, LinearParameters param)
+        {
+            float newValue = param.A * originalValue + param.b;
+            return newValue;
+        }
+
 
         private void AdaptativeCloseHand(HandController hand)
         {
