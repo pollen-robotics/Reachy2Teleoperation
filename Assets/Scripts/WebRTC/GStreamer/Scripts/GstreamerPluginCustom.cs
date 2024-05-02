@@ -26,7 +26,7 @@ namespace GstreamerWebRTC
 
             renderingPlugin = new GStreamerRenderingPlugin(ip_address, ref left, ref right);
             screen.material.SetTexture("_LeftTex", left);
-            screen.material.SetTexture("_RightTex", left);
+            screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
             renderingPlugin.Connect();
