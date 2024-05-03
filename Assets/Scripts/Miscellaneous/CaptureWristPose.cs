@@ -26,12 +26,10 @@ namespace TeleopReachy
         private Transform leftController;
         private Transform rightController;
         private Transform userTrackerTransform;
-        private List<Vector3> leftHandEulerAnglesList = new List<Vector3>();
-        private List<Vector3> rightHandEulerAnglesList = new List<Vector3>();
-        public Vector3 rightMinAngles;
-        public Vector3 rightMaxAngles;
-        public Vector3 leftMinAngles;
-        public Vector3 leftMaxAngles;
+        public Vector3 rightMinAngles = new Vector3(-100f, -100f, -100f);
+        public Vector3 rightMaxAngles = new Vector3(100f, 100f, 100f);
+        public Vector3 leftMinAngles = new Vector3(-100f, -100f, -100f);
+        public Vector3 leftMaxAngles = new Vector3(100f, 100f, 100f);
         public Quaternion rightNeutralOrientation;
         public Quaternion leftNeutralOrientation;
         public List<LinearParameters> rightLinearParameters = new List<LinearParameters>();
@@ -41,7 +39,6 @@ namespace TeleopReachy
         private int nbPosition = 0;
         public UnityEvent event_onStartWristCalib;
         private ControllersManager controllers;
-        private RobotStatus robotStatus ;
         public UnityEvent event_NeutralPoseCaptured = new UnityEvent();
         public UnityEvent event_WristPoseCaptured = new UnityEvent();
 
@@ -51,20 +48,16 @@ namespace TeleopReachy
             Debug.Log("[Wrist Calibration version User] Start");
             leftController = GameObject.Find("LeftHand Controller").transform;
             rightController = GameObject.Find("RightHand Controller").transform;
-            //leftController = GameObject.Find("TrackedLeftHand").transform;
-            //rightController = GameObject.Find("TrackedRightHand").transform;
             event_onStartWristCalib = new UnityEvent();
             event_onStartWristCalib.AddListener(StartWristCalibration);
-            //robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
             controllers = ActiveControllerManager.Instance.ControllersManager;
             
         }
 
         public void Update()
         {
-            //if (robotStatus.IsRobotTeleoperationActive())
             timer += Time.deltaTime;
-            if (timer >= recordInterval)
+            if (timer >= recordInterval && nbPosition < 8)
             {
                 controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
                 if (buttonX)
@@ -73,16 +66,12 @@ namespace TeleopReachy
                 }
             }
 
-            if (nbPosition ==7)
+            if (nbPosition == 7)
             {
-                (leftMinAngles, leftMaxAngles) = GetMinAndMax(leftHandEulerAnglesList);
-                (rightMinAngles, rightMaxAngles) = GetMinAndMax(rightHandEulerAnglesList);
-                Debug.Log("Left Min Angles: " + leftMinAngles + " Left Max Angles: " + leftMaxAngles);
-                Debug.Log("Right Min Angles: " + rightMinAngles + " Right Max Angles: " + rightMaxAngles);
                 SavePoseData();
                 GetRescalingParameters();
                 event_WristPoseCaptured.Invoke();
-                nbPosition = 0;
+                nbPosition ++;
                 capturedData.Clear();
             }
         }
@@ -108,28 +97,50 @@ namespace TeleopReachy
             rightHandEulerAngles.y = NormalizeAngle(rightHandEulerAngles.y);
             rightHandEulerAngles.z = NormalizeAngle(rightHandEulerAngles.z);
 
-
-
             nbPosition++;
-            Debug.Log("Nb position: " + nbPosition);
             buttonX = false;
-
-            leftHandEulerAnglesList.Add(leftHandEulerAngles);
-            rightHandEulerAnglesList.Add(rightHandEulerAngles);
-
-            if (nbPosition == 1)
-            {
-                rightNeutralOrientation = rightHandRotation;
-                leftNeutralOrientation = leftHandRotation;
-                event_NeutralPoseCaptured.Invoke();
-
-            }
-
-            // Ajouter les données de position, rotation et rotation en Euler sur la même ligne
-            capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
-
-            // Réinitialiser le bouton et le minuteur
             timer = 0f;
+
+            switch (nbPosition)
+            {
+                case 1:
+                    rightNeutralOrientation = rightHandRotation;
+                    leftNeutralOrientation = leftHandRotation;
+                    event_NeutralPoseCaptured.Invoke();
+                    Debug.Log("Position 1");
+                    break;
+                case 2:
+                    rightMaxAngles.z = rightHandEulerAngles.z;
+                    leftMinAngles.z = leftHandEulerAngles.z;
+                    Debug.Log("Position 2");
+                    break;
+                case 3:
+                    rightMinAngles.z = rightHandEulerAngles.z;
+                    leftMaxAngles.z = leftHandEulerAngles.z;
+                    Debug.Log("Position 3");
+                    break;
+                case 4:
+                    rightMinAngles.x = rightHandEulerAngles.x;
+                    leftMinAngles.x = leftHandEulerAngles.x;
+                    Debug.Log("Position 4");
+                    break;
+                case 5:
+                    rightMaxAngles.x = rightHandEulerAngles.x;
+                    leftMaxAngles.x = leftHandEulerAngles.x;
+                    Debug.Log("Position 5");
+                    break;
+                case 6:
+                    rightMaxAngles.y = rightHandEulerAngles.y;
+                    leftMinAngles.y = leftHandEulerAngles.y;
+                    Debug.Log("Position 6");
+                    break;
+                case 7:
+                    rightMinAngles.y = rightHandEulerAngles.y;
+                    leftMaxAngles.y = leftHandEulerAngles.y;
+                    Debug.Log("Position 7");
+                    capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
+                    break;
+            }
         }
 
 
@@ -154,22 +165,6 @@ namespace TeleopReachy
                 angle += 360f;
             }
             return angle;
-        }
-
-        public (Vector3, Vector3) GetMinAndMax (List<Vector3> list)
-        {
-
-            float maxX = list.Max(angle => angle.x);
-            float minX = list.Min(angle => angle.x);
-            float maxY = list.Max(angle => angle.y);
-            float minY = list.Min(angle => angle.y);
-            float maxZ = list.Max(angle => angle.z);
-            float minZ = list.Min(angle => angle.z);
-
-            Vector3 min = new Vector3(minX, minY, minZ);
-            Vector3 max = new Vector3(maxX, maxY, maxZ);
-
-            return (min, max);
         }
 
         public void GetRescalingParameters()

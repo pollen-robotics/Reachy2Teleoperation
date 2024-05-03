@@ -10,7 +10,6 @@ namespace TeleopReachy
         {
             //ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation);
             CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation);
-            // WristCalibINCIA.Instance.event_OnWristCalibChanged.AddListener(DefineTrackedHandOrientation);
         }
 
         private void DefineTrackedHandOrientation()
@@ -18,8 +17,6 @@ namespace TeleopReachy
             Vector3 targetEulerAngles = new Vector3(-80, +50, -50);
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
-            // Quaternion rightRotationDifference = Quaternion.Inverse(targetRobotRotation) * CaptureWristPose.Instance.rightNeutralOrientation;
-            // Quaternion leftRotationDifference = Quaternion.Inverse(targetRobotRotation) * CaptureWristPose.Instance.leftNeutralOrientation;
             Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
             Quaternion leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
             Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
