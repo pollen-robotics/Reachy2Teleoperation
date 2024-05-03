@@ -68,7 +68,7 @@ namespace TeleopReachy
     {
         public HandController rightHand;
         public HandController leftHand;
-        public bool rescaleTransform = false;
+        public int rescaleTransform = 0 ; //à changer en false si test concluant et qu'on garde la calib 
 
         public ControllersManager controllers;
 
@@ -78,7 +78,11 @@ namespace TeleopReachy
             leftHand = new HandController("left", controllers.leftHandDevice);
 
             controllers.event_OnDevicesUpdate.AddListener(UpdateDevices);
-            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(ChangeTransforms);
+            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
+            SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
+            SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
+            SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
+
 
         }
 
@@ -103,12 +107,14 @@ namespace TeleopReachy
             AdaptativeCloseHand(leftHand);
         }
 
-        private void ChangeTransforms()
+        private void ChangeTransforms(int numCalib)
         {
-            //rescaleTransform = true;
+            this.rescaleTransform = numCalib;// à repasser en true si concluant et qu'on garde la calib
+            Debug.Log("[HandsTracker] rescaleTransform : " + rescaleTransform); 
         }
+        
 
-        private void GetTransforms(HandController hand, bool rescaleTransform)
+        private void GetTransforms(HandController hand, int rescaleTransform)
         {
             // Position
             Vector3 positionHeadset = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * (hand.GetVRHand().position - transform.parent.position);
@@ -117,17 +123,17 @@ namespace TeleopReachy
 
             // Rotation
             //ajout calib
-            if (rescaleTransform)
+            if (rescaleTransform == 1 || rescaleTransform == 2) 
             {
                 UnityEngine.Quaternion actualRotation=hand.GetVRHand().rotation;
-                UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand);
+                UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * rescaledRotation;
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
 
-            } else {
+            } else if (rescaleTransform == 0){
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
-            }
+            } 
 
             // matrice de passage
             UnityEngine.Matrix4x4 mP = new UnityEngine.Matrix4x4(new Vector4(0, -1, 0, 0),
@@ -148,7 +154,7 @@ namespace TeleopReachy
         }
 
         //ajout calib
-        private Quaternion RescaleRotation(Quaternion actualRotation, HandController hand) //Vector3 neutralpose, Vector3 minAngles, Vector3 maxAngles)
+        private Quaternion RescaleRotation(Quaternion actualRotation, HandController hand, int rescaleTransform) //Vector3 neutralpose, Vector3 minAngles, Vector3 maxAngles)
         {
 
             float new_x = 0, new_y = 0, new_z = 0;
@@ -158,11 +164,13 @@ namespace TeleopReachy
             
             if (hand == rightHand) 
             {
-                paramList = CaptureWristPose.Instance.rightLinearParameters;
+                if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.rightLinearParameters;
+                else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeRightLinearParameters; //à retirer si on garde la calib
                 neutralPose = CaptureWristPose.Instance.rightNeutralOrientation.eulerAngles;
             }
             else {
-                paramList = CaptureWristPose.Instance.leftLinearParameters;
+                if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.leftLinearParameters;
+                else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
                 neutralPose = CaptureWristPose.Instance.leftNeutralOrientation.eulerAngles;
             }
 

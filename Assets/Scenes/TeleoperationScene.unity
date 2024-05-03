@@ -2314,6 +2314,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556633458}
   m_CullTransparentMesh: 0
+--- !u!1 &567280449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 567280451}
+  - component: {fileID: 567280450}
+  m_Layer: 0
+  m_Name: SwitchCalibrationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &567280450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567280449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26370332021f57f45905e6a3e75b9da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedCalibration: 0
+  event_NewCalibAsked:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OldCalibAsked:
+    m_PersistentCalls:
+      m_Calls: []
+  event_FakeCalibAsked:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &567280451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567280449}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7975054, y: 0.80568457, z: 0.31972122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &615226814
 GameObject:
   m_ObjectHideFlags: 0
@@ -7961,3 +8015,4 @@ SceneRoots:
   - {fileID: 1629947394}
   - {fileID: 803308015}
   - {fileID: 1792293515}
+  - {fileID: 567280451}
