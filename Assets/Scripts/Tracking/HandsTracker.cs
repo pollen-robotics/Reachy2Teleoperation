@@ -79,9 +79,8 @@ namespace TeleopReachy
 
             controllers.event_OnDevicesUpdate.AddListener(UpdateDevices);
             CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
-            SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
-            SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
-            SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
+            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(InitSwitchCalib);
+            
 
 
         }
@@ -90,6 +89,13 @@ namespace TeleopReachy
         {
             GetTransforms(rightHand, rescaleTransform);
             GetTransforms(leftHand, rescaleTransform);
+        }
+
+        private void InitSwitchCalib()
+        {
+            SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
+            SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
+            SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
         }
 
         private void UpdateDevices()

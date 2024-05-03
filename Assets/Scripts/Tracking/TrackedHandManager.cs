@@ -10,6 +10,13 @@ namespace TeleopReachy
         {
             //ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation);
             CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
+            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
+
+
+        }
+
+        private void InitSwitchCalib()
+        {
             SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(DefineTrackedHandOrientation_Old);
             SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(DefineTrackedHandOrientation_New);
             SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(DefineTrackedHandOrientation_Fake);
