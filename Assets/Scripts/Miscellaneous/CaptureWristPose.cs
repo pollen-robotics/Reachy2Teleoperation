@@ -34,6 +34,8 @@ namespace TeleopReachy
         public Quaternion leftNeutralOrientation;
         public List<LinearParameters> rightLinearParameters = new List<LinearParameters>();
         public List<LinearParameters> leftLinearParameters = new List<LinearParameters>();
+        public List<LinearParameters> fakeRightLinearParameters = new List<LinearParameters>();
+        public List<LinearParameters> fakeLeftLinearParameters = new List<LinearParameters>();
         private List<string> capturedData = new List<string>();
         private bool buttonX;
         private int nbPosition = 0;
@@ -70,6 +72,7 @@ namespace TeleopReachy
             {
                 SavePoseData();
                 GetRescalingParameters();
+                GetFakeRescalingParameters(); // à enlever si on garde la calibration
                 event_WristPoseCaptured.Invoke();
                 nbPosition ++;
                 capturedData.Clear();
@@ -182,6 +185,24 @@ namespace TeleopReachy
             leftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.x, leftMaxAngles.x, 0f, 100f));
             leftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.y, leftMaxAngles.y, 0f, 20f));
             leftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.z, leftMaxAngles.z, 0f, 50f));
+            
+        }
+
+        public void GetFakeRescalingParameters() // à enlever si on garde la calibration
+        {
+            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.x, rightNeutralOrientation.eulerAngles.x, -80f, 0f));
+            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.y, rightNeutralOrientation.eulerAngles.y, -30f, 0f));
+            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.z, rightNeutralOrientation.eulerAngles.z, -30f, 0f));
+            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.x, rightMaxAngles.x, 0f, 60f));
+            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.y, rightMaxAngles.y, 0f, 30f));
+            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.z, rightMaxAngles.z, 0f, 30f));
+
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.x, leftNeutralOrientation.eulerAngles.x, -80f, 0f));
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.y, leftNeutralOrientation.eulerAngles.y, -30f, 0f));
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.z, leftNeutralOrientation.eulerAngles.z, -30f, 0f));
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.x, leftMaxAngles.x, 0f, 60f));
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.y, leftMaxAngles.y, 0f, 30f));
+            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.z, leftMaxAngles.z, 0f, 30f));
             
         }
 
