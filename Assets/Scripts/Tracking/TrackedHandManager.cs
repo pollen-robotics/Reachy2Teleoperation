@@ -25,7 +25,7 @@ namespace TeleopReachy
 
         public void DefineTrackedHandOrientation_New()
         {
-            Vector3 targetEulerAngles = new Vector3(-80, +50, -50);
+            Vector3 targetEulerAngles = new Vector3(280, 170, 170);
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
             Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
@@ -84,7 +84,7 @@ namespace TeleopReachy
 
         public void DefineTrackedHandOrientation_Fake()
         {
-            Vector3 targetEulerAngles = new Vector3(-80, +50, -30); //20° vers l'intérieur pour les deux poignets
+            Vector3 targetEulerAngles = new Vector3(250, 170, 170); //20° vers l'intérieur pour les deux poignets
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
             Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
