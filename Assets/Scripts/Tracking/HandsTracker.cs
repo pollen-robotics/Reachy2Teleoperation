@@ -179,20 +179,23 @@ namespace TeleopReachy
                 else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
                 neutralPose = CaptureWristPose.Instance.leftNeutralOrientation.eulerAngles;
             }
+            //new_x = LinearRescale_x(actualEulerAngles.x, paramList[0]);
+            new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
+            new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
 
-            if (actualEulerAngles.x <= neutralPose.x)
-                new_x = LinearRescale(actualEulerAngles.x, paramList[0]);
-            else new_x = LinearRescale(actualEulerAngles.x, paramList[3]);
+            // if (actualEulerAngles.x <= neutralPose.x)
+            //     new_x = LinearRescale(actualEulerAngles.x, paramList[0]);
+            // else new_x = LinearRescale(actualEulerAngles.x, paramList[3]);
 
-            if (actualEulerAngles.y <= neutralPose.y)
-                new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
-            else new_y = LinearRescale(actualEulerAngles.y, paramList[4]);
+            // if (actualEulerAngles.y <= neutralPose.y)
+            //     new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
+            // else new_y = LinearRescale(actualEulerAngles.y, paramList[4]);
 
-            if (actualEulerAngles.z <= neutralPose.z)
-                new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
-            else new_z = LinearRescale(actualEulerAngles.z, paramList[5]);
+            // if (actualEulerAngles.z <= neutralPose.z)
+            //     new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
+            // else new_z = LinearRescale(actualEulerAngles.z, paramList[5]);
 
-            Vector3 rescaledEulerAngles = new Vector3 (new_x, new_y, new_z);
+            Vector3 rescaledEulerAngles = new Vector3 (actualEulerAngles.x, new_y, new_z);
             Quaternion rescaledRotation = Quaternion.Euler(rescaledEulerAngles);
             
             return rescaledRotation;
@@ -200,8 +203,30 @@ namespace TeleopReachy
 
         private float LinearRescale (float originalValue, LinearParameters param)
         {
+            if (originalValue < 0) originalValue = originalValue + 360;
+
+            float x360 = (360-param.b) / param.A;
+            if (originalValue > 360 + x360) originalValue = originalValue - 360;
+            else if (originalValue < x360 -360 && originalValue > 0) originalValue = originalValue + 360;
+
             float newValue = param.A * originalValue + param.b;
+            if (newValue > 360 || newValue < 0 ) newValue = 0;
+
+            Debug.Log("originalValue: " + originalValue + " newValue: " + newValue);
             return newValue;
+        }
+
+        private float LinearRescale_x (float originalValue, LinearParameters param)
+        {
+            
+            LinearParameters paramUnder = CaptureWristPose.Instance.LinearCoefficient(0f,200f,0f,param.A*200+param.b);
+            LinearParameters paramAbove= CaptureWristPose.Instance.LinearCoefficient(330f,360f,param.A*330+param.b,360f);
+
+            if (originalValue < 0) originalValue = originalValue + 360;
+            if (originalValue < 200) return LinearRescale(originalValue, paramUnder);
+            else if (originalValue > 330) return LinearRescale(originalValue, paramAbove);
+            else return LinearRescale(originalValue, param);
+
         }
 
 
