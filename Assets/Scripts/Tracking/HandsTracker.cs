@@ -131,10 +131,9 @@ namespace TeleopReachy
             //ajout calib
             if (rescaleTransform == 1 || rescaleTransform == 2) 
             {
-                UnityEngine.Quaternion actualRotation=hand.GetVRHand().rotation;
+                UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
                 UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
-                UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * rescaledRotation;
-                hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
+                hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
 
             } else if (rescaleTransform == 0){
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
@@ -165,7 +164,8 @@ namespace TeleopReachy
 
             float new_x = 0, new_y = 0, new_z = 0;
             Vector3 neutralPose = new Vector3();
-            List<LinearParameters> paramList = new List<LinearParameters>();
+            List<List<float>> limitValues = new List<List<float>>();
+            List<List<LinearParameters>> paramList = new List<List<LinearParameters>>();
             Vector3 actualEulerAngles = actualRotation.eulerAngles;
             
             if (hand == rightHand) 
@@ -173,15 +173,24 @@ namespace TeleopReachy
                 if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.rightLinearParameters;
                 else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeRightLinearParameters; //à retirer si on garde la calib
                 neutralPose = CaptureWristPose.Instance.rightNeutralOrientation.eulerAngles;
+                limitValues = CaptureWristPose.Instance.rightLimitValues;
+
             }
             else {
                 if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.leftLinearParameters;
                 else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
                 neutralPose = CaptureWristPose.Instance.leftNeutralOrientation.eulerAngles;
+                limitValues = CaptureWristPose.Instance.leftLimitValues;
+
             }
-            //new_x = LinearRescale_x(actualEulerAngles.x, paramList[0]);
-            new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
-            new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
+
+
+            // new_x = actualEulerAngles.x;
+            new_y = actualEulerAngles.y;
+            // new_z = actualEulerAngles.z;
+            new_x = LinearRescale(actualEulerAngles.x, paramList[0], limitValues[0], 'x');
+            //new_y = LinearRescale(actualEulerAngles.y, paramList[1], limitValues[1],  'y');
+            new_z = LinearRescale(actualEulerAngles.z, paramList[2], limitValues[2], 'z');
 
             // if (actualEulerAngles.x <= neutralPose.x)
             //     new_x = LinearRescale(actualEulerAngles.x, paramList[0]);
@@ -195,39 +204,35 @@ namespace TeleopReachy
             //     new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
             // else new_z = LinearRescale(actualEulerAngles.z, paramList[5]);
 
-            Vector3 rescaledEulerAngles = new Vector3 (actualEulerAngles.x, new_y, new_z);
+            Vector3 rescaledEulerAngles = new Vector3 (new_x, new_y, new_z);
             Quaternion rescaledRotation = Quaternion.Euler(rescaledEulerAngles);
             
             return rescaledRotation;
         }
 
-        private float LinearRescale (float originalValue, LinearParameters param)
+        private float LinearRescale (float originalValue, List<LinearParameters> param, List<float> limitValues, char mode)
         {
-            if (originalValue < 0) originalValue = originalValue + 360;
+            float newValue = originalValue;
+            if (mode == 'x' && originalValue < 0) originalValue = originalValue + 360;
+            else if ((mode == 'y' || mode == 'z') && originalValue > limitValues[3]) originalValue = originalValue - 360;
+            else if ((mode == 'y' || mode == 'z') && originalValue < limitValues[0]) originalValue = originalValue + 360;
 
-            float x360 = (360-param.b) / param.A;
-            if (originalValue > 360 + x360) originalValue = originalValue - 360;
-            else if (originalValue < x360 -360 && originalValue > 0) originalValue = originalValue + 360;
+            if (originalValue < limitValues[1])
+            {
+                newValue = param[1].A * originalValue + param[1].b;
+            } else if (originalValue > limitValues[2]) {
+                newValue = param[2].A * originalValue + param[2].b;
+            } else {
+                newValue = param[0].A * originalValue + param[0].b;
+            }
 
-            float newValue = param.A * originalValue + param.b;
+            if ((mode == 'y' || mode == 'z') && newValue < 0) newValue = newValue + 360;
             if (newValue > 360 || newValue < 0 ) newValue = 0;
 
-            Debug.Log("originalValue: " + originalValue + " newValue: " + newValue);
+            Debug.Log(mode + " -> originalValue: " + originalValue + " newValue: " + newValue);
             return newValue;
         }
 
-        private float LinearRescale_x (float originalValue, LinearParameters param)
-        {
-            
-            LinearParameters paramUnder = CaptureWristPose.Instance.LinearCoefficient(0f,200f,0f,param.A*200+param.b);
-            LinearParameters paramAbove= CaptureWristPose.Instance.LinearCoefficient(330f,360f,param.A*330+param.b,360f);
-
-            if (originalValue < 0) originalValue = originalValue + 360;
-            if (originalValue < 200) return LinearRescale(originalValue, paramUnder);
-            else if (originalValue > 330) return LinearRescale(originalValue, paramAbove);
-            else return LinearRescale(originalValue, param);
-
-        }
 
 
         private void AdaptativeCloseHand(HandController hand)
