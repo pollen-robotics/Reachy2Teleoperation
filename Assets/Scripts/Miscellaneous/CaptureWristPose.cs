@@ -33,9 +33,12 @@ namespace TeleopReachy
         public Quaternion rightNeutralOrientation;
         public Quaternion leftNeutralOrientation;
         public List<List<LinearParameters>> rightLinearParameters = new List<List<LinearParameters>>();
-        public List<LinearParameters> leftLinearParameters = new List<LinearParameters>();
-        public List<LinearParameters> fakeRightLinearParameters = new List<LinearParameters>();
-        public List<LinearParameters> fakeLeftLinearParameters = new List<LinearParameters>();
+        public List<List<LinearParameters>> leftLinearParameters = new List<List<LinearParameters>>();
+        public List<List<LinearParameters>> fakeRightLinearParameters = new List<List<LinearParameters>>();
+        public List<List<LinearParameters>> fakeLeftLinearParameters = new List<List<LinearParameters>>();
+
+        public List<List<float>> rightLimitValues = new List<List<float>>();
+        public List<List<float>> leftLimitValues = new List<List<float>>();
         private List<string> capturedData = new List<string>();
         private bool buttonX;
         private int nbPosition = 0;
@@ -87,11 +90,11 @@ namespace TeleopReachy
             Matrix4x4 userTrackerInverseTransform = userTrackerTransform.worldToLocalMatrix;
 
             Vector3 leftHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(leftController.position);
-            Quaternion leftHandRotation = Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
+            Quaternion leftHandRotation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
             Vector3 leftHandEulerAngles = leftHandRotation.eulerAngles;
 
             Vector3 rightHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(rightController.position);
-            Quaternion rightHandRotation = Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
+            Quaternion rightHandRotation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
             Vector3 rightHandEulerAngles = rightHandRotation.eulerAngles;
 
 
@@ -162,27 +165,20 @@ namespace TeleopReachy
             }
         }
 
-        private float NormalizeAngle(float angle)
-        {
-            while (angle > 180f)
-            {
-                angle -= 360f;
-            }
-            while (angle < -180f)
-            {
-                angle += 360f;
-            }
-            return angle;
-        }
-
         public void GetRescalingParameters()
         {
-            //rightLinearParameters.Add(LinearCoefficient(rightMinAngles.x, rightMaxAngles.x, 290f, 310f));
-            //rightLinearParameters.Add(LinearCoefficient(rightMinAngles.x, rightMaxAngles.x, 290f, 310f));
-            rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.y - 360, rightMinAngles.y, -60f, 60f));
+            rightLinearParameters.Add(Get3LinearParameters(rightMinAngles.x, rightMaxAngles.x, 290f, 310f, 'x'));
+            rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.y - 360, rightMinAngles.y, -60f, 60f, 'y'));
+            rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.z - 360, rightMinAngles.z, -90f, 90f, 'z'));
+
+            rightLimitValues.Add(GetLimitValues(rightMinAngles.x, rightMaxAngles.x));
+            rightLimitValues.Add(GetLimitValues(rightMaxAngles.y - 360, rightMinAngles.y));
+            rightLimitValues.Add(GetLimitValues(rightMaxAngles.z - 360, rightMinAngles.z));
+
+            Debug.Log("rightlimitvalues ="+ rightLimitValues[0] + rightLimitValues[1] + rightLimitValues[2]);
 
 
-            rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.z - 360, rightMinAngles.z, -90f, 90f));
+            //rightLinearParameters.Add(LinearCoefficient(rightMinAngles.x, rightMaxAngles.x, 290f, 310f));
             //rightLinearParameters.Add(LinearCoefficient(rightMaxAngles.y - 360, rightMinAngles.y, -60f, 60f));
             //rightLinearParameters.Add(LinearCoefficient(rightMaxAngles.z - 360, rightMinAngles.z, -90f, 90f));
 
@@ -193,9 +189,19 @@ namespace TeleopReachy
             // (z0, z360) = GetExtremum(rightLinearParameters[2]);
             // rightLinearParameters.Add(LinearCoefficient(z0, z360, 0f, 360f));
 
-            leftLinearParameters.Add(LinearCoefficient(leftMinAngles.x, leftMaxAngles.x, 290f, 310f));
-            leftLinearParameters.Add(LinearCoefficient(leftMaxAngles.y - 360 , leftMinAngles.y, -60f, 60f));
-            leftLinearParameters.Add(LinearCoefficient(leftMinAngles.z, leftMaxAngles.z, -90f, 90f));
+            leftLinearParameters.Add(Get3LinearParameters(leftMinAngles.x, leftMaxAngles.x, 290f, 310f, 'x'));
+            leftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.y - 360, leftMinAngles.y, -60f, 60f, 'y'));
+            leftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.z - 360, leftMinAngles.z, -90f, 90f, 'z'));
+
+            leftLimitValues.Add(GetLimitValues(leftMinAngles.x, leftMaxAngles.x));
+            leftLimitValues.Add(GetLimitValues(leftMaxAngles.y - 360, leftMinAngles.y));
+            leftLimitValues.Add(GetLimitValues(leftMaxAngles.z - 360, leftMinAngles.z));
+
+            Debug.Log("leftlimitvalues ="+ leftLimitValues[0] + leftLimitValues[1] + leftLimitValues[2]);
+
+            // leftLinearParameters.Add(LinearCoefficient(leftMinAngles.x, leftMaxAngles.x, 290f, 310f));
+            // leftLinearParameters.Add(LinearCoefficient(leftMaxAngles.y - 360 , leftMinAngles.y, -60f, 60f));
+            // leftLinearParameters.Add(LinearCoefficient(leftMinAngles.z, leftMaxAngles.z, -90f, 90f));
             
             // leftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.x, leftMaxAngles.x, 0f, 20f));
             // leftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.y, leftMaxAngles.y, 0f, 50f));
@@ -206,19 +212,14 @@ namespace TeleopReachy
 
         public void GetFakeRescalingParameters() // à enlever si on garde la calibration
         {
-            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.x, rightNeutralOrientation.eulerAngles.x, -80f, 0f));
-            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.y, rightNeutralOrientation.eulerAngles.y, -30f, 0f));
-            fakeRightLinearParameters.Add(LinearCoefficient(rightMinAngles.z, rightNeutralOrientation.eulerAngles.z, -30f, 0f));
-            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.x, rightMaxAngles.x, 0f, 60f));
-            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.y, rightMaxAngles.y, 0f, 30f));
-            fakeRightLinearParameters.Add(LinearCoefficient(rightNeutralOrientation.eulerAngles.z, rightMaxAngles.z, 0f, 30f));
+            fakeRightLinearParameters.Add(Get3LinearParameters(rightMinAngles.x, rightMaxAngles.x, 290f, 310f, 'x'));
+            fakeRightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.y - 360, rightMinAngles.y, -60f, 60f, 'y'));
+            fakeRightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.z - 360, rightMinAngles.z, -90f, 90f, 'z'));
 
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.x, leftNeutralOrientation.eulerAngles.x, -80f, 0f));
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.y, leftNeutralOrientation.eulerAngles.y, -30f, 0f));
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftMinAngles.z, leftNeutralOrientation.eulerAngles.z, -30f, 0f));
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.x, leftMaxAngles.x, 0f, 60f));
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.y, leftMaxAngles.y, 0f, 30f));
-            fakeLeftLinearParameters.Add(LinearCoefficient(leftNeutralOrientation.eulerAngles.z, leftMaxAngles.z, 0f, 30f));
+            fakeLeftLinearParameters.Add(Get3LinearParameters(leftMinAngles.x, leftMaxAngles.x, 290f, 310f, 'x'));
+            fakeLeftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.y - 360, leftMinAngles.y, -60f, 60f, 'y'));
+            fakeLeftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.z - 360, leftMinAngles.z, -90f, 90f, 'z'));
+
             
         }
 
@@ -230,28 +231,54 @@ namespace TeleopReachy
             return linearParameters;
         }
 
-        public (LinearParameters, LinearParameters, LinearParameters) Get3LinearParameters(float x1, float x2, float y1, float y2)
+        public List<LinearParameters> Get3LinearParameters(float x1, float x2, float y1, float y2, char mode)
         {
+            List<LinearParameters> parameters = new List<LinearParameters>();
+
             LinearParameters intervalParameters = LinearCoefficient(x1, x2, y1, y2);
+            parameters.Add(intervalParameters);
+
             LinearParameters negParameters = new LinearParameters(0, 0);
             LinearParameters posParameters = new LinearParameters(0, 0);
 
-            if (intervalParameters.A>0 && x1 < x2 ) 
+            if (mode == 'x') 
             {
-                float rangeX = 360- (x2 - x1);
+                negParameters = LinearCoefficient(0, x1, 0, y1);
+                posParameters = LinearCoefficient(x2, 360, y2, 360);
+            } 
+            else 
+            {
+                float rangeX = 360 - (x2 - x1);
                 float medianX = (x1 + x2) / 2;
-                float rangeY = 360-(y2 - y1);
+                float rangeY = 360 - (y2 - y1);
                 float medianY = (y1 + y2) / 2;
-                negParameters = LinearCoefficient(medianX - rangeX/2, x1, medianY - rangeY/2, y1);
-                posParameters = LinearCoefficient(x2, medianX + rangeX/2, y2, medianY + rangeY/2);
+                negParameters = LinearCoefficient(x1 - rangeX/2, x1, y1 - rangeY/2, y1);
+                posParameters = LinearCoefficient(x2, x2 + rangeX/2, y2, y2 + rangeY/2);
+                
             }
 
-            return (intervalParameters, negParameters, posParameters);
+            parameters.Add(negParameters);
+            parameters.Add(posParameters);
 
+            Debug.Log("Parameters: " + parameters[0].A + " " + parameters[0].b + " " + parameters[1].A + " " + parameters[1].b + " " + parameters[2].A + " " + parameters[2].b);
 
+            return parameters;
 
-            
         }
+
+        public List<float> GetLimitValues (float min, float max) 
+        {
+            List<float> limitValues = new List<float>();
+            float rangeX = 360 - (max - min);
+            float limitDown = min - rangeX/2;
+            float limitUp = max + rangeX/2;
+            limitValues.Add(limitDown);
+            limitValues.Add(min);
+            limitValues.Add(max);
+            limitValues.Add(limitUp);
+            return limitValues;
+        }
+
 
         public (float, float) GetExtremum(LinearParameters linearParameters)
         {
