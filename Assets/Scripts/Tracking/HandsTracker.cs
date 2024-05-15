@@ -132,7 +132,10 @@ namespace TeleopReachy
             if (rescaleTransform == 1 || rescaleTransform == 2) 
             {
                 UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
-                UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
+                UnityEngine.Quaternion rescaledRotation = RescalefromCalibQuaternion(actualRotation, hand);
+                
+                Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
+                // UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
 
             } else if (rescaleTransform == 0){
@@ -163,7 +166,6 @@ namespace TeleopReachy
         {
 
             float new_x = 0, new_y = 0, new_z = 0;
-            Vector3 neutralPose = new Vector3();
             List<List<float>> limitValues = new List<List<float>>();
             List<List<LinearParameters>> paramList = new List<List<LinearParameters>>();
             Vector3 actualEulerAngles = actualRotation.eulerAngles;
@@ -172,24 +174,22 @@ namespace TeleopReachy
             {
                 if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.rightLinearParameters;
                 else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeRightLinearParameters; //à retirer si on garde la calib
-                neutralPose = CaptureWristPose.Instance.rightNeutralOrientation.eulerAngles;
                 limitValues = CaptureWristPose.Instance.rightLimitValues;
 
             }
             else {
                 if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.leftLinearParameters;
                 else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
-                neutralPose = CaptureWristPose.Instance.leftNeutralOrientation.eulerAngles;
                 limitValues = CaptureWristPose.Instance.leftLimitValues;
 
             }
 
 
             // new_x = actualEulerAngles.x;
-            new_y = actualEulerAngles.y;
+            // new_y = actualEulerAngles.y;
             // new_z = actualEulerAngles.z;
             new_x = LinearRescale(actualEulerAngles.x, paramList[0], limitValues[0], 'x');
-            //new_y = LinearRescale(actualEulerAngles.y, paramList[1], limitValues[1],  'y');
+            new_y = LinearRescale(actualEulerAngles.y, paramList[1], limitValues[1],  'y');
             new_z = LinearRescale(actualEulerAngles.z, paramList[2], limitValues[2], 'z');
 
             // if (actualEulerAngles.x <= neutralPose.x)
@@ -231,6 +231,23 @@ namespace TeleopReachy
 
             Debug.Log(mode + " -> originalValue: " + originalValue + " newValue: " + newValue);
             return newValue;
+        }
+
+        public Quaternion RescalefromCalibQuaternion (Quaternion actualRotation, HandController hand)
+        {
+            Quaternion rescaledRotation = Quaternion.identity;
+            actualRotation = actualRotation.normalized;
+
+            if (hand == rightHand) 
+            {
+                rescaledRotation = CaptureWristPose.Instance.rightCalibrationQuaternion * actualRotation;
+                
+            }
+            else {
+                rescaledRotation = CaptureWristPose.Instance.leftCalibrationQuaternion * actualRotation;
+            }
+            ;
+            return rescaledRotation.normalized;
         }
 
 

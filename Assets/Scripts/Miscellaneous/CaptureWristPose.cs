@@ -30,6 +30,34 @@ namespace TeleopReachy
         public Vector3 rightMaxAngles = new Vector3(100f, 100f, 100f);
         public Vector3 leftMinAngles = new Vector3(-100f, -100f, -100f);
         public Vector3 leftMaxAngles = new Vector3(100f, 100f, 100f);
+        public List<Quaternion> rightTargetQuaternions = new List<Quaternion>
+        {
+            new Quaternion(-0.7201552f, -0.02413408f, -0.02017402f, 0.6930999f),
+            new Quaternion(-0.5093532f, 0.4164577f, -0.5759152f, 0.485226f),
+            new Quaternion(-0.5125939f, -0.5285167f, 0.4946146f, 0.4618162f),
+            new Quaternion(-0.4258656f, 0.03434371f, 0.08288516f, 0.9003273f),
+            new Quaternion(-0.8304877f, -0.03057624f, -0.03743934f, 0.5549359f),
+            new Quaternion(-0.6531665f, -0.3869231f, -0.2626457f, 0.5955514f),
+            new Quaternion(-0.6184757f, 0.1423042f, 0.2263798f, 0.7389112f)
+            
+        };
+        public List<Quaternion> leftTargetQuaternions = new List<Quaternion>
+        {
+            new Quaternion(0.7247367f, -0.0355015f, -0.03408778f, -0.6872661f),
+            new Quaternion(0.4929802f, 0.4544906f, -0.561203f, -0.4852425f),
+            new Quaternion(0.5609733f, -0.4850902f, 0.4983143f, -0.4490873f),
+            new Quaternion(0.4884147f, -0.04510013f, 0.01170628f, -0.8713669f),
+            new Quaternion(0.9148228f, 0.004516321f, -0.007648213f, -0.403758f),
+            new Quaternion(0.7160004f, -0.2306543f, -0.2546362f, -0.6077029f),
+            new Quaternion(0.6270378f, 0.3168887f, 0.3886147f, -0.5961409f)
+        };
+
+        public List<Quaternion> rightCalibrationQuaternions = new List<Quaternion>();
+    
+        public List<Quaternion> leftCalibrationQuaternions = new List<Quaternion>();
+        
+        public Quaternion rightCalibrationQuaternion = new Quaternion();
+        public Quaternion leftCalibrationQuaternion = new Quaternion();
         public Quaternion rightNeutralOrientation;
         public Quaternion leftNeutralOrientation;
         public List<List<LinearParameters>> rightLinearParameters = new List<List<LinearParameters>>();
@@ -56,6 +84,22 @@ namespace TeleopReachy
             event_onStartWristCalib = new UnityEvent();
             event_onStartWristCalib.AddListener(StartWristCalibration);
             controllers = ActiveControllerManager.Instance.ControllersManager;
+
+            // leftTargetQuaternions.Add(new Quaternion(0.7548487f, -0.03436273f, -0.05109999f, -0.653002f));
+            // leftTargetQuaternions.Add(new Quaternion(0.436973f, 0.4826646f, -0.5211778f, -0.5517819f));
+            // leftTargetQuaternions.Add(new Quaternion(0.4986962f, -0.5191435f, 0.4933016f, -0.4883094f));
+            // leftTargetQuaternions.Add(new Quaternion(0.4339799f, 0.04320588f, 0.04761387f, -0.8986255f));
+            // leftTargetQuaternions.Add(new Quaternion(0.8197948f, -0.0386104f, -0.07024907f, -0.5670194f));
+            // leftTargetQuaternions.Add(new Quaternion(0.5805598f, -0.2952426f, -0.4605616f, -0.6030466f));
+            // leftTargetQuaternions.Add(new Quaternion(0.6486574f, 0.2513193f, 0.280946f, -0.6611745f));
+
+            // rightTargetQuaternions.Add(new Quaternion(0.7357965f, 0.02146629f, 0.007585278f, -0.6768201f));
+            // rightTargetQuaternions.Add(new Quaternion(0.4939354f, -0.479659f, 0.5272943f, -0.4979117f));
+            // rightTargetQuaternions.Add(new Quaternion(0.4756156f, 0.5365561f, -0.4671748f, -0.5173444f));
+            // rightTargetQuaternions.Add(new Quaternion(0.4470062f, 0.04602879f, -0.04383902f, -0.8922697f));
+            // rightTargetQuaternions.Add(new Quaternion(0.8046046f, 0.03835141f, 0.0276129f, -0.5919276f));
+            // rightTargetQuaternions.Add(new Quaternion(0.4137476f, 0.4840278f, 0.4346469f, -0.636877f));
+            // rightTargetQuaternions.Add(new Quaternion(0.7194823f, -0.2188603f, -0.1713959f, -0.6364505f));
             
         }
 
@@ -74,8 +118,10 @@ namespace TeleopReachy
             if (nbPosition == 7)
             {
                 SavePoseData();
-                GetRescalingParameters();
-                GetFakeRescalingParameters(); // à enlever si on garde la calibration
+                // GetRescalingParameters();
+                // GetFakeRescalingParameters(); // à enlever si on garde la calibration
+                rightCalibrationQuaternion = AverageQuaternions(rightCalibrationQuaternions);
+                leftCalibrationQuaternion = AverageQuaternions(leftCalibrationQuaternions);
                 event_WristPoseCaptured.Invoke();
                 nbPosition ++;
                 capturedData.Clear();
@@ -101,7 +147,8 @@ namespace TeleopReachy
             nbPosition++;
             buttonX = false;
             timer = 0f;
-
+            GetCalibrationQuaternion(leftTargetQuaternions[nbPosition - 1], rightTargetQuaternions[nbPosition - 1], leftHandRotation, rightHandRotation);
+            Debug.Log("left quat =" + leftCalibrationQuaternions[nbPosition - 1].eulerAngles + "right quat =" + rightCalibrationQuaternions[nbPosition - 1].eulerAngles );
             switch (nbPosition)
             {
                 case 1:
@@ -112,36 +159,60 @@ namespace TeleopReachy
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     break;
                 case 2:
+                    Quaternion localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                    Quaternion localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.z = rightHandEulerAngles.z;
                     leftMinAngles.z = leftHandEulerAngles.z;
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     Debug.Log("Position 2");
                     break;
                 case 3:
+                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.z = rightHandEulerAngles.z;
                     leftMaxAngles.z = leftHandEulerAngles.z;
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     Debug.Log("Position 3");
                     break;
                 case 4:
+                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.x = rightHandEulerAngles.x;
                     leftMinAngles.x = leftHandEulerAngles.x;
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     Debug.Log("Position 4");
                     break;
                 case 5:
+                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.x = rightHandEulerAngles.x;
                     leftMaxAngles.x = leftHandEulerAngles.x;
                     Debug.Log("Position 5");
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     break;
                 case 6:
+                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.y = rightHandEulerAngles.y;
                     leftMinAngles.y = leftHandEulerAngles.y;
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     Debug.Log("Position 6");
                     break;
                 case 7:
+                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
+                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.y = rightHandEulerAngles.y;
                     leftMaxAngles.y = leftHandEulerAngles.y;
                     Debug.Log("Position 7");
@@ -155,7 +226,7 @@ namespace TeleopReachy
         public void SavePoseData()
         {
             Debug.Log("[Wrist Calibration] Saving Data");
-            string path = "C:/Users/robot/Dev/WristCalibrationData.csv";
+            string path = "C:/Users/robot/Dev/WristCalibrationData_userinitialtransformation.csv";
             string dataToAppend = string.Join("\n", capturedData) + "\n";
 
             // Utilisation d'un bloc using pour garantir que le StreamWriter est correctement fermé
@@ -167,7 +238,7 @@ namespace TeleopReachy
 
         public void GetRescalingParameters()
         {
-            rightLinearParameters.Add(Get3LinearParameters(rightMinAngles.x, rightMaxAngles.x, 290f, 310f, 'x'));
+            rightLinearParameters.Add(Get3LinearParameters(rightMinAngles.x, rightMaxAngles.x, 290f, 305f, 'x'));
             rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.y - 360, rightMinAngles.y, -60f, 60f, 'y'));
             rightLinearParameters.Add(Get3LinearParameters(rightMaxAngles.z - 360, rightMinAngles.z, -90f, 90f, 'z'));
 
@@ -189,7 +260,7 @@ namespace TeleopReachy
             // (z0, z360) = GetExtremum(rightLinearParameters[2]);
             // rightLinearParameters.Add(LinearCoefficient(z0, z360, 0f, 360f));
 
-            leftLinearParameters.Add(Get3LinearParameters(leftMinAngles.x, leftMaxAngles.x, 290f, 310f, 'x'));
+            leftLinearParameters.Add(Get3LinearParameters(leftMinAngles.x, leftMaxAngles.x, 290f, 305f, 'x'));
             leftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.y - 360, leftMinAngles.y, -60f, 60f, 'y'));
             leftLinearParameters.Add(Get3LinearParameters(leftMaxAngles.z - 360, leftMinAngles.z, -90f, 90f, 'z'));
 
@@ -286,6 +357,59 @@ namespace TeleopReachy
             float x0 = -linearParameters.b / linearParameters.A;
             float x360 = (360 - linearParameters.b) / linearParameters.A;
             return (x0, x360);
+        }
+
+        public void GetCalibrationQuaternion (Quaternion leftTargetQuat, Quaternion rightTargetQuat, Quaternion leftUserQuat, Quaternion rightUserQuat)
+        {
+
+            Quaternion leftRotationDifference = leftTargetQuat * Quaternion.Inverse(leftUserQuat);
+            Quaternion rightRotationDifference = rightTargetQuat * Quaternion.Inverse(rightUserQuat);
+            rightCalibrationQuaternions.Add(rightRotationDifference);
+            leftCalibrationQuaternions.Add(leftRotationDifference);
+            
+        }
+
+        public Quaternion AverageQuaternions(List<Quaternion> quaternions)
+        {
+            if (quaternions == null || quaternions.Count == 0)
+                return Quaternion.identity;
+
+            Quaternion average = quaternions[0].normalized;
+            float learningRate = 1.0f;
+            const float threshold = 0.0001f;
+            bool done = false;
+
+            while (!done)
+            {
+                Quaternion incrementalAvg = Quaternion.identity;
+                float totalWeight = 0.0f;
+
+                foreach (Quaternion q in quaternions)
+                {
+                    Quaternion normalizedQ = q.normalized;
+                    if (Quaternion.Dot(average, normalizedQ) < 0)
+                    {
+                        normalizedQ = new Quaternion(-normalizedQ.x, -normalizedQ.y, -normalizedQ.z, -normalizedQ.w);
+                    }
+
+                    float weight = Quaternion.Angle(average, normalizedQ);
+                    incrementalAvg = Quaternion.Slerp(incrementalAvg, normalizedQ, weight / (totalWeight + weight));
+                    totalWeight += weight;
+                }
+
+                Quaternion newAverage = Quaternion.Slerp(average, incrementalAvg, learningRate);
+                if (Quaternion.Angle(average, newAverage) < threshold)
+                {
+                    done = true;
+                }
+                else
+                {
+                    average = newAverage;
+                }
+            }
+            Debug.Log("Average quaternion: " + average.normalized.eulerAngles);
+
+            return average.normalized;
         }
 
 
