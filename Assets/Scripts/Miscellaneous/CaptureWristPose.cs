@@ -32,24 +32,113 @@ namespace TeleopReachy
         public Vector3 leftMaxAngles = new Vector3(100f, 100f, 100f);
         public List<Quaternion> rightTargetQuaternions = new List<Quaternion>
         {
-            new Quaternion(-0.7201552f, -0.02413408f, -0.02017402f, 0.6930999f),
-            new Quaternion(-0.5093532f, 0.4164577f, -0.5759152f, 0.485226f),
-            new Quaternion(-0.5125939f, -0.5285167f, 0.4946146f, 0.4618162f),
-            new Quaternion(-0.4258656f, 0.03434371f, 0.08288516f, 0.9003273f),
-            new Quaternion(-0.8304877f, -0.03057624f, -0.03743934f, 0.5549359f),
-            new Quaternion(-0.6531665f, -0.3869231f, -0.2626457f, 0.5955514f),
-            new Quaternion(-0.6184757f, 0.1423042f, 0.2263798f, 0.7389112f)
-            
+            // avec les bras bien axés selon le torse
+            // new Quaternion(0.7344111f, 0.005129192f, 0.006385155f, -0.6786556f),
+            // new Quaternion(0.4123681f, -0.5375473f, 0.494651f, -0.5443492f),
+            // new Quaternion(0.509445f, 0.5849369f, -0.4539117f, -0.4384963f),
+            // new Quaternion(0.5188917f, -0.006976227f, -0.004126042f, -0.8548017f),
+            // new Quaternion(0.8167634f, 0.0747829f, -0.03443614f, -0.5710686f),
+            // new Quaternion(0.6491414f, 0.2352062f, 0.2241392f, -0.6877902f),
+            // new Quaternion(0.6518105f, -0.3496563f, -0.4103235f, -0.5334024f)
+
+            // avec les bras en manipulation (vers le centre)
+            // new Quaternion(-0.733967f, 0.001562502f, -0.03871955f, 0.6780788f),
+            // new Quaternion(-0.1353134f, 0.269623f, -0.6390435f, 0.7075431f),
+            // new Quaternion(-0.52517f, -0.524559f, 0.5125754f, 0.4316261f),
+            // new Quaternion(-0.4319915f, 0.01383755f, -0.06989686f, 0.8990587f),
+            // new Quaternion(-0.8277104f, -0.02025749f, -0.04587379f, 0.5589104f),
+            // new Quaternion(-0.5284399f, -0.356739f, -0.4259247f, 0.6419322f),
+            // new Quaternion(-0.6661459f, 0.2963598f, 0.3415214f, 0.5931137f)
+
+            // sans la translation initiale avec bras en manipulation
+            // new Quaternion(0.7200386f, 0.001945139f, 0.007194162f, -0.6938941f),
+            // new Quaternion(0.1892721f, -0.3952768f, 0.6013614f, -0.6680547f),
+            // new Quaternion(0.5539141f, 0.3362891f, -0.622225f, -0.4392323f),
+            // new Quaternion(0.3826739f, -0.0293789f, 0.01883947f, -0.9232241f),
+            // new Quaternion(0.7974557f, 0.01352278f, 0.04223183f, -0.601746f),
+            // new Quaternion(0.5404658f, 0.2670475f, 0.3463716f, -0.7187553f),
+            // new Quaternion(0.6178856f, -0.3566078f, -0.3912661f, -0.5813426f)
+
+            // new Quaternion(0.7035419f, 0.00237859f, -0.01086387f, -0.7105669f),
+            // new Quaternion(0.4569412f, -0.5365228f, 0.5234174f, -0.4789388f),
+            // new Quaternion(0.4668782f, 0.4594523f, -0.5760691f, -0.4889508f),
+            // new Quaternion(0.4070962f, -0.06596193f, 0.008979646f, -0.9109563f),
+            // new Quaternion(0.8455631f, -0.0146188f, -0.05328752f, -0.5310086f),
+            // new Quaternion(0.607029f, 0.2573243f, 0.2729943f, -0.7005529f),
+            // new Quaternion(0.6617436f, -0.3689488f, -0.3730824f, -0.5355201f)
+
+            //new Quaternion(0.7124369f, -0.008194365f, -0.01602869f, -0.7015054f),
+            // new Quaternion(0.3607748f, 0.5844909f, -0.5274996f, -0.4999564f),
+            // new Quaternion(0.4488821f, -0.5250984f, 0.541166f, -0.4794956f),
+            // new Quaternion(0.5578061f, 0.03717021f, 0.001883716f, -0.8291365f),
+            // new Quaternion(0.7947264f, 0.027002f, 0.03841751f, -0.605149f),
+            // new Quaternion(0.5677758f, -0.3151843f, -0.2760258f, -0.7085899f),
+            // new Quaternion(0.6178392f, 0.2879293f, 0.4050178f, -0.6093704f)
+
+            //avec la nouvelle transfo
+             new Quaternion(-0.7255567f, -0.01298403f, -0.05923351f, 0.6854853f),
+            new Quaternion(-0.3958733f, 0.5345705f, -0.5357223f, 0.5201157f),
+            new Quaternion(-0.5435364f, -0.5220206f, 0.5024199f, 0.423836f),
+            new Quaternion(-0.8828944f, -0.06969474f, -0.05926104f, 0.4605739f),
+            new Quaternion(-0.4835635f, -0.06222418f, -0.04293682f, 0.8720384f),
+            new Quaternion(-0.4804487f, -0.05482046f, -0.01646214f, 0.875153f),
+            new Quaternion(-0.6646084f, -0.2905225f, -0.3577821f, 0.5881193f)
+
+                
         };
         public List<Quaternion> leftTargetQuaternions = new List<Quaternion>
         {
-            new Quaternion(0.7247367f, -0.0355015f, -0.03408778f, -0.6872661f),
-            new Quaternion(0.4929802f, 0.4544906f, -0.561203f, -0.4852425f),
-            new Quaternion(0.5609733f, -0.4850902f, 0.4983143f, -0.4490873f),
-            new Quaternion(0.4884147f, -0.04510013f, 0.01170628f, -0.8713669f),
-            new Quaternion(0.9148228f, 0.004516321f, -0.007648213f, -0.403758f),
-            new Quaternion(0.7160004f, -0.2306543f, -0.2546362f, -0.6077029f),
-            new Quaternion(0.6270378f, 0.3168887f, 0.3886147f, -0.5961409f)
+            // avec les bras bien axés selon le torse
+            // new Quaternion(-0.7203441f, 0.03399835f, -0.005024872f, 0.6927649f),
+            // new Quaternion(-0.4838696f, -0.5394279f, 0.4340175f, 0.5352727f),
+            // new Quaternion(-0.4509256f, 0.5427567f, -0.473059f, 0.5275382f),
+            // new Quaternion(-0.4702284f, -0.03697109f, -0.02264086f, 0.8814794f),
+            // new Quaternion(-0.7880319f, 0.07103119f, -0.0172527f, 0.6112795f),
+            // new Quaternion(-0.6622814f, 0.2737709f, 0.2503947f, 0.6509497f),
+            // new Quaternion(-0.775171f, -0.06023739f, -0.1252128f, 0.6162818f)
+
+            // avec les bras en manipulation (vers le centre)
+            // new Quaternion(0.7092143f, -0.02600733f, 0.009396867f, -0.7044505f),
+            // new Quaternion(0.1157549f, 0.2098556f, -0.6401092f, -0.7299464f),
+            // new Quaternion(0.4695066f, -0.493953f, 0.5385018f, -0.4955704f),
+            // new Quaternion(0.3384593f, 0.01320817f, 0.05411278f, -0.9393311f),
+            // new Quaternion(0.8484932f, -0.06607866f, 0.03255066f, -0.524055f),
+            // new Quaternion(0.5566997f, -0.3870198f, -0.3827864f, -0.6275157f),
+            // new Quaternion(0.5646459f, 0.3065913f, 0.4434907f, -0.6248944f)
+
+            // sans la translation initiale avec bras en manipulation
+            // new Quaternion(0.7107952f, -0.0223146f, -0.01824737f, -0.7028083f),
+            // new Quaternion(0.2514088f, 0.3065544f, -0.6233323f, -0.6739992f),
+            // new Quaternion(0.472937f, -0.5334244f, 0.5401126f, -0.4472893f),
+            // new Quaternion(0.4025533f, 0.02738633f, -0.005768039f, -0.9149686f),
+            // new Quaternion(0.787545f, -0.04789896f, -0.00476822f, -0.6143745f),
+            // new Quaternion(0.5785097f, -0.3282643f, -0.3510408f, -0.6590445f),
+            // new Quaternion(0.6363655f, 0.1495565f, 0.3091016f, -0.6907446f)
+
+            // new Quaternion(-0.7134706f, 0.03353291f, 0.0868822f, 0.6944688f),
+            // new Quaternion(-0.4406907f, -0.4731545f, 0.4475748f, 0.6177326f),
+            // new Quaternion(-0.5528527f, 0.5070614f, -0.4861065f, 0.4482669f),
+            // new Quaternion(-0.4674285f, 0.1121391f, 0.03723811f, 0.8760987f),
+            // new Quaternion(-0.8303028f, 0.05414607f, 0.02070714f, 0.5542896f),
+            // new Quaternion(-0.5477383f, 0.3547438f, 0.3736976f, 0.6591583f),
+            // new Quaternion(-0.7251863f, -0.107534f, -0.1053768f, 0.6718907f)
+
+            //new Quaternion(-0.7194409f, 0.001554064f, -0.03588923f, 0.6936241f),
+            // new Quaternion(-0.276718f, 0.5592638f, -0.6697316f, 0.4026301f),
+            // new Quaternion(-0.5469989f, -0.5289803f, 0.5015224f, 0.4116402f),
+            // new Quaternion(-0.545078f, -0.04925552f, -0.04966375f, 0.8354625f),
+            // new Quaternion(-0.847944f, -0.04641689f, -0.07273667f, 0.5230163f),
+            // new Quaternion(-0.517005f, -0.3960971f, -0.3785332f, 0.6576669f),
+            // new Quaternion(-0.632797f, 0.3413086f, 0.414336f, 0.5580344f)
+
+            //avec la nouvelle transfo
+            new Quaternion(0.7378079f, -0.0204621f, -0.03755364f, -0.6736546f),
+            new Quaternion(0.4374879f, 0.4771764f, -0.5734872f, -0.5020154f),
+            new Quaternion(0.5206729f, -0.4900601f, 0.4992528f, -0.4893745f),
+            new Quaternion(0.8468782f, -0.01118093f, 0.06245401f, -0.5279886f),
+            new Quaternion(0.4728747f, -0.01893464f, 0.01083151f, -0.8808596f),
+            new Quaternion(0.4780315f, 0.008404803f, 0.03032118f, -0.877779f),
+            new Quaternion(0.6593991f, -0.2977514f, -0.2526426f, -0.642424f),
         };
 
         public List<Quaternion> rightCalibrationQuaternions = new List<Quaternion>();
@@ -117,11 +206,13 @@ namespace TeleopReachy
 
             if (nbPosition == 7)
             {
-                SavePoseData();
+                
                 // GetRescalingParameters();
                 // GetFakeRescalingParameters(); // à enlever si on garde la calibration
                 rightCalibrationQuaternion = AverageQuaternions(rightCalibrationQuaternions);
                 leftCalibrationQuaternion = AverageQuaternions(leftCalibrationQuaternions);
+                capturedData.Add($"CalibQuat, {leftCalibrationQuaternion.x},{leftCalibrationQuaternion.y},{leftCalibrationQuaternion.z},{leftCalibrationQuaternion.w},{rightCalibrationQuaternion.x},{rightCalibrationQuaternion.y},{rightCalibrationQuaternion.z},{rightCalibrationQuaternion.w}");
+                SavePoseData(); 
                 event_WristPoseCaptured.Invoke();
                 nbPosition ++;
                 capturedData.Clear();
@@ -147,6 +238,8 @@ namespace TeleopReachy
             nbPosition++;
             buttonX = false;
             timer = 0f;
+            //if (nbPosition<8 && nbPosition>1) GetCalibrationQuaternion(leftTargetQuaternions[nbPosition - 2], rightTargetQuaternions[nbPosition - 2], leftHandRotation, rightHandRotation);
+
             GetCalibrationQuaternion(leftTargetQuaternions[nbPosition - 1], rightTargetQuaternions[nbPosition - 1], leftHandRotation, rightHandRotation);
             Debug.Log("left quat =" + leftCalibrationQuaternions[nbPosition - 1].eulerAngles + "right quat =" + rightCalibrationQuaternions[nbPosition - 1].eulerAngles );
             switch (nbPosition)
@@ -159,9 +252,9 @@ namespace TeleopReachy
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     break;
                 case 2:
-                    Quaternion localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    Quaternion localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                    Quaternion localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    Quaternion localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.z = rightHandEulerAngles.z;
                     leftMinAngles.z = leftHandEulerAngles.z;
@@ -169,9 +262,9 @@ namespace TeleopReachy
                     Debug.Log("Position 2");
                     break;
                 case 3:
-                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.z = rightHandEulerAngles.z;
                     leftMaxAngles.z = leftHandEulerAngles.z;
@@ -179,9 +272,9 @@ namespace TeleopReachy
                     Debug.Log("Position 3");
                     break;
                 case 4:
-                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.x = rightHandEulerAngles.x;
                     leftMinAngles.x = leftHandEulerAngles.x;
@@ -189,9 +282,9 @@ namespace TeleopReachy
                     Debug.Log("Position 4");
                     break;
                 case 5:
-                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.x = rightHandEulerAngles.x;
                     leftMaxAngles.x = leftHandEulerAngles.x;
@@ -199,9 +292,9 @@ namespace TeleopReachy
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     break;
                 case 6:
-                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMaxAngles.y = rightHandEulerAngles.y;
                     leftMinAngles.y = leftHandEulerAngles.y;
@@ -209,9 +302,9 @@ namespace TeleopReachy
                     Debug.Log("Position 6");
                     break;
                 case 7:
-                     localLeftHandRotation = leftHandRotation *  UnityEngine.Quaternion.Inverse(leftNeutralOrientation);
+                    localLeftHandRotation = UnityEngine.Quaternion.Inverse(leftNeutralOrientation) * leftHandRotation ;
                     Debug.Log("localLeftHandRotation ="+ localLeftHandRotation.eulerAngles);
-                     localRightHandRotation = rightHandRotation *  UnityEngine.Quaternion.Inverse(rightNeutralOrientation);
+                    localRightHandRotation = UnityEngine.Quaternion.Inverse(rightNeutralOrientation) *  rightHandRotation;
                     Debug.Log("localRightHandRotation ="+ localRightHandRotation.eulerAngles);
                     rightMinAngles.y = rightHandEulerAngles.y;
                     leftMaxAngles.y = leftHandEulerAngles.y;
@@ -229,7 +322,6 @@ namespace TeleopReachy
             string path = "C:/Users/robot/Dev/WristCalibrationData_userinitialtransformation.csv";
             string dataToAppend = string.Join("\n", capturedData) + "\n";
 
-            // Utilisation d'un bloc using pour garantir que le StreamWriter est correctement fermé
             using (StreamWriter writer = new StreamWriter(path, true))
             {
                 writer.Write(dataToAppend);
@@ -375,6 +467,7 @@ namespace TeleopReachy
                 return Quaternion.identity;
 
             Quaternion average = quaternions[0].normalized;
+            List<float> weights = new List<float> {1.0f, 3.0f,3.0f,1.0f,1.0f,1.0f,1.0f};
             float learningRate = 1.0f;
             const float threshold = 0.0001f;
             bool done = false;
@@ -384,18 +477,16 @@ namespace TeleopReachy
                 Quaternion incrementalAvg = Quaternion.identity;
                 float totalWeight = 0.0f;
 
-                foreach (Quaternion q in quaternions)
+                for (int i = 0; i < quaternions.Count; i++)
                 {
-                    Quaternion normalizedQ = q.normalized;
-                    if (Quaternion.Dot(average, normalizedQ) < 0)
-                    {
-                        normalizedQ = new Quaternion(-normalizedQ.x, -normalizedQ.y, -normalizedQ.z, -normalizedQ.w);
-                    }
+                    Quaternion q = quaternions[i].normalized;
+                    if (Quaternion.Dot(average, q) < 0)
+                        q = new Quaternion(-q.x, -q.y, -q.z, -q.w);
 
-                    float weight = Quaternion.Angle(average, normalizedQ);
-                    incrementalAvg = Quaternion.Slerp(incrementalAvg, normalizedQ, weight / (totalWeight + weight));
+                    float weight = Quaternion.Angle(average, q) * weights[i];
+                    incrementalAvg = Quaternion.Slerp(incrementalAvg, q, weight / (totalWeight + weight));
                     totalWeight += weight;
-                }
+                } 
 
                 Quaternion newAverage = Quaternion.Slerp(average, incrementalAvg, learningRate);
                 if (Quaternion.Angle(average, newAverage) < threshold)
