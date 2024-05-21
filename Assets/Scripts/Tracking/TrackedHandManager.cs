@@ -9,7 +9,7 @@ namespace TeleopReachy
         void Start()
         {
             ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation_Old);
-            //CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
+            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
             CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
 
 
@@ -25,15 +25,15 @@ namespace TeleopReachy
 
         public void DefineTrackedHandOrientation_New()
         {
-            // Vector3 targetEulerAngles = new Vector3(275, 190, 170);
-            // UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
-            // targetRobotRotation = Quaternion.Euler(targetEulerAngles);
-            // Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
-            // Quaternion leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
-            // Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
-            // Debug.Log("leftRotationDifference: " + leftRotationDifference.eulerAngles);
-            // if (side_id == ArmSide.LEFT) transform.localRotation = leftRotationDifference;
-            // else transform.localRotation = rightRotationDifference;
+            Vector3 targetEulerAngles = new Vector3(275, 190, 170);
+            UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
+            targetRobotRotation = Quaternion.Euler(targetEulerAngles);
+            Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
+            Quaternion leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
+            Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
+            Debug.Log("leftRotationDifference: " + leftRotationDifference.eulerAngles);
+            if (side_id == ArmSide.LEFT) transform.localRotation = leftRotationDifference;
+            else transform.localRotation = rightRotationDifference;
 
         }
 
@@ -44,10 +44,12 @@ namespace TeleopReachy
             {
                 case ControllersManager.SupportedDevices.Oculus:
                     {
-                        transform.localPosition = new Vector3(0, -0.03f, 0);
+                        //transform.localPosition = new Vector3(0, -0.03f, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
-                        else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
+                        // if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
+                        // else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-95, -35, 50);
+                        else targetRotation.eulerAngles = new Vector3(-95, 35, -50);
                         transform.localRotation = targetRotation;
                         break;
                     }

@@ -239,14 +239,9 @@ namespace TeleopReachy
             actualRotation = actualRotation.normalized;
 
             if (hand == rightHand) 
-            {
-                rescaledRotation = CaptureWristPose.Instance.rightCalibrationQuaternion * actualRotation;
-                
-            }
-            else {
-                rescaledRotation = CaptureWristPose.Instance.leftCalibrationQuaternion * actualRotation;
-            }
-            ;
+            if (hand == rightHand) rescaledRotation = CaptureWristPose.Instance.rightCalibrationQuaternion * actualRotation;
+            else rescaledRotation = CaptureWristPose.Instance.leftCalibrationQuaternion * actualRotation;
+        
             return rescaledRotation.normalized;
         }
 
