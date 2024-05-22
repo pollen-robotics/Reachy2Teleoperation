@@ -129,10 +129,10 @@ namespace TeleopReachy
 
             // Rotation
             //ajout calib
-            if (rescaleTransform == 1 || rescaleTransform == 2) 
+            if (rescaleTransform == 1 ) 
             {
                 UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
-                UnityEngine.Quaternion rescaledRotation = RescalefromCalibQuaternion(actualRotation, hand);
+                UnityEngine.Quaternion rescaledRotation = RescalefromInterpolation(actualRotation, hand);
                 
                 Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
                 // UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
@@ -142,6 +142,15 @@ namespace TeleopReachy
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
             } 
+            else if (rescaleTransform == 2) 
+            {
+                UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
+                UnityEngine.Quaternion rescaledRotation = RescalefromCalibQuaternion(actualRotation, hand);
+                
+                Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
+                hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
+
+            }
 
             // matrice de passage
             UnityEngine.Matrix4x4 mP = new UnityEngine.Matrix4x4(new Vector4(0, -1, 0, 0),
@@ -238,7 +247,6 @@ namespace TeleopReachy
             Quaternion rescaledRotation = Quaternion.identity;
             actualRotation = actualRotation.normalized;
 
-            if (hand == rightHand) 
             if (hand == rightHand) rescaledRotation = CaptureWristPose.Instance.rightCalibrationQuaternion * actualRotation;
             else rescaledRotation = CaptureWristPose.Instance.leftCalibrationQuaternion * actualRotation;
         
@@ -246,6 +254,51 @@ namespace TeleopReachy
         }
 
 
+        public Quaternion RescalefromInterpolation (Quaternion actualRotation, HandController hand)
+        {
+            List<Quaternion> transformationQuaternions = new List<Quaternion>();
+            if (hand == rightHand) transformationQuaternions = CaptureWristPose.Instance.rightTransformationQuaternions;
+            else  transformationQuaternions = CaptureWristPose.Instance.leftTransformationQuaternions;
+        
+            Quaternion rescaledRotation = Quaternion.identity;
+            (int closestIndex, int secondClosestIndex, float interpolationFactor) = FindClosestIndices(actualRotation, hand);
+            Quaternion interpolRotation = Quaternion.Slerp(transformationQuaternions[closestIndex], transformationQuaternions[secondClosestIndex], interpolationFactor);
+            
+            rescaledRotation = interpolRotation * actualRotation;
+        
+            return rescaledRotation.normalized;
+        }
+
+        public (int,int,float) FindClosestIndices(Quaternion qCurrentUser, HandController hand)
+        {
+            int closestIndex = 0;
+            int secondClosestIndex = 0;
+            float minDistance = float.MaxValue;
+            float maxDistance = float.MaxValue;
+
+            List<Quaternion> userQuaternions = new List<Quaternion>();
+            if (hand == rightHand) userQuaternions = CaptureWristPose.Instance.rightUserQuaternions;
+            else userQuaternions = CaptureWristPose.Instance.leftUserQuaternions;
+
+            for (int i = 0; i < userQuaternions.Count; i++)
+            {
+                float distance = Quaternion.Angle(qCurrentUser, userQuaternions[i]);
+                if (distance < minDistance)
+                {
+                    maxDistance = minDistance;
+                    secondClosestIndex = closestIndex;
+                    minDistance = distance;
+                    closestIndex = i;
+                }
+                else if (distance < maxDistance)
+                {
+                    maxDistance = distance;
+                    secondClosestIndex = i;
+                }
+            
+            }
+            return (closestIndex, secondClosestIndex, minDistance / (minDistance + maxDistance));
+        }
 
         private void AdaptativeCloseHand(HandController hand)
         {
