@@ -30,6 +30,9 @@ namespace TeleopReachy
         public Vector3 rightMaxAngles = new Vector3(100f, 100f, 100f);
         public Vector3 leftMinAngles = new Vector3(-100f, -100f, -100f);
         public Vector3 leftMaxAngles = new Vector3(100f, 100f, 100f);
+
+        public List<Quaternion> rightUserQuaternions = new List<Quaternion>();
+        public List<Quaternion> leftUserQuaternions = new List<Quaternion>();
         public List<Quaternion> rightTargetQuaternions = new List<Quaternion>
         {
             // avec les bras bien axés selon le torse
@@ -141,9 +144,9 @@ namespace TeleopReachy
             new Quaternion(0.6593991f, -0.2977514f, -0.2526426f, -0.642424f),
         };
 
-        public List<Quaternion> rightCalibrationQuaternions = new List<Quaternion>();
+        public List<Quaternion> rightTransformationQuaternions = new List<Quaternion>();
     
-        public List<Quaternion> leftCalibrationQuaternions = new List<Quaternion>();
+        public List<Quaternion> leftTransformationQuaternions = new List<Quaternion>();
         
         public Quaternion rightCalibrationQuaternion = new Quaternion();
         public Quaternion leftCalibrationQuaternion = new Quaternion();
@@ -209,8 +212,8 @@ namespace TeleopReachy
                 
                 // GetRescalingParameters();
                 // GetFakeRescalingParameters(); // à enlever si on garde la calibration
-                rightCalibrationQuaternion = AverageQuaternions(rightCalibrationQuaternions);
-                leftCalibrationQuaternion = AverageQuaternions(leftCalibrationQuaternions);
+                rightCalibrationQuaternion = AverageQuaternions(rightTransformationQuaternions);
+                leftCalibrationQuaternion = AverageQuaternions(leftTransformationQuaternions);
                 capturedData.Add($"CalibQuat, {leftCalibrationQuaternion.x},{leftCalibrationQuaternion.y},{leftCalibrationQuaternion.z},{leftCalibrationQuaternion.w},{rightCalibrationQuaternion.x},{rightCalibrationQuaternion.y},{rightCalibrationQuaternion.z},{rightCalibrationQuaternion.w}");
                 SavePoseData(); 
                 event_WristPoseCaptured.Invoke();
@@ -238,10 +241,9 @@ namespace TeleopReachy
             nbPosition++;
             buttonX = false;
             timer = 0f;
-            //if (nbPosition<8 && nbPosition>1) GetCalibrationQuaternion(leftTargetQuaternions[nbPosition - 2], rightTargetQuaternions[nbPosition - 2], leftHandRotation, rightHandRotation);
+            //if (nbPosition<8 && nbPosition>1) GetTransformationQuaternion(leftTargetQuaternions[nbPosition - 2], rightTargetQuaternions[nbPosition - 2], leftHandRotation, rightHandRotation);
 
-            GetCalibrationQuaternion(leftTargetQuaternions[nbPosition - 1], rightTargetQuaternions[nbPosition - 1], leftHandRotation, rightHandRotation);
-            Debug.Log("left quat =" + leftCalibrationQuaternions[nbPosition - 1].eulerAngles + "right quat =" + rightCalibrationQuaternions[nbPosition - 1].eulerAngles );
+            
             switch (nbPosition)
             {
                 case 1:
@@ -249,6 +251,12 @@ namespace TeleopReachy
                     leftNeutralOrientation = leftHandRotation;
                     event_NeutralPoseCaptured.Invoke();
                     Debug.Log("Position 1");
+                    //pour que ça recalcule après l'ajout de la pose neutre 
+                    leftHandRotation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
+                    rightHandRotation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
+                    leftHandEulerAngles = leftHandRotation.eulerAngles;
+                    rightHandEulerAngles = rightHandRotation.eulerAngles;
+
                     capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
                     break;
                 case 2:
@@ -313,6 +321,8 @@ namespace TeleopReachy
                     Debug.Log("rightminangles ="+ rightMinAngles+ "rightmaxangles ="+ rightMaxAngles+ "leftminangles ="+ leftMinAngles+ "leftmaxangles ="+ leftMaxAngles);
                     break;
             }
+
+            GetTransformationQuaternion(leftTargetQuaternions[nbPosition - 1], rightTargetQuaternions[nbPosition - 1], leftHandRotation, rightHandRotation);
         }
 
 
@@ -451,13 +461,13 @@ namespace TeleopReachy
             return (x0, x360);
         }
 
-        public void GetCalibrationQuaternion (Quaternion leftTargetQuat, Quaternion rightTargetQuat, Quaternion leftUserQuat, Quaternion rightUserQuat)
+        public void GetTransformationQuaternion (Quaternion leftTargetQuat, Quaternion rightTargetQuat, Quaternion leftUserQuat, Quaternion rightUserQuat)
         {
 
             Quaternion leftRotationDifference = leftTargetQuat * Quaternion.Inverse(leftUserQuat);
             Quaternion rightRotationDifference = rightTargetQuat * Quaternion.Inverse(rightUserQuat);
-            rightCalibrationQuaternions.Add(rightRotationDifference);
-            leftCalibrationQuaternions.Add(leftRotationDifference);
+            rightTransformationQuaternions.Add(rightRotationDifference);
+            leftTransformationQuaternions.Add(leftRotationDifference);
             
         }
 

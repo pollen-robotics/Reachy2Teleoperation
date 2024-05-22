@@ -9,7 +9,7 @@ namespace TeleopReachy
         void Start()
         {
             ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation_Old);
-            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
+            //CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
             CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
 
 
