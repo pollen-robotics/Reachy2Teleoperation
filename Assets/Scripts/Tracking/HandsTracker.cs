@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 namespace TeleopReachy
@@ -71,6 +72,7 @@ namespace TeleopReachy
         public int rescaleTransform = 0 ; //à changer en false si test concluant et qu'on garde la calib 
 
         public ControllersManager controllers;
+        private Quaternion neutralPose = Quaternion.Euler(270,180,180);
 
         void Awake()
         {
@@ -106,8 +108,13 @@ namespace TeleopReachy
 
         void Update()
         {
+
+            // Debug.Log("right rotation / pose neutre : " + (Quaternion.Inverse(neutralPose) * UnityEngine.Quaternion.Inverse(transform.parent.rotation)* rightHand.GetVRHand().rotation).eulerAngles);
+            // Debug.Log("left rotation / pose neutre : " + (Quaternion.Inverse(neutralPose) * UnityEngine.Quaternion.Inverse(transform.parent.rotation)* leftHand.GetVRHand().rotation).eulerAngles);
             GetTransforms(rightHand, rescaleTransform);
             GetTransforms(leftHand, rescaleTransform);
+
+
 
             AdaptativeCloseHand(rightHand);
             AdaptativeCloseHand(leftHand);
@@ -132,25 +139,17 @@ namespace TeleopReachy
             if (rescaleTransform == 1 ) 
             {
                 UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
-                UnityEngine.Quaternion rescaledRotation = RescalefromInterpolation(actualRotation, hand);
-                
-                Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
-                // UnityEngine.Quaternion rescaledRotation = RescaleRotation(actualRotation, hand, rescaleTransform);
+                UnityEngine.Quaternion rescaledRotation = RescalefromNeutralPose(actualRotation, hand, rescaleTransform);
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
+                Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
+
+                
 
             } else if (rescaleTransform == 0){
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
             } 
-            else if (rescaleTransform == 2) 
-            {
-                UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
-                UnityEngine.Quaternion rescaledRotation = RescalefromCalibQuaternion(actualRotation, hand);
-                
-                Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
-                hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
 
-            }
 
             // matrice de passage
             UnityEngine.Matrix4x4 mP = new UnityEngine.Matrix4x4(new Vector4(0, -1, 0, 0),
@@ -170,135 +169,53 @@ namespace TeleopReachy
             };
         }
 
-        //ajout calib
-        private Quaternion RescaleRotation(Quaternion actualRotation, HandController hand, int rescaleTransform) //Vector3 neutralpose, Vector3 minAngles, Vector3 maxAngles)
-        {
+    
 
-            float new_x = 0, new_y = 0, new_z = 0;
-            List<List<float>> limitValues = new List<List<float>>();
-            List<List<LinearParameters>> paramList = new List<List<LinearParameters>>();
-            Vector3 actualEulerAngles = actualRotation.eulerAngles;
-            
-            if (hand == rightHand) 
+        public Quaternion RescalefromNeutralPose(Quaternion actualRotation, HandController hand, int rescaleTransform)
+        {
+            Quaternion orientationFromNeutralPose = UnityEngine.Quaternion.Inverse(neutralPose)*actualRotation;
+            Vector3 eulerFromNeutralPose = orientationFromNeutralPose.eulerAngles;
+            float actual_x = NormalizeAngle(eulerFromNeutralPose.x);
+            float actual_y = NormalizeAngle(eulerFromNeutralPose.y);
+            float actual_z = NormalizeAngle(eulerFromNeutralPose.z);
+            List<LinearParameters> paramList = new List<LinearParameters>();
+
+            if (hand == rightHand)
             {
-                if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.rightLinearParameters;
-                else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeRightLinearParameters; //à retirer si on garde la calib
-                limitValues = CaptureWristPose.Instance.rightLimitValues;
-
+                if (rescaleTransform ==1) paramList = CaptureWristPose.Instance.rightLinearParameters;
+                else if (rescaleTransform ==2) paramList = CaptureWristPose.Instance.fakeRightLinearParameters; //à retirer si on garde la calib
             }
-            else {
-                if (rescaleTransform == 1) paramList = CaptureWristPose.Instance.leftLinearParameters;
-                else if (rescaleTransform ==2 ) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
-                limitValues = CaptureWristPose.Instance.leftLimitValues;
-
-            }
-
-
-            // new_x = actualEulerAngles.x;
-            // new_y = actualEulerAngles.y;
-            // new_z = actualEulerAngles.z;
-            new_x = LinearRescale(actualEulerAngles.x, paramList[0], limitValues[0], 'x');
-            new_y = LinearRescale(actualEulerAngles.y, paramList[1], limitValues[1],  'y');
-            new_z = LinearRescale(actualEulerAngles.z, paramList[2], limitValues[2], 'z');
-
-            // if (actualEulerAngles.x <= neutralPose.x)
-            //     new_x = LinearRescale(actualEulerAngles.x, paramList[0]);
-            // else new_x = LinearRescale(actualEulerAngles.x, paramList[3]);
-
-            // if (actualEulerAngles.y <= neutralPose.y)
-            //     new_y = LinearRescale(actualEulerAngles.y, paramList[1]);
-            // else new_y = LinearRescale(actualEulerAngles.y, paramList[4]);
-
-            // if (actualEulerAngles.z <= neutralPose.z)
-            //     new_z = LinearRescale(actualEulerAngles.z, paramList[2]);
-            // else new_z = LinearRescale(actualEulerAngles.z, paramList[5]);
-
-            Vector3 rescaledEulerAngles = new Vector3 (new_x, new_y, new_z);
-            Quaternion rescaledRotation = Quaternion.Euler(rescaledEulerAngles);
-            
-            return rescaledRotation;
-        }
-
-        private float LinearRescale (float originalValue, List<LinearParameters> param, List<float> limitValues, char mode)
-        {
-            float newValue = originalValue;
-            if (mode == 'x' && originalValue < 0) originalValue = originalValue + 360;
-            else if ((mode == 'y' || mode == 'z') && originalValue > limitValues[3]) originalValue = originalValue - 360;
-            else if ((mode == 'y' || mode == 'z') && originalValue < limitValues[0]) originalValue = originalValue + 360;
-
-            if (originalValue < limitValues[1])
+            else
             {
-                newValue = param[1].A * originalValue + param[1].b;
-            } else if (originalValue > limitValues[2]) {
-                newValue = param[2].A * originalValue + param[2].b;
-            } else {
-                newValue = param[0].A * originalValue + param[0].b;
+                if (rescaleTransform ==1) paramList = CaptureWristPose.Instance.leftLinearParameters;
+                else if (rescaleTransform ==2) paramList = CaptureWristPose.Instance.fakeLeftLinearParameters; //à retirer si on garde la calib
             }
+            float new_x = paramList[0].A * actual_x + paramList[0].b;
+            float new_y = paramList[1].A * actual_y + paramList[1].b;
+            float new_z = paramList[2].A * actual_z + paramList[2].b;
 
-            if ((mode == 'y' || mode == 'z') && newValue < 0) newValue = newValue + 360;
-            if (newValue > 360 || newValue < 0 ) newValue = 0;
+           
+            Vector3 newEulerAngles = new Vector3(new_x, new_y, new_z);
+            Debug.Log("old x = " + actual_x + " new y = " + new_x + " old y = " + actual_y + " new y = " + new_y + " old z = " + actual_z + " new z = " + new_z);
+            //on remet la rotation par rapport au usertracker
+            Quaternion newQuaternion = neutralPose* Quaternion.Euler(newEulerAngles);
 
-            Debug.Log(mode + " -> originalValue: " + originalValue + " newValue: " + newValue);
-            return newValue;
+            return newQuaternion;
         }
 
-        public Quaternion RescalefromCalibQuaternion (Quaternion actualRotation, HandController hand)
+        private static float NormalizeAngle(float angle)
         {
-            Quaternion rescaledRotation = Quaternion.identity;
-            actualRotation = actualRotation.normalized;
-
-            if (hand == rightHand) rescaledRotation = CaptureWristPose.Instance.rightCalibrationQuaternion * actualRotation;
-            else rescaledRotation = CaptureWristPose.Instance.leftCalibrationQuaternion * actualRotation;
-        
-            return rescaledRotation.normalized;
-        }
-
-
-        public Quaternion RescalefromInterpolation (Quaternion actualRotation, HandController hand)
-        {
-            List<Quaternion> transformationQuaternions = new List<Quaternion>();
-            if (hand == rightHand) transformationQuaternions = CaptureWristPose.Instance.rightTransformationQuaternions;
-            else  transformationQuaternions = CaptureWristPose.Instance.leftTransformationQuaternions;
-        
-            Quaternion rescaledRotation = Quaternion.identity;
-            (int closestIndex, int secondClosestIndex, float interpolationFactor) = FindClosestIndices(actualRotation, hand);
-            Quaternion interpolRotation = Quaternion.Slerp(transformationQuaternions[closestIndex], transformationQuaternions[secondClosestIndex], interpolationFactor);
-            
-            rescaledRotation = interpolRotation * actualRotation;
-        
-            return rescaledRotation.normalized;
-        }
-
-        public (int,int,float) FindClosestIndices(Quaternion qCurrentUser, HandController hand)
-        {
-            int closestIndex = 0;
-            int secondClosestIndex = 0;
-            float minDistance = float.MaxValue;
-            float maxDistance = float.MaxValue;
-
-            List<Quaternion> userQuaternions = new List<Quaternion>();
-            if (hand == rightHand) userQuaternions = CaptureWristPose.Instance.rightUserQuaternions;
-            else userQuaternions = CaptureWristPose.Instance.leftUserQuaternions;
-
-            for (int i = 0; i < userQuaternions.Count; i++)
+            if (angle < -180)
             {
-                float distance = Quaternion.Angle(qCurrentUser, userQuaternions[i]);
-                if (distance < minDistance)
-                {
-                    maxDistance = minDistance;
-                    secondClosestIndex = closestIndex;
-                    minDistance = distance;
-                    closestIndex = i;
-                }
-                else if (distance < maxDistance)
-                {
-                    maxDistance = distance;
-                    secondClosestIndex = i;
-                }
-            
+                angle += 360;
             }
-            return (closestIndex, secondClosestIndex, minDistance / (minDistance + maxDistance));
+            else if (angle > 180)
+            {
+                angle -= 360;
+            }
+            return angle;
         }
+
 
         private void AdaptativeCloseHand(HandController hand)
         {
