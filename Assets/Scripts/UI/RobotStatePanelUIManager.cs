@@ -30,6 +30,7 @@ namespace TeleopReachy
 
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
+            dataController.event_OnAuditUpdate.AddListener(UpdateStatus);
 
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
@@ -71,6 +72,11 @@ namespace TeleopReachy
                 }
             }
             needUpdatePanel = true;
+        }
+
+        private void UpdateStatus(Dictionary<string, string> RobotStatus)
+        {
+            
         }
 
         private void CheckTemperatureInfo()

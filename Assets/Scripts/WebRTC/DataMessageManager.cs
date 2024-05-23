@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,16 +26,12 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<Dictionary<string, string>> event_OnAuditUpdate;
+
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
         private WebRTCData webRTCDataController;
-
-        //private HandCommand lastRightHandCommand;
-        //private HandCommand lastLeftHandCommand;
-        //private ArmCommand lastRightArmCommand;
-        //private ArmCommand lastLeftArmCommand;
-        //private MobileBaseCommand lastMobileBaseCommand;
 
         private AnyCommands commands = new AnyCommands { };
 
@@ -132,6 +129,68 @@ namespace TeleopReachy
             }
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
+        }
+
+        public void StreamReachyStatus(ReachyStatus reachyStatus)
+        {
+            var auditDescriptor = ReachyStatus.Descriptor;
+            var armDescriptor = ArmStatus.Descriptor;
+            var headDescriptor = HeadStatus.Descriptor;
+            var handDescriptor = HandStatus.Descriptor;
+
+            Dictionary<string, string> components_status = new Dictionary<string, string>();
+
+            foreach (var partField in auditDescriptor.Fields.InDeclarationOrder())
+            {
+                var partStatus = partField.Accessor.GetValue(reachyStatus) as IMessage;
+                if (partStatus != null)
+                {
+                    if (partStatus is ArmStatus)
+                    {
+                        foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                        {
+                            var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
+                            if (componentStatus != null)  
+                            {
+                                string[] errorDetails = new string[0];
+                                if(componentStatus is Orbita2dStatus status2d)
+                                {
+                                    errorDetails = status2d.Errors.Select(e => e.Details).ToArray();
+                                    
+                                }
+                                if(componentStatus is Orbita3dStatus status3d)
+                                {
+                                    errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
+                                }
+                                string[] side = partField.Name.Split("status");
+                                string[] component = componentField.Name.Split("status");
+                                string component_name = side[0] + component[0];
+                                components_status.Add(component_name, errorDetails[0]);
+                            }
+                        }
+                    }
+                    if (partStatus is HeadStatus)
+                    {
+                        foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                        {
+                            var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
+                            if (componentStatus != null) 
+                            {
+                                if(componentStatus is Orbita3dStatus status3d)
+                                {
+                                    string[] errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
+                                    string[] side = partField.Name.Split("status");
+                                    string[] component = componentField.Name.Split("status");
+                                    string component_name = side[0] + component[0];
+                                    components_status.Add(component_name, errorDetails[0]);
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            event_OnAuditUpdate.Invoke(components_status);
         }
 
         public void SetHandPosition(HandPositionRequest gripperPosition)
