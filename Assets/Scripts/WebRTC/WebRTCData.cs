@@ -10,11 +10,13 @@ namespace TeleopReachy
     {
         private RTCDataChannel _serviceChannel = null;
         private RTCDataChannel _reachyStateChannel = null;
+        private RTCDataChannel _reachyAuditChannel = null;
         private RTCDataChannel _reachyCommandChannel = null;
 
         private Bridge.ConnectionStatus _connectionStatus = null;
 
         private ReachyState _reachyState = null;
+        private ReachyStatus _reachyStatus = null;
 
         private DataMessageManager dataMessageManager;
 
@@ -48,6 +50,10 @@ namespace TeleopReachy
                     {
                         SetupCommandChannel(channel);
                     }
+                    else if (channel.Label.StartsWith("reachy_audit"))
+                    {
+                        SetupAuditChannel(channel);
+                    }
                     else
                     {
                         Debug.LogWarning($"Channel {channel.Label} is unknown");
@@ -62,11 +68,24 @@ namespace TeleopReachy
             _reachyStateChannel.OnMessage = OnDataChannelStateMessage;
         }
 
+        void SetupAuditChannel(RTCDataChannel channel)
+        {
+            _reachyAuditChannel = channel;
+            _reachyAuditChannel.OnMessage = OnDataChannelAuditMessage;
+        }
+
         void OnDataChannelStateMessage(byte[] data)
         {
             _reachyState = ReachyState.Parser.ParseFrom(data);
 
             dataMessageManager.StreamReachyState(_reachyState);
+        }
+
+        void OnDataChannelAuditMessage(byte[] data)
+        {
+            _reachyStatus = ReachyStatus.Parser.ParseFrom(data);
+
+            dataMessageManager.StreamReachyStatus(_reachyStatus);
         }
 
         void SetupCommandChannel(RTCDataChannel channel)
@@ -107,7 +126,8 @@ namespace TeleopReachy
                     Connect = new Connect
                     {
                         ReachyId = _connectionStatus.Reachy.Id,
-                        UpdateFrequency = 50 //FixedUpdate refresh rate is 0.02 sec
+                        UpdateFrequency = 50, //FixedUpdate refresh rate is 0.02 sec
+                        AuditFrequency = 1,
                     }
                 };
                 _serviceChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(req));

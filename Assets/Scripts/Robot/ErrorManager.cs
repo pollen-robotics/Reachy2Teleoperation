@@ -28,6 +28,7 @@ namespace TeleopReachy
         public UnityEvent<float> event_OnErrorLowBattery;
         public UnityEvent<List<string>> event_OnWarningMotorsTemperatures;
         public UnityEvent<List<string>> event_OnErrorMotorsTemperatures;
+        public UnityEvent<Dictionary<string, string>> event_OnStatusError;
 
         public float previousBatteryLevel;
 
@@ -36,6 +37,7 @@ namespace TeleopReachy
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(CheckTemperatures);
             dataController.event_OnBatteryUpdate.AddListener(CheckBatteryLevel);
+            dataController.event_OnAuditUpdate.AddListener(CheckRobotStatus);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
             //pingsQueue = new Queue<float>();
@@ -89,6 +91,21 @@ namespace TeleopReachy
                 else if (previousBatteryLevel < THRESHOLD_WARNING_BATTERY_LEVEL)
                     event_OnWarningLowBattery.Invoke(previousBatteryLevel);
             }
+        }
+
+        public void CheckRobotStatus(Dictionary<string, string> RobotStatus)
+        {
+            bool errorDetected = false;
+            Dictionary<string, string> errors = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> status in RobotStatus)
+            {
+                if (status.Value != "Ok")
+                {
+                    errorDetected = true;
+                    errors.Add(status.Key, status.Value);
+                }
+            }
+            event_OnStatusError.Invoke(errors);
         }
     }
 }
