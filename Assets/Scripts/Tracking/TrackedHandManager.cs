@@ -25,7 +25,9 @@ namespace TeleopReachy
 
         public void DefineTrackedHandOrientation_New()
         {
-            Vector3 targetEulerAngles = new Vector3(275, 190, 170);
+            // Vector3 targetEulerAngles = new Vector3(275, 190, 170);
+            Vector3 targetEulerAngles = new Vector3(270, 180, 180);
+
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
             Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
@@ -46,8 +48,6 @@ namespace TeleopReachy
                     {
                         //transform.localPosition = new Vector3(0, -0.03f, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        // if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
-                        // else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
                         if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-95, -35, 50);
                         else targetRotation.eulerAngles = new Vector3(-95, 35, -50);
                         transform.localRotation = targetRotation;
