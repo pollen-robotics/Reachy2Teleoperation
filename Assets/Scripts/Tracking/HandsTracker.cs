@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace TeleopReachy
@@ -69,23 +70,41 @@ namespace TeleopReachy
     {
         public HandController rightHand;
         public HandController leftHand;
-        public int rescaleTransform = 0 ; //à changer en false si test concluant et qu'on garde la calib 
+        public int rescaleTransform = 0; //à changer en false si test concluant et qu'on garde la calib 
 
         public ControllersManager controllers;
-        private Quaternion neutralPose = Quaternion.Euler(270,180,180);
+        private TrackedHandManager trackedHandManager;
+        private CaptureWristPose captureWristPose;
+        private UnityEngine.Quaternion neutralOrientation;
 
         void Awake()
         {
             rightHand = new HandController("right", controllers.rightHandDevice);
             leftHand = new HandController("left", controllers.leftHandDevice);
+            trackedHandManager = FindObjectOfType<TrackedHandManager>();
+            neutralOrientation = trackedHandManager.neutralOrientation;
+
+            StartCoroutine(WaitForWristCalibration());
+            Debug.Log("[HandsTracker] End of Coroutine");
 
             controllers.event_OnDevicesUpdate.AddListener(UpdateDevices);
-            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
-            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(InitSwitchCalib);
-            
-
+            Debug.Log("[HandsTracker] End of Awake");
 
         }
+
+        private IEnumerator WaitForWristCalibration()
+        {
+            while (captureWristPose == null)
+            {
+                captureWristPose = FindObjectOfType<CaptureWristPose>();
+                yield return new WaitForSeconds(0.1f);
+            }
+            Debug.Log("[HandsTracker] WaitForWristCalibration done");
+            CaptureWristPose.Instance.event_onNewWristCalib.AddListener(() => ChangeTransforms(0));
+            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
+            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(InitSwitchCalib);
+        }
+
 
         void Start()
         {
@@ -109,12 +128,8 @@ namespace TeleopReachy
         void Update()
         {
 
-            // Debug.Log("right rotation / pose neutre : " + (Quaternion.Inverse(neutralPose) * UnityEngine.Quaternion.Inverse(transform.parent.rotation)* rightHand.GetVRHand().rotation).eulerAngles);
-            // Debug.Log("left rotation / pose neutre : " + (Quaternion.Inverse(neutralPose) * UnityEngine.Quaternion.Inverse(transform.parent.rotation)* leftHand.GetVRHand().rotation).eulerAngles);
             GetTransforms(rightHand, rescaleTransform);
             GetTransforms(leftHand, rescaleTransform);
-
-
 
             AdaptativeCloseHand(rightHand);
             AdaptativeCloseHand(leftHand);
@@ -136,14 +151,12 @@ namespace TeleopReachy
 
             // Rotation
             //ajout calib
-            if (rescaleTransform == 1 ) 
+            if (rescaleTransform == 1 || rescaleTransform == 2) 
             {
                 UnityEngine.Quaternion actualRotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
                 UnityEngine.Quaternion rescaledRotation = RescalefromNeutralPose(actualRotation, hand, rescaleTransform);
                 hand.handPose.SetTRS(new Vector3(0, 0, 0), rescaledRotation, new Vector3(1, 1, 1));
                 Debug.Log("initialRotation :" + actualRotation.normalized.eulerAngles + " // rescaledRotation: " + rescaledRotation.eulerAngles);
-
-                
 
             } else if (rescaleTransform == 0){
                 UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * hand.GetVRHand().rotation;
@@ -173,7 +186,7 @@ namespace TeleopReachy
 
         public Quaternion RescalefromNeutralPose(Quaternion actualRotation, HandController hand, int rescaleTransform)
         {
-            Quaternion orientationFromNeutralPose = UnityEngine.Quaternion.Inverse(neutralPose)*actualRotation;
+            Quaternion orientationFromNeutralPose = UnityEngine.Quaternion.Inverse(neutralOrientation)*actualRotation;
             Vector3 eulerFromNeutralPose = orientationFromNeutralPose.eulerAngles;
             float actual_x = NormalizeAngle(eulerFromNeutralPose.x);
             float actual_y = NormalizeAngle(eulerFromNeutralPose.y);
@@ -198,7 +211,7 @@ namespace TeleopReachy
             Vector3 newEulerAngles = new Vector3(new_x, new_y, new_z);
             Debug.Log("old x = " + actual_x + " new y = " + new_x + " old y = " + actual_y + " new y = " + new_y + " old z = " + actual_z + " new z = " + new_z);
             //on remet la rotation par rapport au usertracker
-            Quaternion newQuaternion = neutralPose* Quaternion.Euler(newEulerAngles);
+            Quaternion newQuaternion = neutralOrientation* Quaternion.Euler(newEulerAngles);
 
             return newQuaternion;
         }

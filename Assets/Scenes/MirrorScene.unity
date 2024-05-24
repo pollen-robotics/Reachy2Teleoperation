@@ -5187,6 +5187,9 @@ MonoBehaviour:
   reachyGhost: {fileID: 58990130}
   ghostReachyIndicator: {fileID: 115978097}
   mirror: {fileID: 4575489516557208141}
+  event_OnEnterTransitionRoom:
+    m_PersistentCalls:
+      m_Calls: []
   event_OnReadyForTeleop:
     m_PersistentCalls:
       m_Calls: []
@@ -6725,6 +6728,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986170407}
   m_CullTransparentMesh: 1
+--- !u!1 &1006132444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006132445}
+  - component: {fileID: 1006132446}
+  m_Layer: 0
+  m_Name: CaptureWristPose
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1006132445
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006132444}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.7975054, y: 0.80568457, z: 0.31972122}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1006132446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006132444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e985c0e047a284699ad0cb263ab6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recordInterval: 1
+  rightNeutralOrientation: {x: 0, y: 0, z: 0, w: 0}
+  leftNeutralOrientation: {x: 0, y: 0, z: 0, w: 0}
+  event_onNewWristCalib:
+    m_PersistentCalls:
+      m_Calls: []
+  event_onWristCalib:
+    m_PersistentCalls:
+      m_Calls: []
+  event_NeutralPoseCaptured:
+    m_PersistentCalls:
+      m_Calls: []
+  event_WristPoseCaptured:
+    m_PersistentCalls:
+      m_Calls: []
+  leftUserEulerAngles_neutralframe: []
+  rightUserEulerAngles_neutralframe: []
+  leftTargetEulerAngles_neutralframe:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -80, z: 0}
+  - {x: 0, y: 90, z: 0}
+  - {x: 40, y: 0, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: 0, y: 0, z: 60}
+  - {x: 0, y: 0, z: -45}
+  rightTargetEulerAngles_neutralframe:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: -90, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: -30, y: 0, z: 0}
+  - {x: 0, y: 0, z: -40}
+  - {x: 0, y: 0, z: 50}
+  fakeLeftTargetEulerAngles_neutralframe:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -40, z: 0}
+  - {x: 0, y: 40, z: 0}
+  - {x: 10, y: 0, z: 0}
+  - {x: -10, y: 0, z: 0}
+  - {x: 0, y: 0, z: -30}
+  - {x: 0, y: 0, z: -30}
+  fakeRightTargetEulerAngles_neutralframe:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 40, z: 0}
+  - {x: 0, y: -40, z: 0}
+  - {x: 10, y: 0, z: 0}
+  - {x: -10, y: 0, z: 0}
+  - {x: 0, y: 0, z: -30}
+  - {x: 0, y: 0, z: 30}
+  rightLinearParameters: []
+  leftLinearParameters: []
+  fakeRightLinearParameters: []
+  fakeLeftLinearParameters: []
 --- !u!1 &1024917796
 GameObject:
   m_ObjectHideFlags: 0
@@ -18131,3 +18231,4 @@ SceneRoots:
   - {fileID: 719493070}
   - {fileID: 506325951}
   - {fileID: 1223158833}
+  - {fileID: 1006132445}

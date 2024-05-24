@@ -13,6 +13,7 @@ namespace TeleopReachy
         //private ConnectionStatus connectionStatus;
         private TransitionRoomManager transitionRoomManager;
         // private WristCalibINCIA wristCalibINCIA;
+        private CaptureWristPose captureWristPose;
 
         private TextButtonControllerModifier textButtonControllerModifier;
 
@@ -20,6 +21,7 @@ namespace TeleopReachy
 
         private string instructionsText;
         private string instructionsDetailsText;
+        private int nbWristPosition =1;
 
         private static InstructionsTextUIManager instance;
 
@@ -48,6 +50,8 @@ namespace TeleopReachy
 
             transitionRoomManager = TransitionRoomManager.Instance;
             // wristCalibINCIA = WristCalibINCIA.Instance;
+            captureWristPose = CaptureWristPose.Instance;
+            
             textButtonControllerModifier = GetComponent<TextButtonControllerModifier>();
 
             if (Robot.IsCurrentRobotVirtual())
@@ -56,16 +60,14 @@ namespace TeleopReachy
             }
             else
             {
-                instructionsText = "Please face the mirror then press Ready";
+                instructionsText = "Place your joysticks in a neutral position then Press X" ;
                 instructionsDetailsText = "";
     
             }
             transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
             transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
-            // wristCalibINCIA.event_WaitForWristCalib.AddListener(IndicateToPressX);
-            // wristCalibINCIA.event_StartRightWristCalib.AddListener(() => IndicateInitialCalibration("right"));
-            // wristCalibINCIA.event_StartLeftWristCalib.AddListener(() => IndicateInitialCalibration("left"));
-            // wristCalibINCIA.event_OnWristCalibChanged.AddListener(IndicateRobotReady);
+            captureWristPose.event_onWristCalib.AddListener(IndicateToPressX);
+            captureWristPose.event_WristPoseCaptured.AddListener(IndicateRobotReady);
             needUpdateText = true;
         }
 
@@ -96,16 +98,32 @@ namespace TeleopReachy
 
         public void IndicateToPressX()
         {
-            instructionsText = "Place arms on either side of body then Press " + textButtonControllerModifier.GetPrimLeftButtonName() + " to start the calibration";
+            string specificInstruction = new string("");
+            switch (nbWristPosition)
+            {
+                case 1:
+                    specificInstruction = "Turn your joysticks outwards completely\n";
+                    break;
+                case 2:
+                    specificInstruction = "Turn your joysticks inwards completely\n";
+                    break;
+                case 3:
+                    specificInstruction = "Tilt your joystick downwards\n";
+                    break;
+                case 4:
+                    specificInstruction = "Tilt your joystick upwards\n";
+                    break;
+                case 5:
+                    specificInstruction = "Tilt your joystick inwards\n";
+                    break;
+                case 6:
+                    specificInstruction = "Tilt your joystick outwards\n";
+                    break;
+            }
+            instructionsText = specificInstruction + "then Press " + textButtonControllerModifier.GetPrimLeftButtonName() ;
             instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
             instructionsDetailsText = "";
-            needUpdateText = true;
-        }
-
-        public void IndicateInitialCalibration(string side)
-        {
-            instructionsText = "Calibration of your " + side + " wrist : " ;
-            instructionsDetailsText = "Keep your " + side + " arm straight and move your wrist in all directions.";
+            nbWristPosition++;
             needUpdateText = true;
         }
 

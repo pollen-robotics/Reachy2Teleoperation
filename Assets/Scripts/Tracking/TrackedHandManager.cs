@@ -1,41 +1,60 @@
 using UnityEngine;
+using System.Collections;
 
 namespace TeleopReachy
 {
     public class TrackedHandManager : MonoBehaviour
     {
         public ArmSide side_id;
+        private Quaternion rightRotationDifference = new Quaternion();
+        private Quaternion leftRotationDifference= new Quaternion();
+        public Quaternion neutralOrientation = Quaternion.Euler(270, 180, 180);
+        private CaptureWristPose captureWristPose;
 
         void Start()
         {
-            ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation_Old);
-            //CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
-            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
-
+            StartCoroutine(WaitForWristCalibration());
+            //ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation_Old);
 
         }
 
-        private void InitSwitchCalib()
+        private IEnumerator WaitForWristCalibration()
         {
+            while (captureWristPose == null)
+            {
+                captureWristPose = FindObjectOfType<CaptureWristPose>();
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            // S'abonner aux événements ou utiliser trackedHandManager ici
+            CaptureWristPose.Instance.event_onNewWristCalib.AddListener(NoTransformedOrientation);
+            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
+            //CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
             SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(DefineTrackedHandOrientation_Old);
             SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(DefineTrackedHandOrientation_New);
             SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(DefineTrackedHandOrientation_Fake);
-
+            // Utilisez neutralOrientation selon vos besoins
         }
+
+        private void NoTransformedOrientation()
+        {
+            transform.localRotation = Quaternion.identity;
+            Debug.Log("NoTransformedOrientation");
+        }
+
 
         public void DefineTrackedHandOrientation_New()
         {
-            // Vector3 targetEulerAngles = new Vector3(275, 190, 170);
-            Vector3 targetEulerAngles = new Vector3(270, 180, 180);
-
+            Vector3 targetEulerAngles = neutralOrientation.eulerAngles;
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
-            Quaternion rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
-            Quaternion leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
+            rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
+            leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
             Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
             Debug.Log("leftRotationDifference: " + leftRotationDifference.eulerAngles);
             if (side_id == ArmSide.LEFT) transform.localRotation = leftRotationDifference;
             else transform.localRotation = rightRotationDifference;
+            Debug.Log("change of localtransform done");
 
         }
 
@@ -46,10 +65,12 @@ namespace TeleopReachy
             {
                 case ControllersManager.SupportedDevices.Oculus:
                     {
-                        //transform.localPosition = new Vector3(0, -0.03f, 0);
+                        transform.localPosition = new Vector3(0, -0.03f, 0);
                         UnityEngine.Quaternion targetRotation = new UnityEngine.Quaternion();
-                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-95, -35, 50);
-                        else targetRotation.eulerAngles = new Vector3(-95, 35, -50);
+                        if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-70, 5, 5);
+                        else targetRotation.eulerAngles = new Vector3(-70, -5, -5);
+                        // if (side_id == ArmSide.LEFT) targetRotation.eulerAngles = new Vector3(-95, -35, 50);
+                        // else targetRotation.eulerAngles = new Vector3(-95, 35, -50);
                         transform.localRotation = targetRotation;
                         break;
                     }
@@ -86,26 +107,9 @@ namespace TeleopReachy
 
         public void DefineTrackedHandOrientation_Fake()
         {
-            Vector3 targetEulerAngles = new Vector3(275, 190, 170);
-            UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
-            targetRobotRotation = Quaternion.Euler(targetEulerAngles);
-            Quaternion rightRotationDifference = targetRobotRotation * Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation);
-            Quaternion leftRotationDifference = targetRobotRotation *  Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation);
-            Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
-            Debug.Log("leftRotationDifference: " + leftRotationDifference.eulerAngles);
             if (side_id == ArmSide.LEFT) transform.localRotation = leftRotationDifference;
             else transform.localRotation = rightRotationDifference;
-
         }
-            
-            // WristCalibINCIA wristCalib = WristCalibINCIA.Instance;
-            // Vector3 position;
-            // if (side_id == ArmSide.LEFT) position = wristCalib.leftWristCenter;
-            // else position = wristCalib.rightWristCenter;
-            // transform.localPosition = position;
-    
-
-
 
     }
 }
