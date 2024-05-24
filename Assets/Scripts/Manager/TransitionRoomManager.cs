@@ -43,7 +43,6 @@ namespace TeleopReachy
 
         const float distanceToMirror = 2.5f;
         const float mirrorHeight = -0.0f;
-
         public UnityEvent event_OnReadyForTeleop;
         public UnityEvent event_OnAbortTeleop;
         public UnityEvent event_OnWaitingForPosition;
@@ -68,6 +67,7 @@ namespace TeleopReachy
             HideReachy();
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 readyButton.gameObject.SetActive(false);

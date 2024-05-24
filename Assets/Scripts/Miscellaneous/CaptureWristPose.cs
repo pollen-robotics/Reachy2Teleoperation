@@ -48,40 +48,55 @@ namespace TeleopReachy
         private Transform userTrackerTransform;
         public Quaternion rightNeutralOrientation;
         public Quaternion leftNeutralOrientation;
-        public UnityEvent event_onStartWristCalib;
+        public UnityEvent event_onNewWristCalib= new UnityEvent();
+        public UnityEvent event_onWristCalib = new UnityEvent();
         private ControllersManager controllers;
         public UnityEvent event_NeutralPoseCaptured = new UnityEvent();
         public UnityEvent event_WristPoseCaptured = new UnityEvent();
         private List<string> capturedData = new List<string>();
         private bool buttonX;
-        private int nbPosition = 0;
+        private int nbPosition ;
 
         
         //version dans la référence de la pose neutre 
         
-        private Quaternion robotNeutralPose = Quaternion.Euler(270,180,180);
+        private Quaternion neutralOrientation;
         public List<Vector3> leftUserEulerAngles_neutralframe = new List<Vector3>();
         public List<Vector3> rightUserEulerAngles_neutralframe = new List<Vector3>();
         public List<Vector3> leftTargetEulerAngles_neutralframe = new List<Vector3>
         {
+            // new Vector3(0f,0f,0f),
+            // new Vector3(0f,-90f,0f),
+            // new Vector3(0f,80f,0f),
+            // new Vector3(25f,0f,0f),
+            // new Vector3(-30f,0f,0f),
+            // new Vector3(0f,0f,40f),
+            // new Vector3(0f,0f,-50f)
             new Vector3(0f,0f,0f),
-            new Vector3(0f,-90f,0f),
+            new Vector3(0f,-80f,0f),
             new Vector3(0f,90f,0f),
-            new Vector3(25f,0f,0f),
+            new Vector3(40f,0f,0f),
             new Vector3(-25f,0f,0f),
-            new Vector3(0f,0f,50f),
-            new Vector3(0f,0f,-50f)
+            new Vector3(0f,0f,60f),
+            new Vector3(0f,0f,-45f)
 
         };
 
         public List<Vector3> rightTargetEulerAngles_neutralframe = new List<Vector3>
         {
+            // new Vector3(0f,0f,0f),
+            // new Vector3(0f,90f,0f),
+            // new Vector3(0f,-80f,0f),
+            // new Vector3(25f,0f,0f),
+            // new Vector3(-30f,0f,0f),
+            // new Vector3(0f,0f,-40f),
+            // new Vector3(0f,0f,50f)
             new Vector3(0f,0f,0f),
             new Vector3(0f,90f,0f),
             new Vector3(0f,-90f,0f),
             new Vector3(25f,0f,0f),
-            new Vector3(-25f,0f,0f),
-            new Vector3(0f,0f,-50f),
+            new Vector3(-30f,0f,0f),
+            new Vector3(0f,0f,-40f),
             new Vector3(0f,0f,50f)
 
         };
@@ -89,24 +104,24 @@ namespace TeleopReachy
         public List<Vector3> fakeLeftTargetEulerAngles_neutralframe = new List<Vector3>
         {
             new Vector3(0f,0f,0f),
-            new Vector3(0f,-60f,0f),
-            new Vector3(0f,60f,0f),
+            new Vector3(0f,-40f,0f),
+            new Vector3(0f,40f,0f),
             new Vector3(10f,0f,0f),
-            new Vector3(-20f,0f,0f),
-            new Vector3(0f,0f,20f),
-            new Vector3(0f,0f,-40f)
+            new Vector3(-10f,0f,0f),
+            new Vector3(0f,0f,-30f),
+            new Vector3(0f,0f,-30f)
 
         };
 
         public List<Vector3> fakeRightTargetEulerAngles_neutralframe = new List<Vector3>
         {
             new Vector3(0f,0f,0f),
-            new Vector3(0f,60f,0f),
-            new Vector3(0f,-60f,0f),
+            new Vector3(0f,40f,0f),
+            new Vector3(0f,-40f,0f),
             new Vector3(10f,0f,0f),
-            new Vector3(-20f,0f,0f),
-            new Vector3(0f,0f,-40f),
-            new Vector3(0f,0f,20f)
+            new Vector3(-10f,0f,0f),
+            new Vector3(0f,0f,-30f),
+            new Vector3(0f,0f,30f)
 
         };
 
@@ -114,17 +129,23 @@ namespace TeleopReachy
         public List<LinearParameters> leftLinearParameters ;
         public List<LinearParameters> fakeRightLinearParameters ;
         public List<LinearParameters> fakeLeftLinearParameters ;
+        private TrackedHandManager trackedHandManager;
+
 
         
 
         public void Start()
         {
+            event_onNewWristCalib.Invoke();
             Debug.Log("[Wrist Calibration version User] Start");
             leftController = GameObject.Find("TrackedLeftHand").transform;
             rightController = GameObject.Find("TrackedRightHand").transform;
-            event_onStartWristCalib = new UnityEvent();
-            event_onStartWristCalib.AddListener(StartWristCalibration);
+            nbPosition = 0;
+
+            event_onWristCalib.AddListener(StartWristCalibration);
             controllers = ActiveControllerManager.Instance.ControllersManager;
+            trackedHandManager= FindObjectOfType<TrackedHandManager>();
+            neutralOrientation = trackedHandManager.neutralOrientation;
         }
 
 
@@ -136,7 +157,7 @@ namespace TeleopReachy
                 controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
                 if (buttonX)
                 {
-                    event_onStartWristCalib.Invoke();
+                    event_onWristCalib.Invoke();
                 }
             }
 
@@ -150,12 +171,12 @@ namespace TeleopReachy
                 rightLinearParameters.Add(LinearCoefficient_3points(rightUserEulerAngles_neutralframe, rightTargetEulerAngles_neutralframe, 'y'));
                 rightLinearParameters.Add(LinearCoefficient_3points(rightUserEulerAngles_neutralframe, rightTargetEulerAngles_neutralframe, 'z'));
 
-                fakeLeftLinearParameters.Add(LinearCoefficient_2points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'x'));
-                fakeLeftLinearParameters.Add(LinearCoefficient_2points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'y'));
-                fakeLeftLinearParameters.Add(LinearCoefficient_2points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'z'));
-                fakeRightLinearParameters.Add(LinearCoefficient_2points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'x'));
-                fakeRightLinearParameters.Add(LinearCoefficient_2points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'y'));
-                fakeRightLinearParameters.Add(LinearCoefficient_2points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'z'));
+                fakeLeftLinearParameters.Add(LinearCoefficient_3points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'x'));
+                fakeLeftLinearParameters.Add(LinearCoefficient_3points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'y'));
+                fakeLeftLinearParameters.Add(LinearCoefficient_3points(leftUserEulerAngles_neutralframe, fakeLeftTargetEulerAngles_neutralframe, 'z'));
+                fakeRightLinearParameters.Add(LinearCoefficient_3points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'x'));
+                fakeRightLinearParameters.Add(LinearCoefficient_3points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'y'));
+                fakeRightLinearParameters.Add(LinearCoefficient_3points(rightUserEulerAngles_neutralframe, fakeRightTargetEulerAngles_neutralframe, 'z'));
                 
                 for (int i = 0; i < rightLinearParameters.Count; i++)
                 {
@@ -172,29 +193,30 @@ namespace TeleopReachy
 
         public void StartWristCalibration()
         {
-
-            userTrackerTransform = GameObject.Find("UserTracker").transform;
             Debug.Log("[Wrist Calibration] Start Calibration");
-            Matrix4x4 userTrackerInverseTransform = userTrackerTransform.worldToLocalMatrix;
-            
-            Vector3 leftHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(leftController.position);
-            Quaternion leftHandRotation = UnityEngine.Quaternion.Inverse(robotNeutralPose)*UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
-            Vector3 leftHandEulerAngles = leftHandRotation.eulerAngles;
-
-            Vector3 rightHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(rightController.position);
-            Quaternion rightHandRotation = UnityEngine.Quaternion.Inverse(robotNeutralPose)* UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
-            Vector3 rightHandEulerAngles = rightHandRotation.eulerAngles;
-
-            nbPosition++;
-            buttonX = false;
-            timer = 0f;
-
-            if (nbPosition == 1)
+            userTrackerTransform = GameObject.Find("UserTracker").transform;
+        
+            if (nbPosition == 0)
             {
                 rightNeutralOrientation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
                 leftNeutralOrientation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
                 event_NeutralPoseCaptured.Invoke();
             }
+
+            
+            Matrix4x4 userTrackerInverseTransform = userTrackerTransform.worldToLocalMatrix;
+            Vector3 leftHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(leftController.position);
+            Debug.Log("[Wrist Calibration] Capturing Pose");
+            Quaternion leftHandRotation = UnityEngine.Quaternion.Inverse(neutralOrientation)*UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
+            Vector3 leftHandEulerAngles = leftHandRotation.eulerAngles;
+
+            Vector3 rightHandPosition = userTrackerInverseTransform.MultiplyPoint3x4(rightController.position);
+            Quaternion rightHandRotation = UnityEngine.Quaternion.Inverse(neutralOrientation)* UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
+            Vector3 rightHandEulerAngles = rightHandRotation.eulerAngles;
+
+            nbPosition++;
+            buttonX = false;
+            timer = 0f;
 
             Debug.Log("[Wrist Calibration] Position " + nbPosition);
             capturedData.Add($"{leftHandPosition.x},{leftHandPosition.y},{leftHandPosition.z},{leftHandRotation.x},{leftHandRotation.y},{leftHandRotation.z},{leftHandRotation.w},{leftHandEulerAngles.x},{leftHandEulerAngles.y},{leftHandEulerAngles.z},{rightHandPosition.x},{rightHandPosition.y},{rightHandPosition.z},{rightHandRotation.x},{rightHandRotation.y},{rightHandRotation.z},{rightHandRotation.w},{rightHandEulerAngles.x},{rightHandEulerAngles.y},{rightHandEulerAngles.z}");
@@ -206,7 +228,7 @@ namespace TeleopReachy
         public void SavePoseData()
         {
             Debug.Log("[Wrist Calibration] Saving Data");
-            string path = "C:/Users/robot/Dev/WristCalibrationData_userframe.csv";
+            string path = "C:/Users/robot/Dev/WristCalibrationData_robotframe.csv";
             string dataToAppend = string.Join("\n", capturedData) + "\n";
 
             using (StreamWriter writer = new StreamWriter(path, true))
@@ -240,7 +262,7 @@ namespace TeleopReachy
                     break;
             }
             
-            float A = (y2 - y1) / (x2 - x1);
+            float A = Math.Abs((y2 - y1) / (x2 - x1));
             float B = y1 - A * x1;
             LinearParameters linearParameters = new LinearParameters(A, B);
             return linearParameters;
