@@ -27,6 +27,7 @@ namespace TeleopReachy
         }
 
     }
+    
     [System.Serializable]
     public struct LinearParameters
     {
@@ -48,7 +49,6 @@ namespace TeleopReachy
         private Transform userTrackerTransform;
         public Quaternion rightNeutralOrientation;
         public Quaternion leftNeutralOrientation;
-        public UnityEvent event_onNewWristCalib= new UnityEvent();
         public UnityEvent event_onWristCalib = new UnityEvent();
         private ControllersManager controllers;
         public UnityEvent event_NeutralPoseCaptured = new UnityEvent();
@@ -65,39 +65,26 @@ namespace TeleopReachy
         public List<Vector3> rightUserEulerAngles_neutralframe = new List<Vector3>();
         public List<Vector3> leftTargetEulerAngles_neutralframe = new List<Vector3>
         {
-            // new Vector3(0f,0f,0f),
-            // new Vector3(0f,-90f,0f),
-            // new Vector3(0f,80f,0f),
-            // new Vector3(25f,0f,0f),
-            // new Vector3(-30f,0f,0f),
-            // new Vector3(0f,0f,40f),
-            // new Vector3(0f,0f,-50f)
+
             new Vector3(0f,0f,0f),
-            new Vector3(0f,-80f,0f),
+            new Vector3(0f,-70f,0f),
             new Vector3(0f,90f,0f),
-            new Vector3(40f,0f,0f),
-            new Vector3(-25f,0f,0f),
-            new Vector3(0f,0f,60f),
-            new Vector3(0f,0f,-45f)
+            new Vector3(25f,0f,0f),
+            new Vector3(-30f,0f,0f),
+            new Vector3(0f,0f,50f),
+            new Vector3(0f,0f,-40f)
 
         };
 
         public List<Vector3> rightTargetEulerAngles_neutralframe = new List<Vector3>
         {
-            // new Vector3(0f,0f,0f),
-            // new Vector3(0f,90f,0f),
-            // new Vector3(0f,-80f,0f),
-            // new Vector3(25f,0f,0f),
-            // new Vector3(-30f,0f,0f),
-            // new Vector3(0f,0f,-40f),
-            // new Vector3(0f,0f,50f)
             new Vector3(0f,0f,0f),
-            new Vector3(0f,90f,0f),
+            new Vector3(0f,70f,0f),
             new Vector3(0f,-90f,0f),
             new Vector3(25f,0f,0f),
             new Vector3(-30f,0f,0f),
-            new Vector3(0f,0f,-40f),
-            new Vector3(0f,0f,50f)
+            new Vector3(0f,0f,-50f),
+            new Vector3(0f,0f,40f)
 
         };
 
@@ -136,7 +123,6 @@ namespace TeleopReachy
 
         public void Start()
         {
-            event_onNewWristCalib.Invoke();
             Debug.Log("[Wrist Calibration version User] Start");
             leftController = GameObject.Find("TrackedLeftHand").transform;
             rightController = GameObject.Find("TrackedRightHand").transform;
@@ -201,6 +187,7 @@ namespace TeleopReachy
                 rightNeutralOrientation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * rightController.rotation;
                 leftNeutralOrientation = UnityEngine.Quaternion.Inverse(userTrackerTransform.rotation) * leftController.rotation;
                 event_NeutralPoseCaptured.Invoke();
+                Debug.Log("[Wrist Calibration] Neutral Pose Captured");
             }
 
             
@@ -228,7 +215,7 @@ namespace TeleopReachy
         public void SavePoseData()
         {
             Debug.Log("[Wrist Calibration] Saving Data");
-            string path = "C:/Users/robot/Dev/WristCalibrationData_robotframe.csv";
+            string path = "C:/Users/robot/Dev/WristCalibrationData_userframe.csv";
             string dataToAppend = string.Join("\n", capturedData) + "\n";
 
             using (StreamWriter writer = new StreamWriter(path, true))

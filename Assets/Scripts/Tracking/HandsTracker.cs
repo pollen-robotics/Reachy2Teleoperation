@@ -84,9 +84,9 @@ namespace TeleopReachy
             trackedHandManager = FindObjectOfType<TrackedHandManager>();
             neutralOrientation = trackedHandManager.neutralOrientation;
 
-            StartCoroutine(WaitForWristCalibration());
-            Debug.Log("[HandsTracker] End of Coroutine");
+            EventManager.StartListening(EventNames.BackToMirrorScene, ReinitValue);
 
+            StartCoroutine(WaitForWristCalibration());
             controllers.event_OnDevicesUpdate.AddListener(UpdateDevices);
             Debug.Log("[HandsTracker] End of Awake");
 
@@ -94,15 +94,21 @@ namespace TeleopReachy
 
         private IEnumerator WaitForWristCalibration()
         {
-            while (captureWristPose == null)
+            while (true)
             {
-                captureWristPose = FindObjectOfType<CaptureWristPose>();
+                var newCaptureWristPose = FindObjectOfType<CaptureWristPose>();
+                if (newCaptureWristPose != null && newCaptureWristPose != captureWristPose)
+                {
+                    if (captureWristPose != null) captureWristPose.event_NeutralPoseCaptured.RemoveListener(() => ChangeTransforms(1));
+            
+                    captureWristPose = newCaptureWristPose;
+                    captureWristPose.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
+                    SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
+                    SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
+                    SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
+                }
                 yield return new WaitForSeconds(0.1f);
             }
-            Debug.Log("[HandsTracker] WaitForWristCalibration done");
-            CaptureWristPose.Instance.event_onNewWristCalib.AddListener(() => ChangeTransforms(0));
-            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(() => ChangeTransforms(1));
-            CaptureWristPose.Instance.event_WristPoseCaptured.AddListener(InitSwitchCalib);
         }
 
 
@@ -112,12 +118,12 @@ namespace TeleopReachy
             GetTransforms(leftHand, rescaleTransform);
         }
 
-        private void InitSwitchCalib()
-        {
-            SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
-            SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
-            SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
-        }
+        // private void InitSwitchCalib()
+        // {
+        //     SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(() => ChangeTransforms(0));
+        //     SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(() => ChangeTransforms(1));
+        //     SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(() => ChangeTransforms(2));
+        // }
 
         private void UpdateDevices()
         {
@@ -133,6 +139,12 @@ namespace TeleopReachy
 
             AdaptativeCloseHand(rightHand);
             AdaptativeCloseHand(leftHand);
+        }
+
+        void ReinitValue()
+        {
+            rescaleTransform = 0;
+            Debug.Log("[HandsTracker] Reinit rescaleTransform : " + rescaleTransform);
         }
 
         private void ChangeTransforms(int numCalib)
