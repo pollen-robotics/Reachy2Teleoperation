@@ -9,10 +9,7 @@ namespace TeleopReachy
 
         [SerializeField]
         private Text instructionsDetails;
-
-        //private ConnectionStatus connectionStatus;
         private TransitionRoomManager transitionRoomManager;
-        // private WristCalibINCIA wristCalibINCIA;
         private CaptureWristPose captureWristPose;
 
         private TextButtonControllerModifier textButtonControllerModifier;
@@ -49,7 +46,6 @@ namespace TeleopReachy
             instructions = transform.GetComponent<Text>();
 
             transitionRoomManager = TransitionRoomManager.Instance;
-            // wristCalibINCIA = WristCalibINCIA.Instance;
             captureWristPose = CaptureWristPose.Instance;
             
             textButtonControllerModifier = GetComponent<TextButtonControllerModifier>();

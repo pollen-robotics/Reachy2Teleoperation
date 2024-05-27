@@ -14,48 +14,48 @@ namespace TeleopReachy
         void Start()
         {
             StartCoroutine(WaitForWristCalibration());
+            EventManager.StartListening(EventNames.BackToMirrorScene, ReinitValue);
             //ControllersManager.Instance.event_OnDevicesUpdate.AddListener(DefineTrackedHandOrientation_Old);
 
         }
 
         private IEnumerator WaitForWristCalibration()
         {
-            while (captureWristPose == null)
+            while (true)
             {
-                captureWristPose = FindObjectOfType<CaptureWristPose>();
+                var newCaptureWristPose = FindObjectOfType<CaptureWristPose>();
+                if (newCaptureWristPose != null && newCaptureWristPose != captureWristPose)
+                {
+                    if (captureWristPose != null) captureWristPose.event_NeutralPoseCaptured.RemoveListener(DefineTrackedHandOrientation_New);
+
+                    captureWristPose = newCaptureWristPose;
+                    captureWristPose.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
+                    SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(DefineTrackedHandOrientation_Old);
+                    SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(DefineTrackedHandOrientation_New);
+                    SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(DefineTrackedHandOrientation_Fake);
+                }
                 yield return new WaitForSeconds(0.1f);
             }
-
-            // S'abonner aux événements ou utiliser trackedHandManager ici
-            CaptureWristPose.Instance.event_onNewWristCalib.AddListener(NoTransformedOrientation);
-            CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(DefineTrackedHandOrientation_New);
-            //CaptureWristPose.Instance.event_NeutralPoseCaptured.AddListener(InitSwitchCalib);
-            SwitchCalibrationManager.Instance.event_OldCalibAsked.AddListener(DefineTrackedHandOrientation_Old);
-            SwitchCalibrationManager.Instance.event_NewCalibAsked.AddListener(DefineTrackedHandOrientation_New);
-            SwitchCalibrationManager.Instance.event_FakeCalibAsked.AddListener(DefineTrackedHandOrientation_Fake);
-            // Utilisez neutralOrientation selon vos besoins
         }
 
-        private void NoTransformedOrientation()
+        private void ReinitValue()
         {
             transform.localRotation = Quaternion.identity;
-            Debug.Log("NoTransformedOrientation");
+            StartCoroutine(WaitForWristCalibration());
+            Debug.Log("[TrackedHandManager] : Reinit value");
         }
-
 
         public void DefineTrackedHandOrientation_New()
         {
             Vector3 targetEulerAngles = neutralOrientation.eulerAngles;
             UnityEngine.Quaternion targetRobotRotation = new UnityEngine.Quaternion();
             targetRobotRotation = Quaternion.Euler(targetEulerAngles);
+            
             rightRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.rightNeutralOrientation) * targetRobotRotation;
             leftRotationDifference = Quaternion.Inverse(CaptureWristPose.Instance.leftNeutralOrientation) * targetRobotRotation;
-            Debug.Log("rightRotationDifference: " + rightRotationDifference.eulerAngles);
-            Debug.Log("leftRotationDifference: " + leftRotationDifference.eulerAngles);
+
             if (side_id == ArmSide.LEFT) transform.localRotation = leftRotationDifference;
             else transform.localRotation = rightRotationDifference;
-            Debug.Log("change of localtransform done");
-
         }
 
         public void DefineTrackedHandOrientation_Old()
