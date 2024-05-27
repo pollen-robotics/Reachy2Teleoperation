@@ -15,9 +15,11 @@ namespace TeleopReachy
         private List<GameObject> actuators;
 
         private Dictionary<string, float> panelTemperature;
+        private Dictionary<string, string> panelStatus;
 
         private bool isStatePanelStatusActive;
         private bool needUpdatePanel;
+        private bool needUpdateStatus;
 
         void Awake()
         {
@@ -45,6 +47,7 @@ namespace TeleopReachy
 
             isStatePanelStatusActive = true;
             needUpdatePanel = false;
+            needUpdateStatus = false;
         }
 
         private void UpdateTemperatures(Dictionary<string, float> Temperatures)
@@ -76,7 +79,16 @@ namespace TeleopReachy
 
         private void UpdateStatus(Dictionary<string, string> RobotStatus)
         {
-            
+            panelStatus = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> status in RobotStatus)
+            {
+                string actuatorName =  status.Key;
+
+                string panelName = actuatorName + "_status";
+
+                panelStatus.Add(panelName, status.Value);
+            }
+            needUpdateStatus = false;
         }
 
         private void CheckTemperatureInfo()
@@ -145,6 +157,23 @@ namespace TeleopReachy
                         {
                             currentActuator.transform.GetChild(0).gameObject.SetActive(false);
                         }
+                    }
+                }
+            }
+            if (needUpdateStatus)
+            {
+                needUpdateStatus = false;
+                foreach (KeyValuePair<string, string> status in panelStatus)
+                {
+                    Transform currentActuator = actuators.Find(act => act.name == status.Key).transform;
+
+                    if (status.Value != "Ok")
+                    {
+                        currentActuator.transform.GetChild(0).gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        currentActuator.transform.GetChild(0).gameObject.SetActive(false);
                     }
                 }
             }
