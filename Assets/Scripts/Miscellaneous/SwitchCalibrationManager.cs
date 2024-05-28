@@ -17,16 +17,18 @@ namespace TeleopReachy
 
     public class SwitchCalibrationManager : MonoBehaviour
     {
+
         private RobotStatus robotStatus;
         private ControllersManager controllers;
-        private float armSizeWithCalib;
+        private float leftArmSizeWithCalib;
+        private float rightArmSizeWithCalib;
         private Transform userTracker;
         private Transform headset;
         private Transform newCalibTransform;
         private Transform oldCalibTransform;
         private Transform floorTransform;
         public CalibrationType selectedCalibration = CalibrationType.NewCalib;
-        private CalibrationType currentCalibration = CalibrationType.NewCalib;
+        public CalibrationType currentCalibration = CalibrationType.NewCalib;
 
         
         // Start is called before the first frame update
@@ -101,7 +103,8 @@ namespace TeleopReachy
             floorTransform = GameObject.Find("Floor").transform;
             floorTransform.position = new Vector3(headset.position.x, 0.0f, headset.position.z);
             floorTransform.rotation = Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0);
-            armSizeWithCalib = UserSize.Instance.UserArmSize;
+            leftArmSizeWithCalib = UserSize.Instance.leftUserArmSize;
+            rightArmSizeWithCalib = UserSize.Instance.rightUserArmSize;
             controllers = ActiveControllerManager.Instance.ControllersManager;
             RandomSequence();
             
@@ -118,15 +121,18 @@ namespace TeleopReachy
             {
                 case CalibrationType.NewCalib:
                     userTracker.position = newCalibTransform.position;
-                    UserSize.Instance.UserArmSize = armSizeWithCalib;
+                    UserSize.Instance.leftUserArmSize = leftArmSizeWithCalib;
+                    UserSize.Instance.rightUserArmSize = rightArmSizeWithCalib;
                     break;
                 case CalibrationType.OldCalib:
                     userTracker.position = oldCalibTransform.position;
-                    UserSize.Instance.UserArmSize = 0.0f;
+                    UserSize.Instance.leftUserArmSize = 0.0f;
+                    UserSize.Instance.rightUserArmSize = 0.0f;
                     break;
                 case CalibrationType.FakeCalib: //offset upside and forward
                     userTracker.position = new Vector3(newCalibTransform.position.x+0.05f, newCalibTransform.position.y + 0.1f, newCalibTransform.position.z + 0.1f);
-                    UserSize.Instance.UserArmSize = armSizeWithCalib + 0.1f; //10cm more on the armsize
+                    UserSize.Instance.leftUserArmSize = leftArmSizeWithCalib + 0.1f; //10cm more on the armsize
+                    UserSize.Instance.rightUserArmSize = rightArmSizeWithCalib + 0.1f; //10cm more on the armsize
                     break;
             }
         }  

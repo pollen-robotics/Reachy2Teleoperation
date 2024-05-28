@@ -17,6 +17,8 @@ namespace TeleopReachy
         private Transform headset;
         private Transform leftController;
         private Transform rightController;
+        private SwitchCalibrationManager switchCalibrationManager;
+
 
         private List<VRPoseData> poseDataList = new List<VRPoseData>();
 
@@ -28,6 +30,7 @@ namespace TeleopReachy
             rightController = GameObject.Find("RightHand Controller").transform;
             humanBase = GameObject.Find("Floor").transform;
             robotStatus.event_OnStopTeleoperation.AddListener(SavePoseData);
+            switchCalibrationManager = FindObjectOfType<SwitchCalibrationManager>();
         }
 
         void Update()
@@ -57,7 +60,7 @@ namespace TeleopReachy
             Vector3 rightControllerPosition = ConvertPosition(humanBaseInverse.MultiplyPoint(rightController.position));
             Quaternion rightControllerRotation = ConvertRotation(rightController.rotation);
 
-            VRPoseData poseData = new VRPoseData(Time.time, headPosition, headRotation, leftControllerPosition, leftControllerRotation, rightControllerPosition, rightControllerRotation);
+            VRPoseData poseData = new VRPoseData(Time.time, switchCalibrationManager.currentCalibration, headPosition, headRotation, leftControllerPosition, leftControllerRotation, rightControllerPosition, rightControllerRotation);
             poseDataList.Add(poseData);
         }
 
@@ -86,6 +89,7 @@ namespace TeleopReachy
     public class VRPoseData
     {
         public float timestamp;
+        public string calibrationType;
         public float[] headPosition;
         public float[] headRotation;
         public float[] leftControllerPosition;
@@ -93,9 +97,10 @@ namespace TeleopReachy
         public float[] rightControllerPosition;
         public float[] rightControllerRotation;
 
-        public VRPoseData(float timestamp, Vector3 headPosition, Quaternion headRotation, Vector3 leftControllerPosition, Quaternion leftControllerRotation, Vector3 rightControllerPosition, Quaternion rightControllerRotation)
+        public VRPoseData(float timestamp, CalibrationType calibrationType, Vector3 headPosition, Quaternion headRotation, Vector3 leftControllerPosition, Quaternion leftControllerRotation, Vector3 rightControllerPosition, Quaternion rightControllerRotation)
         {
             this.timestamp = timestamp;
+            this.calibrationType = calibrationType.ToString();
             this.headPosition = new float[] { headPosition.x, headPosition.y, headPosition.z };
             this.headRotation = new float[] { headRotation.x, headRotation.y, headRotation.z, headRotation.w };
             this.leftControllerPosition = new float[] { leftControllerPosition.x, leftControllerPosition.y, leftControllerPosition.z };

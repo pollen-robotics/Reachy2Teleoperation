@@ -24,13 +24,14 @@ namespace TeleopReachy
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
+        public double leftArmSize { get; set; }
+        public double rightArmSize { get; set; }
         public double meanArmSize { get; set; }
         public double shoulderWidth { get; set; }
-        private float intervalTime=0.04f ; 
-        private float actualTime=0f;
+        private float intervalTime= 0.04f ; 
+        private float actualTime = 0f;
         private bool calib_right_side = false;
         private bool calib_left_side = false;
-        private bool capture_done = false;
         private bool calibration_done = false;
         private ControllersManager controllers;
         private bool start_calib_keyboard = false;
@@ -93,7 +94,6 @@ namespace TeleopReachy
                 start_calib_keyboard = true;
 
             if (!start_calib_keyboard && !calibration_done) 
-             //if (!start_calib_keyboard && !capture_done)
             {
                 event_WaitForCalib.Invoke();
                 actualTime = 0f;
@@ -110,34 +110,24 @@ namespace TeleopReachy
                 CapturePoints("left");
                 actualTime += Time.deltaTime;}
 
-            // else if (!capture_done && start_calib_keyboard)
-            // {
-            //     Debug.Log("calib simultanée");
-            //     event_StartLeftCalib.Invoke();
-            //     CapturePoints();
-            //     actualTime += Time.deltaTime;
-
-
-            // }
-
-            //else if (capture_done && !calibration_done)
+        
             else if (calib_left_side && !calibration_done)  
             {
                 UpperBodyFeatures();
                 calibration_done = true;
                 event_OnCalibChanged.Invoke();
-                UserSize.Instance.UpdateUserSizeafterCalibration(meanArmSize, shoulderWidth);
+                Debug.Log("Avant la fonction d'update : rightarmsize =" + rightArmSize + " leftarmsize =" + leftArmSize);
+                UserSize.Instance.UpdateUserSizeafterCalibration_differentarms(leftArmSize, rightArmSize, shoulderWidth);
                 ExportCoordinatesToCSV(); 
             }  
         }
 
-        private void CapturePoints (string side) //bras séparés
+        private void CapturePoints (string side) 
         {
             Debug.Log("actualTime=" + actualTime);
             if (side == "right"){
                 if (rightCoordinates.Count < 400){
                     
-                    //if (Vector3.Distance(lastPointRight, trackedRightHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
                     {
                         rightCoordinates.Add(trackedRightHand.position);
@@ -150,7 +140,6 @@ namespace TeleopReachy
             } else if (side == "left"){
                 if (leftCoordinates.Count < 400)
                 {
-                    //if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
                     if (actualTime >= intervalTime)
                     {
                         Debug.Log(leftCoordinates.Count);
@@ -159,73 +148,31 @@ namespace TeleopReachy
                         actualTime=0f;}
                 } else  {
                     calib_left_side = true;
-                    //calib_right_side = false;}
                 }
             }
             
         }
 
-        // private void CapturePoints () // version simultanée 
-        // {
-        //     Debug.Log("droit:" + rightCoordinates.Count + "gauche :" + leftCoordinates.Count);
-        //     if (rightCoordinates.Count < 350 || leftCoordinates.Count < 350){
-        //         //if (actualTime >= intervalTime)
-        //         if (Vector3.Distance(lastPointLeft, trackedLeftHand.position)> 0.03f)
-        //         {
-        //             leftCoordinates.Add(trackedLeftHand.position);
-        //             lastPointLeft = trackedLeftHand.position;
-        //             rightCoordinates.Add(trackedRightHand.position);
-        //             lastPointRight = trackedRightHand.position;
-        //             actualTime = 0f;
-
-        //         }
-
-        //         else {
-        //             Debug.Log("actual time :" + actualTime);
-        //         }
-            
-        //     } else 
-        //         capture_done = true;
-        // }
-            
-    
 
 
         public void UpperBodyFeatures()
         {
             Vector3 initialPosition = TransitionRoomManager.Instance.userTracker.position;
  
-            // (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, double approxleftarmsizexy, Vector3 leftShoulderCenter) = EllipsoidFitAleksander(leftCoordinates);
-            // (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, double approxrightarmsizexy, Vector3 rightShoulderCenter) = EllipsoidFitAleksander(rightCoordinates);
-            (double leftArmSize, double approxleftarmsizex, double approxleftarmsizey, Vector3 leftRadii, Vector3 leftShoulderCenter) = RansacEllipsoidFit(leftCoordinates);
-            (double rightArmSize, double approxrightarmsizex, double approxrightarmsizey, Vector3 rightRadii, Vector3 rightShoulderCenter) = RansacEllipsoidFit(rightCoordinates);
+            (double calculatedLeftArmSize, double approxleftarmsizex, double approxleftarmsizey, Vector3 leftRadii, Vector3 leftShoulderCenter) = RansacEllipsoidFit(leftCoordinates);
+            (double calculatedRightArmSize, double approxrightarmsizex, double approxrightarmsizey, Vector3 rightRadii, Vector3 rightShoulderCenter) = RansacEllipsoidFit(rightCoordinates);
             Debug.Log("LSM des deux côtés ok");
-            
-            meanArmSize = (leftArmSize + rightArmSize) / 2f;
-            double approxarmsizex = (approxleftarmsizex + approxrightarmsizex) / 2f;
-            double approxarmsizey = (approxleftarmsizey + approxrightarmsizey) / 2f;
-            Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
 
+            leftArmSize = calculatedLeftArmSize;
+            rightArmSize = calculatedRightArmSize;
+            meanArmSize = (leftArmSize + rightArmSize) / 2f;
+
+            Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
+            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
-        
-            // ajout d'une translation de 2cm vers l'arrière 0804
-            TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint; //+ new Vector3(0, 0, -0.02f);
 
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
             Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
-
-            // get the minimum of rightCoordinates and leftCoordinates together
-            double x_min = rightCoordinates.Select(c => c.x).Concat(leftCoordinates.Select(c => c.x)).Min();
-            double x_max = rightCoordinates.Select(c => c.x).Concat(leftCoordinates.Select(c => c.x)).Max();
-            double y_min = rightCoordinates.Select(c => c.y).Concat(leftCoordinates.Select(c => c.y)).Min();
-            double y_max = rightCoordinates.Select(c => c.y).Concat(leftCoordinates.Select(c => c.y)).Max();
-            double z_min = rightCoordinates.Select(c => c.z).Concat(leftCoordinates.Select(c => c.z)).Min();
-            double z_max = rightCoordinates.Select(c => c.z).Concat(leftCoordinates.Select(c => c.z)).Max();
-
-            double x_approx = (x_min + x_max) / 2;
-            double y_approx = (y_min + y_max) / 2;
-            double z_approx = (z_min + z_max) / 2;
-            
 
             //ajout des data dans un .csv
             var filePath = @"C:\Users\robot\Dev\dataunity_exhaustif.csv";
@@ -234,51 +181,14 @@ namespace TeleopReachy
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
 
-            filePath = @"C:\Users\robot\Dev\dataunity_center.csv";
-            data = $"{currentTime},{midShoulderPoint.x},{x_approx},{initialPosition.x},{midShoulderPoint.y},{y_approx},{initialPosition.y},{midShoulderPoint.z},{z_approx},{initialPosition.z},";
-            using (var writer = new StreamWriter(filePath, true))
-            {writer.WriteLine(data);}
 
             filePath = @"C:\Users\robot\Dev\armsize.csv";
-            data = $"{currentTime},{leftArmSize},{approxleftarmsizex},{approxleftarmsizey},\"{leftRadii.x},{leftRadii.y},{leftRadii.z}\",{rightArmSize},{approxrightarmsizex},{approxrightarmsizey},\"{rightRadii.x},{rightRadii.y},{rightRadii.z}\",{meanArmSize},{approxarmsizex},{approxarmsizey}";
+            data = $"{currentTime},{leftArmSize},{approxleftarmsizex},{approxleftarmsizey},\"{leftRadii.x},{leftRadii.y},{leftRadii.z}\",{rightArmSize},{approxrightarmsizex},{approxrightarmsizey},\"{rightRadii.x},{rightRadii.y},{rightRadii.z}\",{meanArmSize}";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
 
             return;
         }
-
-        // private (double radius, Vector3 rotationCenterPosition) CenterRotationLSM(List<Vector3> sideCoordinates)
-        // {
-        //     Debug.Log("Debut de la LSM");
-        //     int numberOfPoints = sideCoordinates.Count;
-        //     Debug.Log(numberOfPoints);
-            
-        //     double[,] A = new double[numberOfPoints, 4];
-        //     double[,] f = new double[numberOfPoints, 1];
-
-        //     for (int i = 0; i < numberOfPoints; i++)
-        //     {
-        //         A[i, 0] = sideCoordinates[i].x * 2;
-        //         A[i, 1] = sideCoordinates[i].y * 2;
-        //         A[i, 2] = sideCoordinates[i].z * 2;
-        //         A[i, 3] = 1.0f;
-        //         f[i, 0] = sideCoordinates[i].x * sideCoordinates[i].x + sideCoordinates[i].y * sideCoordinates[i].y + sideCoordinates[i].z * sideCoordinates[i].z;
-        //     }
-        //     Debug.Log("Modif de A et f faites");
-
-        //     var aMatrix = Matrix<double>.Build.DenseOfArray(A);
-		//     var fMatrix = Matrix<double>.Build.DenseOfArray(f);
-        //     Debug.Log("A = " + aMatrix + "f= " + fMatrix);
-        //     var rotCenter = MultipleRegression.NormalEquations(aMatrix, fMatrix);
-        //     Debug.Log("rotCenter = " + rotCenter);
-
-        //     double t = (rotCenter[0, 0] * rotCenter[0, 0]) + (rotCenter[1, 0] * rotCenter[1, 0]) + (rotCenter[2, 0] * rotCenter[2, 0]) + rotCenter[3, 0];
-        //     double radius = System.Math.Sqrt(t);
-        //     Vector3 rotationCenterPosition = new Vector3((float)rotCenter[0, 0], (float)rotCenter[1, 0], (float)rotCenter[2, 0]);
-        //     Debug.Log("r=" + radius + "x=" + rotationCenterPosition.x + "y="+ rotationCenterPosition.y+ "z=" +rotationCenterPosition.z);
-
-        //     return (radius, rotationCenterPosition);
-        // }
 
 
         public bool IsCalibrated (){
@@ -323,13 +233,10 @@ namespace TeleopReachy
                 byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
                 fs.Write(csvBytes, 0, csvBytes.Length);
 
-                //File.WriteAllText(filePath, csvContent);
             }
 
             Debug.Log("Coordonnées exportées dans fichier CSV : " + fileName);
         }
-
- 
 
         public static (double, double, double, Vector3, Vector3) EllipsoidFitAleksander(List<Vector3> points)
         {
@@ -376,7 +283,7 @@ namespace TeleopReachy
             var radii = evals.Map(value => Math.Sqrt(1 / Math.Abs(value)));
             Debug.Log("radii =" + radii);
             Vector3 radiiVector3 = new Vector3((float)radii[0], (float)radii[1], (float)radii[2]);
-            double meanRadius = radii.Min();
+            double meanRadius = radii.Median();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
             Debug.Log("centre = " + centreVector3);
             
