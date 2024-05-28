@@ -74,7 +74,7 @@ namespace TeleopReachy
             ArmCartesianGoal rightEndEffector;
            
            
-            if (userArmSize == 0.0)
+            if (UserSize.Instance.rightUserArmSize == 0.0)
             {
                 rightEndEffector = new ArmCartesianGoal
                 {
@@ -87,9 +87,9 @@ namespace TeleopReachy
                 // right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                 // right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
                 // right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
-                right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / userArmSize;
-                right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + userShoulderWidth) * reachyArmSize / userArmSize - reachyShoulderWidth;
-                right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / userArmSize;
+                right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.rightUserArmSize;
+                right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.rightUserArmSize - reachyShoulderWidth;
+                right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.rightUserArmSize;
 
                 rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
             }
@@ -102,8 +102,8 @@ namespace TeleopReachy
         {
 
             ArmCartesianGoal leftEndEffector;
-            //if (UserSize.Instance.UserArmSize == 0)
-            if (userArmSize == 0)
+            if (UserSize.Instance.leftUserArmSize == 0)
+            //if (userArmSize == 0)
             {
                 leftEndEffector = new ArmCartesianGoal
                 {
@@ -116,9 +116,9 @@ namespace TeleopReachy
                 // left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                 // left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
                 // left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
-                left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / userArmSize;
-                left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - userShoulderWidth) * reachyArmSize / userArmSize + reachyShoulderWidth;
-                left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / userArmSize;
+                left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.leftUserArmSize;
+                left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.leftUserArmSize + UserSize.Instance.UserShoulderWidth;
+                left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.leftUserArmSize;
 
                 leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
             }

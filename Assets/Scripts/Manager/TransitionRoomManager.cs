@@ -173,6 +173,11 @@ namespace TeleopReachy
             // userTracker.rotation = systemRotation;
             userTracker.position = midShoulderPoint;
             Debug.Log("nouvelle :" + userTracker.position);
+            Debug.Log("ancienne rotation = " + userTracker.rotation.eulerAngles);
+            Vector3 rotation = headset.rotation.eulerAngles;
+            userTracker.rotation = Quaternion.Euler(0, rotation.y, 0);
+            Debug.Log("nouvelle rotation = " + userTracker.rotation.eulerAngles);
+
             newUserCenter.rotation = userTracker.rotation;
             newUserCenter.position = userTracker.position;
 
