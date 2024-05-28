@@ -5,7 +5,7 @@ namespace TeleopReachy
 {
     public class MiniVideoStreamDisplay : MonoBehaviour
     {
-        private GstreamerUnityGStreamerPlugin audioVideoController;
+        private GStreamerPluginCustom audioVideoController;
         private Renderer screen;
 
         // Used to update display when going back in mirror scene
