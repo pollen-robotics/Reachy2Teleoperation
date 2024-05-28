@@ -2,11 +2,12 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace GstreamerWebRTC
 {
-    public class GstreamerUnityGStreamerPlugin : MonoBehaviour
+    public class GStreamerRenderingPlugin
     {
 
 #if PLATFORM_SWITCH && !UNITY_EDITOR
@@ -26,14 +27,14 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern void DestroyPipeline();
+        private static extern void CreateDevice();
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern void CreateDevice();
+        private static extern void DestroyPipeline();
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -71,16 +72,8 @@ namespace GstreamerWebRTC
         private static extern IntPtr GetTextureUpdateCallback();
 
         private IntPtr leftTextureNativePtr;
-        private Texture leftTexture;
-
-        public Renderer screen;
 
         private IntPtr rightTextureNativePtr;
-        private Texture rightTexture;
-
-        public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
-        public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
-        public UnityEvent<bool> event_AudioSenderStatusHasChanged;
 
         private string _signallingServerURL;
         private Signalling _signalling;
@@ -91,38 +84,44 @@ namespace GstreamerWebRTC
         const uint width = 960;
         const uint height = 720;
 
-        void Start()
+        public UnityEvent event_OnPipelineStarted;
+
+        //CommandBuffer _command = null;
+
+        public GStreamerRenderingPlugin(string ip_address, ref Texture leftTexture, ref Texture rightTexture)
         {
-#if PLATFORM_SWITCH && !UNITY_EDITOR
-        RegisterPlugin();
-#endif
-            string ip_address = PlayerPrefs.GetString("robot_ip");
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
             _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
 
             _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
 
-            CreateDevice();
-            CreateRenderTexture(true, ref leftTextureNativePtr, "_LeftTex", ref leftTexture);
-            CreateRenderTexture(false, ref rightTextureNativePtr, "_RightTex", ref rightTexture);
+            event_OnPipelineStarted = new UnityEvent();
 
+            CreateDevice();
+            leftTexture = CreateRenderTexture(true, ref leftTextureNativePtr);
+            rightTexture = CreateRenderTexture(false, ref rightTextureNativePtr);
+
+        }
+
+        public void Connect()
+        {
             _signalling.Connect();
         }
 
-        void CreateRenderTexture(bool left, ref IntPtr textureNativePtr, string texturename, ref Texture texture)
+        Texture CreateRenderTexture(bool left, ref IntPtr textureNativePtr)
         {
             CreateTexture(width, height, left);
             textureNativePtr = GetTexturePtr(left);
 
             if (textureNativePtr != IntPtr.Zero)
             {
-                texture = Texture2D.CreateExternalTexture((int)width, (int)height, TextureFormat.RGBA32, mipChain: false, linear: true, textureNativePtr);
-                screen.material.SetTexture(texturename, texture);
+                return Texture2D.CreateExternalTexture((int)width, (int)height, TextureFormat.RGBA32, mipChain: false, linear: true, textureNativePtr);
             }
             else
             {
                 Debug.LogError("Texture is null");
+                return null;
             }
 
         }
@@ -131,16 +130,12 @@ namespace GstreamerWebRTC
         {
             Debug.Log("start pipe " + remote_peer_id);
             CreatePipeline(_signallingServerURL, remote_peer_id);
-            event_OnVideoRoomStatusHasChanged.Invoke(true);
-            event_OnAudioReceiverRoomStatusHasChanged.Invoke(true);
-            event_AudioSenderStatusHasChanged.Invoke(true);
+            event_OnPipelineStarted.Invoke();
         }
 
-        void OnDisable()
+        public void Cleanup()
         {
-            event_OnVideoRoomStatusHasChanged.Invoke(false);
-            event_OnAudioReceiverRoomStatusHasChanged.Invoke(false);
-            event_AudioSenderStatusHasChanged.Invoke(false);
+            //_command = null;
             _signalling.Close();
             DestroyPipeline();
             if (leftTextureNativePtr != IntPtr.Zero)
@@ -153,23 +148,15 @@ namespace GstreamerWebRTC
                 ReleaseTexture(rightTextureNativePtr);
                 rightTextureNativePtr = IntPtr.Zero;
             }
+            //_command.Dispose();
         }
 
-        void Update()
+
+        public void Render()
         {
             CommandBuffer _command = new CommandBuffer();
             _command.IssuePluginEvent(GetRenderEventFunc(), 1);
             Graphics.ExecuteCommandBuffer(_command);
-        }
-
-        public Texture GetLeftTexture()
-        {
-            return leftTexture;
-        }
-
-        public Texture GetRightTexture()
-        {
-            return rightTexture;
         }
 
     }

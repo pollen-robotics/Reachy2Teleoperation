@@ -1,0 +1,24 @@
+{
+  "name": "com.pollenrobotics.gstreamerwebrtc",
+  "version": "1.0.0",
+  "displayName": "Gstreamer webRTC",
+  "description": "Exchange audio, video and data with a Reachy robot through webRTC using the Gstreamer framework.",
+  "unity": "2022.3",
+  "documentationUrl": "https://github.com/pollen-robotics/reachy2021-unity-package",
+  "keywords": [
+    "pollen",
+    "robotics",
+    "webrtc",
+    "gstreamer"
+  ],
+  "dependencies": {
+    "com.endel.nativewebsocket": "1.1.4"
+  },
+  "license": "CC-BY-NC-SA-4.0",
+  "author": {
+    "name": "Pollen Robotics",
+    "email": "contact@pollen-robotics.com",
+    "url": "https://www.pollen-robotics.com"
+  },
+  "type": "tool"
+}
