@@ -63,8 +63,10 @@ namespace Bridge {
             "Y3Rpb24YASABKAsyLC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5UYXJnZXREaXJl",
             "Y3Rpb25Db21tYW5kEj4KEG1vYmlsZV9iYXNlX21vZGUYAiABKAsyJC5tb2Jp",
             "bGUuYmFzZS51dGlsaXR5Llp1dXVNb2RlQ29tbWFuZCIzCgtBbnlDb21tYW5k",
-            "cxIkCghjb21tYW5kcxgBIAMoCzISLmJyaWRnZS5BbnlDb21tYW5kYgZwcm90",
-            "bzM="));
+            "cxIkCghjb21tYW5kcxgBIAMoCzISLmJyaWRnZS5BbnlDb21tYW5kIlkKElJl",
+            "YWNoYWJpbGl0eUFuc3dlchJDCgxyZWFjaGFiaWxpdHkYASADKAsyLS5yZWFj",
+            "aHkucGFydC5hcm0uQXJtQ2FydGVzaWFuR29hbFJlYWNoYWJpbGl0eWIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.ReachyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -79,7 +81,8 @@ namespace Bridge {
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.HandCommand), global::Bridge.HandCommand.Parser, new[]{ "HandGoal", "TurnOn", "TurnOff" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.NeckCommand), global::Bridge.NeckCommand.Parser, new[]{ "NeckGoal", "TurnOn", "TurnOff", "SpeedLimit", "TorqueLimit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.MobileBaseCommand), global::Bridge.MobileBaseCommand.Parser, new[]{ "TargetDirection", "MobileBaseMode" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.AnyCommands), global::Bridge.AnyCommands.Parser, new[]{ "Commands" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.AnyCommands), global::Bridge.AnyCommands.Parser, new[]{ "Commands" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ReachabilityAnswer), global::Bridge.ReachabilityAnswer.Parser, new[]{ "Reachability" }, null, null, null, null)
           }));
     }
     #endregion
@@ -3461,6 +3464,184 @@ namespace Bridge {
             break;
           case 10: {
             commands_.AddEntriesFrom(ref input, _repeated_commands_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class ReachabilityAnswer : pb::IMessage<ReachabilityAnswer>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ReachabilityAnswer> _parser = new pb::MessageParser<ReachabilityAnswer>(() => new ReachabilityAnswer());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ReachabilityAnswer> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Bridge.WebrtcBridgeReflection.Descriptor.MessageTypes[12]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer(ReachabilityAnswer other) : this() {
+      reachability_ = other.reachability_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer Clone() {
+      return new ReachabilityAnswer(this);
+    }
+
+    /// <summary>Field number for the "reachability" field.</summary>
+    public const int ReachabilityFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::Reachy.Part.Arm.ArmCartesianGoalReachability> _repeated_reachability_codec
+        = pb::FieldCodec.ForMessage(10, global::Reachy.Part.Arm.ArmCartesianGoalReachability.Parser);
+    private readonly pbc::RepeatedField<global::Reachy.Part.Arm.ArmCartesianGoalReachability> reachability_ = new pbc::RepeatedField<global::Reachy.Part.Arm.ArmCartesianGoalReachability>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Reachy.Part.Arm.ArmCartesianGoalReachability> Reachability {
+      get { return reachability_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ReachabilityAnswer);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ReachabilityAnswer other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!reachability_.Equals(other.reachability_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= reachability_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      reachability_.WriteTo(output, _repeated_reachability_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      reachability_.WriteTo(ref output, _repeated_reachability_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += reachability_.CalculateSize(_repeated_reachability_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ReachabilityAnswer other) {
+      if (other == null) {
+        return;
+      }
+      reachability_.Add(other.reachability_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            reachability_.AddEntriesFrom(input, _repeated_reachability_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            reachability_.AddEntriesFrom(ref input, _repeated_reachability_codec);
             break;
           }
         }
