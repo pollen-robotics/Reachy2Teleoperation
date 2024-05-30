@@ -15,6 +15,7 @@ namespace TeleopReachy
         private Bridge.ConnectionStatus _connectionStatus = null;
 
         private ReachyState _reachyState = null;
+        private ReachabilityAnswer _reachyReachability = null;
 
         private DataMessageManager dataMessageManager;
 
@@ -72,6 +73,14 @@ namespace TeleopReachy
         void SetupCommandChannel(RTCDataChannel channel)
         {
             _reachyCommandChannel = channel;
+            _reachyCommandChannel.OnMessage = OnCommandChannelMessage;
+        }
+
+        void OnCommandChannelMessage(byte[] data)
+        {
+            _reachyReachability = ReachabilityAnswer.Parser.ParseFrom(data);
+
+            dataMessageManager.StreamReachability(_reachyReachability);
         }
 
         void SetupConnection(RTCDataChannel channel)

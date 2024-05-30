@@ -27,6 +27,7 @@ namespace TeleopReachy
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
+        public UnityEvent<Dictionary<string, bool>> event_OnReachabilityUpdate;
 
         private WebRTCData webRTCDataController;
 
@@ -132,6 +133,16 @@ namespace TeleopReachy
             }
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
+        }
+
+        public void StreamReachability(ReachabilityAnswer answer)
+        {
+            Dictionary<string, bool> reachability = new Dictionary<string, bool>();
+            foreach (var armAnswer in answer.Reachability)
+            {
+                reachability.Add(armAnswer.Id.Name, armAnswer.Reachable.Value);
+            }
+            event_OnReachabilityUpdate.Invoke(reachability);
         }
 
         public void SetHandPosition(HandPositionRequest gripperPosition)
