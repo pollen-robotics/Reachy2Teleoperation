@@ -7,6 +7,14 @@
       "dependencies": {},
       "hash": "c5101c07762251edc82caad9e8a39d51b1229c31"
     },
+    "com.pollenrobotics.gstreamerwebrtc": {
+      "version": "file:com.pollenrobotics.gstreamerwebrtc",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.endel.nativewebsocket": "1.1.4"
+      }
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

@@ -53,11 +53,19 @@ namespace TeleopReachy
             needUpdateStatusPanel = false;
             needUpdateAdvancedOptions = false;
             needUpdateHelpPanel = false;
+
+            statusPanel.ActivateChildren(false);
+            statusPanel.GetChild(0).gameObject.SetActive(true);
+            advancedOptions.ActivateChildren(false);
+            advancedOptions.GetChild(0).gameObject.SetActive(true);
+            helpPanel.ActivateChildren(false);
+            helpPanel.GetChild(0).gameObject.SetActive(true);
         }
 
         private void OpenClosePanel(ref Vector3 lerpPanelStartingPosition, ref Transform panel, ref float timeElapsedPanel, ref Vector3 lerpPanelGoalPosition,
                                     Vector3 closedPanelPosition, Vector3 openPanelPosition, ref bool isPanelOpen, ref bool needUpdatePanel)
         {
+            panel.ActivateChildren(true);
             lerpPanelStartingPosition = panel.localPosition;
             timeElapsedPanel = 0;
             if (isPanelOpen)
@@ -90,7 +98,7 @@ namespace TeleopReachy
                            closedAdvancedOptionsPosition, openAdvancedOptionsPosition, ref isAdvancedOptionsOpen, ref needUpdateAdvancedOptions);
         }
 
-        private void NeedUpdatePanel(ref float timeElapsedPanel, ref Transform panel, ref bool needUpdatePanel, Vector3 lerpPanelGoalPosition, Vector3 lerpPanelStartingPosition)
+        private void NeedUpdatePanel(ref float timeElapsedPanel, ref Transform panel, ref bool needUpdatePanel, bool isPanelOpen, Vector3 lerpPanelGoalPosition, Vector3 lerpPanelStartingPosition)
         {
             timeElapsedPanel += Time.deltaTime;
             if (timeElapsedPanel >= 1)
@@ -98,6 +106,11 @@ namespace TeleopReachy
                 timeElapsedPanel = 0;
                 panel.localPosition = lerpPanelGoalPosition;
                 needUpdatePanel = false;
+                if(!isPanelOpen)
+                {
+                    panel.ActivateChildren(false);
+                    panel.GetChild(0).gameObject.SetActive(true);
+                }
             }
             else
             {
@@ -110,17 +123,17 @@ namespace TeleopReachy
         {
             if (needUpdateStatusPanel)
             {
-                NeedUpdatePanel(ref timeElapsedStatusPanel, ref statusPanel, ref needUpdateStatusPanel, lerpStatusPanelGoalPosition, lerpStatusPanelStartingPosition);
+                NeedUpdatePanel(ref timeElapsedStatusPanel, ref statusPanel, ref needUpdateStatusPanel, isStatusPanelOpen, lerpStatusPanelGoalPosition, lerpStatusPanelStartingPosition);
             }
 
             if (needUpdateHelpPanel)
             {
-                NeedUpdatePanel(ref timeElapsedHelpPanel, ref helpPanel, ref needUpdateHelpPanel, lerpHelpPanelGoalPosition, lerpHelpPanelStartingPosition);
+                NeedUpdatePanel(ref timeElapsedHelpPanel, ref helpPanel, ref needUpdateHelpPanel, isHelpPanelOpen, lerpHelpPanelGoalPosition, lerpHelpPanelStartingPosition);
             }
 
             if (needUpdateAdvancedOptions)
             {
-                NeedUpdatePanel(ref timeElapsedAdvancedOptions, ref advancedOptions, ref needUpdateAdvancedOptions, lerpAdvancedOptionsGoalPosition, lerpAdvancedOptionsStartingPosition);
+                NeedUpdatePanel(ref timeElapsedAdvancedOptions, ref advancedOptions, ref needUpdateAdvancedOptions, isAdvancedOptionsOpen, lerpAdvancedOptionsGoalPosition, lerpAdvancedOptionsStartingPosition);
             }
         }
     }

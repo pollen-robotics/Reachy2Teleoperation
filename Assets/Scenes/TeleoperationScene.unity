@@ -2947,9 +2947,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 803308013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b572c1ebfa0c95f4d9f1af5899054ed5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4267467c9946d49942948d10f97b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftRawImage: {fileID: 0}
+  rightRawImage: {fileID: 0}
+  ip_address: 
   screen: {fileID: 224850607}
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
@@ -2960,8 +2963,6 @@ MonoBehaviour:
   event_AudioSenderStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
-  producer: 0
-  remote_producer_name: robot
 --- !u!1 &804350694
 GameObject:
   m_ObjectHideFlags: 0
