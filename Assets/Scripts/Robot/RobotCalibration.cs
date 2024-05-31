@@ -172,7 +172,6 @@ namespace TeleopReachy
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
 
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
-            Debug.Log("largeur épaule =" + Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f);
 
             //ajout des data dans un .csv
             var filePath = @"C:\Users\robot\Dev\dataunity_exhaustif.csv";
@@ -221,7 +220,7 @@ namespace TeleopReachy
                 rightHandPositionsUserSpace.Add(handPositionUserSpace);
             }
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Repere_centre\Claire", fileName)))
+            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Tests\SimonAP", fileName)))
             {
                 string csvContent = "Side,X,Y,Z\n";
                 foreach (Vector3 point in leftHandPositionsUserSpace)
@@ -246,12 +245,10 @@ namespace TeleopReachy
                 2 * p.x, 2 * p.y, 2 * p.z,
                 1
             }).ToArray());
-            Debug.Log("D = " + D);
 
             var d2 = Vector<double>.Build.DenseOfEnumerable(points.Select(p => (double)p.x * p.x + (double)p.y * p.y + (double)p.z * p.z));
-            Debug.Log("d2 = " + d2);
             var u = D.TransposeThisAndMultiply(D).Solve(D.TransposeThisAndMultiply(d2));
-            Debug.Log("u = " + u);
+
             double a = u[0] + u[1] - 1;
             double b = u[0] - 2 * u[1] - 1;
             double c = u[1] - 2 * u[0] - 1;
@@ -263,29 +260,21 @@ namespace TeleopReachy
                 new double[] {v[3], v[1], v[5], v[7]},
                 new double[] {v[4], v[5], v[2], v[8]},
                 new double[] {v[6], v[7], v[8], v[9]});
-            Debug.Log("A = " + A);
 
             var centre = (-A.SubMatrix(0, 3, 0, 3)).Solve(v.SubVector(6, 3));
             var T = DenseMatrix.CreateIdentity(4);
-            Debug.Log("T init = " + T);
             T[3, 0] = centre[0];
             T[3, 1] = centre[1];
             T[3, 2] = centre[2];            
-            Debug.Log("T = " + T);
 
             var R = T.Multiply(A).Multiply(T.Transpose());
-            Debug.Log("R = " + R);
             var eig = R.SubMatrix(0, 3, 0, 3).Divide(-R[3, 3]).Evd();
-            Debug.Log("eig = " + eig);
             var evals = eig.EigenValues.Real();
-            Debug.Log("evals = " + evals);
 
             var radii = evals.Map(value => Math.Sqrt(1 / Math.Abs(value)));
-            Debug.Log("radii =" + radii);
             Vector3 radiiVector3 = new Vector3((float)radii[0], (float)radii[1], (float)radii[2]);
             double meanRadius = radii.Median();
             Vector3 centreVector3 = new Vector3((float)centre[0], (float)centre[1], (float)centre[2]);
-            Debug.Log("centre = " + centreVector3);
             
             double xThreshold = 0.07;
             var filteredPointsx = points.Where(p => Math.Abs(p.x - centre[0]) <= xThreshold);
