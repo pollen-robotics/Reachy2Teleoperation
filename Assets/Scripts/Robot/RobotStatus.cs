@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Reachy.Part.Arm;
 
 namespace TeleopReachy
 {
@@ -39,6 +40,8 @@ namespace TeleopReachy
 
         private bool isLeftGripperClosed = false;
         private bool isRightGripperClosed = false;
+
+        private IKMode armIkMode;
 
         public bool IsRobotPositionLocked { get; private set; }
 
@@ -203,6 +206,16 @@ namespace TeleopReachy
         public void SetMobilityInCloseLoop(bool isCloseLoop)
         {
             isMobilityInCloseLoop = isCloseLoop;
+        }
+
+        public void SetIKMode(IKMode mode)
+        {
+            armIkMode = mode;
+        }
+
+        public IKMode GetIKMode()
+        {
+            return armIkMode;
         }
 
         public void InitializeRobotState()
