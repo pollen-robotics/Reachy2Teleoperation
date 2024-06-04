@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 52924899}
   - component: {fileID: 52924898}
   - component: {fileID: 52924897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 116870410}
   - component: {fileID: 116870412}
   - component: {fileID: 116870411}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 165854968}
   - component: {fileID: 165854967}
   - component: {fileID: 165854966}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 426028724}
   - component: {fileID: 426028723}
   - component: {fileID: 426028722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 758629947}
   - component: {fileID: 758629946}
   - component: {fileID: 758629945}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ GameObject:
   - component: {fileID: 1092319680}
   - component: {fileID: 1092319679}
   - component: {fileID: 1092319678}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 1220279961}
   - component: {fileID: 1220279960}
   - component: {fileID: 1220279963}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 1470044180}
   - component: {fileID: 1470044182}
   - component: {fileID: 1470044181}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1665,7 +1665,7 @@ GameObject:
   - component: {fileID: 1964064619}
   - component: {fileID: 1964064618}
   - component: {fileID: 1964064617}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1774,7 +1774,7 @@ GameObject:
   - component: {fileID: 2069985454}
   - component: {fileID: 2069985456}
   - component: {fileID: 2069985455}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: PressA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1953,7 +1953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 321369478794687394}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_trigger_grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1990,7 +1990,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3674899696849193158}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_thumbstick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2006,7 +2006,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2879203760726334391}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2028,37 +2028,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4148377351351568912}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &543450652890545636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148899702622}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &919132148899702622
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 543450652890545636}
-  m_Layer: 0
-  m_Name: quest2_controllers_div0
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &1233046120827448276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2080,7 +2049,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8607379185934222466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_x
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2123,7 +2092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4148377351351568912}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: right_quest2_controller_world
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2157,7 +2126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3217403282118481720}
   - component: {fileID: 7088378906336999224}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: right_quest2_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2173,7 +2142,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 131240446261841122}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: left_quest2_controller_world
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2328,7 +2297,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6185766491606215477, guid: 8bc6d7a04c445974580f1b644d8ae279, type: 3}
+  - {fileID: 2100000, guid: a36427bdb7eeae94388c0dafed3fe5c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2377,7 +2346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 59640579960678808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_oculus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3892,7 +3861,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6122432668468891474}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_trigger_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3935,7 +3904,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8236265524757104707}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_trigger_grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4047,7 +4016,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3477234630701325189}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_y
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4063,7 +4032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2213790691043399850}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_trigger_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4090,7 +4059,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6185766491606215477, guid: 8bc6d7a04c445974580f1b644d8ae279, type: 3}
+  - {fileID: 2100000, guid: a36427bdb7eeae94388c0dafed3fe5c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4139,7 +4108,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8404071319728436145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_thumbstick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4217,7 +4186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8607529454456285155}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_oculus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4233,7 +4202,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7539667063009623759}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: b_button_b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4265,7 +4234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8916555415729674392}
   - component: {fileID: 4413085031426375914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: left_quest2_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4413,4 +4382,3 @@ SceneRoots:
   - {fileID: 4826978605613812946}
   - {fileID: 121870478}
   - {fileID: 1794126925}
-  - {fileID: 543450652890545636}
