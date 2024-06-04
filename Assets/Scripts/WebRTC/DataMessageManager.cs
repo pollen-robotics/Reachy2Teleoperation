@@ -140,7 +140,8 @@ namespace TeleopReachy
             Dictionary<string, bool> reachability = new Dictionary<string, bool>();
             foreach (var armAnswer in answer.Reachability)
             {
-                reachability.Add(armAnswer.Id.Name, armAnswer.Reachable.Value);
+                try { reachability.Add(armAnswer.Id.Name, armAnswer.Reachable.Value); }
+                catch {}
             }
             event_OnReachabilityUpdate.Invoke(reachability);
         }
