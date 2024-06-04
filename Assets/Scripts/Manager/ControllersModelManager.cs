@@ -77,6 +77,11 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out rightPrimary2DAxisTouched);
             RThumstick.SetActive(rightPrimary2DAxisTouched);
 
+            Vector2 rightPrimary2DAxis;
+            controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out rightPrimary2DAxis);
+            if (rightPrimary2DAxis != new Vector2(0, 0)) RThumstick.GetComponent<Renderer>().material = pressedButton;
+            else RThumstick.GetComponent<Renderer>().material = touchedButton;
+
             bool leftPrimaryButtonTouched;
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out leftPrimaryButtonTouched);
             XButton.SetActive(leftPrimaryButtonTouched);
@@ -99,7 +104,7 @@ namespace TeleopReachy
             YButton.SetActive(leftSecondaryButtonTouched);
 
             bool leftSecondaryButtonPressed;
-            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftSecondaryButtonPressed);
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out leftSecondaryButtonPressed);
             if(leftSecondaryButtonPressed)
             {
                 YButton.transform.localScale = new Vector3(0.012f, 0.006f, 0.012f);
@@ -114,6 +119,11 @@ namespace TeleopReachy
             bool leftPrimary2DAxisTouched;
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out leftPrimary2DAxisTouched);
             LThumstick.SetActive(leftPrimary2DAxisTouched);
+
+            Vector2 leftPrimary2DAxis;
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out leftPrimary2DAxis);
+            if (leftPrimary2DAxis != new Vector2(0, 0)) LThumstick.GetComponent<Renderer>().material = pressedButton;
+            else LThumstick.GetComponent<Renderer>().material = touchedButton;
         }
     }
 }
