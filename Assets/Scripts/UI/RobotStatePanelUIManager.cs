@@ -58,17 +58,12 @@ namespace TeleopReachy
                     string actuatorName = nameParsed[0] + "_hand_temperature";
 
                     string panelName = actuatorName + nameParsed[1];
-
+                    Debug.LogError(panelName);
                     panelTemperature.Add(panelName, motor.Value);
                 }
                 else
                 {
-                    string[] nameParsed = motor.Key.Split("_motor_");
-                    string actuatorName = nameParsed[0] + "_temperature";
-
-                    string panelName = actuatorName + "motor_" + nameParsed[1];
-
-                    panelTemperature.Add(panelName, motor.Value);
+                    panelTemperature.Add(motor.Key, motor.Value);
                 }
             }
             needUpdatePanel = true;
@@ -86,31 +81,32 @@ namespace TeleopReachy
 
         private void CheckTemperatureInfo()
         {
-            // if (connectionStatus.AreRobotServicesRestarting())
-            // {
-            //     transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "Waiting for temperatures...";
-            //     transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
-            //     isStatePanelStatusActive = true;
-            // }
-            // else
-            // {
-            //     if (!connectionStatus.IsRobotInDataRoom())
-            //     {
-            //         transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No temperature information";
-            //         transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
-            //         isStatePanelStatusActive = true;
-            //     }
-            //     else
-            //     {
-            //         isStatePanelStatusActive = false;
-            //     }
-            // }
-            // UpdateStatePanelStatus();
+            if (connectionStatus.AreRobotServicesRestarting())
+            {
+                transform.GetChild(3).GetChild(1).GetComponent<Text>().text = "Waiting for motors info...";
+                transform.GetChild(3).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
+                isStatePanelStatusActive = true;
+            }
+            else
+            {
+                if (!connectionStatus.IsRobotInDataRoom())
+                {
+                    transform.GetChild(3).GetChild(1).GetComponent<Text>().text = "No motors information";
+                    transform.GetChild(3).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
+                    isStatePanelStatusActive = true;
+                }
+                else
+                {
+                    isStatePanelStatusActive = false;
+                }
+            }
+            UpdateStatePanelStatus();
         }
 
         private void UpdateStatePanelStatus()
         {
-            transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
+            transform.GetChild(3).gameObject.SetActive(isStatePanelStatusActive);
+            transform.GetChild(2).ActivateChildren(!isStatePanelStatusActive);
         }
 
         // void Update()
