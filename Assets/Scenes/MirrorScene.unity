@@ -20201,7 +20201,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Right shoulder:'
+  m_Text: Right shoulder
 --- !u!222 &5133549094950797022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20631,7 +20631,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Left shoulder:'
+  m_Text: Left shoulder
 --- !u!222 &5133549095793365921
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20751,7 +20751,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Right elbow:'
+  m_Text: Right elbow
 --- !u!222 &5133549095860319799
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20882,7 +20882,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Neck:'
+  m_Text: Neck
 --- !u!222 &5133549095942116765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20963,7 +20963,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Left hand:'
+  m_Text: Left hand
 --- !u!222 &5133549095957958884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21052,7 +21052,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Left elbow:'
+  m_Text: Left elbow
 --- !u!222 &5133549096264501120
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21134,7 +21134,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Right wrist:'
+  m_Text: Right wrist
 --- !u!1 &5133549096363049698
 GameObject:
   m_ObjectHideFlags: 0
@@ -21254,7 +21254,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Left wrist:'
+  m_Text: Left wrist
 --- !u!222 &5133549096376944374
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21407,7 +21407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Right hand:'
+  m_Text: Right hand
 --- !u!222 &5133549096659959736
 CanvasRenderer:
   m_ObjectHideFlags: 0

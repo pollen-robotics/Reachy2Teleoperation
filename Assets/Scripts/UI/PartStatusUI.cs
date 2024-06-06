@@ -82,15 +82,16 @@ namespace TeleopReachy
                 foreach (var motor in motors)
                 {
                     float value = robotStatePanelManager.GetTemperature(motor.Value);
-                    string[] typeParsed = motor.Value.Split("_");
                     string message;
                     if (motor.Value.Contains("hand"))
                     {
-                        message = typeParsed[0] + ": " + Mathf.Round(value).ToString();
+                        string[] typeParsed = motor.Value.Split("hand_");
+                        message = typeParsed[1] + ": " + Mathf.Round(value).ToString();
                     }
                     else
                     {
-                        message = typeParsed[0] + " " + typeParsed[1] + ": " + Mathf.Round(value).ToString();
+                        string[] typeParsed = motor.Value.Split("motor_");
+                        message = "Motor: " + typeParsed[1] + ": " + Mathf.Round(value).ToString();
                     }
                     transform.GetChild(2).GetChild(motor.Key).GetComponent<Text>().text = message;
                 }
