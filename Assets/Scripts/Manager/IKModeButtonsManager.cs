@@ -19,8 +19,8 @@ namespace TeleopReachy
 
         void Awake()
         {
-            modeFullControlButton.onClick.AddListener(delegate { SwitchToGraspingLockMode(IKMode.Unconstrained); });
-            modeHumanLikeButton.onClick.AddListener(delegate { SwitchToGraspingLockMode(IKMode.LowElbow); });
+            modeFullControlButton.onClick.AddListener(delegate { ChangeIKMode(IKMode.Unconstrained); });
+            modeHumanLikeButton.onClick.AddListener(delegate { ChangeIKMode(IKMode.LowElbow); });
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
@@ -36,7 +36,7 @@ namespace TeleopReachy
             CheckArmPresence();
         }
 
-        void SwitchToGraspingLockMode(IKMode mode)
+        void ChangeIKMode(IKMode mode)
         {
             robotStatus.SetIKMode(mode);
             needUpdateButton = true;
