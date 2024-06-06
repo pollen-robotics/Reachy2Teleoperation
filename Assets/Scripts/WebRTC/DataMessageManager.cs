@@ -171,7 +171,7 @@ namespace TeleopReachy
                     }
                     if (partStatus is HeadStatus)
                     {
-                        foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                        foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
                             if (componentStatus != null) 
