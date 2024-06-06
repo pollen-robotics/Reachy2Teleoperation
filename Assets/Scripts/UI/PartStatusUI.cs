@@ -42,12 +42,16 @@ namespace TeleopReachy
             errorManager.event_OnWarningMotorsTemperatures.AddListener(SetWarningTemperatures);
             errorManager.event_OnErrorMotorsTemperatures.AddListener(SetErrorTemperatures);
 
-            foreach (GameObject child in transform.GetChild(2))
+            motors = new Dictionary<int, string>();
+
+            foreach (Transform child in transform.GetChild(2))
             {
                 string motorName = child.name.Split("_temperature")[0];
                 motorName = partName + "_" + motorName;
-                motors.Add(child.transform.GetSiblingIndex(), motorName);
+                motors.Add(child.GetSiblingIndex(), motorName);
             }
+
+            transform.GetChild(2).ActivateChildren(false);
         }
 
         // Update is called once per frame
@@ -95,7 +99,7 @@ namespace TeleopReachy
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            transform.GetChild(2).gameObject.SetActive(true);
+            transform.GetChild(2).ActivateChildren(true);
             isTemperatureDisplayed = true;
             Vector3 pos = transform.GetChild(2).localPosition;
             if(needErrorDisplay || needWarningDisplay) transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
@@ -104,7 +108,7 @@ namespace TeleopReachy
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            transform.GetChild(2).gameObject.SetActive(false);
+            transform.GetChild(2).ActivateChildren(false);
             isTemperatureDisplayed = false;
         }
 
