@@ -76,8 +76,7 @@ namespace TeleopReachy
 
         public float GetTemperature(string motor)
         {
-            float temperature;
-            if (panelTemperature.TryGetValue(motor, out temperature))
+            if (panelTemperature != null && panelTemperature.TryGetValue(motor, out temperature))
             {
                 return temperature;
             }
