@@ -52,7 +52,7 @@ namespace TeleopReachy
 
         // calibration variables 
         public Vector3 midShoulderPoint { get; set; }
-        private Transform oldUserCenter;
+        public Transform oldUserCenter;
         private Transform newUserCenter;
 
 

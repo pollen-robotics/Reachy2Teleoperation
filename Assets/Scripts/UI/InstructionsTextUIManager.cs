@@ -22,6 +22,7 @@ namespace TeleopReachy
 
         private string instructionsText;
         private string instructionsDetailsText;
+        private int validationStep=0;
 
         private static InstructionsTextUIManager instance;
 
@@ -68,6 +69,7 @@ namespace TeleopReachy
             robotCalib.event_WaitForCalib.AddListener(IndicateToPressX);
             robotCalib.event_StartRightCalib.AddListener(() => IndicateInitialCalibration("right"));
             robotCalib.event_StartLeftCalib.AddListener(() => IndicateInitialCalibration("left"));
+            robotCalib.event_ValidateCalib.AddListener(IndicatetoDoValidationGesture);
             robotCalib.event_OnCalibChanged.AddListener(IndicateRobotReady);
             needUpdateText = true;
         }
@@ -124,6 +126,28 @@ namespace TeleopReachy
             instructionsText = "Calibration done. " ;
             instructionsDetailsText = "";
             needUpdateText = true;
+        }
+
+         public void IndicatetoDoValidationGesture()
+        {
+            switch (validationStep)
+            {
+                case 0:
+                    instructionsText = "Put your arms on either side of your body and press " + textButtonControllerModifier.GetPrimLeftButtonName() ;
+                    instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
+                    break;
+                case 1:
+                    instructionsText = "Put your arms in front of you and press " + textButtonControllerModifier.GetPrimLeftButtonName();
+                    instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
+                    break;
+                case 2:
+                    instructionsText = "Place your joysticks one above the other at sternum level and press " + textButtonControllerModifier.GetPrimLeftButtonName();
+                    instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
+                    break;
+            }
+            instructionsDetailsText = "";
+            needUpdateText = true;
+            validationStep++;
         }
     }
 }
