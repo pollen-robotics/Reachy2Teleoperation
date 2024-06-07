@@ -54,6 +54,13 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
+        public static extern void SendBytesChannelData(byte[] array, int size);
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
         static extern void RegisterICECallback(iceCallback cb);
         delegate void iceCallback(IntPtr candidate, int size_candidate, int mline_index);
 
@@ -73,6 +80,22 @@ namespace GstreamerWebRTC
         static extern void RegisterChannelServiceOpenCallback(channelServiceOpenCallback cb);
         delegate void channelServiceOpenCallback();
 
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
+        static extern void RegisterChannelServiceDataCallback(channelServiceDataCallback cb);
+        delegate void channelServiceDataCallback(IntPtr data, int size_data);
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
+        static extern void RegisterChannelStateDataCallback(channelServiceDataCallback cb);
+        delegate void channelStateDataCallback(IntPtr data, int size_data);
+
         private string _signallingServerURL;
         private Signalling _signalling;
 
@@ -85,12 +108,16 @@ namespace GstreamerWebRTC
 
         private static UnityEvent<string, int> event_OnICE;
         public static UnityEvent event_OnChannelServiceOpen;
+        public static UnityEvent<byte[]> event_OnChannelServiceData;
+        public static UnityEvent<byte[]> event_OnChannelStateData;
 
         public GStreamerDataPlugin(string ip_address)
         {
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
+            RegisterChannelServiceDataCallback(OnChannelServiceDataCallback);
+            RegisterChannelStateDataCallback(OnChannelStateDataCallback);
 
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
@@ -109,6 +136,8 @@ namespace GstreamerWebRTC
             event_OnICE.AddListener(OnICE);
 
             event_OnChannelServiceOpen = new UnityEvent();
+            event_OnChannelServiceData = new UnityEvent<byte[]>();
+            event_OnChannelStateData = new UnityEvent<byte[]>();
         }
 
         public void Connect()
@@ -169,6 +198,22 @@ namespace GstreamerWebRTC
         static void OnChannelServiceOpenCallback()
         {
             event_OnChannelServiceOpen.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(channelServiceDataCallback))]
+        static void OnChannelServiceDataCallback(IntPtr data, int size)
+        {
+            byte[] data_bytes = new byte[size];
+            Marshal.Copy(data, data_bytes, 0, size);
+            event_OnChannelServiceData.Invoke(data_bytes);
+        }
+
+        [MonoPInvokeCallback(typeof(channelStateDataCallback))]
+        static void OnChannelStateDataCallback(IntPtr data, int size)
+        {
+            byte[] data_bytes = new byte[size];
+            Marshal.Copy(data, data_bytes, 0, size);
+            event_OnChannelStateData.Invoke(data_bytes);
         }
 
     }

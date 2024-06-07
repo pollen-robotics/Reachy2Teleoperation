@@ -135,7 +135,6 @@ namespace GstreamerWebRTC
                             if (p.meta.name == _remote_producer_name)
                             {
                                 SendStartSession(p.id);
-                                Debug.Log("here" + p.id);
                                 event_OnRemotePeerId.Invoke(p.id);
                                 sessionStatus = SessionStatus.Started;
                                 break;

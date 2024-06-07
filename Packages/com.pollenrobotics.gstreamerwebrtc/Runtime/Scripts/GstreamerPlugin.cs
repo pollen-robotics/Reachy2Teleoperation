@@ -51,6 +51,7 @@ namespace GstreamerWebRTC
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             dataPlugin.Connect();
         }
 
@@ -68,6 +69,7 @@ namespace GstreamerWebRTC
         {
             renderingPlugin.Cleanup();
             dataPlugin.Cleanup();
+            dataPlugin = null;
         }
 
         void Update()
@@ -78,15 +80,20 @@ namespace GstreamerWebRTC
         //Data channels
         protected virtual void OnChannelServiceOpen()
         {
-            /*var req = new ServiceRequest
-            {
-                GetReachy = new GetReachy()
-            };
-            _serviceChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(req));*/
             byte[] bytes = new byte[] { 0x00, 0x01, 0x02, 0x20, 0x20, 0x20, 0x20 }; ;
             GStreamerDataPlugin.SendBytesChannelService(bytes, bytes.Length);
-
         }
 
+
+        protected virtual void OnChannelServiceData(byte[] data)
+        {
+            byte[] bytes = new byte[] { 0x00, 0x01, 0x02, 0x20, 0x20, 0x20, 0x20 }; ;
+            GStreamerDataPlugin.SendBytesChannelService(bytes, bytes.Length);
+        }
+
+        protected void SendCommandToChannel(byte[] commands)
+        {
+            GStreamerDataPlugin.SendBytesChannelData(commands, commands.Length);
+        }
     }
 }
