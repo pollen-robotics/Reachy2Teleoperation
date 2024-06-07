@@ -11,6 +11,8 @@ namespace GstreamerWebRTC
         [Tooltip("RawImage on which the right texture will be rendered")]
         public RawImage rightRawImage;
         protected GStreamerRenderingPlugin renderingPlugin = null;
+
+        protected GStreamerDataPlugin dataPlugin = null;
         protected DebugFromPlugin debug = null;
 
         [Tooltip("IP address of the robot (i.e. signalling server). PlayerPrefs.GetString(\"ip_address\") if empty")]
@@ -45,22 +47,45 @@ namespace GstreamerWebRTC
             leftRawImage.texture = left;
             rightRawImage.texture = right;
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
-            renderingPlugin.Connect();
+            //renderingPlugin.Connect();
+            dataPlugin = new GStreamerDataPlugin(ip_address);
+            dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            dataPlugin.Connect();
         }
 
         protected virtual void PipelineStarted()
         {
-            Debug.Log("Pipeline strated");
+            Debug.Log("Pipeline started");
+        }
+
+        protected virtual void PipelineDataStarted()
+        {
+            Debug.Log("Pipeline data started");
         }
 
         protected virtual void OnDisable()
         {
             renderingPlugin.Cleanup();
+            dataPlugin.Cleanup();
         }
 
         void Update()
         {
             renderingPlugin.Render();
+        }
+
+        //Data channels
+        protected virtual void OnChannelServiceOpen()
+        {
+            /*var req = new ServiceRequest
+            {
+                GetReachy = new GetReachy()
+            };
+            _serviceChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(req));*/
+            byte[] bytes = new byte[] { 0x00, 0x01, 0x02, 0x20, 0x20, 0x20, 0x20 }; ;
+            GStreamerDataPlugin.SendBytesChannelService(bytes, bytes.Length);
+
         }
 
     }

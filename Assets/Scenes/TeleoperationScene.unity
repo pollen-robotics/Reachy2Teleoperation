@@ -2733,9 +2733,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 803308015}
-  - component: {fileID: 803308020}
-  - component: {fileID: 803308021}
-  - component: {fileID: 803308019}
+  - component: {fileID: 803308025}
+  - component: {fileID: 803308024}
   - component: {fileID: 803308022}
   - component: {fileID: 803308023}
   m_Layer: 0
@@ -2760,56 +2759,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &803308019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803308013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6eff1c5880aa547ad7484748f1ae0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _producer: 0
-  remote_producer_name: grpc_webrtc_bridge
-  event_DataControllerStatusHasChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &803308020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803308013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23cc4045b4807dc408e2b3787a0d1e8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &803308021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803308013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a1bd65db3d4d145ad25a6d39b3ec46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  event_OnConnectionStatusHasChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotReady:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotUnready:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &803308022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,7 +2800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftRawImage: {fileID: 0}
   rightRawImage: {fileID: 0}
-  ip_address: 
+  ip_address: 10.0.1.36
   screen: {fileID: 224850607}
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
@@ -2862,6 +2811,42 @@ MonoBehaviour:
   event_AudioSenderStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
+  event_DataControllerStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &803308024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803308013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a1bd65db3d4d145ad25a6d39b3ec46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  event_OnConnectionStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnRobotReady:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnRobotUnready:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &803308025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803308013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cc4045b4807dc408e2b3787a0d1e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &804350694
 GameObject:
   m_ObjectHideFlags: 0
