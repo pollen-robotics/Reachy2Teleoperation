@@ -84,7 +84,7 @@ namespace TeleopReachy
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
 
-            robotCalib.event_OnCalibChanged.AddListener(FixNewPosition);
+            robotCalib.event_ValidateCalib.AddListener(FixNewPosition);
 
             if (Robot.IsCurrentRobotVirtual())
             {
