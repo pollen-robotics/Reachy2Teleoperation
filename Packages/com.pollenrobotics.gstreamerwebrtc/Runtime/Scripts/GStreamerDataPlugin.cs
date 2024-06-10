@@ -54,7 +54,7 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        public static extern void SendBytesChannelData(byte[] array, int size);
+        public static extern void SendBytesChannelCommand(byte[] array, int size);
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]

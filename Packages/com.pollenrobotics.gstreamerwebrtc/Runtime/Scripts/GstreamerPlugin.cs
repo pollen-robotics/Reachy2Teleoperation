@@ -47,7 +47,7 @@ namespace GstreamerWebRTC
             leftRawImage.texture = left;
             rightRawImage.texture = right;
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
-            //renderingPlugin.Connect();
+            renderingPlugin.Connect();
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
@@ -93,7 +93,7 @@ namespace GstreamerWebRTC
 
         protected void SendCommandToChannel(byte[] commands)
         {
-            GStreamerDataPlugin.SendBytesChannelData(commands, commands.Length);
+            GStreamerDataPlugin.SendBytesChannelCommand(commands, commands.Length);
         }
     }
 }
