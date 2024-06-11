@@ -130,6 +130,7 @@ namespace TeleopReachy
                     }
                 }
             }
+
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
         }
