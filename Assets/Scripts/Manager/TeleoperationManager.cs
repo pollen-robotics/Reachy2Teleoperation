@@ -74,14 +74,14 @@ namespace TeleopReachy
         private void DisplayReachy(bool enabled)
         {
             reachy.switchRenderer(enabled);
-            if (robotConfig.HasHead())
-                reachy.GetChild(0).switchRenderer(enabled);
-            if (robotConfig.HasLeftArm())
-                reachy.GetChild(1).switchRenderer(enabled);
-            if (robotConfig.HasRightArm())
-                reachy.GetChild(3).switchRenderer(enabled);
-            if (robotConfig.HasMobileBase())
-                reachy.GetChild(5).switchRenderer(enabled);
+            // if (robotConfig.HasHead())
+            //     reachy.GetChild(0).switchRenderer(enabled);
+            // if (robotConfig.HasLeftArm())
+            //     reachy.GetChild(1).switchRenderer(enabled);
+            // if (robotConfig.HasRightArm())
+            //     reachy.GetChild(3).switchRenderer(enabled);
+            // if (robotConfig.HasMobileBase())
+            //     reachy.GetChild(5).switchRenderer(enabled);
         }
     }
 }

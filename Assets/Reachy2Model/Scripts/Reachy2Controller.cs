@@ -64,7 +64,7 @@ namespace Reachy2Controller
             }
 
 
-            // headOrientation = new Vector3(0, 0, 0);
+            headOrientation = new Vector3(0, 0, 0);
             // baseHeadRot = head.transform.localRotation;
         }
 
@@ -102,7 +102,6 @@ namespace Reachy2Controller
 
                 targetPosition = low_range + ((high_range - low_range) / (closed_gripper - open_gripper)) * (-targetPosition - open_gripper);
 
-                Debug.LogError(motorName + " : " + targetPosition);
                 string mimicName = motorName + "_mimic";
                 string distalName = motorName + "_distal";
                 string distalMimicName = distalName + "_mimic";
@@ -126,21 +125,21 @@ namespace Reachy2Controller
                 motorName = kvp.Key;
                 SetMotorTargetPosition(motorName, kvp.Value);
 
-                // if (motorName == "head_neck_roll")
-                // {
-                //     containNeckCommand = true;
-                //     headOrientation[0] = kvp.Value;
-                // }
-                // if (motorName == "head_neck_pitch")
-                // {
-                //     containNeckCommand = true;
-                //     headOrientation[1] = kvp.Value;
-                // }
-                // if (motorName == "head_neck_yaw")
-                // {
-                //     containNeckCommand = true;
-                //     headOrientation[2] = -kvp.Value;
-                // }
+                if (motorName == "head_neck_roll")
+                {
+                    containNeckCommand = true;
+                    headOrientation[0] = kvp.Value;
+                }
+                if (motorName == "head_neck_pitch")
+                {
+                    containNeckCommand = true;
+                    headOrientation[1] = kvp.Value;
+                }
+                if (motorName == "head_neck_yaw")
+                {
+                    containNeckCommand = true;
+                    headOrientation[2] = -kvp.Value;
+                }
             }
 
             // if (containNeckCommand)

@@ -6,7 +6,7 @@ namespace TeleopReachy
     public class RobotMobilityUIManager : MonoBehaviour
     {
         [SerializeField]
-        private ReachyController.ReachyController reachyController;
+        private Reachy2Controller.Reachy2Controller reachyController;
 
         private UserMobilityInput userMobilityInput = null;
         private RobotStatus robotStatus;
