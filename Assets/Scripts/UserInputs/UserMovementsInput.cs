@@ -142,11 +142,11 @@ namespace TeleopReachy
 
                 if (right_gripper_closed)
                 {
-                    pos_right_gripper = Mathf.Deg2Rad * 20;
+                    pos_right_gripper = 0;
                 }
                 else
                 {
-                    pos_right_gripper = Mathf.Deg2Rad * -50;
+                    pos_right_gripper = 1;
                 }
             }
 
@@ -183,11 +183,11 @@ namespace TeleopReachy
 
                 if (left_gripper_closed)
                 {
-                    pos_left_gripper = Mathf.Deg2Rad * -20;
+                    pos_left_gripper = 0;
                 }
                 else
                 {
-                    pos_left_gripper = Mathf.Deg2Rad * 50;
+                    pos_left_gripper = 1;
                 }
             }
 
