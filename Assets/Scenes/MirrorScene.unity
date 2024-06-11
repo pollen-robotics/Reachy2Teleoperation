@@ -11333,6 +11333,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotStatePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5133549096407315470, guid: 53c8b224f079c6248aaeda75dfca3ff2, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 9a2083dcb113d5e4d8e47bfa859cabd1, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
