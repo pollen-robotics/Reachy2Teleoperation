@@ -54,7 +54,6 @@ namespace TeleopReachy
         {
             headset = GameObject.Find("Main Camera").transform;
             userTracker = UserTrackerManager.Instance.transform;
-            Debug.LogError(userTracker);
             State = TransitionState.WaitingForTracker;
 
             connectionStatus = WebRTCManager.Instance.ConnectionStatus;
