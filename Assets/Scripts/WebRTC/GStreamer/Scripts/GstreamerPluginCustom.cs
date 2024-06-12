@@ -131,7 +131,7 @@ namespace GstreamerWebRTC
 
         public void SendCommandMessage(AnyCommands commands)
         {
-            Debug.Log("send command");
+            //Debug.Log("send command");
             //if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(commands));
             SendCommandToChannel(Google.Protobuf.MessageExtensions.ToByteArray(commands));
         }
