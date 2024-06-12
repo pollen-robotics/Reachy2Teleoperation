@@ -66,8 +66,8 @@ namespace TeleopReachy
             // If a robot is selected, load teleoperation scene with prefs set to selected info
             if (has_robot_selected)
             {
-                
                 PlayerPrefs.SetString("robot_ip", GetIpv4Address());
+                PlayerPrefs.SetString("robot_info", selectedRobot.ip);
 
                 EventManager.TriggerEvent(EventNames.StartMirrorScene);
             }
@@ -154,9 +154,9 @@ namespace TeleopReachy
             CanvaRobotSelectionButtons.Add(newButton.GetComponent<Button>());
 
             // If it is the launch of the app, select default robot (last teleoperated robot)
-            if (!isContentInitialized && PlayerPrefs.GetString("robot_ip") != null)
+            if (!isContentInitialized && PlayerPrefs.GetString("robot_info") != null)
             {
-                if (reachy.ip == PlayerPrefs.GetString("robot_ip"))
+                if (reachy.ip == PlayerPrefs.GetString("robot_info"))
                 {
                     newButton.GetComponent<RobotButtonManager>().SelectRobotButton();
                 }
