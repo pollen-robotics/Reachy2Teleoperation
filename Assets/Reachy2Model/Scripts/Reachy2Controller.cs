@@ -11,7 +11,6 @@ namespace Reachy2Controller
         public GameObject gameObject;
         public float targetPosition;
         public float presentPosition;
-        public bool isCompliant;
     }
 
     public class Reachy2Controller : MonoBehaviour
@@ -46,7 +45,6 @@ namespace Reachy2Controller
             r_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(2).gameObject;
             head = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(3).gameObject;
             mobile_base = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-            // baseHeadRot = head.transform.localRotation;
         }
 
         void Update()
@@ -55,20 +53,11 @@ namespace Reachy2Controller
             {
                 Motor m = motors[i];
 
-                // if (!m.name.StartsWith("head_neck"))
-                // {
-                    JointController joint = m.gameObject.GetComponent<JointController>();
-                    joint.RotateTo(m.targetPosition);
+                JointController joint = m.gameObject.GetComponent<JointController>();
+                joint.RotateTo(m.targetPosition);
 
-                    m.presentPosition = joint.GetPresentPosition();
-                // }
-                // else
-                // {
-                //     m.presentPosition = m.targetPosition;
-                // }
+                m.presentPosition = joint.GetPresentPosition();
             }
-
-            // UpdateHeadOrientation();
         }
 
         void SetMotorTargetPosition(string motorName, float targetPosition)
@@ -121,100 +110,6 @@ namespace Reachy2Controller
                     headOrientation[2] = -kvp.Value;
                 }
             }
-
-            // if (containNeckCommand)
-            // {
-            //     //UnityEngine.Quaternion.Euler(); not properly working. Manually creating rotation
-            //     UnityEngine.Quaternion euler_request = UnityEngine.Quaternion.Euler(Vector3.forward * headOrientation[2]) * UnityEngine.Quaternion.Euler(Vector3.up * -headOrientation[0]) * UnityEngine.Quaternion.Euler(Vector3.right * headOrientation[1]);
-            //     HandleHeadOrientation(euler_request);
-            // }
         }
-
-        //     public void HandleCompliancy(Dictionary<JointId, bool> commands)
-        //     {
-        //         foreach (KeyValuePair<JointId, bool> kvp in commands)
-        //         {
-        //             string motorName;
-        //             switch (kvp.Key.IdCase)
-        //             {
-        //                 case JointId.IdOneofCase.Name:
-        //                     motorName = kvp.Key.Name;
-        //                     break;
-        //                 case JointId.IdOneofCase.Uid:
-        //                     motorName = motors[kvp.Key.Uid].name;
-        //                     break;
-        //                 default:
-        //                     motorName = kvp.Key.Name;
-        //                     break;
-        //             }
-        //             SetMotorCompliancy(motorName, kvp.Value);
-        //         }
-        //     }
-
-        //     public List<SerializableMotor> GetCurrentMotorsState(Dictionary<JointId, JointField> request)
-        //     {
-        //         List<SerializableMotor> motorsList = new List<SerializableMotor>();
-        //         foreach (KeyValuePair<JointId, JointField> kvp in request)
-        //         {
-        //             Motor m;
-        //             float position;
-        //             float target_position;
-        //             bool compliancy;
-        //             switch (kvp.Key.IdCase)
-        //             {
-        //                 case JointId.IdOneofCase.Name:
-        //                     m = name2motor[kvp.Key.Name];
-        //                     position = m.presentPosition;
-        //                     target_position = m.targetPosition;
-        //                     compliancy = m.isCompliant;
-        //                     if (!name2motor[kvp.Key.Name].isDirect)
-        //                     {
-        //                         position *= -1;
-        //                         target_position *= -1;
-        //                     }
-        //                     position -= name2motor[kvp.Key.Name].offset;
-        //                     target_position -= name2motor[kvp.Key.Name].offset;
-        //                     break;
-        //                 case JointId.IdOneofCase.Uid:
-        //                     m = motors[kvp.Key.Uid];
-        //                     position = m.presentPosition;
-        //                     target_position = m.targetPosition;
-        //                     compliancy = m.isCompliant;
-        //                     if (!motors[kvp.Key.Uid].isDirect)
-        //                     {
-        //                         position *= -1;
-        //                         target_position *= -1;
-        //                     }
-        //                     position -= motors[kvp.Key.Uid].offset;
-        //                     target_position -= motors[kvp.Key.Uid].offset;
-        //                     break;
-        //                 default:
-        //                     m = name2motor[kvp.Key.Name];
-        //                     position = m.presentPosition;
-        //                     target_position = m.targetPosition;
-        //                     compliancy = m.isCompliant;
-        //                     if (!name2motor[kvp.Key.Name].isDirect)
-        //                     {
-        //                         position *= -1;
-        //                         target_position *= -1;
-        //                     }
-        //                     position -= name2motor[kvp.Key.Name].offset;
-        //                     target_position -= name2motor[kvp.Key.Name].offset;
-        //                     break;
-        //             }
-        //             motorsList.Add(new SerializableMotor() { name = m.name, uid = m.uid, present_position = Mathf.Deg2Rad * position, goal_position = Mathf.Deg2Rad * target_position, isCompliant = compliancy });
-        //         }
-        //         return motorsList;
-        //     }
-
-        // public void HandleHeadOrientation(UnityEngine.Quaternion q)
-        // {
-        //     targetHeadRot = q;
-        // }
-
-        // void UpdateHeadOrientation()
-        // {
-        //     head.transform.localRotation = targetHeadRot;
-        // }
     }
 }
