@@ -11,46 +11,23 @@ namespace Reachy2Controller
         public GameObject gameObject;
         public float targetPosition;
         public float presentPosition;
-        public float offset;
-        public bool isDirect;
         public bool isCompliant;
     }
-
-
-    // [System.Serializable]
-    // public struct SerializableMotor
-    // {
-    //     public string name;
-    //     public int uid;
-    //     public float present_position;
-    //     public float goal_position;
-    //     public bool isCompliant;
-    // }
-
-    // [System.Serializable]
-    // public struct MotorCommand
-    // {
-    //     public string name;
-    //     public float goal_position;
-    // }
-
-    // [System.Serializable]
-    // public struct SerializableCommands
-    // {
-    //     public List<MotorCommand> motors;
-    // }
 
     public class Reachy2Controller : MonoBehaviour
     {
         public Motor[] motors;
-        // public GameObject head;
-
         private Dictionary<string, Motor> name2motor;
 
         UnityEngine.Quaternion baseHeadRot;
         UnityEngine.Quaternion targetHeadRot;
         public Vector3 headOrientation;
         float headRotDuration;
+
+        public GameObject l_arm { get; private set; }
+        public GameObject r_arm { get; private set; }
+        public GameObject head { get; private set; }
+        public GameObject mobile_base { get; private set; }
 
         void Awake()
         {
@@ -63,8 +40,12 @@ namespace Reachy2Controller
                 name2motor[m.name] = m;
             }
 
-
             headOrientation = new Vector3(0, 0, 0);
+
+            l_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(1).gameObject;
+            r_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(2).gameObject;
+            head = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(3).gameObject;
+            mobile_base = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             // baseHeadRot = head.transform.localRotation;
         }
 
@@ -113,7 +94,6 @@ namespace Reachy2Controller
             {
                 motor.targetPosition = targetPosition;
             }
-            
         }
 
         public void HandleCommand(Dictionary<string, float> commands)
