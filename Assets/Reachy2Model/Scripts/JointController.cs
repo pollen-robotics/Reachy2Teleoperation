@@ -1,36 +1,39 @@
 using UnityEngine;
 
-public class JointController : MonoBehaviour
+namespace Reachy2Controller
 {
-    private float targetPosition;
-    private bool changed;
-    private ArticulationBody articulation;
-
-    void Start()
+    public class JointController : MonoBehaviour
     {
-        articulation = GetComponent<ArticulationBody>();
-    }
+        private float targetPosition;
+        private bool changed;
+        private ArticulationBody articulation;
 
-    void FixedUpdate()
-    {
-        if (changed)
+        void Start()
         {
-            var drive = articulation.xDrive;
-            drive.target = targetPosition;
-            articulation.xDrive = drive;
-
-            changed = false;
+            articulation = GetComponent<ArticulationBody>();
         }
-    }
 
-    public void RotateTo(float newTargetPosition)
-    {
-        targetPosition = newTargetPosition;
-        changed = true;
-    }
+        void FixedUpdate()
+        {
+            if (changed)
+            {
+                var drive = articulation.xDrive;
+                drive.target = targetPosition;
+                articulation.xDrive = drive;
 
-    public float GetPresentPosition()
-    {
-        return Mathf.Rad2Deg * articulation.jointPosition[0];
+                changed = false;
+            }
+        }
+
+        public void RotateTo(float newTargetPosition)
+        {
+            targetPosition = newTargetPosition;
+            changed = true;
+        }
+
+        public float GetPresentPosition()
+        {
+            return Mathf.Rad2Deg * articulation.jointPosition[0];
+        }
     }
 }
