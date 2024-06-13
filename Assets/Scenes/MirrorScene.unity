@@ -4413,7 +4413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 21fefa3ddeccbeb40a58743f40437dd6, type: 3}
+  m_Texture: {fileID: 2800000, guid: 9bebc0f3bf3728f4abeca3c725ece014, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -4440,7 +4440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2d0da7d21057f4f834f270f5578b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oculusAInputImage: {fileID: 2800000, guid: 21fefa3ddeccbeb40a58743f40437dd6, type: 3}
+  oculusAInputImage: {fileID: 2800000, guid: 9bebc0f3bf3728f4abeca3c725ece014, type: 3}
   viveAInputImage: {fileID: 2800000, guid: 62a81a8ceef49984db6836488b8b4e8e, type: 3}
   valveAInputImage: {fileID: 2800000, guid: 187f3a65afaded942b564c47383923fe, type: 3}
 --- !u!1 &867196953
