@@ -23,7 +23,8 @@ namespace TeleopReachy
         private Transform resetPositionButton;
 
         [SerializeField]
-        private Transform reachyGhost;
+        private Reachy2Controller.Reachy2Controller reachyGhost;
+        private bool robotGhostDisplayed;
 
         [SerializeField]
         private Transform ghostReachyIndicator;
@@ -63,9 +64,11 @@ namespace TeleopReachy
             resetPositionButton.gameObject.SetActive(false);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
+            robotConfig.event_OnConfigChanged.AddListener(DisplayReachy);
+
             robotStatus = RobotDataManager.Instance.RobotStatus;
 
-            HideReachy();
+            DisplayReachy(false);
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
             if (Robot.IsCurrentRobotVirtual())
@@ -100,29 +103,20 @@ namespace TeleopReachy
 
         private void DisplayReachy()
         {
-            if (robotConfig.GotReachyConfig())
-            {
-                reachyGhost.switchRenderer(true);
-                // ghostReachyIndicator.gameObject.SetActive(true);
-                if (!robotConfig.HasHead())
-                {
-                    reachyGhost.GetChild(0).switchRenderer(false);
-                }
-                if (!robotConfig.HasLeftArm())
-                {
-                    reachyGhost.GetChild(1).switchRenderer(false);
-                }
-                if (!robotConfig.HasRightArm())
-                {
-                    reachyGhost.GetChild(3).switchRenderer(false);
-                }
-            }
+            DisplayReachy(robotGhostDisplayed);
         }
 
-        private void HideReachy()
+        private void DisplayReachy(bool enabled)
         {
-            reachyGhost.switchRenderer(false);
-            ghostReachyIndicator.gameObject.SetActive(false);
+            robotGhostDisplayed = enabled;
+            reachyGhost.transform.switchRenderer(enabled);
+            ghostReachyIndicator.gameObject.SetActive(enabled);
+            if (robotConfig.GotReachyConfig()) {
+                reachyGhost.head.transform.switchRenderer(robotConfig.HasHead() && enabled);
+                reachyGhost.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && enabled);
+                reachyGhost.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && enabled);
+                reachyGhost.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && enabled);
+            }
         }
 
         void FixUserTrackerPosition()
@@ -151,7 +145,7 @@ namespace TeleopReachy
         public void WaitingForPosition()
         {
             readyButton.gameObject.SetActive(false);
-            DisplayReachy();
+            DisplayReachy(true);
             resetPositionButton.gameObject.SetActive(true);
             State = TransitionState.WaitingForPosition;
             event_OnWaitingForPosition.Invoke();
@@ -162,7 +156,7 @@ namespace TeleopReachy
             if (userTrackerOk)
             {
                 State = TransitionState.WaitingForRobot;
-                DisplayReachy();
+                DisplayReachy(true);
                 readyButton.gameObject.SetActive(false);
                 event_OnAbortTeleop.Invoke();
                 // WaitingForPosition();
@@ -175,7 +169,7 @@ namespace TeleopReachy
             if (userTrackerOk)
             {
                 State = TransitionState.ReadyForTeleop;
-                DisplayReachy();
+                DisplayReachy(true);
                 readyButton.gameObject.SetActive(false);
                 resetPositionButton.gameObject.SetActive(true);
                 event_OnReadyForTeleop.Invoke();
