@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Button
+  - robot
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - Water
   - UI
   - UserAdvice
-  - 
-  - 
+  - Head
+  - NotVisible
   - 
   - 
   - 
