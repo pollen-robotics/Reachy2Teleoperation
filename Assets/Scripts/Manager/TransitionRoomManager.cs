@@ -52,6 +52,7 @@ namespace TeleopReachy
 
         // calibration variables 
         public Vector3 midShoulderPoint { get; set; }
+        public Quaternion userNewOrientation { get; set; }
         public Transform oldUserCenter;
         private Transform newUserCenter;
 
@@ -84,7 +85,7 @@ namespace TeleopReachy
             FixUserTrackerPosition();
             MakeMirrorFaceUser();
 
-            robotCalib.event_ValidateCalib.AddListener(FixNewPosition);
+            robotCalib.event_ModifyCalib.AddListener(FixNewPosition);
 
             if (Robot.IsCurrentRobotVirtual())
             {
@@ -171,11 +172,11 @@ namespace TeleopReachy
             // // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
             // Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
             // userTracker.rotation = systemRotation;
+            userTracker.rotation = userNewOrientation;
+            Debug.Log("dans TransitionRomm : userNewOrientation = " + userNewOrientation.eulerAngles);
             userTracker.position = midShoulderPoint;
             Debug.Log("nouvelle :" + userTracker.position);
             Debug.Log("ancienne rotation = " + userTracker.rotation.eulerAngles);
-            Vector3 rotation = headset.rotation.eulerAngles;
-            userTracker.rotation = Quaternion.Euler(0, rotation.y, 0);
             Debug.Log("nouvelle rotation = " + userTracker.rotation.eulerAngles);
 
             newUserCenter.rotation = userTracker.rotation;

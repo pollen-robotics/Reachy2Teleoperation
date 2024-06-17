@@ -36,6 +36,7 @@ namespace TeleopReachy
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(SetUserArmSize);
+            Debug.Log("[SwitchCalibrationManager] Start : " + selectedCalibration.ToString());
         }
 
         // Update is called once per frame

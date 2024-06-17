@@ -137,10 +137,14 @@ namespace TeleopReachy
                     instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
                     break;
                 case 1:
-                    instructionsText = "Put your arms in front of you and press " + textButtonControllerModifier.GetPrimLeftButtonName();
+                    instructionsText = "Put your joysticks in front of your shoulders and press " + textButtonControllerModifier.GetPrimLeftButtonName();
                     instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
                     break;
                 case 2:
+                    instructionsText = "Put your arms in front of you and press " + textButtonControllerModifier.GetPrimLeftButtonName();
+                    instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
+                    break;
+                case 3:
                     instructionsText = "Place your joysticks one above the other at sternum level and press " + textButtonControllerModifier.GetPrimLeftButtonName();
                     instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
                     break;
