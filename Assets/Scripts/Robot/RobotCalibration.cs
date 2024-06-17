@@ -15,6 +15,7 @@ namespace TeleopReachy
 {
     public class RobotCalibration : Singleton<RobotCalibration>
     {
+        public string name = "Antoine";
         private Transform trackedLeftHand;
         private Transform trackedRightHand;
         private Transform headset;
@@ -50,6 +51,7 @@ namespace TeleopReachy
         public UnityEvent event_StartRightCalib;
         public UnityEvent event_StartLeftCalib;
         public UnityEvent event_ValidateCalib;
+        public UnityEvent event_ModifyCalib;
 
         // à épurer derrière 
         private double calculatedRightArmSize = 0, 
@@ -117,6 +119,7 @@ namespace TeleopReachy
             event_StartRightCalib = new UnityEvent();
             event_WaitForCalib = new UnityEvent();  
             event_ValidateCalib = new UnityEvent();
+            event_ModifyCalib = new UnityEvent();
 
             }
 
@@ -134,6 +137,8 @@ namespace TeleopReachy
 
             //capturing points from right side, then left side
             if (!calib_right_side && start_calib_keyboard) {
+                //if (rightCoordinates.Count == 399) rightFrame = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
+
                 event_StartRightCalib.Invoke();
                 CapturePoints("right");
                 actualTime += Time.deltaTime;}
@@ -146,7 +151,10 @@ namespace TeleopReachy
                 {
                     RansacEllipsoidFit(rightCoordinates, "right");
                     GetCenterInHeadsetFrame("right");
+                    //leftFrame = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
+
                 }
+                //if (leftCoordinates.Count == 399) leftFrame = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
                 //capture the left side 
                 CapturePoints("left");
                 actualTime += Time.deltaTime;}
@@ -158,6 +166,7 @@ namespace TeleopReachy
                 RansacEllipsoidFit(leftCoordinates, "left");
                 GetCenterInHeadsetFrame("left");
 
+                Debug.Log("headset rotation y :" + headset.rotation.eulerAngles.y + " / left frame rotation y : " + leftFrame.rotation.eulerAngles.y + " / right frame rotation y : " + rightFrame.rotation.eulerAngles.y);
                 UpperBodyFeatures();
                 calibration_done = true;
                 UserSize.Instance.UpdateUserSizeafterCalibration_differentarms(leftArmSize, rightArmSize, shoulderWidth);
@@ -165,9 +174,10 @@ namespace TeleopReachy
 
                 buttonX = false;
                 event_ValidateCalib.Invoke();
+                event_ModifyCalib.Invoke();
             } 
 
-            else if (calibration_done && validationPose < 3)
+            else if (calibration_done && validationPose < 4)
             {
                 actualTime += Time.deltaTime;
                 controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
@@ -175,7 +185,7 @@ namespace TeleopReachy
 
             }
             
-            else if (validationPose == 3) 
+            else if (validationPose == 4) 
             {
                 Debug.Log("export de validation ok");
                 validationPose ++;
@@ -220,6 +230,7 @@ namespace TeleopReachy
 
         public void UpperBodyFeatures()
         {
+            
             // on récupère les données du UserTracker comme s'il était fixé au moment de la fin de la calib 
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             Vector3 initialPosition = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
@@ -229,28 +240,43 @@ namespace TeleopReachy
 
             Matrix4x4 userTrackerInverseTransform = oldMatrix.inverse;
  
-            leftArmSize = Math.Min(calculatedLeftArmSize, calculatedRightArmSize);
-            rightArmSize = leftArmSize;
+            leftArmSize = calculatedLeftArmSize;
+            rightArmSize = calculatedRightArmSize;
             meanArmSize = (leftArmSize + rightArmSize) / 2f;
 
             // determine midshoulderpoint in headsetframe 
             Vector3 midShoulderPointinHeadsetFrame = (leftShoulderCenterInHeadsetFrame + rightShoulderCenterInHeadsetFrame) / 2f;
-            Matrix4x4 headTransform = Matrix4x4.TRS(headset.position, Quaternion.Euler(0,headset.rotation.y, 0), Vector3.one);
+
+            // if (midShoulderPointinHeadsetFrame.x > 0.02f) 
+            // {
+            //     Debug.Log("MidShoulderPoint x too far from headset position: " + midShoulderPointinHeadsetFrame.x);
+            //     midShoulderPointinHeadsetFrame.x = 0;
+            // }
+            Quaternion userActualOrientation = Quaternion.Euler(0,headset.rotation.eulerAngles.y, 0);
+            Debug.Log("User actual orientation : " + userActualOrientation.eulerAngles);
+            Matrix4x4 headTransform = Matrix4x4.TRS(headset.position, userActualOrientation, Vector3.one);
             Vector3 midShoulderPoint = headTransform.MultiplyPoint3x4(midShoulderPointinHeadsetFrame);
 
-
-            //Vector3 midShoulderPoint = (leftShoulderCenter + rightShoulderCenter) / 2f;
+        //    //condition on the lateral translation of the midshoulderpoint 
+        //     if (Math.Abs(midShoulderPoint.x - headset.position.x) > 0.02f) 
+        //     {
+        //         Debug.Log("MidShoulderPoint x too far from headset position: " + midShoulderPoint.x + " / headset position : " + headset.position.x);
+        //         midShoulderPoint.x = headset.position.x;
+        //     }
+ 
             TransitionRoomManager.Instance.midShoulderPoint = midShoulderPoint;
+            TransitionRoomManager.Instance.userNewOrientation = userActualOrientation;
+
             Vector3 newCenterinOldFrame = userTrackerInverseTransform.MultiplyPoint3x4(midShoulderPoint);
             Debug.Log("Epaule G : " + leftShoulderCenter +"/ Epaule D : " + rightShoulderCenter + "/Milieu Epaule  : " + midShoulderPoint +", Taille moyenne des bras : " + meanArmSize);
 
             shoulderWidth = Vector3.Distance(leftShoulderCenter, rightShoulderCenter)/2f;
 
             //ajout des data dans un .csv
-            var filePath = @"C:\Users\robot\Dev\data_tests.csv";            
+            var filePath = $@"C:\Users\robot\Dev\data_tests_{name}.csv";            
             var currentTime = DateTime.Now.ToString("ddMM_HHmm", CultureInfo.InvariantCulture);
-             // date, position initiale, rotation initiale, nouvelle position, nouvelle rotation, nouveau centre dans repère de l'ancien, taille bras gauche, radii bras gauche, taille bras droit, radii bras droit, largeur épaules
-            var data = $"{currentTime},\"{initialPosition.z},{-initialPosition.x},{initialPosition.y}\",\"{initialRotation.z},{-initialRotation.x},{initialRotation.y}\",\"{midShoulderPoint.z},{-midShoulderPoint.x},{midShoulderPoint.y}\", \"{newRotation.z},{-newRotation.x},{newRotation.y}\",\"{newCenterinOldFrame.z},{-newCenterinOldFrame.x}, {newCenterinOldFrame.y}\",{leftArmSize},\"{leftRadii.x},{leftRadii.y},{leftRadii.z}\",{rightArmSize},\"{rightRadii.x},{rightRadii.y},{rightRadii.z}\",{shoulderWidth}";
+             // date, position initiale, rotation initiale, nouvelle position, nouvelle rotation, nouveau centre dans repère de l'ancien, taille bras gauche, radii bras gauche, taille bras droit, radii bras droit, largeur épaules, position repère calib gauche, orientation repère calib gauche, position repère calib droite, orientation repère calib droite, centre épaule gauche dans repère headset, centre épaule droite dans repère headset, centre épaule gauche dans monde, centre épaule droite dans monde
+            var data = $"{name},{currentTime},\"{initialPosition.z},{-initialPosition.x},{initialPosition.y}\",\"{initialRotation.z},{-initialRotation.x},{initialRotation.y}\",\"{midShoulderPoint.z},{-midShoulderPoint.x},{midShoulderPoint.y}\",\"{newRotation.z},{-newRotation.x},{newRotation.y}\",\"{newCenterinOldFrame.z},{-newCenterinOldFrame.x},{newCenterinOldFrame.y}\",{leftArmSize},\"{leftRadii.x},{leftRadii.y},{leftRadii.z}\",{rightArmSize},\"{rightRadii.x},{rightRadii.y},{rightRadii.z}\",{shoulderWidth},\"{leftFrame.GetPosition().z},{-leftFrame.GetPosition().x},{leftFrame.GetPosition().y}\",\"{leftFrame.rotation.eulerAngles.z},{-leftFrame.rotation.eulerAngles.x},{leftFrame.rotation.eulerAngles.y}\",\"{rightFrame.GetPosition().z},{-rightFrame.GetPosition().x},{rightFrame.GetPosition().y}\",\"{rightFrame.rotation.eulerAngles.z},{-rightFrame.rotation.eulerAngles.x},{rightFrame.rotation.eulerAngles.y}\",\"{leftShoulderCenterInHeadsetFrame.z},{-leftShoulderCenterInHeadsetFrame.x},{leftShoulderCenterInHeadsetFrame.y}\",\"{rightShoulderCenterInHeadsetFrame.z},{-rightShoulderCenterInHeadsetFrame.x},{rightShoulderCenterInHeadsetFrame.y}\",\"{leftShoulderCenter.z},{-leftShoulderCenter.x},{leftShoulderCenter.y}\",\"{rightShoulderCenter.z},{-rightShoulderCenter.x},{rightShoulderCenter.y}\"";
             using (var writer = new StreamWriter(filePath, true))
             {writer.WriteLine(data);}
 
@@ -271,14 +297,21 @@ namespace TeleopReachy
         }
 
         public void GetCenterInHeadsetFrame(string side) {
+            //Matrix4x4 headsetMatrix = Matrix4x4.identity;
+            Vector3 globalPosition = Vector3.zero;
             Matrix4x4 headsetMatrix = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
             Debug.Log("Headset matrix : " + headsetMatrix.rotation.eulerAngles+ "position : " + headsetMatrix.GetPosition());
+            
+            if (side == "right")  {
+                globalPosition = rightShoulderCenter;
+                //headsetMatrix = rightFrame;
+                }
+            else if (side == "left") {
+                globalPosition = leftShoulderCenter;
+                //headsetMatrix = leftFrame;
+                }
+            
             Matrix4x4 headsetInverseTransform = headsetMatrix.inverse;
-
-
-    	    Vector3 globalPosition = Vector3.zero;
-            if (side == "right")  globalPosition = rightShoulderCenter;
-            else if (side == "left")  globalPosition = leftShoulderCenter;
 
             Debug.Log(side + "Center of shoulder in global frame : " + globalPosition);
 
@@ -292,7 +325,6 @@ namespace TeleopReachy
             else {
                 leftShoulderCenterInHeadsetFrame = positionInHeadsetFrame;
                 leftFrame = headsetMatrix;
-
 
             } 
 
@@ -321,7 +353,6 @@ namespace TeleopReachy
             List<Vector3> leftHandPositionsUserSpace = new List<Vector3>();
             List<Vector3> headsetPositionsUserSpace = new List<Vector3>();
             List<Vector3> headsetRotationsUserSpace = new List<Vector3>();
-            int ite = 0;
             int indice = 0 ;
             Debug.Log("UserTrackerTransform pour les data csv : "  + userTrackerTransform.position + " " + userTrackerTransform.rotation.eulerAngles);
             
@@ -369,21 +400,23 @@ namespace TeleopReachy
 
             Debug.Log("en userspace, nb de points dans headset pos : " + headsetPositionsUserSpace.Count + " headset rot : " + headsetRotationsUserSpace.Count + " left pos : " + leftHandPositionsUserSpace.Count + " right pos : " + rightHandPositionsUserSpace.Count);
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Tests\Claire", fileName)))
+            using (FileStream fs = File.Create(Path.Combine($@"C:\Users\robot\Dev\data\Tests\{name}", fileName)))
             {
-                string csvContent = "Side,X,Y,Z,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset\n";
-                foreach (Vector3 point in rightHandPositionsUserSpace)
+                string csvContent = "Side,X,Y,Z,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset,X_world,Y_world,Z_world,X_headset_world,Y_headset_world,Z_headset_world,Xrot_headset_world,Yrot_headset_world,Zrot_headset_world\n";
+                for (int ite = 0; ite < rightHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Right," + point.z + "," + -point.x + "," + point.y + ",";
-                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + "\n";
-                        ite= ite +1;
+                        csvContent += "Right," + rightHandPositionsUserSpace[ite].z + "," + -rightHandPositionsUserSpace[ite].x + "," + rightHandPositionsUserSpace[ite].y + ",";
+                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y +",";
+                        csvContent += rightCoordinates[ite].z + "," + -rightCoordinates[ite].x + "," + rightCoordinates[ite].y + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
                     }
 
-                foreach (Vector3 point in leftHandPositionsUserSpace)
+                for (int ite = 0; ite < leftHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Left," + point.z + "," + -point.x + "," + point.y + "," ;
-                        csvContent+= headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y +"\n";
-                        ite= ite +1;
+                        csvContent += "Left," + leftHandPositionsUserSpace[ite].z + "," + -leftHandPositionsUserSpace[ite].x + "," + leftHandPositionsUserSpace[ite].y + "," ;
+                        csvContent+= headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + ",";
+                        csvContent += leftCoordinates[ite].z + "," + -leftCoordinates[ite].x + "," + leftCoordinates[ite].y + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
                     }
 
                 byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
@@ -397,7 +430,6 @@ namespace TeleopReachy
             rightCoordinates.Clear();
             headsetPosition.Clear();
             headsetRotation.Clear();
-            ite = 0;
         }
 
         public void ExportValidationCoordinatesToCSV()
@@ -416,7 +448,6 @@ namespace TeleopReachy
             List<Vector3> leftHandRotationsUserSpace = new List<Vector3>();
             List<Vector3> headsetPositionsUserSpace = new List<Vector3>();
             List<Vector3> headsetRotationsUserSpace = new List<Vector3>();
-            int ite = 0;
             Debug.Log("nb de points dans headset pos : " + headsetPosition.Count + " headset rot : " + headsetRotation.Count + " left pos : " + leftCoordinates.Count + " left rot : " + leftRotations.Count + " right pos : " + rightCoordinates.Count + " right rot : " + rightRotations.Count);
 
             foreach (Vector3 handPosition in leftCoordinates)
@@ -466,22 +497,24 @@ namespace TeleopReachy
 
             Debug.Log("en userspace, nb de points dans headset pos : " + headsetPositionsUserSpace.Count + " headset rot : " + headsetRotationsUserSpace.Count + " left pos : " + leftHandPositionsUserSpace.Count + " left rot : " + leftHandRotationsUserSpace.Count + " right pos : " + rightHandPositionsUserSpace.Count + " right rot : " + rightHandRotationsUserSpace.Count);
 
-            using (FileStream fs = File.Create(Path.Combine(@"C:\Users\robot\Dev\data\Tests\Claire\validation", fileName)))
+            using (FileStream fs = File.Create(Path.Combine($@"C:\Users\robot\Dev\data\Tests\{name}\validation", fileName)))
             {
-                string csvContent= "Side,X,Y,Z,X_rot, Y_rot,Z_rot,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset\n";
-                foreach (Vector3 point in rightHandPositionsUserSpace)
+                string csvContent= "Side,X,Y,Z,X_rot,Y_rot,Z_rot,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset,X_world,Y_world,Z_world,X_rot_world,Y_rot_world,Z_rot_world,X_headset_world,Y_headset_world,Z_headset_world,Xrot_headset_world,Yrot_headset_world,Zrot_headset_world\n";
+                for (int ite = 0; ite < rightHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Right," + point.z + "," + -point.x + "," + point.y + "," + rightHandRotationsUserSpace[ite].z + "," + -rightHandRotationsUserSpace[ite].x + "," + rightHandRotationsUserSpace[ite].y + ",";
-                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + "\n";
-                        ite= ite +1;
+                        csvContent += "Right," + rightHandPositionsUserSpace[ite].z + "," + -rightHandPositionsUserSpace[ite].x + "," + rightHandPositionsUserSpace[ite].y + "," + rightHandRotationsUserSpace[ite].z + "," + -rightHandRotationsUserSpace[ite].x + "," + rightHandRotationsUserSpace[ite].y + ",";
+                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + ",";
+                        csvContent += rightCoordinates[ite].z + "," + -rightCoordinates[ite].x + "," + rightCoordinates[ite].y + "," + rightRotations[ite].z + "," + -rightRotations[ite].x + "," + rightRotations[ite].y + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
+                   
                     }
-                ite = 0;
 
-                foreach (Vector3 point in leftHandPositionsUserSpace)
+                for (int ite = 0; ite < leftHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Left," + point.z + "," + -point.x + "," + point.y + "," + leftHandRotationsUserSpace[ite].z + "," + -leftHandRotationsUserSpace[ite].x + "," + leftHandRotationsUserSpace[ite].y + ",";
-                        csvContent+= headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y +"\n";
-                        ite= ite +1;
+                        csvContent += "Left," + leftHandPositionsUserSpace[ite].z + "," + -leftHandPositionsUserSpace[ite].x + "," + leftHandPositionsUserSpace[ite].y + "," + leftHandRotationsUserSpace[ite].z + "," + -leftHandRotationsUserSpace[ite].x + "," + leftHandRotationsUserSpace[ite].y + ",";
+                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + ",";
+                        csvContent += leftCoordinates[ite].z + "," + -leftCoordinates[ite].x + "," + leftCoordinates[ite].y + "," + leftRotations[ite].z + "," + -leftRotations[ite].x + "," + leftRotations[ite].y + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
                     }
 
                 byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
