@@ -15,18 +15,18 @@ namespace TeleopReachy
 {
     public class RobotCalibration : Singleton<RobotCalibration>
     {
-        public string name = "Antoine";
+        public string name = "Pierre";
         private Transform trackedLeftHand;
         private Transform trackedRightHand;
         private Transform headset;
         private Transform userTrackerTransform;
 
         private List<Vector3> leftCoordinates = new List<Vector3>();
-        private List<Vector3> leftRotations = new List<Vector3>();
+        private List<Quaternion> leftRotations = new List<Quaternion>();
         private List<Vector3> rightCoordinates = new List<Vector3>();
-        private List<Vector3> rightRotations = new List<Vector3>();
+        private List<Quaternion> rightRotations = new List<Quaternion>();
         private List<Vector3> headsetPosition = new List<Vector3>();
-        private List<Vector3> headsetRotation = new List<Vector3>();
+        private List<Quaternion> headsetRotation = new List<Quaternion>();
 
         public double leftArmSize { get; set; }
         public double rightArmSize { get; set; }
@@ -37,6 +37,7 @@ namespace TeleopReachy
         private float actualTime = 0f;
 
         private bool calib_right_side = false;
+        private bool fixed_right_frame = false; 
         private bool calib_left_side = false;
         private bool calibration_done = false;
         private bool start_calib_keyboard = false;
@@ -127,12 +128,17 @@ namespace TeleopReachy
         { 
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
             if (buttonX)
+                {
                 start_calib_keyboard = true;
+                }
 
             if (!start_calib_keyboard && !calibration_done) 
             {
                 event_WaitForCalib.Invoke();
-                actualTime = 0f;
+                if (actualTime >= 1f && calib_right_side && !fixed_right_frame) {
+                    FixFrame("right");
+                    fixed_right_frame = true;
+                    }
             }
 
             //capturing points from right side, then left side
@@ -141,10 +147,9 @@ namespace TeleopReachy
 
                 event_StartRightCalib.Invoke();
                 CapturePoints("right");
-                actualTime += Time.deltaTime;}
+            }
 
             else if (!calib_left_side && start_calib_keyboard){
-                event_StartLeftCalib.Invoke();
 
                 //get the center of the right side
                 if (leftCoordinates.Count == 0) 
@@ -156,30 +161,36 @@ namespace TeleopReachy
                 }
                 //if (leftCoordinates.Count == 399) leftFrame = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
                 //capture the left side 
+                event_StartLeftCalib.Invoke();
                 CapturePoints("left");
-                actualTime += Time.deltaTime;}
+                }
 
         
             else if (calib_left_side && !calibration_done)  
             {
-                //get the center of the left side
-                RansacEllipsoidFit(leftCoordinates, "left");
-                GetCenterInHeadsetFrame("left");
+                Debug.Log("actualTime"+ actualTime);
+                if (actualTime >= 1f) 
+                {
+                    FixFrame("left");
 
-                Debug.Log("headset rotation y :" + headset.rotation.eulerAngles.y + " / left frame rotation y : " + leftFrame.rotation.eulerAngles.y + " / right frame rotation y : " + rightFrame.rotation.eulerAngles.y);
-                UpperBodyFeatures();
-                calibration_done = true;
-                UserSize.Instance.UpdateUserSizeafterCalibration_differentarms(leftArmSize, rightArmSize, shoulderWidth);
-                ExportCalibCoordinatesToCSV();
+                    //get the center of the left side
+                    RansacEllipsoidFit(leftCoordinates, "left");
+                    GetCenterInHeadsetFrame("left");
 
-                buttonX = false;
-                event_ValidateCalib.Invoke();
-                event_ModifyCalib.Invoke();
+                    UpperBodyFeatures();
+                    calibration_done = true;
+                    UserSize.Instance.UpdateUserSizeafterCalibration_differentarms(leftArmSize, rightArmSize, shoulderWidth);
+                    ExportCalibCoordinatesToCSV();
+
+                    buttonX = false;
+                    event_ValidateCalib.Invoke();
+                    event_ModifyCalib.Invoke();
+                }
             } 
 
             else if (calibration_done && validationPose < 4)
             {
-                actualTime += Time.deltaTime;
+                Debug.Log("condition validation pose");
                 controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out buttonX);
                 if (buttonX && actualTime > 0.5f)  CaptureValidationGestures();
 
@@ -192,6 +203,9 @@ namespace TeleopReachy
                 event_OnCalibChanged.Invoke();
                 ExportValidationCoordinatesToCSV();
             }
+
+            actualTime += Time.deltaTime;
+
       
         }
 
@@ -204,11 +218,12 @@ namespace TeleopReachy
                     {
                         rightCoordinates.Add(trackedRightHand.position);
                         headsetPosition.Add(headset.position);
-                        headsetRotation.Add(headset.rotation.eulerAngles);
+                        headsetRotation.Add(headset.rotation);
                         actualTime=0f;}
                 } else {
                     calib_right_side = true;
-                    start_calib_keyboard = false;}
+                    start_calib_keyboard = false;
+                    actualTime = 0f;}
 
             } else if (side == "left"){
                 if (leftCoordinates.Count < 400)
@@ -217,10 +232,11 @@ namespace TeleopReachy
                     {
                         leftCoordinates.Add(trackedLeftHand.position);
                         headsetPosition.Add(headset.position);
-                        headsetRotation.Add(headset.rotation.eulerAngles);
+                        headsetRotation.Add(headset.rotation);
                         actualTime=0f;}
                 } else  {
                     calib_left_side = true;
+                    actualTime = 0f;
                 }
             }
             
@@ -296,19 +312,26 @@ namespace TeleopReachy
             return;
         }
 
-        public void GetCenterInHeadsetFrame(string side) {
-            //Matrix4x4 headsetMatrix = Matrix4x4.identity;
-            Vector3 globalPosition = Vector3.zero;
+        public void FixFrame(string side)
+        {
             Matrix4x4 headsetMatrix = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
-            Debug.Log("Headset matrix : " + headsetMatrix.rotation.eulerAngles+ "position : " + headsetMatrix.GetPosition());
+            if (side == "right") rightFrame = headsetMatrix;
+            else leftFrame = headsetMatrix;
+        }
+
+        public void GetCenterInHeadsetFrame(string side) {
+            Matrix4x4 headsetMatrix = Matrix4x4.identity;
+            Vector3 globalPosition = Vector3.zero;
+            // Matrix4x4 headsetMatrix = Matrix4x4.TRS(headset.position, Quaternion.Euler(0, headset.rotation.eulerAngles.y, 0), Vector3.one);
+            // Debug.Log("Headset matrix : " + headsetMatrix.rotation.eulerAngles+ "position : " + headsetMatrix.GetPosition());
             
             if (side == "right")  {
                 globalPosition = rightShoulderCenter;
-                //headsetMatrix = rightFrame;
+                headsetMatrix = rightFrame;
                 }
             else if (side == "left") {
                 globalPosition = leftShoulderCenter;
-                //headsetMatrix = leftFrame;
+                headsetMatrix = leftFrame;
                 }
             
             Matrix4x4 headsetInverseTransform = headsetMatrix.inverse;
@@ -320,11 +343,11 @@ namespace TeleopReachy
             
             if (side == "right") {
                 rightShoulderCenterInHeadsetFrame = positionInHeadsetFrame;
-                rightFrame = headsetMatrix;
+                //rightFrame = headsetMatrix;
             }
             else {
                 leftShoulderCenterInHeadsetFrame = positionInHeadsetFrame;
-                leftFrame = headsetMatrix;
+                //leftFrame = headsetMatrix;
 
             } 
 
@@ -336,6 +359,11 @@ namespace TeleopReachy
             return calibration_done;
         }
 
+        public Quaternion ConvertOrientationUnityROS(Quaternion unityQuaternion)
+        {
+            Quaternion convertedQuaternion = new Quaternion(-unityQuaternion.z, unityQuaternion.x, -unityQuaternion.y, unityQuaternion.w);
+            return convertedQuaternion;
+        }
 
 
         public void ExportCalibCoordinatesToCSV()
@@ -386,12 +414,12 @@ namespace TeleopReachy
 
             indice = 0 ;
 
-            foreach (Vector3 headRotation in headsetRotation)
+            foreach (Quaternion headRotation in headsetRotation)
             {
 
                 Quaternion headRotationUserSpace; 
-                if (indice < rightCoordinates.Count) headRotationUserSpace = Quaternion.Inverse(rightFrameQuaternion) * Quaternion.Euler(headRotation);
-                else  headRotationUserSpace = Quaternion.Inverse(leftFrameQuaternion) * Quaternion.Euler(headRotation);
+                if (indice < rightCoordinates.Count) headRotationUserSpace = Quaternion.Inverse(rightFrameQuaternion) * headRotation;
+                else  headRotationUserSpace = Quaternion.Inverse(leftFrameQuaternion) * headRotation;
                 // Convertissez la position en position par rapport au UserTracker
                 headsetRotationsUserSpace.Add(headRotationUserSpace.eulerAngles);
                 indice ++;
@@ -448,6 +476,16 @@ namespace TeleopReachy
             List<Vector3> leftHandRotationsUserSpace = new List<Vector3>();
             List<Vector3> headsetPositionsUserSpace = new List<Vector3>();
             List<Vector3> headsetRotationsUserSpace = new List<Vector3>();
+            List<Quaternion> leftHandQuaternionsUserSpace = new List<Quaternion>();
+            List<Quaternion> rightHandQuaternionsUserSpace = new List<Quaternion>();
+            List<Quaternion> headsetQuaternionsUserSpace = new List<Quaternion>();
+            List<Quaternion> leftHandQuaternionWorld = new List<Quaternion>();
+            List<Quaternion> rightHandQuaternionWorld = new List<Quaternion>();
+            List<Quaternion> headsetQuaternionWorld = new List<Quaternion>();
+            List<Vector3> leftHandEulerWorld = new List<Vector3>();
+            List<Vector3> rightHandEulerWorld = new List<Vector3>();
+            List<Vector3> headsetEulerWorld = new List<Vector3>();
+
             Debug.Log("nb de points dans headset pos : " + headsetPosition.Count + " headset rot : " + headsetRotation.Count + " left pos : " + leftCoordinates.Count + " left rot : " + leftRotations.Count + " right pos : " + rightCoordinates.Count + " right rot : " + rightRotations.Count);
 
             foreach (Vector3 handPosition in leftCoordinates)
@@ -474,24 +512,34 @@ namespace TeleopReachy
                 headsetPositionsUserSpace.Add(headPositionUserSpace);
             }
 
-            foreach (Vector3 headRotation in headsetRotation)
+            foreach (Quaternion headRotation in headsetRotation)
             {
                 // Convertissez la position en position par rapport au UserTracker
-                Quaternion headRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * Quaternion.Euler(headRotation);
-                headsetRotationsUserSpace.Add(headRotationUserSpace.eulerAngles);
+                headsetQuaternionWorld.Add(ConvertOrientationUnityROS(headRotation));
+                Quaternion headRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * headRotation;
+                headsetRotationsUserSpace.Add(ConvertOrientationUnityROS(headRotationUserSpace).eulerAngles);
+                headsetQuaternionsUserSpace.Add(ConvertOrientationUnityROS(headRotationUserSpace));
+                headsetEulerWorld.Add(new Vector3(headRotation.eulerAngles.z, -headRotation.eulerAngles.x, headRotation.eulerAngles.y));
             }
 
-            foreach (Vector3 handRotation in rightRotations)
+            foreach (Quaternion handRotation in rightRotations)
             {
                 // Convertissez la rotation en rotation par rapport au UserTracker
-                Quaternion handRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * Quaternion.Euler(handRotation);
-                rightHandRotationsUserSpace.Add(handRotationUserSpace.eulerAngles);
+                rightHandQuaternionWorld.Add(ConvertOrientationUnityROS(handRotation));
+                Quaternion handRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * handRotation;
+                rightHandRotationsUserSpace.Add(ConvertOrientationUnityROS(handRotationUserSpace).eulerAngles);
+                rightHandQuaternionsUserSpace.Add(ConvertOrientationUnityROS(handRotationUserSpace));
+                rightHandEulerWorld.Add(new Vector3(handRotation.eulerAngles.z, -handRotation.eulerAngles.x, handRotation.eulerAngles.y));
+
             }
-            foreach (Vector3 handRotation in leftRotations)
+            foreach (Quaternion handRotation in leftRotations)
             {
                 // Convertissez la rotation en rotation par rapport au UserTracker
-                Quaternion handRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * Quaternion.Euler(handRotation);
-                leftHandRotationsUserSpace.Add(handRotationUserSpace.eulerAngles);
+                leftHandQuaternionWorld.Add(ConvertOrientationUnityROS(handRotation));
+                Quaternion handRotationUserSpace = Quaternion.Inverse(userTrackerrotation) * handRotation;
+                leftHandRotationsUserSpace.Add(ConvertOrientationUnityROS(handRotationUserSpace).eulerAngles);
+                leftHandQuaternionsUserSpace.Add(ConvertOrientationUnityROS(handRotationUserSpace));
+                leftHandEulerWorld.Add(new Vector3 (handRotation.eulerAngles.z, -handRotation.eulerAngles.x, handRotation.eulerAngles.y));
             }
 
 
@@ -499,22 +547,31 @@ namespace TeleopReachy
 
             using (FileStream fs = File.Create(Path.Combine($@"C:\Users\robot\Dev\data\Tests\{name}\validation", fileName)))
             {
-                string csvContent= "Side,X,Y,Z,X_rot,Y_rot,Z_rot,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset,X_world,Y_world,Z_world,X_rot_world,Y_rot_world,Z_rot_world,X_headset_world,Y_headset_world,Z_headset_world,Xrot_headset_world,Yrot_headset_world,Zrot_headset_world\n";
+                string csvContent= "Side,X,Y,Z,X_rot,Y_rot,Z_rot,X_quat,Y_quat,Z_quat,W_quat,X_headset,Y_headset,Z_headset,Xrot_headset,Yrot_headset,Zrot_headset,Xquat_headset,Yquat_headset,Zquat_headset,Wquat_headset,X_world,Y_world,Z_world,Xrot_world,Yrot_world,Zrot_world,Xquat_world,Yquat_world,Zquat_world,Wquat_world,X_headset_world,Y_headset_world,Z_headset_world,Xrot_headset_world,Yrot_headset_world,Zrot_headset_world,Xquat_headset_world,Yquat_headset_world,Zquat_headset_world,Wquat_headset_world\n";
                 for (int ite = 0; ite < rightHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Right," + rightHandPositionsUserSpace[ite].z + "," + -rightHandPositionsUserSpace[ite].x + "," + rightHandPositionsUserSpace[ite].y + "," + rightHandRotationsUserSpace[ite].z + "," + -rightHandRotationsUserSpace[ite].x + "," + rightHandRotationsUserSpace[ite].y + ",";
-                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + ",";
-                        csvContent += rightCoordinates[ite].z + "," + -rightCoordinates[ite].x + "," + rightCoordinates[ite].y + "," + rightRotations[ite].z + "," + -rightRotations[ite].x + "," + rightRotations[ite].y + ",";
-                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
+                        csvContent += "Right," + rightHandPositionsUserSpace[ite].z + "," + -rightHandPositionsUserSpace[ite].x + "," + rightHandPositionsUserSpace[ite].y + "," + rightHandRotationsUserSpace[ite].x + "," + rightHandRotationsUserSpace[ite].y + "," + rightHandRotationsUserSpace[ite].z + ",";
+                        csvContent += rightHandQuaternionsUserSpace[ite].x + "," + rightHandQuaternionsUserSpace[ite].y + "," + rightHandQuaternionsUserSpace[ite].z + "," + rightHandQuaternionsUserSpace[ite].w + ",";
+                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + ",";
+                        csvContent += headsetQuaternionsUserSpace[ite].x + "," + headsetQuaternionsUserSpace[ite].y + "," + headsetQuaternionsUserSpace[ite].z + "," + headsetQuaternionsUserSpace[ite].w + ",";
+                        csvContent += rightCoordinates[ite].z + "," + -rightCoordinates[ite].x + "," + rightCoordinates[ite].y + "," + rightHandEulerWorld[ite].x + "," + rightHandEulerWorld[ite].y + "," + rightHandEulerWorld[ite].z + ",";
+                        csvContent += rightHandQuaternionWorld[ite].x + "," + rightHandQuaternionWorld[ite].y + "," + rightHandQuaternionWorld[ite].z + "," + rightHandQuaternionWorld[ite].w + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetEulerWorld[ite].x + "," + headsetEulerWorld[ite].y + "," + headsetEulerWorld[ite].z + ",";
+                        csvContent += headsetQuaternionWorld[ite].x + "," + headsetQuaternionWorld[ite].y + "," + headsetQuaternionWorld[ite].z + "," + headsetQuaternionWorld[ite].w + "\n";
                    
                     }
 
                 for (int ite = 0; ite < leftHandPositionsUserSpace.Count; ite++)
                     {
-                        csvContent += "Left," + leftHandPositionsUserSpace[ite].z + "," + -leftHandPositionsUserSpace[ite].x + "," + leftHandPositionsUserSpace[ite].y + "," + leftHandRotationsUserSpace[ite].z + "," + -leftHandRotationsUserSpace[ite].x + "," + leftHandRotationsUserSpace[ite].y + ",";
-                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + "," + -headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + ",";
-                        csvContent += leftCoordinates[ite].z + "," + -leftCoordinates[ite].x + "," + leftCoordinates[ite].y + "," + leftRotations[ite].z + "," + -leftRotations[ite].x + "," + leftRotations[ite].y + ",";
-                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetRotation[ite].z + "," + -headsetRotation[ite].x + "," + headsetRotation[ite].y + "\n";
+                        csvContent += "Left," + leftHandPositionsUserSpace[ite].z + "," + -leftHandPositionsUserSpace[ite].x + "," + leftHandPositionsUserSpace[ite].y + "," + leftHandRotationsUserSpace[ite].x + "," + leftHandRotationsUserSpace[ite].y + "," + leftHandRotationsUserSpace[ite].z + ",";
+                        csvContent += leftHandQuaternionsUserSpace[ite].x + "," + leftHandQuaternionsUserSpace[ite].y + "," + leftHandQuaternionsUserSpace[ite].z + "," + leftHandQuaternionsUserSpace[ite].w + ",";
+                        csvContent += headsetPositionsUserSpace[ite].z + ","+ -headsetPositionsUserSpace[ite].x + "," + headsetPositionsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].x + "," + headsetRotationsUserSpace[ite].y + "," + headsetRotationsUserSpace[ite].z + ",";
+                        csvContent += headsetQuaternionsUserSpace[ite].x + "," + headsetQuaternionsUserSpace[ite].y + "," + headsetQuaternionsUserSpace[ite].z + "," + headsetQuaternionsUserSpace[ite].w + ",";
+                        csvContent += leftCoordinates[ite].z + "," + -leftCoordinates[ite].x + "," + leftCoordinates[ite].y + "," + leftHandEulerWorld[ite].x + "," + leftHandEulerWorld[ite].y + "," + leftHandEulerWorld[ite].z + ",";
+                        csvContent += leftHandQuaternionWorld[ite].x + "," + leftHandQuaternionWorld[ite].y + "," + leftHandQuaternionWorld[ite].z + "," + leftHandQuaternionWorld[ite].w + ",";
+                        csvContent += headsetPosition[ite].z + ","+ -headsetPosition[ite].x + "," + headsetPosition[ite].y + "," + headsetEulerWorld[ite].x + "," + headsetEulerWorld[ite].y + "," + headsetEulerWorld[ite].z + ",";
+                        csvContent += headsetQuaternionWorld[ite].x + "," + headsetQuaternionWorld[ite].y + "," + headsetQuaternionWorld[ite].z + "," + headsetQuaternionWorld[ite].w + "\n";
+                   
                     }
 
                 byte[] csvBytes = System.Text.Encoding.UTF8.GetBytes(csvContent);
@@ -663,10 +720,10 @@ namespace TeleopReachy
             Debug.Log("CaptureValidationGestures");
             rightCoordinates.Add(trackedRightHand.position);
             leftCoordinates.Add(trackedLeftHand.position);
-            rightRotations.Add(trackedRightHand.rotation.eulerAngles);
-            leftRotations.Add(trackedLeftHand.rotation.eulerAngles);
+            rightRotations.Add(trackedRightHand.rotation);
+            leftRotations.Add(trackedLeftHand.rotation);
             headsetPosition.Add(headset.position);
-            headsetRotation.Add(headset.rotation.eulerAngles);
+            headsetRotation.Add(headset.rotation);
             event_ValidateCalib.Invoke();
             validationPose ++;
             actualTime = 0f;

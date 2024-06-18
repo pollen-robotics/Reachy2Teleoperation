@@ -109,7 +109,7 @@ namespace TeleopReachy
         //ajout calibration
         public void IndicateToPressX()
         {
-            instructionsText = "Place arms on either side of body then Press " + textButtonControllerModifier.GetPrimLeftButtonName() + " to start the calibration";
+            instructionsText = "Look ahead, and place arms on either side of body. Then Press " + textButtonControllerModifier.GetPrimLeftButtonName() + " to start the calibration";
             instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
             instructionsDetailsText = "";
             needUpdateText = true;
@@ -133,7 +133,7 @@ namespace TeleopReachy
             switch (validationStep)
             {
                 case 0:
-                    instructionsText = "Put your arms on either side of your body and press " + textButtonControllerModifier.GetPrimLeftButtonName() ;
+                    instructionsText = "Keep your head up and put your arms on either side of your body, then press " + textButtonControllerModifier.GetPrimLeftButtonName() ;
                     instructionsText = textButtonControllerModifier.ChangeTextAccordingToController(instructionsText);
                     break;
                 case 1:
