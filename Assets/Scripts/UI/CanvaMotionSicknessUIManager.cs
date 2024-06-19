@@ -26,13 +26,15 @@ namespace TeleopReachy
         [SerializeField]
         private Button nextReticleCanva;
 
+        [SerializeField]
+        private Toggle keepOptions;
+
         private MotionSicknessManager motionSicknessManager;
 
         private bool keepOptionsForAllSession;
 
         void Awake()
         {
-            Debug.LogError("awake");
             DisplayNoCanva();
             EventManager.StartListening(EventNames.LoadConnectionScene, ReinitSession);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, DisplayMotionSicknessCanva);
@@ -44,6 +46,8 @@ namespace TeleopReachy
             keepOptionsForAllSession = PlayerPrefs.GetString("motionSicknessOptions") != "" ? Convert.ToBoolean(PlayerPrefs.GetString("motionSicknessOptions")) : false;
 
             HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(DisplayMotionSicknessCanva);
+
+            keepOptions.onValueChanged.AddListener(delegate { ToggleValueChanged(keepOptions); });
         }
 
         public void FullScreenRendering()
@@ -123,15 +127,11 @@ namespace TeleopReachy
 
         public void DisplayNoCanva()
         {
-            Debug.LogError("DisplayNoCanva");
-
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
         public void DisplayMotionSicknessCanva()
         {
-            Debug.LogError("DisplayMotionSicknessCanva");
-
             if(!keepOptionsForAllSession)
             {
                 transform.GetChild(0).gameObject.SetActive(true);
@@ -139,9 +139,10 @@ namespace TeleopReachy
             }
         }
 
-        public void KeepValueForAllSession(bool value)
+        void ToggleValueChanged(Toggle toggle)
         {
-            PlayerPrefs.SetString("motionSicknessOptions", value.ToString());
+            PlayerPrefs.SetString("motionSicknessOptions", toggle.isOn.ToString());
+            keepOptionsForAllSession = toggle.isOn;
         }
 
         public void SetNextRenderingButtonInteractable()
