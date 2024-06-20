@@ -32,10 +32,24 @@ namespace TeleopReachy
         private MotionSicknessManager motionSicknessManager;
 
         private bool keepOptionsForAllSession;
+        private bool newTeleopSession;
 
         void Awake()
         {
+            DontDestroyOnLoad(this.gameObject);
             DisplayNoCanva();
+
+            // try
+            // {
+            //     bool value = Convert.ToBoolean(PlayerPrefs.GetString("newTeleopSession"));
+            //     Debug.LogError(value);
+            // }
+            // catch (System.Exception)
+            // {
+            //     bool value = true;
+            //     PlayerPrefs.SetString("newTeleopSession", value.ToString());
+            // }
+
             EventManager.StartListening(EventNames.LoadConnectionScene, ReinitSession);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, DisplayMotionSicknessCanva);
         }
@@ -44,8 +58,9 @@ namespace TeleopReachy
         {
             motionSicknessManager = MotionSicknessManager.Instance;
             keepOptionsForAllSession = PlayerPrefs.GetString("motionSicknessOptions") != "" ? Convert.ToBoolean(PlayerPrefs.GetString("motionSicknessOptions")) : false;
+            newTeleopSession = true;
 
-            HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(DisplayMotionSicknessCanva);
+            HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
 
             keepOptions.onValueChanged.AddListener(delegate { ToggleValueChanged(keepOptions); });
         }
@@ -130,13 +145,24 @@ namespace TeleopReachy
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
+        private void BeginNewSession()
+        {
+            newTeleopSession = true;
+            DisplayMotionSicknessCanva();
+        }
+
         public void DisplayMotionSicknessCanva()
         {
-            if(!keepOptionsForAllSession)
+            if(newTeleopSession && !keepOptionsForAllSession)
             {
                 transform.GetChild(0).gameObject.SetActive(true);
                 DisplayRenderingCanva();
             }
+
+            // Debug.LogError(PlayerPrefs.GetString("newTeleopSession"));
+            // Debug.LogError(keepOptionsForAllSession);
+            // bool value = false;
+            // PlayerPrefs.SetString("newTeleopSession", value.ToString());
         }
 
         void ToggleValueChanged(Toggle toggle)
@@ -179,6 +205,8 @@ namespace TeleopReachy
         {
             bool value = false;
             PlayerPrefs.SetString("motionSicknessOptions", value.ToString());
+            PlayerPrefs.SetString("newTeleopSession", (!value).ToString());
+            newTeleopSession = true;
         }
     }
 }
