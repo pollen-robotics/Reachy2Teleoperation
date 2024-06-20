@@ -2800,7 +2800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftRawImage: {fileID: 0}
   rightRawImage: {fileID: 0}
-  ip_address: 10.0.1.36
+  ip_address: 
   screen: {fileID: 224850607}
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
