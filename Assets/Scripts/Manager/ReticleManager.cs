@@ -6,97 +6,104 @@ namespace TeleopReachy
     public class ReticleManager : MonoBehaviour
     {
         [SerializeField]
-        public Button reticleButton;
+        public Button alwaysButton;
 
         [SerializeField]
-        public Toggle reticleToggle;
+        public Button neverButton;
 
-        private RobotConfig robotConfig;
-        private RobotStatus robotStatus;
+        [SerializeField]
+        public Button withExtraOnlyButton;
 
-        //private bool needUpdateButton = false;
-        private bool needUpdateToggle = false;
-        //private bool isButtonInteractable = false;
-        private bool isToggleInteractable = false;
-        //private ColorBlock buttonColor;
-        //private string buttonText;
+        private bool needUpdateButtons = false;
+        private bool needReinit = false;
+        private ColorBlock alwaysColor;
+        private ColorBlock neverColor;
+        private ColorBlock withExtraOnlyColor;
 
         private MotionSicknessManager motionSicknessManager;
+
+        [SerializeField]
+        private bool mustBeInitialized;
 
         void Start()
         {
             motionSicknessManager = MotionSicknessManager.Instance;
-            ChooseButtonMode();
+            motionSicknessManager.event_OnUpdateMotionSicknessPreferences.AddListener(ChooseButtonMode);
+            if(mustBeInitialized) ChooseButtonMode();
 
-            reticleButton.onClick.AddListener(SwitchButtonMode);
-            reticleToggle.onValueChanged.AddListener(SwitchToggleMode);
-
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-
-            robotConfig.event_OnConfigChanged.AddListener(CheckToggleInteractibility);
-
-            CheckToggleInteractibility();
+            alwaysButton.onClick.AddListener(SwitchToAlwaysMode);
+            neverButton.onClick.AddListener(SwitchToNeverMode);
+            withExtraOnlyButton.onClick.AddListener(SwitchTowithExtraOnlyMode);
         }
 
         void ChooseButtonMode()
         {
             if (motionSicknessManager.IsReticleOn)
             {
-                reticleButton.colors = ColorsManager.colorsActivated;
-                reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle ON";
+                if(motionSicknessManager.IsReticleAlwaysShown)
+                {
+                    alwaysButton.colors = ColorsManager.colorsActivated;
+                    neverButton.colors = ColorsManager.colorsDeactivated;
+                    withExtraOnlyButton.colors = ColorsManager.colorsDeactivated;
+                }
+                else 
+                {
+                    alwaysButton.colors = ColorsManager.colorsDeactivated;
+                    neverButton.colors = ColorsManager.colorsDeactivated;
+                    withExtraOnlyButton.colors = ColorsManager.colorsActivated;
+                }
             }
             else
             {
-                reticleButton.colors = ColorsManager.colorsDeactivated;
-                reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle OFF";
+                alwaysButton.colors = ColorsManager.colorsDeactivated;
+                neverButton.colors = ColorsManager.colorsActivated;
+                withExtraOnlyButton.colors = ColorsManager.colorsDeactivated;
             }
         }
 
-        void SwitchToggleMode(bool value)
+        void SwitchToAlwaysMode()
         {
-            motionSicknessManager.IsReticleAlwaysShown = value;
+            motionSicknessManager.IsReticleOn = true;
+            motionSicknessManager.IsReticleAlwaysShown = true;
+            
+            needUpdateButtons = true;
         }
 
-        void SwitchButtonMode()
+        void SwitchToNeverMode()
         {
-            motionSicknessManager.IsReticleOn = !motionSicknessManager.IsReticleOn;
-            ChooseButtonMode();
-            CheckToggleInteractibility();
+            motionSicknessManager.IsReticleOn = false;
+            motionSicknessManager.IsReticleAlwaysShown = false;
+
+            needUpdateButtons = true;
+        }
+
+        void SwitchTowithExtraOnlyMode()
+        {
+            motionSicknessManager.IsReticleOn = true;
+            motionSicknessManager.IsReticleAlwaysShown = false;
+
+            needUpdateButtons = true;
+        }
+
+        public void Reinit()
+        {
+            needReinit = true;
         }
 
         void Update()
         {
-            if (needUpdateToggle)
+            if(needUpdateButtons)
             {
-                reticleToggle.interactable = isToggleInteractable;
-                if (!isToggleInteractable) reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
-                else reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
-                needUpdateToggle = false;
+                needUpdateButtons = false;
+                ChooseButtonMode();
             }
-        }
-
-        void CheckToggleInteractibility()
-        {
-            if (motionSicknessManager.IsReticleOn)
+            if(needReinit)
             {
-                if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
-                {
-                    reticleToggle.isOn = motionSicknessManager.IsReticleAlwaysShown;
-                    isToggleInteractable = true;
-                }
-                else
-                {
-                    reticleToggle.isOn = true;
-                    isToggleInteractable = false;
-                }
+                needReinit = false;
+                alwaysButton.colors = ColorsManager.colorsDeactivated;
+                neverButton.colors = ColorsManager.colorsDeactivated;
+                withExtraOnlyButton.colors = ColorsManager.colorsDeactivated;
             }
-            else
-            {
-                reticleToggle.isOn = false;
-                isToggleInteractable = false;
-            }
-            needUpdateToggle = true;
         }
     }
 }

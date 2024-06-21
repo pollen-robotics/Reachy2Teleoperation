@@ -15,40 +15,54 @@ namespace TeleopReachy
         public Button reducedScreenButton;
 
         [SerializeField]
-        public Toggle onDemandToggle;
+        public Button autoDisplayButton;
+
+        [SerializeField]
+        public Button onDemandOnlyButton;
+
+        [SerializeField]
+        private bool mustBeInitialized;
 
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
         private bool needUpdateButtons = false;
-        private bool needUpdateToggle = false;
+        private bool needReinit = false;
+
         private bool areButtonsInteractable = false;
-        private bool isToggleInteractable = false;
         private ColorBlock noEffectButtonColor;
         private ColorBlock tunnellingButtonColor;
         private ColorBlock reducedScreenButtonColor;
+
+        private ColorBlock autoDisplayButtonColor;
+        private ColorBlock onDemandOnlyButtonColor;
 
         private MotionSicknessManager motionSicknessManager;
 
         void Start()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
-            ChooseButtonsMode();
-            onDemandToggle.isOn = motionSicknessManager.IsNavigationEffectOnDemand;
+            noEffectButton?.onClick.AddListener(SwitchToNoEffectMode);
+            tunnellingButton?.onClick.AddListener(SwitchToTunnellingMode);
+            reducedScreenButton?.onClick.AddListener(SwitchToReducedScreenMode);
 
-            noEffectButton.onClick.AddListener(SwitchToNoEffectMode);
-            tunnellingButton.onClick.AddListener(SwitchToTunnellingMode);
-            reducedScreenButton.onClick.AddListener(SwitchToReducedScreenMode);
-            onDemandToggle.onValueChanged.AddListener(SwitchToggleMode);
+            autoDisplayButton?.onClick.AddListener(SwitchToAutoMode);
+            onDemandOnlyButton?.onClick.AddListener(SwitchToOnDemandeOnlyMode);
+
+            tunnellingButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenButtonColor = ColorsManager.colorsDeactivated;
+            noEffectButtonColor = ColorsManager.colorsDeactivated;
+            autoDisplayButtonColor = ColorsManager.colorsDeactivated;
+            onDemandOnlyButtonColor = ColorsManager.colorsDeactivated;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
 
-            robotConfig.event_OnConfigChanged.AddListener(CheckMobileBasePresence);
+            robotConfig.event_OnConfigChanged.AddListener(CheckNavigationOptionsAvailability);
 
-            onDemandToggle.interactable = false;
-
-            CheckMobileBasePresence();
+            motionSicknessManager = MotionSicknessManager.Instance;
+            motionSicknessManager.event_OnUpdateMotionSicknessPreferences.AddListener(ChooseButtonsMode);
+            if(mustBeInitialized) ChooseButtonsMode();
+            else needReinit = true;
         }
 
         void ChooseButtonsMode()
@@ -56,11 +70,31 @@ namespace TeleopReachy
             if (motionSicknessManager.IsTunnellingOn) SwitchToTunnellingMode();
             else if (motionSicknessManager.IsReducedScreenOn) SwitchToReducedScreenMode();
             else SwitchToNoEffectMode();
+
+            if(motionSicknessManager.IsNavigationEffectOnDemandOnly) SwitchToOnDemandeOnlyMode();
+            else SwitchToAutoMode();
+
+            CheckNavigationOptionsAvailability();
         }
 
-        void SwitchToggleMode(bool value)
+        void SwitchToAutoMode()
         {
-            motionSicknessManager.IsNavigationEffectOnDemand = value;
+            motionSicknessManager.IsNavigationEffectOnDemandOnly = false;
+
+            autoDisplayButtonColor = ColorsManager.colorsActivated;
+            onDemandOnlyButtonColor = ColorsManager.colorsDeactivated;
+
+            needUpdateButtons = true;
+        }
+
+        void SwitchToOnDemandeOnlyMode()
+        {
+            motionSicknessManager.IsNavigationEffectOnDemandOnly = true;
+
+            autoDisplayButtonColor = ColorsManager.colorsDeactivated;
+            onDemandOnlyButtonColor = ColorsManager.colorsActivated;
+
+            needUpdateButtons = true;
         }
 
         void SwitchToNoEffectMode()
@@ -72,8 +106,7 @@ namespace TeleopReachy
             tunnellingButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenButtonColor = ColorsManager.colorsDeactivated;
 
-            isToggleInteractable = false;
-            needUpdateToggle = true;
+            CheckNavigationOptionsAvailability();
             needUpdateButtons = true;
         }
 
@@ -86,8 +119,7 @@ namespace TeleopReachy
             tunnellingButtonColor = ColorsManager.colorsActivated;
             reducedScreenButtonColor = ColorsManager.colorsDeactivated;
 
-            isToggleInteractable = true;
-            needUpdateToggle = true;
+            CheckNavigationOptionsAvailability();
             needUpdateButtons = true;
         }
 
@@ -100,32 +132,68 @@ namespace TeleopReachy
             tunnellingButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenButtonColor = ColorsManager.colorsActivated;
 
-            isToggleInteractable = true;
-            needUpdateToggle = true;
+            CheckNavigationOptionsAvailability();
             needUpdateButtons = true;
         }
 
         void Update()
         {
-            if (needUpdateToggle)
-            {
-                onDemandToggle.interactable = isToggleInteractable;
-                if (!isToggleInteractable) onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
-                else onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
-                needUpdateToggle = false;
-            }
             if (needUpdateButtons)
             {
-                tunnellingButton.interactable = areButtonsInteractable;
-                tunnellingButton.colors = tunnellingButtonColor;
-                reducedScreenButton.interactable = areButtonsInteractable;
-                reducedScreenButton.colors = reducedScreenButtonColor;
-                noEffectButton.colors = noEffectButtonColor;
+                if(tunnellingButton != null) tunnellingButton.colors = tunnellingButtonColor;
+                if(reducedScreenButton != null) reducedScreenButton.colors = reducedScreenButtonColor;
+                if(noEffectButton != null) noEffectButton.colors = noEffectButtonColor;
+
+                if(autoDisplayButton != null) 
+                {
+                    autoDisplayButton.interactable = areButtonsInteractable;
+                    autoDisplayButton.colors = autoDisplayButtonColor;
+                }
+                
+                if(onDemandOnlyButton != null) 
+                {
+                    onDemandOnlyButton.interactable = areButtonsInteractable;
+                    onDemandOnlyButton.colors = onDemandOnlyButtonColor;
+                }
+
                 needUpdateButtons = false;
+            }
+
+            if(needReinit)
+            {
+                needReinit = false;
+                if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
+                {
+                    areButtonsInteractable = true;
+                }
+                else
+                {
+                    areButtonsInteractable = false;
+                }
+                if (!motionSicknessManager.IsTunnellingOn && !motionSicknessManager.IsReducedScreenOn)
+                {
+                    areButtonsInteractable = false;
+                }
+
+                if(tunnellingButton != null) tunnellingButton.colors = ColorsManager.colorsDeactivated;
+                if(reducedScreenButton != null) reducedScreenButton.colors = ColorsManager.colorsDeactivated;
+                if(noEffectButton != null) noEffectButton.colors = ColorsManager.colorsDeactivated;
+
+                if(autoDisplayButton != null) 
+                {
+                    autoDisplayButton.interactable = areButtonsInteractable;
+                    autoDisplayButton.colors = ColorsManager.colorsDeactivated;
+                }
+                
+                if(onDemandOnlyButton != null) 
+                {
+                    onDemandOnlyButton.interactable = areButtonsInteractable;
+                    onDemandOnlyButton.colors = ColorsManager.colorsDeactivated;
+                }
             }
         }
 
-        void CheckMobileBasePresence()
+        void CheckNavigationOptionsAvailability()
         {
             if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
             {
@@ -134,22 +202,17 @@ namespace TeleopReachy
             else
             {
                 areButtonsInteractable = false;
-                motionSicknessManager.IsTunnellingOn = false;
-                motionSicknessManager.IsReducedScreenOn = false;
-                tunnellingButtonColor = ColorsManager.colorsDeactivated;
-                reducedScreenButtonColor = ColorsManager.colorsDeactivated;
-                noEffectButtonColor = ColorsManager.colorsActivated;
             }
-            if (motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
+            if (!motionSicknessManager.IsTunnellingOn && !motionSicknessManager.IsReducedScreenOn)
             {
-                isToggleInteractable = true;
+                areButtonsInteractable = false;
             }
-            else
-            {
-                isToggleInteractable = false;
-            }
-            needUpdateToggle = true;
             needUpdateButtons = true;
+        }
+
+        public void Reinit()
+        {
+            needReinit = true;
         }
     }
 }

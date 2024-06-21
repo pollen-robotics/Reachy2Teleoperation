@@ -12,7 +12,7 @@ namespace TeleopReachy
 
         public bool IsTunnellingOn { get; set; }
         public bool IsReducedScreenOn { get; set; }
-        public bool IsNavigationEffectOnDemand { get; set; }
+        public bool IsNavigationEffectOnDemandOnly { get; set; }
 
         public bool RequestNavigationEffect { get; private set; }
 
@@ -26,6 +26,7 @@ namespace TeleopReachy
 
         public UnityEvent<bool> event_OnRequestNavigationEffect;
         public UnityEvent event_OnNewTeleopSession;
+        public UnityEvent event_OnUpdateMotionSicknessPreferences;
 
         private bool firstStart;
 
@@ -36,7 +37,7 @@ namespace TeleopReachy
 
             IsTunnellingOn = false;
             IsReducedScreenOn = false;
-            IsNavigationEffectOnDemand = false;
+            IsNavigationEffectOnDemandOnly = false;
 
             AreOptionsSaved = false;
 
@@ -80,7 +81,12 @@ namespace TeleopReachy
         void InitOnDemandRequest()
         {
             RequestNavigationEffect = false;
-            ActivateDeactivateTunnelling(IsTunnellingOn && !IsNavigationEffectOnDemand);
+            ActivateDeactivateTunnelling(IsTunnellingOn && !IsNavigationEffectOnDemandOnly);
+        }
+
+        public void UpdateMotionSicknessPreferences()
+        {
+            event_OnUpdateMotionSicknessPreferences.Invoke();
         }
 
         void Update()
@@ -91,7 +97,7 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightJoystickButtonPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out leftJoystickButtonPressed);
 
-            if (IsNavigationEffectOnDemand && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (IsNavigationEffectOnDemandOnly && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
                 {
