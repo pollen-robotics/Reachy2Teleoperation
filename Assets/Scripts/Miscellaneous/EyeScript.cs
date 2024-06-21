@@ -80,7 +80,6 @@ namespace TeleopReachy
 
         void ResizeView(bool activate)
         {
-            Debug.LogError(activate);
             if (motionSicknessManager.IsReducedScreenOn && !activate)
             {
                 lerpGoalScale = fullScreenScale;
