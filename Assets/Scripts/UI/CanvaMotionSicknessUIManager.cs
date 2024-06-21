@@ -46,54 +46,55 @@ namespace TeleopReachy
             keepOptions.onValueChanged.AddListener(delegate { ToggleValueChanged(keepOptions); });
         }
 
-        public void OnDemandOnly()
-        {
-            motionSicknessManager.IsNavigationEffectOnDemand = true;
-        }
+        // public void OnDemandOnly()
+        // {
+        //     // motionSicknessManager.IsNavigationEffectOnDemandOnly = true;
+        // }
 
-        public void AutoOnNavigation()
-        {
-            motionSicknessManager.IsNavigationEffectOnDemand = false;
-        }
+        // public void AutoOnNavigation()
+        // {
+        //     // motionSicknessManager.IsNavigationEffectOnDemandOnly = false;
+        // }
 
-        public void NoNavigationEffect()
-        {
-            motionSicknessManager.IsReducedScreenOn = false;
-            motionSicknessManager.IsTunnellingOn = false;
-        }
+        // public void NoNavigationEffect()
+        // {
+        //     // motionSicknessManager.IsReducedScreenOn = false;
+        //     // motionSicknessManager.IsTunnellingOn = false;
+        // }
 
-        public void TunnellingNavigationEffect()
-        {
-            motionSicknessManager.IsReducedScreenOn = false;
-            motionSicknessManager.IsTunnellingOn = true;
-        }
+        // public void TunnellingNavigationEffect()
+        // {
+        //     // motionSicknessManager.IsReducedScreenOn = false;
+        //     // motionSicknessManager.IsTunnellingOn = true;
+        // }
 
-        public void ReducedScreenNavigationEffect()
-        {
-            motionSicknessManager.IsReducedScreenOn = true;
-            motionSicknessManager.IsTunnellingOn = false;
-        }
+        // public void ReducedScreenNavigationEffect()
+        // {
+        //     // motionSicknessManager.IsReducedScreenOn = true;
+        //     // motionSicknessManager.IsTunnellingOn = false;
+        // }
 
-        public void NoReticle()
-        {
-            motionSicknessManager.IsReticleOn = false;
-            motionSicknessManager.IsReticleAlwaysShown = false;
-        }
+        // public void NoReticle()
+        // {
+        //     // motionSicknessManager.IsReticleOn = false;
+        //     // motionSicknessManager.IsReticleAlwaysShown = false;
+        // }
 
-        public void AlwaysReticle()
-        {
-            motionSicknessManager.IsReticleOn = true;
-            motionSicknessManager.IsReticleAlwaysShown = true;
-        }
+        // public void AlwaysReticle()
+        // {
+        //     // motionSicknessManager.IsReticleOn = true;
+        //     // motionSicknessManager.IsReticleAlwaysShown = true;
+        // }
 
-        public void NavigationOnlyReticle()
-        {
-            motionSicknessManager.IsReticleOn = true;
-            motionSicknessManager.IsReticleAlwaysShown = false;
-        }
+        // public void NavigationOnlyReticle()
+        // {
+        //     // motionSicknessManager.IsReticleOn = true;
+        //     // motionSicknessManager.IsReticleAlwaysShown = false;
+        // }
 
         public void DisplayRenderingCanva()
         {
+            if(renderingCanva.GetComponent<NavigationEffectsManager>() != null) renderingCanva.GetComponent<NavigationEffectsManager>().Reinit();
             renderingCanva.SetActive(true);
             navigationCanva.SetActive(false);
             reticleCanva.SetActive(false);
@@ -101,13 +102,23 @@ namespace TeleopReachy
 
         public void DisplayNavigationOptionCanva()
         {
-            renderingCanva.SetActive(false);
-            navigationCanva.SetActive(true);
-            reticleCanva.SetActive(false);
+            if(navigationCanva.GetComponent<NavigationEffectsManager>() != null) navigationCanva.GetComponent<NavigationEffectsManager>().Reinit();
+            if(motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
+            {
+                renderingCanva.SetActive(false);
+                navigationCanva.SetActive(true);
+                reticleCanva.SetActive(false);
+            }
+            else
+            {
+                if(renderingCanva.activeSelf) DisplayReticleOptionCanva();
+                else DisplayRenderingCanva();
+            }
         }
 
         public void DisplayReticleOptionCanva()
         {
+            if(reticleCanva.GetComponent<ReticleManager>() != null) reticleCanva.GetComponent<ReticleManager>().Reinit();
             renderingCanva.SetActive(false);
             navigationCanva.SetActive(false);
             reticleCanva.SetActive(true);
@@ -116,11 +127,14 @@ namespace TeleopReachy
         public void DisplayNoCanva()
         {
             transform.GetChild(0).gameObject.SetActive(false);
+            if(motionSicknessManager != null) motionSicknessManager.UpdateMotionSicknessPreferences();
+            if(renderingCanva.GetComponent<NavigationEffectsManager>() != null) renderingCanva.GetComponent<NavigationEffectsManager>().Reinit();
+            if(navigationCanva.GetComponent<NavigationEffectsManager>() != null) navigationCanva.GetComponent<NavigationEffectsManager>().Reinit();
+            if(reticleCanva.GetComponent<ReticleManager>() != null) reticleCanva.GetComponent<ReticleManager>().Reinit();
         }
 
         public void DisplayMotionSicknessCanva()
         {
-            Debug.LogError("DisplayMotionSicknessCanva");
             if(!motionSicknessManager.AreOptionsSaved)
             {
                 transform.GetChild(0).gameObject.SetActive(true);

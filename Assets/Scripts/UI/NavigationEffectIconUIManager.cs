@@ -61,7 +61,7 @@ namespace TeleopReachy
             {
                 navigationEffectIconPanel.GetChild(1).GetComponent<RawImage>().texture = displayedNavigationEffect;
                 navigationEffectIconPanel.GetChild(2).GetComponent<RawImage>().texture = displayedNavigationRequest;
-                if (motionSicknessManager.IsNavigationEffectOnDemand)
+                if (motionSicknessManager.IsNavigationEffectOnDemandOnly)
                 {
                     navigationEffectIconPanel.ActivateChildren(true);
                 }

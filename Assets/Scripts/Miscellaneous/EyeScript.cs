@@ -68,8 +68,8 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemand)
+                // if (!motionSicknessManager.IsNavigationEffectOnDemandOnly || (motionSicknessManager.IsNavigationEffectOnDemandOnly && motionSicknessManager.RequestNavigationEffect))
+                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly)
                 {
                     lerpGoalScale = smallerScreenScale;
                     needUpdateScale = true;
@@ -96,8 +96,8 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemand)
+                // if (!motionSicknessManager.IsNavigationEffectOnDemandOnly || (motionSicknessManager.IsNavigationEffectOnDemandOnly && motionSicknessManager.RequestNavigationEffect))
+                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly)
                 {
                     lerpGoalScale = fullScreenScale;
                     needUpdateScale = true;
