@@ -20,6 +20,7 @@ namespace TeleopReachy
 
         private ControllersManager controllers;
         private RobotStatus robotStatus;
+        private UserMobilityFakeMovement mobilityFakeMovement;
 
         private bool rightJoystickButtonPreviouslyPressed;
         private bool leftJoystickButtonPreviouslyPressed;
@@ -70,6 +71,8 @@ namespace TeleopReachy
                 firstStart = false;
                 BeginNewSession();
             }
+
+            mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
         }
 
         void ActivateDeactivateTunnelling(bool value)
@@ -81,7 +84,7 @@ namespace TeleopReachy
         void InitOnDemandRequest()
         {
             RequestNavigationEffect = false;
-            ActivateDeactivateTunnelling(IsTunnellingOn && !IsNavigationEffectOnDemandOnly);
+            ActivateDeactivateTunnelling(IsTunnellingOn);
         }
 
         public void UpdateMotionSicknessPreferences()
@@ -97,18 +100,18 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightJoystickButtonPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out leftJoystickButtonPressed);
 
-            if (IsNavigationEffectOnDemandOnly && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus!= null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
                 {
                     RequestNavigationEffect = !RequestNavigationEffect;
-                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect);
+                    mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
                     event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                 }
                 if (leftJoystickButtonPressed && !leftJoystickButtonPreviouslyPressed)
                 {
                     RequestNavigationEffect = !RequestNavigationEffect;
-                    ActivateDeactivateTunnelling(IsTunnellingOn && RequestNavigationEffect);
+                    mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
                     event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                 }
             }

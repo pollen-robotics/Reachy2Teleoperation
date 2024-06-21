@@ -10,6 +10,7 @@ namespace TeleopReachy
         private UserMobilityFakeMovement mobilityFakeMovement;
 
         private bool needUpdateScale;
+        private bool userRequestedSmallSize;
 
         private Vector3 lerpGoalScale;
 
@@ -22,6 +23,7 @@ namespace TeleopReachy
 
         void Start()
         {
+            userRequestedSmallSize = false;
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
@@ -68,8 +70,7 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemandOnly || (motionSicknessManager.IsNavigationEffectOnDemandOnly && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly)
+                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly && !userRequestedSmallSize)
                 {
                     lerpGoalScale = smallerScreenScale;
                     needUpdateScale = true;
@@ -83,11 +84,13 @@ namespace TeleopReachy
             if (motionSicknessManager.IsReducedScreenOn && !activate)
             {
                 lerpGoalScale = fullScreenScale;
+                userRequestedSmallSize = false;
                 needUpdateScale = true;
             }
             else if(motionSicknessManager.IsReducedScreenOn && activate)
             {
                 lerpGoalScale = smallerScreenScale;
+                userRequestedSmallSize = true;
                 needUpdateScale = true;
             }
         }
@@ -96,8 +99,7 @@ namespace TeleopReachy
         {
             if (motionSicknessManager.IsReducedScreenOn)
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemandOnly || (motionSicknessManager.IsNavigationEffectOnDemandOnly && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly)
+                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly && !userRequestedSmallSize)
                 {
                     lerpGoalScale = fullScreenScale;
                     needUpdateScale = true;
