@@ -32,73 +32,46 @@ namespace TeleopReachy
         private MotionSicknessManager motionSicknessManager;
 
         private bool keepOptionsForAllSession;
-        private bool newTeleopSession;
 
         void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
             DisplayNoCanva();
-
-            // try
-            // {
-            //     bool value = Convert.ToBoolean(PlayerPrefs.GetString("newTeleopSession"));
-            //     Debug.LogError(value);
-            // }
-            // catch (System.Exception)
-            // {
-            //     bool value = true;
-            //     PlayerPrefs.SetString("newTeleopSession", value.ToString());
-            // }
-
-            EventManager.StartListening(EventNames.LoadConnectionScene, ReinitSession);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, DisplayMotionSicknessCanva);
         }
 
         void Start()
         {
             motionSicknessManager = MotionSicknessManager.Instance;
-            keepOptionsForAllSession = PlayerPrefs.GetString("motionSicknessOptions") != "" ? Convert.ToBoolean(PlayerPrefs.GetString("motionSicknessOptions")) : false;
-            newTeleopSession = true;
-
-            HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
+            motionSicknessManager.event_OnNewTeleopSession.AddListener(DisplayMotionSicknessCanva);
 
             keepOptions.onValueChanged.AddListener(delegate { ToggleValueChanged(keepOptions); });
         }
 
-        public void FullScreenRendering()
+        public void OnDemandOnly()
         {
-            motionSicknessManager.IsReducedScreenOn = false;
-            motionSicknessManager.IsNavigationEffectOnDemand = false;
+            motionSicknessManager.IsNavigationEffectOnDemand = true;
         }
 
-        public void ReducedScreenRendering()
+        public void AutoOnNavigation()
         {
-            motionSicknessManager.IsReducedScreenOn = true;
-            motionSicknessManager.IsNavigationEffectOnDemand = true;
+            motionSicknessManager.IsNavigationEffectOnDemand = false;
         }
 
         public void NoNavigationEffect()
         {
             motionSicknessManager.IsReducedScreenOn = false;
             motionSicknessManager.IsTunnellingOn = false;
-
-            motionSicknessManager.IsNavigationEffectOnDemand = false;
         }
 
         public void TunnellingNavigationEffect()
         {
             motionSicknessManager.IsReducedScreenOn = false;
             motionSicknessManager.IsTunnellingOn = true;
-
-            motionSicknessManager.IsNavigationEffectOnDemand = false;
         }
 
         public void ReducedScreenNavigationEffect()
         {
             motionSicknessManager.IsReducedScreenOn = true;
             motionSicknessManager.IsTunnellingOn = false;
-
-            motionSicknessManager.IsNavigationEffectOnDemand = false;
         }
 
         public void NoReticle()
@@ -145,30 +118,19 @@ namespace TeleopReachy
             transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        private void BeginNewSession()
-        {
-            newTeleopSession = true;
-            DisplayMotionSicknessCanva();
-        }
-
         public void DisplayMotionSicknessCanva()
         {
-            if(newTeleopSession && !keepOptionsForAllSession)
+            Debug.LogError("DisplayMotionSicknessCanva");
+            if(!motionSicknessManager.AreOptionsSaved)
             {
                 transform.GetChild(0).gameObject.SetActive(true);
                 DisplayRenderingCanva();
             }
-
-            // Debug.LogError(PlayerPrefs.GetString("newTeleopSession"));
-            // Debug.LogError(keepOptionsForAllSession);
-            // bool value = false;
-            // PlayerPrefs.SetString("newTeleopSession", value.ToString());
         }
 
         void ToggleValueChanged(Toggle toggle)
         {
-            PlayerPrefs.SetString("motionSicknessOptions", toggle.isOn.ToString());
-            keepOptionsForAllSession = toggle.isOn;
+            motionSicknessManager.SaveOptionsForAllSessions(toggle.isOn);
         }
 
         public void SetNextRenderingButtonInteractable()
@@ -199,14 +161,6 @@ namespace TeleopReachy
         public void SetNextReticleButtonNotInteractable()
         {
             nextReticleCanva.interactable = false;
-        }
-
-        private void ReinitSession()
-        {
-            bool value = false;
-            PlayerPrefs.SetString("motionSicknessOptions", value.ToString());
-            PlayerPrefs.SetString("newTeleopSession", (!value).ToString());
-            newTeleopSession = true;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace TeleopReachy
 
         public bool RequestNavigationEffect { get; private set; }
 
+        public bool AreOptionsSaved { get; private set; }
+
         private ControllersManager controllers;
         private RobotStatus robotStatus;
 
@@ -23,6 +25,9 @@ namespace TeleopReachy
         private bool leftJoystickButtonPreviouslyPressed;
 
         public UnityEvent<bool> event_OnRequestNavigationEffect;
+        public UnityEvent event_OnNewTeleopSession;
+
+        private bool firstStart;
 
         protected override void Init()
         {
@@ -33,14 +38,37 @@ namespace TeleopReachy
             IsReducedScreenOn = false;
             IsNavigationEffectOnDemand = false;
 
+            AreOptionsSaved = false;
+
             controllers = ControllersManager.Instance;
             EventManager.StartListening(EventNames.MirrorSceneLoaded, FinishInit);
+        }
+
+        private void Start()
+        {
+            firstStart = true;
+        }
+
+        private void BeginNewSession()
+        {
+            event_OnNewTeleopSession.Invoke();
+        }
+
+        public void SaveOptionsForAllSessions(bool value)
+        {
+            AreOptionsSaved = value;
         }
 
         void FinishInit()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(InitOnDemandRequest);
+            HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
+            if(firstStart)
+            {
+                firstStart = false;
+                BeginNewSession();
+            }
         }
 
         void ActivateDeactivateTunnelling(bool value)
