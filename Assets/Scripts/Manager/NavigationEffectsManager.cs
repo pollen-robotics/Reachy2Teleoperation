@@ -29,7 +29,7 @@ namespace TeleopReachy
         private bool needUpdateButtons = false;
         private bool needReinit = false;
 
-        private bool areButtonsInteractable = false;
+        private bool areButtonsInteractable = true;
         private ColorBlock noEffectButtonColor;
         private ColorBlock tunnellingButtonColor;
         private ColorBlock reducedScreenButtonColor;
@@ -162,18 +162,11 @@ namespace TeleopReachy
             if(needReinit)
             {
                 needReinit = false;
-                if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
-                {
-                    areButtonsInteractable = true;
-                }
-                else
-                {
-                    areButtonsInteractable = false;
-                }
                 if (!motionSicknessManager.IsTunnellingOn && !motionSicknessManager.IsReducedScreenOn)
                 {
                     areButtonsInteractable = false;
                 }
+                else areButtonsInteractable = true;
 
                 if(tunnellingButton != null) tunnellingButton.colors = ColorsManager.colorsDeactivated;
                 if(reducedScreenButton != null) reducedScreenButton.colors = ColorsManager.colorsDeactivated;
@@ -195,18 +188,11 @@ namespace TeleopReachy
 
         void CheckNavigationOptionsAvailability()
         {
-            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
-            {
-                areButtonsInteractable = true;
-            }
-            else
-            {
-                areButtonsInteractable = false;
-            }
             if (!motionSicknessManager.IsTunnellingOn && !motionSicknessManager.IsReducedScreenOn)
             {
                 areButtonsInteractable = false;
             }
+            else areButtonsInteractable = true;
             needUpdateButtons = true;
         }
 
