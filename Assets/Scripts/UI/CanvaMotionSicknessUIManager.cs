@@ -32,6 +32,7 @@ namespace TeleopReachy
         private MotionSicknessManager motionSicknessManager;
 
         private bool keepOptionsForAllSession;
+        private bool hideInfo;
 
         void Awake()
         {
@@ -46,51 +47,20 @@ namespace TeleopReachy
             keepOptions.onValueChanged.AddListener(delegate { ToggleValueChanged(keepOptions); });
         }
 
-        // public void OnDemandOnly()
-        // {
-        //     // motionSicknessManager.IsNavigationEffectOnDemandOnly = true;
-        // }
+        void Update()
+        {
+            if(hideInfo)
+            {
+                hideInfo = false;
+                transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
 
-        // public void AutoOnNavigation()
-        // {
-        //     // motionSicknessManager.IsNavigationEffectOnDemandOnly = false;
-        // }
-
-        // public void NoNavigationEffect()
-        // {
-        //     // motionSicknessManager.IsReducedScreenOn = false;
-        //     // motionSicknessManager.IsTunnellingOn = false;
-        // }
-
-        // public void TunnellingNavigationEffect()
-        // {
-        //     // motionSicknessManager.IsReducedScreenOn = false;
-        //     // motionSicknessManager.IsTunnellingOn = true;
-        // }
-
-        // public void ReducedScreenNavigationEffect()
-        // {
-        //     // motionSicknessManager.IsReducedScreenOn = true;
-        //     // motionSicknessManager.IsTunnellingOn = false;
-        // }
-
-        // public void NoReticle()
-        // {
-        //     // motionSicknessManager.IsReticleOn = false;
-        //     // motionSicknessManager.IsReticleAlwaysShown = false;
-        // }
-
-        // public void AlwaysReticle()
-        // {
-        //     // motionSicknessManager.IsReticleOn = true;
-        //     // motionSicknessManager.IsReticleAlwaysShown = true;
-        // }
-
-        // public void NavigationOnlyReticle()
-        // {
-        //     // motionSicknessManager.IsReticleOn = true;
-        //     // motionSicknessManager.IsReticleAlwaysShown = false;
-        // }
+        IEnumerator DisplayForSeconds()
+        {
+            yield return new WaitForSeconds(3);
+            hideInfo = true;
+        }
 
         public void DisplayRenderingCanva()
         {
@@ -131,6 +101,12 @@ namespace TeleopReachy
             if(renderingCanva.GetComponent<NavigationEffectsManager>() != null) renderingCanva.GetComponent<NavigationEffectsManager>().Reinit();
             if(navigationCanva.GetComponent<NavigationEffectsManager>() != null) navigationCanva.GetComponent<NavigationEffectsManager>().Reinit();
             if(reticleCanva.GetComponent<ReticleManager>() != null) reticleCanva.GetComponent<ReticleManager>().Reinit();
+        }
+
+        public void ShowInfo()
+        {
+            transform.GetChild(1).gameObject.SetActive(true);
+            StartCoroutine(DisplayForSeconds());
         }
 
         public void DisplayMotionSicknessCanva()
