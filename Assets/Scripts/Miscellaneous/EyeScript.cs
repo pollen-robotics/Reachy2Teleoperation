@@ -9,6 +9,8 @@ namespace TeleopReachy
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
+        private RobotStatus robotStatus;
+
         private bool needUpdateScale;
         private bool userRequestedSmallSize;
 
@@ -46,6 +48,9 @@ namespace TeleopReachy
 
             mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
             mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
+
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStopTeleoperation.AddListener(ForceBackToFullScreen);
         }
 
         void Update()
@@ -105,6 +110,12 @@ namespace TeleopReachy
                     needUpdateScale = true;
                 }
             }
+        }
+
+        void ForceBackToFullScreen()
+        {
+            lerpGoalScale = fullScreenScale;
+            needUpdateScale = true;
         }
     }
 }
