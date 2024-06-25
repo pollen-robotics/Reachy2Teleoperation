@@ -40,6 +40,7 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStopTeleoperation.AddListener(StopConstantFakeMovement);
             simulateFakeConstantMovement = false;
         }
 
@@ -126,6 +127,11 @@ namespace TeleopReachy
         public void AskForFakeConstantMovement(bool wantConstantMovement)
         {
             simulateFakeConstantMovement = wantConstantMovement;
+        }
+
+        void StopConstantFakeMovement()
+        {
+            simulateFakeConstantMovement = false;
         }
     }
 }
