@@ -102,17 +102,20 @@ namespace TeleopReachy
 
             if (robotStatus!= null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
+                if(IsTunnellingOn || IsReducedScreenOn)
                 {
-                    RequestNavigationEffect = !RequestNavigationEffect;
-                    mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
-                    event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
-                }
-                if (leftJoystickButtonPressed && !leftJoystickButtonPreviouslyPressed)
-                {
-                    RequestNavigationEffect = !RequestNavigationEffect;
-                    mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
-                    event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
+                    if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
+                    {
+                        RequestNavigationEffect = !RequestNavigationEffect;
+                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
+                        event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
+                    }
+                    if (leftJoystickButtonPressed && !leftJoystickButtonPreviouslyPressed)
+                    {
+                        RequestNavigationEffect = !RequestNavigationEffect;
+                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
+                        event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
+                    }
                 }
             }
 
