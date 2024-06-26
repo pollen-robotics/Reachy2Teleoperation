@@ -73,26 +73,23 @@ namespace TeleopReachy
 
         void SetImageSmaller()
         {
-            if (motionSicknessManager.IsReducedScreenOn)
+            if (motionSicknessManager.IsReducedScreenAutoOn && !userRequestedSmallSize )
             {
-                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly && !userRequestedSmallSize)
-                {
-                    lerpGoalScale = smallerScreenScale;
-                    needUpdateScale = true;
-                }
+                lerpGoalScale = smallerScreenScale;
+                needUpdateScale = true;
             }
 
         }
 
         void ResizeView(bool activate)
         {
-            if (motionSicknessManager.IsReducedScreenOn && !activate)
+            if (motionSicknessManager.IsReducedScreenOnClickOn && !activate)
             {
                 lerpGoalScale = fullScreenScale;
                 userRequestedSmallSize = false;
                 needUpdateScale = true;
             }
-            else if(motionSicknessManager.IsReducedScreenOn && activate)
+            else if(motionSicknessManager.IsReducedScreenOnClickOn && activate)
             {
                 lerpGoalScale = smallerScreenScale;
                 userRequestedSmallSize = true;
@@ -102,19 +99,17 @@ namespace TeleopReachy
 
         void SetImageFullScreen()
         {
-            if (motionSicknessManager.IsReducedScreenOn)
+            if (motionSicknessManager.IsReducedScreenAutoOn && !userRequestedSmallSize)
             {
-                if (!motionSicknessManager.IsNavigationEffectOnDemandOnly && !userRequestedSmallSize)
-                {
-                    lerpGoalScale = fullScreenScale;
-                    needUpdateScale = true;
-                }
+                lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
             }
         }
 
         void ForceBackToFullScreen()
         {
             lerpGoalScale = fullScreenScale;
+            userRequestedSmallSize = false;
             needUpdateScale = true;
         }
     }

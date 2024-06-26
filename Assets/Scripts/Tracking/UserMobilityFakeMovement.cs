@@ -27,6 +27,7 @@ namespace TeleopReachy
         public UnityEvent event_OnStopMoving;
 
         private bool simulateFakeConstantMovement;
+        private bool simulateFakeStaticMovement;
 
         private void OnEnable()
         {
@@ -40,8 +41,9 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(StopConstantFakeMovement);
+            robotStatus.event_OnStopTeleoperation.AddListener(StopFakeMovements);
             simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = false;
         }
 
         private void ReinitCounter()
@@ -80,21 +82,13 @@ namespace TeleopReachy
         {
             if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if(simulateFakeConstantMovement)
-                {
-                    speed = maxSpeed;
-                    rotationAngle = sensitivity;
-                }
-                else
-                {
-                    Vector2 direction = userMobilityInput.GetMobileBaseDirection();
-                    Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
-
-                    speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
-                    speed = Mathf.Clamp(speed, 0, maxSpeed);
-                    rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
-                }
                 
+                Vector2 direction = userMobilityInput.GetMobileBaseDirection();
+                Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
+
+                speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
+                speed = Mathf.Clamp(speed, 0, maxSpeed);
+                rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
 
                 if (speed == 0 && rotationAngle == 0)
                 {
@@ -119,6 +113,17 @@ namespace TeleopReachy
                     AddToQueue(previousRotationAngleQueue, rotationAngle);
                 }
 
+                if(simulateFakeConstantMovement)
+                {
+                    speed = maxSpeed;
+                    rotationAngle = sensitivity;
+                }
+                if(simulateFakeStaticMovement)
+                {
+                    speed = 0;
+                    rotationAngle = 0;
+                }
+
                 transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
                 transform.Rotate(Vector3.up, rotationAngle);
             }
@@ -129,9 +134,15 @@ namespace TeleopReachy
             simulateFakeConstantMovement = wantConstantMovement;
         }
 
-        void StopConstantFakeMovement()
+        public void AskForFakeStaticMovement(bool wantStaticMovement)
+        {
+            simulateFakeStaticMovement = wantStaticMovement;
+        }
+
+        void StopFakeMovements()
         {
             simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = false;
         }
     }
 }
