@@ -8,15 +8,16 @@ namespace TeleopReachy
     public class MotionSicknessManager : Singleton<MotionSicknessManager>
     {
         public bool IsReticleOn { get; set; }
-        public bool IsReticleAlwaysShown { get; set; }
+        // public bool IsReticleAlwaysShown { get; set; }
 
-        public bool IsTunnellingOn { get; set; }
-        public bool IsReducedScreenOn { get; set; }
-        public bool IsNavigationEffectOnDemandOnly { get; set; }
+        public bool IsTunnellingAutoOn { get; set; }
+        public bool IsReducedScreenAutoOn { get; set; }
+        // public bool IsNavigationEffectOnDemandOnly { get; set; }
+
+        public bool IsTunnellingOnClickOn { get; set; }
+        public bool IsReducedScreenOnClickOn { get; set; }
 
         public bool RequestNavigationEffect { get; private set; }
-
-        public bool AreOptionsSaved { get; private set; }
 
         private ControllersManager controllers;
         private RobotStatus robotStatus;
@@ -34,13 +35,14 @@ namespace TeleopReachy
         protected override void Init()
         {
             IsReticleOn = false;
-            IsReticleAlwaysShown = false;
+            // IsReticleAlwaysShown = false;
 
-            IsTunnellingOn = false;
-            IsReducedScreenOn = false;
-            IsNavigationEffectOnDemandOnly = false;
+            IsTunnellingAutoOn = true;
+            IsReducedScreenAutoOn = false;
+            // IsNavigationEffectOnDemandOnly = false;
 
-            AreOptionsSaved = false;
+            IsTunnellingOnClickOn = false;
+            IsReducedScreenOnClickOn = true;
 
             controllers = ControllersManager.Instance;
             EventManager.StartListening(EventNames.MirrorSceneLoaded, FinishInit);
@@ -54,11 +56,6 @@ namespace TeleopReachy
         private void BeginNewSession()
         {
             event_OnNewTeleopSession.Invoke();
-        }
-
-        public void SaveOptionsForAllSessions(bool value)
-        {
-            AreOptionsSaved = value;
         }
 
         void FinishInit()
@@ -77,6 +74,7 @@ namespace TeleopReachy
 
         void ActivateDeactivateTunnelling(bool value)
         {
+            mobilityFakeMovement.AskForFakeStaticMovement(!RequestNavigationEffect && IsTunnellingOnClickOn);
             GameObject camera = GameObject.Find("Main Camera");
             camera.transform.GetComponent<TunnellingMobile>().enabled = value;
         }
@@ -84,7 +82,7 @@ namespace TeleopReachy
         void InitOnDemandRequest()
         {
             RequestNavigationEffect = false;
-            ActivateDeactivateTunnelling(IsTunnellingOn);
+            ActivateDeactivateTunnelling(IsTunnellingOnClickOn || IsTunnellingAutoOn);
         }
 
         public void UpdateMotionSicknessPreferences()
@@ -102,18 +100,20 @@ namespace TeleopReachy
 
             if (robotStatus!= null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if(IsTunnellingOn || IsReducedScreenOn)
+                if(IsTunnellingOnClickOn || IsReducedScreenOnClickOn)
                 {
                     if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
                     {
                         RequestNavigationEffect = !RequestNavigationEffect;
-                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
+                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect && IsTunnellingOnClickOn);
+                        mobilityFakeMovement.AskForFakeStaticMovement(!RequestNavigationEffect && IsTunnellingOnClickOn);
                         event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                     }
                     if (leftJoystickButtonPressed && !leftJoystickButtonPreviouslyPressed)
                     {
                         RequestNavigationEffect = !RequestNavigationEffect;
-                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect);
+                        mobilityFakeMovement.AskForFakeConstantMovement(RequestNavigationEffect && IsTunnellingOnClickOn);
+                        mobilityFakeMovement.AskForFakeStaticMovement(!RequestNavigationEffect && IsTunnellingOnClickOn);
                         event_OnRequestNavigationEffect.Invoke(RequestNavigationEffect);
                     }
                 }

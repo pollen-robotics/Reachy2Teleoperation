@@ -4,10 +4,7 @@ namespace TeleopReachy
 {
     public class ReticleUIManager : MonoBehaviour
     {
-        private UserMobilityFakeMovement mobilityFakeMovement;
         private RobotStatus robotStatus;
-        private bool isReticleActive;
-        private bool needUpdate;
 
         private ControllersManager controllers;
 
@@ -16,15 +13,11 @@ namespace TeleopReachy
         void Start()
         {
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-            isReticleActive = false;
-            transform.ActivateChildren(isReticleActive);
+            HideReticle();
         }
 
         void Init()
         {
-            mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
-            mobilityFakeMovement.event_OnStartMoving.AddListener(StartMoving);
-            mobilityFakeMovement.event_OnStopMoving.AddListener(StopMoving);
             motionSicknessManager = MotionSicknessManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
@@ -32,7 +25,7 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
             {
-                transform.localPosition = new Vector3(0, 0, -600);
+                transform.localPosition = new Vector3(0, 0, -550);
             }
             else if (controllers.headsetType == ControllersManager.SupportedDevices.MetaQuest3)
             {
@@ -40,33 +33,9 @@ namespace TeleopReachy
             }
         }
 
-        void Update()
-        {
-            if (needUpdate)
-            {
-                needUpdate = false;
-                if (motionSicknessManager.IsReticleOn && !motionSicknessManager.IsReticleAlwaysShown)
-                {
-                    transform.ActivateChildren(isReticleActive);
-                }
-            }
-        }
-
-        void StartMoving()
-        {
-            isReticleActive = true;
-            needUpdate = true;
-        }
-
-        void StopMoving()
-        {
-            isReticleActive = false;
-            needUpdate = true;
-        }
-
         void CheckReticleState()
         {
-            if (motionSicknessManager.IsReticleOn && motionSicknessManager.IsReticleAlwaysShown)
+            if (motionSicknessManager.IsReticleOn)
             {
                 transform.ActivateChildren(true);
             }
