@@ -99,40 +99,42 @@ namespace Reachy.Part.Arm {
             "UFJFU0VOVF9QT1NJVElPThADEhEKDVBSRVNFTlRfU1BFRUQQBBIQCgxQUkVT",
             "RU5UX0xPQUQQBRIPCgtURU1QRVJBVFVSRRAGEhAKDEpPSU5UX0xJTUlUUxAH",
             "Eg0KCUNPTVBMSUFOVBAIEhEKDUdPQUxfUE9TSVRJT04QCRIPCgtTUEVFRF9M",
-            "SU1JVBAKEhAKDFRPUlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPKjUK",
-            "EUlLQ29uc3RyYWluZWRNb2RlEhEKDVVOQ09OU1RSQUlORUQQABINCglMT1df",
-            "RUxCT1cQASowChBJS0NvbnRpbnVvdXNNb2RlEg4KCkNPTlRJTlVPVVMQABIM",
-            "CghESVNDUkVURRABKmkKEVJlYWNoYWJpbGl0eUVycm9yEhIKDkRJU1RBTkNF",
-            "X0xJTUlUEAASDwoLRUxCT1dfTElNSVQQARIPCgtXUklTVF9MSU1JVBACEhMK",
-            "D1RPUlNPX0NPTExJU0lPThADEgkKBU9USEVSEAQy4AkKCkFybVNlcnZpY2US",
-            "QAoKR2V0QWxsQXJtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoaLnJlYWNo",
-            "eS5wYXJ0LmFybS5MaXN0T2ZBcm0SOgoIR2V0U3RhdGUSEy5yZWFjaHkucGFy",
-            "dC5QYXJ0SWQaGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUSTQoMQ29tcHV0",
-            "ZUFybUZLEh0ucmVhY2h5LnBhcnQuYXJtLkFybUZLUmVxdWVzdBoeLnJlYWNo",
-            "eS5wYXJ0LmFybS5Bcm1GS1NvbHV0aW9uEk0KDENvbXB1dGVBcm1JSxIdLnJl",
-            "YWNoeS5wYXJ0LmFybS5Bcm1JS1JlcXVlc3QaHi5yZWFjaHkucGFydC5hcm0u",
-            "QXJtSUtTb2x1dGlvbhJJChRHZXRDYXJ0ZXNpYW5Qb3NpdGlvbhITLnJlYWNo",
-            "eS5wYXJ0LlBhcnRJZBocLnJlYWNoeS5raW5lbWF0aWNzLk1hdHJpeDR4NBJF",
-            "ChBHZXRKb2ludFBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVh",
-            "Y2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uEjgKBUF1ZGl0EhMucmVhY2h5LnBh",
-            "cnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybVN0YXR1cxI4CglIZWFy",
-            "dEJlYXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYu",
-            "RW1wdHkSNgoHUmVzdGFydBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2ds",
-            "ZS5wcm90b2J1Zi5FbXB0eRJBChJSZXNldERlZmF1bHRWYWx1ZXMSEy5yZWFj",
-            "aHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSNQoGVHVy",
-            "bk9uEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVt",
-            "cHR5EjYKB1R1cm5PZmYSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUu",
-            "cHJvdG9idWYuRW1wdHkSQgoPR2V0Sm9pbnRzTGltaXRzEhMucmVhY2h5LnBh",
-            "cnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybUxpbWl0cxJICg9HZXRU",
-            "ZW1wZXJhdHVyZXMSEy5yZWFjaHkucGFydC5QYXJ0SWQaIC5yZWFjaHkucGFy",
-            "dC5hcm0uQXJtVGVtcGVyYXR1cmVzEkkKFEdldEpvaW50R29hbFBvc2l0aW9u",
-            "EhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVhY2h5LnBhcnQuYXJtLkFybVBv",
-            "c2l0aW9uEksKDVNldFNwZWVkTGltaXQSIi5yZWFjaHkucGFydC5hcm0uU3Bl",
-            "ZWRMaW1pdFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSTQoOU2V0",
-            "VG9ycXVlTGltaXQSIy5yZWFjaHkucGFydC5hcm0uVG9ycXVlTGltaXRSZXF1",
-            "ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5ElEKFFNlbmRBcm1DYXJ0ZXNp",
-            "YW5Hb2FsEiEucmVhY2h5LnBhcnQuYXJtLkFybUNhcnRlc2lhbkdvYWwaFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHliBnByb3RvMw=="));
+            "SU1JVBAKEhAKDFRPUlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPKlUK",
+            "EUlLQ29uc3RyYWluZWRNb2RlEh4KGlVOREVGSU5FRF9DT05TVFJBSU5FRF9N",
+            "T0RFEAASEQoNVU5DT05TVFJBSU5FRBABEg0KCUxPV19FTEJPVxACKk8KEElL",
+            "Q29udGludW91c01vZGUSHQoZVU5ERUZJTkVEX0NPTlRJTlVPVVNfTU9ERRAA",
+            "Eg4KCkNPTlRJTlVPVVMQARIMCghESVNDUkVURRACKowBChFSZWFjaGFiaWxp",
+            "dHlFcnJvchIMCghOT19FUlJPUhAAEhIKDkRJU1RBTkNFX0xJTUlUEAESEgoO",
+            "U0hPVUxERVJfTElNSVQQAhIPCgtFTEJPV19MSU1JVBADEg8KC1dSSVNUX0xJ",
+            "TUlUEAQSFAoQQ09OVElOVUlUWV9MSU1JVBAFEgkKBU9USEVSEAYy4AkKCkFy",
+            "bVNlcnZpY2USQAoKR2V0QWxsQXJtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eRoaLnJlYWNoeS5wYXJ0LmFybS5MaXN0T2ZBcm0SOgoIR2V0U3RhdGUSEy5y",
+            "ZWFjaHkucGFydC5QYXJ0SWQaGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUS",
+            "TQoMQ29tcHV0ZUFybUZLEh0ucmVhY2h5LnBhcnQuYXJtLkFybUZLUmVxdWVz",
+            "dBoeLnJlYWNoeS5wYXJ0LmFybS5Bcm1GS1NvbHV0aW9uEk0KDENvbXB1dGVB",
+            "cm1JSxIdLnJlYWNoeS5wYXJ0LmFybS5Bcm1JS1JlcXVlc3QaHi5yZWFjaHku",
+            "cGFydC5hcm0uQXJtSUtTb2x1dGlvbhJJChRHZXRDYXJ0ZXNpYW5Qb3NpdGlv",
+            "bhITLnJlYWNoeS5wYXJ0LlBhcnRJZBocLnJlYWNoeS5raW5lbWF0aWNzLk1h",
+            "dHJpeDR4NBJFChBHZXRKb2ludFBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFy",
+            "dElkGhwucmVhY2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uEjgKBUF1ZGl0EhMu",
+            "cmVhY2h5LnBhcnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybVN0YXR1",
+            "cxI4CglIZWFydEJlYXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkSNgoHUmVzdGFydBITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+            "ZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJBChJSZXNldERlZmF1bHRWYWx1",
+            "ZXMSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkSNQoGVHVybk9uEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnBy",
+            "b3RvYnVmLkVtcHR5EjYKB1R1cm5PZmYSEy5yZWFjaHkucGFydC5QYXJ0SWQa",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkSQgoPR2V0Sm9pbnRzTGltaXRzEhMu",
+            "cmVhY2h5LnBhcnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybUxpbWl0",
+            "cxJICg9HZXRUZW1wZXJhdHVyZXMSEy5yZWFjaHkucGFydC5QYXJ0SWQaIC5y",
+            "ZWFjaHkucGFydC5hcm0uQXJtVGVtcGVyYXR1cmVzEkkKFEdldEpvaW50R29h",
+            "bFBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVhY2h5LnBhcnQu",
+            "YXJtLkFybVBvc2l0aW9uEksKDVNldFNwZWVkTGltaXQSIi5yZWFjaHkucGFy",
+            "dC5hcm0uU3BlZWRMaW1pdFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkSTQoOU2V0VG9ycXVlTGltaXQSIy5yZWFjaHkucGFydC5hcm0uVG9ycXVl",
+            "TGltaXRSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5ElEKFFNlbmRB",
+            "cm1DYXJ0ZXNpYW5Hb2FsEiEucmVhY2h5LnBhcnQuYXJtLkFybUNhcnRlc2lh",
+            "bkdvYWwaFi5nb29nbGUucHJvdG9idWYuRW1wdHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.Kinematics.KinematicsReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Component.Orbita2D.Orbita2DReflection.Descriptor, global::Component.Orbita3D.Orbita3DReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Arm.ArmField), typeof(global::Reachy.Part.Arm.IKConstrainedMode), typeof(global::Reachy.Part.Arm.IKContinuousMode), typeof(global::Reachy.Part.Arm.ReachabilityError), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -178,21 +180,25 @@ namespace Reachy.Part.Arm {
   }
 
   public enum IKConstrainedMode {
-    [pbr::OriginalName("UNCONSTRAINED")] Unconstrained = 0,
-    [pbr::OriginalName("LOW_ELBOW")] LowElbow = 1,
+    [pbr::OriginalName("UNDEFINED_CONSTRAINED_MODE")] UndefinedConstrainedMode = 0,
+    [pbr::OriginalName("UNCONSTRAINED")] Unconstrained = 1,
+    [pbr::OriginalName("LOW_ELBOW")] LowElbow = 2,
   }
 
   public enum IKContinuousMode {
-    [pbr::OriginalName("CONTINUOUS")] Continuous = 0,
-    [pbr::OriginalName("DISCRETE")] Discrete = 1,
+    [pbr::OriginalName("UNDEFINED_CONTINUOUS_MODE")] UndefinedContinuousMode = 0,
+    [pbr::OriginalName("CONTINUOUS")] Continuous = 1,
+    [pbr::OriginalName("DISCRETE")] Discrete = 2,
   }
 
   public enum ReachabilityError {
-    [pbr::OriginalName("DISTANCE_LIMIT")] DistanceLimit = 0,
-    [pbr::OriginalName("ELBOW_LIMIT")] ElbowLimit = 1,
-    [pbr::OriginalName("WRIST_LIMIT")] WristLimit = 2,
-    [pbr::OriginalName("TORSO_COLLISION")] TorsoCollision = 3,
-    [pbr::OriginalName("OTHER")] Other = 4,
+    [pbr::OriginalName("NO_ERROR")] NoError = 0,
+    [pbr::OriginalName("DISTANCE_LIMIT")] DistanceLimit = 1,
+    [pbr::OriginalName("SHOULDER_LIMIT")] ShoulderLimit = 2,
+    [pbr::OriginalName("ELBOW_LIMIT")] ElbowLimit = 3,
+    [pbr::OriginalName("WRIST_LIMIT")] WristLimit = 4,
+    [pbr::OriginalName("CONTINUITY_LIMIT")] ContinuityLimit = 5,
+    [pbr::OriginalName("OTHER")] Other = 6,
   }
 
   #endregion
@@ -719,7 +725,7 @@ namespace Reachy.Part.Arm {
 
     /// <summary>Field number for the "description" field.</summary>
     public const int DescriptionFieldNumber = 3;
-    private global::Reachy.Part.Arm.ReachabilityError description_ = global::Reachy.Part.Arm.ReachabilityError.DistanceLimit;
+    private global::Reachy.Part.Arm.ReachabilityError description_ = global::Reachy.Part.Arm.ReachabilityError.NoError;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Reachy.Part.Arm.ReachabilityError Description {
@@ -756,7 +762,7 @@ namespace Reachy.Part.Arm {
       int hash = 1;
       if (orderId_ != null) hash ^= OrderId.GetHashCode();
       if (isReachable_ != null) hash ^= IsReachable.GetHashCode();
-      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) hash ^= Description.GetHashCode();
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.NoError) hash ^= Description.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -781,7 +787,7 @@ namespace Reachy.Part.Arm {
       if (isReachable_ != null) {
         _single_isReachable_codec.WriteTagAndValue(output, IsReachable);
       }
-      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.NoError) {
         output.WriteRawTag(24);
         output.WriteEnum((int) Description);
       }
@@ -801,7 +807,7 @@ namespace Reachy.Part.Arm {
       if (isReachable_ != null) {
         _single_isReachable_codec.WriteTagAndValue(ref output, IsReachable);
       }
-      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.NoError) {
         output.WriteRawTag(24);
         output.WriteEnum((int) Description);
       }
@@ -821,7 +827,7 @@ namespace Reachy.Part.Arm {
       if (isReachable_ != null) {
         size += _single_isReachable_codec.CalculateSizeWithTag(IsReachable);
       }
-      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.NoError) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Description);
       }
       if (_unknownFields != null) {
@@ -846,7 +852,7 @@ namespace Reachy.Part.Arm {
           IsReachable = other.IsReachable;
         }
       }
-      if (other.Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+      if (other.Description != global::Reachy.Part.Arm.ReachabilityError.NoError) {
         Description = other.Description;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -2086,7 +2092,7 @@ namespace Reachy.Part.Arm {
 
     /// <summary>Field number for the "constrained_mode" field.</summary>
     public const int ConstrainedModeFieldNumber = 6;
-    private global::Reachy.Part.Arm.IKConstrainedMode constrainedMode_ = global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained;
+    private global::Reachy.Part.Arm.IKConstrainedMode constrainedMode_ = global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Reachy.Part.Arm.IKConstrainedMode ConstrainedMode {
@@ -2126,7 +2132,7 @@ namespace Reachy.Part.Arm {
 
     /// <summary>Field number for the "continuous_mode" field.</summary>
     public const int ContinuousModeFieldNumber = 9;
-    private global::Reachy.Part.Arm.IKContinuousMode continuousMode_ = global::Reachy.Part.Arm.IKContinuousMode.Continuous;
+    private global::Reachy.Part.Arm.IKContinuousMode continuousMode_ = global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Reachy.Part.Arm.IKContinuousMode ContinuousMode {
@@ -2202,10 +2208,10 @@ namespace Reachy.Part.Arm {
       if (positionTolerance_ != null) hash ^= PositionTolerance.GetHashCode();
       if (orientationTolerance_ != null) hash ^= OrientationTolerance.GetHashCode();
       if (q0_ != null) hash ^= Q0.GetHashCode();
-      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) hash ^= ConstrainedMode.GetHashCode();
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode) hash ^= ConstrainedMode.GetHashCode();
       if (preferredTheta_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(PreferredTheta);
       if (dThetaMax_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(DThetaMax);
-      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) hash ^= ContinuousMode.GetHashCode();
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode) hash ^= ContinuousMode.GetHashCode();
       if (duration_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Duration);
       if (orderId_ != null) hash ^= OrderId.GetHashCode();
       if (_unknownFields != null) {
@@ -2246,7 +2252,7 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(42);
         output.WriteMessage(Q0);
       }
-      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode) {
         output.WriteRawTag(48);
         output.WriteEnum((int) ConstrainedMode);
       }
@@ -2256,7 +2262,7 @@ namespace Reachy.Part.Arm {
       if (dThetaMax_ != null) {
         _single_dThetaMax_codec.WriteTagAndValue(output, DThetaMax);
       }
-      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode) {
         output.WriteRawTag(72);
         output.WriteEnum((int) ContinuousMode);
       }
@@ -2296,7 +2302,7 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(42);
         output.WriteMessage(Q0);
       }
-      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode) {
         output.WriteRawTag(48);
         output.WriteEnum((int) ConstrainedMode);
       }
@@ -2306,7 +2312,7 @@ namespace Reachy.Part.Arm {
       if (dThetaMax_ != null) {
         _single_dThetaMax_codec.WriteTagAndValue(ref output, DThetaMax);
       }
-      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode) {
         output.WriteRawTag(72);
         output.WriteEnum((int) ContinuousMode);
       }
@@ -2341,7 +2347,7 @@ namespace Reachy.Part.Arm {
       if (q0_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Q0);
       }
-      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ConstrainedMode);
       }
       if (preferredTheta_ != null) {
@@ -2350,7 +2356,7 @@ namespace Reachy.Part.Arm {
       if (dThetaMax_ != null) {
         size += _single_dThetaMax_codec.CalculateSizeWithTag(DThetaMax);
       }
-      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ContinuousMode);
       }
       if (duration_ != null) {
@@ -2401,7 +2407,7 @@ namespace Reachy.Part.Arm {
         }
         Q0.MergeFrom(other.Q0);
       }
-      if (other.ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+      if (other.ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.UndefinedConstrainedMode) {
         ConstrainedMode = other.ConstrainedMode;
       }
       if (other.preferredTheta_ != null) {
@@ -2414,7 +2420,7 @@ namespace Reachy.Part.Arm {
           DThetaMax = other.DThetaMax;
         }
       }
-      if (other.ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+      if (other.ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.UndefinedContinuousMode) {
         ContinuousMode = other.ContinuousMode;
       }
       if (other.duration_ != null) {
