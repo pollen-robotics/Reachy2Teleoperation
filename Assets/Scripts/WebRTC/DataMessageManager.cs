@@ -180,7 +180,7 @@ namespace TeleopReachy
                                 {
                                     string[] errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
                                     string[] side = partField.Name.Split("status");
-                                    string[] component = componentField.Name.Split("status");
+                                    string[] component = componentField.Name.Split("_status");
                                     string component_name = side[0] + component[0];
                                     components_status.Add(component_name, errorDetails[0]);
                                 }
