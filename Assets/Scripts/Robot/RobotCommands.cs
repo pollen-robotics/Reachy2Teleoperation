@@ -50,12 +50,12 @@ namespace TeleopReachy
             if (robotConfig.HasLeftArm()) 
             {
                 leftArmRequest.Id = robotConfig.partsId["l_arm"];
-                leftArmRequest.Mode = robotStatus.GetIKMode();
+                leftArmRequest.ConstrainedMode = robotStatus.GetIKMode();
             }
             if (robotConfig.HasRightArm())
             {
                 rightArmRequest.Id = robotConfig.partsId["r_arm"];
-                rightArmRequest.Mode = robotStatus.GetIKMode();
+                rightArmRequest.ConstrainedMode = robotStatus.GetIKMode();
             }
             if (robotConfig.HasHead()) neckRequest.Id = robotConfig.partsId["head"];
 
