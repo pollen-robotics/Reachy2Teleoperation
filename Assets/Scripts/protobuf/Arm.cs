@@ -28,109 +28,121 @@ namespace Reachy.Part.Arm {
             "L2VtcHR5LnByb3RvGh5nb29nbGUvcHJvdG9idWYvd3JhcHBlcnMucHJvdG8a",
             "H2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAucHJvdG8aCnBhcnQucHJvdG8a",
             "EGtpbmVtYXRpY3MucHJvdG8aC2Vycm9yLnByb3RvGg5vcmJpdGEyZC5wcm90",
-            "bxoOb3JiaXRhM2QucHJvdG8imAIKCEFybVN0YXRlEi0KCXRpbWVzdGFtcBgB",
+            "bxoOb3JiaXRhM2QucHJvdG8i0wIKCEFybVN0YXRlEi0KCXRpbWVzdGFtcBgB",
             "IAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASHwoCaWQYAiABKAsy",
             "Ey5yZWFjaHkucGFydC5QYXJ0SWQSEQoJYWN0aXZhdGVkGAMgASgIEjkKDnNo",
             "b3VsZGVyX3N0YXRlGAQgASgLMiEuY29tcG9uZW50Lm9yYml0YTJkLk9yYml0",
             "YTJkU3RhdGUSNgoLZWxib3dfc3RhdGUYBSABKAsyIS5jb21wb25lbnQub3Ji",
             "aXRhMmQuT3JiaXRhMmRTdGF0ZRI2Cgt3cmlzdF9zdGF0ZRgGIAEoCzIhLmNv",
-            "bXBvbmVudC5vcmJpdGEzZC5PcmJpdGEzZFN0YXRlIpoBCg5Bcm1EZXNjcmlw",
-            "dGlvbhIuCghzaG91bGRlchgBIAEoCzIcLmNvbXBvbmVudC5vcmJpdGEyZC5P",
-            "cmJpdGEyZBIrCgVlbGJvdxgCIAEoCzIcLmNvbXBvbmVudC5vcmJpdGEyZC5P",
-            "cmJpdGEyZBIrCgV3cmlzdBgDIAEoCzIcLmNvbXBvbmVudC5vcmJpdGEzZC5P",
-            "cmJpdGEzZCKGAQoDQXJtEiQKB3BhcnRfaWQYASABKAsyEy5yZWFjaHkucGFy",
-            "dC5QYXJ0SWQSNAoLZGVzY3JpcHRpb24YAiABKAsyHy5yZWFjaHkucGFydC5h",
-            "cm0uQXJtRGVzY3JpcHRpb24SIwoEaW5mbxgFIAEoCzIVLnJlYWNoeS5wYXJ0",
-            "LlBhcnRJbmZvIi4KCUxpc3RPZkFybRIhCgNhcm0YASADKAsyFC5yZWFjaHku",
-            "cGFydC5hcm0uQXJtIq8BCgtBcm1Qb3NpdGlvbhI1ChFzaG91bGRlcl9wb3Np",
-            "dGlvbhgBIAEoCzIaLmNvbXBvbmVudC5vcmJpdGEyZC5Qb3NlMmQSMgoOZWxi",
-            "b3dfcG9zaXRpb24YAiABKAsyGi5jb21wb25lbnQub3JiaXRhMmQuUG9zZTJk",
-            "EjUKDndyaXN0X3Bvc2l0aW9uGAMgASgLMh0ucmVhY2h5LmtpbmVtYXRpY3Mu",
-            "Um90YXRpb24zZCKPBAoQQXJtQ2FydGVzaWFuR29hbBIfCgJpZBgBIAEoCzIT",
-            "LnJlYWNoeS5wYXJ0LlBhcnRJZBIvCglnb2FsX3Bvc2UYAiABKAsyHC5yZWFj",
-            "aHkua2luZW1hdGljcy5NYXRyaXg0eDQSRgoScG9zaXRpb25fdG9sZXJhbmNl",
-            "GAMgASgLMioucmVhY2h5LmtpbmVtYXRpY3MuUG9pbnREaXN0YW5jZVRvbGVy",
-            "YW5jZXMSSgoVb3JpZW50YXRpb25fdG9sZXJhbmNlGAQgASgLMisucmVhY2h5",
-            "LmtpbmVtYXRpY3MuRXh0RXVsZXJBbmdsZXNUb2xlcmFuY2VzEigKAnEwGAUg",
-            "ASgLMhwucmVhY2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uEiUKBG1vZGUYBiAB",
-            "KA4yFy5yZWFjaHkucGFydC5hcm0uSUtNb2RlEjQKD3ByZWZlcnJlZF90aGV0",
-            "YRgHIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjAKC2RfdGhl",
-            "dGFfbWF4GAggASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSLQoI",
-            "ZHVyYXRpb24YCiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIt",
-            "CghvcmRlcl9pZBgPIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5JbnQzMlZhbHVl",
-            "IpEBCgxBcm1Kb2ludEdvYWwSHwoCaWQYASABKAsyEy5yZWFjaHkucGFydC5Q",
-            "YXJ0SWQSMQoLam9pbnRzX2dvYWwYAiABKAsyHC5yZWFjaHkucGFydC5hcm0u",
-            "QXJtUG9zaXRpb24SLQoIZHVyYXRpb24YAyABKAsyGy5nb29nbGUucHJvdG9i",
-            "dWYuRmxvYXRWYWx1ZSI8Cg5Bcm1FbmRFZmZlY3RvchIqCgRwb3NlGAEgASgL",
-            "MhwucmVhY2h5LmtpbmVtYXRpY3MuTWF0cml4NHg0Il8KDEFybUZLUmVxdWVz",
-            "dBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIuCghwb3NpdGlv",
-            "bhgCIAEoCzIcLnJlYWNoeS5wYXJ0LmFybS5Bcm1Qb3NpdGlvbiJXCg1Bcm1G",
-            "S1NvbHV0aW9uEg8KB3N1Y2Nlc3MYASABKAgSNQoMZW5kX2VmZmVjdG9yGAIg",
-            "ASgLMh8ucmVhY2h5LnBhcnQuYXJtLkFybUVuZEVmZmVjdG9yIooBCgxBcm1J",
-            "S1JlcXVlc3QSHwoCaWQYASABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQSLwoG",
-            "dGFyZ2V0GAIgASgLMh8ucmVhY2h5LnBhcnQuYXJtLkFybUVuZEVmZmVjdG9y",
-            "EigKAnEwGAMgASgLMhwucmVhY2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uInEK",
-            "DUFybUlLU29sdXRpb24SDwoHc3VjY2VzcxgBIAEoCBIyCgxhcm1fcG9zaXRp",
-            "b24YAiABKAsyHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24SGwoFZXJy",
-            "b3IYAyABKAsyDC5lcnJvci5FcnJvciK8AQoJQXJtU3RhdHVzEjsKD3Nob3Vs",
-            "ZGVyX3N0YXR1cxgBIAEoCzIiLmNvbXBvbmVudC5vcmJpdGEyZC5PcmJpdGEy",
-            "ZFN0YXR1cxI4CgxlbGJvd19zdGF0dXMYAiABKAsyIi5jb21wb25lbnQub3Ji",
-            "aXRhMmQuT3JiaXRhMmRTdGF0dXMSOAoMd3Jpc3Rfc3RhdHVzGAMgASgLMiIu",
-            "Y29tcG9uZW50Lm9yYml0YTNkLk9yYml0YTNkU3RhdHVzIkMKEVNwZWVkTGlt",
-            "aXRSZXF1ZXN0Eh8KAmlkGAEgASgLMhMucmVhY2h5LnBhcnQuUGFydElkEg0K",
-            "BWxpbWl0GAIgASgNIkQKElRvcnF1ZUxpbWl0UmVxdWVzdBIfCgJpZBgBIAEo",
-            "CzITLnJlYWNoeS5wYXJ0LlBhcnRJZBINCgVsaW1pdBgCIAEoDSKqAQoJQXJt",
-            "TGltaXRzEjUKD3Nob3VsZGVyX2xpbWl0cxgBIAEoCzIcLmNvbXBvbmVudC5v",
-            "cmJpdGEyZC5MaW1pdHMyZBIyCgxlbGJvd19saW1pdHMYAiABKAsyHC5jb21w",
-            "b25lbnQub3JiaXRhMmQuTGltaXRzMmQSMgoMd3Jpc3RfbGltaXRzGAMgASgL",
-            "MhwuY29tcG9uZW50Lm9yYml0YTNkLkxpbWl0czNkIrwBCg9Bcm1UZW1wZXJh",
-            "dHVyZXMSOQoUc2hvdWxkZXJfdGVtcGVyYXR1cmUYASABKAsyGy5jb21wb25l",
-            "bnQub3JiaXRhMmQuRmxvYXQyZBI2ChFlbGJvd190ZW1wZXJhdHVyZRgCIAEo",
-            "CzIbLmNvbXBvbmVudC5vcmJpdGEyZC5GbG9hdDJkEjYKEXdyaXN0X3RlbXBl",
-            "cmF0dXJlGAMgASgLMhsuY29tcG9uZW50Lm9yYml0YTNkLkZsb2F0M2Qq2wEK",
-            "CEFybUZpZWxkEggKBE5PTkUQABIICgROQU1FEAESBgoCSUQQAhIUChBQUkVT",
-            "RU5UX1BPU0lUSU9OEAMSEQoNUFJFU0VOVF9TUEVFRBAEEhAKDFBSRVNFTlRf",
-            "TE9BRBAFEg8KC1RFTVBFUkFUVVJFEAYSEAoMSk9JTlRfTElNSVRTEAcSDQoJ",
-            "Q09NUExJQU5UEAgSEQoNR09BTF9QT1NJVElPThAJEg8KC1NQRUVEX0xJTUlU",
-            "EAoSEAoMVE9SUVVFX0xJTUlUEAsSBwoDUElEEAwSBwoDQUxMEA8qKgoGSUtN",
-            "b2RlEhEKDVVOQ09OU1RSQUlORUQQABINCglMT1dfRUxCT1cQATLgCQoKQXJt",
-            "U2VydmljZRJACgpHZXRBbGxBcm1zEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5",
-            "GhoucmVhY2h5LnBhcnQuYXJtLkxpc3RPZkFybRI6CghHZXRTdGF0ZRITLnJl",
-            "YWNoeS5wYXJ0LlBhcnRJZBoZLnJlYWNoeS5wYXJ0LmFybS5Bcm1TdGF0ZRJN",
-            "CgxDb21wdXRlQXJtRksSHS5yZWFjaHkucGFydC5hcm0uQXJtRktSZXF1ZXN0",
-            "Gh4ucmVhY2h5LnBhcnQuYXJtLkFybUZLU29sdXRpb24STQoMQ29tcHV0ZUFy",
-            "bUlLEh0ucmVhY2h5LnBhcnQuYXJtLkFybUlLUmVxdWVzdBoeLnJlYWNoeS5w",
-            "YXJ0LmFybS5Bcm1JS1NvbHV0aW9uEkkKFEdldENhcnRlc2lhblBvc2l0aW9u",
-            "EhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVhY2h5LmtpbmVtYXRpY3MuTWF0",
-            "cml4NHg0EkUKEEdldEpvaW50UG9zaXRpb24SEy5yZWFjaHkucGFydC5QYXJ0",
-            "SWQaHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24SOAoFQXVkaXQSEy5y",
-            "ZWFjaHkucGFydC5QYXJ0SWQaGi5yZWFjaHkucGFydC5hcm0uQXJtU3RhdHVz",
-            "EjgKCUhlYXJ0QmVhdBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5w",
-            "cm90b2J1Zi5FbXB0eRI2CgdSZXN0YXJ0EhMucmVhY2h5LnBhcnQuUGFydElk",
-            "GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EkEKElJlc2V0RGVmYXVsdFZhbHVl",
-            "cxITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eRI1CgZUdXJuT24SEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJv",
-            "dG9idWYuRW1wdHkSNgoHVHVybk9mZhITLnJlYWNoeS5wYXJ0LlBhcnRJZBoW",
-            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRJCCg9HZXRKb2ludHNMaW1pdHMSEy5y",
-            "ZWFjaHkucGFydC5QYXJ0SWQaGi5yZWFjaHkucGFydC5hcm0uQXJtTGltaXRz",
-            "EkgKD0dldFRlbXBlcmF0dXJlcxITLnJlYWNoeS5wYXJ0LlBhcnRJZBogLnJl",
-            "YWNoeS5wYXJ0LmFybS5Bcm1UZW1wZXJhdHVyZXMSSQoUR2V0Sm9pbnRHb2Fs",
-            "UG9zaXRpb24SEy5yZWFjaHkucGFydC5QYXJ0SWQaHC5yZWFjaHkucGFydC5h",
-            "cm0uQXJtUG9zaXRpb24SSwoNU2V0U3BlZWRMaW1pdBIiLnJlYWNoeS5wYXJ0",
-            "LmFybS5TcGVlZExpbWl0UmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eRJNCg5TZXRUb3JxdWVMaW1pdBIjLnJlYWNoeS5wYXJ0LmFybS5Ub3JxdWVM",
-            "aW1pdFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSUQoUU2VuZEFy",
-            "bUNhcnRlc2lhbkdvYWwSIS5yZWFjaHkucGFydC5hcm0uQXJtQ2FydGVzaWFu",
-            "R29hbBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eWIGcHJvdG8z"));
+            "bXBvbmVudC5vcmJpdGEzZC5PcmJpdGEzZFN0YXRlEjkKDHJlYWNoYWJpbGl0",
+            "eRgKIAMoCzIjLnJlYWNoeS5wYXJ0LmFybS5SZWFjaGFiaWxpdHlBbnN3ZXIi",
+            "rgEKElJlYWNoYWJpbGl0eUFuc3dlchItCghvcmRlcl9pZBgBIAEoCzIbLmdv",
+            "b2dsZS5wcm90b2J1Zi5JbnQzMlZhbHVlEjAKDGlzX3JlYWNoYWJsZRgCIAEo",
+            "CzIaLmdvb2dsZS5wcm90b2J1Zi5Cb29sVmFsdWUSNwoLZGVzY3JpcHRpb24Y",
+            "AyABKA4yIi5yZWFjaHkucGFydC5hcm0uUmVhY2hhYmlsaXR5RXJyb3IimgEK",
+            "DkFybURlc2NyaXB0aW9uEi4KCHNob3VsZGVyGAEgASgLMhwuY29tcG9uZW50",
+            "Lm9yYml0YTJkLk9yYml0YTJkEisKBWVsYm93GAIgASgLMhwuY29tcG9uZW50",
+            "Lm9yYml0YTJkLk9yYml0YTJkEisKBXdyaXN0GAMgASgLMhwuY29tcG9uZW50",
+            "Lm9yYml0YTNkLk9yYml0YTNkIoYBCgNBcm0SJAoHcGFydF9pZBgBIAEoCzIT",
+            "LnJlYWNoeS5wYXJ0LlBhcnRJZBI0CgtkZXNjcmlwdGlvbhgCIAEoCzIfLnJl",
+            "YWNoeS5wYXJ0LmFybS5Bcm1EZXNjcmlwdGlvbhIjCgRpbmZvGAUgASgLMhUu",
+            "cmVhY2h5LnBhcnQuUGFydEluZm8iLgoJTGlzdE9mQXJtEiEKA2FybRgBIAMo",
+            "CzIULnJlYWNoeS5wYXJ0LmFybS5Bcm0irwEKC0FybVBvc2l0aW9uEjUKEXNo",
+            "b3VsZGVyX3Bvc2l0aW9uGAEgASgLMhouY29tcG9uZW50Lm9yYml0YTJkLlBv",
+            "c2UyZBIyCg5lbGJvd19wb3NpdGlvbhgCIAEoCzIaLmNvbXBvbmVudC5vcmJp",
+            "dGEyZC5Qb3NlMmQSNQoOd3Jpc3RfcG9zaXRpb24YAyABKAsyHS5yZWFjaHku",
+            "a2luZW1hdGljcy5Sb3RhdGlvbjNkIuIEChBBcm1DYXJ0ZXNpYW5Hb2FsEh8K",
+            "AmlkGAEgASgLMhMucmVhY2h5LnBhcnQuUGFydElkEi8KCWdvYWxfcG9zZRgC",
+            "IAEoCzIcLnJlYWNoeS5raW5lbWF0aWNzLk1hdHJpeDR4NBJGChJwb3NpdGlv",
+            "bl90b2xlcmFuY2UYAyABKAsyKi5yZWFjaHkua2luZW1hdGljcy5Qb2ludERp",
+            "c3RhbmNlVG9sZXJhbmNlcxJKChVvcmllbnRhdGlvbl90b2xlcmFuY2UYBCAB",
+            "KAsyKy5yZWFjaHkua2luZW1hdGljcy5FeHRFdWxlckFuZ2xlc1RvbGVyYW5j",
+            "ZXMSKAoCcTAYBSABKAsyHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24S",
+            "PAoQY29uc3RyYWluZWRfbW9kZRgGIAEoDjIiLnJlYWNoeS5wYXJ0LmFybS5J",
+            "S0NvbnN0cmFpbmVkTW9kZRI0Cg9wcmVmZXJyZWRfdGhldGEYByABKAsyGy5n",
+            "b29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZRIwCgtkX3RoZXRhX21heBgIIAEo",
+            "CzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjoKD2NvbnRpbnVvdXNf",
+            "bW9kZRgJIAEoDjIhLnJlYWNoeS5wYXJ0LmFybS5JS0NvbnRpbnVvdXNNb2Rl",
+            "Ei0KCGR1cmF0aW9uGAogASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFs",
+            "dWUSLQoIb3JkZXJfaWQYDyABKAsyGy5nb29nbGUucHJvdG9idWYuSW50MzJW",
+            "YWx1ZSKRAQoMQXJtSm9pbnRHb2FsEh8KAmlkGAEgASgLMhMucmVhY2h5LnBh",
+            "cnQuUGFydElkEjEKC2pvaW50c19nb2FsGAIgASgLMhwucmVhY2h5LnBhcnQu",
+            "YXJtLkFybVBvc2l0aW9uEi0KCGR1cmF0aW9uGAMgASgLMhsuZ29vZ2xlLnBy",
+            "b3RvYnVmLkZsb2F0VmFsdWUiPAoOQXJtRW5kRWZmZWN0b3ISKgoEcG9zZRgB",
+            "IAEoCzIcLnJlYWNoeS5raW5lbWF0aWNzLk1hdHJpeDR4NCJfCgxBcm1GS1Jl",
+            "cXVlc3QSHwoCaWQYASABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQSLgoIcG9z",
+            "aXRpb24YAiABKAsyHC5yZWFjaHkucGFydC5hcm0uQXJtUG9zaXRpb24iVwoN",
+            "QXJtRktTb2x1dGlvbhIPCgdzdWNjZXNzGAEgASgIEjUKDGVuZF9lZmZlY3Rv",
+            "chgCIAEoCzIfLnJlYWNoeS5wYXJ0LmFybS5Bcm1FbmRFZmZlY3RvciKKAQoM",
+            "QXJtSUtSZXF1ZXN0Eh8KAmlkGAEgASgLMhMucmVhY2h5LnBhcnQuUGFydElk",
+            "Ei8KBnRhcmdldBgCIAEoCzIfLnJlYWNoeS5wYXJ0LmFybS5Bcm1FbmRFZmZl",
+            "Y3RvchIoCgJxMBgDIAEoCzIcLnJlYWNoeS5wYXJ0LmFybS5Bcm1Qb3NpdGlv",
+            "biJxCg1Bcm1JS1NvbHV0aW9uEg8KB3N1Y2Nlc3MYASABKAgSMgoMYXJtX3Bv",
+            "c2l0aW9uGAIgASgLMhwucmVhY2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uEhsK",
+            "BWVycm9yGAMgASgLMgwuZXJyb3IuRXJyb3IivAEKCUFybVN0YXR1cxI7Cg9z",
+            "aG91bGRlcl9zdGF0dXMYASABKAsyIi5jb21wb25lbnQub3JiaXRhMmQuT3Ji",
+            "aXRhMmRTdGF0dXMSOAoMZWxib3dfc3RhdHVzGAIgASgLMiIuY29tcG9uZW50",
+            "Lm9yYml0YTJkLk9yYml0YTJkU3RhdHVzEjgKDHdyaXN0X3N0YXR1cxgDIAEo",
+            "CzIiLmNvbXBvbmVudC5vcmJpdGEzZC5PcmJpdGEzZFN0YXR1cyJDChFTcGVl",
+            "ZExpbWl0UmVxdWVzdBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+            "ZBINCgVsaW1pdBgCIAEoDSJEChJUb3JxdWVMaW1pdFJlcXVlc3QSHwoCaWQY",
+            "ASABKAsyEy5yZWFjaHkucGFydC5QYXJ0SWQSDQoFbGltaXQYAiABKA0iqgEK",
+            "CUFybUxpbWl0cxI1Cg9zaG91bGRlcl9saW1pdHMYASABKAsyHC5jb21wb25l",
+            "bnQub3JiaXRhMmQuTGltaXRzMmQSMgoMZWxib3dfbGltaXRzGAIgASgLMhwu",
+            "Y29tcG9uZW50Lm9yYml0YTJkLkxpbWl0czJkEjIKDHdyaXN0X2xpbWl0cxgD",
+            "IAEoCzIcLmNvbXBvbmVudC5vcmJpdGEzZC5MaW1pdHMzZCK8AQoPQXJtVGVt",
+            "cGVyYXR1cmVzEjkKFHNob3VsZGVyX3RlbXBlcmF0dXJlGAEgASgLMhsuY29t",
+            "cG9uZW50Lm9yYml0YTJkLkZsb2F0MmQSNgoRZWxib3dfdGVtcGVyYXR1cmUY",
+            "AiABKAsyGy5jb21wb25lbnQub3JiaXRhMmQuRmxvYXQyZBI2ChF3cmlzdF90",
+            "ZW1wZXJhdHVyZRgDIAEoCzIbLmNvbXBvbmVudC5vcmJpdGEzZC5GbG9hdDNk",
+            "KtsBCghBcm1GaWVsZBIICgROT05FEAASCAoETkFNRRABEgYKAklEEAISFAoQ",
+            "UFJFU0VOVF9QT1NJVElPThADEhEKDVBSRVNFTlRfU1BFRUQQBBIQCgxQUkVT",
+            "RU5UX0xPQUQQBRIPCgtURU1QRVJBVFVSRRAGEhAKDEpPSU5UX0xJTUlUUxAH",
+            "Eg0KCUNPTVBMSUFOVBAIEhEKDUdPQUxfUE9TSVRJT04QCRIPCgtTUEVFRF9M",
+            "SU1JVBAKEhAKDFRPUlFVRV9MSU1JVBALEgcKA1BJRBAMEgcKA0FMTBAPKjUK",
+            "EUlLQ29uc3RyYWluZWRNb2RlEhEKDVVOQ09OU1RSQUlORUQQABINCglMT1df",
+            "RUxCT1cQASowChBJS0NvbnRpbnVvdXNNb2RlEg4KCkNPTlRJTlVPVVMQABIM",
+            "CghESVNDUkVURRABKmkKEVJlYWNoYWJpbGl0eUVycm9yEhIKDkRJU1RBTkNF",
+            "X0xJTUlUEAASDwoLRUxCT1dfTElNSVQQARIPCgtXUklTVF9MSU1JVBACEhMK",
+            "D1RPUlNPX0NPTExJU0lPThADEgkKBU9USEVSEAQy4AkKCkFybVNlcnZpY2US",
+            "QAoKR2V0QWxsQXJtcxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoaLnJlYWNo",
+            "eS5wYXJ0LmFybS5MaXN0T2ZBcm0SOgoIR2V0U3RhdGUSEy5yZWFjaHkucGFy",
+            "dC5QYXJ0SWQaGS5yZWFjaHkucGFydC5hcm0uQXJtU3RhdGUSTQoMQ29tcHV0",
+            "ZUFybUZLEh0ucmVhY2h5LnBhcnQuYXJtLkFybUZLUmVxdWVzdBoeLnJlYWNo",
+            "eS5wYXJ0LmFybS5Bcm1GS1NvbHV0aW9uEk0KDENvbXB1dGVBcm1JSxIdLnJl",
+            "YWNoeS5wYXJ0LmFybS5Bcm1JS1JlcXVlc3QaHi5yZWFjaHkucGFydC5hcm0u",
+            "QXJtSUtTb2x1dGlvbhJJChRHZXRDYXJ0ZXNpYW5Qb3NpdGlvbhITLnJlYWNo",
+            "eS5wYXJ0LlBhcnRJZBocLnJlYWNoeS5raW5lbWF0aWNzLk1hdHJpeDR4NBJF",
+            "ChBHZXRKb2ludFBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVh",
+            "Y2h5LnBhcnQuYXJtLkFybVBvc2l0aW9uEjgKBUF1ZGl0EhMucmVhY2h5LnBh",
+            "cnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybVN0YXR1cxI4CglIZWFy",
+            "dEJlYXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYu",
+            "RW1wdHkSNgoHUmVzdGFydBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2ds",
+            "ZS5wcm90b2J1Zi5FbXB0eRJBChJSZXNldERlZmF1bHRWYWx1ZXMSEy5yZWFj",
+            "aHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSNQoGVHVy",
+            "bk9uEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVt",
+            "cHR5EjYKB1R1cm5PZmYSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkSQgoPR2V0Sm9pbnRzTGltaXRzEhMucmVhY2h5LnBh",
+            "cnQuUGFydElkGhoucmVhY2h5LnBhcnQuYXJtLkFybUxpbWl0cxJICg9HZXRU",
+            "ZW1wZXJhdHVyZXMSEy5yZWFjaHkucGFydC5QYXJ0SWQaIC5yZWFjaHkucGFy",
+            "dC5hcm0uQXJtVGVtcGVyYXR1cmVzEkkKFEdldEpvaW50R29hbFBvc2l0aW9u",
+            "EhMucmVhY2h5LnBhcnQuUGFydElkGhwucmVhY2h5LnBhcnQuYXJtLkFybVBv",
+            "c2l0aW9uEksKDVNldFNwZWVkTGltaXQSIi5yZWFjaHkucGFydC5hcm0uU3Bl",
+            "ZWRMaW1pdFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSTQoOU2V0",
+            "VG9ycXVlTGltaXQSIy5yZWFjaHkucGFydC5hcm0uVG9ycXVlTGltaXRSZXF1",
+            "ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5ElEKFFNlbmRBcm1DYXJ0ZXNp",
+            "YW5Hb2FsEiEucmVhY2h5LnBhcnQuYXJtLkFybUNhcnRlc2lhbkdvYWwaFi5n",
+            "b29nbGUucHJvdG9idWYuRW1wdHliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.Kinematics.KinematicsReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Component.Orbita2D.Orbita2DReflection.Descriptor, global::Component.Orbita3D.Orbita3DReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Arm.ArmField), typeof(global::Reachy.Part.Arm.IKMode), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmState), global::Reachy.Part.Arm.ArmState.Parser, new[]{ "Timestamp", "Id", "Activated", "ShoulderState", "ElbowState", "WristState" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Arm.ArmField), typeof(global::Reachy.Part.Arm.IKConstrainedMode), typeof(global::Reachy.Part.Arm.IKContinuousMode), typeof(global::Reachy.Part.Arm.ReachabilityError), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmState), global::Reachy.Part.Arm.ArmState.Parser, new[]{ "Timestamp", "Id", "Activated", "ShoulderState", "ElbowState", "WristState", "Reachability" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ReachabilityAnswer), global::Reachy.Part.Arm.ReachabilityAnswer.Parser, new[]{ "OrderId", "IsReachable", "Description" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmDescription), global::Reachy.Part.Arm.ArmDescription.Parser, new[]{ "Shoulder", "Elbow", "Wrist" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.Arm), global::Reachy.Part.Arm.Arm.Parser, new[]{ "PartId", "Description", "Info" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ListOfArm), global::Reachy.Part.Arm.ListOfArm.Parser, new[]{ "Arm" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmPosition), global::Reachy.Part.Arm.ArmPosition.Parser, new[]{ "ShoulderPosition", "ElbowPosition", "WristPosition" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmCartesianGoal), global::Reachy.Part.Arm.ArmCartesianGoal.Parser, new[]{ "Id", "GoalPose", "PositionTolerance", "OrientationTolerance", "Q0", "Mode", "PreferredTheta", "DThetaMax", "Duration", "OrderId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmCartesianGoal), global::Reachy.Part.Arm.ArmCartesianGoal.Parser, new[]{ "Id", "GoalPose", "PositionTolerance", "OrientationTolerance", "Q0", "ConstrainedMode", "PreferredTheta", "DThetaMax", "ContinuousMode", "Duration", "OrderId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmJointGoal), global::Reachy.Part.Arm.ArmJointGoal.Parser, new[]{ "Id", "JointsGoal", "Duration" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmEndEffector), global::Reachy.Part.Arm.ArmEndEffector.Parser, new[]{ "Pose" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Arm.ArmFKRequest), global::Reachy.Part.Arm.ArmFKRequest.Parser, new[]{ "Id", "Position" }, null, null, null, null),
@@ -165,9 +177,22 @@ namespace Reachy.Part.Arm {
     [pbr::OriginalName("ALL")] All = 15,
   }
 
-  public enum IKMode {
+  public enum IKConstrainedMode {
     [pbr::OriginalName("UNCONSTRAINED")] Unconstrained = 0,
     [pbr::OriginalName("LOW_ELBOW")] LowElbow = 1,
+  }
+
+  public enum IKContinuousMode {
+    [pbr::OriginalName("CONTINUOUS")] Continuous = 0,
+    [pbr::OriginalName("DISCRETE")] Discrete = 1,
+  }
+
+  public enum ReachabilityError {
+    [pbr::OriginalName("DISTANCE_LIMIT")] DistanceLimit = 0,
+    [pbr::OriginalName("ELBOW_LIMIT")] ElbowLimit = 1,
+    [pbr::OriginalName("WRIST_LIMIT")] WristLimit = 2,
+    [pbr::OriginalName("TORSO_COLLISION")] TorsoCollision = 3,
+    [pbr::OriginalName("OTHER")] Other = 4,
   }
 
   #endregion
@@ -213,6 +238,7 @@ namespace Reachy.Part.Arm {
       shoulderState_ = other.shoulderState_ != null ? other.shoulderState_.Clone() : null;
       elbowState_ = other.elbowState_ != null ? other.elbowState_.Clone() : null;
       wristState_ = other.wristState_ != null ? other.wristState_.Clone() : null;
+      reachability_ = other.reachability_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -294,6 +320,17 @@ namespace Reachy.Part.Arm {
       }
     }
 
+    /// <summary>Field number for the "reachability" field.</summary>
+    public const int ReachabilityFieldNumber = 10;
+    private static readonly pb::FieldCodec<global::Reachy.Part.Arm.ReachabilityAnswer> _repeated_reachability_codec
+        = pb::FieldCodec.ForMessage(82, global::Reachy.Part.Arm.ReachabilityAnswer.Parser);
+    private readonly pbc::RepeatedField<global::Reachy.Part.Arm.ReachabilityAnswer> reachability_ = new pbc::RepeatedField<global::Reachy.Part.Arm.ReachabilityAnswer>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Reachy.Part.Arm.ReachabilityAnswer> Reachability {
+      get { return reachability_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -315,6 +352,7 @@ namespace Reachy.Part.Arm {
       if (!object.Equals(ShoulderState, other.ShoulderState)) return false;
       if (!object.Equals(ElbowState, other.ElbowState)) return false;
       if (!object.Equals(WristState, other.WristState)) return false;
+      if(!reachability_.Equals(other.reachability_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -328,6 +366,7 @@ namespace Reachy.Part.Arm {
       if (shoulderState_ != null) hash ^= ShoulderState.GetHashCode();
       if (elbowState_ != null) hash ^= ElbowState.GetHashCode();
       if (wristState_ != null) hash ^= WristState.GetHashCode();
+      hash ^= reachability_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -370,6 +409,7 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(50);
         output.WriteMessage(WristState);
       }
+      reachability_.WriteTo(output, _repeated_reachability_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -404,6 +444,7 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(50);
         output.WriteMessage(WristState);
       }
+      reachability_.WriteTo(ref output, _repeated_reachability_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -432,6 +473,7 @@ namespace Reachy.Part.Arm {
       if (wristState_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(WristState);
       }
+      size += reachability_.CalculateSize(_repeated_reachability_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -477,6 +519,7 @@ namespace Reachy.Part.Arm {
         }
         WristState.MergeFrom(other.WristState);
       }
+      reachability_.Add(other.reachability_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -529,6 +572,10 @@ namespace Reachy.Part.Arm {
               WristState = new global::Component.Orbita3D.Orbita3dState();
             }
             input.ReadMessage(WristState);
+            break;
+          }
+          case 82: {
+            reachability_.AddEntriesFrom(input, _repeated_reachability_codec);
             break;
           }
         }
@@ -585,6 +632,289 @@ namespace Reachy.Part.Arm {
             input.ReadMessage(WristState);
             break;
           }
+          case 82: {
+            reachability_.AddEntriesFrom(ref input, _repeated_reachability_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class ReachabilityAnswer : pb::IMessage<ReachabilityAnswer>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ReachabilityAnswer> _parser = new pb::MessageParser<ReachabilityAnswer>(() => new ReachabilityAnswer());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ReachabilityAnswer> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer(ReachabilityAnswer other) : this() {
+      OrderId = other.OrderId;
+      IsReachable = other.IsReachable;
+      description_ = other.description_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ReachabilityAnswer Clone() {
+      return new ReachabilityAnswer(this);
+    }
+
+    /// <summary>Field number for the "order_id" field.</summary>
+    public const int OrderIdFieldNumber = 1;
+    private static readonly pb::FieldCodec<int?> _single_orderId_codec = pb::FieldCodec.ForStructWrapper<int>(10);
+    private int? orderId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int? OrderId {
+      get { return orderId_; }
+      set {
+        orderId_ = value;
+      }
+    }
+
+
+    /// <summary>Field number for the "is_reachable" field.</summary>
+    public const int IsReachableFieldNumber = 2;
+    private static readonly pb::FieldCodec<bool?> _single_isReachable_codec = pb::FieldCodec.ForStructWrapper<bool>(18);
+    private bool? isReachable_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool? IsReachable {
+      get { return isReachable_; }
+      set {
+        isReachable_ = value;
+      }
+    }
+
+
+    /// <summary>Field number for the "description" field.</summary>
+    public const int DescriptionFieldNumber = 3;
+    private global::Reachy.Part.Arm.ReachabilityError description_ = global::Reachy.Part.Arm.ReachabilityError.DistanceLimit;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Arm.ReachabilityError Description {
+      get { return description_; }
+      set {
+        description_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ReachabilityAnswer);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ReachabilityAnswer other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (OrderId != other.OrderId) return false;
+      if (IsReachable != other.IsReachable) return false;
+      if (Description != other.Description) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (orderId_ != null) hash ^= OrderId.GetHashCode();
+      if (isReachable_ != null) hash ^= IsReachable.GetHashCode();
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) hash ^= Description.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (orderId_ != null) {
+        _single_orderId_codec.WriteTagAndValue(output, OrderId);
+      }
+      if (isReachable_ != null) {
+        _single_isReachable_codec.WriteTagAndValue(output, IsReachable);
+      }
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Description);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (orderId_ != null) {
+        _single_orderId_codec.WriteTagAndValue(ref output, OrderId);
+      }
+      if (isReachable_ != null) {
+        _single_isReachable_codec.WriteTagAndValue(ref output, IsReachable);
+      }
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Description);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (orderId_ != null) {
+        size += _single_orderId_codec.CalculateSizeWithTag(OrderId);
+      }
+      if (isReachable_ != null) {
+        size += _single_isReachable_codec.CalculateSizeWithTag(IsReachable);
+      }
+      if (Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Description);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ReachabilityAnswer other) {
+      if (other == null) {
+        return;
+      }
+      if (other.orderId_ != null) {
+        if (orderId_ == null || other.OrderId != 0) {
+          OrderId = other.OrderId;
+        }
+      }
+      if (other.isReachable_ != null) {
+        if (isReachable_ == null || other.IsReachable != false) {
+          IsReachable = other.IsReachable;
+        }
+      }
+      if (other.Description != global::Reachy.Part.Arm.ReachabilityError.DistanceLimit) {
+        Description = other.Description;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            int? value = _single_orderId_codec.Read(input);
+            if (orderId_ == null || value != 0) {
+              OrderId = value;
+            }
+            break;
+          }
+          case 18: {
+            bool? value = _single_isReachable_codec.Read(input);
+            if (isReachable_ == null || value != false) {
+              IsReachable = value;
+            }
+            break;
+          }
+          case 24: {
+            Description = (global::Reachy.Part.Arm.ReachabilityError) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            int? value = _single_orderId_codec.Read(ref input);
+            if (orderId_ == null || value != 0) {
+              OrderId = value;
+            }
+            break;
+          }
+          case 18: {
+            bool? value = _single_isReachable_codec.Read(ref input);
+            if (isReachable_ == null || value != false) {
+              IsReachable = value;
+            }
+            break;
+          }
+          case 24: {
+            Description = (global::Reachy.Part.Arm.ReachabilityError) input.ReadEnum();
+            break;
+          }
         }
       }
     }
@@ -606,7 +936,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -896,7 +1226,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1186,7 +1516,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1364,7 +1694,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1654,7 +1984,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1679,9 +2009,10 @@ namespace Reachy.Part.Arm {
       positionTolerance_ = other.positionTolerance_ != null ? other.positionTolerance_.Clone() : null;
       orientationTolerance_ = other.orientationTolerance_ != null ? other.orientationTolerance_.Clone() : null;
       q0_ = other.q0_ != null ? other.q0_.Clone() : null;
-      mode_ = other.mode_;
+      constrainedMode_ = other.constrainedMode_;
       PreferredTheta = other.PreferredTheta;
       DThetaMax = other.DThetaMax;
+      continuousMode_ = other.continuousMode_;
       Duration = other.Duration;
       OrderId = other.OrderId;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1753,15 +2084,15 @@ namespace Reachy.Part.Arm {
       }
     }
 
-    /// <summary>Field number for the "mode" field.</summary>
-    public const int ModeFieldNumber = 6;
-    private global::Reachy.Part.Arm.IKMode mode_ = global::Reachy.Part.Arm.IKMode.Unconstrained;
+    /// <summary>Field number for the "constrained_mode" field.</summary>
+    public const int ConstrainedModeFieldNumber = 6;
+    private global::Reachy.Part.Arm.IKConstrainedMode constrainedMode_ = global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Reachy.Part.Arm.IKMode Mode {
-      get { return mode_; }
+    public global::Reachy.Part.Arm.IKConstrainedMode ConstrainedMode {
+      get { return constrainedMode_; }
       set {
-        mode_ = value;
+        constrainedMode_ = value;
       }
     }
 
@@ -1792,6 +2123,18 @@ namespace Reachy.Part.Arm {
       }
     }
 
+
+    /// <summary>Field number for the "continuous_mode" field.</summary>
+    public const int ContinuousModeFieldNumber = 9;
+    private global::Reachy.Part.Arm.IKContinuousMode continuousMode_ = global::Reachy.Part.Arm.IKContinuousMode.Continuous;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.Arm.IKContinuousMode ContinuousMode {
+      get { return continuousMode_; }
+      set {
+        continuousMode_ = value;
+      }
+    }
 
     /// <summary>Field number for the "duration" field.</summary>
     public const int DurationFieldNumber = 10;
@@ -1841,9 +2184,10 @@ namespace Reachy.Part.Arm {
       if (!object.Equals(PositionTolerance, other.PositionTolerance)) return false;
       if (!object.Equals(OrientationTolerance, other.OrientationTolerance)) return false;
       if (!object.Equals(Q0, other.Q0)) return false;
-      if (Mode != other.Mode) return false;
+      if (ConstrainedMode != other.ConstrainedMode) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(PreferredTheta, other.PreferredTheta)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(DThetaMax, other.DThetaMax)) return false;
+      if (ContinuousMode != other.ContinuousMode) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Duration, other.Duration)) return false;
       if (OrderId != other.OrderId) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1858,9 +2202,10 @@ namespace Reachy.Part.Arm {
       if (positionTolerance_ != null) hash ^= PositionTolerance.GetHashCode();
       if (orientationTolerance_ != null) hash ^= OrientationTolerance.GetHashCode();
       if (q0_ != null) hash ^= Q0.GetHashCode();
-      if (Mode != global::Reachy.Part.Arm.IKMode.Unconstrained) hash ^= Mode.GetHashCode();
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) hash ^= ConstrainedMode.GetHashCode();
       if (preferredTheta_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(PreferredTheta);
       if (dThetaMax_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(DThetaMax);
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) hash ^= ContinuousMode.GetHashCode();
       if (duration_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Duration);
       if (orderId_ != null) hash ^= OrderId.GetHashCode();
       if (_unknownFields != null) {
@@ -1901,15 +2246,19 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(42);
         output.WriteMessage(Q0);
       }
-      if (Mode != global::Reachy.Part.Arm.IKMode.Unconstrained) {
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
         output.WriteRawTag(48);
-        output.WriteEnum((int) Mode);
+        output.WriteEnum((int) ConstrainedMode);
       }
       if (preferredTheta_ != null) {
         _single_preferredTheta_codec.WriteTagAndValue(output, PreferredTheta);
       }
       if (dThetaMax_ != null) {
         _single_dThetaMax_codec.WriteTagAndValue(output, DThetaMax);
+      }
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+        output.WriteRawTag(72);
+        output.WriteEnum((int) ContinuousMode);
       }
       if (duration_ != null) {
         _single_duration_codec.WriteTagAndValue(output, Duration);
@@ -1947,15 +2296,19 @@ namespace Reachy.Part.Arm {
         output.WriteRawTag(42);
         output.WriteMessage(Q0);
       }
-      if (Mode != global::Reachy.Part.Arm.IKMode.Unconstrained) {
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
         output.WriteRawTag(48);
-        output.WriteEnum((int) Mode);
+        output.WriteEnum((int) ConstrainedMode);
       }
       if (preferredTheta_ != null) {
         _single_preferredTheta_codec.WriteTagAndValue(ref output, PreferredTheta);
       }
       if (dThetaMax_ != null) {
         _single_dThetaMax_codec.WriteTagAndValue(ref output, DThetaMax);
+      }
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+        output.WriteRawTag(72);
+        output.WriteEnum((int) ContinuousMode);
       }
       if (duration_ != null) {
         _single_duration_codec.WriteTagAndValue(ref output, Duration);
@@ -1988,14 +2341,17 @@ namespace Reachy.Part.Arm {
       if (q0_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Q0);
       }
-      if (Mode != global::Reachy.Part.Arm.IKMode.Unconstrained) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mode);
+      if (ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ConstrainedMode);
       }
       if (preferredTheta_ != null) {
         size += _single_preferredTheta_codec.CalculateSizeWithTag(PreferredTheta);
       }
       if (dThetaMax_ != null) {
         size += _single_dThetaMax_codec.CalculateSizeWithTag(DThetaMax);
+      }
+      if (ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ContinuousMode);
       }
       if (duration_ != null) {
         size += _single_duration_codec.CalculateSizeWithTag(Duration);
@@ -2045,8 +2401,8 @@ namespace Reachy.Part.Arm {
         }
         Q0.MergeFrom(other.Q0);
       }
-      if (other.Mode != global::Reachy.Part.Arm.IKMode.Unconstrained) {
-        Mode = other.Mode;
+      if (other.ConstrainedMode != global::Reachy.Part.Arm.IKConstrainedMode.Unconstrained) {
+        ConstrainedMode = other.ConstrainedMode;
       }
       if (other.preferredTheta_ != null) {
         if (preferredTheta_ == null || other.PreferredTheta != 0F) {
@@ -2057,6 +2413,9 @@ namespace Reachy.Part.Arm {
         if (dThetaMax_ == null || other.DThetaMax != 0F) {
           DThetaMax = other.DThetaMax;
         }
+      }
+      if (other.ContinuousMode != global::Reachy.Part.Arm.IKContinuousMode.Continuous) {
+        ContinuousMode = other.ContinuousMode;
       }
       if (other.duration_ != null) {
         if (duration_ == null || other.Duration != 0F) {
@@ -2119,7 +2478,7 @@ namespace Reachy.Part.Arm {
             break;
           }
           case 48: {
-            Mode = (global::Reachy.Part.Arm.IKMode) input.ReadEnum();
+            ConstrainedMode = (global::Reachy.Part.Arm.IKConstrainedMode) input.ReadEnum();
             break;
           }
           case 58: {
@@ -2134,6 +2493,10 @@ namespace Reachy.Part.Arm {
             if (dThetaMax_ == null || value != 0F) {
               DThetaMax = value;
             }
+            break;
+          }
+          case 72: {
+            ContinuousMode = (global::Reachy.Part.Arm.IKContinuousMode) input.ReadEnum();
             break;
           }
           case 82: {
@@ -2201,7 +2564,7 @@ namespace Reachy.Part.Arm {
             break;
           }
           case 48: {
-            Mode = (global::Reachy.Part.Arm.IKMode) input.ReadEnum();
+            ConstrainedMode = (global::Reachy.Part.Arm.IKConstrainedMode) input.ReadEnum();
             break;
           }
           case 58: {
@@ -2216,6 +2579,10 @@ namespace Reachy.Part.Arm {
             if (dThetaMax_ == null || value != 0F) {
               DThetaMax = value;
             }
+            break;
+          }
+          case 72: {
+            ContinuousMode = (global::Reachy.Part.Arm.IKContinuousMode) input.ReadEnum();
             break;
           }
           case 82: {
@@ -2253,7 +2620,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2542,7 +2909,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2740,7 +3107,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2984,7 +3351,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3219,7 +3586,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3509,7 +3876,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3790,7 +4157,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4080,7 +4447,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4315,7 +4682,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4550,7 +4917,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4840,7 +5207,7 @@ namespace Reachy.Part.Arm {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Reachy.Part.Arm.ArmReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

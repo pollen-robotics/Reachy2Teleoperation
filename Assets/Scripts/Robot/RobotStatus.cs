@@ -41,7 +41,7 @@ namespace TeleopReachy
         private bool isLeftGripperClosed = false;
         private bool isRightGripperClosed = false;
 
-        private IKMode armIkMode = IKMode.LowElbow;
+        private IKConstrainedMode armIkMode = IKConstrainedMode.LowElbow;
 
         public bool IsRobotPositionLocked { get; private set; }
 
@@ -208,12 +208,12 @@ namespace TeleopReachy
             isMobilityInCloseLoop = isCloseLoop;
         }
 
-        public void SetIKMode(IKMode mode)
+        public void SetIKMode(IKConstrainedMode mode)
         {
             armIkMode = mode;
         }
 
-        public IKMode GetIKMode()
+        public IKConstrainedMode GetIKMode()
         {
             return armIkMode;
         }
