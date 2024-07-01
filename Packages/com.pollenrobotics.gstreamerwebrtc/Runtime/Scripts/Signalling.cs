@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using NativeWebSocket;
 using System.Linq;
 using UnityEngine.Events;
+using Codice.Client.BaseCommands;
+using PlasticPipe.PlasticProtocol.Messages;
 
 namespace GstreamerWebRTC
 {
@@ -62,7 +64,11 @@ namespace GstreamerWebRTC
         private WebSocket webSocket;
         private string _remote_producer_name;
         private string _peer_id;
+        private string _session_id;
         public UnityEvent<string> event_OnRemotePeerId;
+        public UnityEvent<string> event_OnSDPOffer;
+        public UnityEvent<string, int> event_OnICECandidate;
+        public UnityEvent<string> event_OnSessionID;
 
         private SessionStatus sessionStatus;
         private Task task_askForList;
@@ -78,6 +84,8 @@ namespace GstreamerWebRTC
             sessionStatus = SessionStatus.Ended;
 
             event_OnRemotePeerId = new UnityEvent<string>();
+            event_OnSDPOffer = new UnityEvent<string>();
+            event_OnICECandidate = new UnityEvent<string, int>();
 
             webSocket = new WebSocket(url);
 
@@ -112,11 +120,12 @@ namespace GstreamerWebRTC
                     else if (msg.type == MessageType.PeerStatusChanged.ToString())
                     {
                         Debug.Log(msg.ToString());
-                        /*if (msg.meta?.name == _remote_producer_name && msg.roles.Contains(MessageRole.Producer.ToString()))
+                        if (msg.meta?.name == _remote_producer_name && msg.roles.Contains(MessageRole.Producer.ToString()))
                         {
-                            event_OnRemotePeerId.Invoke(msg.peerId);
-                            //SendStartSession(msg.peerId);
-                        }*/
+                            //event_OnRemotePeerId.Invoke(msg.peerId);
+                            Debug.Log("Start Session");
+                            SendStartSession(msg.peerId);
+                        }
                     }
                     else if (sessionStatus == SessionStatus.Ended && msg.type == MessageType.List.ToString())
                     {
@@ -125,25 +134,26 @@ namespace GstreamerWebRTC
                         {
                             if (p.meta.name == _remote_producer_name)
                             {
-                                //SendStartSession(p.id);
-                                Debug.Log("here" + p.id);
+                                SendStartSession(p.id);
                                 event_OnRemotePeerId.Invoke(p.id);
                                 sessionStatus = SessionStatus.Started;
                                 break;
                             }
                         }
                     }
-                    /*else if (msg.type == MessageType.StartSession.ToString())
+                    else if (msg.type == MessageType.StartSession.ToString())
                     {
+                        Debug.Log("1 " + msg.sessionId);
                         _session_id = msg.sessionId;
-                        event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
+                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
                     }
                     else if (msg.type == MessageType.SessionStarted.ToString())
                     {
+                        Debug.Log("2 " + msg.sessionId);
                         _session_id = msg.sessionId;
-                        Debug.Log("session id: " + _session_id);
+                        //Debug.Log("session id: " + _session_id);
                         Debug.Log("Session started. peer id:" + msg.peerId + " session id:" + msg.sessionId);
-                        event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
+                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
                         sessionStatus = SessionStatus.Started;
                     }
                     else if (msg.type == MessageType.SessionEnded.ToString())
@@ -151,15 +161,16 @@ namespace GstreamerWebRTC
                         _session_id = null;
                         Debug.Log("session ended: " + msg.sessionId);
 
-                        event_OnConnectionStatus.Invoke(ConnectionStatus.Waiting);
+                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Waiting);
                         sessionStatus = SessionStatus.Ended;
                     }
                     else if (msg.type == MessageType.Peer.ToString())
                     {
                         if (msg.ice.IsValid())
                         {
-                            Debug.Log("received ice candidate");
-                            RTCIceCandidate candidate = new RTCIceCandidate(
+                            Debug.Log("received ice candidate " + msg.ice.candidate + " " + msg.ice.sdpMLineIndex);
+                            event_OnICECandidate.Invoke(msg.ice.candidate, msg.ice.sdpMLineIndex);
+                            /*RTCIceCandidate candidate = new RTCIceCandidate(
                                 new RTCIceCandidateInit
                                 {
                                     candidate = msg.ice.candidate,
@@ -167,32 +178,33 @@ namespace GstreamerWebRTC
                                     sdpMLineIndex = msg.ice.sdpMLineIndex,
                                 }
                             );
-                            event_OnICECandidate.Invoke(candidate);
+                            event_OnICECandidate.Invoke(candidate);*/
                         }
                         else if (msg.sdp.IsValid())
                         {
                             if (msg.sdp.type == "offer")
                             {
-                                Debug.Log("received offer");
-                                var offer = new RTCSessionDescription
+                                Debug.Log("received offer " + msg.sdp.sdp);
+                                event_OnSDPOffer.Invoke(msg.sdp.sdp);
+                                /*var offer = new RTCSessionDescription
                                 {
                                     type = RTCSdpType.Offer,
                                     sdp = msg.sdp.sdp,
                                 };
-                                event_OnOffer.Invoke(offer);
+                                event_OnOffer.Invoke(offer);*/
                             }
                             else if (msg.sdp.type == "answer")
                             {
-                                var answser = new RTCSessionDescription
+                                Debug.LogWarning("received answer");
+                                /*var answser = new RTCSessionDescription
                                 {
                                     type = RTCSdpType.Answer,
                                     sdp = msg.sdp.sdp,
                                 };
-                                event_OnAnswer.Invoke(answser);
+                                event_OnAnswer.Invoke(answser);*/
                             }
                         }
-                    }*/
-
+                    }
                     else
                     {
                         Debug.LogError("Unrecognized message !" + sessionStatus);
@@ -232,7 +244,8 @@ namespace GstreamerWebRTC
             tasks_running = false;
             webSocket.Close();
         }
-        /*public async void SendLocalDescription(RTCSessionDescription desc, string type = "answer")
+
+        public async void SendSDP(string sdp_msg, string type = "answer")
         {
             string msg = JsonUtility.ToJson(new SDPMessage
             {
@@ -241,22 +254,22 @@ namespace GstreamerWebRTC
                 sdp = new SdpMessage
                 {
                     type = type,
-                    sdp = desc.sdp,
+                    sdp = sdp_msg,
                 },
             });
             await webSocket.SendText(msg);
         }
-        public async void SendICECandidate(RTCIceCandidate candidate)
+
+        public async void SendICECandidate(string candidate, int mline_index)
         {
             string msg = JsonUtility.ToJson(new ICEMessage
             {
                 type = MessageType.Peer.ToString(),
                 sessionId = _session_id,
-                ice = new ICECandidateMessage(candidate),
+                ice = new ICECandidateMessage(candidate, mline_index),
             });
-            Debug.Log(msg);
             await webSocket.SendText(msg);
-        }*/
+        }
 
         private async void AskList()
         {
@@ -287,7 +300,7 @@ namespace GstreamerWebRTC
             await webSocket.SendText(msg);
         }
 
-        /*private async void SendStartSession(string peer_id)
+        private async void SendStartSession(string peer_id)
         {
             Debug.Log("StartSessionMessage");
             string msg = JsonUtility.ToJson(new StartSessionMessage
@@ -298,7 +311,7 @@ namespace GstreamerWebRTC
             });
             await webSocket.SendText(msg);
             sessionStatus = SessionStatus.Asked;
-        }*/
+        }
     }
 
     //Class used for building json messages
@@ -337,9 +350,9 @@ namespace GstreamerWebRTC
     class ICECandidateMessage
     {
         public string candidate;
-        public string sdpMid;
+        //public string sdpMid;
         public int sdpMLineIndex;
-        public string usernameFragment;
+        // public string usernameFragment;
 
         /*public ICECandidateMessage(RTCIceCandidate candidate)
         {
@@ -347,13 +360,19 @@ namespace GstreamerWebRTC
             this.sdpMid = candidate.SdpMid;
             this.sdpMLineIndex = candidate.SdpMLineIndex ?? 0;
             this.usernameFragment = candidate.UserNameFragment;
+        }*/
+
+        public ICECandidateMessage(string candidate, int mline_index)
+        {
+            this.candidate = candidate;
+            sdpMLineIndex = mline_index;
         }
 
         public bool IsValid()
         {
             //ignore null ice candidate. Ongoing patch with Unity
             return candidate != default(string) && candidate != "";
-        }*/
+        }
     }
 
     [System.Serializable]

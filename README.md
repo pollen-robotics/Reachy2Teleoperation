@@ -68,3 +68,11 @@ You are now controlling Reachy! Press and hold A to return to the previous step.
 
 If you have any problem, you can create an issue or chat with us on our [discord server](https://discord.com/channels/519098054377340948/991321051835404409). 
 
+### Gstreamer Log files
+
+The webRTC plugin is based on gstreamer which ships with its own [logging system](https://gstreamer.freedesktop.org/documentation/tutorials/basic/debugging-tools.html?gi-language=c). To enable gstreamer logging, you need to set these two environment variables:
+```
+GST_DEBUG_FILE=C:\Users\<UserName>\gstreamer.log
+GST_DEBUG=3
+```
+*Note that they are already set in the built version (see [Installer/launch.bat](Installer/launch.bat))*
