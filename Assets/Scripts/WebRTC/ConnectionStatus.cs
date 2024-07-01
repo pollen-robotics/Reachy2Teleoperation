@@ -19,9 +19,9 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private GStreamerPluginCustom audioVideoController;
+        private GStreamerPluginCustom webRTCController;
         //private WebRTCAudioSender microphoneController;
-        private WebRTCData dataController;
+        //private WebRTCData dataController;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
@@ -36,9 +36,10 @@ namespace TeleopReachy
 
         void Start()
         {
-            dataController = WebRTCManager.Instance.webRTCDataController;
-            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
+            //dataController = WebRTCManager.Instance.webRTCDataController;
+            //audioVideoController = WebRTCManager.Instance.webRTCVideoController;
             //microphoneController = WebRTCManager.Instance.webRTCAudioSender;
+            webRTCController = WebRTCManager.Instance.webRTCController;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -59,7 +60,7 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (audioVideoController != null)
+            /*if (audioVideoController != null)
             {
                 audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
                 audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
@@ -67,6 +68,14 @@ namespace TeleopReachy
             }
             if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
             //if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+            */
+            if (webRTCController != null)
+            {
+                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+                webRTCController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+                webRTCController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
+            }
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }
