@@ -20,6 +20,7 @@ namespace TeleopReachy
 
         private string partName;
         private Dictionary<int, string> motors;
+        private bool needUpdate;
         private bool needErrorDisplay;
         private bool needTemperatureErrorDisplay;
         private bool needTemperatureWarningDisplay;
@@ -32,13 +33,13 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
+            needUpdate = false;
             needErrorDisplay = false;
             needTemperatureErrorDisplay = false;
             needTemperatureWarningDisplay = false;
             isTemperatureDisplayed = false;
             partName = gameObject.name.Split("_status")[0];
             errorManager = RobotDataManager.Instance.ErrorManager;
-            Debug.LogError("errorMananger : " + errorManager);
             errorManager.event_OnStatusError.AddListener(SetStatusError);
             errorManager.event_OnWarningMotorsTemperatures.AddListener(SetWarningTemperatures);
             errorManager.event_OnErrorMotorsTemperatures.AddListener(SetErrorTemperatures);
@@ -58,22 +59,27 @@ namespace TeleopReachy
         // Update is called once per frame
         void Update()
         {
-            if(needErrorDisplay || needTemperatureErrorDisplay || needTemperatureWarningDisplay)
+            if(needUpdate)
             {
-                transform.GetChild(1).gameObject.SetActive(true);
-                transform.GetChild(1).GetChild(0).GetComponent<Text>().text = error;
-                if(needErrorDisplay) transform.GetComponent<RawImage>().texture = errorTexture;
-                else transform.GetComponent<RawImage>().texture = hotTexture;
-                Vector3 pos = transform.GetChild(2).localPosition;
-                transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
+                if(needErrorDisplay || needTemperatureErrorDisplay || needTemperatureWarningDisplay)
+                {
+                    transform.GetChild(1).gameObject.SetActive(true);
+                    transform.GetChild(1).GetChild(0).GetComponent<Text>().text = error;
+                    if(needTemperatureWarningDisplay) transform.GetComponent<RawImage>().texture = hotTexture;
+                    else transform.GetComponent<RawImage>().texture = errorTexture;
+                    Vector3 pos = transform.GetChild(2).localPosition;
+                    transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
+                }
+                else
+                {
+                    transform.GetChild(1).gameObject.SetActive(false);
+                    transform.GetComponent<RawImage>().texture = okTexture;
+                    Vector3 pos = transform.GetChild(2).localPosition;
+                    transform.GetChild(2).localPosition = new Vector3(pos.x, 0, pos.z);
+                }
+                needUpdate = false;
             }
-            else
-            {
-                transform.GetChild(1).gameObject.SetActive(false);
-                transform.GetComponent<RawImage>().texture = okTexture;
-                Vector3 pos = transform.GetChild(2).localPosition;
-                transform.GetChild(2).localPosition = new Vector3(pos.x, 0, pos.z);
-            }
+            
 
             if (isTemperatureDisplayed)
             {
@@ -122,6 +128,7 @@ namespace TeleopReachy
             {
                 needErrorDisplay = false;
             }
+            needUpdate = true;
         }
 
         private void SetWarningTemperatures(List<string> TemperatureList)
@@ -135,6 +142,7 @@ namespace TeleopReachy
             {
                 needTemperatureWarningDisplay = false;
             }
+            needUpdate = true;
         }
 
         private void SetErrorTemperatures(List<string> TemperatureList)
@@ -148,6 +156,7 @@ namespace TeleopReachy
             {
                 needTemperatureErrorDisplay = false;
             }
+            needUpdate = true;
         }
     }
 }
