@@ -105,6 +105,7 @@ namespace TeleopReachy
                     errors.Add(status.Key, status.Value);
                 }
             }
+            Debug.LogError("Invoke");
             event_OnStatusError.Invoke(errors);
         }
     }
