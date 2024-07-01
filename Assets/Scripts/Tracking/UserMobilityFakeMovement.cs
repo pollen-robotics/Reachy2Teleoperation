@@ -26,6 +26,9 @@ namespace TeleopReachy
         public UnityEvent event_OnStartMoving;
         public UnityEvent event_OnStopMoving;
 
+        private bool simulateFakeConstantMovement;
+        private bool simulateFakeStaticMovement;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -38,6 +41,9 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStopTeleoperation.AddListener(StopFakeMovements);
+            simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = false;
         }
 
         private void ReinitCounter()
@@ -76,6 +82,7 @@ namespace TeleopReachy
         {
             if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
             {
+                
                 Vector2 direction = userMobilityInput.GetMobileBaseDirection();
                 Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
 
@@ -106,9 +113,36 @@ namespace TeleopReachy
                     AddToQueue(previousRotationAngleQueue, rotationAngle);
                 }
 
+                if(simulateFakeConstantMovement)
+                {
+                    speed = maxSpeed;
+                    rotationAngle = sensitivity;
+                }
+                if(simulateFakeStaticMovement)
+                {
+                    speed = 0;
+                    rotationAngle = 0;
+                }
+
                 transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
                 transform.Rotate(Vector3.up, rotationAngle);
             }
+        }
+
+        public void AskForFakeConstantMovement(bool wantConstantMovement)
+        {
+            simulateFakeConstantMovement = wantConstantMovement;
+        }
+
+        public void AskForFakeStaticMovement(bool wantStaticMovement)
+        {
+            simulateFakeStaticMovement = wantStaticMovement;
+        }
+
+        void StopFakeMovements()
+        {
+            simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = false;
         }
     }
 }

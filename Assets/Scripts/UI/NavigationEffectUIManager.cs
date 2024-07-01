@@ -59,7 +59,7 @@ namespace TeleopReachy
         {
             if (robotStatus.IsRobotTeleoperationActive())
             {
-                if (motionSicknessManager.IsTunnellingOn)
+                if (motionSicknessManager.IsTunnellingOnClickOn)
                 {
                     if (motionSicknessManager.RequestNavigationEffect)
                     {
@@ -70,7 +70,7 @@ namespace TeleopReachy
                         navigationEffectText = "Deactivate tunnelling";
                     }
                 }
-                else if (motionSicknessManager.IsReducedScreenOn)
+                else if (motionSicknessManager.IsReducedScreenOnClickOn)
                 {
                     if (motionSicknessManager.RequestNavigationEffect)
                     {

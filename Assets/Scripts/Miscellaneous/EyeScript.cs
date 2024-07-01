@@ -9,7 +9,10 @@ namespace TeleopReachy
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
+        private RobotStatus robotStatus;
+
         private bool needUpdateScale;
+        private bool userRequestedSmallSize;
 
         private Vector3 lerpGoalScale;
 
@@ -22,6 +25,7 @@ namespace TeleopReachy
 
         void Start()
         {
+            userRequestedSmallSize = false;
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
@@ -44,6 +48,9 @@ namespace TeleopReachy
 
             mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
             mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
+
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStopTeleoperation.AddListener(ForceBackToFullScreen);
         }
 
         void Update()
@@ -66,44 +73,44 @@ namespace TeleopReachy
 
         void SetImageSmaller()
         {
-            if (motionSicknessManager.IsReducedScreenOn)
+            if (motionSicknessManager.IsReducedScreenAutoOn && !userRequestedSmallSize )
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemand)
-                {
-                    lerpGoalScale = smallerScreenScale;
-                    needUpdateScale = true;
-                }
+                lerpGoalScale = smallerScreenScale;
+                needUpdateScale = true;
             }
 
         }
 
         void ResizeView(bool activate)
         {
-            Debug.LogError(activate);
-            if (motionSicknessManager.IsReducedScreenOn && !activate)
+            if (motionSicknessManager.IsReducedScreenOnClickOn && !activate)
             {
                 lerpGoalScale = fullScreenScale;
+                userRequestedSmallSize = false;
                 needUpdateScale = true;
             }
-            else if(motionSicknessManager.IsReducedScreenOn && activate)
+            else if(motionSicknessManager.IsReducedScreenOnClickOn && activate)
             {
                 lerpGoalScale = smallerScreenScale;
+                userRequestedSmallSize = true;
                 needUpdateScale = true;
             }
         }
 
         void SetImageFullScreen()
         {
-            if (motionSicknessManager.IsReducedScreenOn)
+            if (motionSicknessManager.IsReducedScreenAutoOn && !userRequestedSmallSize)
             {
-                // if (!motionSicknessManager.IsNavigationEffectOnDemand || (motionSicknessManager.IsNavigationEffectOnDemand && motionSicknessManager.RequestNavigationEffect))
-                if (!motionSicknessManager.IsNavigationEffectOnDemand)
-                {
-                    lerpGoalScale = fullScreenScale;
-                    needUpdateScale = true;
-                }
+                lerpGoalScale = fullScreenScale;
+                needUpdateScale = true;
             }
+        }
+
+        void ForceBackToFullScreen()
+        {
+            lerpGoalScale = fullScreenScale;
+            userRequestedSmallSize = false;
+            needUpdateScale = true;
         }
     }
 }
