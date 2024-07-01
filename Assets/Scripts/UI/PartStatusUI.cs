@@ -21,8 +21,8 @@ namespace TeleopReachy
         private string partName;
         private Dictionary<int, string> motors;
         private bool needErrorDisplay;
-        private bool needWarningDisplay;
-        private bool removeErrorDisplay;
+        private bool needTemperatureErrorDisplay;
+        private bool needTemperatureWarningDisplay;
         private bool isTemperatureDisplayed;
         private string error;
 
@@ -33,8 +33,8 @@ namespace TeleopReachy
         void Start()
         {
             needErrorDisplay = false;
-            needWarningDisplay = false;
-            removeErrorDisplay = false;
+            needTemperatureErrorDisplay = false;
+            needTemperatureWarningDisplay = false;
             isTemperatureDisplayed = false;
             partName = gameObject.name.Split("_status")[0];
             errorManager = RobotDataManager.Instance.ErrorManager;
@@ -58,24 +58,21 @@ namespace TeleopReachy
         // Update is called once per frame
         void Update()
         {
-            if(needErrorDisplay || needWarningDisplay)
+            if(needErrorDisplay || needTemperatureErrorDisplay || needTemperatureWarningDisplay)
             {
-                needErrorDisplay = false;
-                needWarningDisplay = false;
                 transform.GetChild(1).gameObject.SetActive(true);
                 transform.GetChild(1).GetChild(0).GetComponent<Text>().text = error;
                 if(needErrorDisplay) transform.GetComponent<RawImage>().texture = errorTexture;
                 else transform.GetComponent<RawImage>().texture = hotTexture;
-                removeErrorDisplay = true;
+                Vector3 pos = transform.GetChild(2).localPosition;
+                transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
             }
             else
             {
-                if(removeErrorDisplay)
-                {
-                    transform.GetChild(1).gameObject.SetActive(false);
-                    transform.GetComponent<RawImage>().texture = okTexture;
-                    removeErrorDisplay = false;
-                }
+                transform.GetChild(1).gameObject.SetActive(false);
+                transform.GetComponent<RawImage>().texture = okTexture;
+                Vector3 pos = transform.GetChild(2).localPosition;
+                transform.GetChild(2).localPosition = new Vector3(pos.x, 0, pos.z);
             }
 
             if (isTemperatureDisplayed)
@@ -104,7 +101,7 @@ namespace TeleopReachy
             transform.GetChild(2).ActivateChildren(true);
             isTemperatureDisplayed = true;
             Vector3 pos = transform.GetChild(2).localPosition;
-            if(needErrorDisplay || needWarningDisplay) transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
+            if(needErrorDisplay || needTemperatureErrorDisplay || needTemperatureWarningDisplay) transform.GetChild(2).localPosition = new Vector3(pos.x, -40, pos.z);
             else transform.GetChild(2).localPosition = new Vector3(pos.x, 0, pos.z);
         }
 
@@ -116,11 +113,14 @@ namespace TeleopReachy
 
         private void SetStatusError(Dictionary<string, string> errorList)
         {
-            Debug.LogError("setstatuserror");
             if(errorList.ContainsKey(partName))
             {
                 error = errorList[partName];
                 needErrorDisplay = true;
+            }
+            else
+            {
+                needErrorDisplay = false;
             }
         }
 
@@ -129,7 +129,11 @@ namespace TeleopReachy
             if (!needErrorDisplay && TemperatureList.Contains(partName))
             {
                 error = "Motors heating up";
-                needWarningDisplay = true;
+                needTemperatureWarningDisplay = true;
+            }
+            else
+            {
+                needTemperatureWarningDisplay = false;
             }
         }
 
@@ -138,7 +142,11 @@ namespace TeleopReachy
             if (TemperatureList.Contains(partName))
             {
                 error = "Temperature error";
-                needErrorDisplay = true;
+                needTemperatureErrorDisplay = true;
+            }
+            else
+            {
+                needTemperatureErrorDisplay = false;
             }
         }
     }

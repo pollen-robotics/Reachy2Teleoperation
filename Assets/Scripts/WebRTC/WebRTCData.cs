@@ -84,7 +84,6 @@ namespace TeleopReachy
         void OnDataChannelAuditMessage(byte[] data)
         {
             _reachyStatus = ReachyStatus.Parser.ParseFrom(data);
-            Debug.LogError(_reachyState);
 
             dataMessageManager.StreamReachyStatus(_reachyStatus);
         }
