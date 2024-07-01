@@ -38,6 +38,7 @@ namespace TeleopReachy
             isTemperatureDisplayed = false;
             partName = gameObject.name.Split("_status")[0];
             errorManager = RobotDataManager.Instance.ErrorManager;
+            Debug.LogError("errorMananger : " + errorManager);
             errorManager.event_OnStatusError.AddListener(SetStatusError);
             errorManager.event_OnWarningMotorsTemperatures.AddListener(SetWarningTemperatures);
             errorManager.event_OnErrorMotorsTemperatures.AddListener(SetErrorTemperatures);
@@ -115,6 +116,7 @@ namespace TeleopReachy
 
         private void SetStatusError(Dictionary<string, string> errorList)
         {
+            Debug.LogError("setstatuserror");
             if(errorList.ContainsKey(partName))
             {
                 error = errorList[partName];
