@@ -1,12 +1,8 @@
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
-using UnityEngine.Rendering;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using AOT;
-using Codice.Client.BaseCommands;
-using UnityEngine.TextCore.Text;
 
 namespace GstreamerWebRTC
 {
@@ -93,7 +89,7 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        static extern void RegisterChannelStateDataCallback(channelServiceDataCallback cb);
+        static extern void RegisterChannelStateDataCallback(channelStateDataCallback cb);
         delegate void channelStateDataCallback(IntPtr data, int size_data);
 
         private string _signallingServerURL;

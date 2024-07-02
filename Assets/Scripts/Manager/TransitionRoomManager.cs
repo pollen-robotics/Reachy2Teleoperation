@@ -111,7 +111,8 @@ namespace TeleopReachy
             robotGhostDisplayed = enabled;
             reachyGhost.transform.switchRenderer(enabled);
             ghostReachyIndicator.gameObject.SetActive(enabled);
-            if (robotConfig.GotReachyConfig()) {
+            if (robotConfig.GotReachyConfig())
+            {
                 reachyGhost.head.transform.switchRenderer(robotConfig.HasHead() && enabled);
                 reachyGhost.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && enabled);
                 reachyGhost.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && enabled);
