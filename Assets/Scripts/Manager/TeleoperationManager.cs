@@ -84,7 +84,8 @@ namespace TeleopReachy
         {
             robotDisplayed = enabled;
             reachy.transform.switchRenderer(enabled);
-            if (robotConfig.GotReachyConfig()) {
+            if (robotConfig.GotReachyConfig())
+            {
                 reachy.head.transform.switchRenderer(robotConfig.HasHead() && enabled);
                 reachy.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && enabled);
                 reachy.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && enabled);

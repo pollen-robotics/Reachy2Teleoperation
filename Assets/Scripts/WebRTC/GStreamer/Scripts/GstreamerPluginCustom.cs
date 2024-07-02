@@ -37,13 +37,14 @@ namespace GstreamerWebRTC
             screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
-            renderingPlugin.Connect();
 
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
+
+            renderingPlugin.Connect();
             dataPlugin.Connect();
         }
 
@@ -107,6 +108,7 @@ namespace GstreamerWebRTC
 
                 if (response.ConnectionStatus.Connected)
                 {
+                    Debug.Log("GstreamerPlugin: config received" + response.ConnectionStatus.Reachy);
                     dataMessageManager.GetReachyId(response.ConnectionStatus.Reachy);
                     event_DataControllerStatusHasChanged.Invoke(true);
                 }
