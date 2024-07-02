@@ -45,6 +45,8 @@ namespace TeleopReachy
         const float distanceToMirror = 2.5f;
         const float mirrorHeight = -0.0f;
 
+        private bool needUpdateReachyGhostDisplay;
+
         public UnityEvent event_OnReadyForTeleop;
         public UnityEvent event_OnAbortTeleop;
         public UnityEvent event_OnWaitingForPosition;
@@ -53,6 +55,8 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
+            needUpdateReachyGhostDisplay = false;
+
             headset = GameObject.Find("Main Camera").transform;
             userTracker = UserTrackerManager.Instance.transform;
             State = TransitionState.WaitingForTracker;
@@ -109,14 +113,23 @@ namespace TeleopReachy
         private void DisplayReachy(bool enabled)
         {
             robotGhostDisplayed = enabled;
-            reachyGhost.transform.switchRenderer(enabled);
-            ghostReachyIndicator.gameObject.SetActive(enabled);
-            if (robotConfig.GotReachyConfig())
+            needUpdateReachyGhostDisplay = true;
+        }
+
+        void Update()
+        {
+            if(needUpdateReachyGhostDisplay)
             {
-                reachyGhost.head.transform.switchRenderer(robotConfig.HasHead() && enabled);
-                reachyGhost.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && enabled);
-                reachyGhost.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && enabled);
-                reachyGhost.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && enabled);
+                needUpdateReachyGhostDisplay = false;
+                reachyGhost.transform.switchRenderer(robotGhostDisplayed);
+                ghostReachyIndicator.gameObject.SetActive(robotGhostDisplayed);
+                if (robotConfig.GotReachyConfig())
+                {
+                    reachyGhost.head.transform.switchRenderer(robotConfig.HasHead() && robotGhostDisplayed);
+                    reachyGhost.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && robotGhostDisplayed);
+                    reachyGhost.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && robotGhostDisplayed);
+                    reachyGhost.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && robotGhostDisplayed);
+                }
             }
         }
 
