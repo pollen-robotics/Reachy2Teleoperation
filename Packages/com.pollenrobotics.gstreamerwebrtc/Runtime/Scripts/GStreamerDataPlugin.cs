@@ -93,8 +93,16 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        static extern void RegisterChannelStateDataCallback(channelServiceDataCallback cb);
+        static extern void RegisterChannelStateDataCallback(channelStateDataCallback cb);
         delegate void channelStateDataCallback(IntPtr data, int size_data);
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
+        static extern void RegisterChannelAuditDataCallback(channelAuditDataCallback cb);
+        delegate void channelAuditDataCallback(IntPtr data, int size_data);
 
         private string _signallingServerURL;
         private Signalling _signalling;
@@ -110,6 +118,7 @@ namespace GstreamerWebRTC
         public static UnityEvent event_OnChannelServiceOpen;
         public static UnityEvent<byte[]> event_OnChannelServiceData;
         public static UnityEvent<byte[]> event_OnChannelStateData;
+        public static UnityEvent<byte[]> event_OnChannelAuditData;
 
         public GStreamerDataPlugin(string ip_address)
         {
@@ -118,6 +127,7 @@ namespace GstreamerWebRTC
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
             RegisterChannelServiceDataCallback(OnChannelServiceDataCallback);
             RegisterChannelStateDataCallback(OnChannelStateDataCallback);
+            RegisterChannelAuditDataCallback(OnChannelAuditDataCallback);
 
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
@@ -138,6 +148,7 @@ namespace GstreamerWebRTC
             event_OnChannelServiceOpen = new UnityEvent();
             event_OnChannelServiceData = new UnityEvent<byte[]>();
             event_OnChannelStateData = new UnityEvent<byte[]>();
+            event_OnChannelAuditData = new UnityEvent<byte[]>();
         }
 
         public void Connect()
@@ -214,6 +225,14 @@ namespace GstreamerWebRTC
             byte[] data_bytes = new byte[size];
             Marshal.Copy(data, data_bytes, 0, size);
             event_OnChannelStateData.Invoke(data_bytes);
+        }
+
+        [MonoPInvokeCallback(typeof(channelAuditDataCallback))]
+        static void OnChannelAuditDataCallback(IntPtr data, int size)
+        {
+            byte[] data_bytes = new byte[size];
+            Marshal.Copy(data, data_bytes, 0, size);
+            event_OnChannelAuditData.Invoke(data_bytes);
         }
 
     }
