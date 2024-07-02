@@ -72,16 +72,16 @@ namespace TeleopReachy
         {
             if (connectionStatus.AreRobotServicesRestarting())
             {
-                transform.GetChild(3).GetChild(1).GetComponent<Text>().text = "Waiting for motors info...";
-                transform.GetChild(3).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
+                transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "Waiting for motors info...";
+                transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
                 isStatePanelStatusActive = true;
             }
             else
             {
                 if (!connectionStatus.IsRobotInDataRoom())
                 {
-                    transform.GetChild(3).GetChild(1).GetComponent<Text>().text = "No motors information";
-                    transform.GetChild(3).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
+                    transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No motors information";
+                    transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
                     isStatePanelStatusActive = true;
                 }
                 else
@@ -97,8 +97,8 @@ namespace TeleopReachy
             if(needUpdatePanelInfo)
             {
                 needUpdatePanelInfo = false;
-                transform.GetChild(3).gameObject.SetActive(isStatePanelStatusActive);
-                transform.GetChild(2).ActivateChildren(!isStatePanelStatusActive);
+                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
+                transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
             }
         }
     }
