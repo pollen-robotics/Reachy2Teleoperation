@@ -44,6 +44,7 @@ namespace GstreamerWebRTC
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
+            GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
             dataPlugin.Connect();
         }
 
@@ -139,8 +140,15 @@ namespace GstreamerWebRTC
         void OnDataChannelStateMessage(byte[] data)
         {
             ReachyState _reachyState = ReachyState.Parser.ParseFrom(data);
-            Debug.Log("received message " + _reachyState);
+            Debug.Log("received state message " + _reachyState);
             dataMessageManager.StreamReachyState(_reachyState);
+        }
+
+        void OnDataChannelAuditMessage(byte[] data)
+        {
+            ReachyStatus _reachyState = ReachyStatus.Parser.ParseFrom(data);
+            Debug.Log("received audit message " + _reachyState);
+            dataMessageManager.StreamReachyStatus(_reachyState);
         }
     }
 }
