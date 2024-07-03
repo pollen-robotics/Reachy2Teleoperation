@@ -86,7 +86,7 @@ namespace GstreamerWebRTC
 
         public UnityEvent event_OnPipelineStarted;
 
-        //CommandBuffer _command = null;
+        CommandBuffer _command = null;
 
         public GStreamerRenderingPlugin(string ip_address, ref Texture leftTexture, ref Texture rightTexture)
         {
@@ -101,7 +101,7 @@ namespace GstreamerWebRTC
             CreateDevice();
             leftTexture = CreateRenderTexture(true, ref leftTextureNativePtr);
             rightTexture = CreateRenderTexture(false, ref rightTextureNativePtr);
-
+            _command = new CommandBuffer();
         }
 
         public void Connect()
@@ -135,7 +135,6 @@ namespace GstreamerWebRTC
 
         public void Cleanup()
         {
-            //_command = null;
             _signalling.Close();
             DestroyPipeline();
             if (leftTextureNativePtr != IntPtr.Zero)
@@ -148,15 +147,15 @@ namespace GstreamerWebRTC
                 ReleaseTexture(rightTextureNativePtr);
                 rightTextureNativePtr = IntPtr.Zero;
             }
-            //_command.Dispose();
+            _command.Dispose();
         }
 
 
         public void Render()
         {
-            CommandBuffer _command = new CommandBuffer();
             _command.IssuePluginEvent(GetRenderEventFunc(), 1);
             Graphics.ExecuteCommandBuffer(_command);
+            _command.Clear();
         }
 
     }
