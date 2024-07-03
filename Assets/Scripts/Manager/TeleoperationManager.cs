@@ -9,6 +9,7 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
 
+        private bool needUpdateRobotDisplay;
 
         [SerializeField]
         private Reachy2Controller.Reachy2Controller reachy;
@@ -16,6 +17,8 @@ namespace TeleopReachy
 
         void Start()
         {
+            needUpdateRobotDisplay = false;
+
             EventManager.StartListening(EventNames.QuitMirrorScene, StartTeleoperation);
             EventManager.StartListening(EventNames.BackToMirrorScene, StopTeleoperation);
             EventManager.StartListening(EventNames.HeadsetRemoved, SuspendTeleoperation);
@@ -75,6 +78,22 @@ namespace TeleopReachy
             }
         }
 
+        void Update()
+        {
+            if(needUpdateRobotDisplay)
+            {
+                needUpdateRobotDisplay = false;
+                reachy.transform.switchRenderer(robotDisplayed);
+                if (robotConfig.GotReachyConfig())
+                {
+                    reachy.head.transform.switchRenderer(robotConfig.HasHead() && robotDisplayed);
+                    reachy.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && robotDisplayed);
+                    reachy.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && robotDisplayed);
+                    reachy.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && robotDisplayed);
+                }
+            }
+        }
+
         private void DisplayReachy()
         {
             DisplayReachy(robotDisplayed);
@@ -83,13 +102,7 @@ namespace TeleopReachy
         private void DisplayReachy(bool enabled)
         {
             robotDisplayed = enabled;
-            reachy.transform.switchRenderer(enabled);
-            if (robotConfig.GotReachyConfig()) {
-                reachy.head.transform.switchRenderer(robotConfig.HasHead() && enabled);
-                reachy.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && enabled);
-                reachy.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && enabled);
-                reachy.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && enabled);
-            }
+            needUpdateRobotDisplay = true;
         }
     }
 }

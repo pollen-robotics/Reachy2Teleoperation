@@ -37,14 +37,14 @@ namespace GstreamerWebRTC
             screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
-            renderingPlugin.Connect();
 
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
-            GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
+
+            renderingPlugin.Connect();
             dataPlugin.Connect();
         }
 
