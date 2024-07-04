@@ -142,14 +142,12 @@ namespace GstreamerWebRTC
         void OnDataChannelStateMessage(byte[] data)
         {
             ReachyState _reachyState = ReachyState.Parser.ParseFrom(data);
-            Debug.Log("received state message " + _reachyState);
             dataMessageManager.StreamReachyState(_reachyState);
         }
 
         void OnDataChannelAuditMessage(byte[] data)
         {
             ReachyStatus _reachyState = ReachyStatus.Parser.ParseFrom(data);
-            Debug.Log("received audit message " + _reachyState);
             dataMessageManager.StreamReachyStatus(_reachyState);
         }
     }
