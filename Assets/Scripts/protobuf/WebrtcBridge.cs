@@ -27,49 +27,49 @@ namespace Bridge {
             "ChN3ZWJydGNfYnJpZGdlLnByb3RvEgZicmlkZ2UaCWFybS5wcm90bxoKaGFu",
             "ZC5wcm90bxoKaGVhZC5wcm90bxoKcGFydC5wcm90bxoMcmVhY2h5LnByb3Rv",
             "GgtlcnJvci5wcm90bxoabW9iaWxlX2Jhc2VfbW9iaWxpdHkucHJvdG8aGW1v",
-            "YmlsZV9iYXNlX3V0aWxpdHkucHJvdG8iCwoJR2V0UmVhY2h5IkgKB0Nvbm5l",
+            "YmlsZV9iYXNlX3V0aWxpdHkucHJvdG8iCwoJR2V0UmVhY2h5ImEKB0Nvbm5l",
             "Y3QSIwoJcmVhY2h5X2lkGAEgASgLMhAucmVhY2h5LlJlYWNoeUlkEhgKEHVw",
-            "ZGF0ZV9mcmVxdWVuY3kYAiABKAIiMQoKRGlzY29ubmVjdBIjCglyZWFjaHlf",
-            "aWQYASABKAsyEC5yZWFjaHkuUmVhY2h5SWQikgEKDlNlcnZpY2VSZXF1ZXN0",
-            "EicKCmdldF9yZWFjaHkYASABKAsyES5icmlkZ2UuR2V0UmVhY2h5SAASIgoH",
-            "Y29ubmVjdBgCIAEoCzIPLmJyaWRnZS5Db25uZWN0SAASKAoKZGlzY29ubmVj",
-            "dBgDIAEoCzISLmJyaWRnZS5EaXNjb25uZWN0SABCCQoHcmVxdWVzdCJ1ChBD",
-            "b25uZWN0aW9uU3RhdHVzEhEKCWNvbm5lY3RlZBgBIAEoCBIVCg1zdGF0ZV9j",
-            "aGFubmVsGAIgASgJEhcKD2NvbW1hbmRfY2hhbm5lbBgDIAEoCRIeCgZyZWFj",
-            "aHkYBCABKAsyDi5yZWFjaHkuUmVhY2h5InMKD1NlcnZpY2VSZXNwb25zZRI1",
-            "ChFjb25uZWN0aW9uX3N0YXR1cxgBIAEoCzIYLmJyaWRnZS5Db25uZWN0aW9u",
-            "U3RhdHVzSAASHQoFZXJyb3IYAiABKAsyDC5lcnJvci5FcnJvckgAQgoKCHJl",
-            "c3BvbnNlItYBCgpBbnlDb21tYW5kEikKC2FybV9jb21tYW5kGAEgASgLMhIu",
-            "YnJpZGdlLkFybUNvbW1hbmRIABIrCgxoYW5kX2NvbW1hbmQYAiABKAsyEy5i",
-            "cmlkZ2UuSGFuZENvbW1hbmRIABIrCgxuZWNrX2NvbW1hbmQYAyABKAsyEy5i",
-            "cmlkZ2UuTmVja0NvbW1hbmRIABI4ChNtb2JpbGVfYmFzZV9jb21tYW5kGAQg",
-            "ASgLMhkuYnJpZGdlLk1vYmlsZUJhc2VDb21tYW5kSABCCQoHY29tbWFuZCKM",
-            "AgoKQXJtQ29tbWFuZBI9ChJhcm1fY2FydGVzaWFuX2dvYWwYASABKAsyIS5y",
-            "ZWFjaHkucGFydC5hcm0uQXJtQ2FydGVzaWFuR29hbBIkCgd0dXJuX29uGAIg",
-            "ASgLMhMucmVhY2h5LnBhcnQuUGFydElkEiUKCHR1cm5fb2ZmGAMgASgLMhMu",
-            "cmVhY2h5LnBhcnQuUGFydElkEjcKC3NwZWVkX2xpbWl0GAQgASgLMiIucmVh",
-            "Y2h5LnBhcnQuYXJtLlNwZWVkTGltaXRSZXF1ZXN0EjkKDHRvcnF1ZV9saW1p",
-            "dBgFIAEoCzIjLnJlYWNoeS5wYXJ0LmFybS5Ub3JxdWVMaW1pdFJlcXVlc3Qi",
-            "lAEKC0hhbmRDb21tYW5kEjgKCWhhbmRfZ29hbBgBIAEoCzIlLnJlYWNoeS5w",
-            "YXJ0LmhhbmQuSGFuZFBvc2l0aW9uUmVxdWVzdBIkCgd0dXJuX29uGAIgASgL",
-            "MhMucmVhY2h5LnBhcnQuUGFydElkEiUKCHR1cm5fb2ZmGAMgASgLMhMucmVh",
-            "Y2h5LnBhcnQuUGFydElkIoQCCgtOZWNrQ29tbWFuZBIyCgluZWNrX2dvYWwY",
-            "ASABKAsyHy5yZWFjaHkucGFydC5oZWFkLk5lY2tKb2ludEdvYWwSJAoHdHVy",
-            "bl9vbhgCIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIlCgh0dXJuX29mZhgD",
-            "IAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBI4CgtzcGVlZF9saW1pdBgEIAEo",
-            "CzIjLnJlYWNoeS5wYXJ0LmhlYWQuU3BlZWRMaW1pdFJlcXVlc3QSOgoMdG9y",
-            "cXVlX2xpbWl0GAUgASgLMiQucmVhY2h5LnBhcnQuaGVhZC5Ub3JxdWVMaW1p",
-            "dFJlcXVlc3QimwEKEU1vYmlsZUJhc2VDb21tYW5kEkYKEHRhcmdldF9kaXJl",
-            "Y3Rpb24YASABKAsyLC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5UYXJnZXREaXJl",
-            "Y3Rpb25Db21tYW5kEj4KEG1vYmlsZV9iYXNlX21vZGUYAiABKAsyJC5tb2Jp",
-            "bGUuYmFzZS51dGlsaXR5Llp1dXVNb2RlQ29tbWFuZCIzCgtBbnlDb21tYW5k",
-            "cxIkCghjb21tYW5kcxgBIAMoCzISLmJyaWRnZS5BbnlDb21tYW5kYgZwcm90",
-            "bzM="));
+            "ZGF0ZV9mcmVxdWVuY3kYAiABKAISFwoPYXVkaXRfZnJlcXVlbmN5GAMgASgC",
+            "IjEKCkRpc2Nvbm5lY3QSIwoJcmVhY2h5X2lkGAEgASgLMhAucmVhY2h5LlJl",
+            "YWNoeUlkIpIBCg5TZXJ2aWNlUmVxdWVzdBInCgpnZXRfcmVhY2h5GAEgASgL",
+            "MhEuYnJpZGdlLkdldFJlYWNoeUgAEiIKB2Nvbm5lY3QYAiABKAsyDy5icmlk",
+            "Z2UuQ29ubmVjdEgAEigKCmRpc2Nvbm5lY3QYAyABKAsyEi5icmlkZ2UuRGlz",
+            "Y29ubmVjdEgAQgkKB3JlcXVlc3QidQoQQ29ubmVjdGlvblN0YXR1cxIRCglj",
+            "b25uZWN0ZWQYASABKAgSFQoNc3RhdGVfY2hhbm5lbBgCIAEoCRIXCg9jb21t",
+            "YW5kX2NoYW5uZWwYAyABKAkSHgoGcmVhY2h5GAQgASgLMg4ucmVhY2h5LlJl",
+            "YWNoeSJzCg9TZXJ2aWNlUmVzcG9uc2USNQoRY29ubmVjdGlvbl9zdGF0dXMY",
+            "ASABKAsyGC5icmlkZ2UuQ29ubmVjdGlvblN0YXR1c0gAEh0KBWVycm9yGAIg",
+            "ASgLMgwuZXJyb3IuRXJyb3JIAEIKCghyZXNwb25zZSLWAQoKQW55Q29tbWFu",
+            "ZBIpCgthcm1fY29tbWFuZBgBIAEoCzISLmJyaWRnZS5Bcm1Db21tYW5kSAAS",
+            "KwoMaGFuZF9jb21tYW5kGAIgASgLMhMuYnJpZGdlLkhhbmRDb21tYW5kSAAS",
+            "KwoMbmVja19jb21tYW5kGAMgASgLMhMuYnJpZGdlLk5lY2tDb21tYW5kSAAS",
+            "OAoTbW9iaWxlX2Jhc2VfY29tbWFuZBgEIAEoCzIZLmJyaWRnZS5Nb2JpbGVC",
+            "YXNlQ29tbWFuZEgAQgkKB2NvbW1hbmQijAIKCkFybUNvbW1hbmQSPQoSYXJt",
+            "X2NhcnRlc2lhbl9nb2FsGAEgASgLMiEucmVhY2h5LnBhcnQuYXJtLkFybUNh",
+            "cnRlc2lhbkdvYWwSJAoHdHVybl9vbhgCIAEoCzITLnJlYWNoeS5wYXJ0LlBh",
+            "cnRJZBIlCgh0dXJuX29mZhgDIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBI3",
+            "CgtzcGVlZF9saW1pdBgEIAEoCzIiLnJlYWNoeS5wYXJ0LmFybS5TcGVlZExp",
+            "bWl0UmVxdWVzdBI5Cgx0b3JxdWVfbGltaXQYBSABKAsyIy5yZWFjaHkucGFy",
+            "dC5hcm0uVG9ycXVlTGltaXRSZXF1ZXN0IpQBCgtIYW5kQ29tbWFuZBI4Cglo",
+            "YW5kX2dvYWwYASABKAsyJS5yZWFjaHkucGFydC5oYW5kLkhhbmRQb3NpdGlv",
+            "blJlcXVlc3QSJAoHdHVybl9vbhgCIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+            "ZBIlCgh0dXJuX29mZhgDIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZCKEAgoL",
+            "TmVja0NvbW1hbmQSMgoJbmVja19nb2FsGAEgASgLMh8ucmVhY2h5LnBhcnQu",
+            "aGVhZC5OZWNrSm9pbnRHb2FsEiQKB3R1cm5fb24YAiABKAsyEy5yZWFjaHku",
+            "cGFydC5QYXJ0SWQSJQoIdHVybl9vZmYYAyABKAsyEy5yZWFjaHkucGFydC5Q",
+            "YXJ0SWQSOAoLc3BlZWRfbGltaXQYBCABKAsyIy5yZWFjaHkucGFydC5oZWFk",
+            "LlNwZWVkTGltaXRSZXF1ZXN0EjoKDHRvcnF1ZV9saW1pdBgFIAEoCzIkLnJl",
+            "YWNoeS5wYXJ0LmhlYWQuVG9ycXVlTGltaXRSZXF1ZXN0IpsBChFNb2JpbGVC",
+            "YXNlQ29tbWFuZBJGChB0YXJnZXRfZGlyZWN0aW9uGAEgASgLMiwubW9iaWxl",
+            "LmJhc2UubW9iaWxpdHkuVGFyZ2V0RGlyZWN0aW9uQ29tbWFuZBI+ChBtb2Jp",
+            "bGVfYmFzZV9tb2RlGAIgASgLMiQubW9iaWxlLmJhc2UudXRpbGl0eS5adXV1",
+            "TW9kZUNvbW1hbmQiMwoLQW55Q29tbWFuZHMSJAoIY29tbWFuZHMYASADKAsy",
+            "Ei5icmlkZ2UuQW55Q29tbWFuZGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.ReachyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.GetReachy), global::Bridge.GetReachy.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.Connect), global::Bridge.Connect.Parser, new[]{ "ReachyId", "UpdateFrequency" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.Connect), global::Bridge.Connect.Parser, new[]{ "ReachyId", "UpdateFrequency", "AuditFrequency" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.Disconnect), global::Bridge.Disconnect.Parser, new[]{ "ReachyId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ServiceRequest), global::Bridge.ServiceRequest.Parser, new[]{ "GetReachy", "Connect", "Disconnect" }, new[]{ "Request" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.ConnectionStatus), global::Bridge.ConnectionStatus.Parser, new[]{ "Connected", "StateChannel", "CommandChannel", "Reachy" }, null, null, null, null),
@@ -274,6 +274,7 @@ namespace Bridge {
     public Connect(Connect other) : this() {
       reachyId_ = other.reachyId_ != null ? other.reachyId_.Clone() : null;
       updateFrequency_ = other.updateFrequency_;
+      auditFrequency_ = other.auditFrequency_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -307,6 +308,18 @@ namespace Bridge {
       }
     }
 
+    /// <summary>Field number for the "audit_frequency" field.</summary>
+    public const int AuditFrequencyFieldNumber = 3;
+    private float auditFrequency_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float AuditFrequency {
+      get { return auditFrequency_; }
+      set {
+        auditFrequency_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -324,6 +337,7 @@ namespace Bridge {
       }
       if (!object.Equals(ReachyId, other.ReachyId)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(UpdateFrequency, other.UpdateFrequency)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AuditFrequency, other.AuditFrequency)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -333,6 +347,7 @@ namespace Bridge {
       int hash = 1;
       if (reachyId_ != null) hash ^= ReachyId.GetHashCode();
       if (UpdateFrequency != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(UpdateFrequency);
+      if (AuditFrequency != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AuditFrequency);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -359,6 +374,10 @@ namespace Bridge {
         output.WriteRawTag(21);
         output.WriteFloat(UpdateFrequency);
       }
+      if (AuditFrequency != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(AuditFrequency);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -377,6 +396,10 @@ namespace Bridge {
         output.WriteRawTag(21);
         output.WriteFloat(UpdateFrequency);
       }
+      if (AuditFrequency != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(AuditFrequency);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -391,6 +414,9 @@ namespace Bridge {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(ReachyId);
       }
       if (UpdateFrequency != 0F) {
+        size += 1 + 4;
+      }
+      if (AuditFrequency != 0F) {
         size += 1 + 4;
       }
       if (_unknownFields != null) {
@@ -413,6 +439,9 @@ namespace Bridge {
       }
       if (other.UpdateFrequency != 0F) {
         UpdateFrequency = other.UpdateFrequency;
+      }
+      if (other.AuditFrequency != 0F) {
+        AuditFrequency = other.AuditFrequency;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -440,6 +469,10 @@ namespace Bridge {
             UpdateFrequency = input.ReadFloat();
             break;
           }
+          case 29: {
+            AuditFrequency = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -464,6 +497,10 @@ namespace Bridge {
           }
           case 21: {
             UpdateFrequency = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            AuditFrequency = input.ReadFloat();
             break;
           }
         }
