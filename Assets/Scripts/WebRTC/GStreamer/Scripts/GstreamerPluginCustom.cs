@@ -117,7 +117,8 @@ namespace GstreamerWebRTC
                     Connect = new Connect
                     {
                         ReachyId = _connectionStatus.Reachy.Id,
-                        UpdateFrequency = 50 //FixedUpdate refresh rate is 0.02 sec
+                        UpdateFrequency = 60,
+                        AuditFrequency = 1,
                     }
                 };
                 byte[] bytes = Google.Protobuf.MessageExtensions.ToByteArray(req);
