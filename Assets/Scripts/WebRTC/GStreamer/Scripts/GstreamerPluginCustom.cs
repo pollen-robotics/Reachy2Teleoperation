@@ -43,6 +43,7 @@ namespace GstreamerWebRTC
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
+            GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
 
             renderingPlugin.Connect();
             dataPlugin.Connect();
@@ -108,7 +109,6 @@ namespace GstreamerWebRTC
 
                 if (response.ConnectionStatus.Connected)
                 {
-                    Debug.Log("GstreamerPlugin: config received" + response.ConnectionStatus.Reachy);
                     dataMessageManager.GetReachyId(response.ConnectionStatus.Reachy);
                     event_DataControllerStatusHasChanged.Invoke(true);
                 }
@@ -118,7 +118,8 @@ namespace GstreamerWebRTC
                     Connect = new Connect
                     {
                         ReachyId = _connectionStatus.Reachy.Id,
-                        UpdateFrequency = 50 //FixedUpdate refresh rate is 0.02 sec
+                        UpdateFrequency = 60,
+                        AuditFrequency = 1,
                     }
                 };
                 byte[] bytes = Google.Protobuf.MessageExtensions.ToByteArray(req);
@@ -141,8 +142,13 @@ namespace GstreamerWebRTC
         void OnDataChannelStateMessage(byte[] data)
         {
             ReachyState _reachyState = ReachyState.Parser.ParseFrom(data);
-            Debug.Log("received message " + _reachyState);
             dataMessageManager.StreamReachyState(_reachyState);
+        }
+
+        void OnDataChannelAuditMessage(byte[] data)
+        {
+            ReachyStatus _reachyState = ReachyStatus.Parser.ParseFrom(data);
+            dataMessageManager.StreamReachyStatus(_reachyState);
         }
     }
 }
