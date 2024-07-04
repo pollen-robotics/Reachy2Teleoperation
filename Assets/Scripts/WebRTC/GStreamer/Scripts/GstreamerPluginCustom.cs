@@ -43,6 +43,7 @@ namespace GstreamerWebRTC
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
+            GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
 
             renderingPlugin.Connect();
             dataPlugin.Connect();
