@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using NativeWebSocket;
 using System.Linq;
 using UnityEngine.Events;
-using Codice.Client.BaseCommands;
-using PlasticPipe.PlasticProtocol.Messages;
 
 namespace GstreamerWebRTC
 {
