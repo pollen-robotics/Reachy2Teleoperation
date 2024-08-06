@@ -124,11 +124,12 @@ namespace TeleopReachy
                             event_OnBatteryUpdate.Invoke(batteryLevel);
                         }
 
-                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
+                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_safety");
                         var lidarDetectionValue = lidarDetectionField.Accessor.GetValue(partState);
                         if (lidarDetectionValue != null)
                         {
-                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionValue;
+                            LidarSafety lidarSafety = (LidarSafety)lidarDetectionValue;
+                            LidarObstacleDetectionStatus lidarDetectionStatus = lidarSafety.ObstacleDetectionStatus;
                             obstacleDetection = lidarDetectionStatus.Status;
                             if (obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
                             {
