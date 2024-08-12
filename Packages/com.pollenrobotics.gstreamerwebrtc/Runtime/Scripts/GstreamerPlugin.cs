@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
+using System.Collections;
 
 namespace GstreamerWebRTC
 {
@@ -18,6 +20,8 @@ namespace GstreamerWebRTC
         [Tooltip("IP address of the robot (i.e. signalling server). PlayerPrefs.GetString(\"ip_address\") if empty")]
         public string ip_address = "";
 
+        private Thread cleaning_thread = null;
+        private Thread init_thread = null;
 
         void OnEnable()
         {
@@ -26,10 +30,24 @@ namespace GstreamerWebRTC
 
         void Start()
         {
-            Init();
+            if (cleaning_thread != null)
+            {
+                cleaning_thread.Join();
+            }
+
+            if (ip_address == "")
+            {
+                ip_address = PlayerPrefs.GetString("robot_ip");
+                Debug.Log("Set IP address to: " + ip_address);
+            }
+
+            init_thread = new Thread(InitData);
+            init_thread.Start();
+
+            StartCoroutine(Init());
         }
 
-        protected virtual void Init()
+        protected virtual IEnumerator Init()
         {
             if (leftRawImage == null)
                 Debug.LogError("Left image is not assigned!");
@@ -37,17 +55,27 @@ namespace GstreamerWebRTC
             if (rightRawImage == null)
                 Debug.LogError("Right image is not assigned!");
 
-            if (ip_address == "")
+            /*if (ip_address == "")
             {
                 ip_address = PlayerPrefs.GetString("robot_ip");
                 Debug.Log("Set IP address to: " + ip_address);
-            }
+            }*/
             Texture left = null, right = null;
             renderingPlugin = new GStreamerRenderingPlugin(ip_address, ref left, ref right);
             leftRawImage.texture = left;
             rightRawImage.texture = right;
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
             renderingPlugin.Connect();
+            /*dataPlugin = new GStreamerDataPlugin(ip_address);
+            dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
+            dataPlugin.Connect();*/
+            yield return null;
+        }
+
+        protected virtual void InitData()
+        {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
@@ -67,9 +95,23 @@ namespace GstreamerWebRTC
 
         protected virtual void OnDisable()
         {
+            if (init_thread != null)
+            {
+                init_thread.Join();
+            }
+
+            cleaning_thread = new Thread(Cleanup);
+            cleaning_thread.Start();
+            //renderingPlugin.Cleanup();
+            //dataPlugin.Cleanup();
+            //dataPlugin = null;
+        }
+
+
+        void Cleanup()
+        {
             renderingPlugin.Cleanup();
             dataPlugin.Cleanup();
-            dataPlugin = null;
         }
 
         void Update()

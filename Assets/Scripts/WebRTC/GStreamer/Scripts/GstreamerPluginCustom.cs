@@ -3,6 +3,8 @@ using UnityEngine.Events;
 using Bridge;
 using TeleopReachy;
 using Reachy;
+using System.Threading;
+using System.Collections;
 
 namespace GstreamerWebRTC
 {
@@ -19,16 +21,18 @@ namespace GstreamerWebRTC
 
         private DataMessageManager dataMessageManager;
 
-        override protected void Init()
+
+
+        override protected IEnumerator Init()
         {
             if (screen == null)
                 Debug.LogError("Screen is not assigned!");
 
-            if (ip_address == "")
-            {
-                ip_address = PlayerPrefs.GetString("robot_ip");
-                Debug.Log("Set IP address to: " + ip_address);
-            }
+            /* if (ip_address == "")
+             {
+                 ip_address = PlayerPrefs.GetString("robot_ip");
+                 Debug.Log("Set IP address to: " + ip_address);
+             }*/
 
             dataMessageManager = DataMessageManager.Instance;
 
@@ -38,14 +42,27 @@ namespace GstreamerWebRTC
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
 
+            /*dataPlugin = new GStreamerDataPlugin(ip_address);
+            dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
+            GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
+            GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);*/
+
+            renderingPlugin.Connect();
+            //dataPlugin.Connect();
+
+            yield return null;
+        }
+
+        override protected void InitData()
+        {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
             GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
-
-            renderingPlugin.Connect();
             dataPlugin.Connect();
         }
 

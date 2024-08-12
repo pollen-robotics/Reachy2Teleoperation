@@ -3,6 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine.Events;
 using AOT;
+using System.Collections;
 
 namespace GstreamerWebRTC
 {
@@ -179,10 +180,11 @@ namespace GstreamerWebRTC
             _signalling.SendSDP(sdp_answer);
         }
 
-        public void Cleanup()
+        public /*IEnumerator*/ void Cleanup()
         {
             _signalling.Close();
             DestroyDataPipeline();
+            //yield return null;
         }
 
         [MonoPInvokeCallback(typeof(iceCallback))]
