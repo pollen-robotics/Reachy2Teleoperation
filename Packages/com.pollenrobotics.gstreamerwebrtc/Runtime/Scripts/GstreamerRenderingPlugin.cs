@@ -4,6 +4,8 @@ using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Collections;
+using System.Threading;
 
 namespace GstreamerWebRTC
 {
@@ -88,8 +90,16 @@ namespace GstreamerWebRTC
 
         CommandBuffer _command = null;
 
+        private Thread cleaning_thread = null;
+
+
         public GStreamerRenderingPlugin(string ip_address, ref Texture leftTexture, ref Texture rightTexture)
         {
+            if (cleaning_thread != null)
+            {
+                cleaning_thread.Join();
+            }
+
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
             _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
@@ -98,10 +108,15 @@ namespace GstreamerWebRTC
 
             event_OnPipelineStarted = new UnityEvent();
 
-            CreateDevice();
+            //CreateDevice();
             leftTexture = CreateRenderTexture(true, ref leftTextureNativePtr);
             rightTexture = CreateRenderTexture(false, ref rightTextureNativePtr);
             _command = new CommandBuffer();
+        }
+
+        void Init()
+        {
+            CreateDevice();
         }
 
         public void Connect()
@@ -133,10 +148,12 @@ namespace GstreamerWebRTC
             event_OnPipelineStarted.Invoke();
         }
 
-        public void Cleanup()
+
+        public /*IEnumerator*/ void Cleanup()
         {
             _signalling.Close();
             DestroyPipeline();
+
             if (leftTextureNativePtr != IntPtr.Zero)
             {
                 ReleaseTexture(leftTextureNativePtr);
@@ -148,6 +165,7 @@ namespace GstreamerWebRTC
                 rightTextureNativePtr = IntPtr.Zero;
             }
             _command.Dispose();
+            //yield return null;
         }
 
 
