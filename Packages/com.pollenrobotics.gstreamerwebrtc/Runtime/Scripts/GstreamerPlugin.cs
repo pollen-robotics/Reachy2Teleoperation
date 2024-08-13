@@ -41,13 +41,14 @@ namespace GstreamerWebRTC
                 Debug.Log("Set IP address to: " + ip_address);
             }
 
+            //GStreamerRenderingPlugin has to run in main thread
+            InitAV();
+
             init_thread = new Thread(InitData);
             init_thread.Start();
-
-            StartCoroutine(Init());
         }
 
-        protected virtual IEnumerator Init()
+        protected virtual void InitAV()
         {
             if (leftRawImage == null)
                 Debug.LogError("Left image is not assigned!");
@@ -71,7 +72,7 @@ namespace GstreamerWebRTC
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             dataPlugin.Connect();*/
-            yield return null;
+
         }
 
         protected virtual void InitData()

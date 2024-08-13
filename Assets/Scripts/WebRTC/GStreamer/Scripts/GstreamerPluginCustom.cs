@@ -23,7 +23,7 @@ namespace GstreamerWebRTC
 
 
 
-        override protected IEnumerator Init()
+        override protected void InitAV()
         {
             if (screen == null)
                 Debug.LogError("Screen is not assigned!");
@@ -52,7 +52,7 @@ namespace GstreamerWebRTC
             renderingPlugin.Connect();
             //dataPlugin.Connect();
 
-            yield return null;
+
         }
 
         override protected void InitData()
