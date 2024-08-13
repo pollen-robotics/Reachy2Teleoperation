@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
-using System.Collections;
 
 namespace GstreamerWebRTC
 {
@@ -92,9 +91,6 @@ namespace GstreamerWebRTC
 
             cleaning_thread = new Thread(Cleanup);
             cleaning_thread.Start();
-            //renderingPlugin.Cleanup();
-            //dataPlugin.Cleanup();
-            //dataPlugin = null;
         }
 
 
