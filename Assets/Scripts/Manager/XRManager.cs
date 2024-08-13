@@ -36,7 +36,7 @@ namespace TeleopReachy
             StartCoroutine("StartXRCoroutine");
         }
 
-        void Destroy()
+        void OnDestroy()
         {
             Debug.Log("Stopping XR...");
 
