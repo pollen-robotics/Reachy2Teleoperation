@@ -56,23 +56,12 @@ namespace GstreamerWebRTC
             if (rightRawImage == null)
                 Debug.LogError("Right image is not assigned!");
 
-            /*if (ip_address == "")
-            {
-                ip_address = PlayerPrefs.GetString("robot_ip");
-                Debug.Log("Set IP address to: " + ip_address);
-            }*/
             Texture left = null, right = null;
             renderingPlugin = new GStreamerRenderingPlugin(ip_address, ref left, ref right);
             leftRawImage.texture = left;
             rightRawImage.texture = right;
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
             renderingPlugin.Connect();
-            /*dataPlugin = new GStreamerDataPlugin(ip_address);
-            dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
-            GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
-            GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
-            dataPlugin.Connect();*/
-
         }
 
         protected virtual void InitData()
