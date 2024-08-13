@@ -59,14 +59,15 @@ namespace Bridge {
             "cGFydC5QYXJ0SWQSJQoIdHVybl9vZmYYAyABKAsyEy5yZWFjaHkucGFydC5Q",
             "YXJ0SWQSOAoLc3BlZWRfbGltaXQYBCABKAsyIy5yZWFjaHkucGFydC5oZWFk",
             "LlNwZWVkTGltaXRSZXF1ZXN0EjoKDHRvcnF1ZV9saW1pdBgFIAEoCzIkLnJl",
-            "YWNoeS5wYXJ0LmhlYWQuVG9ycXVlTGltaXRSZXF1ZXN0IpsBChFNb2JpbGVC",
-            "YXNlQ29tbWFuZBJGChB0YXJnZXRfZGlyZWN0aW9uGAEgASgLMiwubW9iaWxl",
-            "LmJhc2UubW9iaWxpdHkuVGFyZ2V0RGlyZWN0aW9uQ29tbWFuZBI+ChBtb2Jp",
-            "bGVfYmFzZV9tb2RlGAIgASgLMiQubW9iaWxlLmJhc2UudXRpbGl0eS5adXV1",
-            "TW9kZUNvbW1hbmQiMwoLQW55Q29tbWFuZHMSJAoIY29tbWFuZHMYASADKAsy",
-            "Ei5icmlkZ2UuQW55Q29tbWFuZGIGcHJvdG8z"));
+            "YWNoeS5wYXJ0LmhlYWQuVG9ycXVlTGltaXRSZXF1ZXN0IrMBChFNb2JpbGVC",
+            "YXNlQ29tbWFuZBJSChB0YXJnZXRfZGlyZWN0aW9uGAEgASgLMjgucmVhY2h5",
+            "LnBhcnQubW9iaWxlLmJhc2UubW9iaWxpdHkuVGFyZ2V0RGlyZWN0aW9uQ29t",
+            "bWFuZBJKChBtb2JpbGVfYmFzZV9tb2RlGAIgASgLMjAucmVhY2h5LnBhcnQu",
+            "bW9iaWxlLmJhc2UudXRpbGl0eS5adXV1TW9kZUNvbW1hbmQiMwoLQW55Q29t",
+            "bWFuZHMSJAoIY29tbWFuZHMYASADKAsyEi5icmlkZ2UuQW55Q29tbWFuZGIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.ReachyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Hand.HandReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, global::Reachy.ReachyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Reachy.Part.Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Reachy.Part.Mobile.Base.Utility.MobileBaseUtilityReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.GetReachy), global::Bridge.GetReachy.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Bridge.Connect), global::Bridge.Connect.Parser, new[]{ "ReachyId", "UpdateFrequency", "AuditFrequency" }, null, null, null, null),
@@ -3132,10 +3133,10 @@ namespace Bridge {
 
     /// <summary>Field number for the "target_direction" field.</summary>
     public const int TargetDirectionFieldNumber = 1;
-    private global::Mobile.Base.Mobility.TargetDirectionCommand targetDirection_;
+    private global::Reachy.Part.Mobile.Base.Mobility.TargetDirectionCommand targetDirection_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Mobile.Base.Mobility.TargetDirectionCommand TargetDirection {
+    public global::Reachy.Part.Mobile.Base.Mobility.TargetDirectionCommand TargetDirection {
       get { return targetDirection_; }
       set {
         targetDirection_ = value;
@@ -3144,10 +3145,10 @@ namespace Bridge {
 
     /// <summary>Field number for the "mobile_base_mode" field.</summary>
     public const int MobileBaseModeFieldNumber = 2;
-    private global::Mobile.Base.Utility.ZuuuModeCommand mobileBaseMode_;
+    private global::Reachy.Part.Mobile.Base.Utility.ZuuuModeCommand mobileBaseMode_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Mobile.Base.Utility.ZuuuModeCommand MobileBaseMode {
+    public global::Reachy.Part.Mobile.Base.Utility.ZuuuModeCommand MobileBaseMode {
       get { return mobileBaseMode_; }
       set {
         mobileBaseMode_ = value;
@@ -3254,13 +3255,13 @@ namespace Bridge {
       }
       if (other.targetDirection_ != null) {
         if (targetDirection_ == null) {
-          TargetDirection = new global::Mobile.Base.Mobility.TargetDirectionCommand();
+          TargetDirection = new global::Reachy.Part.Mobile.Base.Mobility.TargetDirectionCommand();
         }
         TargetDirection.MergeFrom(other.TargetDirection);
       }
       if (other.mobileBaseMode_ != null) {
         if (mobileBaseMode_ == null) {
-          MobileBaseMode = new global::Mobile.Base.Utility.ZuuuModeCommand();
+          MobileBaseMode = new global::Reachy.Part.Mobile.Base.Utility.ZuuuModeCommand();
         }
         MobileBaseMode.MergeFrom(other.MobileBaseMode);
       }
@@ -3281,14 +3282,14 @@ namespace Bridge {
             break;
           case 10: {
             if (targetDirection_ == null) {
-              TargetDirection = new global::Mobile.Base.Mobility.TargetDirectionCommand();
+              TargetDirection = new global::Reachy.Part.Mobile.Base.Mobility.TargetDirectionCommand();
             }
             input.ReadMessage(TargetDirection);
             break;
           }
           case 18: {
             if (mobileBaseMode_ == null) {
-              MobileBaseMode = new global::Mobile.Base.Utility.ZuuuModeCommand();
+              MobileBaseMode = new global::Reachy.Part.Mobile.Base.Utility.ZuuuModeCommand();
             }
             input.ReadMessage(MobileBaseMode);
             break;
@@ -3310,14 +3311,14 @@ namespace Bridge {
             break;
           case 10: {
             if (targetDirection_ == null) {
-              TargetDirection = new global::Mobile.Base.Mobility.TargetDirectionCommand();
+              TargetDirection = new global::Reachy.Part.Mobile.Base.Mobility.TargetDirectionCommand();
             }
             input.ReadMessage(TargetDirection);
             break;
           }
           case 18: {
             if (mobileBaseMode_ == null) {
-              MobileBaseMode = new global::Mobile.Base.Utility.ZuuuModeCommand();
+              MobileBaseMode = new global::Reachy.Part.Mobile.Base.Utility.ZuuuModeCommand();
             }
             input.ReadMessage(MobileBaseMode);
             break;
