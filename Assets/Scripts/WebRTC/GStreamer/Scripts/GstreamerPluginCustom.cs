@@ -3,8 +3,6 @@ using UnityEngine.Events;
 using Bridge;
 using TeleopReachy;
 using Reachy;
-using System.Threading;
-using System.Collections;
 
 namespace GstreamerWebRTC
 {

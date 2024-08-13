@@ -3,7 +3,6 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine.Events;
 using AOT;
-using System.Collections;
 
 namespace GstreamerWebRTC
 {
