@@ -186,11 +186,10 @@ namespace GstreamerWebRTC
             _signalling.SendSDP(sdp_answer);
         }
 
-        public /*IEnumerator*/ void Cleanup()
+        public void Cleanup()
         {
             _signalling.Close();
             DestroyDataPipeline();
-            //yield return null;
         }
 
         [MonoPInvokeCallback(typeof(iceCallback))]
