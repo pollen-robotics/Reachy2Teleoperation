@@ -22,46 +22,55 @@ public static partial class GotoReflection {
   static GotoReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgpnb3RvLnByb3RvGhtnb29nbGUvcHJvdG9idWYvZW1wdHkucHJvdG8aCWFy",
-          "bS5wcm90bxoKaGVhZC5wcm90bxoKcGFydC5wcm90byIUCgZHb1RvSWQSCgoC",
-          "aWQYASABKAUiFgoHR29Ub0FjaxILCgNhY2sYASABKAgiMgoOR29Ub0dvYWxT",
-          "dGF0dXMSIAoLZ29hbF9zdGF0dXMYASABKA4yCy5Hb2FsU3RhdHVzIqYBCg1D",
-          "YXJ0ZXNpYW5Hb2FsEj8KEmFybV9jYXJ0ZXNpYW5fZ29hbBgBIAEoCzIhLnJl",
-          "YWNoeS5wYXJ0LmFybS5Bcm1DYXJ0ZXNpYW5Hb2FsSAASQgoTbmVja19jYXJ0",
-          "ZXNpYW5fZ29hbBgCIAEoCzIjLnJlYWNoeS5wYXJ0LmhlYWQuTmVja0NhcnRl",
-          "c2lhbkdvYWxIAEIQCg5jYXJ0ZXNpYW5fZ29hbCKQAQoKSm9pbnRzR29hbBI3",
-          "Cg5hcm1fam9pbnRfZ29hbBgBIAEoCzIdLnJlYWNoeS5wYXJ0LmFybS5Bcm1K",
-          "b2ludEdvYWxIABI6Cg9uZWNrX2pvaW50X2dvYWwYAiABKAsyHy5yZWFjaHku",
-          "cGFydC5oZWFkLk5lY2tKb2ludEdvYWxIAEINCgtqb2ludHNfZ29hbCJDChFH",
-          "b1RvSW50ZXJwb2xhdGlvbhIuChJpbnRlcnBvbGF0aW9uX3R5cGUYASABKA4y",
-          "Ei5JbnRlcnBvbGF0aW9uTW9kZSKTAQoLR29Ub1JlcXVlc3QSKAoOY2FydGVz",
-          "aWFuX2dvYWwYASABKAsyDi5DYXJ0ZXNpYW5Hb2FsSAASIgoLam9pbnRzX2dv",
-          "YWwYAiABKAsyCy5Kb2ludHNHb2FsSAASLgoSaW50ZXJwb2xhdGlvbl9tb2Rl",
-          "GAMgASgLMhIuR29Ub0ludGVycG9sYXRpb25CBgoEZ29hbCImCglHb1RvUXVl",
-          "dWUSGQoIZ290b19pZHMYASADKAsyBy5Hb1RvSWQqqgEKCkdvYWxTdGF0dXMS",
-          "CAoETk9ORRAAEhIKDlNUQVRVU19VTktOT1dOEAESEwoPU1RBVFVTX0FDQ0VQ",
-          "VEVEEAISFAoQU1RBVFVTX0VYRUNVVElORxADEhQKEFNUQVRVU19DQU5DRUxJ",
-          "TkcQBBIUChBTVEFUVVNfU1VDQ0VFREVEEAUSEwoPU1RBVFVTX0NBTkNFTEVE",
-          "EAYSEgoOU1RBVFVTX0FCT1JURUQQBypJChFJbnRlcnBvbGF0aW9uTW9kZRIW",
-          "ChJOT05FX0lOVEVSUE9MQVRJT04QABIKCgZMSU5FQVIQARIQCgxNSU5JTVVN",
-          "X0pFUksQAjKeAwoLR29Ub1NlcnZpY2USJgoNR29Ub0NhcnRlc2lhbhIMLkdv",
-          "VG9SZXF1ZXN0GgcuR29Ub0lkEiMKCkdvVG9Kb2ludHMSDC5Hb1RvUmVxdWVz",
-          "dBoHLkdvVG9JZBIoCgxHZXRHb1RvU3RhdGUSBy5Hb1RvSWQaDy5Hb1RvR29h",
-          "bFN0YXR1cxInCg5HZXRHb1RvUmVxdWVzdBIHLkdvVG9JZBoMLkdvVG9SZXF1",
-          "ZXN0EjIKEkdldFBhcnRHb1RvUGxheWluZxITLnJlYWNoeS5wYXJ0LlBhcnRJ",
-          "ZBoHLkdvVG9JZBIzChBHZXRQYXJ0R29Ub1F1ZXVlEhMucmVhY2h5LnBhcnQu",
-          "UGFydElkGgouR29Ub1F1ZXVlEh8KCkNhbmNlbEdvVG8SBy5Hb1RvSWQaCC5H",
-          "b1RvQWNrEjEKDUNhbmNlbEFsbEdvVG8SFi5nb29nbGUucHJvdG9idWYuRW1w",
-          "dHkaCC5Hb1RvQWNrEjIKEUNhbmNlbFBhcnRBbGxHb1RvEhMucmVhY2h5LnBh",
-          "cnQuUGFydElkGgguR29Ub0Fja2IGcHJvdG8z"));
+          "Cgpnb3RvLnByb3RvGhtnb29nbGUvcHJvdG9idWYvZW1wdHkucHJvdG8aHmdv",
+          "b2dsZS9wcm90b2J1Zi93cmFwcGVycy5wcm90bxoJYXJtLnByb3RvGgpoZWFk",
+          "LnByb3RvGgpwYXJ0LnByb3RvIhQKBkdvVG9JZBIKCgJpZBgBIAEoBSIWCgdH",
+          "b1RvQWNrEgsKA2FjaxgBIAEoCCIyCg5Hb1RvR29hbFN0YXR1cxIgCgtnb2Fs",
+          "X3N0YXR1cxgBIAEoDjILLkdvYWxTdGF0dXMipgEKDUNhcnRlc2lhbkdvYWwS",
+          "PwoSYXJtX2NhcnRlc2lhbl9nb2FsGAEgASgLMiEucmVhY2h5LnBhcnQuYXJt",
+          "LkFybUNhcnRlc2lhbkdvYWxIABJCChNuZWNrX2NhcnRlc2lhbl9nb2FsGAIg",
+          "ASgLMiMucmVhY2h5LnBhcnQuaGVhZC5OZWNrQ2FydGVzaWFuR29hbEgAQhAK",
+          "DmNhcnRlc2lhbl9nb2FsIr8BCgpKb2ludHNHb2FsEjcKDmFybV9qb2ludF9n",
+          "b2FsGAEgASgLMh0ucmVhY2h5LnBhcnQuYXJtLkFybUpvaW50R29hbEgAEjoK",
+          "D25lY2tfam9pbnRfZ29hbBgCIAEoCzIfLnJlYWNoeS5wYXJ0LmhlYWQuTmVj",
+          "a0pvaW50R29hbEgAEi0KEWN1c3RvbV9qb2ludF9nb2FsGAMgASgLMhAuQ3Vz",
+          "dG9tSm9pbnRHb2FsSABCDQoLam9pbnRzX2dvYWwikQIKD0N1c3RvbUpvaW50",
+          "R29hbBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBI2Cgphcm1f",
+          "am9pbnRzGAIgASgLMiAucmVhY2h5LnBhcnQuYXJtLkN1c3RvbUFybUpvaW50",
+          "c0gAEjkKC25lY2tfam9pbnRzGAMgASgLMiIucmVhY2h5LnBhcnQuaGVhZC5D",
+          "dXN0b21OZWNrSm9pbnRzSAASMQoMam9pbnRzX2dvYWxzGAQgAygLMhsuZ29v",
+          "Z2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSLQoIZHVyYXRpb24YCiABKAsyGy5n",
+          "b29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZUIICgZqb2ludHMiQwoRR29Ub0lu",
+          "dGVycG9sYXRpb24SLgoSaW50ZXJwb2xhdGlvbl90eXBlGAEgASgOMhIuSW50",
+          "ZXJwb2xhdGlvbk1vZGUikwEKC0dvVG9SZXF1ZXN0EigKDmNhcnRlc2lhbl9n",
+          "b2FsGAEgASgLMg4uQ2FydGVzaWFuR29hbEgAEiIKC2pvaW50c19nb2FsGAIg",
+          "ASgLMgsuSm9pbnRzR29hbEgAEi4KEmludGVycG9sYXRpb25fbW9kZRgDIAEo",
+          "CzISLkdvVG9JbnRlcnBvbGF0aW9uQgYKBGdvYWwiJgoJR29Ub1F1ZXVlEhkK",
+          "CGdvdG9faWRzGAEgAygLMgcuR29Ub0lkKqoBCgpHb2FsU3RhdHVzEggKBE5P",
+          "TkUQABISCg5TVEFUVVNfVU5LTk9XThABEhMKD1NUQVRVU19BQ0NFUFRFRBAC",
+          "EhQKEFNUQVRVU19FWEVDVVRJTkcQAxIUChBTVEFUVVNfQ0FOQ0VMSU5HEAQS",
+          "FAoQU1RBVFVTX1NVQ0NFRURFRBAFEhMKD1NUQVRVU19DQU5DRUxFRBAGEhIK",
+          "DlNUQVRVU19BQk9SVEVEEAcqSQoRSW50ZXJwb2xhdGlvbk1vZGUSFgoSTk9O",
+          "RV9JTlRFUlBPTEFUSU9OEAASCgoGTElORUFSEAESEAoMTUlOSU1VTV9KRVJL",
+          "EAIyngMKC0dvVG9TZXJ2aWNlEiYKDUdvVG9DYXJ0ZXNpYW4SDC5Hb1RvUmVx",
+          "dWVzdBoHLkdvVG9JZBIjCgpHb1RvSm9pbnRzEgwuR29Ub1JlcXVlc3QaBy5H",
+          "b1RvSWQSKAoMR2V0R29Ub1N0YXRlEgcuR29Ub0lkGg8uR29Ub0dvYWxTdGF0",
+          "dXMSJwoOR2V0R29Ub1JlcXVlc3QSBy5Hb1RvSWQaDC5Hb1RvUmVxdWVzdBIy",
+          "ChJHZXRQYXJ0R29Ub1BsYXlpbmcSEy5yZWFjaHkucGFydC5QYXJ0SWQaBy5H",
+          "b1RvSWQSMwoQR2V0UGFydEdvVG9RdWV1ZRITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+          "ZBoKLkdvVG9RdWV1ZRIfCgpDYW5jZWxHb1RvEgcuR29Ub0lkGgguR29Ub0Fj",
+          "axIxCg1DYW5jZWxBbGxHb1RvEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gggu",
+          "R29Ub0FjaxIyChFDYW5jZWxQYXJ0QWxsR29UbxITLnJlYWNoeS5wYXJ0LlBh",
+          "cnRJZBoILkdvVG9BY2tiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Reachy.Part.Arm.ArmReflection.Descriptor, global::Reachy.Part.Head.HeadReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::GoalStatus), typeof(global::InterpolationMode), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToId), global::GoToId.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToAck), global::GoToAck.Parser, new[]{ "Ack" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToGoalStatus), global::GoToGoalStatus.Parser, new[]{ "GoalStatus" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CartesianGoal), global::CartesianGoal.Parser, new[]{ "ArmCartesianGoal", "NeckCartesianGoal" }, new[]{ "CartesianGoal" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::JointsGoal), global::JointsGoal.Parser, new[]{ "ArmJointGoal", "NeckJointGoal" }, new[]{ "JointsGoal" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::JointsGoal), global::JointsGoal.Parser, new[]{ "ArmJointGoal", "NeckJointGoal", "CustomJointGoal" }, new[]{ "JointsGoal" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CustomJointGoal), global::CustomJointGoal.Parser, new[]{ "Id", "ArmJoints", "NeckJoints", "JointsGoals", "Duration" }, new[]{ "Joints" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToInterpolation), global::GoToInterpolation.Parser, new[]{ "InterpolationType" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToRequest), global::GoToRequest.Parser, new[]{ "CartesianGoal", "JointsGoal", "InterpolationMode" }, new[]{ "Goal" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GoToQueue), global::GoToQueue.Parser, new[]{ "GotoIds" }, null, null, null, null)
@@ -984,6 +993,9 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
       case JointsGoalOneofCase.NeckJointGoal:
         NeckJointGoal = other.NeckJointGoal.Clone();
         break;
+      case JointsGoalOneofCase.CustomJointGoal:
+        CustomJointGoal = other.CustomJointGoal.Clone();
+        break;
     }
 
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1019,12 +1031,25 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
     }
   }
 
+  /// <summary>Field number for the "custom_joint_goal" field.</summary>
+  public const int CustomJointGoalFieldNumber = 3;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::CustomJointGoal CustomJointGoal {
+    get { return jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal ? (global::CustomJointGoal) jointsGoal_ : null; }
+    set {
+      jointsGoal_ = value;
+      jointsGoalCase_ = value == null ? JointsGoalOneofCase.None : JointsGoalOneofCase.CustomJointGoal;
+    }
+  }
+
   private object jointsGoal_;
   /// <summary>Enum of possible cases for the "joints_goal" oneof.</summary>
   public enum JointsGoalOneofCase {
     None = 0,
     ArmJointGoal = 1,
     NeckJointGoal = 2,
+    CustomJointGoal = 3,
   }
   private JointsGoalOneofCase jointsGoalCase_ = JointsGoalOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1057,6 +1082,7 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
     }
     if (!object.Equals(ArmJointGoal, other.ArmJointGoal)) return false;
     if (!object.Equals(NeckJointGoal, other.NeckJointGoal)) return false;
+    if (!object.Equals(CustomJointGoal, other.CustomJointGoal)) return false;
     if (JointsGoalCase != other.JointsGoalCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -1067,6 +1093,7 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
     int hash = 1;
     if (jointsGoalCase_ == JointsGoalOneofCase.ArmJointGoal) hash ^= ArmJointGoal.GetHashCode();
     if (jointsGoalCase_ == JointsGoalOneofCase.NeckJointGoal) hash ^= NeckJointGoal.GetHashCode();
+    if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) hash ^= CustomJointGoal.GetHashCode();
     hash ^= (int) jointsGoalCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -1094,6 +1121,10 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
       output.WriteRawTag(18);
       output.WriteMessage(NeckJointGoal);
     }
+    if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) {
+      output.WriteRawTag(26);
+      output.WriteMessage(CustomJointGoal);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1112,6 +1143,10 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
       output.WriteRawTag(18);
       output.WriteMessage(NeckJointGoal);
     }
+    if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) {
+      output.WriteRawTag(26);
+      output.WriteMessage(CustomJointGoal);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1127,6 +1162,9 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
     }
     if (jointsGoalCase_ == JointsGoalOneofCase.NeckJointGoal) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(NeckJointGoal);
+    }
+    if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(CustomJointGoal);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1152,6 +1190,12 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
           NeckJointGoal = new global::Reachy.Part.Head.NeckJointGoal();
         }
         NeckJointGoal.MergeFrom(other.NeckJointGoal);
+        break;
+      case JointsGoalOneofCase.CustomJointGoal:
+        if (CustomJointGoal == null) {
+          CustomJointGoal = new global::CustomJointGoal();
+        }
+        CustomJointGoal.MergeFrom(other.CustomJointGoal);
         break;
     }
 
@@ -1188,6 +1232,15 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
           NeckJointGoal = subBuilder;
           break;
         }
+        case 26: {
+          global::CustomJointGoal subBuilder = new global::CustomJointGoal();
+          if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) {
+            subBuilder.MergeFrom(CustomJointGoal);
+          }
+          input.ReadMessage(subBuilder);
+          CustomJointGoal = subBuilder;
+          break;
+        }
       }
     }
   #endif
@@ -1221,6 +1274,417 @@ public sealed partial class JointsGoal : pb::IMessage<JointsGoal>
           NeckJointGoal = subBuilder;
           break;
         }
+        case 26: {
+          global::CustomJointGoal subBuilder = new global::CustomJointGoal();
+          if (jointsGoalCase_ == JointsGoalOneofCase.CustomJointGoal) {
+            subBuilder.MergeFrom(CustomJointGoal);
+          }
+          input.ReadMessage(subBuilder);
+          CustomJointGoal = subBuilder;
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+public sealed partial class CustomJointGoal : pb::IMessage<CustomJointGoal>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<CustomJointGoal> _parser = new pb::MessageParser<CustomJointGoal>(() => new CustomJointGoal());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<CustomJointGoal> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GotoReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public CustomJointGoal() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public CustomJointGoal(CustomJointGoal other) : this() {
+    id_ = other.id_ != null ? other.id_.Clone() : null;
+    jointsGoals_ = other.jointsGoals_.Clone();
+    Duration = other.Duration;
+    switch (other.JointsCase) {
+      case JointsOneofCase.ArmJoints:
+        ArmJoints = other.ArmJoints.Clone();
+        break;
+      case JointsOneofCase.NeckJoints:
+        NeckJoints = other.NeckJoints.Clone();
+        break;
+    }
+
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public CustomJointGoal Clone() {
+    return new CustomJointGoal(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private global::Reachy.Part.PartId id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::Reachy.Part.PartId Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "arm_joints" field.</summary>
+  public const int ArmJointsFieldNumber = 2;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::Reachy.Part.Arm.CustomArmJoints ArmJoints {
+    get { return jointsCase_ == JointsOneofCase.ArmJoints ? (global::Reachy.Part.Arm.CustomArmJoints) joints_ : null; }
+    set {
+      joints_ = value;
+      jointsCase_ = value == null ? JointsOneofCase.None : JointsOneofCase.ArmJoints;
+    }
+  }
+
+  /// <summary>Field number for the "neck_joints" field.</summary>
+  public const int NeckJointsFieldNumber = 3;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::Reachy.Part.Head.CustomNeckJoints NeckJoints {
+    get { return jointsCase_ == JointsOneofCase.NeckJoints ? (global::Reachy.Part.Head.CustomNeckJoints) joints_ : null; }
+    set {
+      joints_ = value;
+      jointsCase_ = value == null ? JointsOneofCase.None : JointsOneofCase.NeckJoints;
+    }
+  }
+
+  /// <summary>Field number for the "joints_goals" field.</summary>
+  public const int JointsGoalsFieldNumber = 4;
+  private static readonly pb::FieldCodec<float?> _repeated_jointsGoals_codec
+      = pb::FieldCodec.ForStructWrapper<float>(34);
+  private readonly pbc::RepeatedField<float?> jointsGoals_ = new pbc::RepeatedField<float?>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<float?> JointsGoals {
+    get { return jointsGoals_; }
+  }
+
+  /// <summary>Field number for the "duration" field.</summary>
+  public const int DurationFieldNumber = 10;
+  private static readonly pb::FieldCodec<float?> _single_duration_codec = pb::FieldCodec.ForStructWrapper<float>(82);
+  private float? duration_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public float? Duration {
+    get { return duration_; }
+    set {
+      duration_ = value;
+    }
+  }
+
+
+  private object joints_;
+  /// <summary>Enum of possible cases for the "joints" oneof.</summary>
+  public enum JointsOneofCase {
+    None = 0,
+    ArmJoints = 2,
+    NeckJoints = 3,
+  }
+  private JointsOneofCase jointsCase_ = JointsOneofCase.None;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public JointsOneofCase JointsCase {
+    get { return jointsCase_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void ClearJoints() {
+    jointsCase_ = JointsOneofCase.None;
+    joints_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as CustomJointGoal);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(CustomJointGoal other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Id, other.Id)) return false;
+    if (!object.Equals(ArmJoints, other.ArmJoints)) return false;
+    if (!object.Equals(NeckJoints, other.NeckJoints)) return false;
+    if(!jointsGoals_.Equals(other.jointsGoals_)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Duration, other.Duration)) return false;
+    if (JointsCase != other.JointsCase) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (id_ != null) hash ^= Id.GetHashCode();
+    if (jointsCase_ == JointsOneofCase.ArmJoints) hash ^= ArmJoints.GetHashCode();
+    if (jointsCase_ == JointsOneofCase.NeckJoints) hash ^= NeckJoints.GetHashCode();
+    hash ^= jointsGoals_.GetHashCode();
+    if (duration_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Duration);
+    hash ^= (int) jointsCase_;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (id_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Id);
+    }
+    if (jointsCase_ == JointsOneofCase.ArmJoints) {
+      output.WriteRawTag(18);
+      output.WriteMessage(ArmJoints);
+    }
+    if (jointsCase_ == JointsOneofCase.NeckJoints) {
+      output.WriteRawTag(26);
+      output.WriteMessage(NeckJoints);
+    }
+    jointsGoals_.WriteTo(output, _repeated_jointsGoals_codec);
+    if (duration_ != null) {
+      _single_duration_codec.WriteTagAndValue(output, Duration);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (id_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Id);
+    }
+    if (jointsCase_ == JointsOneofCase.ArmJoints) {
+      output.WriteRawTag(18);
+      output.WriteMessage(ArmJoints);
+    }
+    if (jointsCase_ == JointsOneofCase.NeckJoints) {
+      output.WriteRawTag(26);
+      output.WriteMessage(NeckJoints);
+    }
+    jointsGoals_.WriteTo(ref output, _repeated_jointsGoals_codec);
+    if (duration_ != null) {
+      _single_duration_codec.WriteTagAndValue(ref output, Duration);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (id_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
+    }
+    if (jointsCase_ == JointsOneofCase.ArmJoints) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ArmJoints);
+    }
+    if (jointsCase_ == JointsOneofCase.NeckJoints) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(NeckJoints);
+    }
+    size += jointsGoals_.CalculateSize(_repeated_jointsGoals_codec);
+    if (duration_ != null) {
+      size += _single_duration_codec.CalculateSizeWithTag(Duration);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(CustomJointGoal other) {
+    if (other == null) {
+      return;
+    }
+    if (other.id_ != null) {
+      if (id_ == null) {
+        Id = new global::Reachy.Part.PartId();
+      }
+      Id.MergeFrom(other.Id);
+    }
+    jointsGoals_.Add(other.jointsGoals_);
+    if (other.duration_ != null) {
+      if (duration_ == null || other.Duration != 0F) {
+        Duration = other.Duration;
+      }
+    }
+    switch (other.JointsCase) {
+      case JointsOneofCase.ArmJoints:
+        if (ArmJoints == null) {
+          ArmJoints = new global::Reachy.Part.Arm.CustomArmJoints();
+        }
+        ArmJoints.MergeFrom(other.ArmJoints);
+        break;
+      case JointsOneofCase.NeckJoints:
+        if (NeckJoints == null) {
+          NeckJoints = new global::Reachy.Part.Head.CustomNeckJoints();
+        }
+        NeckJoints.MergeFrom(other.NeckJoints);
+        break;
+    }
+
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (id_ == null) {
+            Id = new global::Reachy.Part.PartId();
+          }
+          input.ReadMessage(Id);
+          break;
+        }
+        case 18: {
+          global::Reachy.Part.Arm.CustomArmJoints subBuilder = new global::Reachy.Part.Arm.CustomArmJoints();
+          if (jointsCase_ == JointsOneofCase.ArmJoints) {
+            subBuilder.MergeFrom(ArmJoints);
+          }
+          input.ReadMessage(subBuilder);
+          ArmJoints = subBuilder;
+          break;
+        }
+        case 26: {
+          global::Reachy.Part.Head.CustomNeckJoints subBuilder = new global::Reachy.Part.Head.CustomNeckJoints();
+          if (jointsCase_ == JointsOneofCase.NeckJoints) {
+            subBuilder.MergeFrom(NeckJoints);
+          }
+          input.ReadMessage(subBuilder);
+          NeckJoints = subBuilder;
+          break;
+        }
+        case 34: {
+          jointsGoals_.AddEntriesFrom(input, _repeated_jointsGoals_codec);
+          break;
+        }
+        case 82: {
+          float? value = _single_duration_codec.Read(input);
+          if (duration_ == null || value != 0F) {
+            Duration = value;
+          }
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          if (id_ == null) {
+            Id = new global::Reachy.Part.PartId();
+          }
+          input.ReadMessage(Id);
+          break;
+        }
+        case 18: {
+          global::Reachy.Part.Arm.CustomArmJoints subBuilder = new global::Reachy.Part.Arm.CustomArmJoints();
+          if (jointsCase_ == JointsOneofCase.ArmJoints) {
+            subBuilder.MergeFrom(ArmJoints);
+          }
+          input.ReadMessage(subBuilder);
+          ArmJoints = subBuilder;
+          break;
+        }
+        case 26: {
+          global::Reachy.Part.Head.CustomNeckJoints subBuilder = new global::Reachy.Part.Head.CustomNeckJoints();
+          if (jointsCase_ == JointsOneofCase.NeckJoints) {
+            subBuilder.MergeFrom(NeckJoints);
+          }
+          input.ReadMessage(subBuilder);
+          NeckJoints = subBuilder;
+          break;
+        }
+        case 34: {
+          jointsGoals_.AddEntriesFrom(ref input, _repeated_jointsGoals_codec);
+          break;
+        }
+        case 82: {
+          float? value = _single_duration_codec.Read(ref input);
+          if (duration_ == null || value != 0F) {
+            Duration = value;
+          }
+          break;
+        }
       }
     }
   }
@@ -1242,7 +1706,7 @@ public sealed partial class GoToInterpolation : pb::IMessage<GoToInterpolation>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GotoReflection.Descriptor.MessageTypes[5]; }
+    get { return global::GotoReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1431,7 +1895,7 @@ public sealed partial class GoToRequest : pb::IMessage<GoToRequest>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GotoReflection.Descriptor.MessageTypes[6]; }
+    get { return global::GotoReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1762,7 +2226,7 @@ public sealed partial class GoToQueue : pb::IMessage<GoToQueue>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GotoReflection.Descriptor.MessageTypes[7]; }
+    get { return global::GotoReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

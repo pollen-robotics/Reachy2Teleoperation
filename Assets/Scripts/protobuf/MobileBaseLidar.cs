@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Mobile.Base.Lidar {
+namespace Reachy.Part.Mobile.Base.Lidar {
 
   /// <summary>Holder for reflection information generated from mobile_base_lidar.proto</summary>
   public static partial class MobileBaseLidarReflection {
@@ -24,35 +24,38 @@ namespace Mobile.Base.Lidar {
     static MobileBaseLidarReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Chdtb2JpbGVfYmFzZV9saWRhci5wcm90bxIRbW9iaWxlLmJhc2UubGlkYXIa",
-            "G2dvb2dsZS9wcm90b2J1Zi9lbXB0eS5wcm90bxoeZ29vZ2xlL3Byb3RvYnVm",
-            "L3dyYXBwZXJzLnByb3RvGhptb2JpbGVfYmFzZV9tb2JpbGl0eS5wcm90byJd",
-            "ChxMaWRhck9ic3RhY2xlRGV0ZWN0aW9uU3RhdHVzEj0KBnN0YXR1cxgBIAEo",
-            "DjItLm1vYmlsZS5iYXNlLmxpZGFyLkxpZGFyT2JzdGFjbGVEZXRlY3Rpb25F",
-            "bnVtIv4BCgtMaWRhclNhZmV0eRItCglzYWZldHlfb24YASABKAsyGi5nb29n",
-            "bGUucHJvdG9idWYuQm9vbFZhbHVlEjQKD3NhZmV0eV9kaXN0YW5jZRgCIAEo",
-            "CzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlEjYKEWNyaXRpY2FsX2Rp",
-            "c3RhbmNlGAMgASgLMhsuZ29vZ2xlLnByb3RvYnVmLkZsb2F0VmFsdWUSUgoZ",
-            "b2JzdGFjbGVfZGV0ZWN0aW9uX3N0YXR1cxgEIAEoCzIvLm1vYmlsZS5iYXNl",
-            "LmxpZGFyLkxpZGFyT2JzdGFjbGVEZXRlY3Rpb25TdGF0dXMiGAoITGlkYXJN",
-            "YXASDAoEZGF0YRgBIAEoDCqBAQoaTGlkYXJPYnN0YWNsZURldGVjdGlvbkVu",
-            "dW0SEwoPREVURUNUSU9OX0VSUk9SEAASFgoSTk9fT0JKRUNUX0RFVEVDVEVE",
-            "EAESHAoYT0JKRUNUX0RFVEVDVEVEX1NMT1dET1dOEAISGAoUT0JKRUNUX0RF",
-            "VEVDVEVEX1NUT1AQAzLsAgoWTW9iaWxlQmFzZUxpZGFyU2VydmljZRJZCg1T",
-            "ZXRadXV1U2FmZXR5Eh4ubW9iaWxlLmJhc2UubGlkYXIuTGlkYXJTYWZldHka",
-            "KC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5Nb2JpbGl0eVNlcnZpY2VBY2sSRwoN",
-            "R2V0WnV1dVNhZmV0eRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoeLm1vYmls",
-            "ZS5iYXNlLmxpZGFyLkxpZGFyU2FmZXR5EkIKC0dldExpZGFyTWFwEhYuZ29v",
-            "Z2xlLnByb3RvYnVmLkVtcHR5GhsubW9iaWxlLmJhc2UubGlkYXIuTGlkYXJN",
-            "YXASagofR2V0TGlkYXJPYnN0YWNsZURldGVjdGlvblN0YXR1cxIWLmdvb2ds",
-            "ZS5wcm90b2J1Zi5FbXB0eRovLm1vYmlsZS5iYXNlLmxpZGFyLkxpZGFyT2Jz",
-            "dGFjbGVEZXRlY3Rpb25TdGF0dXNiBnByb3RvMw=="));
+            "Chdtb2JpbGVfYmFzZV9saWRhci5wcm90bxIdcmVhY2h5LnBhcnQubW9iaWxl",
+            "LmJhc2UubGlkYXIaG2dvb2dsZS9wcm90b2J1Zi9lbXB0eS5wcm90bxoeZ29v",
+            "Z2xlL3Byb3RvYnVmL3dyYXBwZXJzLnByb3RvGhptb2JpbGVfYmFzZV9tb2Jp",
+            "bGl0eS5wcm90bxoKcGFydC5wcm90byJpChxMaWRhck9ic3RhY2xlRGV0ZWN0",
+            "aW9uU3RhdHVzEkkKBnN0YXR1cxgBIAEoDjI5LnJlYWNoeS5wYXJ0Lm1vYmls",
+            "ZS5iYXNlLmxpZGFyLkxpZGFyT2JzdGFjbGVEZXRlY3Rpb25FbnVtIqsCCgtM",
+            "aWRhclNhZmV0eRIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIt",
+            "CglzYWZldHlfb24YAiABKAsyGi5nb29nbGUucHJvdG9idWYuQm9vbFZhbHVl",
+            "EjQKD3NhZmV0eV9kaXN0YW5jZRgDIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5G",
+            "bG9hdFZhbHVlEjYKEWNyaXRpY2FsX2Rpc3RhbmNlGAQgASgLMhsuZ29vZ2xl",
+            "LnByb3RvYnVmLkZsb2F0VmFsdWUSXgoZb2JzdGFjbGVfZGV0ZWN0aW9uX3N0",
+            "YXR1cxgFIAEoCzI7LnJlYWNoeS5wYXJ0Lm1vYmlsZS5iYXNlLmxpZGFyLkxp",
+            "ZGFyT2JzdGFjbGVEZXRlY3Rpb25TdGF0dXMiGAoITGlkYXJNYXASDAoEZGF0",
+            "YRgBIAEoDCqBAQoaTGlkYXJPYnN0YWNsZURldGVjdGlvbkVudW0SEwoPREVU",
+            "RUNUSU9OX0VSUk9SEAASFgoSTk9fT0JKRUNUX0RFVEVDVEVEEAESHAoYT0JK",
+            "RUNUX0RFVEVDVEVEX1NMT1dET1dOEAISGAoUT0JKRUNUX0RFVEVDVEVEX1NU",
+            "T1AQAzKfAwoWTW9iaWxlQmFzZUxpZGFyU2VydmljZRJxCg1TZXRadXV1U2Fm",
+            "ZXR5EioucmVhY2h5LnBhcnQubW9iaWxlLmJhc2UubGlkYXIuTGlkYXJTYWZl",
+            "dHkaNC5yZWFjaHkucGFydC5tb2JpbGUuYmFzZS5tb2JpbGl0eS5Nb2JpbGl0",
+            "eVNlcnZpY2VBY2sSUAoNR2V0WnV1dVNhZmV0eRITLnJlYWNoeS5wYXJ0LlBh",
+            "cnRJZBoqLnJlYWNoeS5wYXJ0Lm1vYmlsZS5iYXNlLmxpZGFyLkxpZGFyU2Fm",
+            "ZXR5EksKC0dldExpZGFyTWFwEhMucmVhY2h5LnBhcnQuUGFydElkGicucmVh",
+            "Y2h5LnBhcnQubW9iaWxlLmJhc2UubGlkYXIuTGlkYXJNYXAScwofR2V0TGlk",
+            "YXJPYnN0YWNsZURldGVjdGlvblN0YXR1cxITLnJlYWNoeS5wYXJ0LlBhcnRJ",
+            "ZBo7LnJlYWNoeS5wYXJ0Lm1vYmlsZS5iYXNlLmxpZGFyLkxpZGFyT2JzdGFj",
+            "bGVEZXRlY3Rpb25TdGF0dXNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Mobile.Base.Lidar.LidarObstacleDetectionEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Lidar.LidarObstacleDetectionStatus), global::Mobile.Base.Lidar.LidarObstacleDetectionStatus.Parser, new[]{ "Status" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Lidar.LidarSafety), global::Mobile.Base.Lidar.LidarSafety.Parser, new[]{ "SafetyOn", "SafetyDistance", "CriticalDistance", "ObstacleDetectionStatus" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Mobile.Base.Lidar.LidarMap), global::Mobile.Base.Lidar.LidarMap.Parser, new[]{ "Data" }, null, null, null, null)
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Reachy.Part.Mobile.Base.Mobility.MobileBaseMobilityReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus), global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus.Parser, new[]{ "Status" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Mobile.Base.Lidar.LidarSafety), global::Reachy.Part.Mobile.Base.Lidar.LidarSafety.Parser, new[]{ "Id", "SafetyOn", "SafetyDistance", "CriticalDistance", "ObstacleDetectionStatus" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Mobile.Base.Lidar.LidarMap), global::Reachy.Part.Mobile.Base.Lidar.LidarMap.Parser, new[]{ "Data" }, null, null, null, null)
           }));
     }
     #endregion
@@ -83,7 +86,7 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Reachy.Part.Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -115,10 +118,10 @@ namespace Mobile.Base.Lidar {
 
     /// <summary>Field number for the "status" field.</summary>
     public const int StatusFieldNumber = 1;
-    private global::Mobile.Base.Lidar.LidarObstacleDetectionEnum status_ = global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError;
+    private global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum status_ = global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Mobile.Base.Lidar.LidarObstacleDetectionEnum Status {
+    public global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum Status {
       get { return status_; }
       set {
         status_ = value;
@@ -148,7 +151,7 @@ namespace Mobile.Base.Lidar {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Status != global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) hash ^= Status.GetHashCode();
+      if (Status != global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) hash ^= Status.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -167,7 +170,7 @@ namespace Mobile.Base.Lidar {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Status != global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
+      if (Status != global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Status);
       }
@@ -181,7 +184,7 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Status != global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
+      if (Status != global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Status);
       }
@@ -195,7 +198,7 @@ namespace Mobile.Base.Lidar {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Status != global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
+      if (Status != global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Status);
       }
       if (_unknownFields != null) {
@@ -210,7 +213,7 @@ namespace Mobile.Base.Lidar {
       if (other == null) {
         return;
       }
-      if (other.Status != global::Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
+      if (other.Status != global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum.DetectionError) {
         Status = other.Status;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -229,7 +232,7 @@ namespace Mobile.Base.Lidar {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Status = (global::Mobile.Base.Lidar.LidarObstacleDetectionEnum) input.ReadEnum();
+            Status = (global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum) input.ReadEnum();
             break;
           }
         }
@@ -248,7 +251,7 @@ namespace Mobile.Base.Lidar {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Status = (global::Mobile.Base.Lidar.LidarObstacleDetectionEnum) input.ReadEnum();
+            Status = (global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionEnum) input.ReadEnum();
             break;
           }
         }
@@ -272,7 +275,7 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Reachy.Part.Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -292,6 +295,7 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public LidarSafety(LidarSafety other) : this() {
+      id_ = other.id_ != null ? other.id_.Clone() : null;
       SafetyOn = other.SafetyOn;
       SafetyDistance = other.SafetyDistance;
       CriticalDistance = other.CriticalDistance;
@@ -305,9 +309,21 @@ namespace Mobile.Base.Lidar {
       return new LidarSafety(this);
     }
 
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private global::Reachy.Part.PartId id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Reachy.Part.PartId Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
     /// <summary>Field number for the "safety_on" field.</summary>
-    public const int SafetyOnFieldNumber = 1;
-    private static readonly pb::FieldCodec<bool?> _single_safetyOn_codec = pb::FieldCodec.ForStructWrapper<bool>(10);
+    public const int SafetyOnFieldNumber = 2;
+    private static readonly pb::FieldCodec<bool?> _single_safetyOn_codec = pb::FieldCodec.ForStructWrapper<bool>(18);
     private bool? safetyOn_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -320,8 +336,8 @@ namespace Mobile.Base.Lidar {
 
 
     /// <summary>Field number for the "safety_distance" field.</summary>
-    public const int SafetyDistanceFieldNumber = 2;
-    private static readonly pb::FieldCodec<float?> _single_safetyDistance_codec = pb::FieldCodec.ForStructWrapper<float>(18);
+    public const int SafetyDistanceFieldNumber = 3;
+    private static readonly pb::FieldCodec<float?> _single_safetyDistance_codec = pb::FieldCodec.ForStructWrapper<float>(26);
     private float? safetyDistance_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -334,8 +350,8 @@ namespace Mobile.Base.Lidar {
 
 
     /// <summary>Field number for the "critical_distance" field.</summary>
-    public const int CriticalDistanceFieldNumber = 3;
-    private static readonly pb::FieldCodec<float?> _single_criticalDistance_codec = pb::FieldCodec.ForStructWrapper<float>(26);
+    public const int CriticalDistanceFieldNumber = 4;
+    private static readonly pb::FieldCodec<float?> _single_criticalDistance_codec = pb::FieldCodec.ForStructWrapper<float>(34);
     private float? criticalDistance_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -348,11 +364,11 @@ namespace Mobile.Base.Lidar {
 
 
     /// <summary>Field number for the "obstacle_detection_status" field.</summary>
-    public const int ObstacleDetectionStatusFieldNumber = 4;
-    private global::Mobile.Base.Lidar.LidarObstacleDetectionStatus obstacleDetectionStatus_;
+    public const int ObstacleDetectionStatusFieldNumber = 5;
+    private global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus obstacleDetectionStatus_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Mobile.Base.Lidar.LidarObstacleDetectionStatus ObstacleDetectionStatus {
+    public global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus ObstacleDetectionStatus {
       get { return obstacleDetectionStatus_; }
       set {
         obstacleDetectionStatus_ = value;
@@ -374,6 +390,7 @@ namespace Mobile.Base.Lidar {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (!object.Equals(Id, other.Id)) return false;
       if (SafetyOn != other.SafetyOn) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(SafetyDistance, other.SafetyDistance)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(CriticalDistance, other.CriticalDistance)) return false;
@@ -385,6 +402,7 @@ namespace Mobile.Base.Lidar {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
+      if (id_ != null) hash ^= Id.GetHashCode();
       if (safetyOn_ != null) hash ^= SafetyOn.GetHashCode();
       if (safetyDistance_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(SafetyDistance);
       if (criticalDistance_ != null) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(CriticalDistance);
@@ -407,6 +425,10 @@ namespace Mobile.Base.Lidar {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
+      if (id_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Id);
+      }
       if (safetyOn_ != null) {
         _single_safetyOn_codec.WriteTagAndValue(output, SafetyOn);
       }
@@ -417,7 +439,7 @@ namespace Mobile.Base.Lidar {
         _single_criticalDistance_codec.WriteTagAndValue(output, CriticalDistance);
       }
       if (obstacleDetectionStatus_ != null) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteMessage(ObstacleDetectionStatus);
       }
       if (_unknownFields != null) {
@@ -430,6 +452,10 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (id_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Id);
+      }
       if (safetyOn_ != null) {
         _single_safetyOn_codec.WriteTagAndValue(ref output, SafetyOn);
       }
@@ -440,7 +466,7 @@ namespace Mobile.Base.Lidar {
         _single_criticalDistance_codec.WriteTagAndValue(ref output, CriticalDistance);
       }
       if (obstacleDetectionStatus_ != null) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteMessage(ObstacleDetectionStatus);
       }
       if (_unknownFields != null) {
@@ -453,6 +479,9 @@ namespace Mobile.Base.Lidar {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
+      if (id_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Id);
+      }
       if (safetyOn_ != null) {
         size += _single_safetyOn_codec.CalculateSizeWithTag(SafetyOn);
       }
@@ -477,6 +506,12 @@ namespace Mobile.Base.Lidar {
       if (other == null) {
         return;
       }
+      if (other.id_ != null) {
+        if (id_ == null) {
+          Id = new global::Reachy.Part.PartId();
+        }
+        Id.MergeFrom(other.Id);
+      }
       if (other.safetyOn_ != null) {
         if (safetyOn_ == null || other.SafetyOn != false) {
           SafetyOn = other.SafetyOn;
@@ -494,7 +529,7 @@ namespace Mobile.Base.Lidar {
       }
       if (other.obstacleDetectionStatus_ != null) {
         if (obstacleDetectionStatus_ == null) {
-          ObstacleDetectionStatus = new global::Mobile.Base.Lidar.LidarObstacleDetectionStatus();
+          ObstacleDetectionStatus = new global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus();
         }
         ObstacleDetectionStatus.MergeFrom(other.ObstacleDetectionStatus);
       }
@@ -514,29 +549,36 @@ namespace Mobile.Base.Lidar {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+          case 18: {
             bool? value = _single_safetyOn_codec.Read(input);
             if (safetyOn_ == null || value != false) {
               SafetyOn = value;
             }
             break;
           }
-          case 18: {
+          case 26: {
             float? value = _single_safetyDistance_codec.Read(input);
             if (safetyDistance_ == null || value != 0F) {
               SafetyDistance = value;
             }
             break;
           }
-          case 26: {
+          case 34: {
             float? value = _single_criticalDistance_codec.Read(input);
             if (criticalDistance_ == null || value != 0F) {
               CriticalDistance = value;
             }
             break;
           }
-          case 34: {
+          case 42: {
             if (obstacleDetectionStatus_ == null) {
-              ObstacleDetectionStatus = new global::Mobile.Base.Lidar.LidarObstacleDetectionStatus();
+              ObstacleDetectionStatus = new global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus();
             }
             input.ReadMessage(ObstacleDetectionStatus);
             break;
@@ -557,29 +599,36 @@ namespace Mobile.Base.Lidar {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
+            if (id_ == null) {
+              Id = new global::Reachy.Part.PartId();
+            }
+            input.ReadMessage(Id);
+            break;
+          }
+          case 18: {
             bool? value = _single_safetyOn_codec.Read(ref input);
             if (safetyOn_ == null || value != false) {
               SafetyOn = value;
             }
             break;
           }
-          case 18: {
+          case 26: {
             float? value = _single_safetyDistance_codec.Read(ref input);
             if (safetyDistance_ == null || value != 0F) {
               SafetyDistance = value;
             }
             break;
           }
-          case 26: {
+          case 34: {
             float? value = _single_criticalDistance_codec.Read(ref input);
             if (criticalDistance_ == null || value != 0F) {
               CriticalDistance = value;
             }
             break;
           }
-          case 34: {
+          case 42: {
             if (obstacleDetectionStatus_ == null) {
-              ObstacleDetectionStatus = new global::Mobile.Base.Lidar.LidarObstacleDetectionStatus();
+              ObstacleDetectionStatus = new global::Reachy.Part.Mobile.Base.Lidar.LidarObstacleDetectionStatus();
             }
             input.ReadMessage(ObstacleDetectionStatus);
             break;
@@ -605,7 +654,7 @@ namespace Mobile.Base.Lidar {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Reachy.Part.Mobile.Base.Lidar.MobileBaseLidarReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -12,9 +12,9 @@ using Reachy.Part.Hand;
 using Reachy.Kinematics;
 using Component.Orbita2D;
 using Component.Orbita3D;
-using Mobile.Base.Mobility;
-using Mobile.Base.Utility;
-using Mobile.Base.Lidar;
+using Reachy.Part.Mobile.Base.Mobility;
+using Reachy.Part.Mobile.Base.Utility;
+using Reachy.Part.Mobile.Base.Lidar;
 using Bridge;
 using GstreamerWebRTC;
 
@@ -301,9 +301,12 @@ namespace TeleopReachy
             webRTCController.SendCommandMessage(handCommand);
         }
 
-        public void TurnMobileBaseOff()
+        public void TurnMobileBaseOff(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.FreeWheel };
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+                Id = id,
+                Mode = ZuuuModePossiblities.FreeWheel 
+            };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
             {
@@ -367,9 +370,12 @@ namespace TeleopReachy
             webRTCController.SendCommandMessage(handCommand);
         }
 
-        public void TurnMobileBaseOn()
+        public void TurnMobileBaseOn(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+                Id = id,
+                Mode = ZuuuModePossiblities.CmdVel 
+            };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
             {
