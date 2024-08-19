@@ -66,11 +66,11 @@ namespace TeleopReachy
         {
             HandPositionRequest leftHandPositionRequest = new HandPositionRequest();
             if (robotConfig.HasLeftGripper()) leftHandPositionRequest.Id = robotConfig.partsId["l_hand"];
-            leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = leftGripperOpening } };
+            leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { OpeningPercentage = leftGripperOpening } };
 
             HandPositionRequest rightHandPositionRequest = new HandPositionRequest();
             if (robotConfig.HasRightGripper()) rightHandPositionRequest.Id = robotConfig.partsId["r_hand"];
-            rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = rightGripperOpening } };
+            rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { OpeningPercentage = rightGripperOpening } };
 
             ActualSendGrippersCommands(leftHandPositionRequest, rightHandPositionRequest);
         }
