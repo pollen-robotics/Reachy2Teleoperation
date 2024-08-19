@@ -284,6 +284,7 @@ namespace TeleopReachy
             robotStatus.SetMotorsSpeedLimited(true);
             uint speedLimit = 10;
             ModifyArmSpeedLimit(speedLimit);
+            ModifyHeadSpeedLimit(100);
         }
 
         private void SetHeadLookingStraight()
@@ -309,7 +310,6 @@ namespace TeleopReachy
             uint torqueLimitLow = 35;
             uint torqueLimitHigh = 100;
 
-            ModifyHeadSpeedLimit(10);
             ModifyArmTorqueLimit(torqueLimitLow);
 
             SetHeadLookingStraight();
@@ -333,7 +333,6 @@ namespace TeleopReachy
 
             yield return new WaitForSeconds(0.2f);
 
-            ModifyHeadSpeedLimit(100);
             ModifyArmTorqueLimit(torqueLimitHigh);
 
             yield return new WaitForSeconds(0.1f);
