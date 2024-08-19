@@ -44,45 +44,48 @@ namespace Reachy.Part.Hand {
             "bWF4GAIgASgCIkYKFVBhcmFsbGVsR3JpcHBlckxpbWl0cxItCgZsaW1pdHMY",
             "ASABKAsyHS5yZWFjaHkucGFydC5oYW5kLkpvaW50TGltaXRzIl0KDEpvaW50",
             "c0xpbWl0cxJDChBwYXJhbGxlbF9ncmlwcGVyGAEgASgLMicucmVhY2h5LnBh",
-            "cnQuaGFuZC5QYXJhbGxlbEdyaXBwZXJMaW1pdHNIAEIICgZsaW1pdHMiKwoX",
-            "UGFyYWxsZWxHcmlwcGVyUG9zaXRpb24SEAoIcG9zaXRpb24YASABKAIiYQoM",
-            "SGFuZFBvc2l0aW9uEkUKEHBhcmFsbGVsX2dyaXBwZXIYASABKAsyKS5yZWFj",
-            "aHkucGFydC5oYW5kLlBhcmFsbGVsR3JpcHBlclBvc2l0aW9uSABCCgoIcG9z",
-            "aXRpb24iaAoTSGFuZFBvc2l0aW9uUmVxdWVzdBIfCgJpZBgBIAEoCzITLnJl",
-            "YWNoeS5wYXJ0LlBhcnRJZBIwCghwb3NpdGlvbhgCIAEoCzIeLnJlYWNoeS5w",
-            "YXJ0LmhhbmQuSGFuZFBvc2l0aW9uIi0KDFRlbXBlcmF0dXJlcxINCgVtb3Rv",
-            "chgBIAEoAhIOCgZkcml2ZXIYAiABKAIiUQoaUGFyYWxsZWxHcmlwcGVyVGVt",
-            "cGVyYXR1cmUSMwoLdGVtcGVyYXR1cmUYASABKAsyHi5yZWFjaHkucGFydC5o",
-            "YW5kLlRlbXBlcmF0dXJlcyJeChBIYW5kVGVtcGVyYXR1cmVzEjoKEHBhcmFs",
-            "bGVsX2dyaXBwZXIYASABKAsyHi5yZWFjaHkucGFydC5oYW5kLlRlbXBlcmF0",
-            "dXJlc0gAQg4KDHRlbXBlcmF0dXJlcyJhChFTcGVlZExpbWl0UmVxdWVzdBIf",
-            "CgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIrCgVsaW1pdBgCIAEo",
-            "DjIcLnJlYWNoeS5wYXJ0LmhhbmQuU3BlZWRMaW1pdCo6CgpTcGVlZExpbWl0",
-            "EgwKCE5PX0xJTUlUEAASCAoERkFTVBABEgoKBk5PUk1BTBACEggKBFNMT1cQ",
-            "AzKaCAoLSGFuZFNlcnZpY2USQwoLR2V0QWxsSGFuZHMSFi5nb29nbGUucHJv",
-            "dG9idWYuRW1wdHkaHC5yZWFjaHkucGFydC5oYW5kLkxpc3RPZkhhbmQSPAoI",
-            "R2V0U3RhdGUSEy5yZWFjaHkucGFydC5QYXJ0SWQaGy5yZWFjaHkucGFydC5o",
-            "YW5kLkhhbmRTdGF0ZRI3CghPcGVuSGFuZBITLnJlYWNoeS5wYXJ0LlBhcnRJ",
-            "ZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI4CglDbG9zZUhhbmQSEy5yZWFj",
-            "aHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSOgoFQXVk",
-            "aXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaHC5yZWFjaHkucGFydC5oYW5kLkhh",
-            "bmRTdGF0dXMSOAoJSGVhcnRCZWF0EhMucmVhY2h5LnBhcnQuUGFydElkGhYu",
-            "Z29vZ2xlLnByb3RvYnVmLkVtcHR5EjYKB1Jlc3RhcnQSEy5yZWFjaHkucGFy",
-            "dC5QYXJ0SWQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSQQoSUmVzZXREZWZh",
-            "dWx0VmFsdWVzEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5EjUKBlR1cm5PbhITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdv",
-            "b2dsZS5wcm90b2J1Zi5FbXB0eRI2CgdUdXJuT2ZmEhMucmVhY2h5LnBhcnQu",
-            "UGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EkQKDUdldEpvaW50TGlt",
-            "aXQSEy5yZWFjaHkucGFydC5QYXJ0SWQaHi5yZWFjaHkucGFydC5oYW5kLkpv",
-            "aW50c0xpbWl0cxJJCg5HZXRUZW1wZXJhdHVyZRITLnJlYWNoeS5wYXJ0LlBh",
-            "cnRJZBoiLnJlYWNoeS5wYXJ0LmhhbmQuSGFuZFRlbXBlcmF0dXJlcxJKChNH",
-            "ZXRIYW5kR29hbFBvc2l0aW9uEhMucmVhY2h5LnBhcnQuUGFydElkGh4ucmVh",
-            "Y2h5LnBhcnQuaGFuZC5IYW5kUG9zaXRpb24STAoNU2V0U3BlZWRMaW1pdBIj",
-            "LnJlYWNoeS5wYXJ0LmhhbmQuU3BlZWRMaW1pdFJlcXVlc3QaFi5nb29nbGUu",
-            "cHJvdG9idWYuRW1wdHkSUAoPU2V0SGFuZFBvc2l0aW9uEiUucmVhY2h5LnBh",
-            "cnQuaGFuZC5IYW5kUG9zaXRpb25SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5EjgKCEdldEZvcmNlEhMucmVhY2h5LnBhcnQuUGFydElkGhcucmVh",
-            "Y2h5LnBhcnQuaGFuZC5Gb3JjZWIGcHJvdG8z"));
+            "cnQuaGFuZC5QYXJhbGxlbEdyaXBwZXJMaW1pdHNIAEIICgZsaW1pdHMimQEK",
+            "F1BhcmFsbGVsR3JpcHBlclBvc2l0aW9uEjkKEm9wZW5pbmdfcGVyY2VudGFn",
+            "ZRgBIAEoCzIbLmdvb2dsZS5wcm90b2J1Zi5GbG9hdFZhbHVlSAASLwoIcG9z",
+            "aXRpb24YAiABKAsyGy5nb29nbGUucHJvdG9idWYuRmxvYXRWYWx1ZUgAQhIK",
+            "EGdyaXBwZXJfcG9zaXRpb24iYQoMSGFuZFBvc2l0aW9uEkUKEHBhcmFsbGVs",
+            "X2dyaXBwZXIYASABKAsyKS5yZWFjaHkucGFydC5oYW5kLlBhcmFsbGVsR3Jp",
+            "cHBlclBvc2l0aW9uSABCCgoIcG9zaXRpb24iaAoTSGFuZFBvc2l0aW9uUmVx",
+            "dWVzdBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0LlBhcnRJZBIwCghwb3Np",
+            "dGlvbhgCIAEoCzIeLnJlYWNoeS5wYXJ0LmhhbmQuSGFuZFBvc2l0aW9uIi0K",
+            "DFRlbXBlcmF0dXJlcxINCgVtb3RvchgBIAEoAhIOCgZkcml2ZXIYAiABKAIi",
+            "UQoaUGFyYWxsZWxHcmlwcGVyVGVtcGVyYXR1cmUSMwoLdGVtcGVyYXR1cmUY",
+            "ASABKAsyHi5yZWFjaHkucGFydC5oYW5kLlRlbXBlcmF0dXJlcyJeChBIYW5k",
+            "VGVtcGVyYXR1cmVzEjoKEHBhcmFsbGVsX2dyaXBwZXIYASABKAsyHi5yZWFj",
+            "aHkucGFydC5oYW5kLlRlbXBlcmF0dXJlc0gAQg4KDHRlbXBlcmF0dXJlcyJh",
+            "ChFTcGVlZExpbWl0UmVxdWVzdBIfCgJpZBgBIAEoCzITLnJlYWNoeS5wYXJ0",
+            "LlBhcnRJZBIrCgVsaW1pdBgCIAEoDjIcLnJlYWNoeS5wYXJ0LmhhbmQuU3Bl",
+            "ZWRMaW1pdCo6CgpTcGVlZExpbWl0EgwKCE5PX0xJTUlUEAASCAoERkFTVBAB",
+            "EgoKBk5PUk1BTBACEggKBFNMT1cQAzKaCAoLSGFuZFNlcnZpY2USQwoLR2V0",
+            "QWxsSGFuZHMSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHC5yZWFjaHkucGFy",
+            "dC5oYW5kLkxpc3RPZkhhbmQSPAoIR2V0U3RhdGUSEy5yZWFjaHkucGFydC5Q",
+            "YXJ0SWQaGy5yZWFjaHkucGFydC5oYW5kLkhhbmRTdGF0ZRI3CghPcGVuSGFu",
+            "ZBITLnJlYWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eRI4CglDbG9zZUhhbmQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkSOgoFQXVkaXQSEy5yZWFjaHkucGFydC5QYXJ0SWQa",
+            "HC5yZWFjaHkucGFydC5oYW5kLkhhbmRTdGF0dXMSOAoJSGVhcnRCZWF0EhMu",
+            "cmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjYK",
+            "B1Jlc3RhcnQSEy5yZWFjaHkucGFydC5QYXJ0SWQaFi5nb29nbGUucHJvdG9i",
+            "dWYuRW1wdHkSQQoSUmVzZXREZWZhdWx0VmFsdWVzEhMucmVhY2h5LnBhcnQu",
+            "UGFydElkGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjUKBlR1cm5PbhITLnJl",
+            "YWNoeS5wYXJ0LlBhcnRJZBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRI2CgdU",
+            "dXJuT2ZmEhMucmVhY2h5LnBhcnQuUGFydElkGhYuZ29vZ2xlLnByb3RvYnVm",
+            "LkVtcHR5EkQKDUdldEpvaW50TGltaXQSEy5yZWFjaHkucGFydC5QYXJ0SWQa",
+            "Hi5yZWFjaHkucGFydC5oYW5kLkpvaW50c0xpbWl0cxJJCg5HZXRUZW1wZXJh",
+            "dHVyZRITLnJlYWNoeS5wYXJ0LlBhcnRJZBoiLnJlYWNoeS5wYXJ0LmhhbmQu",
+            "SGFuZFRlbXBlcmF0dXJlcxJKChNHZXRIYW5kR29hbFBvc2l0aW9uEhMucmVh",
+            "Y2h5LnBhcnQuUGFydElkGh4ucmVhY2h5LnBhcnQuaGFuZC5IYW5kUG9zaXRp",
+            "b24STAoNU2V0U3BlZWRMaW1pdBIjLnJlYWNoeS5wYXJ0LmhhbmQuU3BlZWRM",
+            "aW1pdFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkSUAoPU2V0SGFu",
+            "ZFBvc2l0aW9uEiUucmVhY2h5LnBhcnQuaGFuZC5IYW5kUG9zaXRpb25SZXF1",
+            "ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5EjgKCEdldEZvcmNlEhMucmVh",
+            "Y2h5LnBhcnQuUGFydElkGhcucmVhY2h5LnBhcnQuaGFuZC5Gb3JjZWIGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Error.ErrorReflection.Descriptor, global::Reachy.Part.PartReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Reachy.Part.Hand.SpeedLimit), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -94,7 +97,7 @@ namespace Reachy.Part.Hand {
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.JointLimits), global::Reachy.Part.Hand.JointLimits.Parser, new[]{ "Min", "Max" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.ParallelGripperLimits), global::Reachy.Part.Hand.ParallelGripperLimits.Parser, new[]{ "Limits" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.JointsLimits), global::Reachy.Part.Hand.JointsLimits.Parser, new[]{ "ParallelGripper" }, new[]{ "Limits" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.ParallelGripperPosition), global::Reachy.Part.Hand.ParallelGripperPosition.Parser, new[]{ "Position" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.ParallelGripperPosition), global::Reachy.Part.Hand.ParallelGripperPosition.Parser, new[]{ "OpeningPercentage", "Position" }, new[]{ "GripperPosition" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandPosition), global::Reachy.Part.Hand.HandPosition.Parser, new[]{ "ParallelGripper" }, new[]{ "Position" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.HandPositionRequest), global::Reachy.Part.Hand.HandPositionRequest.Parser, new[]{ "Id", "Position" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Reachy.Part.Hand.Temperatures), global::Reachy.Part.Hand.Temperatures.Parser, new[]{ "Motor", "Driver" }, null, null, null, null),
@@ -2075,7 +2078,15 @@ namespace Reachy.Part.Hand {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ParallelGripperPosition(ParallelGripperPosition other) : this() {
-      position_ = other.position_;
+      switch (other.GripperPositionCase) {
+        case GripperPositionOneofCase.OpeningPercentage:
+          OpeningPercentage = other.OpeningPercentage;
+          break;
+        case GripperPositionOneofCase.Position:
+          Position = other.Position;
+          break;
+      }
+
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2085,16 +2096,51 @@ namespace Reachy.Part.Hand {
       return new ParallelGripperPosition(this);
     }
 
-    /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 1;
-    private float position_;
+    /// <summary>Field number for the "opening_percentage" field.</summary>
+    public const int OpeningPercentageFieldNumber = 1;
+    private static readonly pb::FieldCodec<float?> _oneof_openingPercentage_codec = pb::FieldCodec.ForStructWrapper<float>(10);
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public float Position {
-      get { return position_; }
+    public float? OpeningPercentage {
+      get { return gripperPositionCase_ == GripperPositionOneofCase.OpeningPercentage ? (float?) gripperPosition_ : (float?) null; }
       set {
-        position_ = value;
+        gripperPosition_ = value;
+        gripperPositionCase_ = value == null ? GripperPositionOneofCase.None : GripperPositionOneofCase.OpeningPercentage;
       }
+    }
+
+    /// <summary>Field number for the "position" field.</summary>
+    public const int PositionFieldNumber = 2;
+    private static readonly pb::FieldCodec<float?> _oneof_position_codec = pb::FieldCodec.ForStructWrapper<float>(18);
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float? Position {
+      get { return gripperPositionCase_ == GripperPositionOneofCase.Position ? (float?) gripperPosition_ : (float?) null; }
+      set {
+        gripperPosition_ = value;
+        gripperPositionCase_ = value == null ? GripperPositionOneofCase.None : GripperPositionOneofCase.Position;
+      }
+    }
+
+    private object gripperPosition_;
+    /// <summary>Enum of possible cases for the "gripper_position" oneof.</summary>
+    public enum GripperPositionOneofCase {
+      None = 0,
+      OpeningPercentage = 1,
+      Position = 2,
+    }
+    private GripperPositionOneofCase gripperPositionCase_ = GripperPositionOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GripperPositionOneofCase GripperPositionCase {
+      get { return gripperPositionCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearGripperPosition() {
+      gripperPositionCase_ = GripperPositionOneofCase.None;
+      gripperPosition_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2112,7 +2158,9 @@ namespace Reachy.Part.Hand {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Position, other.Position)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(OpeningPercentage, other.OpeningPercentage)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.Equals(Position, other.Position)) return false;
+      if (GripperPositionCase != other.GripperPositionCase) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2120,7 +2168,9 @@ namespace Reachy.Part.Hand {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Position != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Position);
+      if (gripperPositionCase_ == GripperPositionOneofCase.OpeningPercentage) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(OpeningPercentage);
+      if (gripperPositionCase_ == GripperPositionOneofCase.Position) hash ^= pbc::ProtobufEqualityComparers.BitwiseNullableSingleEqualityComparer.GetHashCode(Position);
+      hash ^= (int) gripperPositionCase_;
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2139,9 +2189,11 @@ namespace Reachy.Part.Hand {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Position != 0F) {
-        output.WriteRawTag(13);
-        output.WriteFloat(Position);
+      if (gripperPositionCase_ == GripperPositionOneofCase.OpeningPercentage) {
+        _oneof_openingPercentage_codec.WriteTagAndValue(output, (float?) gripperPosition_);
+      }
+      if (gripperPositionCase_ == GripperPositionOneofCase.Position) {
+        _oneof_position_codec.WriteTagAndValue(output, (float?) gripperPosition_);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2153,9 +2205,11 @@ namespace Reachy.Part.Hand {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Position != 0F) {
-        output.WriteRawTag(13);
-        output.WriteFloat(Position);
+      if (gripperPositionCase_ == GripperPositionOneofCase.OpeningPercentage) {
+        _oneof_openingPercentage_codec.WriteTagAndValue(ref output, (float?) gripperPosition_);
+      }
+      if (gripperPositionCase_ == GripperPositionOneofCase.Position) {
+        _oneof_position_codec.WriteTagAndValue(ref output, (float?) gripperPosition_);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2167,8 +2221,11 @@ namespace Reachy.Part.Hand {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Position != 0F) {
-        size += 1 + 4;
+      if (gripperPositionCase_ == GripperPositionOneofCase.OpeningPercentage) {
+        size += _oneof_openingPercentage_codec.CalculateSizeWithTag(OpeningPercentage);
+      }
+      if (gripperPositionCase_ == GripperPositionOneofCase.Position) {
+        size += _oneof_position_codec.CalculateSizeWithTag(Position);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2182,9 +2239,15 @@ namespace Reachy.Part.Hand {
       if (other == null) {
         return;
       }
-      if (other.Position != 0F) {
-        Position = other.Position;
+      switch (other.GripperPositionCase) {
+        case GripperPositionOneofCase.OpeningPercentage:
+          OpeningPercentage = other.OpeningPercentage;
+          break;
+        case GripperPositionOneofCase.Position:
+          Position = other.Position;
+          break;
       }
+
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -2200,8 +2263,12 @@ namespace Reachy.Part.Hand {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 13: {
-            Position = input.ReadFloat();
+          case 10: {
+            OpeningPercentage = _oneof_openingPercentage_codec.Read(input);
+            break;
+          }
+          case 18: {
+            Position = _oneof_position_codec.Read(input);
             break;
           }
         }
@@ -2219,8 +2286,12 @@ namespace Reachy.Part.Hand {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 13: {
-            Position = input.ReadFloat();
+          case 10: {
+            OpeningPercentage = _oneof_openingPercentage_codec.Read(ref input);
+            break;
+          }
+          case 18: {
+            Position = _oneof_position_codec.Read(ref input);
             break;
           }
         }
