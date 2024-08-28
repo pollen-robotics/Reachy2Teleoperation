@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Mobile.Base.Lidar;
+using Reachy.Part.Mobile.Base.Lidar;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 
