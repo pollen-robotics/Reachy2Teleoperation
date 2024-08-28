@@ -7,7 +7,7 @@ using Reachy.Part;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
-using Mobile.Base.Utility;
+using Reachy.Part.Mobile.Base.Utility;
 using Component;
 
 namespace TeleopReachy
@@ -87,7 +87,7 @@ namespace TeleopReachy
             foreach (var field in descriptor.Fields.InDeclarationOrder())
             {
                 var value = field.Accessor.GetValue(reachy) as IMessage;
-                if (value != null && (value is Arm || value is Head || value is Hand))
+                if (value != null)
                 {
                     var idField = value.Descriptor.FindFieldByName("part_id");
                     if (idField != null)
@@ -95,11 +95,6 @@ namespace TeleopReachy
                         PartId id = (PartId)idField.Accessor.GetValue(value);
                         partsId.Add(field.Name, id);
                     }
-                }
-                if (value != null && value is MobileBase)
-                {
-                    PartId id = new PartId { Name = "mobile_base" };
-                    partsId.Add(field.Name, id);
                 }
             }
 

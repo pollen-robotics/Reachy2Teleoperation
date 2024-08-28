@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Mobile.Base.Mobility;
+using Reachy.Part.Mobile.Base.Mobility;
 
 
 namespace TeleopReachy
@@ -27,7 +27,7 @@ namespace TeleopReachy
         {
             if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
             {
-                dataController.TurnMobileBaseOn();
+                dataController.TurnMobileBaseOn(robotConfig.partsId["mobile_base"]);
             }
         }
 
@@ -43,6 +43,7 @@ namespace TeleopReachy
         {
             TargetDirectionCommand command = new TargetDirectionCommand
             {
+                Id = robotConfig.partsId["mobile_base"],
                 Direction = new DirectionVector
                 {
                     X = direction[0],
@@ -61,7 +62,7 @@ namespace TeleopReachy
                 {
                     Vector2 direction = new Vector2(0, 0);
                     SendMobileBaseDirection(direction);
-                    dataController.TurnMobileBaseOff();
+                    dataController.TurnMobileBaseOff(robotConfig.partsId["mobile_base"]);
                 }
             }
             catch (Exception exc)
