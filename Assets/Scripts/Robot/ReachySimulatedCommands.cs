@@ -50,9 +50,9 @@ namespace TeleopReachy
             //     SetHeadToModelPose();
             SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
 
-            // float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
-            // float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
-            // SendGrippersCommands(pos_left_gripper, pos_right_gripper);
+            float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
+            float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
+            SendGrippersCommands(pos_left_gripper, pos_right_gripper);
         }
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
@@ -64,7 +64,8 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            // reachyFakeServer.SendJointsCommands(gripperCommand);
+            if(leftGripperCommand.Id != null) reachyFakeServer.SetHandPosition(leftGripperCommand);
+            if(rightGripperCommand.Id != null) reachyFakeServer.SetHandPosition(rightGripperCommand);
         }
 
         //     void SetHeadToModelPose()
