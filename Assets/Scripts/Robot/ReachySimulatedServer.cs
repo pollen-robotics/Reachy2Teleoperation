@@ -23,8 +23,8 @@ namespace Reachy2Controller
 
         #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-        // #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-        //     [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_ANDROID
@@ -34,8 +34,8 @@ namespace Reachy2Controller
 
         #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-        // #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-        //     [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_ANDROID
