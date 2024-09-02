@@ -188,12 +188,5 @@ namespace TeleopReachy
 
         //         reachy.HandleCommand(rightArmTarget);
         //     }
-
-        //     protected override void SendJointsCommands(JointsCommand jointsCommand)
-        //     {
-        //         reachyFakeServer.SendJointsCommands(jointsCommand);
-        //     }
-
     }
 }
-
