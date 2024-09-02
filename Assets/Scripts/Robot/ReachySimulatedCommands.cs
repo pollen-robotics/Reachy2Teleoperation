@@ -2,6 +2,7 @@ using UnityEngine;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
+using Reachy.Part;
 using Reachy2Controller;
 
 namespace TeleopReachy
@@ -37,7 +38,6 @@ namespace TeleopReachy
         {
             ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
             ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
-
             NeckJointGoal headTarget = headTracker.GetHeadTarget();
 
             // if (robotConfig.IsVirtual() || !robotStatus.IsLeftArmOn())
@@ -57,13 +57,20 @@ namespace TeleopReachy
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            if(leftArmRequest.Id != null) reachyFakeServer.SendArmCommand(leftArmRequest);
-            if(rightArmRequest.Id != null) reachyFakeServer.SendArmCommand(rightArmRequest);
-            if(neckRequest.Id != null) reachyFakeServer.SendNeckCommand(neckRequest);
+            rightArmRequest.Id = new PartId { Name = "r_arm" };
+            leftArmRequest.Id = new PartId { Name = "l_arm" };
+            neckRequest.Id = new PartId { Name = "head" };
+
+            reachyFakeServer.SendArmCommand(leftArmRequest);
+            reachyFakeServer.SendArmCommand(rightArmRequest);
+            reachyFakeServer.SendNeckCommand(neckRequest);
         }
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
+            leftGripperCommand.Id = new PartId { Name = "l_hand" };
+            rightGripperCommand.Id = new PartId { Name = "r_hand" };
+
             if(leftGripperCommand.Id != null) reachyFakeServer.SetHandPosition(leftGripperCommand);
             if(rightGripperCommand.Id != null) reachyFakeServer.SetHandPosition(rightGripperCommand);
         }
