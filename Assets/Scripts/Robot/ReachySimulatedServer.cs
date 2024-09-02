@@ -113,12 +113,6 @@ namespace Reachy2Controller
             float open_gripper = 135;
             float closed_gripper = -3;
 
-            // if(gripperPosition.Id.Name == "r_hand")
-            // {
-            //     open_gripper = -open_gripper;
-            //     closed_gripper = -closed_gripper;
-            // }
-
             float targetPosition = (1 - opening) * closed_gripper + opening * open_gripper;
             present_position[gripperPosition.Id.Name] = targetPosition;
         }
