@@ -30,26 +30,17 @@ namespace TeleopReachy
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
-        //private WebRTCData webRTCDataController;
         private GStreamerPluginCustom webRTCController;
-
-        //private HandCommand lastRightHandCommand;
-        //private HandCommand lastLeftHandCommand;
-        //private ArmCommand lastRightArmCommand;
-        //private ArmCommand lastLeftArmCommand;
-        //private MobileBaseCommand lastMobileBaseCommand;
 
         private AnyCommands commands = new AnyCommands { };
 
         void Start()
         {
-            //webRTCDataController = WebRTCManager.Instance.webRTCDataController;
             webRTCController = WebRTCManager.Instance.webRTCController;
         }
 
         void Update()
         {
-            //if (commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
             if (commands.Commands.Count != 0)
             {
                 webRTCController.SendCommandMessage(commands);
