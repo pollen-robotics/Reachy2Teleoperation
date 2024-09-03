@@ -95,6 +95,18 @@ namespace TeleopReachy
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
                         }
+                        var test = partState.Descriptor.FindFieldByName("activated");
+                        if (test != null)
+                        {
+                            bool pose = (bool)test.Accessor.GetValue(partState);
+                            Debug.LogError(pose); 
+                        }
+                        // var test = partState.Descriptor.FindFieldByName("reachability");
+                        // if (test != null)
+                        // {
+                        //     ReachabilityAnswer pose = (ReachabilityAnswer)test.Accessor.GetValue(partState);
+                        //     Debug.LogError(pose); 
+                        // }
                     }
                     if (partState is HeadState)
                     {
