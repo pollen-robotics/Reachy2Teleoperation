@@ -7560,6 +7560,8 @@ MonoBehaviour:
   event_OnEmotionOver:
     m_PersistentCalls:
       m_Calls: []
+  reachyFakeServer: {fileID: 1435512746}
+  reachyModel: {fileID: 1333218320}
 --- !u!1 &934000039
 GameObject:
   m_ObjectHideFlags: 0
