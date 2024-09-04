@@ -36,8 +36,21 @@ namespace TeleopReachy
 
         private RobotStatus robotStatus;
 
+        private ControllersManager controllers;
+
         void Start()
         {
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
+            {
+                targetOffset = new Vector3(0, 0f, 0.5f);
+            }
+            else
+            {
+                targetOffset = new Vector3(0, 0f, 0.7f);
+            }
+            maxDistanceAllowed = 0;
+
             reachabilityManager = RobotDataManager.Instance.RobotReachabilityManager;
             reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleLeftArmReachabilityError);
             reachabilityManager.event_OnRArmPositionUnreachable.AddListener(HandleRightArmReachabilityError);
