@@ -1,325 +1,148 @@
 using UnityEngine;
+using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using Reachy.Part.Arm;
+using Reachy.Part.Head;
+using Reachy.Part.Hand;
+using Component.Orbita2D;
+using Reachy.Kinematics;
 
-public class ReachySimulatedServer : MonoBehaviour
+namespace Reachy2Controller
 {
-    //     public static ReachyController.ReachyController reachy;
+    public class ReachySimulatedServer : MonoBehaviour
+    {
+        public static Reachy2Controller reachy;
 
-    // #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-    //     [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-    //     [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-    //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_ANDROID
-    //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
-    // #endif
-    //     private static extern void setup();
+        private Dictionary<string, float> present_position;
 
-    // #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-    //     [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-    //     [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-    //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
-    // #elif UNITY_ANDROID
-    //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
-    // #endif
-    //     private static extern void inverse(ArmSide side, double[] M, double[] q);
+        enum ArmSide
+        {
+            Left,
+            Right,
+        }
 
-    //     void Start()
-    //     {
-    //         reachy = GameObject.Find("Reachy").GetComponent<ReachyController>();
-    //         setup(); // Setup Arm_kinematics
-    //     }
+        #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+            [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
+        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+        // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+        //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
+        // #elif UNITY_ANDROID
+        //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
+        #endif
+            private static extern void setup();
 
+        #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+            [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
+        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+        // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+        //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
+        // #elif UNITY_ANDROID
+        //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
+        #endif
+            private static extern void inverse(ArmSide side, double[] M, double[] q);
 
-    //     public JointsCommandAck SendJointsCommands(JointsCommand jointsCommand)
-    //     {
-    //         try
-    //         {
-    //             Dictionary<JointId, float> commands = new Dictionary<JointId, float>();
-    //             Dictionary<JointId, bool> compliancy = new Dictionary<JointId, bool>();
-    //             for (int i = 0; i < jointsCommand.Commands.Count; i++)
-    //             {
-    //                 if (jointsCommand.Commands[i].GoalPosition != null)
-    //                 {
-    //                     float command = Mathf.Rad2Deg * (float)jointsCommand.Commands[i].GoalPosition;
-    //                     commands.Add(jointsCommand.Commands[i].Id, command);
-    //                 }
+        void Start()
+        {
+            reachy = GameObject.Find("Reachy2").GetComponent<Reachy2Controller>();
+            setup(); // Setup Arm_kinematics
 
-    //                 if (jointsCommand.Commands[i].Compliant != null)
-    //                 {
-    //                     bool isCompliant = (bool)jointsCommand.Commands[i].Compliant;
-    //                     compliancy.Add(jointsCommand.Commands[i].Id, isCompliant);
-    //                 }
-    //             }
-    //             reachy.HandleCommand(commands);
-    //             reachy.HandleCompliancy(compliancy);
-    //             return new JointsCommandAck { Success = true };
-    //         }
-    //         catch
-    //         {
-    //             return new JointsCommandAck { Success = false };
-    //         }
-    //     }
+            present_position = new Dictionary<string, float>();
+        }
 
-    //     public JointsState GetJointsState(JointsStateRequest jointRequest)
-    //     {
-    //         Dictionary<JointId, JointField> request = new Dictionary<JointId, JointField>();
+        void Update()
+        {
+            reachy.HandleCommand(present_position);
+        }
 
-    //         for (int i = 0; i < jointRequest.Ids.Count; i++)
-    //         {
-    //             request.Add(jointRequest.Ids[i], JointField.PresentPosition);
-    //         }
-    //         var motors = reachy.GetCurrentMotorsState(request);
+        public void SendArmCommand(ArmCartesianGoal armGoal)
+        {
+            ArmIKRequest ikRequest = new ArmIKRequest {
+                Id = armGoal.Id,
+                Target = new ArmEndEffector {
+                    Pose = armGoal.GoalPose,
+                }
+            };
+            List<double> armSolution = ComputeArmIK(ikRequest);
+            
+            if(armGoal.Id.Name == "l_arm")
+            {
+                present_position["l_arm_shoulder_axis_1"] = Mathf.Rad2Deg * (float)armSolution[0];
+                present_position["l_arm_shoulder_axis_2"] = Mathf.Rad2Deg * (float)armSolution[1];
+                present_position["l_arm_elbow_axis_1"] = Mathf.Rad2Deg * (float)armSolution[2];
+                present_position["l_arm_elbow_axis_2"] = Mathf.Rad2Deg * (float)armSolution[3];
+                present_position["l_arm_wrist_roll"] = Mathf.Rad2Deg * (float)armSolution[4];
+                present_position["l_arm_wrist_pitch"] = Mathf.Rad2Deg * (float)armSolution[5];
+                present_position["l_arm_wrist_yaw"] = Mathf.Rad2Deg * (float)armSolution[6];
+            }
+            else
+            {
+                present_position["r_arm_shoulder_axis_1"] = Mathf.Rad2Deg * (float)armSolution[0];
+                present_position["r_arm_shoulder_axis_2"] = Mathf.Rad2Deg * (float)armSolution[1];
+                present_position["r_arm_elbow_axis_1"] = Mathf.Rad2Deg * (float)armSolution[2];
+                present_position["r_arm_elbow_axis_2"] = Mathf.Rad2Deg * (float)armSolution[3];
+                present_position["r_arm_wrist_roll"] = Mathf.Rad2Deg * (float)armSolution[4];
+                present_position["r_arm_wrist_pitch"] = Mathf.Rad2Deg * (float)armSolution[5];
+                present_position["r_arm_wrist_yaw"] = Mathf.Rad2Deg * (float)armSolution[6];
+            }
+        }
 
-    //         List<JointState> listJointStates = new List<JointState>();
-    //         List<JointId> listJointIds = new List<JointId>();
-    //         foreach (var item in motors)
-    //         {
-    //             var jointState = new JointState();
-    //             jointState.Name = item.name;
-    //             jointState.Uid = (uint?)item.uid;
-    //             if (jointRequest.RequestedFields.Contains(JointField.PresentPosition))
-    //             {
-    //                 jointState.PresentPosition = item.present_position;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.PresentSpeed))
-    //             {
-    //                 jointState.PresentSpeed = 0;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.PresentLoad))
-    //             {
-    //                 jointState.PresentLoad = 0;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.Temperature))
-    //             {
-    //                 jointState.Temperature = 0;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.Compliant))
-    //             {
-    //                 jointState.Compliant = item.isCompliant;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.GoalPosition))
-    //             {
-    //                 jointState.GoalPosition = item.goal_position;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.SpeedLimit))
-    //             {
-    //                 jointState.SpeedLimit = 0;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.TorqueLimit))
-    //             {
-    //                 jointState.TorqueLimit = 100;
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.Pid))
-    //             {
-    //                 jointState.Pid = new PIDValue { Pid = new PIDGains { P = 0, I = 0, D = 0 } };
-    //             }
-    //             if (jointRequest.RequestedFields.Contains(JointField.All))
-    //             {
-    //                 jointState.PresentPosition = item.present_position;
-    //                 jointState.PresentSpeed = 0;
-    //                 jointState.PresentLoad = 0;
-    //                 jointState.Temperature = 0;
-    //                 jointState.Compliant = false;
-    //                 jointState.GoalPosition = item.goal_position;
-    //                 jointState.SpeedLimit = 0;
-    //                 jointState.TorqueLimit = 100;
-    //                 jointState.Pid = new PIDValue { Pid = new PIDGains { P = 0, I = 0, D = 0 } };
-    //             }
+        public void SendNeckCommand(NeckJointGoal neckGoal)
+        {
+            UnityEngine.Quaternion headRotation = new UnityEngine.Quaternion(
+                (float)neckGoal.JointsGoal.Rotation.Q.Y,
+                -(float)neckGoal.JointsGoal.Rotation.Q.Z,
+                -(float)neckGoal.JointsGoal.Rotation.Q.X,
+                (float)neckGoal.JointsGoal.Rotation.Q.W);
 
-    //             listJointStates.Add(jointState);
-    //             listJointIds.Add(new JointId { Name = item.name });
-    //         };
+            Vector3 neck_commands = headRotation.eulerAngles;
 
-    //         JointsState state = new JointsState
-    //         {
-    //             Ids = { listJointIds },
-    //             States = { listJointStates },
-    //         };
+            if(neck_commands[2] > 180) neck_commands[2] = neck_commands[2]-360;
+            if(neck_commands[0] > 180) neck_commands[0] = neck_commands[0]-360;
+            if(neck_commands[1] > 180) neck_commands[1] = neck_commands[1]-360;
 
-    //         return state;
-    //     }
+            present_position["head_neck_roll"] = -neck_commands[2];
+            present_position["head_neck_pitch"] = neck_commands[0];
+            present_position["head_neck_yaw"] = -neck_commands[1];
+        }
 
-    //     public JointsId GetAllJointsId(Google.Protobuf.WellKnownTypes.Empty empty)
-    //     {
-    //         List<uint> ids = new List<uint>();
-    //         List<string> names = new List<string>();
+        public void SetHandPosition(HandPositionRequest gripperPosition)
+        {
+            float opening = (float)gripperPosition.Position.ParallelGripper.OpeningPercentage;
+            float open_gripper = 135;
+            float closed_gripper = -3;
 
-    //         for (int i = 0; i < reachy.motors.Length; i++)
-    //         {
-    //             ids.Add((uint)i);
-    //             names.Add(reachy.motors[i].name);
-    //         }
+            float targetPosition = (1 - opening) * closed_gripper + opening * open_gripper;
+            present_position[gripperPosition.Id.Name] = targetPosition;
+        }
 
-    //         JointsId allIds = new JointsId
-    //         {
-    //             Names = { names },
-    //             Uids = { ids },
-    //         };
+        private List<double> ComputeArmIK(ArmIKRequest ikRequest)
+        {
+            double[] M = new double[16];
+            if (ikRequest.Target.Pose.Data.Count != 16)
+            {
+                return new List<double> { 0, 0, 0, 0, 0, 0, 0 };
+            }
 
-    //         return allIds;
-    //     }
+            for (int i = 0; i < 16; i++)
+            {
+                M[i] = ikRequest.Target.Pose.Data[i];
+            }
+            double[] q = new double[7];
 
-    //     public FullBodyCartesianCommandAck SendFullBodyCartesianCommands(FullBodyCartesianCommand fullBodyCartesianCommand)
-    //     {
-    //         try
-    //         {
-    //             List<JointCommand> jointCommandList = new List<JointCommand>();
+            ArmSide side;
+            if(ikRequest.Id.Name == "l_arm")
+            {
+                side = ArmSide.Left;
+            } 
+            else { side = ArmSide.Right; }
 
-    //             if (fullBodyCartesianCommand.LeftArm != null)
-    //             {
-    //                 ArmIKSolution leftArmSolution = ComputeArmIK(fullBodyCartesianCommand.LeftArm);
+            inverse(side, M, q);
 
-    //                 int iter = 0;
-    //                 foreach (var l_id in leftArmSolution.ArmPosition.Positions.Ids)
-    //                 {
-    //                     jointCommandList.Add(new JointCommand
-    //                     {
-    //                         Id = l_id,
-    //                         GoalPosition = (float?)leftArmSolution.ArmPosition.Positions.Positions[iter],
-    //                     });
-    //                     iter += 1;
-    //                 }
-    //             }
-    //             if (fullBodyCartesianCommand.RightArm != null)
-    //             {
-    //                 ArmIKSolution rightArmSolution = ComputeArmIK(fullBodyCartesianCommand.RightArm);
+            List<double> listq = new List<double>(q);
 
-    //                 int iter = 0;
-    //                 foreach (var l_id in rightArmSolution.ArmPosition.Positions.Ids)
-    //                 {
-    //                     jointCommandList.Add(new JointCommand
-    //                     {
-    //                         Id = l_id,
-    //                         GoalPosition = (float?)rightArmSolution.ArmPosition.Positions.Positions[iter],
-    //                     });
-    //                     iter += 1;
-    //                 }
-    //             }
-
-    //             if (fullBodyCartesianCommand.Head != null)
-    //             {
-    //                 /*UnityEngine.Quaternion headRotation = new UnityEngine.Quaternion((float)fullBodyCartesianCommand.Head.Q.X,
-    //                 (float)fullBodyCartesianCommand.Head.Q.Y,
-    //                 -(float)fullBodyCartesianCommand.Head.Q.Z,
-    //                 (float)fullBodyCartesianCommand.Head.Q.W);*/
-
-    //                 UnityEngine.Quaternion headRotation = new UnityEngine.Quaternion((float)fullBodyCartesianCommand.Head.Q.Y,
-    //                 -(float)fullBodyCartesianCommand.Head.Q.Z,
-    //                 -(float)fullBodyCartesianCommand.Head.Q.X,
-    //                 (float)fullBodyCartesianCommand.Head.Q.W);
-
-
-    //                 Vector3 neck_commands = Mathf.Deg2Rad * headRotation.eulerAngles;
-    //                 jointCommandList.Add(new JointCommand
-    //                 {
-    //                     Id = new JointId { Name = "neck_roll" },
-    //                     GoalPosition = (float?)neck_commands[2],
-    //                 });
-    //                 jointCommandList.Add(new JointCommand
-    //                 {
-    //                     Id = new JointId { Name = "neck_pitch" },
-    //                     GoalPosition = (float?)neck_commands[0],
-    //                 });
-    //                 jointCommandList.Add(new JointCommand
-    //                 {
-    //                     Id = new JointId { Name = "neck_yaw" },
-    //                     GoalPosition = -(float?)neck_commands[1],
-    //                 });
-    //             }
-
-    //             JointsCommand jointsCommand = new JointsCommand { Commands = { jointCommandList } };
-    //             SendJointsCommands(jointsCommand);
-
-    //             return new FullBodyCartesianCommandAck
-    //             {
-    //                 LeftArmCommandSuccess = true,
-    //                 RightArmCommandSuccess = true,
-    //                 HeadCommandSuccess = true
-    //             };
-    //         }
-    //         catch
-    //         {
-    //             return new FullBodyCartesianCommandAck
-    //             {
-    //                 LeftArmCommandSuccess = false,
-    //                 RightArmCommandSuccess = false,
-    //                 HeadCommandSuccess = false
-    //             };
-    //         }
-    //     }
-
-    //     private ArmIKSolution ComputeArmIK(ArmIKRequest ikRequest)
-    //     {
-    //         ArmIKSolution sol;
-
-    //         double[] M = new double[16];
-    //         if (ikRequest.Target.Pose.Data.Count != 16)
-    //         {
-    //             sol = new ArmIKSolution
-    //             {
-    //                 Success = false,
-    //                 ArmPosition = new ArmJointPosition
-    //                 {
-    //                     Side = ikRequest.Target.Side,
-    //                     Positions = new JointPosition
-    //                     {
-    //                         Ids = { new Reachy.Sdk.Joint.JointId { } },
-    //                         Positions = { },
-    //                     },
-    //                 },
-    //             };
-
-    //             return sol;
-    //         }
-
-    //         for (int i = 0; i < 16; i++)
-    //         {
-    //             M[i] = ikRequest.Target.Pose.Data[i];
-    //         }
-    //         double[] q = new double[7];
-    //         inverse(ikRequest.Target.Side, M, q);
-
-    //         List<double> listq = new List<double>(q);
-
-    //         List<JointId> listJointIds = new List<JointId>();
-    //         if (ikRequest.Target.Side == ArmSide.Right)
-    //         {
-    //             listJointIds.Add(new JointId { Name = "r_shoulder_pitch" });
-    //             listJointIds.Add(new JointId { Name = "r_shoulder_roll" });
-    //             listJointIds.Add(new JointId { Name = "r_arm_yaw" });
-    //             listJointIds.Add(new JointId { Name = "r_elbow_pitch" });
-    //             listJointIds.Add(new JointId { Name = "r_forearm_yaw" });
-    //             listJointIds.Add(new JointId { Name = "r_wrist_pitch" });
-    //             listJointIds.Add(new JointId { Name = "r_wrist_roll" });
-    //         }
-    //         else
-    //         {
-    //             listJointIds.Add(new JointId { Name = "l_shoulder_pitch" });
-    //             listJointIds.Add(new JointId { Name = "l_shoulder_roll" });
-    //             listJointIds.Add(new JointId { Name = "l_arm_yaw" });
-    //             listJointIds.Add(new JointId { Name = "l_elbow_pitch" });
-    //             listJointIds.Add(new JointId { Name = "l_forearm_yaw" });
-    //             listJointIds.Add(new JointId { Name = "l_wrist_pitch" });
-    //             listJointIds.Add(new JointId { Name = "l_wrist_roll" });
-    //         }
-
-    //         sol = new ArmIKSolution
-    //         {
-    //             Success = true,
-    //             ArmPosition = new ArmJointPosition
-    //             {
-    //                 Side = ikRequest.Target.Side,
-    //                 Positions = new JointPosition
-    //                 {
-    //                     Ids = { listJointIds },
-    //                     Positions = { listq },
-    //                 },
-    //             },
-    //         };
-
-    //         return sol;
-    //     }
+            return listq;
+        }
+    }
 }
