@@ -95,13 +95,11 @@ namespace TeleopReachy
 
         public void CheckRobotStatus(Dictionary<string, string> RobotStatus)
         {
-            //bool errorDetected = false;
             Dictionary<string, string> errors = new Dictionary<string, string>();
             foreach (KeyValuePair<string, string> status in RobotStatus)
             {
                 if (status.Value != "Ok")
                 {
-                    //errorDetected = true;
                     errors.Add(status.Key, status.Value);
                 }
             }
