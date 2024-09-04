@@ -1,54 +1,131 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using Reachy.Part.Arm;
+using UnityEngine.XR.Interaction.Toolkit.UI;
+using System;
 
 
 namespace TeleopReachy
 {
-    public class RobotReachabilityUIManager : MonoBehaviour
+    public class RobotReachabilityUIManager : LazyFollow
     {
-        private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
         private Dictionary<string, float> panelTemperature;
         private Dictionary<string, string> panelStatus;
 
-        private bool isStatePanelStatusActive;
-        private bool needUpdatePanelInfo;
+        private bool isRArmPanelStatusActive;
+        private bool needUpdateRArmPanelInfo;
+        private bool isLArmPanelStatusActive;
+        private bool needUpdateLArmPanelInfo;
 
-        void Awake()
+        private RobotReachabilityManager reachabilityManager;
+
+        string lArmMessage;
+        string rArmMessage;
+
+        [SerializeField]
+        private Transform leftArmPanel;
+        [SerializeField]
+        private Transform rightArmPanel;
+
+        private Coroutine leftArmPanelDisplay;
+        private Coroutine rightArmPanelDisplay;
+
+        private RobotStatus robotStatus;
+
+        void Start()
         {
-            if (Robot.IsCurrentRobotVirtual())
+            reachabilityManager = RobotDataManager.Instance.RobotReachabilityManager;
+            reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleLeftArmReachabilityError);
+            reachabilityManager.event_OnRArmPositionUnreachable.AddListener(HandleRightArmReachabilityError);
+
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnStopTeleoperation.AddListener(HideMessages);
+
+            HideMessages();
+        }
+
+        private void HandleLeftArmReachabilityError(ReachabilityError error)
+        {
+            SelectMessage(error, ref lArmMessage);
+            needUpdateLArmPanelInfo = true;
+        }
+
+
+        private void HandleRightArmReachabilityError(ReachabilityError error)
+        {
+            SelectMessage(error, ref rArmMessage);
+            needUpdateRArmPanelInfo = true;
+        }
+
+        void SelectMessage(ReachabilityError error, ref string message)
+        {
+            if(error == ReachabilityError.DistanceLimit)
             {
-                isStatePanelStatusActive = false;
-                needUpdatePanelInfo = true;
-                return;
+                message = "arm is too short";
             }
-
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdateReachability.AddListener(UpdateReachability);
-        }
-
-        private void UpdateReachability(Dictionary<int, List<ReachabilityAnswer>> Temperatures)
-        {
-            
-        }
-
-
-        private void CheckTemperatureInfo()
-        {
-            
+            if(error == ReachabilityError.ShoulderLimit)
+            {
+                message = "shoulder limit reached";
+            }
+            if(error == ReachabilityError.ElbowLimit)
+            {
+                message = "elbow limit reached";
+            }
+            if(error == ReachabilityError.WristLimit)
+            {
+                message = "wrist limit reached";
+            }
+            if(error == ReachabilityError.ContinuityLimit)
+            {
+                message = "pose requires a movement jump";
+            }
+            if(error == ReachabilityError.Other)
+            {
+                message = "elbow elevation limit reached";
+            }
         }
 
         void Update()
         {
-            if(needUpdatePanelInfo)
+            if (needUpdateLArmPanelInfo)
             {
-                needUpdatePanelInfo = false;
-                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
-                transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
+                if (leftArmPanelDisplay != null) StopCoroutine(leftArmPanelDisplay);
+                leftArmPanel.ActivateChildren(true);
+                leftArmPanel.GetChild(2).GetComponent<Text>().text = lArmMessage;
+                leftArmPanelDisplay = StartCoroutine(HidePanelAfterSeconds(1, leftArmPanel));
+                needUpdateLArmPanelInfo = false;
             }
+            if (needUpdateRArmPanelInfo)
+            {
+                if (rightArmPanelDisplay != null) StopCoroutine(rightArmPanelDisplay);
+                rightArmPanel.ActivateChildren(true);
+                rightArmPanel.GetChild(2).GetComponent<Text>().text = rArmMessage;
+                rightArmPanelDisplay = StartCoroutine(HidePanelAfterSeconds(1, rightArmPanel));
+                needUpdateRArmPanelInfo = false;
+            }
+        }
+
+        void HideMessages()
+        {
+            if (leftArmPanelDisplay != null) StopCoroutine(leftArmPanelDisplay);
+            if (rightArmPanelDisplay != null) StopCoroutine(rightArmPanelDisplay);
+            leftArmPanel.ActivateChildren(false);
+            rightArmPanel.ActivateChildren(false);
+        }
+
+        void HideMessages(object sender, EventArgs e)
+        {
+            HideMessages();
+        }
+
+        IEnumerator HidePanelAfterSeconds(int seconds, Transform masterPanel)
+        {
+            yield return new WaitForSeconds(seconds);
+            masterPanel.ActivateChildren(false);
         }
     }
 }
