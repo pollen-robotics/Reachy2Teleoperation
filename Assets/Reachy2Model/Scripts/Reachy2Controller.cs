@@ -87,7 +87,6 @@ namespace Reachy2Controller
 
         public void HandleCommand(Dictionary<string, float> commands)
         {
-            //bool containNeckCommand = false;
             foreach (KeyValuePair<string, float> kvp in commands)
             {
                 string motorName;
@@ -96,17 +95,14 @@ namespace Reachy2Controller
 
                 if (motorName == "head_neck_roll")
                 {
-                    //containNeckCommand = true;
                     headOrientation[0] = kvp.Value;
                 }
                 if (motorName == "head_neck_pitch")
                 {
-                    //containNeckCommand = true;
                     headOrientation[1] = kvp.Value;
                 }
                 if (motorName == "head_neck_yaw")
                 {
-                    //containNeckCommand = true;
                     headOrientation[2] = -kvp.Value;
                 }
             }
