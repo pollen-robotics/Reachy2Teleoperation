@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,6 +27,7 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<Dictionary<int, List<ReachabilityAnswer>>> event_OnStateUpdateReachability;
         public UnityEvent<Dictionary<string, string>> event_OnAuditUpdate;
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
@@ -71,6 +73,7 @@ namespace TeleopReachy
 
             Dictionary<string, float> present_position = new Dictionary<string, float>();
             Dictionary<string, float> temperatures = new Dictionary<string, float>();
+            Dictionary<int, List<ReachabilityAnswer>> reachability = new Dictionary<int, List<ReachabilityAnswer>>();
             float batteryLevel;
             LidarObstacleDetectionEnum obstacleDetection;
 
@@ -94,19 +97,32 @@ namespace TeleopReachy
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
+                            
                         }
-                        var test = partState.Descriptor.FindFieldByName("activated");
-                        if (test != null)
+                        PartId partId = new PartId();
+                        var armId = partState.Descriptor.FindFieldByName("id");
+                        if (armId != null)
                         {
-                            bool pose = (bool)test.Accessor.GetValue(partState);
-                            Debug.LogError(pose); 
+                            partId = (PartId)armId.Accessor.GetValue(partState);
                         }
-                        // var test = partState.Descriptor.FindFieldByName("reachability");
-                        // if (test != null)
-                        // {
-                        //     ReachabilityAnswer pose = (ReachabilityAnswer)test.Accessor.GetValue(partState);
-                        //     Debug.LogError(pose); 
-                        // }
+                        var reachabilityAnswer = partState.Descriptor.FindFieldByName("reachability");
+                        if (reachabilityAnswer != null)
+                        {
+                            var reachabilityObject = reachabilityAnswer.Accessor.GetValue(partState);
+                            IEnumerable reachabilityValues = reachabilityObject as IEnumerable;
+                            List<ReachabilityAnswer> answers = new List<ReachabilityAnswer>();
+                            if (reachabilityValues != null)
+                            {
+                                foreach(var reachabilityValue in reachabilityValues)
+                                {
+                                    ReachabilityAnswer reachable = (ReachabilityAnswer)reachabilityValue;
+                                    answers.Add(reachable);
+                                    // Debug.LogError(reachable);
+                                }
+                            }
+                            // Debug.LogError(partId.Name);
+                            reachability.Add((int)partId.Id, answers);
+                        }
                     }
                     if (partState is HeadState)
                     {
@@ -154,6 +170,7 @@ namespace TeleopReachy
 
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
+            event_OnStateUpdateReachability.Invoke(reachability);
         }
 
         public void StreamReachyStatus(ReachyStatus reachyStatus)
