@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2453,6 +2452,12 @@ MonoBehaviour:
   event_OnStateUpdatePresentPositions:
     m_PersistentCalls:
       m_Calls: []
+  event_OnStateUpdateReachability:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnAuditUpdate:
+    m_PersistentCalls:
+      m_Calls: []
   event_OnBatteryUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -2959,6 +2964,7 @@ GameObject:
   - component: {fileID: 8646978543038228294}
   - component: {fileID: 3938323349784142751}
   - component: {fileID: 3938323349784142752}
+  - component: {fileID: 8646978543038228295}
   m_Layer: 0
   m_Name: RobotDataManager
   m_TagString: Untagged
@@ -7348,6 +7354,9 @@ MonoBehaviour:
   event_OnErrorMotorsTemperatures:
     m_PersistentCalls:
       m_Calls: []
+  event_OnStatusError:
+    m_PersistentCalls:
+      m_Calls: []
   previousBatteryLevel: 0
 --- !u!114 &4039092365260534009
 MonoBehaviour:
@@ -7600,6 +7609,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f49f64ad36c5cf40a0b908915b481e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8646978543038228295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934711108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03aabe924f1815b4386d7ffb6ec3af5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  event_OnLArmPositionUnreachable:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnRArmPositionUnreachable:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
