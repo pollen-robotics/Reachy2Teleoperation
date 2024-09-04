@@ -27,13 +27,6 @@ namespace TeleopReachy
 
         void Awake()
         {
-            if (Robot.IsCurrentRobotVirtual())
-            {
-                isStatePanelStatusActive = false;
-                needUpdatePanelInfo = true;
-                return;
-            }
-
             lArmReachabilityCounter = new Queue<int>(QUEUE_SIZE);
             rArmReachabilityCounter = new Queue<int>(QUEUE_SIZE);
    
@@ -72,17 +65,15 @@ namespace TeleopReachy
 
         private void CheckReachability(Queue<int> counter, ref UnityEvent<ReachabilityError> event_Unreachable, ref ReachabilityError reachabilityError)
         {
-            float mean = 0;
+            float sum = 0;
             foreach (int obj in counter)
             {
-                mean += obj;
+                sum += obj;
             }
-            mean = mean / counter.Count;
 
-            if(mean > 7)
+            if(sum > 7)
             {
                 event_Unreachable.Invoke(reachabilityError);
-                Debug.LogError(reachabilityError);
             }
         }
 
