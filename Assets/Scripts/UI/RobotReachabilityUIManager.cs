@@ -11,8 +11,6 @@ namespace TeleopReachy
 {
     public class RobotReachabilityUIManager : LazyFollow
     {
-        private ConnectionStatus connectionStatus;
-
         private Dictionary<string, float> panelTemperature;
         private Dictionary<string, string> panelStatus;
 

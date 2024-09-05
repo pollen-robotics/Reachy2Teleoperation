@@ -19,9 +19,6 @@ namespace TeleopReachy
         private ReachabilityError lArmLastReachabilityError;
         private ReachabilityError rArmLastReachabilityError;
 
-        private bool isStatePanelStatusActive;
-        private bool needUpdatePanelInfo;
-
         public UnityEvent<ReachabilityError> event_OnLArmPositionUnreachable;
         public UnityEvent<ReachabilityError> event_OnRArmPositionUnreachable;
 
@@ -74,16 +71,6 @@ namespace TeleopReachy
             if(sum > 7)
             {
                 event_Unreachable.Invoke(reachabilityError);
-            }
-        }
-
-        void Update()
-        {
-            if(needUpdatePanelInfo)
-            {
-                needUpdatePanelInfo = false;
-                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
-                transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
             }
         }
     }
