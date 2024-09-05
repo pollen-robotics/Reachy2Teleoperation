@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Reachy.Part.Arm;
+using System;
 
 
 namespace TeleopReachy
@@ -12,9 +13,10 @@ namespace TeleopReachy
         private DataMessageManager dataController;
         private RobotConfig robotConfig;
 
-        Queue<int> lArmReachabilityCounter;
-        Queue<int> rArmReachabilityCounter;
-        private int QUEUE_SIZE = 10;
+        Queue<bool> lArmReachabilityCounter;
+        Queue<bool> rArmReachabilityCounter;
+        private const int QUEUE_SIZE = 10;
+        private const int ERROR_THRESHOLD = 7;
 
         private ReachabilityError lArmLastReachabilityError;
         private ReachabilityError rArmLastReachabilityError;
@@ -24,8 +26,8 @@ namespace TeleopReachy
 
         void Awake()
         {
-            lArmReachabilityCounter = new Queue<int>(QUEUE_SIZE);
-            rArmReachabilityCounter = new Queue<int>(QUEUE_SIZE);
+            lArmReachabilityCounter = new Queue<bool>(QUEUE_SIZE);
+            rArmReachabilityCounter = new Queue<bool>(QUEUE_SIZE);
    
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateReachability.AddListener(UpdateReachability);
@@ -45,14 +47,13 @@ namespace TeleopReachy
             CheckReachability(rArmReachabilityCounter, ref event_OnRArmPositionUnreachable, ref rArmLastReachabilityError);
         }
 
-        private void UpdateCounter(List<ReachabilityAnswer> answers, ref Queue<int> counter, ref ReachabilityError reachabilityError)
+        private void UpdateCounter(List<ReachabilityAnswer> answers, ref Queue<bool> counter, ref ReachabilityError reachabilityError)
         {
             foreach(ReachabilityAnswer element in answers)
             {
-                if((bool)element.IsReachable) counter.Enqueue(0);
-                else 
+                counter.Enqueue(!(bool)element.IsReachable);
+                if(!(bool)element.IsReachable)
                 {
-                    counter.Enqueue(1);
                     reachabilityError = element.Description;
                 }
 
@@ -60,15 +61,15 @@ namespace TeleopReachy
             }
         }
 
-        private void CheckReachability(Queue<int> counter, ref UnityEvent<ReachabilityError> event_Unreachable, ref ReachabilityError reachabilityError)
+        private void CheckReachability(Queue<bool> counter, ref UnityEvent<ReachabilityError> event_Unreachable, ref ReachabilityError reachabilityError)
         {
-            float sum = 0;
-            foreach (int obj in counter)
+            int sum = 0;
+            foreach (bool obj in counter)
             {
-                sum += obj;
+                sum += Convert.ToInt32(obj);
             }
 
-            if(sum > 7)
+            if(sum > ERROR_THRESHOLD)
             {
                 event_Unreachable.Invoke(reachabilityError);
             }

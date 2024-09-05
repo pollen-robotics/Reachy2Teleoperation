@@ -92,11 +92,12 @@ namespace TeleopReachy
             }
             if(error == ReachabilityError.ContinuityLimit)
             {
-                message = "pose requires a movement jump";
+                message = " ";
+                Debug.Log("pose requires a movement jump");
             }
             if(error == ReachabilityError.Other)
             {
-                message = "elbow elevation limit reached";
+                message = " ";
             }
         }
 
