@@ -19,6 +19,7 @@ using Reachy.Part.Mobile.Base.Lidar;
 using Bridge;
 using GstreamerWebRTC;
 
+
 namespace TeleopReachy
 {
     public class DataMessageManager : Singleton<DataMessageManager>
