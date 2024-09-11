@@ -107,7 +107,6 @@ namespace GstreamerWebRTC
                     if (msg.type == MessageType.Welcome.ToString())
                     {
                         _peer_id = msg.peerId;
-                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Waiting);
                         Debug.Log("peer id : " + _peer_id);
                         if (!producer)
                         {
@@ -120,7 +119,6 @@ namespace GstreamerWebRTC
                         Debug.Log(msg.ToString());
                         if (msg.meta?.name == _remote_producer_name && msg.roles.Contains(MessageRole.Producer.ToString()))
                         {
-                            //event_OnRemotePeerId.Invoke(msg.peerId);
                             Debug.Log("Start Session");
                             SendStartSession(msg.peerId);
                         }
@@ -141,25 +139,18 @@ namespace GstreamerWebRTC
                     }
                     else if (msg.type == MessageType.StartSession.ToString())
                     {
-                        Debug.Log("1 " + msg.sessionId);
                         _session_id = msg.sessionId;
-                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
                     }
                     else if (msg.type == MessageType.SessionStarted.ToString())
                     {
-                        Debug.Log("2 " + msg.sessionId);
                         _session_id = msg.sessionId;
-                        //Debug.Log("session id: " + _session_id);
                         Debug.Log("Session started. peer id:" + msg.peerId + " session id:" + msg.sessionId);
-                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Ready);
                         sessionStatus = SessionStatus.Started;
                     }
                     else if (msg.type == MessageType.SessionEnded.ToString())
                     {
                         _session_id = null;
                         Debug.Log("session ended: " + msg.sessionId);
-
-                        //event_OnConnectionStatus.Invoke(ConnectionStatus.Waiting);
                         sessionStatus = SessionStatus.Ended;
                     }
                     else if (msg.type == MessageType.Peer.ToString())
@@ -168,15 +159,6 @@ namespace GstreamerWebRTC
                         {
                             Debug.Log("received ice candidate " + msg.ice.candidate + " " + msg.ice.sdpMLineIndex);
                             event_OnICECandidate.Invoke(msg.ice.candidate, msg.ice.sdpMLineIndex);
-                            /*RTCIceCandidate candidate = new RTCIceCandidate(
-                                new RTCIceCandidateInit
-                                {
-                                    candidate = msg.ice.candidate,
-                                    sdpMid = msg.ice.sdpMid,
-                                    sdpMLineIndex = msg.ice.sdpMLineIndex,
-                                }
-                            );
-                            event_OnICECandidate.Invoke(candidate);*/
                         }
                         else if (msg.sdp.IsValid())
                         {
@@ -184,22 +166,10 @@ namespace GstreamerWebRTC
                             {
                                 Debug.Log("received offer " + msg.sdp.sdp);
                                 event_OnSDPOffer.Invoke(msg.sdp.sdp);
-                                /*var offer = new RTCSessionDescription
-                                {
-                                    type = RTCSdpType.Offer,
-                                    sdp = msg.sdp.sdp,
-                                };
-                                event_OnOffer.Invoke(offer);*/
                             }
                             else if (msg.sdp.type == "answer")
                             {
                                 Debug.LogWarning("received answer");
-                                /*var answser = new RTCSessionDescription
-                                {
-                                    type = RTCSdpType.Answer,
-                                    sdp = msg.sdp.sdp,
-                                };
-                                event_OnAnswer.Invoke(answser);*/
                             }
                         }
                     }
