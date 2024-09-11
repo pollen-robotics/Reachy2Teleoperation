@@ -19,16 +19,12 @@ namespace GstreamerWebRTC
 
         private DataMessageManager dataMessageManager;
 
-        override protected void Init()
+
+
+        override protected void InitAV()
         {
             if (screen == null)
                 Debug.LogError("Screen is not assigned!");
-
-            if (ip_address == "")
-            {
-                ip_address = PlayerPrefs.GetString("robot_ip");
-                Debug.Log("Set IP address to: " + ip_address);
-            }
 
             dataMessageManager = DataMessageManager.Instance;
 
@@ -38,14 +34,17 @@ namespace GstreamerWebRTC
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
 
+            renderingPlugin.Connect();
+        }
+
+        override protected void InitData()
+        {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
             GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
-
-            renderingPlugin.Connect();
             dataPlugin.Connect();
         }
 
@@ -71,11 +70,6 @@ namespace GstreamerWebRTC
             event_DataControllerStatusHasChanged.Invoke(false);
             base.OnDisable();
         }
-
-        /*void Update()
-        {
-            renderingPlugin.Render();
-        }*/
 
         public Texture GetLeftTexture()
         {

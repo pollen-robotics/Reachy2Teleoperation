@@ -103,6 +103,7 @@ namespace GstreamerWebRTC
         private string _signallingServerURL;
         private Signalling _signalling;
 
+
         public bool producer = false;
         public string remote_producer_name = "grpc_webrtc_bridge";
 
@@ -127,11 +128,7 @@ namespace GstreamerWebRTC
 
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
-            _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
-
-            _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
-            _signalling.event_OnSDPOffer.AddListener(OnSDPOffer);
-            _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
+            InitSignalling();
 
             event_OnPipelineStarted = new UnityEvent();
 
@@ -145,6 +142,15 @@ namespace GstreamerWebRTC
             event_OnChannelServiceData = new UnityEvent<byte[]>();
             event_OnChannelStateData = new UnityEvent<byte[]>();
             event_OnChannelAuditData = new UnityEvent<byte[]>();
+        }
+
+        public void InitSignalling()
+        {
+            _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
+
+            _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
+            _signalling.event_OnSDPOffer.AddListener(OnSDPOffer);
+            _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
         }
 
         public void Connect()

@@ -73,7 +73,7 @@ namespace TeleopReachy
         void CheckConfig()
         {
             Debug.Log("[Robot config]: CheckConfig");
-            if (connectionStatus.HasRobotJustLeftDataRoom())
+            if (!connectionStatus.IsRobotInDataRoom())
             {
                 ResetConfig();
             }
