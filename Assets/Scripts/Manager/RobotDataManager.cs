@@ -8,6 +8,7 @@ namespace TeleopReachy
         public RobotMobilityCommands RobotMobilityCommands { get; private set; }
         public RobotPingWatcher RobotPingWatcher { get; private set; }
         public ErrorManager ErrorManager { get; private set; }
+        public RobotReachabilityManager RobotReachabilityManager { get; private set; }
 
         protected override void Init()
         {
@@ -17,6 +18,7 @@ namespace TeleopReachy
             RobotConfig = GetComponent<RobotConfig>();
             RobotPingWatcher = GetComponent<RobotPingWatcher>();
             ErrorManager = GetComponent<ErrorManager>();
+            RobotReachabilityManager = GetComponent<RobotReachabilityManager>();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,7 @@ using Reachy.Part.Mobile.Base.Lidar;
 using Bridge;
 using GstreamerWebRTC;
 
+
 namespace TeleopReachy
 {
     public class DataMessageManager : Singleton<DataMessageManager>
@@ -26,12 +28,12 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<Dictionary<int, List<ReachabilityAnswer>>> event_OnStateUpdateReachability;
         public UnityEvent<Dictionary<string, string>> event_OnAuditUpdate;
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
         private GStreamerPluginCustom webRTCController;
-
         private AnyCommands commands = new AnyCommands { };
 
         void Start()
@@ -62,6 +64,7 @@ namespace TeleopReachy
 
             Dictionary<string, float> present_position = new Dictionary<string, float>();
             Dictionary<string, float> temperatures = new Dictionary<string, float>();
+            Dictionary<int, List<ReachabilityAnswer>> reachability = new Dictionary<int, List<ReachabilityAnswer>>();
             float batteryLevel;
             LidarObstacleDetectionEnum obstacleDetection;
 
@@ -85,6 +88,29 @@ namespace TeleopReachy
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
+                            
+                        }
+                        PartId partId = new PartId();
+                        var armId = partState.Descriptor.FindFieldByName("id");
+                        if (armId != null)
+                        {
+                            partId = (PartId)armId.Accessor.GetValue(partState);
+                        }
+                        var reachabilityAnswer = partState.Descriptor.FindFieldByName("reachability");
+                        if (reachabilityAnswer != null)
+                        {
+                            var reachabilityObject = reachabilityAnswer.Accessor.GetValue(partState);
+                            IEnumerable reachabilityValues = reachabilityObject as IEnumerable;
+                            List<ReachabilityAnswer> answers = new List<ReachabilityAnswer>();
+                            if (reachabilityValues != null)
+                            {
+                                foreach(var reachabilityValue in reachabilityValues)
+                                {
+                                    ReachabilityAnswer reachable = (ReachabilityAnswer)reachabilityValue;
+                                    answers.Add(reachable);
+                                }
+                            }
+                            reachability.Add((int)partId.Id, answers);
                         }
                     }
                     if (partState is HeadState)
@@ -133,6 +159,7 @@ namespace TeleopReachy
 
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
+            event_OnStateUpdateReachability.Invoke(reachability);
         }
 
         public void StreamReachyStatus(ReachyStatus reachyStatus)
