@@ -210,6 +210,7 @@ namespace GstreamerWebRTC
         [MonoPInvokeCallback(typeof(channelServiceOpenCallback))]
         static void OnChannelServiceOpenCallback()
         {
+            Debug.Log("OnChannelService Open");
             event_OnChannelServiceOpen.Invoke();
         }
 

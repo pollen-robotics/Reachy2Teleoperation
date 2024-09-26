@@ -154,14 +154,14 @@ namespace TeleopReachy
                         foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
-                            if (componentStatus != null)  
+                            if (componentStatus != null)
                             {
                                 string[] errorDetails = new string[0];
-                                if(componentStatus is Orbita2dStatus status2d)
+                                if (componentStatus is Orbita2dStatus status2d)
                                 {
                                     errorDetails = status2d.Errors.Select(e => e.Details).ToArray();
                                 }
-                                if(componentStatus is Orbita3dStatus status3d)
+                                if (componentStatus is Orbita3dStatus status3d)
                                 {
                                     errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
                                 }
@@ -177,9 +177,9 @@ namespace TeleopReachy
                         foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
-                            if (componentStatus != null) 
+                            if (componentStatus != null)
                             {
-                                if(componentStatus is Orbita3dStatus status3d)
+                                if (componentStatus is Orbita3dStatus status3d)
                                 {
                                     string[] errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
                                     string[] side = partField.Name.Split("status");
@@ -187,7 +187,7 @@ namespace TeleopReachy
                                     string component_name = side[0] + component[0];
                                     components_status.Add(component_name, errorDetails[0]);
                                 }
-                                
+
                             }
                         }
                     }
@@ -257,6 +257,7 @@ namespace TeleopReachy
                     }
                 }
             };
+            Debug.Log("turn off message " + armCommand);
             webRTCController.SendCommandMessage(armCommand);
         }
 
@@ -294,9 +295,10 @@ namespace TeleopReachy
 
         public void TurnMobileBaseOff(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand
+            {
                 Id = id,
-                Mode = ZuuuModePossiblities.FreeWheel 
+                Mode = ZuuuModePossiblities.FreeWheel
             };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
@@ -326,6 +328,7 @@ namespace TeleopReachy
                     }
                 }
             };
+            Debug.Log("turn on message " + armCommand);
             webRTCController.SendCommandMessage(armCommand);
         }
 
@@ -363,9 +366,10 @@ namespace TeleopReachy
 
         public void TurnMobileBaseOn(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand
+            {
                 Id = id,
-                Mode = ZuuuModePossiblities.CmdVel 
+                Mode = ZuuuModePossiblities.CmdVel
             };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
