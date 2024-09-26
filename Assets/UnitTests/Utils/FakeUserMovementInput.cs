@@ -70,8 +70,8 @@ namespace TeleopReachy
 
         private IEnumerator LateInit()
         {
-            //while (robotStatus.HasMotorsSpeedLimited())
-            //    yield return new WaitForSeconds(0.2f);
+            while (robotStatus.HasMotorsSpeedLimited())
+                yield return new WaitForSeconds(0.2f);
             //Debug.Log("Robot config test " + robotConfig + " " + robotStatus);
             /*robotStatus.InitializeRobotState();
             robotStatus.SetHeadOn(true);
@@ -79,10 +79,10 @@ namespace TeleopReachy
             robotStatus.SetLeftArmOn(true);
             robotStatus.StartRobotTeleoperation();
             robotStatus.StartArmTeleoperation();*/
-            //yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3);
             robotStatus.TurnRobotStiff();
             //jointsCommands.SetRobotStiff();
-            yield return null;
+            //yield return null;
 
         }
 
