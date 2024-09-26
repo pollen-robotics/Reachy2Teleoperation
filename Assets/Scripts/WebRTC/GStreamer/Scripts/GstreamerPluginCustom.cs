@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using Bridge;
 using TeleopReachy;
 using Reachy;
+using System.Threading;
 
 namespace GstreamerWebRTC
 {
@@ -19,7 +20,7 @@ namespace GstreamerWebRTC
 
         private DataMessageManager dataMessageManager;
 
-
+        private static Mutex mut = new Mutex();
 
         override protected void InitAV()
         {
@@ -83,6 +84,7 @@ namespace GstreamerWebRTC
 
         protected override void OnChannelServiceOpen()
         {
+            Debug.Log("Service Request: Get Reachy");
             var req = new ServiceRequest
             {
                 GetReachy = new GetReachy()
@@ -94,7 +96,7 @@ namespace GstreamerWebRTC
         protected override void OnChannelServiceData(byte[] data)
         {
             ServiceResponse response = ServiceResponse.Parser.ParseFrom(data);
-            Debug.Log(response);
+            Debug.Log("Service data response: " + response);
 
             if (response.ConnectionStatus != null)
             {
@@ -128,9 +130,11 @@ namespace GstreamerWebRTC
 
         public void SendCommandMessage(AnyCommands commands)
         {
-            //Debug.Log("send command");
+            mut.WaitOne();
+            Debug.Log("send command " + commands + " " + Thread.CurrentThread.Name);
             //if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(commands));
             SendCommandToChannel(Google.Protobuf.MessageExtensions.ToByteArray(commands));
+            mut.ReleaseMutex();
         }
 
         void OnDataChannelStateMessage(byte[] data)

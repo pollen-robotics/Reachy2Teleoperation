@@ -5,6 +5,7 @@ using Reachy.Part.Hand;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Kinematics;
+using UnityEngine.Rendering;
 
 
 namespace TeleopReachy
@@ -90,9 +91,16 @@ namespace TeleopReachy
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
+            Debug.Log("Le F" + robotStatus.IsRobotArmTeleoperationActive());
             if (robotStatus.IsRobotArmTeleoperationActive())
             {
-                if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+                Debug.Log("Fabien2 " + robotConfig.HasLeftArm() + " " + robotStatus.IsLeftArmOn());
+                Debug.Log("Fabien3 " + robotConfig.HasRightArm() + " " + robotStatus.IsRightArmOn());
+                if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+                {
+                    Debug.Log("send left");
+                    dataController.SendArmCommand(leftArmRequest);
+                }
                 if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
             }
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
@@ -104,8 +112,9 @@ namespace TeleopReachy
             setSmoothCompliance = StartCoroutine(SmoothCompliance(2));
         }
 
-        private void SetRobotStiff()
+        public void SetRobotStiff()
         {
+            Debug.Log("Fabien " + robotConfig.HasLeftArm() + " " + robotStatus.IsLeftArmOn());
             ToggleStiffness();
             robotStatus.SetRobotCompliant(false);
         }
@@ -143,7 +152,7 @@ namespace TeleopReachy
                 StopCoroutine(setSmoothCompliance);
             }
 
-            Debug.Log("[RobotJointCommands] SetRobotStiff " + partName);
+            Debug.Log("[RobotJointCommands] SetRobotStiff " + partName + robotConfig.HasLeftArm() + " " + robotConfig.partsId["l_arm"]);
             if (partName == "")
             {
                 if (robotConfig.HasLeftArm())
@@ -177,6 +186,7 @@ namespace TeleopReachy
                 {
                     if (partName.Contains("arm"))
                     {
+                        Debug.LogWarning("fabien set on" + partName);
                         dataController.TurnArmOn(robotConfig.partsId[partName]);
                     }
                     else if (partName.Contains("hand"))
