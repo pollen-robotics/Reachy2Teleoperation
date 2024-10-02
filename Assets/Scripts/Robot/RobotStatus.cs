@@ -21,8 +21,10 @@ namespace TeleopReachy
         private bool isMobilityOn = true; // true if operator want to have control of the mobile base, false otherwise
 
         private bool isLeftArmOn = true; // true if operator want to have control of the left arm, false otherwise
+        private bool isLeftGripperOn = true; // true if operator want to have control of the left arm, false otherwise
 
         private bool isRightArmOn = true; // true if operator want to have control of the right arm, false otherwise
+        private bool isRightGripperOn = true; // true if operator want to have control of the left arm, false otherwise
 
         private bool isHeadOn = true; // true if operator want to have control of the head, false otherwise
 
@@ -115,9 +117,19 @@ namespace TeleopReachy
             return isLeftArmOn;
         }
 
+        public bool IsLeftGripperOn()
+        {
+            return isLeftGripperOn;
+        }
+
         public bool IsRightArmOn()
         {
             return isRightArmOn;
+        }
+
+        public bool IsRightGripperOn()
+        {
+            return isRightGripperOn;
         }
 
         public bool IsHeadOn()
@@ -193,9 +205,19 @@ namespace TeleopReachy
             isLeftArmOn = isOn;
         }
 
+        public void SetLeftGripperOn(bool isOn)
+        {
+            isLeftGripperOn = isOn;
+        }
+
         public void SetRightArmOn(bool isOn)
         {
             isRightArmOn = isOn;
+        }
+
+        public void SetRightGripperOn(bool isOn)
+        {
+            isRightGripperOn = isOn;
         }
 
         public void SetHeadOn(bool isOn)
