@@ -61,7 +61,7 @@ namespace TeleopReachy
             userTracker = UserTrackerManager.Instance.transform;
             State = TransitionState.WaitingForTracker;
 
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
             connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
             connectionStatus.event_OnRobotUnready.AddListener(AbortTeleop);
 

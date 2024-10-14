@@ -14,7 +14,7 @@ namespace TeleopReachy
         private RawImage pingIcon;
 
         private RobotPingWatcher pingWatcher;
-        private ErrorManager errorManager;
+        private RobotErrorManager errorManager;
 
         private Coroutine warningEnd;
 
@@ -24,7 +24,7 @@ namespace TeleopReachy
         {
             pingWatcher = RobotDataManager.Instance.RobotPingWatcher;
 
-            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
             errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);
 

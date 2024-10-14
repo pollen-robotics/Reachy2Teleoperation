@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace TeleopReachy
 {
-    public class ErrorManager : MonoBehaviour
+    public class RobotErrorManager : MonoBehaviour
     {
         private DataMessageManager dataController;
 

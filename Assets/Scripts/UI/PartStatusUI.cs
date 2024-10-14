@@ -16,7 +16,7 @@ namespace TeleopReachy
 
         [SerializeField]
         private Texture hotTexture;
-        private ErrorManager errorManager;
+        private RobotErrorManager errorManager;
 
         private string partName;
         private Dictionary<int, string> motors;
@@ -39,7 +39,7 @@ namespace TeleopReachy
             needTemperatureWarningDisplay = false;
             isTemperatureDisplayed = false;
             partName = gameObject.name.Split("_status")[0];
-            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnStatusError.AddListener(SetStatusError);
             errorManager.event_OnWarningMotorsTemperatures.AddListener(SetWarningTemperatures);
             errorManager.event_OnErrorMotorsTemperatures.AddListener(SetErrorTemperatures);

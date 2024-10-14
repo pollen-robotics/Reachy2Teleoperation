@@ -6,16 +6,22 @@ namespace TeleopReachy
     {
         [SerializeField]
         private Transform reachyEyeView;
+        public Renderer screen;
 
         //private EyeScript eyeScript;
         private RobotStatus robotStatus;
+        private RobotVideoStream robotVideoStream;
         // private gRPCVideoController videoController;
 
         void Start()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotVideoStream = RobotDataManager.Instance.RobotVideoStream;
             robotStatus.event_OnStartTeleoperation.AddListener(ShowReachyView);
             robotStatus.event_OnStopTeleoperation.AddListener(HideReachyView);
+
+            screen.material.SetTexture("_LeftTex", robotVideoStream.GetLeftTexture());
+            screen.material.SetTexture("_RightTex", robotVideoStream.GetRightTexture());
 
             // videoController = gRPCManager.Instance.gRPCVideoController;
             // videoController.event_OnVideoRoomStatusHasChanged.AddListener(ModifyTextureTransparency);

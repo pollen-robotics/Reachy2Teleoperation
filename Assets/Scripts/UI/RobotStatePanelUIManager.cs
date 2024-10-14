@@ -28,7 +28,7 @@ namespace TeleopReachy
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
 
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
 
             CheckTemperatureInfo();
