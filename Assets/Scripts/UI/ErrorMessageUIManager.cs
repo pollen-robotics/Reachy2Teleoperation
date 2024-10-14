@@ -17,7 +17,7 @@ namespace TeleopReachy
         private Transform pingErrorPanel;
 
         private RobotStatus robotStatus;
-        private ErrorManager errorManager;
+        private RobotErrorManager errorManager;
 
         private int nbMotorsWarning = 0;
         private int nbMotorsError = 0;
@@ -58,7 +58,7 @@ namespace TeleopReachy
             robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
             robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);
 
-            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningMotorsTemperatures.AddListener(WarningMotorTemperature);
             errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
             errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);

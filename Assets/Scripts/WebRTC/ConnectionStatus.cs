@@ -5,7 +5,7 @@ using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
-    public class ConnectionStatus : MonoBehaviour
+    public class ConnectionStatus : Singleton<ConnectionStatus>
     {
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
@@ -18,7 +18,7 @@ namespace TeleopReachy
 
         private bool areRobotServicesRestarting;
 
-        private GStreamerPluginCustom webRTCController;
+        private GStreamerPluginCustom gstreamerPlugin;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
@@ -33,7 +33,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            webRTCController = WebRTCManager.Instance.webRTCController;
+            gstreamerPlugin = WebRTCManager.Instance.gstreamerPlugin;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -52,12 +52,12 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (webRTCController != null)
+            if (gstreamerPlugin != null)
             {
-                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
-                webRTCController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
-                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
-                webRTCController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+                gstreamerPlugin.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+                gstreamerPlugin.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
             }
 
             waitForConnection = StartCoroutine(WaitForConnection());

@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using GstreamerWebRTC;
 
 
 namespace TeleopReachy
 {
-    public class RobotJointState : MonoBehaviour
+    public class RobotVideoStream : MonoBehaviour
     {
-        private DataMessageManager dataController;
-        public UnityEvent<Dictionary<string, float>> event_OnPresentPositionsChanged; 
+        private GStreamerPluginCustom videoController;
+
 
         void Start()
         {
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdatePresentPositions.AddListener(UpdateJointsState);
+            videoController = WebRTCManager.Instance.gstreamerPlugin;
 
             // EventManager.StartListening(EventNames.QuitMirrorScene, UpdateRobot);
             // EventManager.StartListening(EventNames.MirrorSceneLoaded, UpdateModelRobot);
@@ -29,13 +29,14 @@ namespace TeleopReachy
         //     reachy = GameObject.Find("Reachy2Ghost").GetComponent<Reachy2Controller.Reachy2Controller>();
         // }
 
-        protected void UpdateJointsState(Dictionary<string, float> PresentPositions)
+        public Texture GetLeftTexture()
         {
-            // if (reachy != null)
-            // {
-            //     reachy.HandleCommand(PresentPositions);
-            // }
-            event_OnPresentPositionsChanged.Invoke(PresentPositions);
+            return videoController.GetLeftTexture();
+        }
+
+        public Texture GetRightTexture()
+        {
+            return videoController.GetLeftTexture();
         }
     }
 }

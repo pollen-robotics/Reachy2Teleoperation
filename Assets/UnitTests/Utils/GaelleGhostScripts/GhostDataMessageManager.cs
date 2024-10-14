@@ -75,8 +75,6 @@ namespace TeleopReachy
 
         void GetRobotScripts()
         {
-            webRTCController = WebRTCManager.Instance.webRTCController;
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStopTeleoperation.AddListener(InitBackInc);
         }

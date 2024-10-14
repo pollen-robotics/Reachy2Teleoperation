@@ -54,7 +54,7 @@ namespace TeleopReachy
             {
                 transform.localPosition = new Vector3(0, -189, -479);
             }
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }
 

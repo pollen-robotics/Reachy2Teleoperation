@@ -39,7 +39,7 @@ namespace TeleopReachy
             }
             maxDistanceAllowed = 0;
 
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 

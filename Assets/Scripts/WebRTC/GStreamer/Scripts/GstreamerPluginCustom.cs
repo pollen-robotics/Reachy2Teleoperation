@@ -8,29 +8,31 @@ namespace GstreamerWebRTC
 {
     public class GStreamerPluginCustom : GStreamerPlugin
     {
-        public Renderer screen;
+        // public Renderer screen;
         public UnityEvent<bool> event_OnVideoRoomStatusHasChanged;
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
         public UnityEvent<bool> event_AudioSenderStatusHasChanged;
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
+        public UnityEvent<Texture> event_LeftVideoTextureReady;
+        public UnityEvent<Texture> event_RightVideoTextureReady;
 
         private Texture left = null;
         private Texture right = null;
 
         private DataMessageManager dataMessageManager;
 
-
-
         override protected void InitAV()
         {
-            if (screen == null)
-                Debug.LogError("Screen is not assigned!");
+            // if (screen == null)
+            //     Debug.LogError("Screen is not assigned!");
 
             dataMessageManager = DataMessageManager.Instance;
 
             renderingPlugin = new GStreamerRenderingPlugin(ip_address, ref left, ref right);
-            screen.material.SetTexture("_LeftTex", left);
-            screen.material.SetTexture("_RightTex", right);
+            event_LeftVideoTextureReady.Invoke(left);
+            event_RightVideoTextureReady.Invoke(right);
+            // screen.material.SetTexture("_LeftTex", left);
+            // screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
 
