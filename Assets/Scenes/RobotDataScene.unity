@@ -302,9 +302,9 @@ GameObject:
   - component: {fileID: 934711111}
   - component: {fileID: 934711113}
   - component: {fileID: 8646978543038228294}
-  - component: {fileID: 8646978543038228296}
   - component: {fileID: 8646978543038228297}
   - component: {fileID: 3938323349784142751}
+  - component: {fileID: 8646978543038228296}
   - component: {fileID: 8646978543038228295}
   m_Layer: 0
   m_Name: RobotDataManager
