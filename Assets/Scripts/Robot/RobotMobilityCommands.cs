@@ -18,9 +18,10 @@ namespace TeleopReachy
 
             robotConfig = transform.GetComponent<RobotConfig>();
             robotStatus = transform.GetComponent<RobotStatus>();
-            robotStatus.event_OnStartTeleoperation.AddListener(StartMobility);
-            robotStatus.event_OnStopTeleoperation.AddListener(StopMobility);
-            robotStatus.event_OnSuspendTeleoperation.AddListener(StopMobileBaseMovements);
+
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartMobility);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopMobility);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, StopMobileBaseMovements);
         }
 
         private void StartMobility()

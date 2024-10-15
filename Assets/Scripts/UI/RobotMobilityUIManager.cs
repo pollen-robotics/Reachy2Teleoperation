@@ -76,8 +76,8 @@ namespace TeleopReachy
                 userMobilityInput = null;
                 ShowMobilityUIListenerSet = false;
                 HideMobilityUIListenerSet = false;
-                robotStatus.event_OnStartTeleoperation.RemoveListener(ShowMobilityUI);
-                robotStatus.event_OnStopTeleoperation.RemoveListener(HideMobilityUI);
+                EventManager.StopListening(EventNames.OnStartTeleoperation, ShowMobilityUI);
+                EventManager.StopListening(EventNames.OnStopTeleoperation, HideMobilityUI);
                 HideMobilityUI();
             }
             else
@@ -86,12 +86,12 @@ namespace TeleopReachy
 
                 if (ShowMobilityUIListenerSet == false)
                 {
-                    robotStatus.event_OnStartTeleoperation.AddListener(ShowMobilityUI);
+                    EventManager.StartListening(EventNames.OnStartTeleoperation, ShowMobilityUI);
                     ShowMobilityUIListenerSet = true;
                 }
                 if (HideMobilityUIListenerSet == false)
                 {
-                    robotStatus.event_OnStopTeleoperation.AddListener(HideMobilityUI);
+                    EventManager.StartListening(EventNames.OnStopTeleoperation, HideMobilityUI);
                     HideMobilityUIListenerSet = true;
                 }
             }

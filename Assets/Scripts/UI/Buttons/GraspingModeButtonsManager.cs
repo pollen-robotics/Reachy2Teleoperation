@@ -25,7 +25,8 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
 
             robotConfig.event_OnConfigChanged.AddListener(CheckGripperPresence);
-            robotStatus.event_OnStopTeleoperation.AddListener(UpdateGraspingButtons);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, UpdateGraspingButtons);
+
 
             modeFullControlButton.interactable = isInteractable;
             modeLockedButton.interactable = isInteractable;

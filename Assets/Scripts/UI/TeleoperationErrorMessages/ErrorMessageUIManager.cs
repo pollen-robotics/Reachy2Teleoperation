@@ -55,8 +55,8 @@ namespace TeleopReachy
             maxDistanceAllowed = 0;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
-            robotStatus.event_OnStartTeleoperation.AddListener(ReinitializeValues);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, ReinitializeValues);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideWarningMessage);
 
             errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningMotorsTemperatures.AddListener(WarningMotorTemperature);

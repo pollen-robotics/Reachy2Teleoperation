@@ -37,7 +37,8 @@ namespace TeleopReachy
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ShowInfoMessage);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideInfoMessage);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideInfoMessage);
+
 
             HideInfoMessage();
         }

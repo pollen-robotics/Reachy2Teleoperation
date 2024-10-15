@@ -65,11 +65,11 @@ namespace TeleopReachy
         private void Start()
         {
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
-            EventManager.StartListening(EventNames.OnStartTeleoperation, StartTeleoperation);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, StopTeleoperation);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartRobotTeleoperation);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopRobotTeleoperation);
 
-            EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendTeleoperation);
-            EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeTeleoperation);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendRobotTeleoperation);
+            EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeRobotTeleoperation);
         }
 
         public void LeftGripperClosed(bool isclosed)

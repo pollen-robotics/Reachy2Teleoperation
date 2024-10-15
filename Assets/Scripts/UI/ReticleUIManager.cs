@@ -4,8 +4,6 @@ namespace TeleopReachy
 {
     public class ReticleUIManager : MonoBehaviour
     {
-        private RobotStatus robotStatus;
-
         private ControllersManager controllers;
 
         private MotionSicknessManager motionSicknessManager;
@@ -19,9 +17,9 @@ namespace TeleopReachy
         void Init()
         {
             motionSicknessManager = MotionSicknessManager.Instance;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideReticle);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, CheckReticleState);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideReticle);
+
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
             {
