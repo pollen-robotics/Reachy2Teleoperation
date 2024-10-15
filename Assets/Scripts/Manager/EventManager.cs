@@ -20,18 +20,22 @@ namespace TeleopReachy
         MirrorSceneLoaded,
         TeleoperationSceneLoaded,
 
-
-        // QuitMirrorScene,
-        // BackToMirrorScene,
-        // MirrorSceneLoaded,
-        // StartMirrorScene,
-        // LoadConnectionScene,
-        // TeleoperationSceneLoaded,
-
         ShowXRay,
         HideXRay,
         HeadsetRemoved,
         HeadsetReset,
+
+        OnStartTeleoperation,
+        OnStartArmTeleoperation,
+        OnStopTeleoperation,
+        OnSuspendTeleoperation,
+        OnResumeTeleoperation,
+
+        OnInitializeRobotStateRequested,
+        OnRobotStiffRequested,
+        OnRobotCompliantRequested,
+        OnRobotSmoothlyCompliantRequested,
+        OnGraspingLock,
     }
 
     public class EventManager : Singleton<EventManager>

@@ -10,18 +10,10 @@ namespace TeleopReachy
 {
     public class ControllerModelManager : MonoBehaviour
     {
-        private RobotStatus robotStatus;
-
         private void Start()
         {
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-        }
-
-        private void Init()
-        {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(HideControllers);
-            robotStatus.event_OnStopTeleoperation.AddListener(ShowControllers);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, HideControllers);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, ShowControllers);
         }
 
         void HideControllers()

@@ -35,7 +35,7 @@ namespace TeleopReachy
         {
             //robotConfig = RobotDataManager.Instance.RobotConfig;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(DeactivateOfflineMenu);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, DeactivateOfflineMenu);
 
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
 

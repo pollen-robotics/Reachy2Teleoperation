@@ -48,7 +48,8 @@ namespace TeleopReachy
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckNewStatus);
             connectionStatus.event_OnRobotReady.AddListener(HideWarningMessage);
             connectionStatus.event_OnRobotUnready.AddListener(ShowWarningMessage);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideWarningMessage);
+            
 
             needUpdateWarningMessage = false;
             wantWarningMessageDisplayed = false;

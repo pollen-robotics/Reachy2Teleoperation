@@ -43,7 +43,7 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideSuspensionWarning);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideSuspensionWarning);
 
             suspensionManager = TeleoperationSuspensionManager.Instance;
 

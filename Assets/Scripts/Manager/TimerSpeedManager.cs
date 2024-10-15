@@ -8,8 +8,6 @@ namespace TeleopReachy
 {
     public class TimerSpeedManager : LazyFollow
     {
-        private RobotStatus robotStatus;
-
         Coroutine timerCoroutine;
         Coroutine rotateLoader;
 
@@ -30,9 +28,9 @@ namespace TeleopReachy
             timerCoroutine = null;
             rotateLoader = null;
 
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTimer);
-            robotStatus.event_OnStopTeleoperation.AddListener(StopTimer);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTimer);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopTimer);
+
 
             transform.ActivateChildren(false);
         }

@@ -70,13 +70,13 @@ namespace TeleopReachy
 
         void OnBaseSceneLoaded()
         {
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, GetRobotScripts);
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, GetRobotScripts);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, InitBackInc);
         }
 
         void GetRobotScripts()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(InitBackInc);
         }
 
         void InitBackInc()

@@ -44,7 +44,7 @@ namespace TeleopReachy
             //robotConfig = RobotDataManager.Instance.RobotConfig;
 
             dataController.event_OnLidarDetectionUpdate.AddListener(ShowWarningMessage);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideWarningMessage);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideWarningMessage);
 
             needUpdateWarningMessage = false;
             wantWarningMessageDisplayed = false;
