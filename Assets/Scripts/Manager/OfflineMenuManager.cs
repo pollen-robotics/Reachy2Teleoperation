@@ -101,7 +101,8 @@ namespace TeleopReachy
                             ExitOffLineMenu();
                             if (selectedItem == OfflineMenuItem.LockAndHome)
                                 robotStatus.LockRobotPosition();
-                            EventManager.TriggerEvent(EventNames.BackToMirrorScene);
+                            EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                            EventManager.TriggerEvent(EventNames.EnterMirrorScene);
                         }
 
                         if (leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)

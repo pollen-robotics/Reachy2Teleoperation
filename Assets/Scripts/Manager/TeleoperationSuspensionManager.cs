@@ -22,7 +22,7 @@ namespace TeleopReachy
         {
             EventManager.StartListening(EventNames.HeadsetRemoved, CallSuspensionWarning);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
-            EventManager.StartListening(EventNames.BackToMirrorScene, ReinitValue);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, ReinitValue);
 
             controllers = ControllersManager.Instance;
 
@@ -71,7 +71,8 @@ namespace TeleopReachy
 
                     if (indicatorTimer >= 1.0f)
                     {
-                        EventManager.TriggerEvent(EventNames.BackToMirrorScene);
+                        EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                        EventManager.TriggerEvent(EventNames.EnterMirrorScene);
                         robotStatus.ResumeRobotTeleoperation();
                     }
                 }

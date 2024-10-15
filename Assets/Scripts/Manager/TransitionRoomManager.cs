@@ -207,7 +207,8 @@ namespace TeleopReachy
             RobotJointCommands robotJointsCommands = RobotDataManager.Instance.RobotJointCommands;
             if (robotJointsCommands.setSmoothCompliance != null) yield return robotJointsCommands.setSmoothCompliance;
             else yield return null;
-            EventManager.TriggerEvent(EventNames.LoadConnectionScene);
+            EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+            EventManager.TriggerEvent(EventNames.EnterConnectionScene);
         }
     }
 }
