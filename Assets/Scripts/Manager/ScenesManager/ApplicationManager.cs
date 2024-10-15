@@ -22,11 +22,18 @@ namespace TeleopReachy
         void Start()
         {
             SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
+
             EventManager.StartListening(EventNames.QuitApplication, QuitApplication);
-            EventManager.StartListening(EventNames.QuitMirrorScene, OnConnectToRobot);
-            EventManager.StartListening(EventNames.StartMirrorScene, LoadMirrorScene);
-            EventManager.StartListening(EventNames.LoadConnectionScene, ReturnToConnectionScene);
-            EventManager.StartListening(EventNames.BackToMirrorScene, ReturnToMirrorScene);
+
+            EventManager.StartListening(EventNames.EnterConnectionScene, LoadConnectionScene);
+            EventManager.StartListening(EventNames.QuitConnectionScene, UnloadConnectionScene);
+
+            EventManager.StartListening(EventNames.EnterMirrorScene, LoadMirrorScene);
+            EventManager.StartListening(EventNames.QuitMirrorScene, UnloadMirrorScene);
+
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadTeleoperationScene);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadTeleoperationScene);
+
             EventManager.StartListening(EventNames.ShowXRay, ShowXRay);
             EventManager.StartListening(EventNames.HideXRay, HideXRay);
         }
@@ -37,30 +44,70 @@ namespace TeleopReachy
             Application.Quit();
         }
 
+        private void LoadConnectionScene()
+        {
+            Debug.Log("Loading Connection Scene");
+            ground.SetActive(true);
+            userInput.SetActive(false);
+            userTracker.SetActive(false);
+            SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
+        }
+
+        private void UnloadConnectionScene()
+        {
+            SceneManager.UnloadSceneAsync("ConnectionScene");
+            StartCoroutine(LoadRobotDataScene());
+        }
+
+        IEnumerator LoadRobotDataScene()
+        {
+            userTracker.SetActive(true);
+
+            SceneManager.LoadScene("RobotDataScene", LoadSceneMode.Additive);
+            yield return null;
+            EventManager.TriggerEvent(EventNames.RobotDataSceneLoaded);
+
+            userInput.SetActive(true);
+        }
 
         private void LoadMirrorScene()
         {
-            SceneManager.UnloadSceneAsync("ConnectionScene");
+            ground.SetActive(true);
             StartCoroutine(LoadTransitionRoom());
         }
 
-        private void ReturnToMirrorScene()
+        IEnumerator LoadTransitionRoom()
         {
-            ground.SetActive(true);
-            StartCoroutine(BackToMirrorScene());
-        }
-
-        IEnumerator BackToMirrorScene()
-        {
+            while(!SceneManager.GetSceneByName("RobotDataScene").isLoaded)
+            {
+                yield return null;
+            }
             SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);
             yield return null;
             EventManager.TriggerEvent(EventNames.MirrorSceneLoaded);
         }
 
-        private void OnConnectToRobot()
+        private void UnloadMirrorScene()
         {
             SceneManager.UnloadSceneAsync("MirrorScene");
             ground.SetActive(false);
+        }
+
+        private void LoadTeleoperationScene()
+        {
+            StartCoroutine(LoadTeleoperationRoom());
+        }
+
+        IEnumerator LoadTeleoperationRoom()
+        {
+            SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
+            yield return null;
+            EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
+        }
+
+        private void UnloadTeleoperationScene()
+        {
+            SceneManager.UnloadSceneAsync("TeleoperationScene");
         }
 
         private void ShowXRay()
@@ -78,55 +125,6 @@ namespace TeleopReachy
             XRInteractorLineVisual[] xrlines = XROrigin.GetComponentsInChildren<XRInteractorLineVisual>();
             foreach (XRInteractorLineVisual xr in xrlines)
                 xr.enabled = activated;
-        }
-
-        IEnumerator LoadTransitionRoom()
-        {
-            userTracker.SetActive(true);
-
-            SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
-            yield return null;
-
-            userInput.SetActive(true);
-            // canvasOnlineMenu.SetActive(true);
-            // UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-            // uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
-
-            EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
-            SceneManager.LoadScene("MirrorScene", LoadSceneMode.Additive);
-            yield return null;
-
-            EventManager.TriggerEvent(EventNames.MirrorSceneLoaded);
-
-        }
-
-
-        // IEnumerator LoadTeleoperationScene()
-        // {
-        //     ground.SetActive(false);
-        //     userInput.SetActive(true);
-        //     canvasOnlineMenu.SetActive(true);
-        //     UserEmotionInput uei = userInput.GetComponent<UserEmotionInput>();
-        //     uei.onlineMenuManager = canvasOnlineMenu.GetComponent<OnlineMenuManager>();
-
-        //     userTracker.SetActive(true);
-
-        //     SceneManager.LoadScene("TeleoperationScene", LoadSceneMode.Additive);
-        //     yield return null;
-
-        //     EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
-        // }
-
-        private void ReturnToConnectionScene()
-        {
-            Debug.Log("Loading Connection Scene");
-            SceneManager.UnloadSceneAsync("TeleoperationScene");
-            SceneManager.UnloadSceneAsync("MirrorScene");
-            userInput.SetActive(false);
-            userTracker.SetActive(false);
-            canvasOnlineMenu.SetActive(false);
-            ground.SetActive(true);
-            SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
         }
     }
 }

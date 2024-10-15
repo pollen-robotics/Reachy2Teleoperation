@@ -53,7 +53,8 @@ namespace TeleopReachy
 
         void BackToTransitionRoom()
         {
-            EventManager.TriggerEvent(EventNames.BackToMirrorScene);
+            EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+            EventManager.TriggerEvent(EventNames.EnterMirrorScene);
         }
     }
 }

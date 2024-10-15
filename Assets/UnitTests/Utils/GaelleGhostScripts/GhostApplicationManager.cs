@@ -35,45 +35,41 @@ namespace TeleopReachy
             }
 
             event_BaseSceneLoaded.Invoke();
-            EventManager.StartListening(EventNames.QuitMirrorScene, OnConnectToRobot);
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, LoadMirrorScene);
-            EventManager.StartListening(EventNames.BackToMirrorScene, ReturnToMirrorScene);
-        
-            EventManager.StartListening(EventNames.LoadConnectionScene, ReturnToConnectionScene);
+            EventManager.StartListening(EventNames.EnterMirrorScene, LoadGhostMirrorScene);
+            EventManager.StartListening(EventNames.QuitMirrorScene, UnloadGhostMirrorScene);
+
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadGhostTeleoperationScene);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadGhostTeleoperationScene);
         }
 
-        private void LoadMirrorScene()
+        private void UnloadGhostMirrorScene()
         {
-            StartCoroutine(LoadTransitionRoom());
+            SceneManager.UnloadSceneAsync("Test_GaelleGhostMirrorScene");
         }
 
-        private void ReturnToMirrorScene()
-        {
-            StartCoroutine(BackToMirrorScene());
-        }
-
-        IEnumerator BackToMirrorScene()
+        private void UnloadGhostTeleoperationScene()
         {
             SceneManager.UnloadSceneAsync("Test_GaelleGhostTeleoperationScene");
+        }
+
+        private void LoadGhostMirrorScene()
+        {
+            StartCoroutine(LoadGhostMirrorSceneCo());
+        }
+
+        IEnumerator LoadGhostMirrorSceneCo()
+        {
+            while(!SceneManager.GetSceneByName("RobotDataScene").isLoaded)
+            {
+                yield return null;
+            }
             SceneManager.LoadScene("Test_GaelleGhostMirrorScene", LoadSceneMode.Additive);
             yield return null;
         }
 
-        private void OnConnectToRobot()
+        private void LoadGhostTeleoperationScene()
         {
-            SceneManager.UnloadSceneAsync("Test_GaelleGhostMirrorScene");
             SceneManager.LoadScene("Test_GaelleGhostTeleoperationScene", LoadSceneMode.Additive);
-        }
-
-        IEnumerator LoadTransitionRoom()
-        {
-            SceneManager.LoadScene("Test_GaelleGhostMirrorScene", LoadSceneMode.Additive);
-            yield return null;
-        }
-
-        private void ReturnToConnectionScene()
-        {
-            SceneManager.UnloadSceneAsync("Test_GaelleGhostMirrorScene");
         }
     }
 }

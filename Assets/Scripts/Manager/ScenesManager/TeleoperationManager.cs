@@ -19,8 +19,8 @@ namespace TeleopReachy
         {
             needUpdateRobotDisplay = false;
 
-            EventManager.StartListening(EventNames.QuitMirrorScene, StartTeleoperation);
-            EventManager.StartListening(EventNames.BackToMirrorScene, StopTeleoperation);
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, StartTeleoperation);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, StopTeleoperation);
             EventManager.StartListening(EventNames.HeadsetRemoved, SuspendTeleoperation);
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotConfig.event_OnConfigChanged.AddListener(DisplayReachy);

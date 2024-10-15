@@ -7,13 +7,27 @@ namespace TeleopReachy
 {
     public enum EventNames
     {
+        EnterConnectionScene,
+        EnterMirrorScene,
+        EnterTeleoperationScene,
+
+        QuitConnectionScene,
         QuitMirrorScene,
-        BackToMirrorScene,
-        MirrorSceneLoaded,
-        StartMirrorScene,
-        LoadConnectionScene,
-        TeleoperationSceneLoaded,
+        QuitTeleoperationScene,
         QuitApplication,
+
+        RobotDataSceneLoaded,
+        MirrorSceneLoaded,
+        TeleoperationSceneLoaded,
+
+
+        // QuitMirrorScene,
+        // BackToMirrorScene,
+        // MirrorSceneLoaded,
+        // StartMirrorScene,
+        // LoadConnectionScene,
+        // TeleoperationSceneLoaded,
+
         ShowXRay,
         HideXRay,
         HeadsetRemoved,

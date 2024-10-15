@@ -69,7 +69,8 @@ namespace TeleopReachy
                 PlayerPrefs.SetString("robot_ip", GetIpv4Address());
                 PlayerPrefs.SetString("robot_info", selectedRobot.ip);
 
-                EventManager.TriggerEvent(EventNames.StartMirrorScene);
+                EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+                EventManager.TriggerEvent(EventNames.EnterMirrorScene);
             }
         }
 
