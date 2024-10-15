@@ -14,11 +14,7 @@ namespace TeleopReachy
 
         private bool isRobotCompliant;
 
-        private bool isMobilityInCloseLoop; // true if mobile base in close-loop, false if mobile base in idle
-
-        private bool isMobilityInBreakMode;
-
-        private bool isMobilityOn = true; // true if operator want to have control of the mobile base, false otherwise
+        private bool isMobileBaseOn = true; // true if operator want to have control of the mobile base, false otherwise
 
         private bool isLeftArmOn = true; // true if operator want to have control of the left arm, false otherwise
         private bool isLeftGripperOn = true; // true if operator want to have control of the left arm, false otherwise
@@ -47,17 +43,7 @@ namespace TeleopReachy
 
         public bool IsRobotPositionLocked { get; private set; }
 
-        // public UnityEvent event_OnStartTeleoperation;
-        // public UnityEvent event_OnStartArmTeleoperation;
-        // public UnityEvent event_OnStopTeleoperation;
-        // public UnityEvent event_OnSuspendTeleoperation;
-        // public UnityEvent event_OnResumeTeleoperation;
-
-        // public UnityEvent event_OnInitializeRobotStateRequested;
-        public UnityEvent event_OnRobotStiffRequested;
         public UnityEvent<bool> event_OnGraspingLock;
-        public UnityEvent event_OnRobotSmoothlyCompliantRequested;
-        public UnityEvent event_OnRobotCompliantRequested;
         public UnityEvent event_OnRobotFullyCompliant;
 
         public UnityEvent<bool> event_OnSwitchMobilityOn;
@@ -117,9 +103,9 @@ namespace TeleopReachy
             return areEmotionsActive;
         }
 
-        public bool IsMobilityOn()
+        public bool IsMobileBaseOn()
         {
-            return isMobilityOn;
+            return isMobileBaseOn;
         }
 
         public bool IsLeftArmOn()
@@ -145,16 +131,6 @@ namespace TeleopReachy
         public bool IsHeadOn()
         {
             return isHeadOn;
-        }
-
-        public bool IsMobilityInCloseLoop()
-        {
-            return isMobilityInCloseLoop;
-        }
-
-        public bool IsMobilityInBreakMode()
-        {
-            return isMobilityInBreakMode;
         }
 
         public bool IsEmotionPlaying()
@@ -194,11 +170,6 @@ namespace TeleopReachy
             isMobilityActive = isActive;
         }
 
-        public void SetMobilityInBreakMode(bool inBreakMode)
-        {
-            isMobilityInBreakMode = inBreakMode;
-        }
-
         public void SetEmotionsActive(bool isActive)
         {
             areEmotionsActive = isActive;
@@ -206,7 +177,7 @@ namespace TeleopReachy
 
         public void SetMobilityOn(bool isOn)
         {
-            isMobilityOn = isOn;
+            isMobileBaseOn = isOn;
             event_OnSwitchMobilityOn.Invoke(isOn);
         }
 
@@ -235,11 +206,6 @@ namespace TeleopReachy
             isHeadOn = isOn;
         }
 
-        public void SetMobilityInCloseLoop(bool isCloseLoop)
-        {
-            isMobilityInCloseLoop = isCloseLoop;
-        }
-
         public void SetIKMode(IKConstrainedMode mode)
         {
             armIkMode = mode;
@@ -250,17 +216,12 @@ namespace TeleopReachy
             return armIkMode;
         }
 
-        // public void InitializeRobotState()
-        // {
-        //     event_OnInitializeRobotStateRequested.Invoke();
-        // }
-
         public void LockRobotPosition()
         {
             IsRobotPositionLocked = true;
         }
 
-        public void StartRobotTeleoperation()
+        private void StartRobotTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start teleoperation");
             isRobotTeleoperationActive = true;
@@ -268,19 +229,19 @@ namespace TeleopReachy
             // event_OnStartTeleoperation.Invoke();
         }
 
-        public void StartArmTeleoperation()
+        private void StartArmTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start arm teleoperation");
             isRobotArmTeleoperationActive = true;
             // event_OnStartArmTeleoperation.Invoke();
         }
 
-        public void StopRobotTeleoperation()
+        private void StopRobotTeleoperation()
         {
             Debug.Log("[RobotStatus]: Stop teleoperation");
             isRobotTeleoperationActive = false;
             isRobotArmTeleoperationActive = false;
-            // event_OnStopTeleoperation.Invoke();
+            SetMobilityActive(false);
         }
 
         public void SetMotorsSpeedLimited(bool isLimited)
@@ -297,34 +258,14 @@ namespace TeleopReachy
             }
         }
 
-        public void SuspendRobotTeleoperation()
+        private void SuspendRobotTeleoperation()
         {
             areRobotMovementsSuspended = true;
-            // event_OnSuspendTeleoperation.Invoke();
         }
 
-        public void ResumeRobotTeleoperation()
+        private void ResumeRobotTeleoperation()
         {
             areRobotMovementsSuspended = false;
-            // event_OnResumeTeleoperation.Invoke();
-        }
-
-        public void TurnRobotStiff()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Stiff");
-            event_OnRobotStiffRequested.Invoke();
-        }
-
-        public void TurnRobotCompliant()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Compliant");
-            event_OnRobotCompliantRequested.Invoke();
-        }
-
-        public void TurnRobotSmoothlyCompliant()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Smoothly Compliant");
-            event_OnRobotSmoothlyCompliantRequested.Invoke();
         }
 
         public override string ToString()
@@ -332,9 +273,7 @@ namespace TeleopReachy
             return string.Format(@"isRobotTeleoperationActive = {0},
              areRobotMovementsSuspended= {1},
              isRobotCompliant= {2},
-             isMobilityInCloseLoop= {3},
-             isMobilityInBreakMode= {4},
-             isMobilityOn= {5},
+             isMobileBaseOn= {5},
              isLeftArmOn= {6},
              isRightArmOn= {7},
              isHeadOn= {8},
@@ -344,7 +283,7 @@ namespace TeleopReachy
              statusChanged= {12},
              hasMotorsSpeedLimited= {13}",
              isRobotTeleoperationActive, areRobotMovementsSuspended, isRobotCompliant,
-              isMobilityInCloseLoop, isMobilityInBreakMode, isMobilityOn, isLeftArmOn, isRightArmOn, isHeadOn,
+              isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
                isMobilityActive, areEmotionsActive, isEmotionPlaying, statusChanged, isGraspingLockActivated);
         }
     }

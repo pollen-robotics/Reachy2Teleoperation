@@ -17,11 +17,9 @@ namespace TeleopReachy
         bool leftTriggerPressed;
         bool leftPrimaryButtonPressed;
 
-        public UnityEvent event_OnEmergencyStopCalled;
-
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
         }
 
         private void OnDisable()
@@ -61,8 +59,8 @@ namespace TeleopReachy
             {
                 if ((leftGripPressed && leftTriggerPressed && leftPrimaryButtonPressed) || (rightGripPressed && rightTriggerPressed && rightPrimaryButtonPressed))
                 {
-                    robotStatus.SuspendRobotTeleoperation();
-                    event_OnEmergencyStopCalled.Invoke();
+                    EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
+                    EventManager.TriggerEvent(EventNames.OnEmergencyStop);
                 }
             }
         }

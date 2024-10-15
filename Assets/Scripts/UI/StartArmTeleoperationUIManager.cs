@@ -9,7 +9,6 @@ namespace TeleopReachy
         //private RobotConfig robotConfig;
 
         private ControllersManager controllers;
-        private UserEmergencyStopInput userEmergencyStop;
 
         private bool needUpdateInfoMessage;
         private bool wantInfoMessageDisplayed;
@@ -35,15 +34,9 @@ namespace TeleopReachy
             needUpdateInfoMessage = false;
             wantInfoMessageDisplayed = false;
 
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            EventManager.StartListening(EventNames.OnEmergencyStop, HideInfoMessage);
 
             transform.ActivateChildren(false);
-        }
-
-        void Init()
-        {
-            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
-            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(HideInfoMessage);
         }
 
         void ShowInfoMessage()

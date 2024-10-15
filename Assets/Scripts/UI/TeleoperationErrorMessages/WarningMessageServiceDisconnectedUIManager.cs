@@ -105,7 +105,7 @@ namespace TeleopReachy
                     }
                     else
                     {
-                        if (!robotStatus.IsMobilityOn()) messageToDisplay = "Mobile base has been disabled in options";
+                        if (!robotStatus.IsMobileBaseOn()) messageToDisplay = "Mobile base has been disabled in options";
                     }
                     ShowWarningMessage();
                 }

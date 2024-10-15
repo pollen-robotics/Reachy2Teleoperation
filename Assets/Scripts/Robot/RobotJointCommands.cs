@@ -45,6 +45,11 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendTeleoperation);
             EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeTeleoperation);
 
+            EventManager.StartListening(EventNames.OnInitializeRobotStateRequested, InitializeRobotState);
+            EventManager.StartListening(EventNames.OnRobotStiffRequested, SetRobotStiff);
+            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, SetRobotSmoothlyCompliant);
+            EventManager.StartListening(EventNames.OnRobotCompliantRequested, SetRobotCompliant);
+
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
             setSmoothCompliance = null;

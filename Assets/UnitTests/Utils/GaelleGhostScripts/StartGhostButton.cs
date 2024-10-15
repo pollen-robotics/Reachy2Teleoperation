@@ -27,7 +27,7 @@ namespace TeleopReachy
         {
             transitionRoomManager.ValidateTracker();
             transitionRoomManager.ExitTransitionRoomRequested();
-            robotStatus.StartArmTeleoperation();
+            EventManager.TriggerEvent(EventNames.OnStartTeleoperation);
         }
     }
 }

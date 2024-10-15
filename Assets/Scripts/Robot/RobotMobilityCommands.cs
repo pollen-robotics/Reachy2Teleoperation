@@ -26,7 +26,7 @@ namespace TeleopReachy
 
         private void StartMobility()
         {
-            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
                 dataController.TurnMobileBaseOn(robotConfig.partsId["mobile_base"]);
             }

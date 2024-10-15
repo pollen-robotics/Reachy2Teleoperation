@@ -47,7 +47,7 @@ namespace TeleopReachy
             robotStatus.SetLeftArmOn(false);
             robotStatus.SetRightArmOn(false);
             robotStatus.SetHeadOn(false);
-            robotStatus.TurnRobotSmoothlyCompliant();
+            EventManager.TriggerEvent(EventNames.OnRobotSmoothlyCompliantRequested);
             beforeValidateElements.SetActive(false);
             afterValidateElements.SetActive(true);
             rotateLoader = StartCoroutine(RotateLoader(3));

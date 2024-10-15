@@ -70,7 +70,7 @@ namespace TeleopReachy
                 controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightSecondaryButtonPressed);
             }
 
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobileBaseOn() && !robotStatus.AreRobotMovementsSuspended())
             {
                 if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
                 {
@@ -98,7 +98,7 @@ namespace TeleopReachy
             }
             else
             {
-                if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobilityOn()))
+                if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobileBaseOn()))
                 {
                     if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
                     {

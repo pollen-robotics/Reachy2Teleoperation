@@ -13,8 +13,6 @@ namespace TeleopReachy
         [SerializeField]
         private Text suspensionReasonText;
 
-        private UserEmergencyStopInput userEmergencyStop;
-
         private bool isLoaderActive = false;
 
         private RobotStatus robotStatus;
@@ -40,7 +38,7 @@ namespace TeleopReachy
             maxDistanceAllowed = 0;
 
             EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            EventManager.StartListening(EventNames.OnEmergencyStop, EmergencyStopCalled);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideSuspensionWarning);
@@ -48,12 +46,6 @@ namespace TeleopReachy
             suspensionManager = TeleoperationSuspensionManager.Instance;
 
             HideSuspensionWarning();
-        }
-
-        void Init()
-        {
-            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
-            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(EmergencyStopCalled);
         }
 
         void HeadsetRemoved()
