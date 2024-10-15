@@ -61,7 +61,8 @@ namespace TeleopReachy
         void FinishInit()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(InitOnDemandRequest);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, InitOnDemandRequest);
+            
             HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
             if(firstStart)
             {

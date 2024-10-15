@@ -40,17 +40,11 @@ namespace TeleopReachy
             }
             UnityEngine.XR.InputDevices.deviceConnected += CheckDevice;
 
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitRobotStatus);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, HideControllerLaser);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, ShowControllerLaser);
 
             EnableSteamLaserPointer(controllerLeft, false);
             allowActiveControllerChange = true;
-        }
-
-        void InitRobotStatus()
-        {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartArmTeleoperation.AddListener(HideControllerLaser);
-            robotStatus.event_OnStopTeleoperation.AddListener(ShowControllerLaser);
         }
 
         void Update()

@@ -4,6 +4,7 @@ namespace TeleopReachy
 {
     public class TeleoperationSuspensionManager : Singleton<TeleoperationSuspensionManager>
     {
+        // TODO: Put class somewhere else
         private RobotStatus robotStatus;
         private bool isActivatedTeleoperationSuspension;
 
@@ -27,7 +28,7 @@ namespace TeleopReachy
             controllers = ControllersManager.Instance;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(NoSuspensionWarning);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, NoSuspensionWarning);
 
             NoSuspensionWarning();
         }
@@ -73,7 +74,7 @@ namespace TeleopReachy
                     {
                         EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
                         EventManager.TriggerEvent(EventNames.EnterMirrorScene);
-                        robotStatus.ResumeRobotTeleoperation();
+                        EventManager.TriggerEvent(EventNames.OnResumeTeleoperation);
                     }
                 }
                 else

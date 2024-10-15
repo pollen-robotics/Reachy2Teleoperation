@@ -32,8 +32,6 @@ namespace TeleopReachy
         private Coroutine leftArmPanelDisplay;
         private Coroutine rightArmPanelDisplay;
 
-        private RobotStatus robotStatus;
-
         private ControllersManager controllers;
 
         void Start()
@@ -53,8 +51,7 @@ namespace TeleopReachy
             reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleLeftArmReachabilityError);
             reachabilityManager.event_OnRArmPositionUnreachable.AddListener(HandleRightArmReachabilityError);
 
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideMessages);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideMessages);
 
             HideMessages();
         }

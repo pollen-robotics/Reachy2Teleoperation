@@ -53,7 +53,8 @@ namespace TeleopReachy
             Headset = HeadsetPermanenTrackerWorldManager.Instance.transform;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideOnlineMenu);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideOnlineMenu);
+
             robotStatus.SetGraspingLockActivated(false, false);
             robotConfig = RobotDataManager.Instance.RobotConfig;
 

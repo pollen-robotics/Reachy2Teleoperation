@@ -47,13 +47,13 @@ namespace TeleopReachy
 
         public bool IsRobotPositionLocked { get; private set; }
 
-        public UnityEvent event_OnStartTeleoperation;
-        public UnityEvent event_OnStartArmTeleoperation;
-        public UnityEvent event_OnStopTeleoperation;
-        public UnityEvent event_OnSuspendTeleoperation;
-        public UnityEvent event_OnResumeTeleoperation;
+        // public UnityEvent event_OnStartTeleoperation;
+        // public UnityEvent event_OnStartArmTeleoperation;
+        // public UnityEvent event_OnStopTeleoperation;
+        // public UnityEvent event_OnSuspendTeleoperation;
+        // public UnityEvent event_OnResumeTeleoperation;
 
-        public UnityEvent event_OnInitializeRobotStateRequested;
+        // public UnityEvent event_OnInitializeRobotStateRequested;
         public UnityEvent event_OnRobotStiffRequested;
         public UnityEvent<bool> event_OnGraspingLock;
         public UnityEvent event_OnRobotSmoothlyCompliantRequested;
@@ -61,6 +61,16 @@ namespace TeleopReachy
         public UnityEvent event_OnRobotFullyCompliant;
 
         public UnityEvent<bool> event_OnSwitchMobilityOn;
+
+        private void Start()
+        {
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartTeleoperation);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopTeleoperation);
+
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendTeleoperation);
+            EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeTeleoperation);
+        }
 
         public void LeftGripperClosed(bool isclosed)
         {
@@ -240,10 +250,10 @@ namespace TeleopReachy
             return armIkMode;
         }
 
-        public void InitializeRobotState()
-        {
-            event_OnInitializeRobotStateRequested.Invoke();
-        }
+        // public void InitializeRobotState()
+        // {
+        //     event_OnInitializeRobotStateRequested.Invoke();
+        // }
 
         public void LockRobotPosition()
         {
@@ -255,14 +265,14 @@ namespace TeleopReachy
             Debug.Log("[RobotStatus]: Start teleoperation");
             isRobotTeleoperationActive = true;
             IsRobotPositionLocked = false;
-            event_OnStartTeleoperation.Invoke();
+            // event_OnStartTeleoperation.Invoke();
         }
 
         public void StartArmTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start arm teleoperation");
             isRobotArmTeleoperationActive = true;
-            event_OnStartArmTeleoperation.Invoke();
+            // event_OnStartArmTeleoperation.Invoke();
         }
 
         public void StopRobotTeleoperation()
@@ -270,7 +280,7 @@ namespace TeleopReachy
             Debug.Log("[RobotStatus]: Stop teleoperation");
             isRobotTeleoperationActive = false;
             isRobotArmTeleoperationActive = false;
-            event_OnStopTeleoperation.Invoke();
+            // event_OnStopTeleoperation.Invoke();
         }
 
         public void SetMotorsSpeedLimited(bool isLimited)
@@ -290,13 +300,13 @@ namespace TeleopReachy
         public void SuspendRobotTeleoperation()
         {
             areRobotMovementsSuspended = true;
-            event_OnSuspendTeleoperation.Invoke();
+            // event_OnSuspendTeleoperation.Invoke();
         }
 
         public void ResumeRobotTeleoperation()
         {
             areRobotMovementsSuspended = false;
-            event_OnResumeTeleoperation.Invoke();
+            // event_OnResumeTeleoperation.Invoke();
         }
 
         public void TurnRobotStiff()

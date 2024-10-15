@@ -15,7 +15,6 @@ namespace TeleopReachy
 
         private bool isLoaderActive = true;
 
-        private RobotStatus robotStatus;
         private OfflineMenuManager offlineMenuManager;
 
         private OfflineMenuManager.OfflineMenuItem previousItem;
@@ -34,8 +33,7 @@ namespace TeleopReachy
             // }
             maxDistanceAllowed = 0;
 
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(HideMenu);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideMenu);
 
             offlineMenuManager = OfflineMenuManager.Instance;
             offlineMenuManager.event_OnAskForOfflineMenu.AddListener(ShowMenu);
