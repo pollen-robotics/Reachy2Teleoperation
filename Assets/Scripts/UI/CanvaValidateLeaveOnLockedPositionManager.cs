@@ -51,7 +51,7 @@ namespace TeleopReachy
             beforeValidateElements.SetActive(false);
             afterValidateElements.SetActive(true);
             rotateLoader = StartCoroutine(RotateLoader(3));
-            TransitionRoomManager.Instance.BackToConnectionScene();
+            MirrorSceneManager.Instance.BackToConnectionScene();
         }
 
         private IEnumerator RotateLoader(float duration)

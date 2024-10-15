@@ -11,7 +11,7 @@ namespace TeleopReachy
         [SerializeField]
         public Button startButton;
 
-        private TransitionRoomManager transitionRoomManager;
+        private MirrorSceneManager sceneManager;
         private RobotStatus robotStatus;
 
         void Start()
@@ -19,14 +19,14 @@ namespace TeleopReachy
             Button btn = startButton.GetComponent<Button>();
 		    btn.onClick.AddListener(StartTeleoperation);
 
-            transitionRoomManager = TransitionRoomManager.Instance;
+            sceneManager = MirrorSceneManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 
         void StartTeleoperation()
         {
-            transitionRoomManager.ValidateTracker();
-            transitionRoomManager.ExitTransitionRoomRequested();
+            sceneManager.ValidateTracker();
+            sceneManager.ExitTransitionRoomRequested();
             EventManager.TriggerEvent(EventNames.OnStartTeleoperation);
         }
     }

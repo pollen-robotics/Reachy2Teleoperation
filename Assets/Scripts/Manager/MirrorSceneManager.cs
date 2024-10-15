@@ -10,7 +10,7 @@ namespace TeleopReachy
         WaitingForTracker, WaitingForPosition, ReadyForTeleop, WaitingForRobot
     }
 
-    public class TransitionRoomManager : Singleton<TransitionRoomManager>
+    public class MirrorSceneManager : Singleton<MirrorSceneManager>
     {
         public TransitionState State { get; private set; }
 

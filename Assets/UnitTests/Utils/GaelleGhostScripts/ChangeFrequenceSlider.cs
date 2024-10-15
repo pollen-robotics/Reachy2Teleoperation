@@ -11,7 +11,6 @@ namespace TeleopReachy
         public Slider frequencySlider;
         public Text currentFrequency;
 
-        private TransitionRoomManager transitionRoomManager;
         private RobotStatus robotStatus;
 
         void Start()
@@ -20,7 +19,6 @@ namespace TeleopReachy
             frequencySlider.value = Application.targetFrameRate;
 		    frequencySlider.onValueChanged.AddListener(delegate {ChangeFrequency();});
 
-            transitionRoomManager = TransitionRoomManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 

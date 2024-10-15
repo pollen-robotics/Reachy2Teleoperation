@@ -12,7 +12,7 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
-            TransitionRoomManager.Instance.event_OnReadyForTeleop.AddListener(BlueRobotIndication);
+            MirrorSceneManager.Instance.event_OnReadyForTeleop.AddListener(BlueRobotIndication);
         }
 
         // Update is called once per frame
