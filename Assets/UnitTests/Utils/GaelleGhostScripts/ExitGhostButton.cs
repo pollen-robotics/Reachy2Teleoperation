@@ -11,19 +11,19 @@ namespace TeleopReachy
         [SerializeField]
         public Button exitButton;
 
-        private TransitionRoomManager transitionRoomManager;
+        private MirrorSceneManager sceneManager;
 
         void Start()
         {
             Button btn = exitButton.GetComponent<Button>();
 		    btn.onClick.AddListener(ExitMirrorScene);
 
-            transitionRoomManager = TransitionRoomManager.Instance;
+            sceneManager = MirrorSceneManager.Instance;
         }
 
         void ExitMirrorScene()
         {
-            transitionRoomManager.BackToConnectionScene();
+            sceneManager.BackToConnectionScene();
         }
     }
 }

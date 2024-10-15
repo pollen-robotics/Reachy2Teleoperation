@@ -26,8 +26,8 @@ namespace TeleopReachy
             connectionStatus = ConnectionStatus.Instance;
 
             connectionStatus.event_OnRobotUnready.AddListener(HideLoader);
-            TransitionRoomManager.Instance.event_OnReadyForTeleop.AddListener(ShowLoader);
-            TransitionRoomManager.Instance.event_OnAbortTeleop.AddListener(HideLoader);
+            MirrorSceneManager.Instance.event_OnReadyForTeleop.AddListener(ShowLoader);
+            MirrorSceneManager.Instance.event_OnAbortTeleop.AddListener(HideLoader);
         }
 
         void ShowLoader()
@@ -53,7 +53,7 @@ namespace TeleopReachy
         // Update is called once per frame
         void Update()
         {
-            if (TransitionRoomManager.Instance.State == TransitionState.ReadyForTeleop && isLoaderActive)
+            if (MirrorSceneManager.Instance.State == TransitionState.ReadyForTeleop && isLoaderActive)
             {
                 bool rightPrimaryButtonPressed;
 
@@ -64,7 +64,7 @@ namespace TeleopReachy
 
                     if (indicatorTimer >= 1.0f)
                     {
-                        TransitionRoomManager.Instance.ExitTransitionRoomRequested();
+                        MirrorSceneManager.Instance.ExitTransitionRoomRequested();
                     }
                 }
                 else

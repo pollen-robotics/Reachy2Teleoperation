@@ -11,7 +11,7 @@ namespace TeleopReachy
         private Text instructionsDetails;
 
         //private ConnectionStatus connectionStatus;
-        private TransitionRoomManager transitionRoomManager;
+        private MirrorSceneManager sceneManager;
 
         private TextButtonControllerModifier textButtonControllerModifier;
 
@@ -24,7 +24,7 @@ namespace TeleopReachy
         {
             instructions = transform.GetComponent<Text>();
 
-            transitionRoomManager = TransitionRoomManager.Instance;
+            sceneManager = MirrorSceneManager.Instance;
             textButtonControllerModifier = GetComponent<TextButtonControllerModifier>();
 
             if (Robot.IsCurrentRobotVirtual())
@@ -35,8 +35,8 @@ namespace TeleopReachy
             {
                 instructionsText = "Please face the mirror then press Ready";
                 instructionsDetailsText = "";
-                transitionRoomManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
-                transitionRoomManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
+                sceneManager.event_OnReadyForTeleop.AddListener(IndicateToPressA);
+                sceneManager.event_OnAbortTeleop.AddListener(IndicateRobotNotReady);
             }
 
             needUpdateText = true;

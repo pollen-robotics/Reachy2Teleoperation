@@ -13,7 +13,7 @@ namespace TeleopReachy
         void Start()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            TransitionRoomManager.Instance.event_OnReadyForTeleop.AddListener(ShowMirrorIndicator);
+            MirrorSceneManager.Instance.event_OnReadyForTeleop.AddListener(ShowMirrorIndicator);
             transform.ActivateChildren(false);
         }
 

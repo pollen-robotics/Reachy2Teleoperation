@@ -23,7 +23,7 @@ namespace TeleopReachy
         void QuitTransitionRoom()
         {
             if (!robotStatus.IsRobotPositionLocked)
-                TransitionRoomManager.Instance.BackToConnectionScene();
+                MirrorSceneManager.Instance.BackToConnectionScene();
             else
             {
                 canvaWarningLockPosition.ActivateChildren(true);
