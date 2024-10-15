@@ -179,7 +179,8 @@ namespace TeleopReachy
 
         public void ReadyForTeleop()
         {
-            robotStatus.InitializeRobotState();
+            EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
+
             if (userTrackerOk)
             {
                 State = TransitionState.ReadyForTeleop;

@@ -6,7 +6,6 @@ namespace TeleopReachy
 {
     public class StartArmTeleoperationUIManager : LazyFollow
     {
-        private RobotStatus robotStatus;
         //private RobotConfig robotConfig;
 
         private ControllersManager controllers;
@@ -27,12 +26,11 @@ namespace TeleopReachy
                 targetOffset = new Vector3(0, -0.1f, 0.7f);
             }
             maxDistanceAllowed = 0;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
             //robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            robotStatus.event_OnStartTeleoperation.AddListener(ShowInfoMessage);
-            robotStatus.event_OnStartArmTeleoperation.AddListener(HideInfoMessage);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideInfoMessage);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, HideInfoMessage);
+            EventManager.StartListening(EventNames.OnStartTeleoperation, ShowInfoMessage);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, HideInfoMessage);
 
             needUpdateInfoMessage = false;
             wantInfoMessageDisplayed = false;
