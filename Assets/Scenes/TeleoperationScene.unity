@@ -7042,7 +7042,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899718906aa8b3f448ab198f7bf16628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachy: {fileID: 0}
+  reachy: {fileID: 1953859516}
 --- !u!1 &2003905729
 GameObject:
   m_ObjectHideFlags: 0

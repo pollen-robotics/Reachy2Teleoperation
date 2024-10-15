@@ -40,7 +40,7 @@ namespace TeleopReachy
             }
             UnityEngine.XR.InputDevices.deviceConnected += CheckDevice;
 
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, InitRobotStatus);
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitRobotStatus);
 
             EnableSteamLaserPointer(controllerLeft, false);
             allowActiveControllerChange = true;

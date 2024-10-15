@@ -194,7 +194,7 @@ namespace TeleopReachy
         {
             event_OnExitTransitionRoomRequested.Invoke();
             robotStatus.SetEmotionsActive(true);
-            EventManager.TriggerEvent(EventNames.QuitMirrorScene);
+            EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
         }
 
         public void BackToConnectionScene()

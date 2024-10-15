@@ -25,14 +25,14 @@ namespace TeleopReachy
 
             EventManager.StartListening(EventNames.QuitApplication, QuitApplication);
 
-            EventManager.StartListening(EventNames.EnterConnectionScene, LoadConnectionScene);
-            EventManager.StartListening(EventNames.QuitConnectionScene, UnloadConnectionScene);
+            EventManager.StartListening(EventNames.EnterConnectionScene, LoadConnectionSceneEndUnloadMirrorScene);
+            EventManager.StartListening(EventNames.QuitConnectionScene, UnloadConnectionSceneAndLoadMirrorScene);
 
             EventManager.StartListening(EventNames.EnterMirrorScene, LoadMirrorScene);
             EventManager.StartListening(EventNames.QuitMirrorScene, UnloadMirrorScene);
 
-            EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadTeleoperationScene);
-            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadTeleoperationScene);
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadTeleoperationSceneAndUnloadMirrorScene);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadTeleoperationSceneAndLoadMirrorScene);
 
             EventManager.StartListening(EventNames.ShowXRay, ShowXRay);
             EventManager.StartListening(EventNames.HideXRay, HideXRay);
@@ -44,6 +44,21 @@ namespace TeleopReachy
             Application.Quit();
         }
 
+        private void UnloadRobotDataScene()
+        {
+            SceneManager.UnloadSceneAsync("RobotDataScene");
+        }
+
+        private void LoadConnectionSceneEndUnloadMirrorScene()
+        {
+            LoadConnectionScene();
+            if(SceneManager.GetSceneByName("RobotDataScene").isLoaded)
+            {
+                UnloadRobotDataScene();
+                UnloadMirrorScene();
+            }
+        }
+
         private void LoadConnectionScene()
         {
             Debug.Log("Loading Connection Scene");
@@ -53,13 +68,13 @@ namespace TeleopReachy
             SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
         }
 
-        private void UnloadConnectionScene()
+        private void UnloadConnectionSceneAndLoadMirrorScene()
         {
             SceneManager.UnloadSceneAsync("ConnectionScene");
-            StartCoroutine(LoadRobotDataScene());
+            StartCoroutine(LoadRobotDataSceneAndMirrorScene());
         }
 
-        IEnumerator LoadRobotDataScene()
+        IEnumerator LoadRobotDataSceneAndMirrorScene()
         {
             userTracker.SetActive(true);
 
@@ -68,6 +83,8 @@ namespace TeleopReachy
             EventManager.TriggerEvent(EventNames.RobotDataSceneLoaded);
 
             userInput.SetActive(true);
+
+            LoadMirrorScene();
         }
 
         private void LoadMirrorScene()
@@ -93,9 +110,10 @@ namespace TeleopReachy
             ground.SetActive(false);
         }
 
-        private void LoadTeleoperationScene()
+        private void LoadTeleoperationSceneAndUnloadMirrorScene()
         {
             StartCoroutine(LoadTeleoperationRoom());
+            UnloadMirrorScene();
         }
 
         IEnumerator LoadTeleoperationRoom()
@@ -105,9 +123,10 @@ namespace TeleopReachy
             EventManager.TriggerEvent(EventNames.TeleoperationSceneLoaded);
         }
 
-        private void UnloadTeleoperationScene()
+        private void UnloadTeleoperationSceneAndLoadMirrorScene()
         {
             SceneManager.UnloadSceneAsync("TeleoperationScene");
+            LoadMirrorScene();
         }
 
         private void ShowXRay()
