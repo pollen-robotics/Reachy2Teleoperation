@@ -39,7 +39,6 @@ namespace TeleopReachy
         void Start()
         {
             isRobotSelectionMenuOpen = false;
-            //isServerInfoMenuOpen = false;
             isAddRobotMenuOpen = false;
             isDeleteRobotMenuOpen = false;
             isModifyRobotMenuOpen = false;
@@ -70,7 +69,6 @@ namespace TeleopReachy
                 PlayerPrefs.SetString("robot_info", selectedRobot.ip);
 
                 EventManager.TriggerEvent(EventNames.QuitConnectionScene);
-                EventManager.TriggerEvent(EventNames.EnterMirrorScene);
             }
         }
 
