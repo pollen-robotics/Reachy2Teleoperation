@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36635852}
   - component: {fileID: 36635854}
-  - component: {fileID: 36635855}
+  - component: {fileID: 36635856}
   m_Layer: 5
   m_Name: HomeMenuLoader
   m_TagString: Untagged
@@ -240,7 +240,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36635851}
   m_CullTransparentMesh: 1
---- !u!114 &36635855
+--- !u!114 &36635856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 36635851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b2a1828a6b248d48a7e0b80b2287661, type: 3}
+  m_Script: {fileID: 11500000, guid: b453faa7891faf24699e3b8a255df359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 0}
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_ApplyTargetInLocalSpace: 0
   m_MovementSpeed: 6
   m_MovementSpeedVariancePercentage: 0.25
-  m_SnapOnEnable: 0
+  m_SnapOnEnable: 1
   m_PositionFollowMode: 1
   m_MinDistanceAllowed: 0.01
   m_MaxDistanceAllowed: 0.3
@@ -2818,9 +2818,8 @@ GameObject:
   - component: {fileID: 804350696}
   - component: {fileID: 804350695}
   - component: {fileID: 804350700}
-  - component: {fileID: 804350701}
   m_Layer: 5
-  m_Name: CanvaOfflineMenu
+  m_Name: TeleoperationExitMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2941,26 +2940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlaneDistance: 1.5
---- !u!114 &804350701
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea0ca64b58078714ca35e0bf4007f907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedItem: 0
-  indicatorTimer: 0
-  event_OnAskForOfflineMenu:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnLeaveOfflineMenu:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &814315993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4904,7 +4883,7 @@ GameObject:
   - component: {fileID: 1412520789}
   - component: {fileID: 1412520790}
   m_Layer: 0
-  m_Name: TeleoperationManager
+  m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4938,6 +4917,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reachy: {fileID: 1953859516}
+  selectedItem: 0
+  event_OnAskForTeleoperationMenu:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnLeaveTeleoperationMenu:
+    m_PersistentCalls:
+      m_Calls: []
+  indicatorTimer: 0
 --- !u!1 &1437018699
 GameObject:
   m_ObjectHideFlags: 0
@@ -8057,8 +8044,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1876506746}
-  - {fileID: 1412520789}
   - {fileID: 100821914}
   - {fileID: 1629947394}
   - {fileID: 1792293515}
   - {fileID: 1953859514}
+  - {fileID: 1412520789}

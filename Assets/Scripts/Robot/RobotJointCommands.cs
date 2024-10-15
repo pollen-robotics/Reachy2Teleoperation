@@ -28,17 +28,6 @@ namespace TeleopReachy
             dataController = DataMessageManager.Instance;
             connectionStatus = ConnectionStatus.Instance;
 
-            // robotStatus.event_OnInitializeRobotStateRequested.AddListener(InitializeRobotState);
-            // robotStatus.event_OnRobotStiffRequested.AddListener(SetRobotStiff);
-            // robotStatus.event_OnRobotCompliantRequested.AddListener(SetRobotCompliant);
-            // robotStatus.event_OnRobotSmoothlyCompliantRequested.AddListener(SetRobotSmoothlyCompliant);
-
-            // robotStatus.event_OnSuspendTeleoperation.AddListener(SuspendTeleoperation);
-            // robotStatus.event_OnResumeTeleoperation.AddListener(ResumeTeleoperation);
-
-            // robotStatus.event_OnStartArmTeleoperation.AddListener(StartTeleoperation);
-            // robotStatus.event_OnStopTeleoperation.AddListener(StopTeleoperation);
-
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTeleoperation);
             EventManager.StartListening(EventNames.OnStopTeleoperation, StopTeleoperation);
 

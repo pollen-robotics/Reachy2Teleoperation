@@ -3,7 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class LoaderToStopManager : LazyFollow
+    public class TeleoperationExitMenuUIManager : LazyFollow
     {
         [SerializeField]
         private Transform loaderA;
@@ -15,12 +15,9 @@ namespace TeleopReachy
 
         private bool isLoaderActive = true;
 
-        private OfflineMenuManager offlineMenuManager;
-
-        private OfflineMenuManager.OfflineMenuItem previousItem;
-        // private ControllersManager controllers;
-
-        // Start is called before the first frame update
+        private TeleoperationSceneManager sceneManager;
+        private TeleoperationSceneManager.TeleoperationMenuItem previousItem;
+    
         void Start()
         {
             // controllers = ActiveControllerManager.Instance.ControllersManager;
@@ -35,11 +32,11 @@ namespace TeleopReachy
 
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideMenu);
 
-            offlineMenuManager = OfflineMenuManager.Instance;
-            offlineMenuManager.event_OnAskForOfflineMenu.AddListener(ShowMenu);
-            offlineMenuManager.event_OnLeaveOfflineMenu.AddListener(HideMenu);
+            sceneManager = TeleoperationSceneManager.Instance;
+            sceneManager.event_OnAskForTeleoperationMenu.AddListener(ShowMenu);
+            sceneManager.event_OnLeaveTeleoperationMenu.AddListener(HideMenu);
 
-            previousItem = offlineMenuManager.selectedItem;
+            previousItem = sceneManager.selectedItem;
 
             lock_image.SetActive(false);
 
@@ -57,7 +54,7 @@ namespace TeleopReachy
         {
             if (isLoaderActive)
             {
-                loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = offlineMenuManager.indicatorTimer;
+                loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = sceneManager.indicatorTimer;
                 menu.gameObject.SetActive(false);
                 isLoaderActive = false;
             }
@@ -68,10 +65,10 @@ namespace TeleopReachy
         {
             if (isLoaderActive)
             {
-                loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = offlineMenuManager.indicatorTimer;
-                if (previousItem != offlineMenuManager.selectedItem)
+                loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = sceneManager.indicatorTimer;
+                if (previousItem != sceneManager.selectedItem)
                 {
-                    previousItem = offlineMenuManager.selectedItem;
+                    previousItem = sceneManager.selectedItem;
                     HighlightSelectedItem();
                 }
             }
@@ -79,14 +76,14 @@ namespace TeleopReachy
 
         void HighlightSelectedItem()
         {
-            switch (offlineMenuManager.selectedItem)
+            switch (sceneManager.selectedItem)
             {
-                case OfflineMenuManager.OfflineMenuItem.LockAndHome:
+                case TeleoperationSceneManager.TeleoperationMenuItem.LockAndHome:
                     {
                         lock_image.SetActive(true);
                         break;
                     }
-                case OfflineMenuManager.OfflineMenuItem.Home:
+                case TeleoperationSceneManager.TeleoperationMenuItem.Home:
                     {
                         lock_image.SetActive(false);
                         break;
