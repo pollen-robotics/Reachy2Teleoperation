@@ -1243,9 +1243,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1794126925}
-  - component: {fileID: 1794126929}
   - component: {fileID: 1794126926}
   - component: {fileID: 1794126928}
+  - component: {fileID: 1794126929}
+  - component: {fileID: 1794126930}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -1310,6 +1311,18 @@ MonoBehaviour:
   userInput: {fileID: 4826978605613812945}
   ground: {fileID: 6389971055515736630}
   XROrigin: {fileID: 595309022}
+--- !u!114 &1794126930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060dd2ec099141e47ac114e5d82be687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1877841883
 GameObject:
   m_ObjectHideFlags: 0

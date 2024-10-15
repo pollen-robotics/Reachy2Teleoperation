@@ -9,7 +9,6 @@ namespace TeleopReachy
         private bool isActivatedTeleoperationSuspension;
 
         private ControllersManager controllers;
-        private UserEmergencyStopInput userEmergencyStop;
 
         public float indicatorTimer = 0.0f;
         private float minIndicatorTimer = 0.0f;
@@ -22,7 +21,7 @@ namespace TeleopReachy
         void Start()
         {
             EventManager.StartListening(EventNames.HeadsetRemoved, CallSuspensionWarning);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init_EmergencyStop);
+            EventManager.StartListening(EventNames.OnEmergencyStop, CallSuspensionWarning);
             EventManager.StartListening(EventNames.QuitTeleoperationScene, ReinitValue);
 
             controllers = ControllersManager.Instance;
@@ -31,12 +30,6 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnStopTeleoperation, NoSuspensionWarning);
 
             NoSuspensionWarning();
-        }
-
-        void Init_EmergencyStop()
-        {
-            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
-            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(CallSuspensionWarning);
         }
 
         void ReinitValue()

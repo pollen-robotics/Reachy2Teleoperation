@@ -39,11 +39,11 @@ namespace TeleopReachy
             {
                 if ((!robotConfig.HasLeftArm() || !robotStatus.IsLeftArmOn()) && (!robotConfig.HasRightArm() || !robotStatus.IsRightArmOn()))
                 {
-                    robotStatus.StartArmTeleoperation();
+                    EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
                 }
                 else if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                 {
-                    robotStatus.StartArmTeleoperation();
+                    EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
                 }
 
             }

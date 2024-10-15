@@ -37,10 +37,10 @@ namespace TeleopReachy
 
         void SwitchButtonMode()
         {
-            robotStatus.SetMobilityOn(!robotStatus.IsMobilityOn());
-            PlayerPrefs.SetString("mobility_on", robotStatus.IsMobilityOn().ToString());
+            robotStatus.SetMobilityOn(!robotStatus.IsMobileBaseOn());
+            PlayerPrefs.SetString("mobility_on", robotStatus.IsMobileBaseOn().ToString());
 
-            if (robotStatus.IsMobilityOn())
+            if (robotStatus.IsMobileBaseOn())
             {
                 mobilityButton.colors = ColorsManager.colorsActivated;
                 mobilityButton.transform.GetChild(0).GetComponent<Text>().text = "Mobile base ON";
@@ -68,7 +68,7 @@ namespace TeleopReachy
             if (robotConfig.HasMobileBase())
             {
                 isInteractable = true;
-                if (robotStatus.IsMobilityOn())
+                if (robotStatus.IsMobileBaseOn())
                 {
                     buttonColor = ColorsManager.colorsActivated;
                     buttonText = "Mobile base ON";

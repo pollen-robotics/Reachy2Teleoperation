@@ -81,7 +81,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobileBaseOn() && !robotStatus.AreRobotMovementsSuspended())
             {
                 
                 Vector2 direction = userMobilityInput.GetMobileBaseDirection();

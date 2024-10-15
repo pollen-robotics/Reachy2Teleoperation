@@ -36,6 +36,8 @@ namespace TeleopReachy
         OnRobotCompliantRequested,
         OnRobotSmoothlyCompliantRequested,
         OnGraspingLock,
+
+        OnEmergencyStop,
     }
 
     public class EventManager : Singleton<EventManager>
