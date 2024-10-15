@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace TeleopReachy
 {
-    public class ApplicationManager : MonoBehaviour
+    public class ScenesManager : Singleton<ScenesManager>
     {
         public GameObject userTracker = null;
 
