@@ -6,22 +6,11 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class WarningMessageServiceDisconnectedUIManager : CustomLazyFollowUI
+    public class WarningMessageServiceDisconnectedUIManager : InformationalPanel
     {
         private ConnectionStatus connectionStatus;
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
-
-        [SerializeField]
-        private Text warningMessage;
-
-        private string messageToDisplay;
-
-        private bool needUpdateWarningMessage;
-        private bool wantWarningMessageDisplayed;
-
-        private bool onlyMobileServicesAffected;
-        private Coroutine limitDisplayInTime;
 
         private UserMobilityInput userMobilityInput;
 
@@ -33,119 +22,53 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, ListenToUserMobilityInput);
-
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckNewStatus);
-            connectionStatus.event_OnRobotReady.AddListener(HideWarningMessage);
-            connectionStatus.event_OnRobotUnready.AddListener(ShowWarningMessage);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, HideWarningMessage);
-            
-
-            needUpdateWarningMessage = false;
-            wantWarningMessageDisplayed = false;
-
-            transform.ActivateChildren(false);
-        }
-
-        void ListenToUserMobilityInput()
-        {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             userMobilityInput.event_OnTriedToSendCommands.AddListener(DisplayMessageForMobility);
+
+            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(DisplayNewConnectionStatus);
+            connectionStatus.event_OnRobotReady.AddListener(HideInfoMessage);
+            connectionStatus.event_OnRobotUnready.AddListener(ShowInfoMessage);
+
+            HideInfoMessage();
         }
 
-
-        void CheckNewStatus()
+        void DisplayNewConnectionStatus()
         {
-            onlyMobileServicesAffected = false;
             if (!connectionStatus.IsRobotInDataRoom())
             {
                 if (!connectionStatus.IsRobotInVideoRoom())
                 {
-                    messageToDisplay = "Robot services have been disconnected";
+                    textToDisplay = "Robot services have been disconnected";
                 }
                 else
                 {
-                    messageToDisplay = "Motor control has been disconnected";
+                    textToDisplay = "Motor control has been disconnected";
                 }
             }
             else
             {
                 if (!connectionStatus.IsRobotInVideoRoom())
                 {
-                    messageToDisplay = "Video stream has been disconnected";
-                }
-                else
-                {
-                    wantWarningMessageDisplayed = false;
+                    textToDisplay = "Video stream has been disconnected";
                 }
             }
-            needUpdateWarningMessage = true;
+            ShowInfoMessage();
         }
 
         void DisplayMessageForMobility()
         {
-            if (!wantWarningMessageDisplayed)
+            if (robotConfig.HasMobileBase())
             {
-                onlyMobileServicesAffected = true;
-                if (robotConfig.HasMobileBase())
+                if (!robotStatus.IsMobilityActive())
                 {
-                    if (!robotStatus.IsMobilityActive())
-                    {
-                        messageToDisplay = "Mobile services have been disconnected";
-                    }
-                    else
-                    {
-                        if (!robotStatus.IsMobileBaseOn()) messageToDisplay = "Mobile base has been disabled in options";
-                    }
-                    ShowWarningMessage();
-                }
-            }
-        }
-
-        void ShowWarningMessage()
-        {
-            if (robotStatus.IsRobotTeleoperationActive())
-            {
-                wantWarningMessageDisplayed = true;
-                needUpdateWarningMessage = true;
-            }
-        }
-
-        void Update()
-        {
-            if (needUpdateWarningMessage)
-            {
-                warningMessage.text = messageToDisplay;
-                if (onlyMobileServicesAffected)
-                {
-                    if (wantWarningMessageDisplayed)
-                    {
-                        if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
-                        limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
-                    }
+                    textToDisplay = "Mobile services have been disconnected";
                 }
                 else
                 {
-                    if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
-                    if (wantWarningMessageDisplayed) transform.ActivateChildren(true);
-                    else { transform.ActivateChildren(false); }
+                    if (!robotStatus.IsMobileBaseOn()) textToDisplay = "Mobile base has been disabled in options";
                 }
-                needUpdateWarningMessage = false;
+                ShowInfoMessage();
             }
-        }
-
-        IEnumerator DisplayLimitedInTime()
-        {
-            transform.ActivateChildren(true);
-            yield return new WaitForSeconds(3);
-            transform.ActivateChildren(false);
-            wantWarningMessageDisplayed = false;
-        }
-
-        void HideWarningMessage()
-        {
-            wantWarningMessageDisplayed = false;
-            needUpdateWarningMessage = true;
         }
     }
 }
