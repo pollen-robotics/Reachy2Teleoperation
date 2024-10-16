@@ -33,13 +33,12 @@ namespace TeleopReachy
         private ColorBlock tunnellingOnClickButtonColor;
         private ColorBlock reducedScreenOnClickButtonColor;
 
-        // private ColorBlock autoDisplayButtonColor;
-        // private ColorBlock onDemandOnlyButtonColor;
-
-        private MotionSicknessManager motionSicknessManager;
+        private OptionsManager optionsManager;
 
         void Start()
         {
+            optionsManager = OptionsManager.Instance;
+
             noEffectAutoButton?.onClick.AddListener(SwitchToNoEffectAutoMode);
             tunnellingAutoButton?.onClick.AddListener(SwitchToTunnellingAutoMode);
             reducedScreenAutoButton?.onClick.AddListener(SwitchToReducedScreenAutoMode);
@@ -56,26 +55,23 @@ namespace TeleopReachy
             reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
             noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
 
-            motionSicknessManager = MotionSicknessManager.Instance;
-            motionSicknessManager.event_OnUpdateMotionSicknessPreferences.AddListener(ChooseButtonsMode);
             ChooseButtonsMode();
         }
 
         void ChooseButtonsMode()
         {
-            if (motionSicknessManager.IsTunnellingAutoOn) SwitchToTunnellingAutoMode();
-            else if (motionSicknessManager.IsReducedScreenAutoOn) SwitchToReducedScreenAutoMode();
+            if (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.Tunnelling) SwitchToTunnellingAutoMode();
+            else if (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.ReducedScreen) SwitchToReducedScreenAutoMode();
             else SwitchToNoEffectAutoMode();
 
-            if (motionSicknessManager.IsTunnellingOnClickOn) SwitchToTunnellingOnClickMode();
-            else if (motionSicknessManager.IsReducedScreenOnClickOn) SwitchToReducedScreenOnClickMode();
+            if (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.Tunnelling) SwitchToTunnellingOnClickMode();
+            else if (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen) SwitchToReducedScreenOnClickMode();
             else SwitchToNoEffectOnClickMode();
         }
 
         void SwitchToNoEffectAutoMode()
         {
-            motionSicknessManager.IsTunnellingAutoOn = false;
-            motionSicknessManager.IsReducedScreenAutoOn = false;
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.None);
 
             noEffectAutoButtonColor = ColorsManager.colorsActivated;
             tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
@@ -86,8 +82,7 @@ namespace TeleopReachy
 
         void SwitchToTunnellingAutoMode()
         {
-            motionSicknessManager.IsTunnellingAutoOn = true;
-            motionSicknessManager.IsReducedScreenAutoOn = false;
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.Tunnelling);
 
             noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
             tunnellingAutoButtonColor = ColorsManager.colorsActivated;
@@ -98,8 +93,7 @@ namespace TeleopReachy
 
         void SwitchToReducedScreenAutoMode()
         {
-            motionSicknessManager.IsTunnellingAutoOn = false;
-            motionSicknessManager.IsReducedScreenAutoOn = true;
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.ReducedScreen);
 
             noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
             tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
@@ -110,8 +104,7 @@ namespace TeleopReachy
 
         void SwitchToNoEffectOnClickMode()
         {
-            motionSicknessManager.IsTunnellingOnClickOn = false;
-            motionSicknessManager.IsReducedScreenOnClickOn = false;
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.None);
 
             noEffectOnClickButtonColor = ColorsManager.colorsActivated;
             tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
@@ -122,8 +115,7 @@ namespace TeleopReachy
 
         void SwitchToTunnellingOnClickMode()
         {
-            motionSicknessManager.IsTunnellingOnClickOn = true;
-            motionSicknessManager.IsReducedScreenOnClickOn = false;
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.Tunnelling);
 
             noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
             tunnellingOnClickButtonColor = ColorsManager.colorsActivated;
@@ -134,8 +126,7 @@ namespace TeleopReachy
 
         void SwitchToReducedScreenOnClickMode()
         {
-            motionSicknessManager.IsTunnellingOnClickOn = false;
-            motionSicknessManager.IsReducedScreenOnClickOn = true;
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.ReducedScreen);
 
             noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
             tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;

@@ -1247,6 +1247,7 @@ GameObject:
   - component: {fileID: 1794126928}
   - component: {fileID: 1794126929}
   - component: {fileID: 1794126930}
+  - component: {fileID: 1794126931}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -1321,6 +1322,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 060dd2ec099141e47ac114e5d82be687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1794126931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ce875cfa3db8b4ab097c9801342305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1877841883
@@ -4432,9 +4445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4b7c4714532df4a8bde80ab93b2659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_OnEmergencyStopCalled:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &9073630071473511950
 MonoBehaviour:
   m_ObjectHideFlags: 0

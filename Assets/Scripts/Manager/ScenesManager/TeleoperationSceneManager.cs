@@ -23,7 +23,7 @@ namespace TeleopReachy
         private bool robotDisplayed;
 
         public TeleoperationMenuItem selectedItem;
-        private bool isTeleoperationMenuActive;
+        public bool IsTeleoperationMenuActive { get; private set; }
 
         public UnityEvent event_OnAskForTeleoperationMenu;
         public UnityEvent event_OnLeaveTeleoperationMenu;
@@ -31,7 +31,7 @@ namespace TeleopReachy
         private bool rightPrimaryButtonPreviouslyPressed;
         private bool leftPrimaryButtonPreviouslyPressed;
 
-        public float indicatorTimer = 0.0f;
+        public float indicatorTimer { get; private set; }
         private const float minIndicatorTimer = 0.0f;
 
         void Start()
@@ -63,7 +63,8 @@ namespace TeleopReachy
 
             // For menu
             selectedItem = TeleoperationMenuItem.Cancel;
-            isTeleoperationMenuActive = false;
+            IsTeleoperationMenuActive = false;
+            indicatorTimer = 0.0f;
         }
 
         void StopTeleoperation()
@@ -124,14 +125,14 @@ namespace TeleopReachy
             if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
             {
                 selectedItem = TeleoperationMenuItem.Home;
-                if (!isTeleoperationMenuActive)
+                if (!IsTeleoperationMenuActive)
                 {
                     event_OnAskForTeleoperationMenu.Invoke();
-                    isTeleoperationMenuActive = true;
+                    IsTeleoperationMenuActive = true;
                 }
             }
 
-            if (isTeleoperationMenuActive)
+            if (IsTeleoperationMenuActive)
             {
                 if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
                 {
@@ -175,7 +176,7 @@ namespace TeleopReachy
         {
             indicatorTimer = minIndicatorTimer;
             event_OnLeaveTeleoperationMenu.Invoke();
-            isTeleoperationMenuActive = false;
+            IsTeleoperationMenuActive = false;
         }
     }
 }
