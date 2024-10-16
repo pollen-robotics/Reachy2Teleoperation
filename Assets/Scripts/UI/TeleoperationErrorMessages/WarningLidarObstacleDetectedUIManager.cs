@@ -25,8 +25,6 @@ namespace TeleopReachy
 
         private UserMobilityInput userMobilityInput;
 
-        private ControllersManager controllers;
-
         void Start()
         {
             SetOculusTargetOffset(new Vector3(0, -0.22f, 0.8f));
