@@ -5,40 +5,26 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class GraspingLockUIManager : CustomLazyFollowUI
+    public class GraspingLockUIManager : InformationalPanel
     {
         private RobotStatus robotStatus;
-
-        private Coroutine limitDisplayInTime;
-
-        [SerializeField]
-        private Text infoMessage;
 
         void Start()
         {
             SetOculusTargetOffset(new Vector3(0, -0.22f, 0.8f));
 
-            transform.ActivateChildren(false);
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnGraspingLock.AddListener(ShowMessage);
+            robotStatus.event_OnGraspingLock.AddListener(ChooseMessageAndDisplay);
+            HideInfoMessage();
         }
 
-
-        void ShowMessage(bool graspLockActivated)
+        void ChooseMessageAndDisplay(bool graspLockActivated)
         {
             if (graspLockActivated)
-                infoMessage.text = "Grasping Lock Activated";
+                textToDisplay = "Grasping Lock Activated";
             else
-                infoMessage.text = "Grasping Lock Deactivated";
-            if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
-            limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
-        }
-
-        IEnumerator DisplayLimitedInTime()
-        {
-            transform.ActivateChildren(true);
-            yield return new WaitForSeconds(3);
-            transform.ActivateChildren(false);
+                textToDisplay = "Grasping Lock Deactivated";
+            ShowInfoMessage();
         }
     }
 }
