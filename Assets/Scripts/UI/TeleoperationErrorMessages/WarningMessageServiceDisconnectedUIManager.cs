@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class WarningMessageServiceDisconnectedUIManager : LazyFollow
+    public class WarningMessageServiceDisconnectedUIManager : CustomLazyFollowUI
     {
         private ConnectionStatus connectionStatus;
         private RobotStatus robotStatus;
@@ -24,20 +24,10 @@ namespace TeleopReachy
         private Coroutine limitDisplayInTime;
 
         private UserMobilityInput userMobilityInput;
-        private ControllersManager controllers;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.32f, 0.8f);
-            }
-            else
-            { // If oculus 3 or other
-                targetOffset = new Vector3(0, -0.32f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.32f, 0.8f));
 
             connectionStatus = ConnectionStatus.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;

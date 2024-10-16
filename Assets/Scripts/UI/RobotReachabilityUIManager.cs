@@ -9,7 +9,7 @@ using System;
 
 namespace TeleopReachy
 {
-    public class RobotReachabilityUIManager : LazyFollow
+    public class RobotReachabilityUIManager : CustomLazyFollowUI
     {
         private Dictionary<string, float> panelTemperature;
         private Dictionary<string, string> panelStatus;
@@ -32,20 +32,9 @@ namespace TeleopReachy
         private Coroutine leftArmPanelDisplay;
         private Coroutine rightArmPanelDisplay;
 
-        private ControllersManager controllers;
-
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, 0f, 0.5f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, 0f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
 
             reachabilityManager = RobotDataManager.Instance.RobotReachabilityManager;
             reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleLeftArmReachabilityError);

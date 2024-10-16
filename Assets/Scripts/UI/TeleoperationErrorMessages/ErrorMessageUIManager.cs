@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class ErrorMessageUIManager : LazyFollow
+    public class ErrorMessageUIManager : CustomLazyFollowUI
     {
         [SerializeField]
         private Transform motorsErrorPanel;
@@ -43,16 +43,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.27f, 0.8f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.27f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.27f, 0.8f));
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStartTeleoperation, ReinitializeValues);
