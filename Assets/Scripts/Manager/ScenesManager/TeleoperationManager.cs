@@ -7,12 +7,19 @@ namespace TeleopReachy
     {
         private ConnectionStatus connectionStatus;
 
+        public enum TeleoperationSuspensionCase 
+        {
+            None, HeadsetRemoved, EmergencyStopActivated,
+        }
+
+        public TeleoperationSuspensionCase reasonForSuspension { get; private set; }
+
         void Start()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartTeleoperation);
             EventManager.StartListening(EventNames.QuitTeleoperationScene, StopTeleoperation);
-            EventManager.StartListening(EventNames.HeadsetRemoved, SuspendTeleoperation);
-            EventManager.StartListening(EventNames.OnEmergencyStop, SuspendTeleoperation);
+            EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
+            EventManager.StartListening(EventNames.OnEmergencyStop, EmergencyStopActivated);
 
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitConnectionStatus);
         }
@@ -37,6 +44,18 @@ namespace TeleopReachy
         void StopTeleoperation()
         {
             EventManager.TriggerEvent(EventNames.OnStopTeleoperation);
+        }
+
+        void EmergencyStopActivated()
+        {
+            reasonForSuspension = TeleoperationSuspensionCase.EmergencyStopActivated;
+            SuspendTeleoperation();
+        }
+
+        void HeadsetRemoved()
+        {
+            reasonForSuspension = TeleoperationSuspensionCase.HeadsetRemoved;
+            SuspendTeleoperation();
         }
 
         void SuspendTeleoperation()

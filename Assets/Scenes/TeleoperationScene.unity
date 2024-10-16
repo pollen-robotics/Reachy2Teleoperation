@@ -3841,10 +3841,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1244735972}
   - component: {fileID: 1244735973}
-  - component: {fileID: 1244735975}
   - component: {fileID: 1244735974}
   m_Layer: 6
-  m_Name: TeleoperationSuspension
+  m_Name: TeleoperationSuspensionMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3863,7 +3862,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2011720378}
-  m_Father: {fileID: 1876506746}
+  m_Father: {fileID: 2021801166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3907,19 +3906,6 @@ MonoBehaviour:
   m_TimeUntilThresholdReachesMaxAngle: 3
   loaderA: {fileID: 1286382600}
   suspensionReasonText: {fileID: 1277325909}
---- !u!114 &1244735975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1244735971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7d2189dd3151940b91ae279d868660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indicatorTimer: 0
 --- !u!1 &1265444221
 GameObject:
   m_ObjectHideFlags: 0
@@ -6313,7 +6299,6 @@ RectTransform:
   - {fileID: 1501744152}
   - {fileID: 750364233}
   - {fileID: 213409791}
-  - {fileID: 1244735972}
   - {fileID: 1383062756}
   - {fileID: 1365689280}
   - {fileID: 935331310}
@@ -6642,6 +6627,7 @@ RectTransform:
   m_Children:
   - {fileID: 1437018700}
   - {fileID: 36635852}
+  - {fileID: 1244735972}
   m_Father: {fileID: 1876506746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
