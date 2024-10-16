@@ -68,7 +68,7 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightJoystickButtonPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out leftJoystickButtonPressed);
 
-            if (!robotStatus.AreRobotMovementsSuspended() && !TeleoperationSceneManager.Instance.IsTeleoperationMenuActive)
+            if (!robotStatus.AreRobotMovementsSuspended() && !TeleoperationSceneManager.Instance.IsTeleoperationExitMenuActive)
             {
                 if(IsTunnellingOnClickOn || IsReducedScreenOnClickOn)
                 {

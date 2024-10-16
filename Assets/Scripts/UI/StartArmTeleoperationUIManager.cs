@@ -4,45 +4,20 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class StartArmTeleoperationUIManager : LazyFollow
+    public class StartArmTeleoperationUIManager : CustomLazyFollowUI
     {
-        //private RobotConfig robotConfig;
-
-        private ControllersManager controllers;
-
         private bool needUpdateInfoMessage;
         private bool wantInfoMessageDisplayed;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.1f, 0.5f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.1f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
-            //robotConfig = RobotDataManager.Instance.RobotConfig;
+            SetOculusTargetOffset(new Vector3(0, -0.1f, 0.5f));
 
-            EventManager.StartListening(EventNames.OnStartArmTeleoperation, HideInfoMessage);
-            EventManager.StartListening(EventNames.OnStartTeleoperation, ShowInfoMessage);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, HideInfoMessage);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, HideMenu);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, HideMenu);
 
             needUpdateInfoMessage = false;
             wantInfoMessageDisplayed = false;
-
-            EventManager.StartListening(EventNames.OnEmergencyStop, HideInfoMessage);
-
-            transform.ActivateChildren(false);
-        }
-
-        void ShowInfoMessage()
-        {
-            wantInfoMessageDisplayed = true;
-            needUpdateInfoMessage = true;
         }
 
         void Update()
@@ -54,7 +29,7 @@ namespace TeleopReachy
             }
         }
 
-        void HideInfoMessage()
+        void HideMenu()
         {
             wantInfoMessageDisplayed = false;
             needUpdateInfoMessage = true;

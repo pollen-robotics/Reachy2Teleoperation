@@ -16,7 +16,7 @@ namespace TeleopReachy
         private bool isLoaderActive = true;
 
         private TeleoperationSceneManager sceneManager;
-        private TeleoperationSceneManager.TeleoperationMenuItem previousItem;
+        private TeleoperationSceneManager.TeleoperationExitMenuItem previousItem;
     
         void Start()
         {
@@ -36,7 +36,7 @@ namespace TeleopReachy
             sceneManager.event_OnAskForTeleoperationMenu.AddListener(ShowMenu);
             sceneManager.event_OnLeaveTeleoperationMenu.AddListener(HideMenu);
 
-            previousItem = sceneManager.selectedItem;
+            previousItem = sceneManager.teleoperationExitSelectedOption;
 
             lock_image.SetActive(false);
 
@@ -65,9 +65,9 @@ namespace TeleopReachy
             if (isLoaderActive)
             {
                 loaderA.GetComponent<UnityEngine.UI.Image>().fillAmount = sceneManager.indicatorTimer;
-                if (previousItem != sceneManager.selectedItem)
+                if (previousItem != sceneManager.teleoperationExitSelectedOption)
                 {
-                    previousItem = sceneManager.selectedItem;
+                    previousItem = sceneManager.teleoperationExitSelectedOption;
                     HighlightSelectedItem();
                 }
             }
@@ -75,14 +75,14 @@ namespace TeleopReachy
 
         void HighlightSelectedItem()
         {
-            switch (sceneManager.selectedItem)
+            switch (sceneManager.teleoperationExitSelectedOption)
             {
-                case TeleoperationSceneManager.TeleoperationMenuItem.LockAndHome:
+                case TeleoperationSceneManager.TeleoperationExitMenuItem.LockAndHome:
                     {
                         lock_image.SetActive(true);
                         break;
                     }
-                case TeleoperationSceneManager.TeleoperationMenuItem.Home:
+                case TeleoperationSceneManager.TeleoperationExitMenuItem.Home:
                     {
                         lock_image.SetActive(false);
                         break;
