@@ -39,7 +39,6 @@ namespace TeleopReachy
         private string warningPingText;
         private string warningBatteryText;
         private Color32 warningBatteryColor;
-        private ControllersManager controllers;
 
         void Start()
         {
