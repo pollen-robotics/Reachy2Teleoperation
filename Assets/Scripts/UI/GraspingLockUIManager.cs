@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class GraspingLockUIManager : LazyFollow
+    public class GraspingLockUIManager : CustomLazyFollowUI
     {
         private RobotStatus robotStatus;
 
@@ -14,20 +14,10 @@ namespace TeleopReachy
         [SerializeField]
         private Text infoMessage;
 
-        private ControllersManager controllers;
-
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.22f, 0.8f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.22f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.22f, 0.8f));
+
             transform.ActivateChildren(false);
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnGraspingLock.AddListener(ShowMessage);

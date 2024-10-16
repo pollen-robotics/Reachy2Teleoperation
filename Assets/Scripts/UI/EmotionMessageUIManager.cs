@@ -6,7 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class EmotionMessageUIManager : LazyFollow
+    public class EmotionMessageUIManager : CustomLazyFollowUI
     {
         //private RobotStatus robotStatus;
 
@@ -31,23 +31,14 @@ namespace TeleopReachy
 
         [SerializeField]
         private RawImage image;
-        private ControllersManager controllers;
 
 
         private Dictionary<Emotion, Texture> emotionImages;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.24f, 0.8f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.24f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.24f, 0.8f));
+
             transform.ActivateChildren(false);
             emotionImages = new Dictionary<Emotion, Texture>();
             emotionImages.Add(Emotion.Sad, sadImage);

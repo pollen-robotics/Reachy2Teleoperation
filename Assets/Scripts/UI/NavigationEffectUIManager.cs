@@ -5,7 +5,7 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class NavigationEffectUIManager : LazyFollow
+    public class NavigationEffectUIManager : CustomLazyFollowUI
     {
         [SerializeField]
         private Transform navigationEffectInfoPanel;
@@ -18,20 +18,10 @@ namespace TeleopReachy
         private bool needNavigationEffectUpdate;
 
         private string navigationEffectText;
-        private ControllersManager controllers;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.27f, 0.8f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.27f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.27f, 0.8f));
 
             motionSicknessManager = MotionSicknessManager.Instance;
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ShowInfoMessage);
