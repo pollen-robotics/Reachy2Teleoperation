@@ -32,6 +32,8 @@ namespace TeleopReachy
         public float indicatorTimer { get; private set; }
         private const float minIndicatorTimer = 0.0f;
 
+        private bool allowRightPrimaryButtonUse = true;
+
         void Start()
         {
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, CloseTeleoperationExitMenu);
@@ -96,6 +98,12 @@ namespace TeleopReachy
             if (!robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 CheckStartArmTeleoperationState(rightPrimaryButtonPressed);
+            }
+
+            // Check teleoperation and controllers status for suspension menu
+            if (robotStatus.IsRobotTeleoperationActive() && robotStatus.AreRobotMovementsSuspended())
+            {
+                CheckTeleoperationSuspensionMenuState(rightPrimaryButtonPressed);
             }
 
             rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
@@ -163,6 +171,27 @@ namespace TeleopReachy
             else if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
             {
                 TeleoperationManager.Instance.AskForStartingArmTeleoperation();
+            }
+        }
+
+        void CheckTeleoperationSuspensionMenuState(bool rightPrimaryButtonPressed)
+        {
+            if (rightPrimaryButtonPressed) allowRightPrimaryButtonUse = false;
+            else allowRightPrimaryButtonUse = true;
+
+            if (rightPrimaryButtonPressed && allowRightPrimaryButtonUse)
+            {
+                indicatorTimer += Time.deltaTime;
+
+                if (indicatorTimer >= 1.0f)
+                {
+                    EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                }
+            }
+            else
+            {
+                indicatorTimer = minIndicatorTimer;
+                if (!rightPrimaryButtonPreviouslyPressed && rightPrimaryButtonPressed) allowRightPrimaryButtonUse = true;
             }
         }
 
