@@ -6,22 +6,22 @@ namespace TeleopReachy
     public class NavigationEffectsManager : MonoBehaviour
     {
         [SerializeField]
-        public Button noEffectAutoButton;
+        private Button noEffectAutoButton;
 
         [SerializeField]
-        public Button tunnellingAutoButton;
+        private Button tunnellingAutoButton;
 
         [SerializeField]
-        public Button reducedScreenAutoButton;
+        private Button reducedScreenAutoButton;
 
         [SerializeField]
-        public Button noEffectOnClickButton;
+        private Button noEffectOnClickButton;
 
         [SerializeField]
-        public Button tunnellingOnClickButton;
+        private Button tunnellingOnClickButton;
 
         [SerializeField]
-        public Button reducedScreenOnClickButton;
+        private Button reducedScreenOnClickButton;
 
         private bool needUpdateButtons;
 

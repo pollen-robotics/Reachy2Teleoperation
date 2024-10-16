@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 36635854}
   - component: {fileID: 36635856}
   m_Layer: 5
-  m_Name: HomeMenuLoader
+  m_Name: TeleoperationExitMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -219,17 +219,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36635851}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1495567281}
-  m_Father: {fileID: 804350699}
+  m_Father: {fileID: 2021801166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -74, y: 204.5}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &36635854
@@ -1175,7 +1175,7 @@ GameObject:
   - component: {fileID: 224850606}
   - component: {fileID: 224850609}
   m_Layer: 10
-  m_Name: ReachyEyeViewQuad
+  m_Name: ReachyViewQuad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1284,7 +1284,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f093a8021ce9bc443a5de613579a73ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ReachyViewQuad: {fileID: 0}
+  controllers: {fileID: 0}
+  mobilityFakeMovement: {fileID: 0}
+  needUpdateScale: 0
+  userRequestedSmallSize: 0
+  lerpGoalScale: {x: 0, y: 0, z: 0}
+  fullScreenScale: {x: 41333, y: -31000, z: 1}
+  smallerScreenScale: {x: 20666, y: -15500, z: 1}
   blackScreen: {fileID: 1204306791}
+  motionSicknessManager: {fileID: 0}
 --- !u!1 &258652890
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,142 +2813,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &804350694
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 804350699}
-  - component: {fileID: 804350698}
-  - component: {fileID: 804350697}
-  - component: {fileID: 804350696}
-  - component: {fileID: 804350695}
-  - component: {fileID: 804350700}
-  m_Layer: 5
-  m_Name: TeleoperationExitMenu
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &804350695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 0
-  m_CheckFor2DOcclusion: 0
-  m_CheckFor3DOcclusion: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RaycastTriggerInteraction: 1
---- !u!114 &804350696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!114 &804350697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
---- !u!223 &804350698
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 1
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!224 &804350699
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 36635852}
-  m_Father: {fileID: 1876506746}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 441, y: 459.5}
-  m_SizeDelta: {x: 882, y: 919}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &804350700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 804350694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5633a71ce64bff42aa11d707725e671, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlaneDistance: 1.5
 --- !u!1 &814315993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3639,7 +3512,7 @@ GameObject:
   - component: {fileID: 1204306794}
   - component: {fileID: 1204306793}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: MotionSicknessBlackScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4916,15 +4789,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a3e33cd7dd41914d85a7187472ca016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachy: {fileID: 0}
-  selectedItem: 1
+  backToMirrorSceneButton: {fileID: 92447027}
   event_OnAskForTeleoperationMenu:
     m_PersistentCalls:
       m_Calls: []
   event_OnLeaveTeleoperationMenu:
     m_PersistentCalls:
       m_Calls: []
-  indicatorTimer: 0
 --- !u!1 &1437018699
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,13 +4806,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1437018700}
   - component: {fileID: 1437018702}
-  - component: {fileID: 1437018707}
   - component: {fileID: 1437018703}
   - component: {fileID: 1437018706}
   - component: {fileID: 1437018705}
   - component: {fileID: 1437018704}
   m_Layer: 9
-  m_Name: StartArmTeleoperationInfo
+  m_Name: StartArmTeleoperationMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4956,14 +4826,14 @@ RectTransform:
   m_GameObject: {fileID: 1437018699}
   m_LocalRotation: {x: 0.08715578, y: -0, z: -0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: -28.3}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 5.825243}
+  m_LocalScale: {x: 0.3, y: 0.30000004, z: 5.825243}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1781808656}
   - {fileID: 270581195}
   - {fileID: 438123925}
   - {fileID: 92447026}
-  m_Father: {fileID: 1876506746}
+  m_Father: {fileID: 2021801166}
   m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5064,34 +4934,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1437018707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437018699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 544fe911dc37bfa4e817f9ebdbb5a93f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_TargetOffset: {x: 0, y: -0.1, z: 0.5}
-  m_FollowInLocalSpace: 1
-  m_ApplyTargetInLocalSpace: 0
-  m_MovementSpeed: 6
-  m_MovementSpeedVariancePercentage: 0.25
-  m_SnapOnEnable: 1
-  m_PositionFollowMode: 1
-  m_MinDistanceAllowed: 0
-  m_MaxDistanceAllowed: 0
-  m_TimeUntilThresholdReachesMaxDistance: 3
-  m_RotationFollowMode: 1
-  m_MinAngleAllowed: 0
-  m_MaxAngleAllowed: 0
-  m_TimeUntilThresholdReachesMaxAngle: 3
-  backToTransitionRoomButton: {fileID: 92447027}
 --- !u!1 &1458039699
 GameObject:
   m_ObjectHideFlags: 0
@@ -5750,6 +5592,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1629947394}
   - component: {fileID: 1629947395}
+  - component: {fileID: 1629947397}
   - component: {fileID: 1629947396}
   m_Layer: 0
   m_Name: UserViewManager
@@ -5883,6 +5726,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1629947397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629947393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f3f23a3ff963548848cc304ac6073d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ReachyViewQuad: {fileID: 224850605}
+  blackScreen: {fileID: 1204306791}
 --- !u!1 &1631699611
 GameObject:
   m_ObjectHideFlags: 0
@@ -6328,12 +6185,6 @@ MonoBehaviour:
   event_OnRequestNavigationEffect:
     m_PersistentCalls:
       m_Calls: []
-  event_OnNewTeleopSession:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnUpdateMotionSicknessPreferences:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1792293515
 Transform:
   m_ObjectHideFlags: 0
@@ -6437,7 +6288,7 @@ GameObject:
   - component: {fileID: 1876506748}
   - component: {fileID: 1876506747}
   m_Layer: 0
-  m_Name: TeleoperationLeftView
+  m_Name: TeleoperationView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6456,7 +6307,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224850605}
-  - {fileID: 1437018700}
   - {fileID: 3183984262926124750}
   - {fileID: 6381839846723253368}
   - {fileID: 1865267273}
@@ -6469,7 +6319,7 @@ RectTransform:
   - {fileID: 935331310}
   - {fileID: 1204306792}
   - {fileID: 478219824}
-  - {fileID: 804350699}
+  - {fileID: 2021801166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6762,6 +6612,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011720377}
   m_CullTransparentMesh: 1
+--- !u!1 &2021801165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2021801166}
+  m_Layer: 0
+  m_Name: Menus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2021801166
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021801165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1437018700}
+  - {fileID: 36635852}
+  m_Father: {fileID: 1876506746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2069381606
 GameObject:
   m_ObjectHideFlags: 0
@@ -7151,7 +7038,7 @@ GameObject:
   - component: {fileID: 3183984262926124748}
   - component: {fileID: 3183984262926124751}
   m_Layer: 6
-  m_Name: TimerSpeed
+  m_Name: SpeedTimer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7198,7 +7085,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3183984262926124737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ac674787fdf60b4e80084118687406f, type: 3}
+  m_Script: {fileID: 11500000, guid: 218e28cdc8df43b4d9c53b117da8f9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Target: {fileID: 0}

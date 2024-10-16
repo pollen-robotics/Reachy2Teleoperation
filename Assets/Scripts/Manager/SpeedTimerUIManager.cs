@@ -6,31 +6,20 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class TimerSpeedManager : LazyFollow
+    public class SpeedTimerUIManager : CustomLazyFollowUI
     {
         Coroutine timerCoroutine;
         Coroutine rotateLoader;
 
-        // private ControllersManager controllers;
         void Start()
         {
-
-            // controllers = ActiveControllerManager.Instance.ControllersManager;
-            // if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            // {
-            //     targetOffset = new Vector3(0, -0.15f, 0.5f);
-            // }
-            // else{ // If oculus 3 or other
-            targetOffset = new Vector3(0, -0.15f, 0.8f);
-            // }
-            maxDistanceAllowed = 0;
+            SetOculusTargetOffset(new Vector3(0, -0.15f, 0.8f));
 
             timerCoroutine = null;
             rotateLoader = null;
 
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTimer);
             EventManager.StartListening(EventNames.OnStopTeleoperation, StopTimer);
-
 
             transform.ActivateChildren(false);
         }
@@ -67,7 +56,10 @@ namespace TeleopReachy
 
         void StartTimer()
         {
-            timerCoroutine = StartCoroutine(TimerCountdown());
+            if(RobotDataManager.Instance.RobotConfig.HasLeftArm() || RobotDataManager.Instance.RobotConfig.HasRightArm())
+            {
+                timerCoroutine = StartCoroutine(TimerCountdown());
+            }
         }
 
         void StopTimer()

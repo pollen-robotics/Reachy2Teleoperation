@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace TeleopReachy
 {
-    public class EyeScript : MonoBehaviour
+    public class ReachyViewSizeManager : MonoBehaviour
     {
+        [SerializeField]
+        private Transform ReachyViewQuad;
+
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
@@ -28,26 +31,19 @@ namespace TeleopReachy
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
                 Debug.Log("Oculus 2 detected");
-                transform.localPosition = new Vector3(0f, -595.0f, 18473.0f);
+                ReachyViewQuad.localPosition = new Vector3(0f, -595.0f, 18473.0f);
             }
             else
             {
                 Debug.Log("Oculus 3 or other detected");
-                transform.localPosition = new Vector3(0f, -3266f, 15093f);
+                ReachyViewQuad.localPosition = new Vector3(0f, -3266f, 15093f);
             }
             motionSicknessManager = MotionSicknessManager.Instance;
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ResizeView);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-        }
-
-        void Init()
-        {
+            
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
-
             mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
             mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
-
-            EventManager.StartListening(EventNames.OnStopTeleoperation, ForceBackToFullScreen);
         }
 
         void Update()
@@ -56,7 +52,7 @@ namespace TeleopReachy
             {
                 needUpdateScale = false;
                 StartCoroutine(BlackScreenAppears());
-                transform.localScale = lerpGoalScale;
+                ReachyViewQuad.localScale = lerpGoalScale;
             }
         }
 
@@ -101,13 +97,6 @@ namespace TeleopReachy
                 lerpGoalScale = fullScreenScale;
                 needUpdateScale = true;
             }
-        }
-
-        void ForceBackToFullScreen()
-        {
-            lerpGoalScale = fullScreenScale;
-            userRequestedSmallSize = false;
-            needUpdateScale = true;
         }
     }
 }

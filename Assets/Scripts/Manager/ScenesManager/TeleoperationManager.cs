@@ -48,5 +48,10 @@ namespace TeleopReachy
         {
             EventManager.TriggerEvent(EventNames.OnResumeTeleoperation);
         }
+
+        public void AskForStartingArmTeleoperation()
+        {
+            EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
+        }
     }
 }
