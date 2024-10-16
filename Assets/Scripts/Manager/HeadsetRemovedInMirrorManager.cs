@@ -14,7 +14,6 @@ namespace TeleopReachy
 
         public UnityEvent event_OnHeadsetReset;
 
-        // Start is called before the first frame update
         void Start()
         {
             headsetRemovedMessage.gameObject.SetActive(false);

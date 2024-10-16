@@ -10,16 +10,13 @@ namespace TeleopReachy
 
         void Start()
         {
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-            HideReticle();
+            motionSicknessManager = MotionSicknessManager.Instance;
+            InitPosition();
+            CheckReticleState();
         }
 
-        void Init()
+        void InitPosition()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
-            EventManager.StartListening(EventNames.OnStartTeleoperation, CheckReticleState);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, HideReticle);
-
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
             {
@@ -37,11 +34,10 @@ namespace TeleopReachy
             {
                 transform.ActivateChildren(true);
             }
-        }
-
-        void HideReticle()
-        {
-            transform.ActivateChildren(false);
+            else
+            {
+                transform.ActivateChildren(false);
+            }
         }
     }
 }

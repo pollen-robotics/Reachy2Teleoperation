@@ -16,10 +16,11 @@ namespace TeleopReachy
         [SerializeField]
         private ReachySimulatedServer reachyFakeServer;
 
-        private Reachy2Controller.Reachy2Controller reachy;
+        [SerializeField]
+        private Reachy2Controller.Reachy2Controller reachyReal;
 
         [SerializeField]
-        private Reachy2Controller.Reachy2Controller reachyModel;
+        private Reachy2Controller.Reachy2Controller reachySimulated;
 
 
         // Start is called before the first frame update
@@ -29,8 +30,6 @@ namespace TeleopReachy
             headTracker = UserTrackerManager.Instance.HeadTracker;
             handsTracker = UserTrackerManager.Instance.HandsTracker;
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
-
-            reachy = GameObject.Find("Reachy2").transform.GetComponent<Reachy2Controller.Reachy2Controller>();
         }
 
         // Update is called once per frame
@@ -89,7 +88,7 @@ namespace TeleopReachy
         //         joint.Name = "neck_yaw";
         //         headJoints.Add(joint, field);
 
-        //         List<SerializableMotor> headMotors = reachyModel.GetCurrentMotorsState(headJoints);
+        //         List<SerializableMotor> headMotors = reachySimulated.GetCurrentMotorsState(headJoints);
 
         //         Dictionary<JointId, float> headTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < headMotors.Count; i++)
@@ -100,7 +99,7 @@ namespace TeleopReachy
         //             headTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(headTarget);
+        //         reachyReal.HandleCommand(headTarget);
         //     }
 
         //     void SetLeftArmToModelPose()
@@ -132,7 +131,7 @@ namespace TeleopReachy
         //         joint.Name = "l_gripper";
         //         leftJoints.Add(joint, field);
 
-        //         List<SerializableMotor> leftArmMotors = reachyModel.GetCurrentMotorsState(leftJoints);
+        //         List<SerializableMotor> leftArmMotors = reachySimulated.GetCurrentMotorsState(leftJoints);
 
         //         Dictionary<JointId, float> leftArmTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < leftArmMotors.Count; i++)
@@ -143,7 +142,7 @@ namespace TeleopReachy
         //             leftArmTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(leftArmTarget);
+        //         reachyReal.HandleCommand(leftArmTarget);
         //     }
 
         //     void SetRightArmToModelPose()
@@ -175,7 +174,7 @@ namespace TeleopReachy
         //         joint.Name = "r_gripper";
         //         rightJoints.Add(joint, field);
 
-        //         List<SerializableMotor> rightArmMotors = reachyModel.GetCurrentMotorsState(rightJoints);
+        //         List<SerializableMotor> rightArmMotors = reachySimulated.GetCurrentMotorsState(rightJoints);
 
         //         Dictionary<JointId, float> rightArmTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < rightArmMotors.Count; i++)
@@ -186,7 +185,7 @@ namespace TeleopReachy
         //             rightArmTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(rightArmTarget);
+        //         reachyReal.HandleCommand(rightArmTarget);
         //     }
     }
 }
