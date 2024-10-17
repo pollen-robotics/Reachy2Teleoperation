@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 namespace TeleopReachy
 {
-    public class RobotMobilityUIManager : MonoBehaviour
+    public class RobotDirectionUIManager : MonoBehaviour
     {
-        [SerializeField]
-        private Reachy2Controller.Reachy2Controller reachyController;
-
         private UserMobilityInput userMobilityInput = null;
         private RobotJointState robotJointState;
 
@@ -18,9 +15,6 @@ namespace TeleopReachy
         private Vector2 directionRight;
 
         private Vector3 headOrientation;
-
-        private bool ShowMobilityUIListenerSet = false;
-        private bool HideMobilityUIListenerSet = false;
 
         [SerializeField]
         private Transform arrow;
