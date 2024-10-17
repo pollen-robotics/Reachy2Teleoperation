@@ -1,80 +1,96 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 namespace TeleopReachy
 {
-    public enum TransitionState
+    public enum InitializationState
     {
-        WaitingForTracker, WaitingForPosition, ReadyForTeleop, WaitingForRobot
+        WaitingForRobotReady, WaitingForUserOriginValidation, ReadyForTeleop,
     }
 
     public class MirrorSceneManager : Singleton<MirrorSceneManager>
     {
-        public TransitionState State { get; private set; }
+        public InitializationState initializationState { get; private set; }
 
         [SerializeField]
-        private Transform readyButton;
+        private Button readyButton;
 
-        public GameObject stream;
+        public GameObject stream; // to hide it when robot is virtual
 
         [SerializeField]
         private Transform resetPositionButton;
 
         [SerializeField]
-        private Reachy2Controller.Reachy2Controller reachyGhost;
-        private bool robotGhostDisplayed;
+        private Reachy2Controller.Reachy2Controller simulatedReachy;
 
         [SerializeField]
-        private Transform ghostReachyIndicator;
+        private Reachy2Controller.Reachy2Controller realReachy;
 
-        private Transform userTracker;
+        [SerializeField]
+        private Transform realRobotLabel;
+
+        [SerializeField]
+        private Button leaveMirrorSceneButton;
+
+        [SerializeField]
+        private Button leaveMirrorSceneButtonRobotLocked;
+
+        private bool realRobotDisplayed;
+        private bool needUpdateRealRobotDisplay;
+
+        private Transform userOrigin;
 
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
         private ConnectionStatus connectionStatus;
 
-        private Transform headset;
+        private ControllersManager controllers;
 
-        private bool userTrackerOk;
+        public float indicatorTimer { get; private set; }
+        private const float minIndicatorTimer = 0.0f;
 
-        public Transform mirror = null;
+        [SerializeField]
+        private Transform mirror;
+
+        [SerializeField]
+        private Transform menuWarningLockPosition;
 
         const float distanceToMirror = 2.5f;
         const float mirrorHeight = -0.0f;
 
-        private bool needUpdateReachyGhostDisplay;
+        public UnityEvent event_OnStartTeleopInitialization;
+        public UnityEvent event_OnAbortTeleopInitialization;
 
-        public UnityEvent event_OnReadyForTeleop;
-        public UnityEvent event_OnAbortTeleop;
-        public UnityEvent event_OnWaitingForPosition;
-        public UnityEvent event_OnExitTransitionRoomRequested;
+        private bool rightPrimaryButtonPreviouslyPressed;
 
         // Start is called before the first frame update
         void Start()
         {
-            needUpdateReachyGhostDisplay = false;
+            needUpdateRealRobotDisplay = false;
 
-            headset = GameObject.Find("Main Camera").transform;
-            userTracker = UserTrackerManager.Instance.transform;
-            State = TransitionState.WaitingForTracker;
+            userOrigin = UserTrackerManager.Instance.transform;
 
             connectionStatus = ConnectionStatus.Instance;
-            connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
-            connectionStatus.event_OnRobotUnready.AddListener(AbortTeleop);
+            connectionStatus.event_OnRobotReady.AddListener(RobotReadyForTeleop);
+            connectionStatus.event_OnRobotUnready.AddListener(AbortTeleopInitialization);
 
             resetPositionButton.gameObject.SetActive(false);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotConfig.event_OnConfigChanged.AddListener(DisplayReachy);
+            robotConfig.event_OnConfigChanged.AddListener(ModifyRobotsDisplayed);
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
 
-            DisplayReachy(false);
-            FixUserTrackerPosition();
-            MakeMirrorFaceUser();
+            readyButton.onClick.AddListener(ValidateUserOrigin);
+
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+
+            leaveMirrorSceneButton.onClick.AddListener(CheckBeforeQuittingScene);
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 readyButton.gameObject.SetActive(false);
@@ -84,129 +100,108 @@ namespace TeleopReachy
             {
                 robotStatus.SetEmotionsActive(true);
             }
+
+            DisplayRealRobot(false);
+            FixUserOrigin();
+            MakeMirrorFaceUserOrigin();
+            initializationState = InitializationState.WaitingForRobotReady;
+
+            if (connectionStatus.IsRobotReady()) RobotReadyForTeleop();
         }
 
-        public void ResetPosition()
+        private void CheckBeforeQuittingScene()
         {
-            FixUserTrackerPosition();
-            MakeMirrorFaceUser();
+            if (!robotStatus.IsRobotPositionLocked) BackToConnectionScene();
+            else menuWarningLockPosition.ActivateChildren(true);
         }
 
-        private void MakeMirrorFaceUser()
+        private void ResetPosition()
         {
-            mirror.position = userTracker.TransformPoint(Vector3.forward * distanceToMirror);
+            FixUserOrigin();
+            MakeMirrorFaceUserOrigin();
+        }
+
+        void FixUserOrigin()
+        {
+            EventManager.TriggerEvent(EventNames.OnFixUserOrigin);
+        }
+
+        private void MakeMirrorFaceUserOrigin()
+        {
+            mirror.position = userOrigin.TransformPoint(Vector3.forward * distanceToMirror);
             mirror.position = new Vector3(mirror.position.x, mirror.position.y + mirrorHeight, mirror.position.z);
-
-            Quaternion rotation = headset.localRotation;
-            Vector3 eulerAngles = rotation.eulerAngles;
-
-            // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
-            Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
-            mirror.rotation = systemRotation;
+            mirror.rotation = userOrigin.localRotation;
         }
 
-        private void DisplayReachy()
+        private void ModifyRobotsDisplayed()
         {
-            DisplayReachy(robotGhostDisplayed);
+            DisplayRealRobot(realRobotDisplayed);
         }
 
-        private void DisplayReachy(bool enabled)
+        private void DisplayRealRobot(bool enabled)
         {
-            robotGhostDisplayed = enabled;
-            needUpdateReachyGhostDisplay = true;
+            realRobotDisplayed = enabled;
+            needUpdateRealRobotDisplay = true;
         }
 
         void Update()
         {
-            if(needUpdateReachyGhostDisplay)
+            if(needUpdateRealRobotDisplay)
             {
-                needUpdateReachyGhostDisplay = false;
-                reachyGhost.transform.switchRenderer(robotGhostDisplayed);
-                ghostReachyIndicator.gameObject.SetActive(robotGhostDisplayed);
+                needUpdateRealRobotDisplay = false;
+                realReachy.transform.switchRenderer(realRobotDisplayed);
+                realRobotLabel.gameObject.SetActive(realRobotDisplayed);
                 if (robotConfig.GotReachyConfig())
                 {
-                    reachyGhost.head.transform.switchRenderer(robotConfig.HasHead() && robotGhostDisplayed);
-                    reachyGhost.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && robotGhostDisplayed);
-                    reachyGhost.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && robotGhostDisplayed);
-                    reachyGhost.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && robotGhostDisplayed);
+                    realReachy.head.transform.switchRenderer(robotConfig.HasHead() && realRobotDisplayed);
+                    realReachy.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && realRobotDisplayed);
+                    realReachy.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && realRobotDisplayed);
+                    realReachy.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && realRobotDisplayed);
                 }
             }
-        }
 
-        void FixUserTrackerPosition()
-        // Fix the position and orientation of Reachy's coordinate system of the user based on the headset position and orientation
-        {
-            Quaternion rotation = headset.localRotation;
-            Vector3 eulerAngles = rotation.eulerAngles;
-
-            // Only the rotation around the y axis is kept, z and x axis are considered parallel to the floor
-            Quaternion systemRotation = Quaternion.Euler(0, eulerAngles.y, 0);
-
-            userTracker.rotation = systemRotation;
-            // Origin of the coordinate system is placed 15cm under the headset y position
-            Vector3 headPosition = headset.position - headset.forward * 0.1f;
-            userTracker.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
-        }
-
-        public void ValidateTracker()
-        {
-            FixUserTrackerPosition();
-            userTrackerOk = true;
-            if (connectionStatus.IsRobotReady()) ReadyForTeleop();
-            else AbortTeleop();
-        }
-
-        public void WaitingForPosition()
-        {
-            readyButton.gameObject.SetActive(false);
-            DisplayReachy(true);
-            resetPositionButton.gameObject.SetActive(true);
-            State = TransitionState.WaitingForPosition;
-            event_OnWaitingForPosition.Invoke();
-        }
-
-        public void AbortTeleop()
-        {
-            if (userTrackerOk)
+            if (initializationState == InitializationState.ReadyForTeleop)
             {
-                State = TransitionState.WaitingForRobot;
-                DisplayReachy(true);
-                readyButton.gameObject.SetActive(false);
-                event_OnAbortTeleop.Invoke();
-                // WaitingForPosition();
+                bool rightPrimaryButtonPressed;
+                controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
+
+                if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
+                {
+                    indicatorTimer += Time.deltaTime;
+                    if (indicatorTimer >= 1.0f)
+                    {
+                        EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
+                    }
+                }
+                else
+                {
+                    indicatorTimer = minIndicatorTimer;
+                }
+                rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
             }
         }
 
-        public void ReadyForTeleop()
+        protected void ValidateUserOrigin()
         {
-            if (userTrackerOk)
-            {
-                State = TransitionState.ReadyForTeleop;
-                DisplayReachy(true);
-                readyButton.gameObject.SetActive(false);
-                resetPositionButton.gameObject.SetActive(true);
-                event_OnReadyForTeleop.Invoke();
-            }
+            ResetPosition();
+            initializationState = InitializationState.ReadyForTeleop;
         }
 
-        public void ExitTransitionRoomRequested()
+        protected void AbortTeleopInitialization()
         {
-            event_OnExitTransitionRoomRequested.Invoke();
-            robotStatus.SetEmotionsActive(true);
-            EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
+            initializationState = InitializationState.WaitingForRobotReady;
+            DisplayRealRobot(false);
+            event_OnAbortTeleopInitialization.Invoke();
         }
 
-        public void BackToConnectionScene()
+        protected void RobotReadyForTeleop()
         {
-            StartCoroutine(GoBackToConnectionScene());
+            initializationState = InitializationState.WaitingForUserOriginValidation;
+            event_OnStartTeleopInitialization.Invoke();
         }
 
-        IEnumerator GoBackToConnectionScene()
+        protected void BackToConnectionScene()
         {
-            RobotJointCommands robotJointsCommands = RobotDataManager.Instance.RobotJointCommands;
-            if (robotJointsCommands.setSmoothCompliance != null) yield return robotJointsCommands.setSmoothCompliance;
-            else yield return null;
-            EventManager.TriggerEvent(EventNames.QuitConnectionScene);
             EventManager.TriggerEvent(EventNames.EnterConnectionScene);
         }
     }

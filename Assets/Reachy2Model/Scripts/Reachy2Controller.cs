@@ -21,7 +21,9 @@ namespace Reachy2Controller
         UnityEngine.Quaternion baseHeadRot;
         UnityEngine.Quaternion targetHeadRot;
 
+        [SerializeField]
         public GameObject l_arm { get; private set; }
+
         public GameObject r_arm { get; private set; }
         public GameObject head { get; private set; }
         public GameObject mobile_base { get; private set; }

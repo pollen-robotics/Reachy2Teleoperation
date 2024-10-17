@@ -5,68 +5,70 @@ using UnityEngine.UI;
 
 namespace TeleopReachy
 {
+
+    // TODO : Review
     public class CanvaValidateLeaveOnLockedPositionManager : MonoBehaviour
     {
-        [SerializeField]
-        private Button validateLeaveRoomButton;
+        // [SerializeField]
+        // private Button validateLeaveRoomButton;
 
-        [SerializeField]
-        private Button cancelLeaveRoomButton;
+        // [SerializeField]
+        // private Button cancelLeaveRoomButton;
 
-        [SerializeField]
-        private Transform loader;
+        // [SerializeField]
+        // private Transform loader;
 
-        [SerializeField]
-        private GameObject beforeValidateElements;
+        // [SerializeField]
+        // private GameObject beforeValidateElements;
 
-        [SerializeField]
-        private GameObject afterValidateElements;
+        // [SerializeField]
+        // private GameObject afterValidateElements;
 
-        [SerializeField]
-        private ExitTransitionRoomButtonManager exitButtonsManager;
+        // [SerializeField]
+        // private ExitTransitionRoomButtonManager exitButtonsManager;
 
-        private RobotStatus robotStatus;
+        // private RobotStatus robotStatus;
 
-        Coroutine rotateLoader;
+        // Coroutine rotateLoader;
 
-        void Awake()
-        {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
+        // void Awake()
+        // {
+        //     robotStatus = RobotDataManager.Instance.RobotStatus;
 
-            validateLeaveRoomButton.onClick.AddListener(QuitTransitionRoom);
-            cancelLeaveRoomButton.onClick.AddListener(Cancel);
-        }
+        //     validateLeaveRoomButton.onClick.AddListener(QuitTransitionRoom);
+        //     cancelLeaveRoomButton.onClick.AddListener(Cancel);
+        // }
 
-        void OnDestroy()
-        {
-            if (rotateLoader != null) StopCoroutine(rotateLoader);
-        }
+        // void OnDestroy()
+        // {
+        //     if (rotateLoader != null) StopCoroutine(rotateLoader);
+        // }
 
-        void QuitTransitionRoom()
-        {
-            robotStatus.SetLeftArmOn(false);
-            robotStatus.SetRightArmOn(false);
-            robotStatus.SetHeadOn(false);
-            EventManager.TriggerEvent(EventNames.OnRobotSmoothlyCompliantRequested);
-            beforeValidateElements.SetActive(false);
-            afterValidateElements.SetActive(true);
-            rotateLoader = StartCoroutine(RotateLoader(3));
-            MirrorSceneManager.Instance.BackToConnectionScene();
-        }
+        // void QuitTransitionRoom()
+        // {
+        //     robotStatus.SetLeftArmOn(false);
+        //     robotStatus.SetRightArmOn(false);
+        //     robotStatus.SetHeadOn(false);
+        //     EventManager.TriggerEvent(EventNames.OnRobotSmoothlyCompliantRequested);
+        //     beforeValidateElements.SetActive(false);
+        //     afterValidateElements.SetActive(true);
+        //     rotateLoader = StartCoroutine(RotateLoader(3));
+        //     MirrorSceneManager.Instance.BackToConnectionScene();
+        // }
 
-        private IEnumerator RotateLoader(float duration)
-        {
-            for (float t = 0; t < duration; t += Time.deltaTime)
-            {
-                loader.transform.Rotate(0, 0, -7, Space.Self);
-                yield return null;
-            }
-        }
+        // private IEnumerator RotateLoader(float duration)
+        // {
+        //     for (float t = 0; t < duration; t += Time.deltaTime)
+        //     {
+        //         loader.transform.Rotate(0, 0, -7, Space.Self);
+        //         yield return null;
+        //     }
+        // }
 
-        void Cancel()
-        {
-            transform.ActivateChildren(false);
-            exitButtonsManager.HideValidationButtons();
-        }
+        // void Cancel()
+        // {
+        //     transform.ActivateChildren(false);
+        //     exitButtonsManager.HideValidationButtons();
+        // }
     }
 }

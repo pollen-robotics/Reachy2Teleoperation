@@ -17,6 +17,9 @@ namespace TeleopReachy
         [SerializeField]
         private Transform usualIcon;
 
+        [SerializeField]
+        private Button cancelLeaveRoomButton;
+
         private Vector3 closedButtonsPosition = new Vector3(-188, -130, 0);
         private Vector3 openButtonsPosition = new Vector3(-64, -130, 0);
 
@@ -27,6 +30,10 @@ namespace TeleopReachy
         private Vector3 lerpStartingPosition;
         private Vector3 lerpGoalPosition;
 
+        void Start()
+        {
+            cancelLeaveRoomButton.onClick.AddListener(HideValidationButtons);
+        }
 
         void Update()
         {
