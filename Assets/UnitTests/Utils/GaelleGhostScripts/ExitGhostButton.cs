@@ -23,7 +23,7 @@ namespace TeleopReachy
 
         void ExitMirrorScene()
         {
-            sceneManager.BackToConnectionScene();
+            // sceneManager.BackToConnectionScene();
         }
     }
 }

@@ -38,6 +38,8 @@ namespace TeleopReachy
         OnGraspingLock,
 
         OnEmergencyStop,
+
+        OnFixUserOrigin,
     }
 
     public class EventManager : Singleton<EventManager>

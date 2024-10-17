@@ -19,7 +19,7 @@ namespace TeleopReachy
             rotateLoader = null;
 
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTimer);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, StopTimer);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, StopTimer);
 
             transform.ActivateChildren(false);
         }

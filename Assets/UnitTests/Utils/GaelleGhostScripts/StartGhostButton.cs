@@ -25,8 +25,8 @@ namespace TeleopReachy
 
         void StartTeleoperation()
         {
-            sceneManager.ValidateTracker();
-            sceneManager.ExitTransitionRoomRequested();
+            // sceneManager.ValidateTracker();
+            // sceneManager.ExitTransitionRoomRequested();
             EventManager.TriggerEvent(EventNames.OnStartTeleoperation);
         }
     }
