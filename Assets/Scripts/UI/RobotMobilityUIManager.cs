@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 
 namespace TeleopReachy
@@ -9,13 +10,14 @@ namespace TeleopReachy
         private Reachy2Controller.Reachy2Controller reachyController;
 
         private UserMobilityInput userMobilityInput = null;
-        private RobotStatus robotStatus;
-        private RobotConfig robotConfig;
+        private RobotJointState robotJointState;
 
         private ConnectionStatus connectionStatus;
 
         private Vector2 directionLeft;
         private Vector2 directionRight;
+
+        private Vector3 headOrientation;
 
         private bool ShowMobilityUIListenerSet = false;
         private bool HideMobilityUIListenerSet = false;
@@ -35,75 +37,55 @@ namespace TeleopReachy
         [SerializeField]
         private Transform arrowLeftRotationCommand;
 
-        private ControllersManager controllers;
-
-        private void OnEnable()
-        {
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.TeleoperationSceneLoaded, Init);
-        }
-
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
+            InitializeUIPosition();
+            InitializeDisplayedElements();
+            headOrientation = new Vector3(0, 0, 0);
+
+            userMobilityInput = UserInputManager.Instance.UserMobilityInput;
+            robotJointState = RobotDataManager.Instance.RobotJointState;
+            robotJointState.event_OnPresentPositionsChanged.AddListener(GetHeadOrientation);
+        }
+
+        void InitializeUIPosition()
+        {
+            ControllersManager controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
                 transform.localPosition = new Vector3(0, -189, -479);
             }
-            connectionStatus = ConnectionStatus.Instance;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(Init);
         }
 
-        private void Init()
+        private void InitializeDisplayedElements()
         {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-
-            UpdateMobilityUI(robotConfig.HasMobileBase());
-
-            if (robotConfig.HasMobileBase())
-                robotStatus.event_OnSwitchMobilityOn.AddListener(UpdateMobilityUI);
+            arrowRightRotationCommand.gameObject.SetActive(false);
+            arrowLeftRotationCommand.gameObject.SetActive(false);
         }
 
-        void UpdateMobilityUI(bool on)
+        protected void GetHeadOrientation(Dictionary<string, float> presentPositions)
         {
-            if (!on)
+            foreach (KeyValuePair<string, float> kvp in presentPositions)
             {
-                userMobilityInput = null;
-                ShowMobilityUIListenerSet = false;
-                HideMobilityUIListenerSet = false;
-                EventManager.StopListening(EventNames.OnStartTeleoperation, ShowMobilityUI);
-                EventManager.StopListening(EventNames.OnStopTeleoperation, HideMobilityUI);
-                HideMobilityUI();
-            }
-            else
-            {
-                userMobilityInput = UserInputManager.Instance.UserMobilityInput;
-
-                if (ShowMobilityUIListenerSet == false)
+                string motorName = kvp.Key;
+                if (motorName == "head_neck_roll")
                 {
-                    EventManager.StartListening(EventNames.OnStartTeleoperation, ShowMobilityUI);
-                    ShowMobilityUIListenerSet = true;
+                    headOrientation[0] = kvp.Value;
                 }
-                if (HideMobilityUIListenerSet == false)
+                if (motorName == "head_neck_pitch")
                 {
-                    EventManager.StartListening(EventNames.OnStopTeleoperation, HideMobilityUI);
-                    HideMobilityUIListenerSet = true;
+                    headOrientation[1] = kvp.Value;
+                }
+                if (motorName == "head_neck_yaw")
+                {
+                    headOrientation[2] = -kvp.Value;
                 }
             }
         }
 
         void Update()
         {
-            //not initialized yet.
-            if (userMobilityInput == null)
-                return;
-
-            float orbita_yaw = -reachyController.headOrientation[2];
+            float orbita_yaw = headOrientation[2];
             if (orbita_yaw > 180)
             {
                 orbita_yaw -= 360;
@@ -145,18 +127,6 @@ namespace TeleopReachy
         private void IsRobotStatic(bool isStatic)
         {
             arrowMobilityCommand.gameObject.SetActive(!isStatic);
-        }
-
-        public void HideMobilityUI()
-        {
-            transform.ActivateChildren(false);
-        }
-
-        private void ShowMobilityUI()
-        {
-            transform.ActivateChildren(true);
-            arrowRightRotationCommand.gameObject.SetActive(false);
-            arrowLeftRotationCommand.gameObject.SetActive(false);
         }
     }
 }

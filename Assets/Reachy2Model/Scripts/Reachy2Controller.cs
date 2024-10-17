@@ -20,8 +20,6 @@ namespace Reachy2Controller
 
         UnityEngine.Quaternion baseHeadRot;
         UnityEngine.Quaternion targetHeadRot;
-        public Vector3 headOrientation;
-        float headRotDuration;
 
         public GameObject l_arm { get; private set; }
         public GameObject r_arm { get; private set; }
@@ -38,8 +36,6 @@ namespace Reachy2Controller
                 m.uid = i;
                 name2motor[m.name] = m;
             }
-
-            headOrientation = new Vector3(0, 0, 0);
 
             l_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(1).gameObject;
             r_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(2).gameObject;
@@ -92,19 +88,6 @@ namespace Reachy2Controller
                 string motorName;
                 motorName = kvp.Key;
                 SetMotorTargetPosition(motorName, kvp.Value);
-
-                if (motorName == "head_neck_roll")
-                {
-                    headOrientation[0] = kvp.Value;
-                }
-                if (motorName == "head_neck_pitch")
-                {
-                    headOrientation[1] = kvp.Value;
-                }
-                if (motorName == "head_neck_yaw")
-                {
-                    headOrientation[2] = -kvp.Value;
-                }
             }
         }
     }
