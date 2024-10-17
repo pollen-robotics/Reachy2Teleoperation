@@ -1,35 +1,40 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
     public class InformationalPanel : CustomLazyFollowUI
     {
         [SerializeField]
-        private Text infoText;
+        protected Text infoText;
 
-        private Coroutine infoPanelDisplay;
+        [SerializeField]
+        protected Image infoBackground;
 
-        private bool needInfoPanelUpdate;
+        protected Coroutine infoPanelDisplay;
+
+        protected bool needInfoPanelUpdate;
 
         protected string textToDisplay;
 
-        private int displayDuration = 3;
+        protected int displayDuration = 3;
+
+        protected Color32 backgroundColor = ColorsManager.error_black;
 
         protected void SetMinimumTimeDisplayed(int seconds)
         {
             displayDuration = seconds;
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if (needInfoPanelUpdate)
             {
                 if (infoPanelDisplay != null) StopCoroutine(infoPanelDisplay);
                 transform.ActivateChildren(true);
                 infoText.text = textToDisplay;
+                if (infoBackground != null) infoBackground.color = backgroundColor;
                 infoPanelDisplay = StartCoroutine(HidePanelAfterSeconds(displayDuration, transform));
 
                 needInfoPanelUpdate = false;
