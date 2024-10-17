@@ -50,7 +50,7 @@ namespace TeleopReachy
 
         private void Init()
         {
-            Headset = HeadsetPermanenTrackerWorldManager.Instance.transform;
+            Headset = HeadsetPermanentTrackerWorldManager.Instance.transform;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideOnlineMenu);

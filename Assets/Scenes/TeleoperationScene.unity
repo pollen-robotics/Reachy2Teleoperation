@@ -863,7 +863,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100821912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc06b03a55c6824409cb306d2829c32d, type: 3}
+  m_Script: {fileID: 11500000, guid: b90d95c32869ed54bb6b12fff8162e98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &122493228
@@ -1933,7 +1933,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2132846945}
-  m_Father: {fileID: 1876506746}
+  m_Father: {fileID: 1174091166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3369,6 +3369,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103887131}
   m_CullTransparentMesh: 1
+--- !u!1 &1174091165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174091166}
+  m_Layer: 0
+  m_Name: MotionSicknessElements
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1174091166
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174091165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 478219824}
+  - {fileID: 1204306792}
+  m_Father: {fileID: 1876506746}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1181464247
 GameObject:
   m_ObjectHideFlags: 0
@@ -3474,12 +3511,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204306791}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 600}
   m_LocalScale: {x: 20000, y: 20000, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1876506746}
+  m_Father: {fileID: 1174091166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4401,7 +4438,7 @@ GameObject:
   - component: {fileID: 1365689281}
   - component: {fileID: 1365689282}
   m_Layer: 6
-  m_Name: FrontIndicator
+  m_Name: RobotDirectionIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4444,10 +4481,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1365689279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c05f8e018cfcd1418aece362891f676, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e7384670b9b90f4c8dd71490b1e0ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachyController: {fileID: 0}
   arrow: {fileID: 277626011}
   arrowMobilityCommand: {fileID: 665542929}
   circleMobilityCommand: {fileID: 1216398767}
@@ -6314,12 +6350,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 224850605}
-  - {fileID: 3183984262926124750}
   - {fileID: 1856982303}
   - {fileID: 1501744152}
+  - {fileID: 1174091166}
   - {fileID: 1365689280}
-  - {fileID: 1204306792}
-  - {fileID: 478219824}
   - {fileID: 2021801166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6642,6 +6676,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1437018700}
+  - {fileID: 3183984262926124750}
   - {fileID: 36635852}
   - {fileID: 1244735972}
   m_Father: {fileID: 1876506746}
@@ -7071,7 +7106,7 @@ RectTransform:
   - {fileID: 3183984262377747327}
   - {fileID: 3183984262286595079}
   - {fileID: 98349719}
-  m_Father: {fileID: 1876506746}
+  m_Father: {fileID: 2021801166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
