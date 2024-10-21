@@ -2673,6 +2673,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265441145}
   m_CullTransparentMesh: 0
+--- !u!1 &272586980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8729706485945982065, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+  m_PrefabInstance: {fileID: 1333218316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &272586981 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1535905175071072918, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+  m_PrefabInstance: {fileID: 1333218316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &272586982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 63617399828265814, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+  m_PrefabInstance: {fileID: 1333218316}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &272586983 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6171338879422050675, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+  m_PrefabInstance: {fileID: 1333218316}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &273648663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4157,12 +4177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d2fc4d67fb3c947a28ede923913dd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  validateLeaveRoomButton: {fileID: 100910207}
-  cancelLeaveRoomButton: {fileID: 867196955}
-  loader: {fileID: 1492108198}
-  beforeValidateElements: {fileID: 502704157}
-  afterValidateElements: {fileID: 880490116}
-  exitButtonsManager: {fileID: 4575489516777253714}
 --- !u!1 &510219793
 GameObject:
   m_ObjectHideFlags: 0
@@ -5531,14 +5545,14 @@ MonoBehaviour:
   simulatedReachy: {fileID: 0}
   realReachy: {fileID: 1333218320}
   realRobotLabel: {fileID: 1345996166}
+  leaveMirrorSceneButton: {fileID: 0}
+  leaveMirrorSceneButtonRobotLocked: {fileID: 0}
   mirror: {fileID: 4575489516557208141}
+  menuWarningLockPosition: {fileID: 0}
   event_OnStartTeleopInitialization:
     m_PersistentCalls:
       m_Calls: []
   event_OnAbortTeleopInitialization:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnExitTransitionRoomRequested:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &724079991
@@ -10633,6 +10647,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b3bde9ff91671f743bdd0bd46712abce, type: 2}
+    - target: {fileID: 63617399828265814, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 65298477723048827, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -11409,6 +11427,22 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b3bde9ff91671f743bdd0bd46712abce, type: 2}
+    - target: {fileID: 5889787848258669613, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+      propertyPath: head
+      value: 
+      objectReference: {fileID: 272586981}
+    - target: {fileID: 5889787848258669613, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+      propertyPath: l_arm
+      value: 
+      objectReference: {fileID: 272586982}
+    - target: {fileID: 5889787848258669613, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+      propertyPath: r_arm
+      value: 
+      objectReference: {fileID: 272586983}
+    - target: {fileID: 5889787848258669613, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
+      propertyPath: mobile_base
+      value: 
+      objectReference: {fileID: 272586980}
     - target: {fileID: 5932120415141108524, guid: 90e8f727304f8d142b5a845926fd8271, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -21693,6 +21727,10 @@ MonoBehaviour:
     gameObject: {fileID: 5520543706490982562}
     targetPosition: 0
     presentPosition: 0
+  l_arm: {fileID: 5102496663971907840}
+  r_arm: {fileID: 1407575119851111205}
+  head: {fileID: 6015990516383928512}
+  mobile_base: {fileID: 4542887182202744359}
 --- !u!4 &1700869037337037354
 Transform:
   m_ObjectHideFlags: 0
@@ -29791,6 +29829,7 @@ MonoBehaviour:
   validationText: {fileID: 222253883}
   usualText: {fileID: 4575489516298116811}
   usualIcon: {fileID: 4575489516518363939}
+  cancelLeaveRoomButton: {fileID: 0}
 --- !u!114 &4575489516777253740
 MonoBehaviour:
   m_ObjectHideFlags: 0
