@@ -22,6 +22,7 @@ namespace GstreamerWebRTC
         private Thread cleaning_thread = null;
         private Thread init_thread = null;
 
+
         void OnEnable()
         {
             debug = new DebugFromPlugin();
@@ -92,7 +93,6 @@ namespace GstreamerWebRTC
             cleaning_thread = new Thread(Cleanup);
             cleaning_thread.Start();
         }
-
 
         void Cleanup()
         {
