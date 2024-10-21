@@ -45,11 +45,6 @@ namespace Reachy2Controller
                 m.uid = i;
                 name2motor[m.name] = m;
             }
-
-            l_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(1).gameObject;
-            r_arm = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(2).gameObject;
-            head = transform.GetChild(0).GetChild(0).GetChild(3).GetChild(1).GetChild(3).gameObject;
-            mobile_base = transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
         }
 
         void Update()
