@@ -103,9 +103,25 @@ namespace TeleopReachy
             return areEmotionsActive;
         }
 
-        public bool IsMobileBaseOn()
+        public bool IsPartOn(Part part)
         {
-            return isMobileBaseOn;
+            switch (part)
+            {
+                case Part.LeftArm:
+                    return IsLeftArmOn();
+                case Part.RightArm:
+                    return IsRightArmOn();
+                case Part.LeftGripper:
+                    return IsLeftGripperOn();
+                case Part.RightGripper:
+                    return IsRightGripperOn();
+                case Part.Head:
+                    return IsHeadOn();
+                case Part.MobileBase:
+                    return IsMobileBaseOn();
+                default:
+                    return false;
+            }
         }
 
         public bool IsLeftArmOn()
@@ -131,6 +147,11 @@ namespace TeleopReachy
         public bool IsHeadOn()
         {
             return isHeadOn;
+        }
+
+        public bool IsMobileBaseOn()
+        {
+            return isMobileBaseOn;
         }
 
         public bool IsEmotionPlaying()
@@ -175,10 +196,34 @@ namespace TeleopReachy
             areEmotionsActive = isActive;
         }
 
-        public void SetMobilityOn(bool isOn)
+        public void SetPartOn(Part part, bool isOn)
+        {
+            switch (part)
+            {
+                case Part.LeftArm:
+                    SetLeftArmOn(isOn);
+                    break;
+                case Part.RightArm:
+                    SetRightArmOn(isOn);
+                    break;
+                case Part.LeftGripper:
+                    SetLeftGripperOn(isOn);
+                    break;
+                case Part.RightGripper:
+                    SetRightGripperOn(isOn);
+                    break;
+                case Part.Head:
+                    SetHeadOn(isOn);
+                    break;
+                case Part.MobileBase:
+                    SetMobileBaseOn(isOn);
+                    break;
+            }
+        }
+
+        public void SetMobileBaseOn(bool isOn)
         {
             isMobileBaseOn = isOn;
-            event_OnSwitchMobilityOn.Invoke(isOn);
         }
 
         public void SetLeftArmOn(bool isOn)
