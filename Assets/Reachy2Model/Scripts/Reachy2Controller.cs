@@ -22,11 +22,18 @@ namespace Reachy2Controller
         UnityEngine.Quaternion targetHeadRot;
 
         [SerializeField]
-        public GameObject l_arm { get; private set; }
+        private GameObject l_arm;
+        [SerializeField]
+        private GameObject r_arm;
+        [SerializeField]
+        private GameObject head;
+        [SerializeField]
+        private GameObject mobile_base;
 
-        public GameObject r_arm { get; private set; }
-        public GameObject head { get; private set; }
-        public GameObject mobile_base { get; private set; }
+        public GameObject LeftArm { get => this.l_arm; private set => this.l_arm = value; }
+        public GameObject RightArm { get => this.r_arm; private set => this.r_arm = value; }
+        public GameObject Head { get => this.head; private set => this.head = value; }
+        public GameObject MobileBase { get => this.mobile_base; private set => this.mobile_base = value; }
 
         void Awake()
         {

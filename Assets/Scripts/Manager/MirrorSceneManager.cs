@@ -153,10 +153,10 @@ namespace TeleopReachy
                 realRobotLabel.gameObject.SetActive(realRobotDisplayed);
                 if (robotConfig.GotReachyConfig())
                 {
-                    realReachy.head.transform.switchRenderer(robotConfig.HasHead() && realRobotDisplayed);
-                    realReachy.l_arm.transform.switchRenderer(robotConfig.HasLeftArm() && realRobotDisplayed);
-                    realReachy.r_arm.transform.switchRenderer(robotConfig.HasRightArm() && realRobotDisplayed);
-                    realReachy.mobile_base.transform.switchRenderer(robotConfig.HasMobileBase() && realRobotDisplayed);
+                    realReachy.Head.transform.switchRenderer(robotConfig.HasHead() && realRobotDisplayed);
+                    realReachy.LeftArm.transform.switchRenderer(robotConfig.HasLeftArm() && realRobotDisplayed);
+                    realReachy.RightArm.transform.switchRenderer(robotConfig.HasRightArm() && realRobotDisplayed);
+                    realReachy.MobileBase.transform.switchRenderer(robotConfig.HasMobileBase() && realRobotDisplayed);
                 }
             }
 
