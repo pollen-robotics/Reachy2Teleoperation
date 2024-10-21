@@ -12,10 +12,16 @@ namespace TeleopReachy
         void Start()
         {
             screen = GetComponent<Renderer>();
-            videoController = RobotDataManager.Instance.RobotVideoStream;
-            screen.material.SetTexture("_LeftTex", videoController.GetLeftTexture());
-            screen.material.SetTexture("_RightTex", videoController.GetLeftTexture());
+            if (Robot.IsCurrentRobotVirtual())
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                videoController = RobotDataManager.Instance.RobotVideoStream;
+                screen.material.SetTexture("_LeftTex", videoController.GetLeftTexture());
+                screen.material.SetTexture("_RightTex", videoController.GetLeftTexture());
+            }
         }
-
     }
 }

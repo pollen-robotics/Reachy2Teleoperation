@@ -72,5 +72,10 @@ namespace TeleopReachy
         {
             EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
         }
+
+        public void AskForRobotSmoothlyCompliant()
+        {
+            EventManager.TriggerEvent(EventNames.OnRobotSmoothlyCompliantRequested);
+        }
     }
 }
