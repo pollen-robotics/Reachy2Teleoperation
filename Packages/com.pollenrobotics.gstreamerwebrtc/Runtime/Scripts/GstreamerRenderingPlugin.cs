@@ -176,6 +176,7 @@ namespace GstreamerWebRTC
             if (_started)
             {
                 //CommandBuffer _command = new CommandBuffer();
+                _command.Clear();
                 _command.IssuePluginEvent(GetRenderEventFunc(), 1);
                 Graphics.ExecuteCommandBuffer(_command);
             }
