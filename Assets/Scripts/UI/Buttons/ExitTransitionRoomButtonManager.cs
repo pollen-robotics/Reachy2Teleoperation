@@ -20,6 +20,9 @@ namespace TeleopReachy
         [SerializeField]
         private Button cancelLeaveRoomButton;
 
+        [SerializeField]
+        private Button validateLeaveRoomButton;
+
         private Vector3 closedButtonsPosition = new Vector3(-188, -130, 0);
         private Vector3 openButtonsPosition = new Vector3(-64, -130, 0);
 
@@ -33,6 +36,7 @@ namespace TeleopReachy
         void Start()
         {
             cancelLeaveRoomButton.onClick.AddListener(HideValidationButtons);
+            validateLeaveRoomButton.onClick.AddListener(HideValidationButtons);
         }
 
         void Update()
