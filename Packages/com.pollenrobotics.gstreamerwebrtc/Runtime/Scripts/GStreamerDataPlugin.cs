@@ -1,8 +1,12 @@
 using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using AOT;
+using Codice.Client.BaseCommands;
+using UnityEngine.TextCore.Text;
 
 namespace GstreamerWebRTC
 {
@@ -103,7 +107,6 @@ namespace GstreamerWebRTC
         private string _signallingServerURL;
         private Signalling _signalling;
 
-
         public bool producer = false;
         public string remote_producer_name = "grpc_webrtc_bridge";
 
@@ -117,8 +120,13 @@ namespace GstreamerWebRTC
         public static UnityEvent<byte[]> event_OnChannelStateData;
         public static UnityEvent<byte[]> event_OnChannelAuditData;
 
+        //private bool _started = false;
+        private bool _autoreconnect = false;
+
         public GStreamerDataPlugin(string ip_address)
         {
+            //_started = false;
+            _autoreconnect = true;
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
@@ -128,7 +136,12 @@ namespace GstreamerWebRTC
 
             _signallingServerURL = "ws://" + ip_address + ":8443";
 
-            InitSignalling();
+            _signalling = new Signalling(_signallingServerURL, remote_producer_name);
+
+            _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
+            _signalling.event_OnRemotePeerLeft.AddListener(StopPipeline);
+            _signalling.event_OnSDPOffer.AddListener(OnSDPOffer);
+            _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
 
             event_OnPipelineStarted = new UnityEvent();
 
@@ -144,15 +157,6 @@ namespace GstreamerWebRTC
             event_OnChannelAuditData = new UnityEvent<byte[]>();
         }
 
-        public void InitSignalling()
-        {
-            _signalling = new Signalling(_signallingServerURL, producer, remote_producer_name);
-
-            _signalling.event_OnRemotePeerId.AddListener(StartPipeline);
-            _signalling.event_OnSDPOffer.AddListener(OnSDPOffer);
-            _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
-        }
-
         public void Connect()
         {
             _signalling.Connect();
@@ -163,6 +167,14 @@ namespace GstreamerWebRTC
             Debug.Log("start pipe " + remote_peer_id);
             CreateDataPipeline();
             event_OnPipelineStarted.Invoke();
+            // _started = true;
+        }
+
+        void StopPipeline()
+        {
+            // _started = false;
+            if (_autoreconnect)
+                Connect();
         }
 
         void OnSDPOffer(string sdp_offer)
@@ -188,6 +200,7 @@ namespace GstreamerWebRTC
         public void Cleanup()
         {
             _signalling.Close();
+            _signalling.RequestStop();
             DestroyDataPipeline();
         }
 

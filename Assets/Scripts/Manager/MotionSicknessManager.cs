@@ -37,7 +37,7 @@ namespace TeleopReachy
             IsReticleOn = false;
             // IsReticleAlwaysShown = false;
 
-            IsTunnellingAutoOn = true;
+            IsTunnellingAutoOn = false;
             IsReducedScreenAutoOn = false;
             // IsNavigationEffectOnDemandOnly = false;
 
@@ -63,7 +63,7 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnStartTeleoperation.AddListener(InitOnDemandRequest);
             HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
-            if(firstStart)
+            if (firstStart)
             {
                 firstStart = false;
                 BeginNewSession();
@@ -98,9 +98,9 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightJoystickButtonPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out leftJoystickButtonPressed);
 
-            if (robotStatus!= null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
-                if(IsTunnellingOnClickOn || IsReducedScreenOnClickOn)
+                if (IsTunnellingOnClickOn || IsReducedScreenOnClickOn)
                 {
                     if (rightJoystickButtonPressed && !rightJoystickButtonPreviouslyPressed)
                     {
