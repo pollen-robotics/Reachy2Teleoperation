@@ -57,18 +57,18 @@ namespace TeleopReachy
 
         void DisplayMessageForMobility()
         {
-            if (robotConfig.HasMobileBase())
-            {
-                if (!robotStatus.IsMobilityActive())
-                {
-                    textToDisplay = "Mobile services have been disconnected";
-                }
-                else
-                {
-                    if (!robotStatus.IsMobileBaseOn()) textToDisplay = "Mobile base has been disabled in options";
-                }
-                ShowInfoMessage();
-            }
+            // if (robotConfig.HasMobileBase())
+            // {
+            //     if (!robotStatus.IsMobilityActive())
+            //     {
+            //         textToDisplay = "Mobile services have been disconnected";
+            //     }
+            //     else
+            //     {
+            //         if (!robotStatus.IsMobileBaseOn()) textToDisplay = "Mobile base has been disabled in options";
+            //     }
+            //     ShowInfoMessage();
+            // }
         }
     }
 }

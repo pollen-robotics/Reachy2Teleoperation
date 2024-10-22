@@ -24,15 +24,21 @@ namespace TeleopReachy
         public UnityEvent<ReachabilityError> event_OnLArmPositionUnreachable;
         public UnityEvent<ReachabilityError> event_OnRArmPositionUnreachable;
 
-        void Awake()
+        void Start()
         {
             lArmReachabilityCounter = new Queue<bool>(QUEUE_SIZE);
             rArmReachabilityCounter = new Queue<bool>(QUEUE_SIZE);
-   
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdateReachability.AddListener(UpdateReachability);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
+
+            robotConfig.event_OnConfigChanged.AddListener(ReadyToCheckReachability);
+            if (robotConfig.GotReachyConfig()) ReadyToCheckReachability();
+        }
+
+        private void ReadyToCheckReachability()
+        {
+            dataController = DataMessageManager.Instance;
+            dataController.event_OnStateUpdateReachability.AddListener(UpdateReachability);
         }
 
         private void UpdateReachability(Dictionary<int, List<ReachabilityAnswer>> reachabilityAnswer)

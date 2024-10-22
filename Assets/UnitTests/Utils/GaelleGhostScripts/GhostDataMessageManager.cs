@@ -150,7 +150,7 @@ namespace TeleopReachy
 
         public override void SendArmCommand(ArmCartesianGoal armGoal)
         {
-            if(!robotStatus.IsRobotArmTeleoperationActive())
+            if(!robotStatus.IsArmTeleoperationActive())
             {
                 Bridge.AnyCommand armCommand = new Bridge.AnyCommand
                 {

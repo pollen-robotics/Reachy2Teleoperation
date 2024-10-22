@@ -8,7 +8,8 @@ namespace TeleopReachy
     {
         private bool isRobotTeleoperationActive;
 
-        private bool isRobotArmTeleoperationActive;
+        private bool isArmTeleoperationActive;
+        private bool isMobileBaseTeleoperationActive;
 
         private bool areRobotMovementsSuspended;
 
@@ -23,10 +24,6 @@ namespace TeleopReachy
         private bool isRightGripperOn = true; // true if operator want to have control of the left arm, false otherwise
 
         private bool isHeadOn = true; // true if operator want to have control of the head, false otherwise
-
-        private bool isMobilityActive; // true if panel must be shown, false otherwise
-
-        private bool areEmotionsActive;
 
         private bool isEmotionPlaying;
 
@@ -46,11 +43,11 @@ namespace TeleopReachy
         public UnityEvent<bool> event_OnGraspingLock;
         public UnityEvent event_OnRobotFullyCompliant;
 
-        public UnityEvent<bool> event_OnSwitchMobilityOn;
-
         private void Start()
         {
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
+            EventManager.StartListening(EventNames.OnStartMobileBaseTeleoperation, StartMobileBaseTeleoperation);
+            EventManager.StartListening(EventNames.OnStopMobileBaseTeleoperation, StopMobileBaseTeleoperation);
             EventManager.StartListening(EventNames.OnStartTeleoperation, StartRobotTeleoperation);
             EventManager.StartListening(EventNames.OnStopTeleoperation, StopRobotTeleoperation);
 
@@ -83,9 +80,14 @@ namespace TeleopReachy
             return isRobotTeleoperationActive;
         }
 
-        public bool IsRobotArmTeleoperationActive()
+        public bool IsArmTeleoperationActive()
         {
-            return isRobotArmTeleoperationActive;
+            return isArmTeleoperationActive;
+        }
+
+        public bool IsMobileBaseTeleoperationActive()
+        {
+            return isMobileBaseTeleoperationActive;
         }
 
         public bool AreRobotMovementsSuspended()
@@ -96,11 +98,6 @@ namespace TeleopReachy
         public bool IsRobotCompliant()
         {
             return isRobotCompliant;
-        }
-
-        public bool AreEmotionsActive()
-        {
-            return areEmotionsActive;
         }
 
         public bool IsPartOn(Part part)
@@ -159,11 +156,6 @@ namespace TeleopReachy
             return isEmotionPlaying;
         }
 
-        public bool IsMobilityActive()
-        {
-            return isMobilityActive;
-        }
-
         public bool HasMotorsSpeedLimited()
         {
             return hasMotorsSpeedLimited;
@@ -184,16 +176,6 @@ namespace TeleopReachy
         public void SetEmotionPlaying(bool isPlaying)
         {
             isEmotionPlaying = isPlaying;
-        }
-
-        public void SetMobilityActive(bool isActive)
-        {
-            isMobilityActive = isActive;
-        }
-
-        public void SetEmotionsActive(bool isActive)
-        {
-            areEmotionsActive = isActive;
         }
 
         public void SetPartOn(Part part, bool isOn)
@@ -277,7 +259,21 @@ namespace TeleopReachy
         private void StartArmTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start arm teleoperation");
-            isRobotArmTeleoperationActive = true;
+            isArmTeleoperationActive = true;
+            // event_OnStartArmTeleoperation.Invoke();
+        }
+
+        private void StartMobileBaseTeleoperation()
+        {
+            Debug.Log("[RobotStatus]: Start mobile base teleoperation");
+            isMobileBaseTeleoperationActive = true;
+            // event_OnStartArmTeleoperation.Invoke();
+        }
+
+        private void StopMobileBaseTeleoperation()
+        {
+            Debug.Log("[RobotStatus]: Stop mobile base teleoperation");
+            isMobileBaseTeleoperationActive = false;
             // event_OnStartArmTeleoperation.Invoke();
         }
 
@@ -285,8 +281,7 @@ namespace TeleopReachy
         {
             Debug.Log("[RobotStatus]: Stop teleoperation");
             isRobotTeleoperationActive = false;
-            isRobotArmTeleoperationActive = false;
-            SetMobilityActive(false);
+            isArmTeleoperationActive = false;
         }
 
         public void SetMotorsSpeedLimited(bool isLimited)
@@ -322,14 +317,12 @@ namespace TeleopReachy
              isLeftArmOn= {4},
              isRightArmOn= {5},
              isHeadOn= {6},
-             isMobilityActive= {7},
-             areEmotionsActive= {8},
-             isEmotionPlaying= {9},
-             statusChanged= {10},
-             hasMotorsSpeedLimited= {11}",
+             isEmotionPlaying= {7},
+             statusChanged= {8},
+             hasMotorsSpeedLimited= {9}",
              isRobotTeleoperationActive, areRobotMovementsSuspended, isRobotCompliant,
               isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
-               isMobilityActive, areEmotionsActive, isEmotionPlaying, statusChanged, isGraspingLockActivated);
+              isEmotionPlaying, statusChanged, isGraspingLockActivated);
         }
     }
 }
