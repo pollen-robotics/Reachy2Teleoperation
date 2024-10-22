@@ -22,9 +22,9 @@ namespace TeleopReachy
             sceneManager = MirrorSceneManager.Instance;
             needUpdateInstructions = false;
 
-            if(virtualRobotInstructions && Robot.IsCurrentRobotVirtual())
+            if(virtualRobotInstructions)
             {
-                transform.ActivateChildren(true);
+                transform.ActivateChildren(Robot.IsCurrentRobotVirtual());
             }
             else
             {

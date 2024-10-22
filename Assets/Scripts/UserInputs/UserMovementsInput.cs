@@ -22,20 +22,15 @@ namespace TeleopReachy
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.TeleoperationSceneLoaded, Init);
+            headTracker = UserTrackerManager.Instance.HeadTracker;
+            handsTracker = UserTrackerManager.Instance.HandsTracker;
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
         }
 
         private void Init()
         {
             jointsCommands = RobotDataManager.Instance.RobotJointCommands;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            headTracker = UserTrackerManager.Instance.HeadTracker;
-            handsTracker = UserTrackerManager.Instance.HandsTracker;
         }
 
         void Start()
@@ -47,69 +42,88 @@ namespace TeleopReachy
             reinit_right_gripper = true;
         }
 
-        void Update()
+        // void Update()
+        // {
+        //     if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotCompliant() && !robotStatus.AreRobotMovementsSuspended())
+        //     {
+        //         ArmCartesianGoal leftEndEffector = GetLeftEndEffectorTarget();
+        //         ArmCartesianGoal rightEndEffector = GetRightEndEffectorTarget();
+
+        //         NeckJointGoal headTarget = headTracker.GetHeadTarget();
+
+        //         float pos_left_gripper = GetLeftGripperTarget();
+        //         float pos_right_gripper = GetRightGripperTarget();
+
+        //         jointsCommands.SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
+        //         jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
+        //         robotStatus.LeftGripperClosed(left_gripper_closed);
+        //         robotStatus.RightGripperClosed(right_gripper_closed);
+        //     }
+        // }
+
+        public NeckJointGoal GetHeadTarget()
         {
-            if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotCompliant() && !robotStatus.AreRobotMovementsSuspended())
-            {
-                ArmCartesianGoal leftEndEffector = GetLeftEndEffectorTarget();
-                ArmCartesianGoal rightEndEffector = GetRightEndEffectorTarget();
-
-                NeckJointGoal headTarget = headTracker.GetHeadTarget();
-
-                float pos_left_gripper = GetLeftGripperTarget();
-                float pos_right_gripper = GetRightGripperTarget();
-
-                jointsCommands.SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
-                jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
-                robotStatus.LeftGripperClosed(left_gripper_closed);
-                robotStatus.RightGripperClosed(right_gripper_closed);
-            }
+            return headTracker.GetHeadTarget();
         }
 
         public ArmCartesianGoal GetRightEndEffectorTarget()
         {
-            ArmCartesianGoal rightEndEffector;
-            if (UserSize.Instance.UserArmSize == 0)
+            if(handsTracker != null)
             {
-                rightEndEffector = new ArmCartesianGoal
+                ArmCartesianGoal rightEndEffector;
+                if (UserSize.Instance.UserArmSize == 0)
                 {
-                    GoalPose = handsTracker.rightHand.target_pos,
-                };
+                    rightEndEffector = new ArmCartesianGoal
+                    {
+                        GoalPose = handsTracker.rightHand.target_pos,
+                    };
+                }
+                else
+                {
+                    Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
+                    right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
+                    right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
+                    right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+
+                    rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
+                }
+
+                return rightEndEffector;
             }
             else
             {
-                Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
-                right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
-                right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
-                right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
-
-                rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
+                return new ArmCartesianGoal();
             }
-
-            return rightEndEffector;
         }
 
         public ArmCartesianGoal GetLeftEndEffectorTarget()
         {
-            ArmCartesianGoal leftEndEffector;
-            if (UserSize.Instance.UserArmSize == 0)
+            if(handsTracker != null)
             {
-                leftEndEffector = new ArmCartesianGoal
+                ArmCartesianGoal leftEndEffector;
+                if (UserSize.Instance.UserArmSize == 0)
                 {
-                    GoalPose = handsTracker.leftHand.target_pos,
-                };
+                    leftEndEffector = new ArmCartesianGoal
+                    {
+                        GoalPose = handsTracker.leftHand.target_pos,
+                    };
+                }
+                else
+                {
+                    Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
+                    left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
+                    left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
+                    left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+
+                    leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
+                }
+
+                return leftEndEffector;
             }
             else
             {
-                Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
-                left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
-                left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
-                left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
-
-                leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
+                return new ArmCartesianGoal();
             }
-
-            return leftEndEffector;
         }
 
         public float GetRightGripperTarget()
