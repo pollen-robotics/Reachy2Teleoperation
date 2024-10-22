@@ -6,7 +6,6 @@ namespace TeleopReachy
 {
     public class UserMovementsInput : MonoBehaviour
     {
-        private RobotJointCommands jointsCommands;
         private RobotStatus robotStatus;
         private HeadTracker headTracker;
         private HandsTracker handsTracker;
@@ -24,13 +23,6 @@ namespace TeleopReachy
         {
             headTracker = UserTrackerManager.Instance.HeadTracker;
             handsTracker = UserTrackerManager.Instance.HandsTracker;
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
-        }
-
-        private void Init()
-        {
-            jointsCommands = RobotDataManager.Instance.RobotJointCommands;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 
         void Start()
@@ -42,28 +34,10 @@ namespace TeleopReachy
             reinit_right_gripper = true;
         }
 
-        // void Update()
-        // {
-        //     if (robotStatus.IsRobotTeleoperationActive() && !robotStatus.IsRobotCompliant() && !robotStatus.AreRobotMovementsSuspended())
-        //     {
-        //         ArmCartesianGoal leftEndEffector = GetLeftEndEffectorTarget();
-        //         ArmCartesianGoal rightEndEffector = GetRightEndEffectorTarget();
-
-        //         NeckJointGoal headTarget = headTracker.GetHeadTarget();
-
-        //         float pos_left_gripper = GetLeftGripperTarget();
-        //         float pos_right_gripper = GetRightGripperTarget();
-
-        //         jointsCommands.SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
-        //         jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
-        //         robotStatus.LeftGripperClosed(left_gripper_closed);
-        //         robotStatus.RightGripperClosed(right_gripper_closed);
-        //     }
-        // }
-
         public NeckJointGoal GetHeadTarget()
         {
-            return headTracker.GetHeadTarget();
+            if(headTracker != null) return headTracker.GetHeadTarget();
+            else return new NeckJointGoal();
         }
 
         public ArmCartesianGoal GetRightEndEffectorTarget()
@@ -126,21 +100,11 @@ namespace TeleopReachy
             }
         }
 
-        public float GetRightGripperTarget()
+        void Update()
         {
-            float pos_right_gripper;
-
-            if (!robotStatus.IsGraspingLockActivated())
+            if(handsTracker != null)
             {
-                pos_right_gripper = 1 - handsTracker.rightHand.trigger;
-                //set correct gripper status 
-                if (handsTracker.rightHand.trigger > 0.5)
-                    right_gripper_closed = true;
-                else
-                    right_gripper_closed = false;
-            }
-            else
-            {
+                // Check Right Gripper State
                 if (handsTracker.rightHand.trigger > 0.9 && reinit_right_gripper)
                 {
                     reinit_right_gripper = false;
@@ -154,34 +118,7 @@ namespace TeleopReachy
                     }
                 }
 
-                if (right_gripper_closed)
-                {
-                    pos_right_gripper = 0;
-                }
-                else
-                {
-                    pos_right_gripper = 1;
-                }
-            }
-
-            return pos_right_gripper;
-        }
-
-        public float GetLeftGripperTarget()
-        {
-            float pos_left_gripper;
-
-            if (!robotStatus.IsGraspingLockActivated())
-            {
-                pos_left_gripper = 1 - handsTracker.leftHand.trigger;
-                //set correct gripper status 
-                if (handsTracker.leftHand.trigger > 0.5)
-                    left_gripper_closed = true;
-                else
-                    left_gripper_closed = false;
-            }
-            else
-            {
+                // Check Left Gripper State
                 if (handsTracker.leftHand.trigger > 0.9 && reinit_left_gripper)
                 {
                     reinit_left_gripper = false;
@@ -194,17 +131,44 @@ namespace TeleopReachy
                         reinit_left_gripper = true;
                     }
                 }
-
-                if (left_gripper_closed)
-                {
-                    pos_left_gripper = 0;
-                }
-                else
-                {
-                    pos_left_gripper = 1;
-                }
             }
+        }
 
+        public float GetRightGripperTarget(bool openCloseAnswer=false)
+        {
+            float pos_right_gripper;
+            // if (handsTracker.rightHand.trigger > 0.5)
+            //         right_gripper_closed = true;
+            //     else
+            //         right_gripper_closed = false;
+            if (openCloseAnswer)
+            {
+                if (right_gripper_closed) pos_right_gripper = 0;
+                else pos_right_gripper = 1;
+            }
+            else
+            {
+                pos_right_gripper = 1 - handsTracker.rightHand.trigger;
+            }
+            return pos_right_gripper;
+        }
+
+        public float GetLeftGripperTarget(bool openCloseAnswer=false)
+        {
+            float pos_left_gripper;
+            // if (handsTracker.leftHand.trigger > 0.5)
+            //         left_gripper_closed = true;
+            //     else
+            //         left_gripper_closed = false;
+            if (openCloseAnswer)
+            {
+                if (left_gripper_closed) pos_left_gripper = 0;
+                else pos_left_gripper = 1;
+            }
+            else
+            {
+                pos_left_gripper = 1 - handsTracker.leftHand.trigger;
+            }
             return pos_left_gripper;
         }
 
