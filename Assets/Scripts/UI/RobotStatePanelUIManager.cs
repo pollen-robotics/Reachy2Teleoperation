@@ -24,51 +24,15 @@ namespace TeleopReachy
                 needUpdatePanelInfo = true;
                 return;
             }
-
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
-
             connectionStatus = ConnectionStatus.Instance;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
+            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMotorsInfo);
 
-            CheckTemperatureInfo();
+            CheckMotorsInfo();
 
-            isStatePanelStatusActive = true;
             needUpdatePanelInfo = false;
         }
 
-        private void UpdateTemperatures(Dictionary<string, float> Temperatures)
-        {
-            panelTemperature = new Dictionary<string, float>();
-            foreach (KeyValuePair<string, float> motor in Temperatures)
-            {
-                if (motor.Key.Contains("hand"))
-                {
-                    string[] nameParsed = motor.Key.Split("_hand_");
-                    string actuatorName = nameParsed[0] + "_hand_temperature";
-
-                    string panelName = actuatorName + nameParsed[1];
-                    Debug.LogError(panelName);
-                    panelTemperature.Add(panelName, motor.Value);
-                }
-                else
-                {
-                    panelTemperature.Add(motor.Key, motor.Value);
-                }
-            }
-        }
-
-        public float GetTemperature(string motor)
-        {
-            float temperature;
-            if (panelTemperature != null && panelTemperature.TryGetValue(motor, out temperature))
-            {
-                return temperature;
-            }
-            else return 0;
-        }
-
-        private void CheckTemperatureInfo()
+        private void CheckMotorsInfo()
         {
             if (connectionStatus.AreRobotServicesRestarting())
             {
