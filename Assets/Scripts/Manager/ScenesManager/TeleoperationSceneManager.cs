@@ -32,7 +32,7 @@ namespace TeleopReachy
         public float indicatorTimer { get; private set; }
         private const float minIndicatorTimer = 0.0f;
 
-        private bool allowRightPrimaryButtonUse = true;
+        private bool suspensionMenuEntry = true;
 
         void Start()
         {
@@ -176,22 +176,25 @@ namespace TeleopReachy
 
         void CheckTeleoperationSuspensionMenuState(bool rightPrimaryButtonPressed)
         {
-            if (rightPrimaryButtonPressed) allowRightPrimaryButtonUse = false;
-            else allowRightPrimaryButtonUse = true;
-
-            if (rightPrimaryButtonPressed && allowRightPrimaryButtonUse)
+            if (suspensionMenuEntry)
             {
-                indicatorTimer += Time.deltaTime;
-
-                if (indicatorTimer >= 1.0f)
-                {
-                    EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
-                }
+                if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed) suspensionMenuEntry = false;
             }
             else
             {
-                indicatorTimer = minIndicatorTimer;
-                if (!rightPrimaryButtonPreviouslyPressed && rightPrimaryButtonPressed) allowRightPrimaryButtonUse = true;
+                if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
+                {
+                    indicatorTimer += Time.deltaTime;
+
+                    if (indicatorTimer >= 1.0f)
+                    {
+                        EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                    }
+                }
+                else
+                {
+                    indicatorTimer = minIndicatorTimer;
+                }
             }
         }
 
