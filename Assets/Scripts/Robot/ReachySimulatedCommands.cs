@@ -9,8 +9,6 @@ namespace TeleopReachy
 {
     public class ReachySimulatedCommands : RobotCommands
     {
-        private HeadTracker headTracker;
-        private HandsTracker handsTracker;
         private UserMovementsInput userMovementsInput;
 
         [SerializeField]
@@ -27,8 +25,6 @@ namespace TeleopReachy
         void Start()
         {
             Init();
-            headTracker = UserTrackerManager.Instance.HeadTracker;
-            handsTracker = UserTrackerManager.Instance.HandsTracker;
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
         }
 
@@ -37,7 +33,7 @@ namespace TeleopReachy
         {
             ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
             ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
-            NeckJointGoal headTarget = headTracker.GetHeadTarget();
+            NeckJointGoal headTarget = userMovementsInput.GetHeadTarget();
 
             // if (robotConfig.IsVirtual() || !robotStatus.IsLeftArmOn())
             //     SetLeftArmToModelPose();

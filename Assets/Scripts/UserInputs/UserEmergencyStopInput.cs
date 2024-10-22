@@ -55,14 +55,14 @@ namespace TeleopReachy
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out leftTriggerPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
 
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
-            {
+            // if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            // {
                 if ((leftGripPressed && leftTriggerPressed && leftPrimaryButtonPressed) || (rightGripPressed && rightTriggerPressed && rightPrimaryButtonPressed))
                 {
                     EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
                     EventManager.TriggerEvent(EventNames.OnEmergencyStop);
                 }
-            }
+            // }
         }
     }
 }

@@ -1608,6 +1608,11 @@ MonoBehaviour:
   stencilReference: 1
   stencilMask: 255
   stencilBias: 1
+--- !u!4 &1906032144 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1440600536130867592, guid: 770664eca1f4897479c79fc61a6ab5f5, type: 3}
+  m_PrefabInstance: {fileID: 1906032139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1906032147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1440600536123287008, guid: 770664eca1f4897479c79fc61a6ab5f5, type: 3}
@@ -2607,6 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0017296f992f8ee4f826d15660d1b8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headset: {fileID: 1906032144}
 --- !u!1 &5745522331229630513
 GameObject:
   m_ObjectHideFlags: 0

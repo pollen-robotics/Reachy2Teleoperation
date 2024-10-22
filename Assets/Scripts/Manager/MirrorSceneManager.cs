@@ -56,13 +56,7 @@ namespace TeleopReachy
         {
             userOrigin = UserTrackerManager.Instance.transform;
 
-            connectionStatus = ConnectionStatus.Instance;
-            connectionStatus.event_OnRobotReady.AddListener(RobotReadyForTeleop);
-            connectionStatus.event_OnRobotUnready.AddListener(AbortTeleopInitialization);
-
             resetPositionButton.gameObject.SetActive(false);
-
-            robotStatus = RobotDataManager.Instance.RobotStatus;
 
             readyButton.onClick.AddListener(ValidateUserOrigin);
 
@@ -71,13 +65,20 @@ namespace TeleopReachy
             leaveMirrorSceneButton.onClick.AddListener(CheckIfLockedBeforeQuittingScene);
             leaveMirrorSceneButtonRobotLocked.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
 
+            ResetPosition();
+            initializationState = InitializationState.WaitingForRobotReady;
+
+            connectionStatus = ConnectionStatus.Instance;
+            connectionStatus.event_OnRobotReady.AddListener(RobotReadyForTeleop);
+            connectionStatus.event_OnRobotUnready.AddListener(AbortTeleopInitialization);
+
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotConfig = RobotDataManager.Instance.RobotConfig;
+
             if (robotConfig.HasHead())
             {
                 robotStatus.SetEmotionsActive(true);
             }
-
-            ResetPosition();
-            initializationState = InitializationState.WaitingForRobotReady;
 
             if (connectionStatus.IsRobotReady()) RobotReadyForTeleop();
         }

@@ -51,12 +51,12 @@ namespace TeleopReachy
 
         private void LoadConnectionSceneEndUnloadMirrorScene()
         {
-            LoadConnectionScene();
             if(SceneManager.GetSceneByName("RobotDataScene").isLoaded)
             {
                 UnloadRobotDataScene();
                 UnloadMirrorScene();
             }
+            LoadConnectionScene();
         }
 
         private void LoadConnectionScene()
@@ -71,18 +71,16 @@ namespace TeleopReachy
         private void UnloadConnectionSceneAndLoadMirrorScene()
         {
             SceneManager.UnloadSceneAsync("ConnectionScene");
+            userTracker.SetActive(true);
+            userInput.SetActive(true);
             StartCoroutine(LoadRobotDataSceneAndMirrorScene());
         }
 
         IEnumerator LoadRobotDataSceneAndMirrorScene()
         {
-            userTracker.SetActive(true);
-
             SceneManager.LoadScene("RobotDataScene", LoadSceneMode.Additive);
             yield return null;
             EventManager.TriggerEvent(EventNames.RobotDataSceneLoaded);
-
-            userInput.SetActive(true);
 
             LoadMirrorScene();
         }

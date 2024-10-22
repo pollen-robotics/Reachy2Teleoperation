@@ -45,7 +45,7 @@ namespace Reachy2Controller
 
         void Start()
         {
-            reachy = GameObject.Find("Reachy2").GetComponent<Reachy2Controller>();
+            reachy = GameObject.Find("Reachy2Simulated").GetComponent<Reachy2Controller>();
             setup(); // Setup Arm_kinematics
 
             present_position = new Dictionary<string, float>();

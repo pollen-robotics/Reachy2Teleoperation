@@ -13,6 +13,7 @@ namespace TeleopReachy
 
         private Vector2 mobileBaseTranslation;
         private Vector2 mobileBaseRotation;
+        private Vector3 targetDirectionCommand;
 
         private Vector2 direction;
 
@@ -26,12 +27,7 @@ namespace TeleopReachy
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.TeleoperationSceneLoaded, Init);
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
         }
 
         private void Init()
@@ -70,50 +66,48 @@ namespace TeleopReachy
                 controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightSecondaryButtonPressed);
             }
 
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobileBaseOn() && !robotStatus.AreRobotMovementsSuspended())
+            if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
             {
-                if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
-                {
-                    mobilityInputsSuspended = false;
-                    float r = Mathf.Sqrt(Mathf.Pow(mobileBaseTranslation[0], 2) + Mathf.Pow(mobileBaseTranslation[1], 2));
-                    float phi = Mathf.Atan2(mobileBaseTranslation[1], mobileBaseTranslation[0]);
+                mobilityInputsSuspended = false;
+                float r = Mathf.Sqrt(Mathf.Pow(mobileBaseTranslation[0], 2) + Mathf.Pow(mobileBaseTranslation[1], 2));
+                float phi = Mathf.Atan2(mobileBaseTranslation[1], mobileBaseTranslation[0]);
 
-                    if (Mathf.Abs(phi) < (Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
-                    if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
-                    if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
-                    if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
+                if (Mathf.Abs(phi) < (Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
+                if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
+                if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) mobileBaseTranslation[1] = 0;
+                if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) mobileBaseTranslation[0] = 0;
 
-                    direction = new Vector2(mobileBaseTranslation[0], mobileBaseTranslation[1]);
+                direction = new Vector2(mobileBaseTranslation[0], mobileBaseTranslation[1]);
 
-                    float translationSpeed = maxSpeedFactor;
-                    if (rightSecondaryButtonPressed)
-                        translationSpeed = 1.0f;
+                float translationSpeed = maxSpeedFactor;
+                if (rightSecondaryButtonPressed)
+                    translationSpeed = 1.0f;
 
-                    mobilityCommands.SendMobileBaseDirection(new Vector3(direction[1] * translationSpeed, -direction[0] * translationSpeed, -mobileBaseRotation[0] * 1.5f));
-                }
-                else
-                {
-                    mobilityInputsSuspended = true;
-                }
+                targetDirectionCommand = new Vector3(direction[1] * translationSpeed, -direction[0] * translationSpeed, -mobileBaseRotation[0] * 1.5f);
             }
             else
             {
-                if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobileBaseOn()))
-                {
-                    if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
-                    {
-                        if ((mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0)))
-                        {
-                            if (!mobilityInputsDisableTry)
-                            {
-                                event_OnTriedToSendCommands.Invoke();
-                                mobilityInputsDisableTry = true;
-                            }
-                        }
-                        else { mobilityInputsDisableTry = false; }
-                    }
-                }
+                mobilityInputsSuspended = true;
+                targetDirectionCommand = new Vector3(0, 0, 0);
             }
+            // else
+            // {
+            //     if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobileBaseOn()))
+            //     {
+            //         if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
+            //         {
+            //             if ((mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0)))
+            //             {
+            //                 if (!mobilityInputsDisableTry)
+            //                 {
+            //                     event_OnTriedToSendCommands.Invoke();
+            //                     mobilityInputsDisableTry = true;
+            //                 }
+            //             }
+            //             else { mobilityInputsDisableTry = false; }
+            //         }
+            //     }
+            // }
         }
 
         public bool CanGetUserMobilityInputs()
@@ -129,6 +123,11 @@ namespace TeleopReachy
         public Vector2 GetAngleDirection()
         {
             return mobileBaseRotation;
+        }
+
+        public Vector3 GetTargetDirectionCommand()
+        {
+            return targetDirectionCommand;
         }
     }
 }
