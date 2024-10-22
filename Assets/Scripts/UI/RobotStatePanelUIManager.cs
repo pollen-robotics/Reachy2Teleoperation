@@ -16,8 +16,10 @@ namespace TeleopReachy
         private bool isStatePanelStatusActive;
         private bool needUpdatePanelInfo;
 
-        void Awake()
+        void OnEnable()
         {
+            needUpdatePanelInfo = false;
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 isStatePanelStatusActive = false;
@@ -28,8 +30,6 @@ namespace TeleopReachy
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMotorsInfo);
 
             CheckMotorsInfo();
-
-            needUpdatePanelInfo = false;
         }
 
         private void CheckMotorsInfo()
@@ -61,8 +61,8 @@ namespace TeleopReachy
             if(needUpdatePanelInfo)
             {
                 needUpdatePanelInfo = false;
-                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
                 transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
+                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
             }
         }
     }
