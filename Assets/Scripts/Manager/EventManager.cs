@@ -27,6 +27,8 @@ namespace TeleopReachy
 
         OnStartTeleoperation,
         OnStartArmTeleoperation,
+        OnStartMobileBaseTeleoperation,
+        OnStopMobileBaseTeleoperation,
         OnStopTeleoperation,
         OnSuspendTeleoperation,
         OnResumeTeleoperation,

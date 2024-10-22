@@ -75,10 +75,10 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            if (robotConfig.HasHead())
-            {
-                robotStatus.SetEmotionsActive(true);
-            }
+            // if (robotConfig.HasHead())
+            // {
+            //     robotStatus.SetEmotionsActive(true);
+            // }
 
             if (connectionStatus.IsRobotReady()) RobotReadyForTeleop();
         }

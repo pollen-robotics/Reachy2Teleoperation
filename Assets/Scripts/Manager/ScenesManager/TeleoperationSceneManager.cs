@@ -42,10 +42,10 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            if (robotConfig.HasMobileBase())
-            {
-                robotStatus.SetMobilityActive(true);
-            }
+            // if (robotConfig.HasMobileBase())
+            // {
+            //     robotStatus.SetMobilityActive(true);
+            // }
             if (robotStatus.IsRobotPositionLocked || robotStatus.IsGraspingLockActivated())
             {
                 if (robotStatus.IsLeftGripperClosed())
@@ -73,7 +73,7 @@ namespace TeleopReachy
         {
             Debug.Log("[TeleoperationManager]: StopTeleoperation");
             //robotStatus.SetEmotionsActive(false);
-            robotStatus.SetMobilityActive(false);
+            // robotStatus.SetMobilityActive(false);
         }
 
         void Update()
@@ -89,13 +89,13 @@ namespace TeleopReachy
 
 
             // Check teleoperation and controllers status for exit menu
-            if (robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus.IsArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 CheckTeleoperationExitMenuState(rightPrimaryButtonPressed, leftPrimaryButtonPressed, leftJoystickValue);
             }
 
             // Check teleoperation and controllers status to start arm teleoperation
-            if (!robotStatus.IsRobotArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (!robotStatus.IsArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
             {
                 CheckStartArmTeleoperationState(rightPrimaryButtonPressed);
             }
@@ -118,6 +118,7 @@ namespace TeleopReachy
                 if (!IsTeleoperationExitMenuActive)
                 {
                     event_OnAskForTeleoperationMenu.Invoke();
+                    EventManager.TriggerEvent(EventNames.OnStopMobileBaseTeleoperation);
                     IsTeleoperationExitMenuActive = true;
                 }
             }
@@ -158,6 +159,7 @@ namespace TeleopReachy
                 else if (!rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
                 {
                     CloseTeleoperationExitMenu();
+                    EventManager.TriggerEvent(EventNames.OnStartMobileBaseTeleoperation);
                 }
             }
         }

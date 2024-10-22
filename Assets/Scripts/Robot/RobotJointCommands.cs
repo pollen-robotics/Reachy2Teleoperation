@@ -81,7 +81,7 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            if (robotStatus.IsRobotArmTeleoperationActive())
+            if (robotStatus.IsArmTeleoperationActive())
             {
                 if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
                 if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
@@ -90,7 +90,7 @@ namespace TeleopReachy
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            if (robotStatus.IsRobotArmTeleoperationActive())
+            if (robotStatus.IsArmTeleoperationActive())
             {
                 if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
                 if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
