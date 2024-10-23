@@ -8,6 +8,7 @@ namespace TeleopReachy
     {
         private UserMobilityInput userMobilityInput = null;
         private RobotJointState robotJointState;
+        private RobotStatus robotStatus;
 
         private ConnectionStatus connectionStatus;
         private TeleoperationManager teleoperationManager;
@@ -42,6 +43,7 @@ namespace TeleopReachy
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotJointState = RobotDataManager.Instance.RobotJointState;
             robotJointState.event_OnPresentPositionsChanged.AddListener(GetHeadOrientation);
+            robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 
         void InitializeUIPosition()
@@ -91,7 +93,7 @@ namespace TeleopReachy
 
             arrow.localEulerAngles = new Vector3(0, 0, -orbita_yaw);
 
-            if (teleoperationManager.IsMobileBaseTeleoperationActive)
+            if (teleoperationManager.IsMobileBaseTeleoperationActive && robotStatus.IsMobileBaseOn() && !robotStatus.AreRobotMovementsSuspended())
             {
                 directionLeft = userMobilityInput.GetMobileBaseDirection();
                 directionRight = userMobilityInput.GetAngleDirection();
