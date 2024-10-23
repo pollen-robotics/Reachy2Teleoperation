@@ -167,18 +167,20 @@ namespace TeleopReachy
         {
             if(robotStatus != null && IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
             {
-                ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
-                ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
-
                 NeckJointGoal headTarget = userMovementsInput.GetHeadTarget();
+                jointsCommands.SendNeckCommands(headTarget);
 
-                float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
-                float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
+                if (IsArmTeleoperationActive)
+                {
+                    ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
+                    ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
 
-                jointsCommands.SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
-                jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
-                // robotStatus.LeftGripperClosed(left_gripper_closed);
-                // robotStatus.RightGripperClosed(right_gripper_closed);
+                    float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
+                    float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
+
+                    jointsCommands.SendArmsCommands(leftEndEffector, rightEndEffector);
+                    jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);
+                }
 
                 if (IsMobileBaseTeleoperationActive)
                 {

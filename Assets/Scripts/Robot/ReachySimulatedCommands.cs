@@ -43,21 +43,27 @@ namespace TeleopReachy
 
             // if (robotConfig.IsVirtual() || !robotStatus.IsHeadOn())
             //     SetHeadToModelPose();
-            SendFullBodyCommands(leftEndEffector, rightEndEffector, headTarget);
+            SendArmsCommands(leftEndEffector, rightEndEffector);
+            SendNeckCommands(headTarget);
 
             float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
             float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
             SendGrippersCommands(pos_left_gripper, pos_right_gripper);
         }
 
-        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
+        protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
             rightArmRequest.Id = new PartId { Name = "r_arm" };
             leftArmRequest.Id = new PartId { Name = "l_arm" };
-            neckRequest.Id = new PartId { Name = "head" };
 
             reachyFakeServer.SendArmCommand(leftArmRequest);
             reachyFakeServer.SendArmCommand(rightArmRequest);
+        }
+
+        protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)
+        {
+            neckRequest.Id = new PartId { Name = "head" };
+
             reachyFakeServer.SendNeckCommand(neckRequest);
         }
 
