@@ -22,8 +22,6 @@ namespace TeleopReachy
 
         private bool isEmotionPlaying;
 
-        private bool statusChanged;
-
         private bool hasMotorsSpeedLimited;
 
         private bool isGraspingLockActivated;
@@ -263,11 +261,10 @@ namespace TeleopReachy
              isRightArmOn= {5},
              isHeadOn= {6},
              isEmotionPlaying= {7},
-             statusChanged= {8},
-             hasMotorsSpeedLimited= {9}",
+             hasMotorsSpeedLimited= {8}",
              areRobotMovementsSuspended, isRobotCompliant,
               isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
-              isEmotionPlaying, statusChanged, isGraspingLockActivated);
+              isEmotionPlaying, isGraspingLockActivated);
         }
     }
 }

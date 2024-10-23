@@ -5174,7 +5174,7 @@ MonoBehaviour:
   leaveMirrorSceneButton: {fileID: 27345661}
   leaveMirrorSceneButtonRobotLocked: {fileID: 100910207}
   mirror: {fileID: 4575489516557208141}
-  menuWarningLockPosition: {fileID: 0}
+  menuWarningLockPosition: {fileID: 506325951}
   event_OnTeleopInitializationStepChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -175,8 +175,8 @@ namespace TeleopReachy
                     ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
                     ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
 
-                    float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
-                    float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
+                    float pos_left_gripper = userMovementsInput.GetLeftGripperTarget(robotStatus.IsGraspingLockActivated());
+                    float pos_right_gripper = userMovementsInput.GetRightGripperTarget(robotStatus.IsGraspingLockActivated());
 
                     jointsCommands.SendArmsCommands(leftEndEffector, rightEndEffector);
                     jointsCommands.SendGrippersCommands(pos_left_gripper, pos_right_gripper);

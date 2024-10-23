@@ -10,6 +10,7 @@ namespace TeleopReachy
     public class ReachySimulatedCommands : RobotCommands
     {
         private UserMovementsInput userMovementsInput;
+        private RobotStatus robotStatus;
 
         [SerializeField]
         private ReachySimulatedServer reachyFakeServer;
@@ -26,6 +27,7 @@ namespace TeleopReachy
         {
             Init();
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
+            robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 
         // Update is called once per frame
@@ -46,8 +48,8 @@ namespace TeleopReachy
             SendArmsCommands(leftEndEffector, rightEndEffector);
             SendNeckCommands(headTarget);
 
-            float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
-            float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
+            float pos_right_gripper = userMovementsInput.GetRightGripperTarget(robotStatus.IsGraspingLockActivated());
+            float pos_left_gripper = userMovementsInput.GetLeftGripperTarget(robotStatus.IsGraspingLockActivated());
             SendGrippersCommands(pos_left_gripper, pos_right_gripper);
         }
 

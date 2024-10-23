@@ -73,15 +73,6 @@ namespace TeleopReachy
             };
         }
 
-        void OnDestroy()
-        {
-            robotStatus.SetLeftArmOn(false);
-            robotStatus.SetRightArmOn(false);
-            robotStatus.SetHeadOn(false);
-            if (!robotConfig.IsVirtual())
-                SetRobotCompliant();
-        }
-
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
             if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
