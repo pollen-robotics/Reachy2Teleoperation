@@ -28,6 +28,8 @@ namespace TeleopReachy
     {
         public GhostApplicationManager ghostApplicationManager;
 
+        private TeleoperationManager teleoperationManager;
+
         private RobotStatus robotStatus;
 
         public TextAsset RightArmTextFile;
@@ -64,12 +66,13 @@ namespace TeleopReachy
             LeftGripper = LeftGripperTextFile.text.Split('\n');
             Neck = NeckTextFile.text.Split('\n');
             MobileBase = MobileBaseTextFile.text.Split('\n');
-
+            
             ghostApplicationManager.event_BaseSceneLoaded.AddListener(OnBaseSceneLoaded);
         }
 
         void OnBaseSceneLoaded()
         {
+            teleoperationManager = TeleoperationManager.Instance;
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, GetRobotScripts);
             EventManager.StartListening(EventNames.OnStopTeleoperation, InitBackInc);
         }
@@ -150,7 +153,7 @@ namespace TeleopReachy
 
         public override void SendArmCommand(ArmCartesianGoal armGoal)
         {
-            if(!robotStatus.IsArmTeleoperationActive())
+            if(!teleoperationManager.IsArmTeleoperationActive)
             {
                 Bridge.AnyCommand armCommand = new Bridge.AnyCommand
                 {
@@ -257,7 +260,7 @@ namespace TeleopReachy
 
         public override void SendNeckCommand(NeckJointGoal neckGoal)
         {
-            if(!robotStatus.IsRobotTeleoperationActive())
+            if(!teleoperationManager.IsRobotTeleoperationActive)
             {
                 Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
                 {

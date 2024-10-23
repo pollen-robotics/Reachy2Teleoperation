@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 
@@ -16,6 +17,10 @@ namespace TeleopReachy
         private UserMovementsInput userMovementsInput;
         private UserMobilityInput userMobilityInput;
 
+        public bool IsRobotTeleoperationActive { get; private set; }
+        public bool IsArmTeleoperationActive { get; private set; }
+        public bool IsMobileBaseTeleoperationActive { get; private set; }
+
         public enum TeleoperationSuspensionCase 
         {
             None, HeadsetRemoved, EmergencyStopActivated,
@@ -23,13 +28,23 @@ namespace TeleopReachy
 
         public TeleoperationSuspensionCase reasonForSuspension { get; private set; }
 
+        public UnityEvent event_OnTriedToSendMobilityCommands;
+
         void Start()
         {
+            IsRobotTeleoperationActive = false;
+            IsArmTeleoperationActive = false;
+            IsMobileBaseTeleoperationActive = false;
+
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartTeleoperation);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, InitUserInputs);
             EventManager.StartListening(EventNames.QuitTeleoperationScene, StopTeleoperation);
             EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
             EventManager.StartListening(EventNames.OnEmergencyStop, EmergencyStopActivated);
+
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
+            EventManager.StartListening(EventNames.OnStartMobileBaseTeleoperation, StartMobileBaseTeleoperation);
+            EventManager.StartListening(EventNames.OnStopMobileBaseTeleoperation, StopMobileBaseTeleoperation);
 
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitRobotData);
         }
@@ -51,6 +66,41 @@ namespace TeleopReachy
             mobilityCommands = RobotDataManager.Instance.RobotMobilityCommands;
         }
 
+        private void StartArmTeleoperation()
+        {
+            Debug.Log("[TeleoperationManager]: Start arm teleoperation");
+            IsArmTeleoperationActive = true;
+        }
+
+        private void StartMobileBaseTeleoperation()
+        {
+            Debug.Log("[TeleoperationManager]: Start mobile base teleoperation");
+            userMobilityInput.event_OnStartMoving.AddListener(ActivateOnNewMobilityMovement);
+            if (!robotStatus.IsMobileBaseOn()) userMobilityInput.event_OnStartMoving.AddListener(FailToSendMobilityCommand);
+        }
+
+        private void ActivateOnNewMobilityMovement()
+        {
+            userMobilityInput.event_OnStartMoving.RemoveListener(ActivateOnNewMobilityMovement);
+            IsMobileBaseTeleoperationActive = true;
+        }
+
+        private void StopMobileBaseTeleoperation()
+        {
+            Debug.Log("[TeleoperationManager]: Stop mobile base teleoperation");
+            IsMobileBaseTeleoperationActive = false;
+            if (!robotStatus.IsMobileBaseOn()) userMobilityInput.event_OnStartMoving.RemoveListener(FailToSendMobilityCommand);
+            userMobilityInput.event_OnStartMoving.RemoveListener(ActivateOnNewMobilityMovement);
+        }
+
+        private void FailToSendMobilityCommand()
+        {
+            if (!robotStatus.IsMobileBaseOn())
+            {
+                event_OnTriedToSendMobilityCommands.Invoke();
+            }
+        }
+
         void ReadyForTeleop()
         {
             EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
@@ -58,13 +108,21 @@ namespace TeleopReachy
 
         void StartTeleoperation()
         {
+            Debug.Log("[TeleoperationManager]: Start teleoperation");
             EventManager.TriggerEvent(EventNames.OnRobotStiffRequested);
             EventManager.TriggerEvent(EventNames.OnStartTeleoperation);
+            if (!robotStatus.IsMobileBaseOn()) userMobilityInput.event_OnStartMoving.AddListener(FailToSendMobilityCommand);
+            IsRobotTeleoperationActive = true;
+            IsMobileBaseTeleoperationActive = true;
         }
         
         void StopTeleoperation()
         {
+            Debug.Log("[TeleoperationManager]: Stop teleoperation");
             EventManager.TriggerEvent(EventNames.OnStopTeleoperation);
+            IsRobotTeleoperationActive = false;
+            IsArmTeleoperationActive = false;
+            IsMobileBaseTeleoperationActive = false;
         }
 
         void EmergencyStopActivated()
@@ -81,17 +139,23 @@ namespace TeleopReachy
 
         void SuspendTeleoperation()
         {
-            EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
+            if(IsRobotTeleoperationActive) EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
         }
 
         public void AskForResumingTeleoperation()
         {
-            EventManager.TriggerEvent(EventNames.OnResumeTeleoperation);
+            if (IsRobotTeleoperationActive && robotStatus.AreRobotMovementsSuspended())
+            {
+                EventManager.TriggerEvent(EventNames.OnResumeTeleoperation);
+            }
         }
 
         public void AskForStartingArmTeleoperation()
         {
-            EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
+            if (IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
+            {
+                EventManager.TriggerEvent(EventNames.OnStartArmTeleoperation);
+            }
         }
 
         public void AskForRobotSmoothlyCompliant()
@@ -101,7 +165,7 @@ namespace TeleopReachy
 
         void Update()
         {
-            if(robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if(robotStatus != null && IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
             {
                 ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
                 ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
@@ -116,8 +180,11 @@ namespace TeleopReachy
                 // robotStatus.LeftGripperClosed(left_gripper_closed);
                 // robotStatus.RightGripperClosed(right_gripper_closed);
 
-                Vector3 direction = userMobilityInput.GetTargetDirectionCommand();
-                mobilityCommands.SendMobileBaseDirection(direction);
+                if (IsMobileBaseTeleoperationActive)
+                {
+                    Vector3 direction = userMobilityInput.GetTargetDirectionCommand();
+                    mobilityCommands.SendMobileBaseDirection(direction);
+                }
             }
         }
     }

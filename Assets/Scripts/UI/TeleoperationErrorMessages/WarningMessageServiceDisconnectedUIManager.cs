@@ -12,7 +12,7 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
 
-        private UserMobilityInput userMobilityInput;
+        private TeleoperationManager teleoperationManager;
 
         void Start()
         {
@@ -22,8 +22,8 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            userMobilityInput = UserInputManager.Instance.UserMobilityInput;
-            userMobilityInput.event_OnTriedToSendCommands.AddListener(DisplayMessageForMobility);
+            teleoperationManager = TeleoperationManager.Instance;
+            teleoperationManager.event_OnTriedToSendMobilityCommands.AddListener(DisplayMessageForMobility);
 
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(DisplayNewConnectionStatus);
             connectionStatus.event_OnRobotReady.AddListener(HideInfoMessage);
@@ -57,18 +57,11 @@ namespace TeleopReachy
 
         void DisplayMessageForMobility()
         {
-            // if (robotConfig.HasMobileBase())
-            // {
-            //     if (!robotStatus.IsMobilityActive())
-            //     {
-            //         textToDisplay = "Mobile services have been disconnected";
-            //     }
-            //     else
-            //     {
-            //         if (!robotStatus.IsMobileBaseOn()) textToDisplay = "Mobile base has been disabled in options";
-            //     }
-            //     ShowInfoMessage();
-            // }
+            if (robotConfig.HasMobileBase())
+            {
+                textToDisplay = "Mobile base has been disabled in options";
+                ShowInfoMessage();
+            }
         }
     }
 }
