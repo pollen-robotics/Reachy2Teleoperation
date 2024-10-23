@@ -138,7 +138,8 @@ namespace GstreamerWebRTC
                 }
                 await Task.Delay(1000);
             }
-            event_OnRemotePeerLeft.Invoke();
+            if (!request_stop)
+                event_OnRemotePeerLeft.Invoke();
             Close();
         }
 
@@ -209,7 +210,8 @@ namespace GstreamerWebRTC
                     {
                         Debug.LogWarning("Producer has " + _remote_producer_name + " left");
                         sessionStatus = SessionStatus.Ended;
-                        event_OnRemotePeerLeft.Invoke();
+                        if (!request_stop)
+                            event_OnRemotePeerLeft.Invoke();
                         Close();
                     }
                 }
