@@ -16,6 +16,7 @@ namespace TeleopReachy
         private Button backToMirrorSceneButton;
 
         private ControllersManager controllers;
+        private TeleoperationManager teleoperationManager;
 
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
@@ -41,6 +42,8 @@ namespace TeleopReachy
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
+
+            teleoperationManager = TeleoperationManager.Instance;
 
             // if (robotConfig.HasMobileBase())
             // {
@@ -89,19 +92,19 @@ namespace TeleopReachy
 
 
             // Check teleoperation and controllers status for exit menu
-            if (robotStatus.IsArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (teleoperationManager.IsArmTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
             {
                 CheckTeleoperationExitMenuState(rightPrimaryButtonPressed, leftPrimaryButtonPressed, leftJoystickValue);
             }
 
             // Check teleoperation and controllers status to start arm teleoperation
-            if (!robotStatus.IsArmTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (!teleoperationManager.IsArmTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
             {
                 CheckStartArmTeleoperationState(rightPrimaryButtonPressed);
             }
 
             // Check teleoperation and controllers status for suspension menu
-            if (robotStatus.IsRobotTeleoperationActive() && robotStatus.AreRobotMovementsSuspended())
+            if (teleoperationManager.IsRobotTeleoperationActive && robotStatus.AreRobotMovementsSuspended())
             {
                 CheckTeleoperationSuspensionMenuState(rightPrimaryButtonPressed);
             }

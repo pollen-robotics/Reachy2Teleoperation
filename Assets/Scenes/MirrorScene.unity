@@ -3172,8 +3172,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Some required services are not available. \nCheck the status panel for
-    more details, or access the dashboard!"
+  m_Text: "Some required services are not available. \nCheck the info panel for more
+    details, or access the dashboard!"
 --- !u!222 &449329031
 CanvasRenderer:
   m_ObjectHideFlags: 0

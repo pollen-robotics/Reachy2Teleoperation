@@ -20,6 +20,7 @@ namespace TeleopReachy
         private ArmCartesianGoal lArmZeroPose;
         private ArmCartesianGoal rArmZeroPose;
 
+        private TeleoperationManager teleoperationManager;
 
         // Start is called before the first frame update
         void Start()
@@ -43,6 +44,8 @@ namespace TeleopReachy
 
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
+
+            teleoperationManager = TeleoperationManager.Instance;
 
             Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4
             {
@@ -81,7 +84,7 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            if (robotStatus.IsArmTeleoperationActive())
+            if (teleoperationManager.IsArmTeleoperationActive)
             {
                 if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
                 if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
@@ -90,7 +93,7 @@ namespace TeleopReachy
 
         protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
         {
-            if (robotStatus.IsArmTeleoperationActive())
+            if (teleoperationManager.IsArmTeleoperationActive)
             {
                 if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
                 if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
@@ -434,34 +437,28 @@ namespace TeleopReachy
 
         void SuspendTeleoperation()
         {
-            if (robotStatus.IsRobotTeleoperationActive())
+            try
             {
-                try
+                if (waitToSetRobotFullSpeed != null)
                 {
-                    if (waitToSetRobotFullSpeed != null)
-                    {
-                        StopCoroutine(waitToSetRobotFullSpeed);
-                    }
-                    ResetMotorsStartingSpeed();
-                    if (setSmoothCompliance != null) StopCoroutine(setSmoothCompliance);
-                    setSmoothCompliance = StartCoroutine(SmoothCompliance(5));
-                    if (robotStatus.IsHeadOn()) SetHeadLookingStraight();
+                    StopCoroutine(waitToSetRobotFullSpeed);
                 }
-                catch (Exception exc)
-                {
-                    Debug.Log($"[RobotJointCommands]: SuspendTeleoperation error: {exc}");
-                }
+                ResetMotorsStartingSpeed();
+                if (setSmoothCompliance != null) StopCoroutine(setSmoothCompliance);
+                setSmoothCompliance = StartCoroutine(SmoothCompliance(5));
+                if (robotStatus.IsHeadOn()) SetHeadLookingStraight();
+            }
+            catch (Exception exc)
+            {
+                Debug.Log($"[RobotJointCommands]: SuspendTeleoperation error: {exc}");
             }
         }
 
         void ResumeTeleoperation()
         {
-            if (robotStatus.IsRobotTeleoperationActive())
+            if (!robotStatus.HasMotorsSpeedLimited())
             {
-                if (!robotStatus.HasMotorsSpeedLimited())
-                {
-                    ResetMotorsStartingSpeed();
-                }
+                ResetMotorsStartingSpeed();
             }
         }
     }

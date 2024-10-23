@@ -14,16 +14,13 @@ namespace TeleopReachy
         private Vector2 mobileBaseTranslation;
         private Vector2 mobileBaseRotation;
         private Vector3 targetDirectionCommand;
+        private Vector3 previousTargetDirectionCommand;
 
         private Vector2 direction;
 
-        private bool mobilityInputsSuspended;
-        private bool mobilityInputsDisableTry;
-
         private const float maxSpeedFactor = 0.5f;
 
-        public UnityEvent event_OnTriedToSendCommands;
-        public UnityEvent<bool> event_DejaVu;
+        public UnityEvent event_OnStartMoving;
 
         private void OnEnable()
         {
@@ -43,8 +40,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            mobilityInputsSuspended = false;
-            mobilityInputsDisableTry = false;
+            previousTargetDirectionCommand = new Vector3(0, 0, 0);
         }
 
         void Update()
@@ -66,9 +62,6 @@ namespace TeleopReachy
                 controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightSecondaryButtonPressed);
             }
 
-            // if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
-            // {
-            mobilityInputsSuspended = false;
             float r = Mathf.Sqrt(Mathf.Pow(mobileBaseTranslation[0], 2) + Mathf.Pow(mobileBaseTranslation[1], 2));
             float phi = Mathf.Atan2(mobileBaseTranslation[1], mobileBaseTranslation[0]);
 
@@ -84,35 +77,13 @@ namespace TeleopReachy
                 translationSpeed = 1.0f;
 
             targetDirectionCommand = new Vector3(direction[1] * translationSpeed, -direction[0] * translationSpeed, -mobileBaseRotation[0] * 1.5f);
-            // }
-            // else
-            // {
-            //     mobilityInputsSuspended = true;
-            //     targetDirectionCommand = new Vector3(0, 0, 0);
-            // }
-            // else
-            // {
-            //     if (robotStatus.IsRobotTeleoperationActive() && (!robotStatus.IsMobilityActive() || !robotStatus.IsMobileBaseOn()))
-            //     {
-            //         if (!leftPrimaryButtonPressed && !rightPrimaryButtonPressed)
-            //         {
-            //             if ((mobileBaseRotation != new Vector2(0, 0) || mobileBaseTranslation != new Vector2(0, 0)))
-            //             {
-            //                 if (!mobilityInputsDisableTry)
-            //                 {
-            //                     event_OnTriedToSendCommands.Invoke();
-            //                     mobilityInputsDisableTry = true;
-            //                 }
-            //             }
-            //             else { mobilityInputsDisableTry = false; }
-            //         }
-            //     }
-            // }
-        }
+            
+            if (previousTargetDirectionCommand == new Vector3(0, 0, 0) && targetDirectionCommand != new Vector3(0, 0, 0))
+            {
+                event_OnStartMoving.Invoke();
+            }
 
-        public bool CanGetUserMobilityInputs()
-        {
-            return !mobilityInputsSuspended;
+            previousTargetDirectionCommand = targetDirectionCommand;
         }
 
         public Vector2 GetMobileBaseDirection()

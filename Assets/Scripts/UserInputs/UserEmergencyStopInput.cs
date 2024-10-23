@@ -8,29 +8,12 @@ namespace TeleopReachy
     {
         private ControllersManager controllers;
 
-        private RobotStatus robotStatus;
-
         bool rightGripPressed;
         bool rightTriggerPressed;
         bool rightPrimaryButtonPressed;
         bool leftGripPressed;
         bool leftTriggerPressed;
         bool leftPrimaryButtonPressed;
-
-        private void OnEnable()
-        {
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.TeleoperationSceneLoaded, Init);
-        }
-
-        private void Init()
-        {
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-        }
 
         void Awake()
         {
@@ -55,14 +38,10 @@ namespace TeleopReachy
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out leftTriggerPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
 
-            // if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
-            // {
-                if ((leftGripPressed && leftTriggerPressed && leftPrimaryButtonPressed) || (rightGripPressed && rightTriggerPressed && rightPrimaryButtonPressed))
-                {
-                    EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
-                    EventManager.TriggerEvent(EventNames.OnEmergencyStop);
-                }
-            // }
+            if ((leftGripPressed && leftTriggerPressed && leftPrimaryButtonPressed) || (rightGripPressed && rightTriggerPressed && rightPrimaryButtonPressed))
+            {
+                EventManager.TriggerEvent(EventNames.OnEmergencyStop);
+            }
         }
     }
 }

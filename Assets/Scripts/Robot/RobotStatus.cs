@@ -6,11 +6,6 @@ namespace TeleopReachy
 {
     public class RobotStatus : MonoBehaviour
     {
-        private bool isRobotTeleoperationActive;
-
-        private bool isArmTeleoperationActive;
-        private bool isMobileBaseTeleoperationActive;
-
         private bool areRobotMovementsSuspended;
 
         private bool isRobotCompliant;
@@ -45,12 +40,7 @@ namespace TeleopReachy
 
         private void Start()
         {
-            EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
-            EventManager.StartListening(EventNames.OnStartMobileBaseTeleoperation, StartMobileBaseTeleoperation);
-            EventManager.StartListening(EventNames.OnStopMobileBaseTeleoperation, StopMobileBaseTeleoperation);
             EventManager.StartListening(EventNames.OnStartTeleoperation, StartRobotTeleoperation);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, StopRobotTeleoperation);
-
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendRobotTeleoperation);
             EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeRobotTeleoperation);
         }
@@ -73,21 +63,6 @@ namespace TeleopReachy
         public bool IsLeftGripperClosed()
         {
             return isLeftGripperClosed;
-        }
-
-        public bool IsRobotTeleoperationActive()
-        {
-            return isRobotTeleoperationActive;
-        }
-
-        public bool IsArmTeleoperationActive()
-        {
-            return isArmTeleoperationActive;
-        }
-
-        public bool IsMobileBaseTeleoperationActive()
-        {
-            return isMobileBaseTeleoperationActive;
         }
 
         public bool AreRobotMovementsSuspended()
@@ -251,37 +226,8 @@ namespace TeleopReachy
         private void StartRobotTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start teleoperation");
-            isRobotTeleoperationActive = true;
+            areRobotMovementsSuspended = false;
             IsRobotPositionLocked = false;
-            // event_OnStartTeleoperation.Invoke();
-        }
-
-        private void StartArmTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Start arm teleoperation");
-            isArmTeleoperationActive = true;
-            // event_OnStartArmTeleoperation.Invoke();
-        }
-
-        private void StartMobileBaseTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Start mobile base teleoperation");
-            isMobileBaseTeleoperationActive = true;
-            // event_OnStartArmTeleoperation.Invoke();
-        }
-
-        private void StopMobileBaseTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Stop mobile base teleoperation");
-            isMobileBaseTeleoperationActive = false;
-            // event_OnStartArmTeleoperation.Invoke();
-        }
-
-        private void StopRobotTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Stop teleoperation");
-            isRobotTeleoperationActive = false;
-            isArmTeleoperationActive = false;
         }
 
         public void SetMotorsSpeedLimited(bool isLimited)
@@ -310,8 +256,7 @@ namespace TeleopReachy
 
         public override string ToString()
         {
-            return string.Format(@"isRobotTeleoperationActive = {0},
-             areRobotMovementsSuspended= {1},
+            return string.Format(@"areRobotMovementsSuspended= {1},
              isRobotCompliant= {2},
              isMobileBaseOn= {3},
              isLeftArmOn= {4},
@@ -320,7 +265,7 @@ namespace TeleopReachy
              isEmotionPlaying= {7},
              statusChanged= {8},
              hasMotorsSpeedLimited= {9}",
-             isRobotTeleoperationActive, areRobotMovementsSuspended, isRobotCompliant,
+             areRobotMovementsSuspended, isRobotCompliant,
               isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
               isEmotionPlaying, statusChanged, isGraspingLockActivated);
         }
