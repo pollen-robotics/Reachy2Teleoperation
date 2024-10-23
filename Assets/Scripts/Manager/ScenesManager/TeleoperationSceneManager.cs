@@ -43,25 +43,7 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
-            teleoperationManager = TeleoperationManager.Instance;
-
-            // if (robotConfig.HasMobileBase())
-            // {
-            //     robotStatus.SetMobilityActive(true);
-            // }
-            if (robotStatus.IsRobotPositionLocked || robotStatus.IsGraspingLockActivated())
-            {
-                if (robotStatus.IsLeftGripperClosed())
-                {
-                    UserInputManager.Instance.UserMovementsInput.ForceLeftGripperStatus(true);
-                    robotStatus.SetGraspingLockActivated(true);
-                }
-                if (robotStatus.IsRightGripperClosed())
-                {
-                    UserInputManager.Instance.UserMovementsInput.ForceRightGripperStatus(true);
-                    robotStatus.SetGraspingLockActivated(true);
-                }
-            }
+            teleoperationManager = TeleoperationManager.Instance;    
 
             // For exit menu
             teleoperationExitSelectedOption = TeleoperationExitMenuItem.Cancel;
@@ -76,7 +58,6 @@ namespace TeleopReachy
         {
             Debug.Log("[TeleoperationManager]: StopTeleoperation");
             //robotStatus.SetEmotionsActive(false);
-            // robotStatus.SetMobilityActive(false);
         }
 
         void Update()

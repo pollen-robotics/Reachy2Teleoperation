@@ -137,10 +137,6 @@ namespace TeleopReachy
         public float GetRightGripperTarget(bool openCloseAnswer=false)
         {
             float pos_right_gripper;
-            // if (handsTracker.rightHand.trigger > 0.5)
-            //         right_gripper_closed = true;
-            //     else
-            //         right_gripper_closed = false;
             if (openCloseAnswer)
             {
                 if (right_gripper_closed) pos_right_gripper = 0;
@@ -156,10 +152,6 @@ namespace TeleopReachy
         public float GetLeftGripperTarget(bool openCloseAnswer=false)
         {
             float pos_left_gripper;
-            // if (handsTracker.leftHand.trigger > 0.5)
-            //         left_gripper_closed = true;
-            //     else
-            //         left_gripper_closed = false;
             if (openCloseAnswer)
             {
                 if (left_gripper_closed) pos_left_gripper = 0;
@@ -170,20 +162,6 @@ namespace TeleopReachy
                 pos_left_gripper = 1 - handsTracker.leftHand.trigger;
             }
             return pos_left_gripper;
-        }
-
-        public void ForceLeftGripperStatus(bool closed)
-        {
-            if (handsTracker.leftHand.trigger < 0.5)
-                left_gripper_closed = closed;
-            reinit_left_gripper = false;
-        }
-
-        public void ForceRightGripperStatus(bool closed)
-        {
-            if (handsTracker.rightHand.trigger < 0.5)
-                right_gripper_closed = closed;
-            reinit_right_gripper = false;
         }
     }
 }
