@@ -20,7 +20,6 @@ namespace TeleopReachy
         void StopTeleoperation()
         {
             EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
-            EventManager.TriggerEvent(EventNames.EnterMirrorScene);
         }
     }
 }

@@ -42,17 +42,20 @@ namespace TeleopReachy
 
         public void SendMobileBaseDirection(Vector3 direction)
         {
-            TargetDirectionCommand command = new TargetDirectionCommand
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
-                Id = robotConfig.partsId["mobile_base"],
-                Direction = new DirectionVector
+                TargetDirectionCommand command = new TargetDirectionCommand
                 {
-                    X = direction[0],
-                    Y = direction[1],
-                    Theta = direction[2],
-                }
-            };
-            dataController.SendMobileBaseCommand(command);
+                    Id = robotConfig.partsId["mobile_base"],
+                    Direction = new DirectionVector
+                    {
+                        X = direction[0],
+                        Y = direction[1],
+                        Theta = direction[2],
+                    }
+                };
+                dataController.SendMobileBaseCommand(command);
+            }
         }
 
         void StopMobileBaseMovements()

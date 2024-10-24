@@ -28,8 +28,8 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.EnterConnectionScene, LoadConnectionSceneEndUnloadMirrorScene);
             EventManager.StartListening(EventNames.QuitConnectionScene, UnloadConnectionSceneAndLoadMirrorScene);
 
-            EventManager.StartListening(EventNames.EnterMirrorScene, LoadMirrorScene);
-            EventManager.StartListening(EventNames.QuitMirrorScene, UnloadMirrorScene);
+            // EventManager.StartListening(EventNames.EnterMirrorScene, LoadMirrorScene);
+            // EventManager.StartListening(EventNames.QuitMirrorScene, UnloadMirrorScene);
 
             EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadTeleoperationSceneAndUnloadMirrorScene);
             EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadTeleoperationSceneAndLoadMirrorScene);

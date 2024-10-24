@@ -11,9 +11,6 @@ namespace TeleopReachy
 
         [SerializeField]
         private InitializationState instructionsStep;
-        
-        [SerializeField]
-        private bool virtualRobotInstructions;
 
         private bool needUpdateInstructions;
 
@@ -22,15 +19,8 @@ namespace TeleopReachy
             sceneManager = MirrorSceneManager.Instance;
             needUpdateInstructions = false;
 
-            if(Robot.IsCurrentRobotVirtual())
-            {
-                transform.ActivateChildren(virtualRobotInstructions);
-            }
-            else
-            {
-                sceneManager.event_OnTeleopInitializationStepChanged.AddListener(CheckInstructions);
-                CheckInstructions();
-            }
+            sceneManager.event_OnTeleopInitializationStepChanged.AddListener(CheckInstructions);
+            CheckInstructions();
         }
 
         void CheckInstructions()

@@ -10,6 +10,9 @@ namespace TeleopReachy
     public class GhostApplicationManager : MonoBehaviour
     {
         public UnityEvent event_BaseSceneLoaded;
+
+        private TeleoperationManager teleoperationManager;
+
         void Start()
         {
             QualitySettings.vSyncCount = 0;  // Disable VSync
@@ -19,8 +22,8 @@ namespace TeleopReachy
             Debug.LogError("Target Frame Rate: " + Application.targetFrameRate);
 
             // By default soft team asked for mobile base off
-            bool mobility_default_mode = false;
-            PlayerPrefs.SetString("mobility_on", mobility_default_mode.ToString());
+            // bool mobility_default_mode = false;
+            // PlayerPrefs.SetString("mobility_on", mobility_default_mode.ToString());
 
             StartCoroutine(LoadBaseScene());
         }
@@ -35,16 +38,21 @@ namespace TeleopReachy
             }
 
             event_BaseSceneLoaded.Invoke();
-            EventManager.StartListening(EventNames.EnterMirrorScene, LoadGhostMirrorScene);
-            EventManager.StartListening(EventNames.QuitMirrorScene, UnloadGhostMirrorScene);
+            teleoperationManager = TeleoperationManager.Instance;
+            EventManager.StartListening(EventNames.EnterConnectionScene, UnloadGhostMirrorScene);
+            EventManager.StartListening(EventNames.QuitConnectionScene, LoadGhostMirrorScene);
 
-            EventManager.StartListening(EventNames.EnterTeleoperationScene, LoadGhostTeleoperationScene);
-            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadGhostTeleoperationScene);
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, UnloadGhostMirrorSceneAndLoadTeleoperationScene);
+            EventManager.StartListening(EventNames.QuitTeleoperationScene, UnloadGhostTeleoperationSceneAndLoadGhostMirrorScene);
+            EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartArmTeleop);
         }
 
         private void UnloadGhostMirrorScene()
         {
-            SceneManager.UnloadSceneAsync("Test_GaelleGhostMirrorScene");
+            if(SceneManager.GetSceneByName("Test_GaelleGhostMirrorScene").isLoaded)
+            {
+                SceneManager.UnloadSceneAsync("Test_GaelleGhostMirrorScene");
+            }
         }
 
         private void UnloadGhostTeleoperationScene()
@@ -67,9 +75,21 @@ namespace TeleopReachy
             yield return null;
         }
 
-        private void LoadGhostTeleoperationScene()
+        private void UnloadGhostMirrorSceneAndLoadTeleoperationScene()
         {
+            UnloadGhostMirrorScene();
             SceneManager.LoadScene("Test_GaelleGhostTeleoperationScene", LoadSceneMode.Additive);
+        }
+
+        private void StartArmTeleop()
+        {
+            teleoperationManager.AskForStartingArmTeleoperation();
+        }
+
+        private void UnloadGhostTeleoperationSceneAndLoadGhostMirrorScene()
+        {
+            UnloadGhostTeleoperationScene();
+            LoadGhostMirrorScene();
         }
     }
 }

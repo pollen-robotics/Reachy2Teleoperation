@@ -68,7 +68,7 @@ namespace TeleopReachy
 
         private void StartArmTeleoperation()
         {
-            Debug.Log("[TeleoperationManager]: Start arm teleoperation");
+            Debug.LogError("[TeleoperationManager]: Start arm teleoperation");
             IsArmTeleoperationActive = true;
         }
 
