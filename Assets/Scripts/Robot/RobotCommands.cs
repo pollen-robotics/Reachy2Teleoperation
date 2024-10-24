@@ -23,7 +23,6 @@ namespace TeleopReachy
         protected void Init()
         {
             robotConfig = RobotDataManager.Instance.RobotConfig;
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 

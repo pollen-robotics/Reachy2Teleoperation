@@ -80,6 +80,7 @@ namespace TeleopReachy
         void GetRobotScripts()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            webRTCController = WebRTCManager.Instance.gstreamerPlugin;
         }
 
         void InitBackInc()

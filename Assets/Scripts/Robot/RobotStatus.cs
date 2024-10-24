@@ -10,15 +10,13 @@ namespace TeleopReachy
 
         private bool isRobotCompliant;
 
-        private bool isMobileBaseOn = true; // true if operator want to have control of the mobile base, false otherwise
-
-        private bool isLeftArmOn = true; // true if operator want to have control of the left arm, false otherwise
-        private bool isLeftGripperOn = true; // true if operator want to have control of the left arm, false otherwise
-
-        private bool isRightArmOn = true; // true if operator want to have control of the right arm, false otherwise
-        private bool isRightGripperOn = true; // true if operator want to have control of the left arm, false otherwise
-
-        private bool isHeadOn = true; // true if operator want to have control of the head, false otherwise
+        // Parts are "On" if operators want to have control on it, false otherwise
+        private bool isMobileBaseOn = true;
+        private bool isLeftArmOn = true;
+        private bool isLeftGripperOn = true;
+        private bool isRightArmOn = true;
+        private bool isRightGripperOn = true;
+        private bool isHeadOn = true;
 
         private bool isEmotionPlaying;
 
@@ -151,15 +149,17 @@ namespace TeleopReachy
             isEmotionPlaying = isPlaying;
         }
 
-        public void SetPartOn(Part part, bool isOn)
+        public void SetPartOn(Part part, bool isOn, bool subPartManaged=false)
         {
             switch (part)
             {
                 case Part.LeftArm:
                     SetLeftArmOn(isOn);
+                    if (subPartManaged) SetLeftGripperOn(isOn);
                     break;
                 case Part.RightArm:
                     SetRightArmOn(isOn);
+                    if (subPartManaged) SetRightGripperOn(isOn);
                     break;
                 case Part.LeftGripper:
                     SetLeftGripperOn(isOn);
@@ -254,14 +254,14 @@ namespace TeleopReachy
 
         public override string ToString()
         {
-            return string.Format(@"areRobotMovementsSuspended= {1},
-             isRobotCompliant= {2},
-             isMobileBaseOn= {3},
-             isLeftArmOn= {4},
-             isRightArmOn= {5},
-             isHeadOn= {6},
-             isEmotionPlaying= {7},
-             hasMotorsSpeedLimited= {8}",
+            return string.Format(@"areRobotMovementsSuspended= {0},
+             isRobotCompliant= {1},
+             isMobileBaseOn= {2},
+             isLeftArmOn= {3},
+             isRightArmOn= {4},
+             isHeadOn= {5},
+             isEmotionPlaying= {6},
+             hasMotorsSpeedLimited= {7}",
              areRobotMovementsSuspended, isRobotCompliant,
               isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
               isEmotionPlaying, isGraspingLockActivated);

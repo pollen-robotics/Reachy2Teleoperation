@@ -2338,6 +2338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: 5
   partButton: {fileID: 241177636}
+  subPartManaged: 0
 --- !u!1 &251840066
 GameObject:
   m_ObjectHideFlags: 0
@@ -4821,7 +4822,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instructionsStep: 1
-  virtualRobotInstructions: 0
 --- !u!1 &628343169
 GameObject:
   m_ObjectHideFlags: 0
@@ -7217,7 +7217,7 @@ GameObject:
   - component: {fileID: 974770731}
   - component: {fileID: 974770732}
   m_Layer: 0
-  m_Name: ReachySimulated
+  m_Name: ReachySimulation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7623,7 +7623,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instructionsStep: 2
-  virtualRobotInstructions: 0
 --- !u!1 &1078866832
 GameObject:
   m_ObjectHideFlags: 0
@@ -8699,6 +8698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: 0
   partButton: {fileID: 1226051853}
+  subPartManaged: 1
 --- !u!1 &1228221515
 GameObject:
   m_ObjectHideFlags: 0
@@ -12246,8 +12246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a841c0dca40a034bba446049c1f57d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instructionsStep: 0
-  virtualRobotInstructions: 1
+  instructionsStep: 3
 --- !u!1 &1516254554
 GameObject:
   m_ObjectHideFlags: 0
@@ -14378,6 +14377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: 4
   partButton: {fileID: 1966570206}
+  subPartManaged: 0
 --- !u!1 &1975667248
 GameObject:
   m_ObjectHideFlags: 0
@@ -15487,6 +15487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   part: 2
   partButton: {fileID: 2040763371}
+  subPartManaged: 1
 --- !u!1 &2062093827
 GameObject:
   m_ObjectHideFlags: 0
@@ -27391,7 +27392,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instructionsStep: 0
-  virtualRobotInstructions: 0
 --- !u!114 &4575489515867783904
 MonoBehaviour:
   m_ObjectHideFlags: 0

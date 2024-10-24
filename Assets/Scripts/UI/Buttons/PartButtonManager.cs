@@ -14,6 +14,9 @@ namespace TeleopReachy
         [SerializeField]
         private Button partButton;
 
+        [SerializeField]
+        private bool subPartManaged;
+
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
 
@@ -49,7 +52,7 @@ namespace TeleopReachy
 
         void SwitchButtonMode()
         {
-            robotStatus.SetPartOn(part, !robotStatus.IsPartOn(part));
+            robotStatus.SetPartOn(part, !robotStatus.IsPartOn(part), subPartManaged);
 
             if (robotStatus.IsPartOn(part))
             {

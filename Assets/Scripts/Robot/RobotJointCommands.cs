@@ -75,8 +75,8 @@ namespace TeleopReachy
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
-            if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
+            if (robotConfig.HasLeftGripper() && robotStatus.IsLeftGripperOn()) dataController.SetHandPosition(leftGripperCommand);
+            if (robotConfig.HasRightGripper() && robotStatus.IsRightGripperOn()) dataController.SetHandPosition(rightGripperCommand);
         }
 
         protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)

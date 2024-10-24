@@ -8,7 +8,7 @@ namespace TeleopReachy
 {
     public enum InitializationState
     {
-        WaitingForRobotReady, WaitingForUserOriginValidation, ReadyForTeleop,
+        WaitingForRobotReady, WaitingForUserOriginValidation, ReadyForTeleop, NoInitializationRequired,
     }
 
     public class MirrorSceneManager : Singleton<MirrorSceneManager>
@@ -66,7 +66,8 @@ namespace TeleopReachy
             leaveMirrorSceneButtonRobotLocked.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
 
             ResetPosition();
-            initializationState = InitializationState.WaitingForRobotReady;
+            if (Robot.IsCurrentRobotVirtual())  initializationState = InitializationState.NoInitializationRequired;
+            else initializationState = InitializationState.WaitingForRobotReady;
 
             connectionStatus = ConnectionStatus.Instance;
             connectionStatus.event_OnRobotReady.AddListener(RobotReadyForTeleop);
