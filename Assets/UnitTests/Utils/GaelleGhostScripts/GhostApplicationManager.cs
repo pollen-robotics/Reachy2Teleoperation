@@ -39,6 +39,9 @@ namespace TeleopReachy
 
             event_BaseSceneLoaded.Invoke();
             teleoperationManager = TeleoperationManager.Instance;
+            OptionsManager.Instance.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.None);
+            OptionsManager.Instance.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.None);
+
             EventManager.StartListening(EventNames.EnterConnectionScene, UnloadGhostMirrorScene);
             EventManager.StartListening(EventNames.QuitConnectionScene, LoadGhostMirrorScene);
 
