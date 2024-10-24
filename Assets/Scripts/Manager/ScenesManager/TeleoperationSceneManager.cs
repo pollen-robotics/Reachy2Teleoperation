@@ -54,12 +54,6 @@ namespace TeleopReachy
             if(backToMirrorSceneButton != null) backToMirrorSceneButton.onClick.AddListener(BackToMirrorScene);
         }
 
-        void StopTeleoperation()
-        {
-            Debug.Log("[TeleoperationManager]: StopTeleoperation");
-            //robotStatus.SetEmotionsActive(false);
-        }
-
         void Update()
         {
             bool rightPrimaryButtonPressed = false;

@@ -119,10 +119,10 @@ namespace TeleopReachy
         void StopTeleoperation()
         {
             Debug.Log("[TeleoperationManager]: Stop teleoperation");
-            EventManager.TriggerEvent(EventNames.OnStopTeleoperation);
             IsRobotTeleoperationActive = false;
             IsArmTeleoperationActive = false;
             IsMobileBaseTeleoperationActive = false;
+            EventManager.TriggerEvent(EventNames.OnStopTeleoperation);
         }
 
         void EmergencyStopActivated()
