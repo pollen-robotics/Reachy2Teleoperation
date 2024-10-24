@@ -1107,7 +1107,6 @@ GameObject:
   - component: {fileID: 224850608}
   - component: {fileID: 224850607}
   - component: {fileID: 224850606}
-  - component: {fileID: 224850609}
   m_Layer: 10
   m_Name: ReachyViewQuad
   m_TagString: Untagged
@@ -1206,28 +1205,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224850604}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &224850609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 224850604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f093a8021ce9bc443a5de613579a73ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ReachyViewQuad: {fileID: 0}
-  controllers: {fileID: 0}
-  mobilityFakeMovement: {fileID: 0}
-  needUpdateScale: 0
-  userRequestedSmallSize: 0
-  lerpGoalScale: {x: 0, y: 0, z: 0}
-  fullScreenScale: {x: 41333, y: -31000, z: 1}
-  smallerScreenScale: {x: 20666, y: -15500, z: 1}
-  blackScreen: {fileID: 1204306791}
-  motionSicknessManager: {fileID: 0}
 --- !u!1 &258652890
 GameObject:
   m_ObjectHideFlags: 0
