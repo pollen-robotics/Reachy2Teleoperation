@@ -21,10 +21,6 @@ namespace TeleopReachy
             Debug.LogError("VSync Count: " + QualitySettings.vSyncCount);
             Debug.LogError("Target Frame Rate: " + Application.targetFrameRate);
 
-            // By default soft team asked for mobile base off
-            // bool mobility_default_mode = false;
-            // PlayerPrefs.SetString("mobility_on", mobility_default_mode.ToString());
-
             StartCoroutine(LoadBaseScene());
         }
 
@@ -74,6 +70,8 @@ namespace TeleopReachy
             {
                 yield return null;
             }
+            // By default soft team asked for mobile base off
+            RobotDataManager.Instance.RobotStatus.SetMobileBaseOn(false);
             SceneManager.LoadScene("Test_GaelleGhostMirrorScene", LoadSceneMode.Additive);
             yield return null;
         }
