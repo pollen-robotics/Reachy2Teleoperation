@@ -35,20 +35,21 @@ namespace GstreamerWebRTC
         [DllImport("UnityGStreamerPlugin")]
 #endif
         private static extern void DestroyPipeline();
+        /*
+        #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+            [DllImport("__Internal")]
+        #else
+                [DllImport("UnityGStreamerPlugin")]
+        #endif
+                private static extern IntPtr GetTexturePtr(bool left);
+                */
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        private static extern IntPtr GetTexturePtr(bool left);
-
-#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
-    [DllImport("__Internal")]
-#else
-        [DllImport("UnityGStreamerPlugin")]
-#endif
-        private static extern void CreateTexture(uint width, uint height, bool left);
+        private static extern IntPtr CreateTexture(uint width, uint height, bool left);
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -117,8 +118,8 @@ namespace GstreamerWebRTC
 
         Texture CreateRenderTexture(bool left, ref IntPtr textureNativePtr)
         {
-            CreateTexture(width, height, left);
-            textureNativePtr = GetTexturePtr(left);
+            textureNativePtr = CreateTexture(width, height, left);
+            //textureNativePtr = GetTexturePtr(left);
 
             if (textureNativePtr != IntPtr.Zero)
             {
