@@ -242,16 +242,13 @@ namespace TeleopReachy
         private void StopTeleoperation()
         {
             Debug.Log("[RobotJointCommands]: StopTeleoperation");
-            if (connectionStatus.IsServerConnected())
+            AskForCancellationCurrentMovementsPlaying();
+            if (waitToSetRobotFullSpeed != null)
             {
-                AskForCancellationCurrentMovementsPlaying();
-                if (waitToSetRobotFullSpeed != null)
-                {
-                    StopCoroutine(waitToSetRobotFullSpeed);
-                }
-                if (!robotStatus.IsRobotPositionLocked) SetRobotSmoothlyCompliant();
-                ResetMotorsStartingSpeed();
+                StopCoroutine(waitToSetRobotFullSpeed);
             }
+            if (!robotStatus.IsRobotPositionLocked) SetRobotSmoothlyCompliant();
+            ResetMotorsStartingSpeed();
         }
 
         private void InitializeRobotState()
