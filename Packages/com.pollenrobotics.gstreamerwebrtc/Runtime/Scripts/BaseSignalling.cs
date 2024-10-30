@@ -6,7 +6,6 @@ using System;
 using UnityEngine;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Linq;
 using UnityEngine.Events;
 using System.Net.WebSockets;
 using System.Text;
