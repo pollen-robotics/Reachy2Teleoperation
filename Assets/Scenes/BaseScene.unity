@@ -1324,6 +1324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060dd2ec099141e47ac114e5d82be687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  event_OnTriedToSendMobilityCommands:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1794126931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2469,10 +2472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllers: {fileID: 3921144727203494908}
-  event_OnTriedToSendCommands:
-    m_PersistentCalls:
-      m_Calls: []
-  event_DejaVu:
+  event_OnStartMoving:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4826978605613812945
@@ -2492,7 +2492,7 @@ GameObject:
   - component: {fileID: 9009280609215881307}
   - component: {fileID: 9009280609215881308}
   m_Layer: 0
-  m_Name: UserInput
+  m_Name: UserInputs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
