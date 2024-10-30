@@ -6,7 +6,6 @@ using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
-using UnityEngine.UI;
 using UnityEngine.Events;
 
 namespace GstreamerWebRTC
