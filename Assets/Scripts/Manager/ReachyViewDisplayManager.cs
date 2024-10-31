@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace TeleopReachy
 {
-    public class UserViewDisplayManager : MonoBehaviour
+    public class ReachyViewDisplayManager : MonoBehaviour
     {
-        [SerializeField]
-        private Transform reachyEyeView;
-        public Renderer screen;
+        // [SerializeField]
+        // private Transform reachyEyeView;
+        private Renderer screen;
 
         //private EyeScript eyeScript;
         private RobotVideoStream robotVideoStream;
@@ -14,10 +14,10 @@ namespace TeleopReachy
 
         void Start()
         {
+            screen = this.GetComponent<Renderer>();
             robotVideoStream = RobotDataManager.Instance.RobotVideoStream;
-            EventManager.StartListening(EventNames.OnStartTeleoperation, ShowReachyView);
-            EventManager.StartListening(EventNames.OnStopTeleoperation, HideReachyView);
-
+            // EventManager.StartListening(EventNames.OnStartTeleoperation, ShowReachyView);
+            // EventManager.StartListening(EventNames.OnStopTeleoperation, HideReachyView);
 
             screen.material.SetTexture("_LeftTex", robotVideoStream.GetLeftTexture());
             screen.material.SetTexture("_RightTex", robotVideoStream.GetRightTexture());
@@ -27,19 +27,19 @@ namespace TeleopReachy
 
             //eyeScript = reachyEyeView.GetComponent<EyeScript>();
 
-            reachyEyeView.gameObject.SetActive(false);
+            // reachyEyeView.gameObject.SetActive(false);
         }
 
-        void ShowReachyView()
-        {
-            reachyEyeView.gameObject.SetActive(true);
-        }
+        // void ShowReachyView()
+        // {
+        //     reachyEyeView.gameObject.SetActive(true);
+        // }
 
-        void HideReachyView()
-        {
-            Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
-            reachyEyeView.gameObject.SetActive(false);
-        }
+        // void HideReachyView()
+        // {
+        //     Camera.main.stereoTargetEye = StereoTargetEyeMask.Both;
+        //     reachyEyeView.gameObject.SetActive(false);
+        // }
 
         // void ModifyTextureTransparency(bool isRobotInVideoRoom)
         // {
