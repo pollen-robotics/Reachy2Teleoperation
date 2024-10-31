@@ -9,10 +9,6 @@ namespace TeleopReachy
     {
         public GameObject userTracker = null;
 
-        public GameObject canvasOnlineMenu = null;
-
-        public Transform menuParent = null;
-
         public GameObject userInput = null;
 
         public GameObject ground = null;
