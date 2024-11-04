@@ -125,6 +125,20 @@ namespace TeleopReachy
                 else
                     SetRobotCompliant("head");
             }
+            if (robotConfig.HasLeftGripper())
+            {
+                if (robotStatus.IsLeftGripperOn())
+                    SetRobotStiff("l_hand");
+                else
+                    SetRobotCompliant("l_hand");
+            }
+            if (robotConfig.HasRightGripper())
+            {
+                if (robotStatus.IsRightGripperOn())
+                    SetRobotStiff("r_hand");
+                else
+                    SetRobotCompliant("r_hand");
+            }
         }
 
         //partName should be l_, r_ or neck_
@@ -144,7 +158,7 @@ namespace TeleopReachy
                 }
                 if (robotConfig.HasLeftGripper())
                 {
-                    dataController.TurnArmOn(robotConfig.partsId["l_hand"]);
+                    dataController.TurnHandOn(robotConfig.partsId["l_hand"]);
                 }
                 if (robotConfig.HasRightArm())
                 {
@@ -152,7 +166,7 @@ namespace TeleopReachy
                 }
                 if (robotConfig.HasRightGripper())
                 {
-                    dataController.TurnArmOn(robotConfig.partsId["r_hand"]);
+                    dataController.TurnHandOn(robotConfig.partsId["r_hand"]);
                 }
                 if (robotConfig.HasHead())
                 {
