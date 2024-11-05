@@ -13,7 +13,6 @@ namespace TeleopReachy
         {
             try
             {
-                IPAddress address;
                 if (ipAddress == "localhost" || ipAddress == Robot.VIRTUAL_ROBOT_IP)
                     return true;
 

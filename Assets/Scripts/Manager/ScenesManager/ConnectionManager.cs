@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -137,7 +138,6 @@ namespace TeleopReachy
                 if (robot.ip == ip)
                 {
                     RaiseRobotIPAlreadyExists(action);
-                    CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = "";
                     return;
                 }
             }
@@ -241,15 +241,16 @@ namespace TeleopReachy
         {
             robotToBeModified = rbi;
             OpenCloseModifyRobot();
-            CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text = robotToBeModified.robot.uid;
-            CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = robotToBeModified.robot.ip;
+            CanvaRobotSelection.transform.Find("ModifyRobot/RobotNameInputField").GetComponent<InputField>().text = robotToBeModified.robot.uid;
+            CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text = robotToBeModified.robot.ip;
         }
 
         public void ModifyRobot()
         {
+        
             Robot newRobot = robotsList.Find(r => r.uid == robotToBeModified.robot.uid);
-            string action = "modify";
 
+            string action = "modify";
             string ip = CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text.Trim();
             
             //check the IP is valid
@@ -258,15 +259,16 @@ namespace TeleopReachy
                 RaiseRobotIpCannotBeNull(action);
                 return;
             }
-            
+
+            //get the list of all the robots except the modified one
+            var otherRobots = robotsList.Where(robot => robot.uid != newRobot.uid);
+
             //check the IP is not already in the list
-            foreach (Robot robot in robotsList)
+            foreach (Robot robot in otherRobots)
             {
                 if (robot.ip == ip)
                 {
-                    RaiseRobotIPAlreadyExists(action);
-                    CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text = "";
-                    
+                    RaiseRobotIPAlreadyExists(action);                    
                     return;
                 }
             }
@@ -275,7 +277,7 @@ namespace TeleopReachy
 
             //check the name is not already in the list and set to unknow if nothing has been filled
             string uid = CanvaRobotSelection.transform.Find("ModifyRobot/RobotNameInputField").GetComponent<InputField>().text.Trim();
-            foreach (Robot robot in robotsList)
+            foreach (Robot robot in otherRobots)
             {
                 if (robot.uid == uid)
                 {
