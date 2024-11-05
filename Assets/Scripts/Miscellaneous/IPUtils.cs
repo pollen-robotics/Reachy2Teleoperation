@@ -1,5 +1,7 @@
 using System.Net;
 using System;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace TeleopReachy
@@ -14,25 +16,12 @@ namespace TeleopReachy
                 IPAddress address;
                 if (ipAddress == "localhost" || ipAddress == Robot.VIRTUAL_ROBOT_IP)
                     return true;
-                if (ipAddress.EndsWith(".local"))
-                {
-                    IPAddress[] ipAddresses = Dns.GetHostAddresses(ipAddress);
-                    foreach (IPAddress ip in ipAddresses)
-                    {
-                        // Check if the IP address is an IPv4 address
-                        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        {
-                            address = ip;
-                        }
-                    }
-                }
+
+                else if ((Regex.IsMatch(ipAddress, @"^reachy2-\w+\.local$")))
+                    return true;
+
                 else 
-                {
-                    // Create an instance of IPAddress for the specified address string (in
-                    // dotted-quad, or colon-hexadecimal notation).
-                    address = IPAddress.Parse(ipAddress);
-                }
-                return true;
+                    return IsValidIPv4(ipAddress);
             }
 
             catch (ArgumentNullException e)
@@ -52,6 +41,13 @@ namespace TeleopReachy
                 Debug.LogWarning("IP is invalid : " + e.Message);
                 return false;
             }
+        }
+
+        public static bool IsValidIPv4(string input)
+        {
+            return IPAddress.TryParse(input, out IPAddress ip)
+            && ip.AddressFamily == AddressFamily.InterNetwork
+            && ip.ToString() == input;
         }
     }
 }

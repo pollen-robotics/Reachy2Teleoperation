@@ -123,6 +123,8 @@ namespace TeleopReachy
             Robot newRobot = new Robot();
             string action = "add";
             string ip = CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text;
+            
+            // check the IP is valid
             if (!IPUtils.IsIPValid(ip))
             {
                 RaiseRobotIpCannotBeNull(action);
