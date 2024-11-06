@@ -9,7 +9,7 @@ namespace TeleopReachy
     public class ConnectionManager : MonoBehaviour
     {
         public GameObject CanvaRobotSelection;
-
+        public GameObject CanvaConnectionSelection;
         public GameObject prefabRobotButton;
         private Transform contentRobotList;
 
@@ -76,6 +76,7 @@ namespace TeleopReachy
                 catch (System.Exception ex)
                 {
                     Debug.Log($"Connection error: {ex.Message}");
+                    RaiseRobotConnectionError();
                 }
             }
         }
@@ -197,6 +198,11 @@ namespace TeleopReachy
             }
         }
 
+        void RaiseRobotConnectionError()
+        {
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(true);
+        }
+
         void RaiseRobotIpCannotBeNull()
         {
             CanvaRobotSelection.transform.GetChild(1).GetChild(4).gameObject.SetActive(true);
@@ -284,6 +290,8 @@ namespace TeleopReachy
         {
             isRobotSelectionMenuOpen = !isRobotSelectionMenuOpen;
             CanvaRobotSelection.transform.GetChild(0).gameObject.SetActive(isRobotSelectionMenuOpen);
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
+
             UpdateSelectRobotMenu();
         }
 
