@@ -16,8 +16,8 @@ namespace TeleopReachy
 
         void Start()
         {
-            motionSicknessEffectAuto = MotionSicknessEffect.Tunnelling;
-            motionSicknessEffectOnClick = MotionSicknessEffect.ReducedScreen;
+            motionSicknessEffectAuto = MotionSicknessEffect.None;
+            motionSicknessEffectOnClick = MotionSicknessEffect.None;
             isReticleOn = false;
         }
 

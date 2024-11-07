@@ -45,6 +45,7 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            
             teleoperationManager = TeleoperationManager.Instance;
             EventManager.StartListening(EventNames.OnStopTeleoperation, StopFakeMovements);
 
@@ -90,37 +91,34 @@ namespace TeleopReachy
             {
                 Vector2 direction = userMobilityInput.GetMobileBaseDirection();
                 Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
-                if (NavigationMode)
-                {
-                    speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
-                    speed = Mathf.Clamp(speed, 0, maxSpeed);
-                    rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
+                speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
+                speed = Mathf.Clamp(speed, 0, maxSpeed);
+                rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
 
-                    if (speed == 0 && rotationAngle == 0)
+                if (speed == 0 && rotationAngle == 0)
+                {
+                    if (wasMoving)
                     {
-                        if (wasMoving)
-                        {
-                            counterFakeMovement -= 1.0f;
-                            speed = GetQueueMean(previousTranslationSpeedQueue);
-                            rotationAngle = GetQueueMean(previousRotationAngleQueue);
-                        }
-                        if (counterFakeMovement == 0)
-                        {
-                            event_OnStopMoving.Invoke();
-                            wasMoving = false;
-                            ReinitCounter();
-                        }
+                        counterFakeMovement -= 1.0f;
+                        speed = GetQueueMean(previousTranslationSpeedQueue);
+                        rotationAngle = GetQueueMean(previousRotationAngleQueue);
                     }
-                    else
+                    if (counterFakeMovement == 0)
                     {
-                        if (!wasMoving) event_OnStartMoving.Invoke();
-                        wasMoving = true;
-                        AddToQueue(previousTranslationSpeedQueue, speed);
-                        AddToQueue(previousRotationAngleQueue, rotationAngle);
+                        event_OnStopMoving.Invoke();
+                        wasMoving = false;
+                        ReinitCounter();
                     }
                 }
+                else
+                {
+                    if (!wasMoving) event_OnStartMoving.Invoke();
+                    wasMoving = true;
+                    AddToQueue(previousTranslationSpeedQueue, speed);
+                    AddToQueue(previousRotationAngleQueue, rotationAngle);
+                }
 
-                else if (ClickMode)
+                if (ClickMode)
                 {
                     if(simulateFakeConstantMovement)
                     {
@@ -128,7 +126,7 @@ namespace TeleopReachy
                         rotationAngle = sensitivity;
                     }
 
-                    if(simulateFakeStaticMovement)
+                    else if(simulateFakeStaticMovement)
                     {
                         speed = 0;
                         rotationAngle = 0;
