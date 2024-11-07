@@ -18,4 +18,4 @@ EditorBuildSettings:
     path: Assets/Scenes/TeleoperationScene.unity
     guid: beec81ff035a3f347b87646c46367e9b
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7a2211f427eccad458eb4421b2f4fac3, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 0e65f13ab05d3804d9de629a09c7dac7, type: 2}
