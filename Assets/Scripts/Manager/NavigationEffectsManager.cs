@@ -77,6 +77,9 @@ namespace TeleopReachy
             tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenAutoButtonColor = ColorsManager.colorsDeactivated;
 
+            tunnellingOnClickButton.interactable = true;
+            reducedScreenOnClickButton.interactable = true;
+
             needUpdateButtons = true;
         }
 
@@ -88,7 +91,11 @@ namespace TeleopReachy
             tunnellingAutoButtonColor = ColorsManager.colorsActivated;
             reducedScreenAutoButtonColor = ColorsManager.colorsDeactivated;
 
+            tunnellingOnClickButton.interactable = false;
+            reducedScreenOnClickButton.interactable = true;
+
             needUpdateButtons = true;
+            
         }
 
         void SwitchToReducedScreenAutoMode()
@@ -98,6 +105,9 @@ namespace TeleopReachy
             noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
             tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenAutoButtonColor = ColorsManager.colorsActivated;
+
+            tunnellingOnClickButton.interactable = true ;
+            reducedScreenOnClickButton.interactable = false;
 
             needUpdateButtons = true;
         }
@@ -110,6 +120,9 @@ namespace TeleopReachy
             tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
 
+            tunnellingAutoButton.interactable = true;
+            reducedScreenAutoButton.interactable = true;
+
             needUpdateButtons = true;
         }
 
@@ -121,6 +134,9 @@ namespace TeleopReachy
             tunnellingOnClickButtonColor = ColorsManager.colorsActivated;
             reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
 
+            tunnellingAutoButton.interactable = false;
+            reducedScreenAutoButton.interactable = true;
+
             needUpdateButtons = true;
         }
 
@@ -131,6 +147,9 @@ namespace TeleopReachy
             noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
             tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
             reducedScreenOnClickButtonColor = ColorsManager.colorsActivated;
+
+            tunnellingAutoButton.interactable = true;
+            reducedScreenAutoButton.interactable = false;
 
             needUpdateButtons = true;
         }
