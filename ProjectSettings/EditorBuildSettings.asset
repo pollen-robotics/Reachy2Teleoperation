@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ConnectionScene.unity
     guid: 163a2b56744d6e547b6310efc9890e42
   - enabled: 1
+    path: Assets/Scenes/RobotDataScene.unity
+    guid: a19e8d80e6185a2479e38bb3a885bc86
+  - enabled: 1
     path: Assets/Scenes/MirrorScene.unity
     guid: e4791a46b24fba844ad2bf64bc08b164
   - enabled: 1
