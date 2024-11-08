@@ -61,7 +61,6 @@ namespace TeleopReachy
             }
 
             waitForConnection = StartCoroutine(WaitForConnection());
-            Debug.LogError(checkVideoStream);
         }
 
         public bool IsRobotInDataRoom()
