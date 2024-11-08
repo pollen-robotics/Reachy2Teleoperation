@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace TeleopReachy
     public class ConnectionManager : MonoBehaviour
     {
         public GameObject CanvaRobotSelection;
-
+        public GameObject CanvaConnectionSelection;
         public GameObject prefabRobotButton;
         private Transform contentRobotList;
 
@@ -65,16 +66,25 @@ namespace TeleopReachy
             // If a robot is selected, load teleoperation scene with prefs set to selected info
             if (has_robot_selected)
             {
-                PlayerPrefs.SetString("robot_ip", GetIpv4Address());
-                PlayerPrefs.SetString("robot_info", selectedRobot.ip);
+                try
+                {
+                    PlayerPrefs.SetString("robot_ip", GetIpv4Address());
+                    PlayerPrefs.SetString("robot_info", selectedRobot.ip);
 
-                EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+                    EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.Log($"Connection error: {ex.Message}");
+                    RaiseRobotConnectionError();
+                }
             }
         }
 
         private string GetIpv4Address()
         {
-            if(selectedRobot.ip.EndsWith(".local"))
+
+            if (selectedRobot.ip.EndsWith(".local"))
             {
                 IPAddress[] ipAddresses = Dns.GetHostAddresses(selectedRobot.ip);
                 foreach (IPAddress ip in ipAddresses)
@@ -85,8 +95,34 @@ namespace TeleopReachy
                         return(ip.ToString());
                     }
                 }
+            throw new System.Exception("No valid IPv4 address found with the .local address.");
             }
-            return selectedRobot.ip;
+            else
+            {
+                if (!IsIPAddressReachable(selectedRobot.ip))
+                {
+                    throw new System.Exception("The IPv4 address is not reachable.");
+                }
+                return selectedRobot.ip;
+            }
+        }
+
+        
+
+        private bool IsIPAddressReachable(string ipAddress)
+        {
+            try
+            {
+                using (var tcpClient = new TcpClient())
+                {
+                    tcpClient.Connect(ipAddress, 80);
+                    return true;
+                }
+            }
+            catch (SocketException)
+            {
+                return false;
+            }
         }
 
         bool IsVirtualRobotInList()
@@ -160,6 +196,11 @@ namespace TeleopReachy
                     newButton.GetComponent<RobotButtonManager>().SelectRobotButton();
                 }
             }
+        }
+
+        void RaiseRobotConnectionError()
+        {
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(true);
         }
 
         void RaiseRobotIpCannotBeNull()
@@ -249,6 +290,8 @@ namespace TeleopReachy
         {
             isRobotSelectionMenuOpen = !isRobotSelectionMenuOpen;
             CanvaRobotSelection.transform.GetChild(0).gameObject.SetActive(isRobotSelectionMenuOpen);
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
+
             UpdateSelectRobotMenu();
         }
 
