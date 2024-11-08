@@ -160,6 +160,7 @@ MonoBehaviour:
   event_OnRobotUnready:
     m_PersistentCalls:
       m_Calls: []
+  checkVideoStream: 1
 --- !u!4 &397212059
 Transform:
   m_ObjectHideFlags: 0
@@ -370,40 +371,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f543f11b1126f449a11cee7e9945b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_OnStartTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnStartArmTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnStopTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnSuspendTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnResumeTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnInitializeRobotStateRequested:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotStiffRequested:
-    m_PersistentCalls:
-      m_Calls: []
   event_OnGraspingLock:
     m_PersistentCalls:
       m_Calls: []
-  event_OnRobotSmoothlyCompliantRequested:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotCompliantRequested:
-    m_PersistentCalls:
-      m_Calls: []
   event_OnRobotFullyCompliant:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnSwitchMobilityOn:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &934711113
