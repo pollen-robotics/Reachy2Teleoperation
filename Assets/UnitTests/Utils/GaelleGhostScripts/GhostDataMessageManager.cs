@@ -117,7 +117,7 @@ namespace TeleopReachy
                     r_handCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(r_json.ToString());
                     right_gripper_inc++;
                 }
-                catch (Exception e)
+                catch
                 {
                     right_gripper_inc = 0;
                     string r_line = RightGripper[right_gripper_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
@@ -136,7 +136,7 @@ namespace TeleopReachy
                     l_handCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(l_json.ToString());
                     left_gripper_inc++;
                 }
-                catch (Exception e)
+                catch
                 {
                     left_gripper_inc = 0;
                     string l_line = LeftGripper[left_gripper_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
@@ -196,7 +196,7 @@ namespace TeleopReachy
                         r_armCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(r_json.ToString());
                         right_arm_inc++;
                     }
-                    catch (Exception e)
+                    catch
                     {
                         right_arm_inc = 0;
                         string r_line = RightArm[right_arm_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
@@ -215,7 +215,7 @@ namespace TeleopReachy
                         l_armCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(l_json.ToString());
                         left_arm_inc++;
                     }
-                    catch (Exception e)
+                    catch
                     {
                         left_arm_inc = 0;
                         string l_line = LeftArm[left_arm_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
@@ -289,7 +289,7 @@ namespace TeleopReachy
                 neckCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(n_json.ToString());
                 neck_inc++;
             }
-            catch (Exception e)
+            catch
             {
                 neck_inc = 0;
                 string n_line = Neck[neck_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
@@ -312,7 +312,7 @@ namespace TeleopReachy
                 mobileBaseCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(mb_json.ToString());
                 mobile_base_inc++;
             }
-            catch (Exception e)
+            catch
             {
                 mobile_base_inc = 0;
                 string mb_line = MobileBase[mobile_base_inc].Trim('[', ']', ' ', '\t', '\n', '\r');

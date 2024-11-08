@@ -1,3 +1,7 @@
+/* Copyright(c) Pollen Robotics, all rights reserved.
+ This source code is licensed under the license found in the
+ LICENSE file in the root directory of this source tree. */
+
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
@@ -22,9 +26,15 @@ namespace GstreamerWebRTC
         private Thread cleaning_thread = null;
         private Thread init_thread = null;
 
+
         void OnEnable()
         {
             debug = new DebugFromPlugin();
+        }
+
+        void OnDestroy()
+        {
+            cleaning_thread?.Join();
         }
 
         void Start()
@@ -92,7 +102,6 @@ namespace GstreamerWebRTC
             cleaning_thread = new Thread(Cleanup);
             cleaning_thread.Start();
         }
-
 
         void Cleanup()
         {
