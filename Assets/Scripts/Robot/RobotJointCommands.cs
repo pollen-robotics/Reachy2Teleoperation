@@ -37,7 +37,7 @@ namespace TeleopReachy
 
             EventManager.StartListening(EventNames.OnInitializeRobotStateRequested, InitializeRobotState);
             EventManager.StartListening(EventNames.OnRobotStiffRequested, SetRobotStiff);
-            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, SetRobotSmoothlyCompliant);
+            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, ReinitializeLimits);
             EventManager.StartListening(EventNames.OnRobotCompliantRequested, SetRobotCompliant);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -460,6 +460,17 @@ namespace TeleopReachy
             {
                 ResetMotorsStartingSpeed();
             }
+        }
+
+        void ReinitializeLimits()
+        {
+            uint max_limit = 100;
+            Debug.Log("[RobotJointCommands]: ReinitializeLimits");
+            
+            ModifyHeadSpeedLimit(max_limit);
+            ModifyArmSpeedLimit(max_limit);
+            ModifyHeadTorqueLimit(max_limit);
+            ModifyArmTorqueLimit(max_limit);
         }
     }
 }
