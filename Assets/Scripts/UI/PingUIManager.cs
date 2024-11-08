@@ -34,7 +34,7 @@ namespace TeleopReachy
         void Update()
         {
             float currentPing = pingWatcher.GetPing();
-            if (pingValue != null) pingValue.text = "Ping : " + (int)currentPing + " ms";
+            if (pingValue != null) pingValue.text = "Ping : " + currentPing.ToString("#.#") + " ms";
 
             if (!hasWarningActivated)
             {
