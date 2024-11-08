@@ -29,6 +29,9 @@ namespace TeleopReachy
 
         private Coroutine waitForConnection;
 
+        [SerializeField]
+        private bool checkVideoStream;
+
         void Start()
         {
             gstreamerPlugin = WebRTCManager.Instance.gstreamerPlugin;
@@ -58,6 +61,7 @@ namespace TeleopReachy
             }
 
             waitForConnection = StartCoroutine(WaitForConnection());
+            Debug.LogError(checkVideoStream);
         }
 
         public bool IsRobotInDataRoom()
@@ -137,7 +141,9 @@ namespace TeleopReachy
             if (statusChanged)
             {
                 statusChanged = false;
-                if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                if (isRobotInDataRoom && isRobotConfigReady && (
+                    (checkVideoStream && (robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead())
+                    || !checkVideoStream))
                 {
                     if (!isRobotReady)
                     {

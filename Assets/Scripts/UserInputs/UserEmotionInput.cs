@@ -45,7 +45,7 @@ namespace TeleopReachy
 
         private void AskToPlayEmotion(Emotion emotion)
         {
-            RobotCommands robot;
+            // RobotCommands robot;
             // if (robotConfig.HasHead() && robotStatus.IsRobotTeleoperationActive() && robotStatus.AreEmotionsActive() && !robotStatus.IsEmotionPlaying() && !robotStatus.AreRobotMovementsSuspended())
             // {
             //     robot = robotCommands;

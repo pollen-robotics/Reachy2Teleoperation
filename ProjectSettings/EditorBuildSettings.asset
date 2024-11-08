@@ -12,10 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/ConnectionScene.unity
     guid: 163a2b56744d6e547b6310efc9890e42
   - enabled: 1
+    path: Assets/Scenes/RobotDataScene.unity
+    guid: a19e8d80e6185a2479e38bb3a885bc86
+  - enabled: 1
     path: Assets/Scenes/MirrorScene.unity
     guid: e4791a46b24fba844ad2bf64bc08b164
   - enabled: 1
     path: Assets/Scenes/TeleoperationScene.unity
     guid: beec81ff035a3f347b87646c46367e9b
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 7a2211f427eccad458eb4421b2f4fac3, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 0e65f13ab05d3804d9de629a09c7dac7, type: 2}
