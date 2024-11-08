@@ -29,6 +29,8 @@ namespace TeleopReachy
         private bool simulateFakeConstantMovement;
         private bool simulateFakeStaticMovement;
 
+        private TeleoperationManager teleoperationManager;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -41,7 +43,9 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStopTeleoperation.AddListener(StopFakeMovements);
+            teleoperationManager = TeleoperationManager.Instance;
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopFakeMovements);
+
             simulateFakeConstantMovement = false;
             simulateFakeStaticMovement = false;
         }
@@ -80,9 +84,8 @@ namespace TeleopReachy
 
         void Update()
         {
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus != null && teleoperationManager.IsMobileBaseTeleoperationActive && robotStatus.IsMobileBaseOn() && !robotStatus.AreRobotMovementsSuspended())
             {
-                
                 Vector2 direction = userMobilityInput.GetMobileBaseDirection();
                 Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
 

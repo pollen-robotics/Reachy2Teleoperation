@@ -15,12 +15,12 @@ namespace TeleopReachy
         private ColorBlock alwaysColor;
         private ColorBlock neverColor;
 
-        private MotionSicknessManager motionSicknessManager;
+        private OptionsManager optionsManager;
 
         void Start()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
-            motionSicknessManager.event_OnUpdateMotionSicknessPreferences.AddListener(ChooseButtonMode);
+            optionsManager = OptionsManager.Instance;
+
             ChooseButtonMode();
 
             alwaysButton.onClick.AddListener(SwitchToAlwaysMode);
@@ -29,7 +29,7 @@ namespace TeleopReachy
 
         void ChooseButtonMode()
         {
-            if (motionSicknessManager.IsReticleOn)
+            if (optionsManager.isReticleOn)
             {
                 alwaysButton.colors = ColorsManager.colorsActivated;
                 neverButton.colors = ColorsManager.colorsDeactivated;
@@ -43,14 +43,14 @@ namespace TeleopReachy
 
         void SwitchToAlwaysMode()
         {
-            motionSicknessManager.IsReticleOn = true;
+            optionsManager.SetReticleOn(true);
 
             needUpdateButtons = true;
         }
 
         void SwitchToNeverMode()
         {
-            motionSicknessManager.IsReticleOn = false;
+            optionsManager.SetReticleOn(false);
 
             needUpdateButtons = true;
         }

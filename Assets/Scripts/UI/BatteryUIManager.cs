@@ -13,7 +13,7 @@ namespace TeleopReachy
         [SerializeField]
         private RawImage batteryIcon;
 
-        private ErrorManager errorManager;
+        private RobotErrorManager errorManager;
         private DataMessageManager dataController;
 
         private Coroutine warningEnd;
@@ -35,7 +35,7 @@ namespace TeleopReachy
             robotConfig = RobotDataManager.Instance.RobotConfig;
             robotConfig.event_OnConfigChanged.AddListener(ConfigChanged);
 
-            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
             errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
 

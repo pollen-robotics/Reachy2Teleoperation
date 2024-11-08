@@ -33,15 +33,15 @@ namespace TeleopReachy
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
-        private GStreamerPluginCustom webRTCController;
-        private AnyCommands commands = new AnyCommands { };
+        protected GStreamerPluginCustom webRTCController;
+        protected AnyCommands commands = new AnyCommands { };
 
-        void Start()
+        protected virtual void Start()
         {
-            webRTCController = WebRTCManager.Instance.webRTCController;
+            webRTCController = WebRTCManager.Instance.gstreamerPlugin;
         }
 
-        void Update()
+        protected void Update()
         {
             if (commands.Commands.Count != 0)
             {
@@ -223,7 +223,7 @@ namespace TeleopReachy
             event_OnAuditUpdate.Invoke(components_status);
         }
 
-        public void SetHandPosition(HandPositionRequest gripperPosition)
+        public virtual void SetHandPosition(HandPositionRequest gripperPosition)
         {
             Bridge.AnyCommand handCommand = new Bridge.AnyCommand
             {
@@ -235,7 +235,7 @@ namespace TeleopReachy
             commands.Commands.Add(handCommand);
         }
 
-        public void SendArmCommand(ArmCartesianGoal armGoal)
+        public virtual void SendArmCommand(ArmCartesianGoal armGoal)
         {
             Bridge.AnyCommand armCommand = new Bridge.AnyCommand
             {
@@ -247,7 +247,7 @@ namespace TeleopReachy
             commands.Commands.Add(armCommand);
         }
 
-        public void SendNeckCommand(NeckJointGoal neckGoal)
+        public virtual void SendNeckCommand(NeckJointGoal neckGoal)
         {
             Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
@@ -259,7 +259,7 @@ namespace TeleopReachy
             commands.Commands.Add(neckCommand);
         }
 
-        public void SendMobileBaseCommand(TargetDirectionCommand direction)
+        public virtual void SendMobileBaseCommand(TargetDirectionCommand direction)
         {
             Bridge.AnyCommand mobileBaseCommand = new Bridge.AnyCommand
             {
@@ -473,7 +473,7 @@ namespace TeleopReachy
             webRTCController.SendCommandMessage(neckCommand);
         }
 
-        private void GetOrbita3D_PresentPosition(
+        protected void GetOrbita3D_PresentPosition(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -500,7 +500,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita2D_PresentPosition(
+        protected void GetOrbita2D_PresentPosition(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -526,7 +526,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita2D_Temperature(
+        protected void GetOrbita2D_Temperature(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -552,7 +552,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita3D_Temperature(
+        protected void GetOrbita3D_Temperature(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -578,7 +578,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetParallelGripper_PresentPosition(
+        protected void GetParallelGripper_PresentPosition(
             Dictionary<string, float> dict,
             IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField
@@ -597,7 +597,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetParallelGripper_Temperature(
+        protected void GetParallelGripper_Temperature(
             Dictionary<string, float> dict,
             IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField

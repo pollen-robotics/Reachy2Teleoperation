@@ -7,15 +7,13 @@ namespace TeleopReachy
 {
     public class MotionSicknessManager : Singleton<MotionSicknessManager>
     {
-        public bool IsReticleOn { get; set; }
-        // public bool IsReticleAlwaysShown { get; set; }
+        public bool IsReticleOn { get; private set; }
 
-        public bool IsTunnellingAutoOn { get; set; }
-        public bool IsReducedScreenAutoOn { get; set; }
-        // public bool IsNavigationEffectOnDemandOnly { get; set; }
+        public bool IsTunnellingAutoOn { get; private set; }
+        public bool IsReducedScreenAutoOn { get; private set; }
 
-        public bool IsTunnellingOnClickOn { get; set; }
-        public bool IsReducedScreenOnClickOn { get; set; }
+        public bool IsTunnellingOnClickOn { get; private set; }
+        public bool IsReducedScreenOnClickOn { get; private set; }
 
         public bool RequestNavigationEffect { get; private set; }
 
@@ -27,49 +25,26 @@ namespace TeleopReachy
         private bool leftJoystickButtonPreviouslyPressed;
 
         public UnityEvent<bool> event_OnRequestNavigationEffect;
-        public UnityEvent event_OnNewTeleopSession;
-        public UnityEvent event_OnUpdateMotionSicknessPreferences;
-
-        private bool firstStart;
+        private OptionsManager optionsManager;
 
         protected override void Init()
         {
-            IsReticleOn = false;
-            // IsReticleAlwaysShown = false;
+            optionsManager = OptionsManager.Instance;
 
-            IsTunnellingAutoOn = true;
-            IsReducedScreenAutoOn = false;
-            // IsNavigationEffectOnDemandOnly = false;
+            IsReticleOn = optionsManager.isReticleOn;
 
-            IsTunnellingOnClickOn = false;
-            IsReducedScreenOnClickOn = true;
+            IsTunnellingAutoOn = (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.Tunnelling);
+            IsReducedScreenAutoOn = (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.ReducedScreen);
+
+            IsTunnellingOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.Tunnelling);
+            IsReducedScreenOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen);
 
             controllers = ControllersManager.Instance;
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, FinishInit);
-        }
 
-        private void Start()
-        {
-            firstStart = true;
-        }
-
-        private void BeginNewSession()
-        {
-            event_OnNewTeleopSession.Invoke();
-        }
-
-        void FinishInit()
-        {
             robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(InitOnDemandRequest);
-            HeadsetRemovedInMirrorManager.Instance.event_OnHeadsetReset.AddListener(BeginNewSession);
-            if(firstStart)
-            {
-                firstStart = false;
-                BeginNewSession();
-            }
-
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
+
+            InitOnDemandRequest();
         }
 
         void ActivateDeactivateTunnelling(bool value)
@@ -85,11 +60,6 @@ namespace TeleopReachy
             ActivateDeactivateTunnelling(IsTunnellingOnClickOn || IsTunnellingAutoOn);
         }
 
-        public void UpdateMotionSicknessPreferences()
-        {
-            event_OnUpdateMotionSicknessPreferences.Invoke();
-        }
-
         void Update()
         {
             bool rightJoystickButtonPressed;
@@ -98,7 +68,7 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out rightJoystickButtonPressed);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out leftJoystickButtonPressed);
 
-            if (robotStatus!= null && robotStatus.IsRobotTeleoperationActive() && !robotStatus.AreRobotMovementsSuspended())
+            if (!robotStatus.AreRobotMovementsSuspended() && !TeleoperationSceneManager.Instance.IsTeleoperationExitMenuActive)
             {
                 if(IsTunnellingOnClickOn || IsReducedScreenOnClickOn)
                 {

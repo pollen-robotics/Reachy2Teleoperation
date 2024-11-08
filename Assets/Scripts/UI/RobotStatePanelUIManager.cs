@@ -16,59 +16,23 @@ namespace TeleopReachy
         private bool isStatePanelStatusActive;
         private bool needUpdatePanelInfo;
 
-        void Awake()
+        void OnEnable()
         {
+            needUpdatePanelInfo = false;
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 isStatePanelStatusActive = false;
                 needUpdatePanelInfo = true;
                 return;
             }
+            connectionStatus = ConnectionStatus.Instance;
+            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMotorsInfo);
 
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
-
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
-
-            CheckTemperatureInfo();
-
-            isStatePanelStatusActive = true;
-            needUpdatePanelInfo = false;
+            CheckMotorsInfo();
         }
 
-        private void UpdateTemperatures(Dictionary<string, float> Temperatures)
-        {
-            panelTemperature = new Dictionary<string, float>();
-            foreach (KeyValuePair<string, float> motor in Temperatures)
-            {
-                if (motor.Key.Contains("hand"))
-                {
-                    string[] nameParsed = motor.Key.Split("_hand_");
-                    string actuatorName = nameParsed[0] + "_hand_temperature";
-
-                    string panelName = actuatorName + nameParsed[1];
-                    Debug.LogError(panelName);
-                    panelTemperature.Add(panelName, motor.Value);
-                }
-                else
-                {
-                    panelTemperature.Add(motor.Key, motor.Value);
-                }
-            }
-        }
-
-        public float GetTemperature(string motor)
-        {
-            float temperature;
-            if (panelTemperature != null && panelTemperature.TryGetValue(motor, out temperature))
-            {
-                return temperature;
-            }
-            else return 0;
-        }
-
-        private void CheckTemperatureInfo()
+        private void CheckMotorsInfo()
         {
             if (connectionStatus.AreRobotServicesRestarting())
             {
@@ -97,8 +61,8 @@ namespace TeleopReachy
             if(needUpdatePanelInfo)
             {
                 needUpdatePanelInfo = false;
-                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
                 transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
+                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
             }
         }
     }

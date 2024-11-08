@@ -5,24 +5,22 @@ using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
-    public class ConnectionStatus : MonoBehaviour
+    public class ConnectionStatus : Singleton<ConnectionStatus>
     {
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
         private bool isRobotInAudioSenderRoom;
-        private bool isRobotInRestartRoom;
 
         private bool isRobotReady;
 
         private bool areRobotServicesRestarting;
 
-        private GStreamerPluginCustom webRTCController;
+        private GStreamerPluginCustom gstreamerPlugin;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
-
         public UnityEvent event_OnRobotUnready;
 
         private bool statusChanged;
@@ -31,9 +29,12 @@ namespace TeleopReachy
 
         private Coroutine waitForConnection;
 
+        [SerializeField]
+        private bool checkVideoStream;
+
         void Start()
         {
-            webRTCController = WebRTCManager.Instance.webRTCController;
+            gstreamerPlugin = WebRTCManager.Instance.gstreamerPlugin;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -44,7 +45,6 @@ namespace TeleopReachy
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
             isRobotInAudioSenderRoom = false;
-            isRobotInRestartRoom = false;
 
             isRobotReady = false;
 
@@ -52,25 +52,21 @@ namespace TeleopReachy
 
             statusChanged = false;
 
-            if (webRTCController != null)
+            if (gstreamerPlugin != null)
             {
-                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
-                webRTCController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
-                webRTCController.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
-                webRTCController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+                gstreamerPlugin.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+                gstreamerPlugin.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
             }
 
             waitForConnection = StartCoroutine(WaitForConnection());
+            Debug.LogError(checkVideoStream);
         }
 
         public bool IsRobotInDataRoom()
         {
             return isRobotInDataRoom;
-        }
-
-        public bool IsRobotConfigReady()
-        {
-            return isRobotConfigReady;
         }
 
         public bool IsRobotInVideoRoom()
@@ -88,21 +84,9 @@ namespace TeleopReachy
             return isRobotInAudioSenderRoom;
         }
 
-        public bool IsRobotInRestartRoom()
-        {
-            return isRobotInRestartRoom;
-        }
-
         public bool IsRobotReady()
         {
             return isRobotReady;
-        }
-
-        public bool IsServerConnected()
-        {
-            //return isServerConnected;
-            //Todo
-            return true;
         }
 
         public bool AreRobotServicesRestarting()
@@ -157,7 +141,9 @@ namespace TeleopReachy
             if (statusChanged)
             {
                 statusChanged = false;
-                if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                if (isRobotInDataRoom && isRobotConfigReady && (
+                    (checkVideoStream && (robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead())
+                    || !checkVideoStream))
                 {
                     if (!isRobotReady)
                     {

@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1244,9 +1243,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1794126925}
-  - component: {fileID: 1794126924}
   - component: {fileID: 1794126926}
   - component: {fileID: 1794126928}
+  - component: {fileID: 1794126929}
+  - component: {fileID: 1794126930}
+  - component: {fileID: 1794126931}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -1254,24 +1255,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1794126924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1794126923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f3308da2be4e8409c3a62a8f2658fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  userTracker: {fileID: 121870476}
-  canvasOnlineMenu: {fileID: 5745522331450096041}
-  menuParent: {fileID: 1906032148}
-  userInput: {fileID: 4826978605613812945}
-  ground: {fileID: 6389971055515736630}
-  XROrigin: {fileID: 595309022}
 --- !u!4 &1794126925
 Transform:
   m_ObjectHideFlags: 0
@@ -1309,6 +1292,51 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 16df7fd9b4600234c8dad7b97e5a3571, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1794126929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adbe72322e6aeca468732e5e73985b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userTracker: {fileID: 121870476}
+  canvasOnlineMenu: {fileID: 5745522331450096041}
+  menuParent: {fileID: 1906032148}
+  userInput: {fileID: 4826978605613812945}
+  ground: {fileID: 6389971055515736630}
+  XROrigin: {fileID: 595309022}
+--- !u!114 &1794126930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060dd2ec099141e47ac114e5d82be687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  event_OnTriedToSendMobilityCommands:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1794126931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33ce875cfa3db8b4ab097c9801342305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1877841883
@@ -1583,6 +1611,11 @@ MonoBehaviour:
   stencilReference: 1
   stencilMask: 255
   stencilBias: 1
+--- !u!4 &1906032144 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1440600536130867592, guid: 770664eca1f4897479c79fc61a6ab5f5, type: 3}
+  m_PrefabInstance: {fileID: 1906032139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1906032147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1440600536123287008, guid: 770664eca1f4897479c79fc61a6ab5f5, type: 3}
@@ -2439,10 +2472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controllers: {fileID: 3921144727203494908}
-  event_OnTriedToSendCommands:
-    m_PersistentCalls:
-      m_Calls: []
-  event_DejaVu:
+  event_OnStartMoving:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4826978605613812945
@@ -2462,7 +2492,7 @@ GameObject:
   - component: {fileID: 9009280609215881307}
   - component: {fileID: 9009280609215881308}
   m_Layer: 0
-  m_Name: UserInput
+  m_Name: UserInputs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2582,6 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0017296f992f8ee4f826d15660d1b8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  headset: {fileID: 1906032144}
 --- !u!1 &5745522331229630513
 GameObject:
   m_ObjectHideFlags: 0
@@ -4420,9 +4451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4b7c4714532df4a8bde80ab93b2659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_OnEmergencyStopCalled:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &9073630071473511950
 MonoBehaviour:
   m_ObjectHideFlags: 0

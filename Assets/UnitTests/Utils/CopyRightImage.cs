@@ -6,19 +6,19 @@ using TeleopReachy;
 
 public class CopyRightImage : MonoBehaviour
 {
-    private GStreamerPluginCustom webRTCController;
+    private GStreamerPluginCustom gstreamerPlugin;
     private Renderer rend;
 
     // Start is called before the first frame update
     void Start()
     {
-        webRTCController = WebRTCManager.Instance.webRTCController;
+        gstreamerPlugin = WebRTCManager.Instance.gstreamerPlugin;
         rend = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        rend.material.mainTexture = webRTCController.GetRightTexture();
+        rend.material.mainTexture = gstreamerPlugin.GetRightTexture();
     }
 }

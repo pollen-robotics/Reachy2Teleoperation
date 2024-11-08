@@ -4,54 +4,20 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class StartArmTeleoperationUIManager : LazyFollow
+    public class StartArmTeleoperationUIManager : CustomLazyFollowUI
     {
-        private RobotStatus robotStatus;
-        //private RobotConfig robotConfig;
-
-        private ControllersManager controllers;
-        private UserEmergencyStopInput userEmergencyStop;
-
         private bool needUpdateInfoMessage;
         private bool wantInfoMessageDisplayed;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.1f, 0.5f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.1f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            //robotConfig = RobotDataManager.Instance.RobotConfig;
+            SetOculusTargetOffset(new Vector3(0, -0.1f, 0.5f));
 
-            robotStatus.event_OnStartTeleoperation.AddListener(ShowInfoMessage);
-            robotStatus.event_OnStartArmTeleoperation.AddListener(HideInfoMessage);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideInfoMessage);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, HideMenu);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, HideMenu);
 
             needUpdateInfoMessage = false;
             wantInfoMessageDisplayed = false;
-
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-
-            transform.ActivateChildren(false);
-        }
-
-        void Init()
-        {
-            userEmergencyStop = UserInputManager.Instance.UserEmergencyStopInput;
-            userEmergencyStop.event_OnEmergencyStopCalled.AddListener(HideInfoMessage);
-        }
-
-        void ShowInfoMessage()
-        {
-            wantInfoMessageDisplayed = true;
-            needUpdateInfoMessage = true;
         }
 
         void Update()
@@ -63,7 +29,7 @@ namespace TeleopReachy
             }
         }
 
-        void HideInfoMessage()
+        void HideMenu()
         {
             wantInfoMessageDisplayed = false;
             needUpdateInfoMessage = true;
