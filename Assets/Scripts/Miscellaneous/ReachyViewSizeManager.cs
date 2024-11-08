@@ -6,9 +6,6 @@ namespace TeleopReachy
 {
     public class ReachyViewSizeManager : MonoBehaviour
     {
-        [SerializeField]
-        private Transform ReachyViewQuad;
-
         private ControllersManager controllers;
         private UserMobilityFakeMovement mobilityFakeMovement;
 
@@ -31,12 +28,12 @@ namespace TeleopReachy
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
             {
                 Debug.Log("Oculus 2 detected");
-                ReachyViewQuad.localPosition = new Vector3(0f, -595.0f, 18473.0f);
+                transform.localPosition = new Vector3(0f, -595.0f, 18473.0f);
             }
             else
             {
                 Debug.Log("Oculus 3 or other detected");
-                ReachyViewQuad.localPosition = new Vector3(0f, -3266f, 15093f);
+                transform.localPosition = new Vector3(0f, -3266f, 15093f);
             }
             motionSicknessManager = MotionSicknessManager.Instance;
             motionSicknessManager.event_OnRequestNavigationEffect.AddListener(ResizeView);
@@ -52,16 +49,19 @@ namespace TeleopReachy
             {
                 needUpdateScale = false;
                 StartCoroutine(BlackScreenAppears());
-                ReachyViewQuad.localScale = lerpGoalScale;
+                transform.localScale = lerpGoalScale;
             }
         }
 
         IEnumerator BlackScreenAppears()
         {
-            blackScreen.GetComponent<MeshRenderer>().enabled = true;
-            yield return new WaitForSeconds(0.1f);
-            blackScreen.GetComponent<MeshRenderer>().enabled = false;
-
+            if (blackScreen != null)
+            {
+                blackScreen.GetComponent<MeshRenderer>().enabled = true;
+                yield return new WaitForSeconds(0.1f);
+                blackScreen.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else yield return null;
         }
 
         void SetImageSmaller()
