@@ -63,6 +63,7 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
             leaveMirrorSceneButton.onClick.AddListener(CheckIfLockedBeforeQuittingScene);
+            leaveMirrorSceneButton.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
             leaveMirrorSceneButtonRobotLocked.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
 
             ResetPosition();
