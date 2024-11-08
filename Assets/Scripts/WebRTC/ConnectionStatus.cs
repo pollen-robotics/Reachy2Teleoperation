@@ -12,7 +12,6 @@ namespace TeleopReachy
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
         private bool isRobotInAudioSenderRoom;
-        private bool isRobotInRestartRoom;
 
         private bool isRobotReady;
 
@@ -22,7 +21,6 @@ namespace TeleopReachy
 
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
-
         public UnityEvent event_OnRobotUnready;
 
         private bool statusChanged;
@@ -30,6 +28,9 @@ namespace TeleopReachy
         private RobotConfig robotConfig;
 
         private Coroutine waitForConnection;
+
+        [SerializeField]
+        private bool checkVideoStream;
 
         void Start()
         {
@@ -44,7 +45,6 @@ namespace TeleopReachy
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
             isRobotInAudioSenderRoom = false;
-            isRobotInRestartRoom = false;
 
             isRobotReady = false;
 
@@ -68,11 +68,6 @@ namespace TeleopReachy
             return isRobotInDataRoom;
         }
 
-        public bool IsRobotConfigReady()
-        {
-            return isRobotConfigReady;
-        }
-
         public bool IsRobotInVideoRoom()
         {
             return isRobotInVideoRoom;
@@ -88,21 +83,9 @@ namespace TeleopReachy
             return isRobotInAudioSenderRoom;
         }
 
-        public bool IsRobotInRestartRoom()
-        {
-            return isRobotInRestartRoom;
-        }
-
         public bool IsRobotReady()
         {
             return isRobotReady;
-        }
-
-        public bool IsServerConnected()
-        {
-            //return isServerConnected;
-            //Todo
-            return true;
         }
 
         public bool AreRobotServicesRestarting()
@@ -157,7 +140,9 @@ namespace TeleopReachy
             if (statusChanged)
             {
                 statusChanged = false;
-                if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                if (isRobotInDataRoom && isRobotConfigReady && (
+                    (checkVideoStream && (robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead())
+                    || !checkVideoStream))
                 {
                     if (!isRobotReady)
                     {

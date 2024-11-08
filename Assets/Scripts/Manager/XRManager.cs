@@ -28,6 +28,7 @@ namespace TeleopReachy
             {
                 Debug.Log("Starting XR...");
                 XRGeneralSettings.Instance.Manager.StartSubsystems();
+                Debug.Log("XR started");
             }
         }
 
