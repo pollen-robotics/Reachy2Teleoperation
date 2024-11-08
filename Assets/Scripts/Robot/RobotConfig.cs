@@ -12,6 +12,11 @@ using Component;
 
 namespace TeleopReachy
 {
+    public enum Part
+    {
+        LeftArm, LeftGripper, RightArm, RightGripper, Head, MobileBase, 
+    }
+
     public class RobotConfig : MonoBehaviour
     {
         private DataMessageManager dataController;
@@ -38,7 +43,7 @@ namespace TeleopReachy
         void Start()
         {
             dataController = DataMessageManager.Instance;
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
 
             dataController.event_OnRobotReceived.AddListener(GetPartsId);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
@@ -114,6 +119,27 @@ namespace TeleopReachy
             has_robot_config = true;
 
             event_OnConfigChanged.Invoke();
+        }
+
+        public bool HasPart(Part part)
+        {
+            switch (part)
+            {
+                case Part.LeftArm:
+                    return HasLeftArm();
+                case Part.RightArm:
+                    return HasRightArm();
+                case Part.LeftGripper:
+                    return HasLeftGripper();
+                case Part.RightGripper:
+                    return HasRightGripper();
+                case Part.Head:
+                    return HasHead();
+                case Part.MobileBase:
+                    return HasMobileBase();
+                default:
+                    return false;
+            }
         }
 
         public bool HasRightArm()

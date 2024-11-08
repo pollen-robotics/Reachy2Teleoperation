@@ -5,17 +5,23 @@ namespace TeleopReachy
 {
     public class MiniVideoStreamDisplay : MonoBehaviour
     {
-        private GStreamerPluginCustom audioVideoController;
+        private RobotVideoStream videoController;
         private Renderer screen;
 
         // Used to update display when going back in mirror scene
         void Start()
         {
             screen = GetComponent<Renderer>();
-            audioVideoController = WebRTCManager.Instance.webRTCController;
-            screen.material.SetTexture("_LeftTex", audioVideoController.GetLeftTexture());
-            screen.material.SetTexture("_RightTex", audioVideoController.GetLeftTexture());
+            if (Robot.IsCurrentRobotVirtual())
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                videoController = RobotDataManager.Instance.RobotVideoStream;
+                screen.material.SetTexture("_LeftTex", videoController.GetLeftTexture());
+                screen.material.SetTexture("_RightTex", videoController.GetLeftTexture());
+            }
         }
-
     }
 }

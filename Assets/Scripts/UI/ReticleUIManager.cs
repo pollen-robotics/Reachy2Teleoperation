@@ -4,24 +4,19 @@ namespace TeleopReachy
 {
     public class ReticleUIManager : MonoBehaviour
     {
-        private RobotStatus robotStatus;
-
         private ControllersManager controllers;
 
         private MotionSicknessManager motionSicknessManager;
 
         void Start()
         {
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-            HideReticle();
+            motionSicknessManager = MotionSicknessManager.Instance;
+            InitPosition();
+            CheckReticleState();
         }
 
-        void Init()
+        void InitPosition()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotStatus.event_OnStartTeleoperation.AddListener(CheckReticleState);
-            robotStatus.event_OnStopTeleoperation.AddListener(HideReticle);
             controllers = ActiveControllerManager.Instance.ControllersManager;
             if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus)
             {
@@ -39,11 +34,10 @@ namespace TeleopReachy
             {
                 transform.ActivateChildren(true);
             }
-        }
-
-        void HideReticle()
-        {
-            transform.ActivateChildren(false);
+            else
+            {
+                transform.ActivateChildren(false);
+            }
         }
     }
 }

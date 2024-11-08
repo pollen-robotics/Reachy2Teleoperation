@@ -20,29 +20,32 @@ namespace TeleopReachy
         private ArmCartesianGoal lArmZeroPose;
         private ArmCartesianGoal rArmZeroPose;
 
+        private TeleoperationManager teleoperationManager;
 
         // Start is called before the first frame update
         void Start()
         {
             Init();
             dataController = DataMessageManager.Instance;
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
 
-            robotStatus.event_OnInitializeRobotStateRequested.AddListener(InitializeRobotState);
-            robotStatus.event_OnRobotStiffRequested.AddListener(SetRobotStiff);
-            robotStatus.event_OnRobotCompliantRequested.AddListener(SetRobotCompliant);
-            robotStatus.event_OnRobotSmoothlyCompliantRequested.AddListener(SetRobotSmoothlyCompliant);
+            EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTeleoperation);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopTeleoperation);
 
-            robotStatus.event_OnSuspendTeleoperation.AddListener(SuspendTeleoperation);
-            robotStatus.event_OnResumeTeleoperation.AddListener(ResumeTeleoperation);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendTeleoperation);
+            EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeTeleoperation);
 
-            robotStatus.event_OnStartArmTeleoperation.AddListener(StartTeleoperation);
-            robotStatus.event_OnStopTeleoperation.AddListener(StopTeleoperation);
+            EventManager.StartListening(EventNames.OnInitializeRobotStateRequested, InitializeRobotState);
+            EventManager.StartListening(EventNames.OnRobotStiffRequested, SetRobotStiff);
+            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, SetRobotSmoothlyCompliant);
+            EventManager.StartListening(EventNames.OnRobotCompliantRequested, SetRobotCompliant);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
+
+            teleoperationManager = TeleoperationManager.Instance;
 
             Reachy.Kinematics.Matrix4x4 rArmZeroTarget = new Reachy.Kinematics.Matrix4x4
             {
@@ -70,31 +73,20 @@ namespace TeleopReachy
             };
         }
 
-        void OnDestroy()
-        {
-            robotStatus.SetLeftArmOn(false);
-            robotStatus.SetRightArmOn(false);
-            robotStatus.SetHeadOn(false);
-            if (!robotConfig.IsVirtual())
-                SetRobotCompliant();
-        }
-
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            if (robotStatus.IsRobotArmTeleoperationActive())
-            {
-                if (robotConfig.HasLeftGripper() && robotStatus.IsLeftArmOn()) dataController.SetHandPosition(leftGripperCommand);
-                if (robotConfig.HasRightGripper() && robotStatus.IsRightArmOn()) dataController.SetHandPosition(rightGripperCommand);
-            }
+            if (robotConfig.HasLeftGripper() && robotStatus.IsLeftGripperOn()) dataController.SetHandPosition(leftGripperCommand);
+            if (robotConfig.HasRightGripper() && robotStatus.IsRightGripperOn()) dataController.SetHandPosition(rightGripperCommand);
         }
 
-        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
+        protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
-            if (robotStatus.IsRobotArmTeleoperationActive())
-            {
-                if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
-                if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
-            }
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+        }
+
+        protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)
+        {
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
         }
 
@@ -133,6 +125,20 @@ namespace TeleopReachy
                 else
                     SetRobotCompliant("head");
             }
+            if (robotConfig.HasLeftGripper())
+            {
+                if (robotStatus.IsLeftGripperOn())
+                    SetRobotStiff("l_hand");
+                else
+                    SetRobotCompliant("l_hand");
+            }
+            if (robotConfig.HasRightGripper())
+            {
+                if (robotStatus.IsRightGripperOn())
+                    SetRobotStiff("r_hand");
+                else
+                    SetRobotCompliant("r_hand");
+            }
         }
 
         //partName should be l_, r_ or neck_
@@ -152,7 +158,7 @@ namespace TeleopReachy
                 }
                 if (robotConfig.HasLeftGripper())
                 {
-                    dataController.TurnArmOn(robotConfig.partsId["l_hand"]);
+                    dataController.TurnHandOn(robotConfig.partsId["l_hand"]);
                 }
                 if (robotConfig.HasRightArm())
                 {
@@ -160,7 +166,7 @@ namespace TeleopReachy
                 }
                 if (robotConfig.HasRightGripper())
                 {
-                    dataController.TurnArmOn(robotConfig.partsId["r_hand"]);
+                    dataController.TurnHandOn(robotConfig.partsId["r_hand"]);
                 }
                 if (robotConfig.HasHead())
                 {
@@ -250,16 +256,13 @@ namespace TeleopReachy
         private void StopTeleoperation()
         {
             Debug.Log("[RobotJointCommands]: StopTeleoperation");
-            if (connectionStatus.IsServerConnected())
+            AskForCancellationCurrentMovementsPlaying();
+            if (waitToSetRobotFullSpeed != null)
             {
-                AskForCancellationCurrentMovementsPlaying();
-                if (waitToSetRobotFullSpeed != null)
-                {
-                    StopCoroutine(waitToSetRobotFullSpeed);
-                }
-                if (!robotStatus.IsRobotPositionLocked) SetRobotSmoothlyCompliant();
-                ResetMotorsStartingSpeed();
+                StopCoroutine(waitToSetRobotFullSpeed);
             }
+            if (!robotStatus.IsRobotPositionLocked) SetRobotSmoothlyCompliant();
+            ResetMotorsStartingSpeed();
         }
 
         private void InitializeRobotState()
@@ -434,34 +437,28 @@ namespace TeleopReachy
 
         void SuspendTeleoperation()
         {
-            if (robotStatus.IsRobotTeleoperationActive())
+            try
             {
-                try
+                if (waitToSetRobotFullSpeed != null)
                 {
-                    if (waitToSetRobotFullSpeed != null)
-                    {
-                        StopCoroutine(waitToSetRobotFullSpeed);
-                    }
-                    ResetMotorsStartingSpeed();
-                    if (setSmoothCompliance != null) StopCoroutine(setSmoothCompliance);
-                    setSmoothCompliance = StartCoroutine(SmoothCompliance(5));
-                    if (robotStatus.IsHeadOn()) SetHeadLookingStraight();
+                    StopCoroutine(waitToSetRobotFullSpeed);
                 }
-                catch (Exception exc)
-                {
-                    Debug.Log($"[RobotJointCommands]: SuspendTeleoperation error: {exc}");
-                }
+                ResetMotorsStartingSpeed();
+                if (setSmoothCompliance != null) StopCoroutine(setSmoothCompliance);
+                setSmoothCompliance = StartCoroutine(SmoothCompliance(5));
+                if (robotStatus.IsHeadOn()) SetHeadLookingStraight();
+            }
+            catch (Exception exc)
+            {
+                Debug.Log($"[RobotJointCommands]: SuspendTeleoperation error: {exc}");
             }
         }
 
         void ResumeTeleoperation()
         {
-            if (robotStatus.IsRobotTeleoperationActive())
+            if (!robotStatus.HasMotorsSpeedLimited())
             {
-                if (!robotStatus.HasMotorsSpeedLimited())
-                {
-                    ResetMotorsStartingSpeed();
-                }
+                ResetMotorsStartingSpeed();
             }
         }
     }

@@ -18,14 +18,15 @@ namespace TeleopReachy
 
             robotConfig = transform.GetComponent<RobotConfig>();
             robotStatus = transform.GetComponent<RobotStatus>();
-            robotStatus.event_OnStartTeleoperation.AddListener(StartMobility);
-            robotStatus.event_OnStopTeleoperation.AddListener(StopMobility);
-            robotStatus.event_OnSuspendTeleoperation.AddListener(StopMobileBaseMovements);
+
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartMobility);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopMobility);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, StopMobileBaseMovements);
         }
 
         private void StartMobility()
         {
-            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
                 dataController.TurnMobileBaseOn(robotConfig.partsId["mobile_base"]);
             }
@@ -41,17 +42,20 @@ namespace TeleopReachy
 
         public void SendMobileBaseDirection(Vector3 direction)
         {
-            TargetDirectionCommand command = new TargetDirectionCommand
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
-                Id = robotConfig.partsId["mobile_base"],
-                Direction = new DirectionVector
+                TargetDirectionCommand command = new TargetDirectionCommand
                 {
-                    X = direction[0],
-                    Y = direction[1],
-                    Theta = direction[2],
-                }
-            };
-            dataController.SendMobileBaseCommand(command);
+                    Id = robotConfig.partsId["mobile_base"],
+                    Direction = new DirectionVector
+                    {
+                        X = direction[0],
+                        Y = direction[1],
+                        Theta = direction[2],
+                    }
+                };
+                dataController.SendMobileBaseCommand(command);
+            }
         }
 
         void StopMobileBaseMovements()
