@@ -35,6 +35,7 @@ namespace GstreamerWebRTC
             // screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
+            renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
 
             renderingPlugin.Connect();
         }
@@ -43,6 +44,7 @@ namespace GstreamerWebRTC
         {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            dataPlugin.event_OnPipelineStopped.AddListener(PipelineDataStopped);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
@@ -62,6 +64,20 @@ namespace GstreamerWebRTC
         {
             Debug.Log("Pipeline data started Custom");
             event_DataControllerStatusHasChanged.Invoke(true);
+        }
+
+        override protected void PipelineStopped()
+        {
+            Debug.Log("Pipeline stopped");
+            event_OnVideoRoomStatusHasChanged.Invoke(false);
+            event_OnAudioReceiverRoomStatusHasChanged.Invoke(false);
+            event_AudioSenderStatusHasChanged.Invoke(false);
+        }
+
+        override protected void PipelineDataStopped()
+        {
+            Debug.Log("Pipeline data stopped");
+            event_DataControllerStatusHasChanged.Invoke(false);
         }
 
         override protected void OnDisable()

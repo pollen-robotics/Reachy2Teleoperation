@@ -61,7 +61,6 @@ namespace GstreamerWebRTC
 
         private bool request_stop = false;
 
-
         public BaseSignalling(string url, string remote_producer_name = "")
         {
             if (remote_producer_name == "")
@@ -112,7 +111,6 @@ namespace GstreamerWebRTC
                     else
                     {
                         Debug.LogWarning("Failed to connect to WebSocket server. Attempt " + i);
-
                     }
                 }
                 catch (WebSocketException ex)
@@ -216,6 +214,14 @@ namespace GstreamerWebRTC
                             event_OnRemotePeerLeft.Invoke();
                         Close();
                     }
+                }
+                else if (msg.type == MessageType.SessionEnded.ToString())
+                {
+                    Debug.Log("Session ended");
+                    sessionStatus = SessionStatus.Ended;
+                    if (!request_stop)
+                        event_OnRemotePeerLeft.Invoke();
+                    Close();
                 }
                 else
                 {
