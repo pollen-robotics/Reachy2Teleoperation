@@ -63,7 +63,6 @@ namespace TeleopReachy
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
             leaveMirrorSceneButton.onClick.AddListener(CheckIfLockedBeforeQuittingScene);
-            leaveMirrorSceneButton.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
             leaveMirrorSceneButtonRobotLocked.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
 
             ResetPosition();
@@ -94,7 +93,7 @@ namespace TeleopReachy
         private void SetRobotCompliantBeforeQuittingScene()
         {
             TeleoperationManager.Instance.AskForRobotSmoothlyCompliant();
-            RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(BackToConnectionScene);
+            BackToConnectionScene();
         }
 
         public void ResetPosition()
@@ -158,6 +157,12 @@ namespace TeleopReachy
         }
 
         protected void BackToConnectionScene()
+        {
+            if (!RobotDataManager.Instance.RobotStatus.IsRobotCompliant())
+            { RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(TriggerEnterConnectionSceneEvent); }
+        }
+
+        protected void TriggerEnterConnectionSceneEvent()
         {
             EventManager.TriggerEvent(EventNames.EnterConnectionScene);
         }
