@@ -122,13 +122,12 @@ namespace TeleopReachy
         public void AddRobot()
         {
             Robot newRobot = new Robot();
-            string action = "add";
             string ip = CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text;
             
             // check the IP is valid
             if (!IPUtils.IsIPValid(ip))
             {
-                RaiseRobotIpCannotBeNull(action);
+                RaiseRobotIpCannotBeNull(false);
                 return;
             }
 
@@ -137,7 +136,7 @@ namespace TeleopReachy
             {
                 if (robot.ip == ip)
                 {
-                    RaiseRobotIPAlreadyExists(action);
+                    RaiseRobotIPAlreadyExists(false);
                     return;
                 }
             }
@@ -150,7 +149,7 @@ namespace TeleopReachy
             {
                 if (robot.uid == uid)
                 {
-                    RaiseRobotNameAlreadyExists(action);
+                    RaiseRobotNameAlreadyExists(false);
                     return;
                 }
             }
@@ -187,32 +186,32 @@ namespace TeleopReachy
         }
 
         // raises a warning when the IP is already in the list
-        void RaiseRobotIPAlreadyExists(string action)
+        void RaiseRobotIPAlreadyExists(bool modify)
         {
             Debug.Log("IP already exists");
-            ClearErrorMessage(action);
-            string parent_folder = action == "add" ? "AddRobot" : "ModifyRobot";
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
             CanvaRobotSelection.transform.Find($"{parent_folder}/UidAlreadyExists").gameObject.SetActive(true);
         }
 
-        void RaiseRobotNameAlreadyExists(string action)
+        void RaiseRobotNameAlreadyExists(bool modify)
         {
             Debug.Log("Name already exists");
-            ClearErrorMessage(action);
-            string parent_folder = action == "add" ? "AddRobot" : "ModifyRobot";
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
             CanvaRobotSelection.transform.Find($"{parent_folder}/NameAlreadyExists").gameObject.SetActive(true);
         }
 
-        void RaiseRobotIpCannotBeNull(string action)
+        void RaiseRobotIpCannotBeNull(bool modify)
         {
-            ClearErrorMessage(action);
-            string parent_folder = action == "add" ? "AddRobot" : "ModifyRobot";
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
             CanvaRobotSelection.transform.Find($"{parent_folder}/UidCannotBeNull").gameObject.SetActive(true);
         }
 
-        void ClearErrorMessage(string action)
+        void ClearErrorMessage(bool modify)
         {
-            string parent_folder = action == "add" ? "AddRobot" : "ModifyRobot";
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
             CanvaRobotSelection.transform.Find($"{parent_folder}/UidCannotBeNull").gameObject.SetActive(false);
             CanvaRobotSelection.transform.Find($"{parent_folder}/NameAlreadyExists").gameObject.SetActive(false);
             CanvaRobotSelection.transform.Find($"{parent_folder}/UidAlreadyExists").gameObject.SetActive(false);
@@ -250,13 +249,12 @@ namespace TeleopReachy
         
             Robot newRobot = robotsList.Find(r => r.uid == robotToBeModified.robot.uid);
 
-            string action = "modify";
             string ip = CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text.Trim();
             
             //check the IP is valid
             if (!IPUtils.IsIPValid(ip))
             {
-                RaiseRobotIpCannotBeNull(action);
+                RaiseRobotIpCannotBeNull(true);
                 return;
             }
 
@@ -268,7 +266,7 @@ namespace TeleopReachy
             {
                 if (robot.ip == ip)
                 {
-                    RaiseRobotIPAlreadyExists(action);                    
+                    RaiseRobotIPAlreadyExists(true);                    
                     return;
                 }
             }
@@ -281,7 +279,7 @@ namespace TeleopReachy
             {
                 if (robot.uid == uid)
                 {
-                    RaiseRobotNameAlreadyExists(action);
+                    RaiseRobotNameAlreadyExists(true);
                     return;
                 }
             }
@@ -349,7 +347,7 @@ namespace TeleopReachy
             {
                 CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text = "";
                 CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = "";
-                ClearErrorMessage("add");
+                ClearErrorMessage(false);
             }
 
             CanvaRobotSelection.transform.GetChild(1).gameObject.SetActive(isAddRobotMenuOpen);
@@ -379,7 +377,7 @@ namespace TeleopReachy
             {
                 CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text = "";
                 CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = "";
-                ClearErrorMessage("modify");
+                ClearErrorMessage(true);
             }
 
             CanvaRobotSelection.transform.GetChild(3).gameObject.SetActive(isModifyRobotMenuOpen);

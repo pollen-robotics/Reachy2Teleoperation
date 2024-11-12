@@ -25,19 +25,19 @@ namespace TeleopReachy
 
             catch (ArgumentNullException e)
             {
-                Debug.LogWarning("IP is invalid : " + e.Message);
+                Debug.LogError("IP is invalid : " + e.Message);
                 return false;
             }
 
             catch (FormatException e)
             {
-                Debug.LogWarning("IP is invalid : " + e.Message);
+                Debug.LogError("IP is invalid : " + e.Message);
                 return false;
             }
 
             catch (Exception e)
             {
-                Debug.LogWarning("IP is invalid : " + e.Message);
+                Debug.LogError("IP is invalid : " + e.Message);
                 return false;
             }
         }
