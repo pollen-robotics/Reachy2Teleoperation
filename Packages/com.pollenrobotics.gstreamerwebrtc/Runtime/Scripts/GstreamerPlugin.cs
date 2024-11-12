@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
+using UnityEngine.Events;
 
 namespace GstreamerWebRTC
 {
@@ -26,6 +27,8 @@ namespace GstreamerWebRTC
         private Thread cleaning_thread = null;
         private Thread init_thread = null;
 
+        public UnityEvent<bool> event_OnPipelineRenderingRunning = new UnityEvent<bool>();
+        public UnityEvent<bool> event_OnPipelineDataRunning = new UnityEvent<bool>();
 
         void OnEnable()
         {
@@ -70,6 +73,7 @@ namespace GstreamerWebRTC
             leftRawImage.texture = left;
             rightRawImage.texture = right;
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
+            renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
             renderingPlugin.Connect();
         }
 
@@ -77,6 +81,7 @@ namespace GstreamerWebRTC
         {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            dataPlugin.event_OnPipelineStopped.AddListener(PipelineDataStopped);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             dataPlugin.Connect();
@@ -85,11 +90,25 @@ namespace GstreamerWebRTC
         protected virtual void PipelineStarted()
         {
             Debug.Log("Pipeline started");
+            event_OnPipelineRenderingRunning.Invoke(true);
         }
 
         protected virtual void PipelineDataStarted()
         {
             Debug.Log("Pipeline data started");
+            event_OnPipelineDataRunning.Invoke(true);
+        }
+
+        protected virtual void PipelineStopped()
+        {
+            Debug.Log("Pipeline stopped");
+            event_OnPipelineRenderingRunning.Invoke(false);
+        }
+
+        protected virtual void PipelineDataStopped()
+        {
+            Debug.Log("Pipeline data stopped");
+            event_OnPipelineDataRunning.Invoke(false);
         }
 
         protected virtual void OnDisable()
