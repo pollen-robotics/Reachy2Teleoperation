@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
+
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -114,14 +116,15 @@ namespace TeleopReachy
         {
             try
             {
-                using (var tcpClient = new TcpClient())
+                using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
                 {
-                    tcpClient.Connect(ipAddress, 80);
-                    return true;
+                    PingReply reply = ping.Send(ipAddress, 2000); // délai de 2000 ms
+                    return reply.Status == IPStatus.Success;
                 }
             }
-            catch (SocketException)
+            catch (PingException ex)
             {
+                Debug.Log($"Ping failed: {ex.Message}");
                 return false;
             }
         }
