@@ -163,6 +163,11 @@ namespace TeleopReachy
             EventManager.TriggerEvent(EventNames.OnRobotSmoothlyCompliantRequested);
         }
 
+        public void AskToResetRobotLimits()
+        {
+            EventManager.TriggerEvent(EventNames.OnResetRobotLimitsRequested);
+        }
+
         void Update()
         {
             if(robotStatus != null && IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())

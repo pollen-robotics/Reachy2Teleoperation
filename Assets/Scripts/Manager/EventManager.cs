@@ -34,6 +34,7 @@ namespace TeleopReachy
         OnResumeTeleoperation,
 
         OnInitializeRobotStateRequested,
+        OnResetRobotLimitsRequested,
         OnRobotStiffRequested,
         OnRobotCompliantRequested,
         OnRobotSmoothlyCompliantRequested,

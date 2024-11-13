@@ -159,10 +159,16 @@ namespace TeleopReachy
         protected void BackToConnectionScene()
         {
             if (!RobotDataManager.Instance.RobotStatus.IsRobotCompliant())
-            { RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(TriggerEnterConnectionSceneEvent); }
+            { RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(ResetRobotLimits); }
         }
 
-        protected void TriggerEnterConnectionSceneEvent()
+        protected void ResetRobotLimits()
+        {
+            RobotDataManager.Instance.RobotStatus.event_OnRobotMaxSpeedSet.AddListener(TriggerEnterConnectionScene);
+            TeleoperationManager.Instance.AskToResetRobotLimits();
+        }
+
+        protected void TriggerEnterConnectionScene()
         {
             EventManager.TriggerEvent(EventNames.EnterConnectionScene);
         }
