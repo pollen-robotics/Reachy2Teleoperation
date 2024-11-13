@@ -13,8 +13,6 @@ namespace TeleopReachy
         private bool userRequestedSmallSize;
 
         private Vector3 lerpGoalScale;
-        private Vector3 currentScale;
-        private float transitionSpeed = 5f;
 
         private Vector3 fullScreenScale = new Vector3(41333, -31000, 1);
         private Vector3 smallerScreenScale = new Vector3(20666, -15500, 1);
@@ -43,22 +41,15 @@ namespace TeleopReachy
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
             mobilityFakeMovement.event_OnStartMoving.AddListener(SetImageSmaller);
             mobilityFakeMovement.event_OnStopMoving.AddListener(SetImageFullScreen);
-
-            currentScale = transform.localScale;
         }
 
         void Update()
         {
             if (needUpdateScale)
             {
-                currentScale = Vector3.Lerp(currentScale, lerpGoalScale, Time.deltaTime * transitionSpeed);
-                transform.localScale = currentScale;
-
-                if (Vector3.Distance(currentScale, lerpGoalScale) < 0.01f) 
-                {
-                    currentScale = lerpGoalScale;
-                    needUpdateScale = false;
-                }
+                needUpdateScale = false;
+                StartCoroutine(BlackScreenAppears());
+                transform.localScale = lerpGoalScale;
             }
         }
 
