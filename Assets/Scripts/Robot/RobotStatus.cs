@@ -33,6 +33,7 @@ namespace TeleopReachy
 
         public UnityEvent<bool> event_OnGraspingLock;
         public UnityEvent event_OnRobotFullyCompliant;
+        public UnityEvent event_OnRobotMaxSpeedSet;
 
         private void Start()
         {
@@ -231,6 +232,10 @@ namespace TeleopReachy
         public void SetMotorsSpeedLimited(bool isLimited)
         {
             hasMotorsSpeedLimited = isLimited;
+            if (!isLimited)
+            {
+                event_OnRobotMaxSpeedSet.Invoke();
+            }
         }
 
         public void SetRobotCompliant(bool isCompliant)
