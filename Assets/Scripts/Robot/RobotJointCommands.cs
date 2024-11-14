@@ -35,9 +35,11 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendTeleoperation);
             EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeTeleoperation);
 
+            EventManager.StartListening(EventNames.OnReinitializeLimitsRequested, () => StartCoroutine(DeconnectFromTeleoperation()));
+
             EventManager.StartListening(EventNames.OnInitializeRobotStateRequested, InitializeRobotState);
             EventManager.StartListening(EventNames.OnRobotStiffRequested, SetRobotStiff);
-            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, ReinitializeLimits);
+            EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, SetRobotSmoothlyCompliant);
             EventManager.StartListening(EventNames.OnRobotCompliantRequested, SetRobotCompliant);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -92,7 +94,7 @@ namespace TeleopReachy
 
         private void SetRobotSmoothlyCompliant()
         {
-            Debug.Log("[RobotJointCommands]: SetRobotSmoothlyCompliant");
+            Debug.Log("[RobotJointCommands]: SetRobotSmoothlyCompliant ");
             setSmoothCompliance = StartCoroutine(SmoothCompliance(2));
         }
 
@@ -339,6 +341,7 @@ namespace TeleopReachy
             ModifyArmTorqueLimit(torqueLimitHigh);
 
             yield return new WaitForSeconds(0.1f);
+
         }
 
         private void ModifyArmTorqueLimit(uint torqueLimit)
@@ -462,15 +465,29 @@ namespace TeleopReachy
             }
         }
 
-        void ReinitializeLimits()
+        private IEnumerator DeconnectFromTeleoperation()
         {
-            uint max_limit = 100;
-            Debug.Log("[RobotJointCommands]: ReinitializeLimits");
+            while (!robotStatus.IsRobotCompliant())
+            {
+                yield return null;
+            }
             
-            ModifyHeadSpeedLimit(max_limit);
-            ModifyArmSpeedLimit(max_limit);
+            ReinitializeLimits();
+            EventManager.TriggerEvent(EventNames.EnterConnectionScene);
+        }
+
+        private void ReinitializeLimits()
+        {
+            Debug.Log("[RobotJointCommands]: ReinitializeLimits");
+
+            uint max_limit = 100;
+            
             ModifyHeadTorqueLimit(max_limit);
             ModifyArmTorqueLimit(max_limit);
+            ModifyHeadSpeedLimit(max_limit);
+            ModifyArmSpeedLimit(max_limit);
+            robotStatus.SetMotorsSpeedLimited(false);
+
         }
     }
 }

@@ -159,7 +159,7 @@ namespace TeleopReachy
 
         protected void BackToConnectionScene()
         {
-            EventManager.TriggerEvent(EventNames.EnterConnectionScene);
+            EventManager.TriggerEvent(EventNames.OnReinitializeLimitsRequested);
         }
     }
 }
