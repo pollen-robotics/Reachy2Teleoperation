@@ -110,21 +110,18 @@ namespace TeleopReachy
             }
         }
 
-        
-
         private bool IsIPAddressReachable(string ipAddress)
         {
             try
             {
-                using (System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping())
+                using (var tcpClient = new TcpClient())
                 {
-                    PingReply reply = ping.Send(ipAddress, 2000); // délai de 2000 ms
-                    return reply.Status == IPStatus.Success;
+                    tcpClient.Connect(ipAddress, 8443);
+                    return true;
                 }
             }
-            catch (PingException ex)
+            catch (SocketException)
             {
-                Debug.Log($"Ping failed: {ex.Message}");
                 return false;
             }
         }
