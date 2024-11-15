@@ -114,6 +114,11 @@ namespace GstreamerWebRTC
             renderingPlugin.Render();
         }
 
+        protected virtual void OnChannelCommandOpen()
+        {
+            Debug.Log("Channel command open");
+        }
+
         //Data channels
         protected virtual void OnChannelServiceOpen()
         {

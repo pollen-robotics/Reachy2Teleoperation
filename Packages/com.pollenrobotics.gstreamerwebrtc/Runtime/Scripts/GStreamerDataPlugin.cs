@@ -85,6 +85,14 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
+        static extern void RegisterChannelCommandOpenCallback(channelCommandOpenCallback cb);
+        delegate void channelCommandOpenCallback();
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
         static extern void RegisterChannelServiceDataCallback(channelServiceDataCallback cb);
         delegate void channelServiceDataCallback(IntPtr data, int size_data);
 
@@ -116,6 +124,7 @@ namespace GstreamerWebRTC
 
         private static UnityEvent<string, int> event_OnICE;
         public static UnityEvent event_OnChannelServiceOpen;
+        public static UnityEvent event_OnChannelCommandOpen;
         public static UnityEvent<byte[]> event_OnChannelServiceData;
         public static UnityEvent<byte[]> event_OnChannelStateData;
         public static UnityEvent<byte[]> event_OnChannelAuditData;
@@ -130,6 +139,7 @@ namespace GstreamerWebRTC
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
+            RegisterChannelCommandOpenCallback(OnChannelCommandOpenCallback);
             RegisterChannelServiceDataCallback(OnChannelServiceDataCallback);
             RegisterChannelStateDataCallback(OnChannelStateDataCallback);
             RegisterChannelAuditDataCallback(OnChannelAuditDataCallback);
@@ -152,6 +162,7 @@ namespace GstreamerWebRTC
             event_OnICE.AddListener(OnICE);
 
             event_OnChannelServiceOpen = new UnityEvent();
+            event_OnChannelCommandOpen = new UnityEvent();
             event_OnChannelServiceData = new UnityEvent<byte[]>();
             event_OnChannelStateData = new UnityEvent<byte[]>();
             event_OnChannelAuditData = new UnityEvent<byte[]>();
@@ -224,6 +235,12 @@ namespace GstreamerWebRTC
         static void OnChannelServiceOpenCallback()
         {
             event_OnChannelServiceOpen.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(channelCommandOpenCallback))]
+        static void OnChannelCommandOpenCallback()
+        {
+            event_OnChannelCommandOpen.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(channelServiceDataCallback))]
