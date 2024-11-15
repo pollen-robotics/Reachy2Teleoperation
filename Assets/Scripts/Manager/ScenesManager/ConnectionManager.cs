@@ -78,22 +78,20 @@ namespace TeleopReachy
         {
             connectButton.interactable = false;
             string ipAddress = null;
+
             if (selectedRobot.ip.EndsWith(".local"))
             {
-                bool resolved = false;
                 yield return StartCoroutine(ResolveLocalIPAddress(selectedRobot.ip, result =>
                 {
                     ipAddress = result;
-                    resolved = result != null;
                 }));
 
-                if (!resolved)
+                if (ipAddress == null)
                 {
                     RaiseRobotConnectionError();
                     yield break;
                 }
             }
-            
             else
             {
                 bool isReachable = false;
@@ -108,11 +106,11 @@ namespace TeleopReachy
 
                 ipAddress = selectedRobot.ip;
             }
+
             try
             {
                 PlayerPrefs.SetString("robot_ip", ipAddress);
                 PlayerPrefs.SetString("robot_info", selectedRobot.ip);
-
                 EventManager.TriggerEvent(EventNames.QuitConnectionScene);
             }
             catch (System.Exception ex)
@@ -124,10 +122,8 @@ namespace TeleopReachy
 
         private IEnumerator ResolveLocalIPAddress(string hostname, System.Action<string> callback)
         {
-            string resolvedIp = null;
-            bool completed = false;
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
 
-            // Lancer la résolution DNS dans un thread séparé
             Task.Run(() =>
             {
                 try
@@ -137,36 +133,25 @@ namespace TeleopReachy
                     {
                         if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            resolvedIp = ip.ToString();
-                            break;
+                            tcs.SetResult(ip.ToString());
+                            return;
                         }
                     }
+                    tcs.SetResult(null);
                 }
                 catch (System.Exception ex)
                 {
                     Debug.LogError($"DNS resolution error: {ex.Message}");
-                }
-                finally
-                {
-                    completed = true; // Indiquer que la tâche est terminée
+                    tcs.SetResult(null);
                 }
             });
 
-            // Attendre que la tâche soit terminée
-            while (!completed)
+            while (!tcs.Task.IsCompleted)
             {
-                yield return null; // Libérer le thread principal pendant que la tâche s'exécute
+                yield return null;
             }
 
-            if (resolvedIp != null)
-            {
-                callback?.Invoke(resolvedIp); // Passer l'adresse IP résolue
-            }
-            else
-            {
-                Debug.LogError("No valid IPv4 address found or resolution failed.");
-                callback?.Invoke(null);
-            }
+            callback?.Invoke(tcs.Task.Result);
         }
 
         private IEnumerator IsIPAddressReachableCoroutine(string ipAddress, System.Action<bool> callback)
