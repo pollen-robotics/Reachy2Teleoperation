@@ -69,6 +69,7 @@ namespace TeleopReachy
 
         public void ConnectToRobot()
         {
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
             if (has_robot_selected)
             {
                 StartCoroutine(ConnectToRobotCoroutine());
@@ -77,6 +78,9 @@ namespace TeleopReachy
         private IEnumerator ConnectToRobotCoroutine()
         {
             connectButton.interactable = false;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connecting...";
+
             string ipAddress = null;
 
             if (selectedRobot.ip.EndsWith(".local"))
@@ -276,6 +280,8 @@ namespace TeleopReachy
         void RaiseRobotConnectionError()
         {
             connectButton.interactable = true ;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Retry";
             CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(true);
         }
 
@@ -413,6 +419,8 @@ namespace TeleopReachy
 
         public void OpenCloseSelectRobotMenu()
         {
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connect";
             isRobotSelectionMenuOpen = !isRobotSelectionMenuOpen;
             CanvaRobotSelection.transform.GetChild(0).gameObject.SetActive(isRobotSelectionMenuOpen);
             CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
