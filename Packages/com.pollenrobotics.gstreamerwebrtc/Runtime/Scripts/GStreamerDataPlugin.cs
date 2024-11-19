@@ -119,6 +119,7 @@ namespace GstreamerWebRTC
         public string remote_producer_name = "grpc_webrtc_bridge";
 
         public UnityEvent event_OnPipelineStarted;
+        public UnityEvent event_OnPipelineStopped;
 
         private static UnityEvent<string> event_OnSDPAnswer;
 
@@ -129,12 +130,10 @@ namespace GstreamerWebRTC
         public static UnityEvent<byte[]> event_OnChannelStateData;
         public static UnityEvent<byte[]> event_OnChannelAuditData;
 
-        //private bool _started = false;
         private bool _autoreconnect = false;
 
         public GStreamerDataPlugin(string ip_address)
         {
-            //_started = false;
             _autoreconnect = true;
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
@@ -154,6 +153,7 @@ namespace GstreamerWebRTC
             _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
 
             event_OnPipelineStarted = new UnityEvent();
+            event_OnPipelineStopped = new UnityEvent();
 
             event_OnSDPAnswer = new UnityEvent<string>();
             event_OnSDPAnswer.AddListener(SendSDPAnswer);
@@ -175,15 +175,14 @@ namespace GstreamerWebRTC
 
         void StartPipeline(string remote_peer_id)
         {
-            Debug.Log("start pipe " + remote_peer_id);
+            Debug.Log("start data pipe " + remote_peer_id);
             CreateDataPipeline();
             event_OnPipelineStarted.Invoke();
-            // _started = true;
         }
 
         void StopPipeline()
         {
-            // _started = false;
+            event_OnPipelineStopped.Invoke();
             if (_autoreconnect)
                 Connect();
         }
