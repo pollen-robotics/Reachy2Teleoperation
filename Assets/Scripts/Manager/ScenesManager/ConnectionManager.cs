@@ -42,6 +42,7 @@ namespace TeleopReachy
         private RobotButtonInfo robotToBeModified;
 
         private Robot selectedRobot;
+        const float TIMEOUT = 5.0f;
 
         void Start()
         {
@@ -164,10 +165,9 @@ namespace TeleopReachy
             using (var tcpClient = new TcpClient())
             {
                 var connectTask = tcpClient.ConnectAsync(ipAddress, 8443);
-                float timeout = 5f;
                 float elapsedTime = 0f;
 
-                while (!connectTask.IsCompleted && elapsedTime < timeout)
+                while (!connectTask.IsCompleted && elapsedTime < TIMEOUT)
                 {
                     elapsedTime += Time.deltaTime;
                     yield return null;
