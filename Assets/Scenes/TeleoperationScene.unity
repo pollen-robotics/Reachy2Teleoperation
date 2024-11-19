@@ -1219,7 +1219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5f3f23a3ff963548848cc304ac6073d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReachyViewQuad: {fileID: 224850605}
   blackScreen: {fileID: 1204306791}
 --- !u!114 &224850610
 MonoBehaviour:
@@ -2574,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &750364233
 RectTransform:
   m_ObjectHideFlags: 0
