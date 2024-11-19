@@ -46,6 +46,7 @@ namespace GstreamerWebRTC
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             dataPlugin.event_OnPipelineStopped.AddListener(PipelineDataStopped);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            GStreamerDataPlugin.event_OnChannelCommandOpen.AddListener(OnChannelCommandOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
             GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
@@ -99,6 +100,12 @@ namespace GstreamerWebRTC
             return right;
         }
 
+        protected override void OnChannelCommandOpen()
+        {
+            Debug.Log("Pipeline data started Custom");
+            event_DataControllerStatusHasChanged.Invoke(true);
+        }
+
         protected override void OnChannelServiceOpen()
         {
             var req = new ServiceRequest
@@ -146,8 +153,6 @@ namespace GstreamerWebRTC
 
         public void SendCommandMessage(AnyCommands commands)
         {
-            //Debug.Log("send command");
-            //if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(commands));
             SendCommandToChannel(Google.Protobuf.MessageExtensions.ToByteArray(commands));
         }
 
