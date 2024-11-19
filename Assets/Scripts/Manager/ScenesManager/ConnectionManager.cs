@@ -1,7 +1,12 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
 using System.Linq;
+
+using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,6 +42,7 @@ namespace TeleopReachy
         private RobotButtonInfo robotToBeModified;
 
         private Robot selectedRobot;
+        const float TIMEOUT = 5.0f;
 
         void Start()
         {
@@ -64,66 +70,116 @@ namespace TeleopReachy
 
         public void ConnectToRobot()
         {
-            // If a robot is selected, load teleoperation scene with prefs set to selected info
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
             if (has_robot_selected)
             {
-                try
-                {
-                    PlayerPrefs.SetString("robot_ip", GetIpv4Address());
-                    PlayerPrefs.SetString("robot_info", selectedRobot.ip);
-
-                    EventManager.TriggerEvent(EventNames.QuitConnectionScene);
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.Log($"Connection error: {ex.Message}");
-                    RaiseRobotConnectionError();
-                }
+                StartCoroutine(ConnectToRobotCoroutine());
             }
         }
-
-        private string GetIpv4Address()
+        private IEnumerator ConnectToRobotCoroutine()
         {
+            connectButton.interactable = false;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connecting...";
+
+            string ipAddress = null;
 
             if (selectedRobot.ip.EndsWith(".local"))
             {
-                IPAddress[] ipAddresses = Dns.GetHostAddresses(selectedRobot.ip);
-                foreach (IPAddress ip in ipAddresses)
+                yield return StartCoroutine(ResolveLocalIPAddress(selectedRobot.ip, result =>
                 {
-                    // Check if the IP address is an IPv4 address
-                    if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    {
-                        return(ip.ToString());
-                    }
+                    ipAddress = result;
+                }));
+
+                if (ipAddress == null)
+                {
+                    RaiseRobotConnectionError();
+                    yield break;
                 }
-            throw new System.Exception("No valid IPv4 address found with the .local address.");
             }
             else
             {
-                if (!IsIPAddressReachable(selectedRobot.ip))
+                bool isReachable = false;
+                yield return StartCoroutine(IsIPAddressReachableCoroutine(selectedRobot.ip, result => isReachable = result));
+
+                if (!isReachable)
                 {
-                    throw new System.Exception("The IPv4 address is not reachable.");
+                    Debug.LogError("The IPv4 address is not reachable.");
+                    RaiseRobotConnectionError();
+                    yield break;
                 }
-                return selectedRobot.ip;
+
+                ipAddress = selectedRobot.ip;
+            }
+
+            try
+            {
+                PlayerPrefs.SetString("robot_ip", ipAddress);
+                PlayerPrefs.SetString("robot_info", selectedRobot.ip);
+                EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Connection Error: {ex.Message}");
+                RaiseRobotConnectionError();
             }
         }
 
-        
-
-        private bool IsIPAddressReachable(string ipAddress)
+        private IEnumerator ResolveLocalIPAddress(string hostname, System.Action<string> callback)
         {
-            try
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+
+            Task.Run(() =>
             {
-                using (var tcpClient = new TcpClient())
+                try
                 {
-                    tcpClient.Connect(ipAddress, 80);
-                    return true;
+                    IPAddress[] ipAddresses = Dns.GetHostAddresses(hostname);
+                    foreach (IPAddress ip in ipAddresses)
+                    {
+                        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            tcs.SetResult(ip.ToString());
+                            return;
+                        }
+                    }
+                    tcs.SetResult(null);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"DNS resolution error: {ex.Message}");
+                    tcs.SetResult(null);
+                }
+            });
+
+            while (!tcs.Task.IsCompleted)
+            {
+                yield return null;
+            }
+
+            callback?.Invoke(tcs.Task.Result);
+        }
+
+        private IEnumerator IsIPAddressReachableCoroutine(string ipAddress, System.Action<bool> callback)
+        {
+            bool isReachable = false;
+            using (var tcpClient = new TcpClient())
+            {
+                var connectTask = tcpClient.ConnectAsync(ipAddress, 8443);
+                float elapsedTime = 0f;
+
+                while (!connectTask.IsCompleted && elapsedTime < TIMEOUT)
+                {
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                if (connectTask.IsCompleted && tcpClient.Connected)
+                {
+                    isReachable = true;
                 }
             }
-            catch (SocketException)
-            {
-                return false;
-            }
+
+            callback?.Invoke(isReachable);
         }
 
         bool IsVirtualRobotInList()
@@ -223,6 +279,9 @@ namespace TeleopReachy
 
         void RaiseRobotConnectionError()
         {
+            connectButton.interactable = true ;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Retry";
             CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(true);
         }
 
@@ -360,6 +419,8 @@ namespace TeleopReachy
 
         public void OpenCloseSelectRobotMenu()
         {
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connect";
             isRobotSelectionMenuOpen = !isRobotSelectionMenuOpen;
             CanvaRobotSelection.transform.GetChild(0).gameObject.SetActive(isRobotSelectionMenuOpen);
             CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
