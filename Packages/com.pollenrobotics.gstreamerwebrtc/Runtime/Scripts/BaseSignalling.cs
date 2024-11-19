@@ -58,6 +58,7 @@ namespace GstreamerWebRTC
         protected CancellationTokenSource _cts;
 
         private const int MAX_CONNECTION_ATTEMPTS = 100;
+        private const int PAUSE_BETWEEN_CONNECTION_ATTEMPTS_MS = 5000;
 
         private bool request_stop = false;
 
@@ -119,7 +120,7 @@ namespace GstreamerWebRTC
                     if (request_stop)
                         break;
                 }
-
+                await Task.Delay(PAUSE_BETWEEN_CONNECTION_ATTEMPTS_MS);
             }
             if (webSocket.State != WebSocketState.Open && !request_stop)
                 Debug.LogError("Failed to connect to WebSocket server.");
