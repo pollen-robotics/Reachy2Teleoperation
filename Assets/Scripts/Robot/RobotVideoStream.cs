@@ -23,7 +23,7 @@ namespace TeleopReachy
 
         public Texture GetRightTexture()
         {
-            return videoController.GetLeftTexture();
+            return videoController.GetRightTexture();
         }
     }
 }
