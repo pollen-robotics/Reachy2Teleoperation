@@ -1,5 +1,12 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Net;
+using System.Net.Sockets;
+using System.Net.NetworkInformation;
+using System.Linq;
+
+using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +15,7 @@ namespace TeleopReachy
     public class ConnectionManager : MonoBehaviour
     {
         public GameObject CanvaRobotSelection;
-
+        public GameObject CanvaConnectionSelection;
         public GameObject prefabRobotButton;
         private Transform contentRobotList;
 
@@ -35,6 +42,7 @@ namespace TeleopReachy
         private RobotButtonInfo robotToBeModified;
 
         private Robot selectedRobot;
+        const float TIMEOUT = 5.0f;
 
         void Start()
         {
@@ -62,31 +70,116 @@ namespace TeleopReachy
 
         public void ConnectToRobot()
         {
-            // If a robot is selected, load teleoperation scene with prefs set to selected info
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
             if (has_robot_selected)
             {
-                PlayerPrefs.SetString("robot_ip", GetIpv4Address());
-                PlayerPrefs.SetString("robot_info", selectedRobot.ip);
+                StartCoroutine(ConnectToRobotCoroutine());
+            }
+        }
+        private IEnumerator ConnectToRobotCoroutine()
+        {
+            connectButton.interactable = false;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connecting...";
 
+            string ipAddress = null;
+
+            if (selectedRobot.ip.EndsWith(".local"))
+            {
+                yield return StartCoroutine(ResolveLocalIPAddress(selectedRobot.ip, result =>
+                {
+                    ipAddress = result;
+                }));
+
+                if (ipAddress == null)
+                {
+                    RaiseRobotConnectionError();
+                    yield break;
+                }
+            }
+            else
+            {
+                bool isReachable = false;
+                yield return StartCoroutine(IsIPAddressReachableCoroutine(selectedRobot.ip, result => isReachable = result));
+
+                if (!isReachable)
+                {
+                    Debug.LogError("The IPv4 address is not reachable.");
+                    RaiseRobotConnectionError();
+                    yield break;
+                }
+
+                ipAddress = selectedRobot.ip;
+            }
+
+            try
+            {
+                PlayerPrefs.SetString("robot_ip", ipAddress);
+                PlayerPrefs.SetString("robot_info", selectedRobot.ip);
                 EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Connection Error: {ex.Message}");
+                RaiseRobotConnectionError();
             }
         }
 
-        private string GetIpv4Address()
+        private IEnumerator ResolveLocalIPAddress(string hostname, System.Action<string> callback)
         {
-            if(selectedRobot.ip.EndsWith(".local"))
+            TaskCompletionSource<string> tcs = new TaskCompletionSource<string>();
+
+            Task.Run(() =>
             {
-                IPAddress[] ipAddresses = Dns.GetHostAddresses(selectedRobot.ip);
-                foreach (IPAddress ip in ipAddresses)
+                try
                 {
-                    // Check if the IP address is an IPv4 address
-                    if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    IPAddress[] ipAddresses = Dns.GetHostAddresses(hostname);
+                    foreach (IPAddress ip in ipAddresses)
                     {
-                        return(ip.ToString());
+                        if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            tcs.SetResult(ip.ToString());
+                            return;
+                        }
                     }
+                    tcs.SetResult(null);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"DNS resolution error: {ex.Message}");
+                    tcs.SetResult(null);
+                }
+            });
+
+            while (!tcs.Task.IsCompleted)
+            {
+                yield return null;
+            }
+
+            callback?.Invoke(tcs.Task.Result);
+        }
+
+        private IEnumerator IsIPAddressReachableCoroutine(string ipAddress, System.Action<bool> callback)
+        {
+            bool isReachable = false;
+            using (var tcpClient = new TcpClient())
+            {
+                var connectTask = tcpClient.ConnectAsync(ipAddress, 8443);
+                float elapsedTime = 0f;
+
+                while (!connectTask.IsCompleted && elapsedTime < TIMEOUT)
+                {
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                if (connectTask.IsCompleted && tcpClient.Connected)
+                {
+                    isReachable = true;
                 }
             }
-            return selectedRobot.ip;
+
+            callback?.Invoke(isReachable);
         }
 
         bool IsVirtualRobotInList()
@@ -121,15 +214,37 @@ namespace TeleopReachy
         public void AddRobot()
         {
             Robot newRobot = new Robot();
-            string ip = CanvaRobotSelection.transform.GetChild(1).GetChild(6).GetComponent<InputField>().text;
+            string ip = CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text;
+            
+            // check the IP is valid
             if (!IPUtils.IsIPValid(ip))
             {
-                RaiseRobotIpCannotBeNull();
+                RaiseRobotIpCannotBeNull(false);
                 return;
             }
+
+            //check that the IP is not already in the list
+            foreach (Robot robot in robotsList)
+            {
+                if (robot.ip == ip)
+                {
+                    RaiseRobotIPAlreadyExists(false);
+                    return;
+                }
+            }
+
             newRobot.ip = ip;
-            // Set uid to "unknown" if nothing has been filled
-            string uid = CanvaRobotSelection.transform.GetChild(1).GetChild(5).GetComponent<InputField>().text.Trim();
+
+            //check the name is not already in the list and set to unknow if nothing has been filled
+            string uid = CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text.Trim();
+            foreach (Robot robot in robotsList)
+            {
+                if (robot.uid == uid)
+                {
+                    RaiseRobotNameAlreadyExists(false);
+                    return;
+                }
+            }
             newRobot.uid = uid != "" ? uid : "@Reachy";
 
             // Add robot to list, create new button and update menu
@@ -162,21 +277,51 @@ namespace TeleopReachy
             }
         }
 
-        void RaiseRobotIpCannotBeNull()
+        void RaiseRobotConnectionError()
         {
-            CanvaRobotSelection.transform.GetChild(1).GetChild(4).gameObject.SetActive(true);
+            connectButton.interactable = true ;
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Retry";
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(true);
         }
 
-        void RaiseRobotIpCannotBeNullModify()
+        // raises a warning when the IP is already in the list
+        void RaiseRobotIPAlreadyExists(bool modify)
         {
-            CanvaRobotSelection.transform.GetChild(3).GetChild(4).gameObject.SetActive(true);
+            Debug.Log("IP already exists");
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
+            CanvaRobotSelection.transform.Find($"{parent_folder}/UidAlreadyExists").gameObject.SetActive(true);
+        }
+
+        void RaiseRobotNameAlreadyExists(bool modify)
+        {
+            Debug.Log("Name already exists");
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
+            CanvaRobotSelection.transform.Find($"{parent_folder}/NameAlreadyExists").gameObject.SetActive(true);
+        }
+
+        void RaiseRobotIpCannotBeNull(bool modify)
+        {
+            ClearErrorMessage(modify);
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
+            CanvaRobotSelection.transform.Find($"{parent_folder}/UidCannotBeNull").gameObject.SetActive(true);
+        }
+
+        void ClearErrorMessage(bool modify)
+        {
+            string parent_folder = modify == false ? "AddRobot" : "ModifyRobot";
+            CanvaRobotSelection.transform.Find($"{parent_folder}/UidCannotBeNull").gameObject.SetActive(false);
+            CanvaRobotSelection.transform.Find($"{parent_folder}/NameAlreadyExists").gameObject.SetActive(false);
+            CanvaRobotSelection.transform.Find($"{parent_folder}/UidAlreadyExists").gameObject.SetActive(false);
         }
 
         void AskRobotDeletionConfirmation(RobotButtonInfo rbi)
         {
             robotToBeDeleted = rbi;
             OpenCloseDeleteRobot();
-            CanvaRobotSelection.transform.GetChild(2).GetChild(3).GetComponent<Text>().text = rbi.robot.uid;
+            CanvaRobotSelection.transform.Find("DeleteRobot/RobotUIDDeletion").GetComponent<Text>().text = rbi.robot.uid;
         }
 
         public void DeleteRobot()
@@ -195,22 +340,49 @@ namespace TeleopReachy
         {
             robotToBeModified = rbi;
             OpenCloseModifyRobot();
-            CanvaRobotSelection.transform.GetChild(3).GetChild(5).GetComponent<InputField>().text = robotToBeModified.robot.uid;
-            CanvaRobotSelection.transform.GetChild(3).GetChild(6).GetComponent<InputField>().text = robotToBeModified.robot.ip;
+            CanvaRobotSelection.transform.Find("ModifyRobot/RobotNameInputField").GetComponent<InputField>().text = robotToBeModified.robot.uid;
+            CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text = robotToBeModified.robot.ip;
         }
 
         public void ModifyRobot()
         {
+        
             Robot newRobot = robotsList.Find(r => r.uid == robotToBeModified.robot.uid);
 
-            string ip = CanvaRobotSelection.transform.GetChild(3).GetChild(6).GetComponent<InputField>().text.Trim();
+            string ip = CanvaRobotSelection.transform.Find("ModifyRobot/LocationInputField").GetComponent<InputField>().text.Trim();
+            
+            //check the IP is valid
             if (!IPUtils.IsIPValid(ip))
             {
-                RaiseRobotIpCannotBeNullModify();
+                RaiseRobotIpCannotBeNull(true);
                 return;
             }
+
+            //get the list of all the robots except the modified one
+            var otherRobots = robotsList.Where(robot => robot.uid != newRobot.uid);
+
+            //check the IP is not already in the list
+            foreach (Robot robot in otherRobots)
+            {
+                if (robot.ip == ip)
+                {
+                    RaiseRobotIPAlreadyExists(true);                    
+                    return;
+                }
+            }
+
             newRobot.ip = ip;
-            string uid = CanvaRobotSelection.transform.GetChild(3).GetChild(5).GetComponent<InputField>().text.Trim();
+
+            //check the name is not already in the list and set to unknow if nothing has been filled
+            string uid = CanvaRobotSelection.transform.Find("ModifyRobot/RobotNameInputField").GetComponent<InputField>().text.Trim();
+            foreach (Robot robot in otherRobots)
+            {
+                if (robot.uid == uid)
+                {
+                    RaiseRobotNameAlreadyExists(true);
+                    return;
+                }
+            }
             newRobot.uid = uid != "" ? uid : "@Reachy";
             robotToBeModified.button.GetComponent<RobotButtonManager>().SetRobot(newRobot);
 
@@ -247,8 +419,12 @@ namespace TeleopReachy
 
         public void OpenCloseSelectRobotMenu()
         {
+            Text buttonText = connectButton.GetComponentInChildren<Text>();
+            buttonText.text = "Connect";
             isRobotSelectionMenuOpen = !isRobotSelectionMenuOpen;
             CanvaRobotSelection.transform.GetChild(0).gameObject.SetActive(isRobotSelectionMenuOpen);
+            CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
+
             UpdateSelectRobotMenu();
         }
 
@@ -273,9 +449,9 @@ namespace TeleopReachy
 
             if (!isAddRobotMenuOpen)
             {
-                CanvaRobotSelection.transform.GetChild(1).GetChild(5).GetComponent<InputField>().text = "";
-                CanvaRobotSelection.transform.GetChild(1).GetChild(6).GetComponent<InputField>().text = "";
-                CanvaRobotSelection.transform.GetChild(1).GetChild(4).gameObject.SetActive(false);
+                CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text = "";
+                CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = "";
+                ClearErrorMessage(false);
             }
 
             CanvaRobotSelection.transform.GetChild(1).gameObject.SetActive(isAddRobotMenuOpen);
@@ -303,9 +479,9 @@ namespace TeleopReachy
 
             if (!isModifyRobotMenuOpen)
             {
-                CanvaRobotSelection.transform.GetChild(3).GetChild(5).GetComponent<InputField>().text = "";
-                CanvaRobotSelection.transform.GetChild(3).GetChild(6).GetComponent<InputField>().text = "";
-                CanvaRobotSelection.transform.GetChild(3).GetChild(4).gameObject.SetActive(false);
+                CanvaRobotSelection.transform.Find("AddRobot/RobotNameInputField").GetComponent<InputField>().text = "";
+                CanvaRobotSelection.transform.Find("AddRobot/LocationInputField").GetComponent<InputField>().text = "";
+                ClearErrorMessage(true);
             }
 
             CanvaRobotSelection.transform.GetChild(3).gameObject.SetActive(isModifyRobotMenuOpen);
