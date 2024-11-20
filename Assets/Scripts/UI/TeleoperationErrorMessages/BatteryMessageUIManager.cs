@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 namespace TeleopReachy
 {
@@ -7,6 +8,10 @@ namespace TeleopReachy
         private RobotErrorManager errorManager;
 
         private float previousBatteryLevel = 0;
+        private string textToDisplay;
+        private Color32 backgroundColor;
+
+        private Coroutine batteryWarningCoroutine;
 
         void Start()
         {
@@ -21,24 +26,38 @@ namespace TeleopReachy
 
         void WarningLowBattery(float batteryLevel)
         {
+            Debug.Log("Warning low battery");
             if (previousBatteryLevel == 0 || (previousBatteryLevel - batteryLevel > 0.2f))
             {
-                SetErrorBatteryMessage("Low battery", ColorsManager.error_black);
-                previousBatteryLevel = batteryLevel;
+                textToDisplay = "Low battery";
+                backgroundColor = ColorsManager.error_black;
+                StartBatteryCoroutine(batteryLevel);
             }
         }
 
         void ErrorLowBattery(float batteryLevel)
         {
-            SetErrorBatteryMessage("No battery", ColorsManager.error_red);
-            previousBatteryLevel = batteryLevel;
+            Debug.Log("Error low battery");
+            textToDisplay = "No battery";
+            backgroundColor = ColorsManager.error_red;
+            StartBatteryCoroutine(batteryLevel);
         }
 
-        private void SetErrorBatteryMessage(string errorText, Color32 color)
+        private void StartBatteryCoroutine(float batteryLevel)
         {
-            textToDisplay = errorText;
-            backgroundColor = color;
+            previousBatteryLevel = batteryLevel;
+
+            if (batteryWarningCoroutine != null)
+            {
+                StopCoroutine(batteryWarningCoroutine);
+            }
+            batteryWarningCoroutine = StartCoroutine(SetErrorBatteryMessage());
+        }
+
+        private IEnumerator SetErrorBatteryMessage()
+        {
             ShowInfoMessage();
+            yield return new WaitForSeconds(30);
         }
     }
 }
