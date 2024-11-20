@@ -142,6 +142,8 @@ namespace TeleopReachy
             ResetPosition();
             initializationState = InitializationState.ReadyForTeleop;
             event_OnTeleopInitializationStepChanged.Invoke();
+            resetPositionButton.gameObject.SetActive(true);
+
         }
 
         protected void AbortTeleopInitialization()
