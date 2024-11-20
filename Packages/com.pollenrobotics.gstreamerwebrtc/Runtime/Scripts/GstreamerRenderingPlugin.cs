@@ -81,6 +81,7 @@ namespace GstreamerWebRTC
         const uint height = 720;
 
         public UnityEvent event_OnPipelineStarted;
+        public UnityEvent event_OnPipelineStopped;
 
         CommandBuffer _command = null;
 
@@ -99,6 +100,7 @@ namespace GstreamerWebRTC
             _signalling.event_OnRemotePeerLeft.AddListener(StopPipeline);
 
             event_OnPipelineStarted = new UnityEvent();
+            event_OnPipelineStopped = new UnityEvent();
             _command = new CommandBuffer();
 
             CreateDevice();
@@ -128,7 +130,7 @@ namespace GstreamerWebRTC
 
         void StartPipeline(string remote_peer_id)
         {
-            Debug.Log("start pipe " + remote_peer_id);
+            Debug.Log("start rendering pipe " + remote_peer_id);
             CreatePipeline(_signallingServerURL, remote_peer_id);
             event_OnPipelineStarted.Invoke();
             _started = true;
@@ -136,9 +138,9 @@ namespace GstreamerWebRTC
 
         void StopPipeline()
         {
-            Debug.Log("Stop");
             _started = false;
             DestroyPipeline();
+            event_OnPipelineStopped.Invoke();
             if (_autoreconnect)
                 Connect();
         }
