@@ -22,7 +22,7 @@ namespace TeleopReachy
 
         protected Color32 backgroundColor = ColorsManager.error_black;
 
-        protected void SetMinimumTimeDisplayed(int seconds)
+        protected virtual void SetMinimumTimeDisplayed(int seconds)
         {
             displayDuration = seconds;
         }
@@ -36,7 +36,7 @@ namespace TeleopReachy
                 infoText.text = textToDisplay;
                 if (infoBackground != null) infoBackground.color = backgroundColor;
                 infoPanelDisplay = StartCoroutine(HidePanelAfterSeconds(displayDuration, transform));
-
+                
                 needInfoPanelUpdate = false;
             }
         }

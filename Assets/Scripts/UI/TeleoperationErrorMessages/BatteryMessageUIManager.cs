@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 namespace TeleopReachy
 {
@@ -8,14 +7,10 @@ namespace TeleopReachy
         private RobotErrorManager errorManager;
 
         private float previousBatteryLevel = 0;
-        private string textToDisplay;
-        private Color32 backgroundColor;
-
-        private Coroutine batteryWarningCoroutine;
 
         void Start()
         {
-            SetOculusTargetOffset(new Vector3(0, -0.27f, 0.8f));
+            SetOculusTargetOffset(new Vector3(0, -0.40f, 0.8f));
 
             errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
@@ -26,38 +21,31 @@ namespace TeleopReachy
 
         void WarningLowBattery(float batteryLevel)
         {
-            Debug.Log("Warning low battery");
             if (previousBatteryLevel == 0 || (previousBatteryLevel - batteryLevel > 0.2f))
             {
-                textToDisplay = "Low battery";
-                backgroundColor = ColorsManager.error_black;
-                StartBatteryCoroutine(batteryLevel);
+                SetMinimumTimeDisplayed(15);
+                SetErrorBatteryMessage("Low battery", ColorsManager.error_black);
+                previousBatteryLevel = batteryLevel;
             }
         }
 
         void ErrorLowBattery(float batteryLevel)
         {
-            Debug.Log("Error low battery");
-            textToDisplay = "No battery";
-            backgroundColor = ColorsManager.error_red;
-            StartBatteryCoroutine(batteryLevel);
-        }
-
-        private void StartBatteryCoroutine(float batteryLevel)
-        {
+            SetMinimumTimeDisplayed(30);
+            SetErrorBatteryMessage("No battery", ColorsManager.error_red);
             previousBatteryLevel = batteryLevel;
-
-            if (batteryWarningCoroutine != null)
-            {
-                StopCoroutine(batteryWarningCoroutine);
-            }
-            batteryWarningCoroutine = StartCoroutine(SetErrorBatteryMessage());
         }
 
-        private IEnumerator SetErrorBatteryMessage()
+        private void SetErrorBatteryMessage(string errorText, Color32 color)
         {
+            textToDisplay = errorText;
+            backgroundColor = color;
             ShowInfoMessage();
-            yield return new WaitForSeconds(30);
+        }
+
+        protected override void SetMinimumTimeDisplayed(int seconds)
+        {
+            displayDuration = seconds;
         }
     }
 }
