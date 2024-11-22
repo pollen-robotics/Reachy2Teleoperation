@@ -73,7 +73,15 @@ namespace TeleopReachy
             CanvaConnectionSelection.transform.Find("ConnectionUI/ConnectButton/ConnectionError").gameObject.SetActive(false);
             if (has_robot_selected)
             {
-                StartCoroutine(ConnectToRobotCoroutine());
+                if (selectedRobot.ip == Robot.VIRTUAL_ROBOT_IP)
+                {
+                    PlayerPrefs.SetString("robot_ip", Robot.VIRTUAL_ROBOT_IP);
+                    PlayerPrefs.SetString("robot_info", Robot.VIRTUAL_ROBOT);
+                    EventManager.TriggerEvent(EventNames.QuitConnectionScene);
+                }
+                // If the robot isn't virtual, we check if it is reachable
+                else
+                    StartCoroutine(ConnectToRobotCoroutine());
             }
         }
         private IEnumerator ConnectToRobotCoroutine()
