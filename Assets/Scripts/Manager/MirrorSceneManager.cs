@@ -126,6 +126,7 @@ namespace TeleopReachy
                     indicatorTimer += Time.deltaTime;
                     if (indicatorTimer >= 1.0f)
                     {
+                        EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
                         EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
                     }
                 }
