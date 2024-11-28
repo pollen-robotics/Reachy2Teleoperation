@@ -49,8 +49,8 @@ namespace TeleopReachy
                 case ReachabilityError.WristLimit:
                     textToDisplay = "wrist limit reached";
                     break;
-                case ReachabilityError.ContinuityLimit:
-                    textToDisplay = "discontinuity issue";
+                case ReachabilityError.SingularityAvoidance:
+                    textToDisplay = "workspace limit reached";
                     break;
                 case ReachabilityError.Other:
                     textToDisplay = "elbow elevation limit reached";

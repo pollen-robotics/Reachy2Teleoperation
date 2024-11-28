@@ -75,9 +75,14 @@ namespace TeleopReachy
                 sum += Convert.ToInt32(obj);
             }
 
-            if(sum > ERROR_THRESHOLD)
+            if (sum > ERROR_THRESHOLD)
             {
-                event_Unreachable.Invoke(reachabilityError);
+                if (reachabilityError == ReachabilityError.DiscontinuityFreeze || 
+                reachabilityError == ReachabilityError.MultiturnFreeze || 
+                reachabilityError == ReachabilityError.DistanceLimit)
+                {
+                    event_Unreachable.Invoke(reachabilityError);
+                }
             }
         }
     }
