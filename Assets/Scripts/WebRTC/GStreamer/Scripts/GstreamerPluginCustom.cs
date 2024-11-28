@@ -35,6 +35,7 @@ namespace GstreamerWebRTC
             // screen.material.SetTexture("_RightTex", right);
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
+            renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
 
             renderingPlugin.Connect();
         }
@@ -43,7 +44,9 @@ namespace GstreamerWebRTC
         {
             dataPlugin = new GStreamerDataPlugin(ip_address);
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
+            dataPlugin.event_OnPipelineStopped.AddListener(PipelineDataStopped);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
+            GStreamerDataPlugin.event_OnChannelCommandOpen.AddListener(OnChannelCommandOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
             GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
@@ -64,6 +67,20 @@ namespace GstreamerWebRTC
             event_DataControllerStatusHasChanged.Invoke(true);
         }
 
+        override protected void PipelineStopped()
+        {
+            Debug.Log("Pipeline stopped");
+            event_OnVideoRoomStatusHasChanged.Invoke(false);
+            event_OnAudioReceiverRoomStatusHasChanged.Invoke(false);
+            event_AudioSenderStatusHasChanged.Invoke(false);
+        }
+
+        override protected void PipelineDataStopped()
+        {
+            Debug.Log("Pipeline data stopped");
+            event_DataControllerStatusHasChanged.Invoke(false);
+        }
+
         override protected void OnDisable()
         {
             event_OnVideoRoomStatusHasChanged.Invoke(false);
@@ -81,6 +98,12 @@ namespace GstreamerWebRTC
         public Texture GetRightTexture()
         {
             return right;
+        }
+
+        protected override void OnChannelCommandOpen()
+        {
+            Debug.Log("Pipeline data started Custom");
+            event_DataControllerStatusHasChanged.Invoke(true);
         }
 
         protected override void OnChannelServiceOpen()
@@ -130,8 +153,6 @@ namespace GstreamerWebRTC
 
         public void SendCommandMessage(AnyCommands commands)
         {
-            //Debug.Log("send command");
-            //if (_reachyCommandChannel != null) _reachyCommandChannel.Send(Google.Protobuf.MessageExtensions.ToByteArray(commands));
             SendCommandToChannel(Google.Protobuf.MessageExtensions.ToByteArray(commands));
         }
 

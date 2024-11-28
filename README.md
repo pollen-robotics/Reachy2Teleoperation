@@ -16,14 +16,14 @@ https://gstreamer.freedesktop.org/data/pkg/windows/1.24.0/msvc/gstreamer-1.0-msv
 
 For the Oculus Quest 2 or 3, you may ask to join the list of beta users to install the app directly from the app store. Please contact us on our [discord channel](https://discord.com/channels/519098054377340948/991321051835404409)!
 
-For Windows and Android platforms, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). The Windows package is a zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used. The Android package is an *.apk that should be installed on your device.
+For Windows and Android platforms, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). You can use the installer to install the application on your computer, as well as GStreamer, or download the zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used. The Android package is an *.apk that should be installed on your device.
 
 
 ### From source
 
-Clone the **main** branch of the repo. Make sure that git lfs is enabled. If you want to contribue to the project please see the *Issues/Contribution* section.
+Clone the **develop** branch of the repo. Make sure that Git LFS is enabled. If you want to contribue to the project please see the *Issues/Contribution* section.
 ```
-git clone -b main https://github.com/pollen-robotics/Reachy2Teleoperation.git
+git clone -b develop https://github.com/pollen-robotics/Reachy2Teleoperation.git
 ```
 
 Make sure you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your computer.
