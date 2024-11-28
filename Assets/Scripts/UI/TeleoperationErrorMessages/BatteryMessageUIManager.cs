@@ -15,6 +15,7 @@ namespace TeleopReachy
             errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
             errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
+            errorManager.event_OnNormalBattery.AddListener(NormalBattery);
 
             HideInfoMessage();
         }
@@ -33,6 +34,13 @@ namespace TeleopReachy
         {
             SetMinimumTimeDisplayed(30);
             SetErrorBatteryMessage("No battery", ColorsManager.error_red);
+            previousBatteryLevel = batteryLevel;
+        }
+
+        void NormalBattery(float batteryLevel)
+        {
+            SetMinimumTimeDisplayed(3);
+            SetErrorBatteryMessage("Battery OK", ColorsManager.error_black);
             previousBatteryLevel = batteryLevel;
         }
 
