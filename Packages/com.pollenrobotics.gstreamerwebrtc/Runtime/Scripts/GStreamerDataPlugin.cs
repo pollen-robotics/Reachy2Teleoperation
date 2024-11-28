@@ -85,6 +85,14 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
+        static extern void RegisterChannelCommandOpenCallback(channelCommandOpenCallback cb);
+        delegate void channelCommandOpenCallback();
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
         static extern void RegisterChannelServiceDataCallback(channelServiceDataCallback cb);
         delegate void channelServiceDataCallback(IntPtr data, int size_data);
 
@@ -111,25 +119,26 @@ namespace GstreamerWebRTC
         public string remote_producer_name = "grpc_webrtc_bridge";
 
         public UnityEvent event_OnPipelineStarted;
+        public UnityEvent event_OnPipelineStopped;
 
         private static UnityEvent<string> event_OnSDPAnswer;
 
         private static UnityEvent<string, int> event_OnICE;
         public static UnityEvent event_OnChannelServiceOpen;
+        public static UnityEvent event_OnChannelCommandOpen;
         public static UnityEvent<byte[]> event_OnChannelServiceData;
         public static UnityEvent<byte[]> event_OnChannelStateData;
         public static UnityEvent<byte[]> event_OnChannelAuditData;
 
-        //private bool _started = false;
         private bool _autoreconnect = false;
 
         public GStreamerDataPlugin(string ip_address)
         {
-            //_started = false;
             _autoreconnect = true;
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
+            RegisterChannelCommandOpenCallback(OnChannelCommandOpenCallback);
             RegisterChannelServiceDataCallback(OnChannelServiceDataCallback);
             RegisterChannelStateDataCallback(OnChannelStateDataCallback);
             RegisterChannelAuditDataCallback(OnChannelAuditDataCallback);
@@ -144,6 +153,7 @@ namespace GstreamerWebRTC
             _signalling.event_OnICECandidate.AddListener(OnReceivedICE);
 
             event_OnPipelineStarted = new UnityEvent();
+            event_OnPipelineStopped = new UnityEvent();
 
             event_OnSDPAnswer = new UnityEvent<string>();
             event_OnSDPAnswer.AddListener(SendSDPAnswer);
@@ -152,6 +162,7 @@ namespace GstreamerWebRTC
             event_OnICE.AddListener(OnICE);
 
             event_OnChannelServiceOpen = new UnityEvent();
+            event_OnChannelCommandOpen = new UnityEvent();
             event_OnChannelServiceData = new UnityEvent<byte[]>();
             event_OnChannelStateData = new UnityEvent<byte[]>();
             event_OnChannelAuditData = new UnityEvent<byte[]>();
@@ -164,15 +175,14 @@ namespace GstreamerWebRTC
 
         void StartPipeline(string remote_peer_id)
         {
-            Debug.Log("start pipe " + remote_peer_id);
+            Debug.Log("start data pipe " + remote_peer_id);
             CreateDataPipeline();
             event_OnPipelineStarted.Invoke();
-            // _started = true;
         }
 
         void StopPipeline()
         {
-            // _started = false;
+            event_OnPipelineStopped.Invoke();
             if (_autoreconnect)
                 Connect();
         }
@@ -224,6 +234,12 @@ namespace GstreamerWebRTC
         static void OnChannelServiceOpenCallback()
         {
             event_OnChannelServiceOpen.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(channelCommandOpenCallback))]
+        static void OnChannelCommandOpenCallback()
+        {
+            event_OnChannelCommandOpen.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(channelServiceDataCallback))]
