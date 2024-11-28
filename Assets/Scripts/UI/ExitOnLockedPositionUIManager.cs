@@ -34,7 +34,7 @@ namespace TeleopReachy
             if (rotateLoader != null) StopCoroutine(rotateLoader);
         }
 
-        void QuitTransitionRoom()
+        public void QuitTransitionRoom()
         {
             beforeValidateElements.SetActive(false);
             afterValidateElements.SetActive(true);
