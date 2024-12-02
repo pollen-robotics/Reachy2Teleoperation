@@ -233,7 +233,7 @@ namespace GstreamerWebRTC
 
         public void Close()
         {
-            Debug.Log("Close signalling");
+            Debug.Log("Close signalling 1");
             tasks_running = false;
             sessionStatus = SessionStatus.Ended;
             //webSocket.Close();

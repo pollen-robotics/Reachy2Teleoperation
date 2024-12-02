@@ -98,10 +98,13 @@ namespace TeleopReachy
                 menuWarningLockPosition.GetComponent<ExitOnLockedPositionUIManager>().QuitTransitionRoom();
                 TeleoperationManager.Instance.AskForRobotSmoothlyCompliant();
                 RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(BackToConnectionScene);
+                Debug.Log("[MirrorSceneManager] SetRobotCompliantBeforeQuittingScene + AskForRobotSmoothlyCompliant");
             }
             else
             {
+                Debug.Log("[MirrorSceneManager] SetRobotCompliantBeforeQuittingScene + BackToConnectionScene");
                 BackToConnectionScene();
+
             }
         }
 
@@ -170,6 +173,7 @@ namespace TeleopReachy
 
         protected void BackToConnectionScene()
         {
+            Debug.Log("[MirrorSceneManager] Back to connection scene + event ReinitalizeLimits");
             EventManager.TriggerEvent(EventNames.OnReinitializeLimitsRequested);
         }
     }

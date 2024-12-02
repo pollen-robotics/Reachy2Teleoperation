@@ -43,16 +43,21 @@ namespace TeleopReachy
         private void UnloadRobotDataScene()
         {
             SceneManager.UnloadSceneAsync("RobotDataScene");
+            Debug.Log("[ScenesManager] Function UnloadRobotDataScene done"); 
         }
 
         private void LoadConnectionSceneEndUnloadMirrorScene()
         {
+            Debug.Log("[ScenesManager] LoadConnectionSceneEndUnloadMirrorScene");
             if(SceneManager.GetSceneByName("RobotDataScene").isLoaded)
             {
+                Debug.Log("[ScenesManager] Unloading RobotDataScene");
                 UnloadRobotDataScene();
+                Debug.Log("[ScenesManager] Unloading MirrorScene");
                 UnloadMirrorScene();
             }
             LoadConnectionScene();
+            Debug.Log("[ScenesManager] Connection Scene loading");
         }
 
         private void LoadConnectionScene()
@@ -62,6 +67,7 @@ namespace TeleopReachy
             userInput.SetActive(false);
             userTracker.SetActive(false);
             SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
+            Debug.Log("Connection Scene loaded");
         }
 
         private void UnloadConnectionSceneAndLoadMirrorScene()
@@ -101,6 +107,7 @@ namespace TeleopReachy
         private void UnloadMirrorScene()
         {
             SceneManager.UnloadSceneAsync("MirrorScene");
+            Debug.Log("[ScenesManager] Function UnloadMirrorScene done");
             ground.SetActive(false);
         }
 

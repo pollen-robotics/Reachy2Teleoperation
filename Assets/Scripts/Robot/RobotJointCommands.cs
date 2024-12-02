@@ -473,7 +473,9 @@ namespace TeleopReachy
             }
             
             ReinitializeLimits();
+            Debug.Log("[RobotJointCommands]: Trigger event EnterConnectionScene");
             EventManager.TriggerEvent(EventNames.EnterConnectionScene);
+
         }
 
         private void ReinitializeLimits()
@@ -487,6 +489,7 @@ namespace TeleopReachy
             ModifyHeadSpeedLimit(max_limit);
             ModifyArmSpeedLimit(max_limit);
             robotStatus.SetMotorsSpeedLimited(false);
+            Debug.Log("[RobotJointCommands]: ReinitializeLimits done");
 
         }
     }
