@@ -10,7 +10,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            versionText.text = introText + Application.version;
+            versionText.text = introText + Application.version + "\n Running on " + SystemInfo.graphicsDeviceName;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace TeleopReachy
 {
     public class TeleoperationManager : Singleton<TeleoperationManager>
     {
-        private ConnectionStatus connectionStatus;
         private RobotConfig robotConfig;
         private RobotStatus robotStatus;
         private RobotJointCommands jointsCommands;
@@ -57,9 +56,6 @@ namespace TeleopReachy
 
         void InitRobotData()
         {
-            connectionStatus = ConnectionStatus.Instance;
-            connectionStatus.event_OnRobotReady.AddListener(ReadyForTeleop);
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
             jointsCommands = RobotDataManager.Instance.RobotJointCommands;
@@ -99,11 +95,6 @@ namespace TeleopReachy
             {
                 event_OnTriedToSendMobilityCommands.Invoke();
             }
-        }
-
-        void ReadyForTeleop()
-        {
-            EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
         }
 
         void StartTeleoperation()
