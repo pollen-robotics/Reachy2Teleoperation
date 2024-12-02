@@ -86,14 +86,23 @@ namespace TeleopReachy
 
         private void CheckIfLockedBeforeQuittingScene()
         {
-            if (!robotStatus.IsRobotPositionLocked) BackToConnectionScene();
+            if (!robotStatus.IsRobotPositionLocked) SetRobotCompliantBeforeQuittingScene();
             else menuWarningLockPosition.ActivateChildren(true);
         }
 
         private void SetRobotCompliantBeforeQuittingScene()
         {
-            TeleoperationManager.Instance.AskForRobotSmoothlyCompliant();
-            RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(BackToConnectionScene);
+            if (!robotStatus.IsRobotCompliant())
+            {
+                menuWarningLockPosition.ActivateChildren(true);
+                menuWarningLockPosition.GetComponent<ExitOnLockedPositionUIManager>().QuitTransitionRoom();
+                TeleoperationManager.Instance.AskForRobotSmoothlyCompliant();
+                RobotDataManager.Instance.RobotStatus.event_OnRobotFullyCompliant.AddListener(BackToConnectionScene);
+            }
+            else
+            {
+                BackToConnectionScene();
+            }
         }
 
         public void ResetPosition()
@@ -126,6 +135,7 @@ namespace TeleopReachy
                     indicatorTimer += Time.deltaTime;
                     if (indicatorTimer >= 1.0f)
                     {
+                        EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
                         EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
                     }
                 }
@@ -142,6 +152,8 @@ namespace TeleopReachy
             ResetPosition();
             initializationState = InitializationState.ReadyForTeleop;
             event_OnTeleopInitializationStepChanged.Invoke();
+            resetPositionButton.gameObject.SetActive(true);
+
         }
 
         protected void AbortTeleopInitialization()
@@ -158,7 +170,7 @@ namespace TeleopReachy
 
         protected void BackToConnectionScene()
         {
-            EventManager.TriggerEvent(EventNames.EnterConnectionScene);
+            EventManager.TriggerEvent(EventNames.OnReinitializeLimitsRequested);
         }
     }
 }

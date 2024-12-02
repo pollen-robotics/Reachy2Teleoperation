@@ -8,7 +8,7 @@ namespace TeleopReachy
     {
         private bool areRobotMovementsSuspended;
 
-        private bool isRobotCompliant;
+        private bool isRobotCompliant= true;
 
         // Parts are "On" if operators want to have control on it, false otherwise
         private bool isMobileBaseOn = true;

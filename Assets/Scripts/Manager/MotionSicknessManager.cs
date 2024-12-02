@@ -40,7 +40,6 @@ namespace TeleopReachy
             IsReducedScreenOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen);
 
             controllers = ControllersManager.Instance;
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
 
@@ -49,9 +48,10 @@ namespace TeleopReachy
 
         void ActivateDeactivateTunnelling(bool value)
         {
-            mobilityFakeMovement.AskForFakeStaticMovement(!RequestNavigationEffect && IsTunnellingOnClickOn);
             GameObject camera = GameObject.Find("Main Camera");
             camera.transform.GetComponent<TunnellingMobile>().enabled = value;
+            mobilityFakeMovement.SetClickMode(IsTunnellingOnClickOn);
+            mobilityFakeMovement.SetNavigationMode(IsTunnellingAutoOn);
         }
 
         void InitOnDemandRequest()
