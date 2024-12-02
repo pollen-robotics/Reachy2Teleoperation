@@ -138,16 +138,21 @@ namespace GstreamerWebRTC
 
         void StopPipeline()
         {
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + " [GsrteamerRenderingPlugin] : StopPipeline start");
             _started = false;
             DestroyPipeline();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + " [GsrteamerRenderingPlugin]: StopPipeline 1");
             event_OnPipelineStopped.Invoke();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + " [GsrteamerRenderingPlugin] : StopPipeline 2");
             if (_autoreconnect)
                 Connect();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + " [GsrteamerRenderingPlugin] : StopPipeline end");
+        }
         }
 
         public void Cleanup()
         {
-            Debug.Log("Cleanup");
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + "[GsrteamerRenderingPlugin] Cleanup");
 
             _autoreconnect = false;
             _signalling.Close();

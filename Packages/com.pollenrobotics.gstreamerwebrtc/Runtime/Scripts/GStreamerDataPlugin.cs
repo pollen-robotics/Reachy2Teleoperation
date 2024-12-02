@@ -209,9 +209,13 @@ namespace GstreamerWebRTC
 
         public void Cleanup()
         {
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + "[GStreamerDataPlugin] Cleanup");
             _signalling.Close();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + "[GStreamerDataPlugin] Cleanup 1");
             _signalling.RequestStop();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + "[GStreamerDataPlugin] Cleanup 2");
             DestroyDataPipeline();
+            Debug.Log(System.DateTime.Now.ToString("HH:mm:ss.fff") + "[GStreamerDataPlugin] Cleanup end");
         }
 
         [MonoPInvokeCallback(typeof(iceCallback))]
