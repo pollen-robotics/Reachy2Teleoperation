@@ -1,0 +1,3 @@
+[submodule "Assets/Scripts/reachy2-sdk-api"]
+	path = Assets/Scripts/reachy2-sdk-api
+	url = https://github.com/pollen-robotics/reachy2-sdk-api.git
