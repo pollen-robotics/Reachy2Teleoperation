@@ -24,10 +24,12 @@ namespace TeleopReachy
 
         void Start()
         {
-            SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
+            if (armSide == Arm.Left) SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
+            else SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
+            
 
             reachabilityManager = RobotDataManager.Instance.RobotReachabilityManager;
-            if(armSide == Arm.Left) reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleReachabilityError);
+            if (armSide == Arm.Left) reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleReachabilityError);
             else reachabilityManager.event_OnRArmPositionUnreachable.AddListener(HandleReachabilityError);
 
             HideInfoMessage();

@@ -23,6 +23,7 @@ namespace TeleopReachy
 
         public UnityEvent<ReachabilityError> event_OnLArmPositionUnreachable;
         public UnityEvent<ReachabilityError> event_OnRArmPositionUnreachable;
+        public UnityEvent<ReachabilityError> event_OnArmIKFreeze;
 
         void Start()
         {
@@ -77,11 +78,15 @@ namespace TeleopReachy
 
             if (sum > ERROR_THRESHOLD)
             {
-                if (reachabilityError == ReachabilityError.DiscontinuityFreeze || 
-                reachabilityError == ReachabilityError.MultiturnFreeze || 
-                reachabilityError == ReachabilityError.DistanceLimit)
+                if (reachabilityError == ReachabilityError.DistanceLimit)
                 {
                     event_Unreachable.Invoke(reachabilityError);
+                }
+
+                if (reachabilityError == ReachabilityError.DiscontinuityFreeze || 
+                reachabilityError == ReachabilityError.MultiturnFreeze)
+                {
+                    event_OnArmIKFreeze.Invoke(reachabilityError);
                 }
             }
         }
