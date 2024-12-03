@@ -258,6 +258,12 @@ MonoBehaviour:
   leftRawImage: {fileID: 0}
   rightRawImage: {fileID: 0}
   ip_address: 
+  event_OnPipelineRenderingRunning:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnPipelineDataRunning:
+    m_PersistentCalls:
+      m_Calls: []
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -307,6 +313,7 @@ GameObject:
   - component: {fileID: 3938323349784142751}
   - component: {fileID: 8646978543038228296}
   - component: {fileID: 8646978543038228295}
+  - component: {fileID: 8646978543038228298}
   m_Layer: 0
   m_Name: RobotDataManager
   m_TagString: Untagged
@@ -490,6 +497,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a16f810e14635f0428aa3a18904f3793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8646978543038228298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934711108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c0d352f00f1ba4485806d01304f456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
