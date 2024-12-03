@@ -49,7 +49,7 @@ namespace TeleopReachy
                 if (UserSize.Instance.UserArmSize == 0)
                 {
                     Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
-                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height);
+                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
 
                     rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
                 }
@@ -58,7 +58,7 @@ namespace TeleopReachy
                     Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
                     right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                     right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
-                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height);
+                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height / 100);
 
                     rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
                 }
@@ -79,7 +79,7 @@ namespace TeleopReachy
                 if (UserSize.Instance.UserArmSize == 0)
                 {
                     Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
-                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height);
+                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
 
                     leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
                 }
@@ -88,7 +88,7 @@ namespace TeleopReachy
                     Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
                     left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                     left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
-                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height);
+                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height / 100);
 
                     leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
                 }
