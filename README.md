@@ -21,9 +21,9 @@ For Windows and Android platforms, the simplest way to use the application is to
 
 ### From source
 
-Clone the **develop** branch of the repo. Make sure that Git LFS is enabled. If you want to contribue to the project please see the *Issues/Contribution* section.
+Clone the **master** branch of the repo. Make sure that git lfs is enabled. If you want to contribue to the project please see the *Issues/Contribution* section.
 ```
-git clone -b develop https://github.com/pollen-robotics/Reachy2Teleoperation.git
+git clone --recurse-submodules -b master https://github.com/pollen-robotics/Reachy2Teleoperation.git
 ```
 
 Make sure you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your computer.
