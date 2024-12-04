@@ -20,7 +20,7 @@ namespace TeleopReachy
 
         public void IncrementValue()
         {
-            tableHeightSlider.value += 0.01f;
+            tableHeightSlider.value += 1.0f;
             if (tableHeightSlider.value > tableHeightSlider.maxValue)
                 tableHeightSlider.value = tableHeightSlider.maxValue;
             TableHeight.Instance.UpdateTableHeight(tableHeightSlider.value);
@@ -28,7 +28,7 @@ namespace TeleopReachy
 
         public void DecrementValue()
         {
-            tableHeightSlider.value -= 0.01f;
+            tableHeightSlider.value -= 1.0f;
             if (tableHeightSlider.value < tableHeightSlider.minValue)
                 tableHeightSlider.value = tableHeightSlider.minValue;
             TableHeight.Instance.UpdateTableHeight(tableHeightSlider.value);

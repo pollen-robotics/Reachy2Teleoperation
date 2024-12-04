@@ -20,6 +20,9 @@ namespace TeleopReachy
         private float reachyArmSize = 0.6375f;
         private float reachyShoulderWidth = 0.19f;
 
+        private bool reducedLeftTorque = false;
+        private bool reducedRightTorque = false;
+
         private void OnEnable()
         {
             headTracker = UserTrackerManager.Instance.HeadTracker;
@@ -49,6 +52,16 @@ namespace TeleopReachy
                 if (UserSize.Instance.UserArmSize == 0)
                 {
                     Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
+                    if (right_target_pos_calibrated.Data[11] < -TableHeight.Instance.Height / 100 && !reducedRightTorque)
+                    {
+                        reducedRightTorque = true;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyRightArmTorqueLimit(30);
+                    }
+                    if (right_target_pos_calibrated.Data[11] > -TableHeight.Instance.Height / 100 && reducedRightTorque)
+                    {
+                        reducedRightTorque = false;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyRightArmTorqueLimit(100);
+                    }
                     right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
 
                     rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
@@ -79,6 +92,16 @@ namespace TeleopReachy
                 if (UserSize.Instance.UserArmSize == 0)
                 {
                     Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
+                    if (left_target_pos_calibrated.Data[11] < -TableHeight.Instance.Height / 100 && !reducedLeftTorque)
+                    {
+                        reducedLeftTorque = true;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyLeftArmTorqueLimit(30);
+                    }
+                    if (left_target_pos_calibrated.Data[11] > -TableHeight.Instance.Height / 100 && reducedLeftTorque)
+                    {
+                        reducedLeftTorque = false;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyLeftArmTorqueLimit(100);
+                    }
                     left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
 
                     leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
