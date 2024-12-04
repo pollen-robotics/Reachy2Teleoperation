@@ -62,8 +62,10 @@ namespace TeleopReachy
                         reducedRightTorque = false;
                         RobotDataManager.Instance.RobotJointCommands.ModifyRightArmTorqueLimit(100);
                     }
-                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
-
+                    if (TableHeight.Instance.SafetyActivated)
+                    {
+                        right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
+                    }
                     rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
                 }
                 else
@@ -102,8 +104,10 @@ namespace TeleopReachy
                         reducedLeftTorque = false;
                         RobotDataManager.Instance.RobotJointCommands.ModifyLeftArmTorqueLimit(100);
                     }
-                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
-
+                    if (TableHeight.Instance.SafetyActivated)
+                    {
+                        left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
+                    }
                     leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
                 }
                 else
