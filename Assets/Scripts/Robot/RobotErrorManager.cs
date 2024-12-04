@@ -16,7 +16,8 @@ namespace TeleopReachy
 
         //private Queue<float> pingsQueue;
         //private const int PINGS_QUEUE_SIZE = 20;
-        private const float THRESHOLD_WARNING_BATTERY_LEVEL = 24.5f;
+        private const float THRESHOLD_NORMAL_BATTERY_LEVEL = 25.5f;
+        private const float THRESHOLD_WARNING_BATTERY_LEVEL = 25.0f;
         private const float THRESHOLD_ERROR_BATTERY_LEVEL = 23.1f;
         //private const float FPS_MINIMUM = 15f;
         public const float THRESHOLD_ERROR_MOTOR_TEMPERATURE = 54.0f;
@@ -24,6 +25,7 @@ namespace TeleopReachy
 
         public UnityEvent event_OnWarningHighLatency;
         public UnityEvent event_OnWarningUnstablePing;
+        public UnityEvent<float> event_OnNormalBattery;
         public UnityEvent<float> event_OnWarningLowBattery;
         public UnityEvent<float> event_OnErrorLowBattery;
         public UnityEvent<List<string>> event_OnWarningMotorsTemperatures;
@@ -31,6 +33,7 @@ namespace TeleopReachy
         public UnityEvent<Dictionary<string, string>> event_OnStatusError;
 
         public float previousBatteryLevel;
+        private bool isBatteryError;
 
         void Start()
         {
@@ -40,6 +43,7 @@ namespace TeleopReachy
             dataController.event_OnAuditUpdate.AddListener(CheckRobotStatus);
 
             robotPing = RobotDataManager.Instance.RobotPingWatcher;
+            isBatteryError = false;
             //pingsQueue = new Queue<float>();
         }
 
@@ -77,9 +81,20 @@ namespace TeleopReachy
         {
             previousBatteryLevel = batteryLevel;
             if (batteryLevel < THRESHOLD_ERROR_BATTERY_LEVEL)
+            {
                 event_OnErrorLowBattery.Invoke(batteryLevel);
+                isBatteryError = true;
+            }
             else if (batteryLevel < THRESHOLD_WARNING_BATTERY_LEVEL)
+            {
                 event_OnWarningLowBattery.Invoke(batteryLevel);
+                isBatteryError = true;
+            }
+            else if (batteryLevel > THRESHOLD_NORMAL_BATTERY_LEVEL && isBatteryError)
+            {
+                event_OnNormalBattery.Invoke(batteryLevel);
+                isBatteryError = false;
+            }
         }
 
         public void CheckBatteryStatus()
