@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3483,6 +3484,7 @@ MonoBehaviour:
   CanvaRobotSelection: {fileID: 509571141}
   CanvaConnectionSelection: {fileID: 325904303}
   prefabRobotButton: {fileID: 999428515826380098, guid: 9b195be28168bc741829e95a97057258, type: 3}
+  CanvaConnectionError: {fileID: 0}
   connectButton: {fileID: 1302906730}
   selectRobotButton: {fileID: 1475380335}
 --- !u!4 &1025611271
@@ -5128,8 +5130,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1516037251}
   - {fileID: 586015193}
+  - {fileID: 1516037251}
   m_Father: {fileID: 1084793229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
