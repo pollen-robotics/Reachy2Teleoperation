@@ -10,11 +10,12 @@ namespace TeleopReachy
 
         void Start()
         {
-            SetOculusTargetOffset(new Vector3(0, -0.27f, 0.8f));
+            SetOculusTargetOffset(new Vector3(0, -0.40f, 0.8f));
 
             errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningLowBattery.AddListener(WarningLowBattery);
             errorManager.event_OnErrorLowBattery.AddListener(ErrorLowBattery);
+            errorManager.event_OnNormalBattery.AddListener(NormalBattery);
 
             HideInfoMessage();
         }
@@ -23,6 +24,7 @@ namespace TeleopReachy
         {
             if (previousBatteryLevel == 0 || (previousBatteryLevel - batteryLevel > 0.2f))
             {
+                SetMinimumTimeDisplayed(15);
                 SetErrorBatteryMessage("Low battery", ColorsManager.error_black);
                 previousBatteryLevel = batteryLevel;
             }
@@ -30,7 +32,15 @@ namespace TeleopReachy
 
         void ErrorLowBattery(float batteryLevel)
         {
+            SetMinimumTimeDisplayed(30);
             SetErrorBatteryMessage("No battery", ColorsManager.error_red);
+            previousBatteryLevel = batteryLevel;
+        }
+
+        void NormalBattery(float batteryLevel)
+        {
+            SetMinimumTimeDisplayed(3);
+            SetErrorBatteryMessage("Battery OK", ColorsManager.error_black);
             previousBatteryLevel = batteryLevel;
         }
 
@@ -39,6 +49,11 @@ namespace TeleopReachy
             textToDisplay = errorText;
             backgroundColor = color;
             ShowInfoMessage();
+        }
+
+        protected override void SetMinimumTimeDisplayed(int seconds)
+        {
+            displayDuration = seconds;
         }
     }
 }
