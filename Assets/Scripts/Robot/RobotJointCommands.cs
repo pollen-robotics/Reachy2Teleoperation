@@ -419,11 +419,13 @@ namespace TeleopReachy
             if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
             {
                 lArmZeroPose.Id = robotConfig.partsId["l_arm"];
+                lArmZeroPose.ContinuousMode = IKContinuousMode.Unfreeze;
                 dataController.SendArmCommand(lArmZeroPose);
             }
             if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
             {
                 rArmZeroPose.Id = robotConfig.partsId["r_arm"];
+                rArmZeroPose.ContinuousMode = IKContinuousMode.Unfreeze;
                 dataController.SendArmCommand(rArmZeroPose);
             }
         }
