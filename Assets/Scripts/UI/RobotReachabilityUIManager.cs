@@ -10,7 +10,7 @@ using UnityEngine.Events;
 
 namespace TeleopReachy
 {
-    public class RobotReachabilityUIManager : InformationalPanel
+    public class RobotReachabilityUIManager : MonoBehaviour
     {
         private enum Arm
         {
@@ -20,14 +20,58 @@ namespace TeleopReachy
         [SerializeField]
         private Arm armSide;
 
+        [SerializeField]
+        protected Text infoText;
+
+        protected Coroutine infoPanelDisplay;
+
+        protected bool needInfoPanelUpdate;
+
+        protected string textToDisplay;
+
+        protected int displayDuration = 3;
+
+        protected Color32 backgroundColor = ColorsManager.error_black;
+
+        protected void SetMinimumTimeDisplayed(int seconds)
+        {
+            displayDuration = seconds;
+        }
+
+        protected virtual void Update()
+        {
+            if (needInfoPanelUpdate)
+            {
+                if (infoPanelDisplay != null) StopCoroutine(infoPanelDisplay);
+                transform.ActivateChildren(true);
+                infoText.text = textToDisplay;
+                infoPanelDisplay = StartCoroutine(HidePanelAfterSeconds(displayDuration, transform));
+
+                needInfoPanelUpdate = false;
+            }
+        }
+
+        protected virtual void ShowInfoMessage()
+        {
+            needInfoPanelUpdate = true;
+        }
+
+        protected virtual void HideInfoMessage()
+        {
+            if (infoPanelDisplay != null) StopCoroutine(infoPanelDisplay);
+            transform.ActivateChildren(false);
+        }
+
+        IEnumerator HidePanelAfterSeconds(int seconds, Transform masterPanel)
+        {
+            yield return new WaitForSeconds(seconds);
+            masterPanel.ActivateChildren(false);
+        }
+
         private RobotReachabilityManager reachabilityManager;
 
         void Start()
         {
-            if (armSide == Arm.Left) SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
-            else SetOculusTargetOffset(new Vector3(0, 0f, 0.5f));
-            
-
             reachabilityManager = RobotDataManager.Instance.RobotReachabilityManager;
             if (armSide == Arm.Left) reachabilityManager.event_OnLArmPositionUnreachable.AddListener(HandleReachabilityError);
             else reachabilityManager.event_OnRArmPositionUnreachable.AddListener(HandleReachabilityError);
