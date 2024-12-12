@@ -38,7 +38,7 @@ namespace TeleopReachy
             {
                 if (!connectionStatus.IsRobotInVideoRoom())
                 {
-                    textToDisplay = "Robot services have been disconnected";
+                    textToDisplay = "You have been disconnected from the robot";
                 }
                 else
                 {
