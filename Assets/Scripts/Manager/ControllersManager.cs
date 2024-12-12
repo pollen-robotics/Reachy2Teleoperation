@@ -22,6 +22,9 @@ namespace TeleopReachy
         public SupportedDevices controllerDeviceType;
         public SupportedDevices headsetType;
 
+        private bool rightHandDeviceIsTracked;
+        private bool leftHandDeviceIsTracked;
+
         public UnityEvent event_OnDevicesUpdate;
 
         void Start()
@@ -29,6 +32,8 @@ namespace TeleopReachy
             UpdateDevicesList();
 
             UnityEngine.XR.InputDevices.deviceConnected += UpdateDevicesList;
+            rightHandDeviceIsTracked = false;
+            leftHandDeviceIsTracked = false;
         }
 
         private void UpdateDevicesList(UnityEngine.XR.InputDevice device)
@@ -74,6 +79,32 @@ namespace TeleopReachy
             }
 
             event_OnDevicesUpdate.Invoke();
+        }
+
+        private void Update()
+        {
+            if (rightHandDevice != null)
+            {
+                if (rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool isTracked))
+                {
+                    Debug.LogError($"right hand isTracked: {isTracked}");
+                }
+                else
+                {
+                    Debug.LogWarning($"right hand tracking state not available.");
+                }
+            }
+            if (leftHandDevice != null)
+            {
+                if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool isTracked))
+                {
+                    Debug.LogError($"right hand isTracked: {isTracked}");
+                }
+                else
+                {
+                    Debug.LogWarning($"right hand tracking state not available.");
+                }
+            }
         }
     }
 }
