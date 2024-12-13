@@ -24,6 +24,10 @@ namespace TeleopReachy
         HideXRay,
         HeadsetRemoved,
         HeadsetReset,
+        LeftControllerTrackingLost,
+        LeftControllerTrackingRetrieved,
+        RightControllerTrackingLost,
+        RightControllerTrackingRetrieved,
 
         OnStartTeleoperation,
         OnStartArmTeleoperation,

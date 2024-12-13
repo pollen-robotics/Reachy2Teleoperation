@@ -16,9 +16,13 @@ namespace TeleopReachy
 
         public Coroutine setSmoothCompliance;
         public Coroutine waitToSetRobotFullSpeed;
+        public Coroutine waitToSetLeftArmFullSpeed;
+        public Coroutine waitToSetRightArmFullSpeed;
 
         private ArmCartesianGoal lArmZeroPose;
         private ArmCartesianGoal rArmZeroPose;
+
+        private ControllersManager controllers;
 
         private TeleoperationManager teleoperationManager;
 
@@ -28,6 +32,7 @@ namespace TeleopReachy
             Init();
             dataController = DataMessageManager.Instance;
             connectionStatus = ConnectionStatus.Instance;
+            controllers = ControllersManager.Instance;
 
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTeleoperation);
             EventManager.StartListening(EventNames.OnStopTeleoperation, StopTeleoperation);
@@ -42,10 +47,17 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnRobotSmoothlyCompliantRequested, SetRobotSmoothlyCompliant);
             EventManager.StartListening(EventNames.OnRobotCompliantRequested, SetRobotCompliant);
 
+            EventManager.StartListening(EventNames.LeftControllerTrackingLost, ReduceLeftArmSpeed);
+            EventManager.StartListening(EventNames.LeftControllerTrackingRetrieved, ResetLeftArmSpeed);
+            EventManager.StartListening(EventNames.RightControllerTrackingLost, ReduceRightArmSpeed);
+            EventManager.StartListening(EventNames.RightControllerTrackingRetrieved, ResetRightArmSpeed);
+
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
             setSmoothCompliance = null;
             waitToSetRobotFullSpeed = null;
+            waitToSetLeftArmFullSpeed = null;
+            waitToSetRightArmFullSpeed = null;
 
             teleoperationManager = TeleoperationManager.Instance;
 
@@ -83,8 +95,8 @@ namespace TeleopReachy
 
         protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
-            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
-            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            if (controllers.leftHandDeviceIsTracked && robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+            if (controllers.rightHandDeviceIsTracked && robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
         }
 
         protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)
@@ -263,6 +275,14 @@ namespace TeleopReachy
             {
                 StopCoroutine(waitToSetRobotFullSpeed);
             }
+            if (waitToSetLeftArmFullSpeed != null)
+            {
+                StopCoroutine(waitToSetLeftArmFullSpeed);
+            }
+            if (waitToSetRightArmFullSpeed != null)
+            {
+                StopCoroutine(waitToSetRightArmFullSpeed);
+            }
             if (!robotStatus.IsRobotPositionLocked) SetRobotSmoothlyCompliant();
             ResetMotorsStartingSpeed();
         }
@@ -288,7 +308,7 @@ namespace TeleopReachy
             Debug.Log("[RobotJointCommands] ResetMotorsStartingSpeed");
             robotStatus.SetMotorsSpeedLimited(true);
             uint speedLimit = 10;
-            ModifyArmSpeedLimit(speedLimit);
+            ModifyArmSpeedLimit(speedLimit, false);
             ModifyHeadSpeedLimit(100);
         }
 
@@ -366,7 +386,42 @@ namespace TeleopReachy
             }
         }
 
-        private void ModifyArmSpeedLimit(uint speedLimit)
+        private void ResetLeftArmSpeed()
+        {
+            waitToSetLeftArmFullSpeed = StartCoroutine(ResetLeftArmFullSpeed());
+        }
+
+        private void ReduceLeftArmSpeed()
+        {
+            uint speedLimit = 10;
+            ModifyLeftArmSpeedLimit(speedLimit);
+        }
+
+        private void ResetRightArmSpeed()
+        {
+            waitToSetRightArmFullSpeed = StartCoroutine(ResetRightArmFullSpeed());
+        }
+
+        private void ReduceRightArmSpeed()
+        {
+            uint speedLimit = 10;
+            ModifyRightArmSpeedLimit(speedLimit);
+        }
+
+        private void ModifyRightArmSpeedLimit(uint speedLimit)
+        {
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
+                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
+                {
+                    Id = robotConfig.partsId["r_arm"],
+                    Limit = speedLimit,
+                };
+                dataController.SetArmSpeedLimit(speedRequest);
+            }
+        }
+
+        private void ModifyLeftArmSpeedLimit(uint speedLimit)
         {
             if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
             {
@@ -377,14 +432,19 @@ namespace TeleopReachy
                 };
                 dataController.SetArmSpeedLimit(speedRequest);
             }
-            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+        }
+
+        private void ModifyArmSpeedLimit(uint speedLimit, bool checkControllers=true)
+        {
+            if (checkControllers)
             {
-                Reachy.Part.Arm.SpeedLimitRequest speedRequest = new Reachy.Part.Arm.SpeedLimitRequest
-                {
-                    Id = robotConfig.partsId["r_arm"],
-                    Limit = speedLimit,
-                };
-                dataController.SetArmSpeedLimit(speedRequest);
+                if (controllers.leftHandDeviceIsTracked) ModifyLeftArmSpeedLimit(speedLimit);
+                if (controllers.rightHandDeviceIsTracked) ModifyRightArmSpeedLimit(speedLimit);
+            }
+            else
+            {
+                ModifyLeftArmSpeedLimit(speedLimit);
+                ModifyRightArmSpeedLimit(speedLimit);
             }
         }
 
@@ -440,6 +500,26 @@ namespace TeleopReachy
             robotStatus.SetMotorsSpeedLimited(false);
         }
 
+        private IEnumerator ResetLeftArmFullSpeed()
+        {
+            Debug.Log("[RobotJointCommands]: ResetLeftArmFullSpeed");
+            yield return new WaitForSeconds(4);
+
+            uint speedLimit = 100;
+            ModifyLeftArmSpeedLimit(speedLimit);
+            robotStatus.SetMotorsSpeedLimited(false);
+        }
+
+        private IEnumerator ResetRightArmFullSpeed()
+        {
+            Debug.Log("[RobotJointCommands]: ResetRightArmFullSpeed");
+            yield return new WaitForSeconds(4);
+
+            uint speedLimit = 100;
+            ModifyRightArmSpeedLimit(speedLimit);
+            robotStatus.SetMotorsSpeedLimited(false);
+        }
+
         void SuspendTeleoperation()
         {
             try
@@ -447,6 +527,14 @@ namespace TeleopReachy
                 if (waitToSetRobotFullSpeed != null)
                 {
                     StopCoroutine(waitToSetRobotFullSpeed);
+                }
+                if (waitToSetLeftArmFullSpeed != null)
+                {
+                    StopCoroutine(waitToSetLeftArmFullSpeed);
+                }
+                if (waitToSetRightArmFullSpeed != null)
+                {
+                    StopCoroutine(waitToSetRightArmFullSpeed);
                 }
                 ResetMotorsStartingSpeed();
                 if (setSmoothCompliance != null) StopCoroutine(setSmoothCompliance);
