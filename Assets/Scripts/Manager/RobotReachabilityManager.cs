@@ -32,6 +32,8 @@ namespace TeleopReachy
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
+            EventManager.StartListening(EventNames.OnStopTeleoperation, ReinitializeCounter);
+
             robotConfig.event_OnConfigChanged.AddListener(ReadyToCheckReachability);
             if (robotConfig.GotReachyConfig()) ReadyToCheckReachability();
         }
@@ -40,6 +42,13 @@ namespace TeleopReachy
         {
             dataController = DataMessageManager.Instance;
             dataController.event_OnStateUpdateReachability.AddListener(UpdateReachability);
+        }
+
+        private void ReinitializeCounter()
+        {
+            Debug.LogError("ReinitializeCounter");
+            lArmReachabilityCounter.Clear();
+            rArmReachabilityCounter.Clear();
         }
 
         private void UpdateReachability(Dictionary<int, List<ReachabilityAnswer>> reachabilityAnswer)
@@ -71,6 +80,7 @@ namespace TeleopReachy
         private void CheckReachability(Queue<bool> counter, ref UnityEvent<ReachabilityError> event_Unreachable, ref ReachabilityError reachabilityError)
         {
             int sum = 0;
+            Debug.LogError(counter.Count);
             foreach (bool obj in counter)
             {
                 sum += Convert.ToInt32(obj);
