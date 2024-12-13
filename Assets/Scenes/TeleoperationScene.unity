@@ -3860,7 +3860,7 @@ MonoBehaviour:
   m_MinAngleAllowed: 0.1
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
-  infoText: {fileID: 0}
+  infoText: {fileID: 304693569}
   infoBackground: {fileID: 0}
 --- !u!1 &1091350868
 GameObject:

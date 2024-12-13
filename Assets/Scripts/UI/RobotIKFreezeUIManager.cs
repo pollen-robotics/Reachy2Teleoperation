@@ -29,10 +29,10 @@ namespace TeleopReachy
             switch (error)
             {
                 case ReachabilityError.DiscontinuityFreeze:
-                    textToDisplay = "discontinuity detected";
+                    textToDisplay = "Safety stop: Arms are frozen due to a potential unexpected movement (discontinuity)";
                     break;
                 case ReachabilityError.MultiturnFreeze:
-                    textToDisplay = "multiturn command detected";
+                    textToDisplay = "Safety stop: Arms are frozen due to a potential unexpected movement (multiturn)";
                     break;
                 default:
                     textToDisplay = "pose cannot be reached";
