@@ -33,6 +33,8 @@ namespace TeleopReachy
         OnStartArmTeleoperation,
         OnStartMobileBaseTeleoperation,
         OnStopMobileBaseTeleoperation,
+        OnStartEmotionTeleoperation,
+        OnStopEmotionTeleoperation,
         OnStopTeleoperation,
         OnSuspendTeleoperation,
         OnResumeTeleoperation,
@@ -43,6 +45,9 @@ namespace TeleopReachy
         OnRobotCompliantRequested,
         OnRobotSmoothlyCompliantRequested,
         OnGraspingLock,
+
+        OnEmotionMode,
+        OnMobilityMode,
 
         OnEmergencyStop,
 

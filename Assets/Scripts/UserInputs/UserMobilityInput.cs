@@ -49,12 +49,7 @@ namespace TeleopReachy
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out mobileBaseRotation);
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out mobileBaseTranslation);
 
-            bool leftPrimaryButtonPressed;
-            bool rightPrimaryButtonPressed;
             bool rightSecondaryButtonPressed;
-
-            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
-            controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
 
             controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out rightSecondaryButtonPressed);
             if (controllers.controllerDeviceType == ControllersManager.SupportedDevices.HTCVive)
