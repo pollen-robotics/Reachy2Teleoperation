@@ -3631,11 +3631,10 @@ MonoBehaviour:
   m_MinAngleAllowed: 0.1
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
-  infoText: {fileID: 0}
+  infoText: {fileID: 1181464249}
   infoBackground: {fileID: 0}
   sadImage: {fileID: 2800000, guid: 1ad1ae9c1bd3cc14ca03672b0515c3af, type: 3}
   happyImage: {fileID: 2800000, guid: 378cff144e7fc2442aec1678ce4a5599, type: 3}
-  angryImage: {fileID: 2800000, guid: f9aa17d7fab40c04bb82a4d4f494fe94, type: 3}
   confusedImage: {fileID: 2800000, guid: 28e9450586afde34e9253d2f100e5598, type: 3}
   emoji: {fileID: 556633460}
 --- !u!222 &935331312

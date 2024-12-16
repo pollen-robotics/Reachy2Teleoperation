@@ -15,6 +15,13 @@ namespace TeleopReachy
 
         private UserMovementsInput userMovementsInput;
         private UserMobilityInput userMobilityInput;
+        private UserEmotionInput userEmotionInput;
+
+        private enum JoystickMode
+        {
+            Emotion, Mobility
+        }
+        private JoystickMode joystickMode;
 
         public bool IsRobotTeleoperationActive { get; private set; }
         public bool IsArmTeleoperationActive { get; private set; }
@@ -34,6 +41,7 @@ namespace TeleopReachy
             IsRobotTeleoperationActive = false;
             IsArmTeleoperationActive = false;
             IsMobileBaseTeleoperationActive = false;
+            joystickMode = JoystickMode.Mobility;
 
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartTeleoperation);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, InitUserInputs);
@@ -44,6 +52,8 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
             EventManager.StartListening(EventNames.OnStartMobileBaseTeleoperation, StartMobileBaseTeleoperation);
             EventManager.StartListening(EventNames.OnStopMobileBaseTeleoperation, StopMobileBaseTeleoperation);
+            EventManager.StartListening(EventNames.OnEmotionMode, ActivateEmotionMode);
+            EventManager.StartListening(EventNames.OnMobilityMode, ActivateMobilityMode);
 
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitRobotData);
         }
@@ -95,6 +105,18 @@ namespace TeleopReachy
             {
                 event_OnTriedToSendMobilityCommands.Invoke();
             }
+        }
+
+        private void ActivateEmotionMode()
+        {
+            joystickMode = JoystickMode.Emotion;
+            StopMobileBaseTeleoperation();
+        }
+
+        private void ActivateMobilityMode()
+        {
+            joystickMode = JoystickMode.Mobility;
+            StartMobileBaseTeleoperation();
         }
 
         void StartTeleoperation()

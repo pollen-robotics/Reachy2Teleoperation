@@ -97,6 +97,7 @@ namespace TeleopReachy
                 {
                     event_OnAskForTeleoperationMenu.Invoke();
                     EventManager.TriggerEvent(EventNames.OnStopMobileBaseTeleoperation);
+                    EventManager.TriggerEvent(EventNames.OnStopEmotionTeleoperation);
                     IsTeleoperationExitMenuActive = true;
                 }
             }
@@ -138,6 +139,7 @@ namespace TeleopReachy
                 {
                     CloseTeleoperationExitMenu();
                     EventManager.TriggerEvent(EventNames.OnStartMobileBaseTeleoperation);
+                    EventManager.TriggerEvent(EventNames.OnStartEmotionTeleoperation);
                 }
             }
         }
