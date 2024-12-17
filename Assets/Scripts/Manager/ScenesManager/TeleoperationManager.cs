@@ -62,6 +62,7 @@ namespace TeleopReachy
         {
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
+            userEmotionInput = UserInputManager.Instance.UserEmotionInput;
         }
 
         void InitRobotData()
@@ -110,12 +111,33 @@ namespace TeleopReachy
         private void ActivateEmotionMode()
         {
             joystickMode = JoystickMode.Emotion;
+            userEmotionInput.event_OnEmotionSelected.AddListener(PlayEmotion);
             StopMobileBaseTeleoperation();
+        }
+
+        private void PlayEmotion(Emotion emotion)
+        {
+            if(robotStatus != null && IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
+            {
+                switch (emotion)
+                {
+                    case Emotion.Sad:
+                        jointsCommands.ReachySad();
+                        break;
+                    case Emotion.Happy:
+                        jointsCommands.ReachyHappy();
+                        break;
+                    case Emotion.Confused:
+                        jointsCommands.ReachyConfused();
+                        break;
+                }
+            }
         }
 
         private void ActivateMobilityMode()
         {
             joystickMode = JoystickMode.Mobility;
+            userEmotionInput.event_OnEmotionSelected.RemoveListener(PlayEmotion);
             StartMobileBaseTeleoperation();
         }
 

@@ -22,6 +22,8 @@ namespace TeleopReachy
         [SerializeField]
         private RawImage emoji;
 
+        private RobotStatus robotStatus;
+
         private Dictionary<Emotion, Texture> emotionImages;
 
         private EmotionMenuManager emotionMenuManager;
@@ -40,8 +42,8 @@ namespace TeleopReachy
 
         void Init()
         {
-            emotionMenuManager = GameObject.Find("CanvaOnlineMenu").GetComponent<EmotionMenuManager>();
-            emotionMenuManager.event_OnAskEmotion.AddListener(ChooseEmotionAndShow);
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnEmotionStart.AddListener(ChooseEmotionAndShow);
         }
 
         protected override void Update()
@@ -50,8 +52,9 @@ namespace TeleopReachy
             base.Update();
         }
 
-        void ChooseEmotionAndShow(Emotion emotion)
+        void ChooseEmotionAndShow()
         {
+            Emotion emotion = UserInputManager.Instance.UserEmotionInput.GetSelectedEmotion();
             switch (emotion)
             {
                 case Emotion.Sad:
