@@ -61,7 +61,13 @@ namespace TeleopReachy
 
         protected virtual void ShowInfoMessage()
         {
-            needInfoPanelUpdate = true;
+            if (TeleoperationManager.Instance.IsArmTeleoperationActive &&
+                (((armSide == Arm.Left) && RobotDataManager.Instance.RobotStatus.IsLeftArmOn()) ||
+                ((armSide == Arm.Right) && RobotDataManager.Instance.RobotStatus.IsRightArmOn()))
+            )
+            {
+                needInfoPanelUpdate = true;
+            }
         }
 
         protected virtual void HideInfoMessage()
@@ -84,14 +90,22 @@ namespace TeleopReachy
             {
                 EventManager.StartListening(EventNames.LeftControllerTrackingLost, TrackingLost);
                 EventManager.StartListening(EventNames.LeftControllerTrackingRetrieved, TrackingRetrieved);
+                EventManager.StartListening(EventNames.OnStartArmTeleoperation, CheckTrackingState);
             }
             else
             {
                 EventManager.StartListening(EventNames.RightControllerTrackingLost, TrackingLost);
                 EventManager.StartListening(EventNames.RightControllerTrackingRetrieved, TrackingRetrieved);
+                EventManager.StartListening(EventNames.OnStartArmTeleoperation, CheckTrackingState);
             }
 
             HideInfoMessage();
+        }
+
+        private void CheckTrackingState()
+        {
+            if (armSide == Arm.Left && !ControllersManager.Instance.leftHandDeviceIsTracked) TrackingLost();
+            if (armSide == Arm.Right && !ControllersManager.Instance.rightHandDeviceIsTracked) TrackingLost();
         }
 
         private void TrackingLost()
