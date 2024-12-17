@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using Reachy.Part.Head;
 using Reachy.Part.Arm;
 using Reachy.Part.Hand;
 using Component.DynamixelMotor;
+using Component;
 
 
 namespace TeleopReachy
@@ -159,61 +162,37 @@ namespace TeleopReachy
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
 
-            await Task.Delay(5000);
+            float duration = 2.0f;
+            int sampleRate = 60; // 100 samples per second
+            int totalSteps = (int)(duration * sampleRate);
+            float[] t = Enumerable.Range(0, totalSteps)
+                                .Select(i => i / (float)sampleRate)
+                                .ToArray();
+            float[] positions = t.Select(time => (float)(10 * Math.Sin(2 * Math.PI * 5 * time))).ToArray();
 
-            // JointsCommand antennasCommand1 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(10) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(-10) },
-            //         }
-            // };
-            // JointsCommand antennasCommand2 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(-10) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(10) },
-            //         }
-            // };
+            try
+            {
+                foreach (var p in positions)
+                {
+                    DynamixelMotorsCommand currentCommands = new DynamixelMotorsCommand {
+                        Cmd = {
+                            new DynamixelMotorCommand { Id=new ComponentId { Name = "antenna_left" },
+                                                    GoalPosition = Mathf.Deg2Rad*(p)},
+                            new DynamixelMotorCommand { Id=new ComponentId { Name = "antenna_right" },
+                                                    GoalPosition = Mathf.Deg2Rad*(-p)},
+                        }
+                    };
+                    
+                    ActualSendAntennasCommands(currentCommands);
+                    await Task.Delay(15);
+                    cancellationToken.ThrowIfCancellationRequested();
+                }
+            }
+            catch (OperationCanceledException e)
+            {
+                Debug.Log("Reachy happy has been canceled: " + e);
+            }
 
-            // JointsCommand antennasCommandBack = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(0) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(0) },
-            //         }
-            // };
-            // JointsCommand antennasSpeedBack = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, SpeedLimit = 0 },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, SpeedLimit = 0 },
-            //         }
-            // };
-
-            // try
-            // {
-            //     SendJointsCommands(antennasSpeedBack);
-            //     for (int i = 0; i < 9; i++)
-            //     {
-            //         SendJointsCommands(antennasCommand1);
-            //         await Task.Delay(100);
-            //         SendJointsCommands(antennasCommand2);
-            //         await Task.Delay(100);
-            //         cancellationToken.ThrowIfCancellationRequested();
-            //     }
-
-            //     await Task.Delay(200);
-            //     SendJointsCommands(antennasCommandBack);
-            //     SendJointsCommands(antennasSpeedBack);
-            //     cancellationToken.ThrowIfCancellationRequested();
-            //     event_OnEmotionOver.Invoke(Emotion.Happy);
-            // }
-            // catch (OperationCanceledException e)
-            // {
-            //     Debug.Log("Reachy happy has been canceled: " + e);
-            //     event_OnEmotionOver.Invoke(Emotion.Happy);
-            // }
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(false);
         }
 
