@@ -51,6 +51,10 @@ namespace TeleopReachy
             {
                 child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
+            if (!robotStatus.IsEmotionPlaying())
+            {
+                HighlightSelectedEmotion();
+            }
         }
     }
 }

@@ -57,6 +57,7 @@ namespace TeleopReachy
         void DeactivateEmotion()
         {
             canMenuOpen = false;
+            if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
         }
 
@@ -64,6 +65,7 @@ namespace TeleopReachy
         {
             if (emotion == Emotion.NoEmotion)
             {
+                if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
                 menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
             }
         }
@@ -105,6 +107,7 @@ namespace TeleopReachy
 
         void HideAfterSeconds()
         {
+            if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
         }
 
@@ -125,6 +128,7 @@ namespace TeleopReachy
 
         void HideImmediatelyEmotionMenu()
         {
+            if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(false);

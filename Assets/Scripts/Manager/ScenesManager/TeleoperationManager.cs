@@ -130,6 +130,8 @@ namespace TeleopReachy
                     case Emotion.Confused:
                         jointsCommands.ReachyConfused();
                         break;
+                    case Emotion.NoEmotion:
+                        break;
                 }
             }
         }
