@@ -16,6 +16,7 @@ using Component.Orbita3D;
 using Reachy.Part.Mobile.Base.Mobility;
 using Reachy.Part.Mobile.Base.Utility;
 using Reachy.Part.Mobile.Base.Lidar;
+using Component.DynamixelMotor;
 using Bridge;
 using GstreamerWebRTC;
 
@@ -269,6 +270,16 @@ namespace TeleopReachy
                 }
             };
             commands.Commands.Add(mobileBaseCommand);
+        }
+
+        
+        public virtual void SendAntennasCommand(DynamixelMotorsCommand motorCommand)
+        {
+            Bridge.AnyCommand antennasCommand = new Bridge.AnyCommand
+            {
+                AntennasCommand = motorCommand 
+            };
+            commands.Commands.Add(antennasCommand);
         }
 
         public void TurnArmOff(PartId id)

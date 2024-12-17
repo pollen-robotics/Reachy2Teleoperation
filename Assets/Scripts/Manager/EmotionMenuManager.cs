@@ -7,10 +7,8 @@ namespace TeleopReachy
 {
     public class EmotionMenuManager : Singleton<EmotionMenuManager>
     {
-        public Transform Headset;
-        public ControllersManager controllers;
-
-        public Transform CancelIcon;
+        // public Transform Headset;
+        private ControllersManager controllers;
 
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
@@ -25,30 +23,12 @@ namespace TeleopReachy
         private Coroutine menuHidingCoroutine;
         private bool menuHidingRequested;
 
-        //private int nbEnum;
-
-        private void OnEnable()
-        {
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
-
-            canMenuOpen = true;
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-
-            EventManager.StartListening(EventNames.OnStartEmotionTeleoperation, ActivateEmotion);
-            EventManager.StartListening(EventNames.OnStopEmotionTeleoperation, DeactivateEmotion);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.RobotDataSceneLoaded, Init);
-        }
-
         private void Init()
         {
             // Headset = HeadsetPermanentTrackerWorldManager.Instance.transform;
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideImmediatelyEmotionMenu);
+            robotStatus.event_OnEmotionStart.AddListener(HideAfterSeconds);
             UserInputManager.Instance.UserEmotionInput.event_OnEmotionSelected.AddListener(CheckCancel);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -57,6 +37,14 @@ namespace TeleopReachy
         // Start is called before the first frame update
         void Start()
         {
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
+
+            canMenuOpen = true;
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+
+            EventManager.StartListening(EventNames.OnStartEmotionTeleoperation, ActivateEmotion);
+            EventManager.StartListening(EventNames.OnStopEmotionTeleoperation, DeactivateEmotion);
+
             HideImmediatelyEmotionMenu();
             menuHidingRequested = false;
         }
@@ -76,7 +64,7 @@ namespace TeleopReachy
         {
             if (emotion == Emotion.NoEmotion)
             {
-                HideImmediatelyEmotionMenu();
+                menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
             }
         }
 
@@ -87,18 +75,17 @@ namespace TeleopReachy
 
             if (canMenuOpen)
             {   
-                if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed) && !leftPrimaryButtonPreviouslyPressed)
+                if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed) && leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)
                 {
                     if (!isEmotionMenuOpen)
                     {
                         ShowEmotionMenu();
-                        HighlightCancel();
                         EventManager.TriggerEvent(EventNames.OnEmotionMode);
                     }
 
                     else
                     {
-                        menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
+                        HideImmediatelyEmotionMenu();
                         EventManager.TriggerEvent(EventNames.OnMobilityMode);
                     }
                 }
@@ -116,14 +103,9 @@ namespace TeleopReachy
             }
         }
 
-        void HighlightCancel()
+        void HideAfterSeconds()
         {
-            CancelIcon.localScale = new Vector3(1.5f * 0.3f, 1.5f * 0.3f, 1.5f);
-        }
-
-        void RemoveHighlightCancel()
-        {
-            CancelIcon.localScale = new Vector3(1.0f * 0.3f, 1.0f * 0.3f, 1.0f);
+            menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
         }
 
         void ShowEmotionMenu()

@@ -5,6 +5,7 @@ using Reachy.Part.Hand;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Kinematics;
+using Component.DynamixelMotor;
 
 
 namespace TeleopReachy
@@ -102,6 +103,11 @@ namespace TeleopReachy
         protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)
         {
             if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendNeckCommand(neckRequest);
+        }
+
+        protected override void ActualSendAntennasCommands(DynamixelMotorsCommand antennasRequest)
+        {
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) dataController.SendAntennasCommand(antennasRequest);
         }
 
         private void SetRobotSmoothlyCompliant()
