@@ -30,18 +30,17 @@ namespace TeleopReachy
         protected override void Init()
         {
             optionsManager = OptionsManager.Instance;
-
-            IsReticleOn = optionsManager.isReticleOn;
-
-            IsTunnellingAutoOn = (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.Tunnelling);
-            IsReducedScreenAutoOn = (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.ReducedScreen);
-
-            IsTunnellingOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.Tunnelling);
-            IsReducedScreenOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen);
-
             controllers = ControllersManager.Instance;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             mobilityFakeMovement = UserInputManager.Instance.UserMobilityFakeMovement;
+
+            IsReticleOn = optionsManager.isReticleOn;
+
+            IsTunnellingAutoOn = robotStatus.IsMobileBaseOn() && (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.Tunnelling);
+            IsReducedScreenAutoOn = robotStatus.IsMobileBaseOn() && (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.ReducedScreen);
+
+            IsTunnellingOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.Tunnelling);
+            IsReducedScreenOnClickOn = (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen);
 
             InitOnDemandRequest();
         }
