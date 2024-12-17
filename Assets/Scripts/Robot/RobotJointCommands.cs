@@ -388,24 +388,36 @@ namespace TeleopReachy
 
         private void ResetLeftArmSpeed()
         {
-            waitToSetLeftArmFullSpeed = StartCoroutine(ResetLeftArmFullSpeed());
+            if (teleoperationManager.IsArmTeleoperationActive)
+            {
+                waitToSetLeftArmFullSpeed = StartCoroutine(ResetLeftArmFullSpeed());
+            }
         }
 
         private void ReduceLeftArmSpeed()
         {
-            uint speedLimit = 10;
-            ModifyLeftArmSpeedLimit(speedLimit);
+            if (teleoperationManager.IsArmTeleoperationActive)
+            {
+                uint speedLimit = 10;
+                ModifyLeftArmSpeedLimit(speedLimit);
+            }
         }
 
         private void ResetRightArmSpeed()
         {
-            waitToSetRightArmFullSpeed = StartCoroutine(ResetRightArmFullSpeed());
+            if (teleoperationManager.IsArmTeleoperationActive)
+            {
+                waitToSetRightArmFullSpeed = StartCoroutine(ResetRightArmFullSpeed());
+            }
         }
 
         private void ReduceRightArmSpeed()
         {
-            uint speedLimit = 10;
-            ModifyRightArmSpeedLimit(speedLimit);
+            if (teleoperationManager.IsArmTeleoperationActive)
+            {
+                uint speedLimit = 10;
+                ModifyRightArmSpeedLimit(speedLimit);
+            }
         }
 
         private void ModifyRightArmSpeedLimit(uint speedLimit)
