@@ -40,18 +40,23 @@ namespace TeleopReachy
  
         void Update()
         {
-            // For joystick commands
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
+
+            float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
+            float r = Mathf.Sqrt(Mathf.Pow(selectedDirection[0], 2) + Mathf.Pow(selectedDirection[1], 2));
+
             if (!isEmotionSelected)
             {
-                controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
-
-                float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
-                float r = Mathf.Sqrt(Mathf.Pow(selectedDirection[0], 2) + Mathf.Pow(selectedDirection[1], 2));
-
                 if (Mathf.Abs(phi) < (Mathf.PI / 8)) selectedEmotion = Emotion.Confused;
                 else if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.Happy;
                 else if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) selectedEmotion = Emotion.Sad;
                 else if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.NoEmotion;
+                if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
+                previousR = r;
+            }
+            if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8)))
+            {
+                selectedEmotion = Emotion.NoEmotion;
                 if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
                 previousR = r;
             }
