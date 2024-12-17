@@ -37,13 +37,10 @@ namespace TeleopReachy
             emotionImages.Add(Emotion.Happy, happyImage);
             emotionImages.Add(Emotion.Confused, confusedImage);
 
-            HideInfoMessage();
-        }
-
-        void Init()
-        {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnEmotionStart.AddListener(ChooseEmotionAndShow);
+
+            HideInfoMessage();
         }
 
         protected override void Update()

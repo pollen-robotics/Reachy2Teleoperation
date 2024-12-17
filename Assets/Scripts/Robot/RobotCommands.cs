@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using Reachy.Part.Head;
 using Reachy.Part.Arm;
 using Reachy.Part.Hand;
+using Component.DynamixelMotor;
 
 
 namespace TeleopReachy
@@ -38,10 +39,10 @@ namespace TeleopReachy
             askForCancellation = new CancellationTokenSource();
         }
 
-        // protected abstract void SendJointsCommands(JointsCommand jointsCommand);
         protected abstract void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand);
         protected abstract void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest);
         protected abstract void ActualSendNeckCommands(NeckJointGoal neckRequest);
+        protected abstract void ActualSendAntennasCommands(DynamixelMotorsCommand antennasRequest);
         
         public void SendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
@@ -79,10 +80,11 @@ namespace TeleopReachy
 
         public async void ReachySad()
         {
-            Debug.Log("Simulated Reachy is sad");
-            robotStatus.SetEmotionPlaying(true);
+            Debug.LogError("Simulated Reachy is sad");
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(true);
+
             CancellationToken cancellationToken = askForCancellation.Token;
-            await Task.Delay(100);
+            await Task.Delay(5000);
 
             // JointsCommand antennasSpeedLimit = new JointsCommand
             // {
@@ -148,17 +150,16 @@ namespace TeleopReachy
             //     event_OnEmotionOver.Invoke(Emotion.Sad);
             // }
 
-            robotStatus.SetEmotionPlaying(false);
-
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(false);
         }
 
         public async void ReachyHappy()
         {
-            Debug.Log("Simulated Reachy is happy");
-            robotStatus.SetEmotionPlaying(true);
+            Debug.LogError("Simulated Reachy is happy");
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
 
-            await Task.Delay(100);
+            await Task.Delay(5000);
 
             // JointsCommand antennasCommand1 = new JointsCommand
             // {
@@ -213,16 +214,15 @@ namespace TeleopReachy
             //     Debug.Log("Reachy happy has been canceled: " + e);
             //     event_OnEmotionOver.Invoke(Emotion.Happy);
             // }
-            robotStatus.SetEmotionPlaying(false);
-
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(false);
         }
 
         public async void ReachyConfused()
         {
-            Debug.Log("Reachy is confused");
-            robotStatus.SetEmotionPlaying(true);
+            Debug.LogError("Reachy is confused");
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
-            await Task.Delay(100);
+            await Task.Delay(5000);
 
 
             // JointsCommand antennasSpeedLimit = new JointsCommand
@@ -270,7 +270,7 @@ namespace TeleopReachy
             //     event_OnEmotionOver.Invoke(Emotion.Confused);
             // }
 
-            robotStatus.SetEmotionPlaying(false);
+            if (robotConfig.HasHead() && robotStatus.IsHeadOn()) robotStatus.SetEmotionPlaying(false);
         }
     }
 }
