@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace TeleopReachy
@@ -10,95 +11,61 @@ namespace TeleopReachy
 
     public class UserEmotionInput : MonoBehaviour
     {
-        public EmotionMenuManager emotionMenuManager;
-
-        public ControllersManager controllers;
+        private ControllersManager controllers;
         
         private Vector2 selectedDirection;
 
-        private RobotConfig robotConfig;
-        private RobotJointCommands robotCommands;
-
-        private ReachySimulatedCommands robotSimulatedCommands;
-        private RobotStatus robotStatus;
-
-        private TeleoperationManager teleoperationManager;
-
         private Emotion selectedEmotion;
 
+        private bool isEmotionSelected;
 
-        private void OnEnable()
-        {
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
-        }
-
-        private void OnDisable()
-        {
-            EventManager.StopListening(EventNames.RobotDataSceneLoaded, Init);
-        }
+        public UnityEvent<Emotion> event_OnEmotionSelected;
 
         void Awake()
         {
             controllers = ActiveControllerManager.Instance.ControllersManager;
+            isEmotionSelected = false;
+
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
         }
 
-        private void Init()
+        void Init()
         {
-            robotCommands = RobotDataManager.Instance.RobotJointCommands;
-            robotCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
-            robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            robotSimulatedCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            emotionMenuManager.event_OnAskEmotion.AddListener(AskToPlayEmotion);
-
-            teleoperationManager = TeleoperationManager.Instance;
+            RobotDataManager.Instance.RobotStatus.event_OnEmotionStart.AddListener(SetEmotionSelected);
+            RobotDataManager.Instance.RobotStatus.event_OnEmotionOver.AddListener(EmotionIsOver);
         }
 
         void Update()
         {
             // For joystick commands
-            controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
-
-            float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
-
-            if (Mathf.Abs(phi) < (Mathf.PI / 8)) selectedEmotion = Emotion.Happy;
-            if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.Sad;
-            if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) selectedEmotion = Emotion.Confused;
-            if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.NoEmotion;
-        }
-
-
-        private void AskToPlayEmotion(Emotion emotion)
-        {
-            RobotCommands robot;
-            if (robotConfig.HasHead() && teleoperationManager.IsRobotTeleoperationActive && !robotStatus.IsEmotionPlaying() && !robotStatus.AreRobotMovementsSuspended())
+            if (!isEmotionSelected)
             {
-                robot = robotCommands;
-            }
-            else
-            {
-                robot = robotSimulatedCommands;
-            }
-            robotStatus.SetEmotionPlaying(true);
-            switch (emotion)
-            {
-                case Emotion.Sad:
-                    robot.ReachySad();
-                    break;
+                controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
 
-                case Emotion.Happy:
-                    robot.ReachyHappy();
-                    break;
-                case Emotion.Confused:
-                    robot.ReachyConfused();
-                    break;
+                float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
+
+                if (Mathf.Abs(phi) < (Mathf.PI / 8)) selectedEmotion = Emotion.Happy;
+                else if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.Sad;
+                else if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) selectedEmotion = Emotion.Confused;
+                else if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.NoEmotion;
+
+                event_OnEmotionSelected.Invoke(selectedEmotion);
             }
         }
 
-        public void EmotionIsOver(Emotion emotion)
+        private void EmotionIsOver()
         {
-            robotStatus.SetEmotionPlaying(false);
+            isEmotionSelected = false;
+        }
+
+        private void SetEmotionSelected()
+        {
+            isEmotionSelected = true;
+        }
+
+        public Emotion GetSelectedEmotion()
+        {
+            return selectedEmotion;
         }
     }
 }

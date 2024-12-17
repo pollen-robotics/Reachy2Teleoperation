@@ -12,8 +12,6 @@ namespace TeleopReachy
 {
     public abstract class RobotCommands : MonoBehaviour
     {
-        public UnityEvent<Emotion> event_OnEmotionOver;
-
         // Token to cancel emotions
         protected CancellationTokenSource askForCancellation = new CancellationTokenSource();
 
@@ -82,9 +80,9 @@ namespace TeleopReachy
         public async void ReachySad()
         {
             Debug.Log("Simulated Reachy is sad");
+            robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
             await Task.Delay(100);
-
 
             // JointsCommand antennasSpeedLimit = new JointsCommand
             // {
@@ -149,10 +147,15 @@ namespace TeleopReachy
             //     Debug.Log("Reachy sad has been canceled: " + e);
             //     event_OnEmotionOver.Invoke(Emotion.Sad);
             // }
+
+            robotStatus.SetEmotionPlaying(false);
+
         }
+
         public async void ReachyHappy()
         {
             Debug.Log("Simulated Reachy is happy");
+            robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
 
             await Task.Delay(100);
@@ -210,89 +213,14 @@ namespace TeleopReachy
             //     Debug.Log("Reachy happy has been canceled: " + e);
             //     event_OnEmotionOver.Invoke(Emotion.Happy);
             // }
+            robotStatus.SetEmotionPlaying(false);
+
         }
-        public async void ReachyAngry()
-        {
-            Debug.Log("Reachy is angry");
-            CancellationToken cancellationToken = askForCancellation.Token;
-            await Task.Delay(100);
 
-            // JointsCommand antennasSpeedLimit1 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, SpeedLimit = 5f},
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, SpeedLimit = 5f },
-            //         }
-            // };
-            // JointsCommand antennasSpeedLimit2 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna"  }, SpeedLimit = 2.3f},
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, SpeedLimit = 2.3f },
-            //         }
-            // };
-            // JointsCommand antennasCommand1 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(80) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(-80) },
-            //         }
-            // };
-            // JointsCommand antennasCommand2 = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(40) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(-40) },
-            //         }
-            // };
-            // JointsCommand antennasCommandBack = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, GoalPosition=Mathf.Deg2Rad*(0) },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, GoalPosition=Mathf.Deg2Rad*(0) },
-            //         }
-            // };
-            // JointsCommand antennasSpeedBack = new JointsCommand
-            // {
-            //     Commands = {
-            //         new JointCommand { Id=new JointId { Name = "l_antenna" }, SpeedLimit = 0 },
-            //         new JointCommand { Id=new JointId { Name = "r_antenna" }, SpeedLimit = 0 },
-            //         }
-            // };
-
-            // try
-            // {
-            //     for (int i = 0; i < 2; i++)
-            //     {
-            //         SendJointsCommands(antennasSpeedBack);
-            //         SendJointsCommands(antennasCommand1);
-            //         await Task.Delay(1000);
-            //         cancellationToken.ThrowIfCancellationRequested();
-            //         SendJointsCommands(antennasSpeedLimit2);
-            //         SendJointsCommands(antennasCommand2);
-            //         await Task.Delay(500);
-            //         cancellationToken.ThrowIfCancellationRequested();
-            //     }
-
-            //     SendJointsCommands(antennasSpeedBack);
-            //     SendJointsCommands(antennasCommand1);
-            //     await Task.Delay(1500);
-            //     cancellationToken.ThrowIfCancellationRequested();
-            //     SendJointsCommands(antennasSpeedLimit2);
-
-            //     SendJointsCommands(antennasCommandBack);
-            //     cancellationToken.ThrowIfCancellationRequested();
-            //     event_OnEmotionOver.Invoke(Emotion.Angry);
-            // }
-            // catch (OperationCanceledException e)
-            // {
-            //     Debug.Log("Reachy angry has been canceled: " + e);
-            //     event_OnEmotionOver.Invoke(Emotion.Angry);
-            // }
-        }
         public async void ReachyConfused()
         {
             Debug.Log("Reachy is confused");
+            robotStatus.SetEmotionPlaying(true);
             CancellationToken cancellationToken = askForCancellation.Token;
             await Task.Delay(100);
 
@@ -341,6 +269,8 @@ namespace TeleopReachy
             //     Debug.Log("Reachy confused has been canceled: " + e);
             //     event_OnEmotionOver.Invoke(Emotion.Confused);
             // }
+
+            robotStatus.SetEmotionPlaying(false);
         }
     }
 }
