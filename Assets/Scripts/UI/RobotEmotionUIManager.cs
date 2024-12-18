@@ -30,13 +30,13 @@ namespace TeleopReachy
             robotStatus.event_OnEmotionOver.AddListener(HighlightNoEmotion);
 
             userEmotionInput = UserInputManager.Instance.UserEmotionInput;
-            userEmotionInput.event_OnEmotionSelected.AddListener(CheckNoEmotion);
+            // userEmotionInput.event_OnEmotionSelected.AddListener(CheckNoEmotion);
         }
 
-        void CheckNoEmotion(Emotion emotion)
-        {
-            if (emotion == Emotion.NoEmotion) HighlightSelectedEmotion();
-        }
+        // void CheckNoEmotion(Emotion emotion)
+        // {
+        //     if (emotion == Emotion.NoEmotion) HighlightSelectedEmotion();
+        // }
 
         void HighlightSelectedEmotion()
         {
@@ -50,10 +50,6 @@ namespace TeleopReachy
             foreach (Transform child in transform)
             {
                 child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            }
-            if (!robotStatus.IsEmotionPlaying())
-            {
-                HighlightSelectedEmotion();
             }
         }
     }

@@ -29,7 +29,7 @@ namespace TeleopReachy
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideImmediatelyEmotionMenu);
             robotStatus.event_OnEmotionStart.AddListener(HideAfterSeconds);
-            UserInputManager.Instance.UserEmotionInput.event_OnEmotionSelected.AddListener(CheckCancel);
+            // UserInputManager.Instance.UserEmotionInput.event_OnEmotionSelected.AddListener(CheckCancel);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
         }
@@ -51,24 +51,27 @@ namespace TeleopReachy
 
         void ActivateEmotion()
         {
+            Debug.LogError("ActivateEmotion");
             canMenuOpen = true;
         }
 
         void DeactivateEmotion()
         {
+            Debug.LogError("DeactivateEmotion");
+
             canMenuOpen = false;
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
         }
 
-        void CheckCancel(Emotion emotion)
-        {
-            if (emotion == Emotion.NoEmotion)
-            {
-                if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
-                menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
-            }
-        }
+        // void CheckCancel(Emotion emotion)
+        // {
+        //     if (emotion == Emotion.NoEmotion)
+        //     {
+        //         if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
+        //         menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
+        //     }
+        // }
 
         // Update is called once per frame
         void Update()
