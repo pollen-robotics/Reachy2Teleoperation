@@ -54,12 +54,12 @@ namespace TeleopReachy
                 if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
                 previousR = r;
             }
-            if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8)))
-            {
-                selectedEmotion = Emotion.NoEmotion;
-                if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
-                previousR = r;
-            }
+            // if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8)))
+            // {
+            //     selectedEmotion = Emotion.NoEmotion;
+            //     if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
+            //     previousR = r;
+            // }
         }
 
         private void EmotionIsOver()
