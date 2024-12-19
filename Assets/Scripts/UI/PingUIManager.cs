@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace TeleopReachy
 {
@@ -14,7 +15,7 @@ namespace TeleopReachy
         private RawImage pingIcon;
 
         private RobotPingWatcher pingWatcher;
-        private ErrorManager errorManager;
+        private RobotErrorManager errorManager;
 
         private Coroutine warningEnd;
 
@@ -24,7 +25,7 @@ namespace TeleopReachy
         {
             pingWatcher = RobotDataManager.Instance.RobotPingWatcher;
 
-            errorManager = RobotDataManager.Instance.ErrorManager;
+            errorManager = RobotDataManager.Instance.RobotErrorManager;
             errorManager.event_OnWarningHighLatency.AddListener(WarningHighLatency);
             errorManager.event_OnWarningUnstablePing.AddListener(WarningUnstablePing);
 
@@ -34,7 +35,24 @@ namespace TeleopReachy
         void Update()
         {
             float currentPing = pingWatcher.GetPing();
-            if (pingValue != null) pingValue.text = "Ping : " + (int)currentPing + " ms";
+            if (pingValue != null) 
+            {
+                switch (currentPing)
+                {
+                    case -1000:
+                        pingValue.text = "Ping failed";
+                        break;
+                    case -1:
+                        pingValue.text = "Ping: waiting...";
+                        break;
+                    case 0:
+                        pingValue.text = "Ping: <0.1 ms";
+                        break;
+                    default:
+                        pingValue.text = "Ping: " + Math.Round(currentPing, 2) + " ms";
+                        break;
+                }
+            }
 
             if (!hasWarningActivated)
             {

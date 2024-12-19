@@ -26,6 +26,13 @@ namespace TeleopReachy
         public UnityEvent event_OnStartMoving;
         public UnityEvent event_OnStopMoving;
 
+        private bool ClickMode;
+        private bool NavigationMode;
+        private bool simulateFakeConstantMovement;
+        private bool simulateFakeStaticMovement;
+
+        private TeleoperationManager teleoperationManager;
+
         private void OnEnable()
         {
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, Init);
@@ -38,6 +45,12 @@ namespace TeleopReachy
         {
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
             robotStatus = RobotDataManager.Instance.RobotStatus;
+            
+            teleoperationManager = TeleoperationManager.Instance;
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopFakeMovements);
+
+            simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = true;
         }
 
         private void ReinitCounter()
@@ -74,11 +87,10 @@ namespace TeleopReachy
 
         void Update()
         {
-            if (robotStatus != null && robotStatus.IsRobotTeleoperationActive() && robotStatus.IsMobilityActive() && robotStatus.IsMobilityOn() && !robotStatus.AreRobotMovementsSuspended())
+            if (robotStatus != null && ((teleoperationManager.IsMobileBaseTeleoperationActive && robotStatus.IsMobileBaseOn()) || (teleoperationManager.IsRobotTeleoperationActive && ClickMode)) && !robotStatus.AreRobotMovementsSuspended())
             {
                 Vector2 direction = userMobilityInput.GetMobileBaseDirection();
                 Vector2 mobileBaseRotation = userMobilityInput.GetAngleDirection();
-
                 speed = Mathf.Sqrt(Mathf.Pow(direction[0], 2.0f) + Mathf.Pow(direction[1], 2.0f)) * sensitivity;
                 speed = Mathf.Clamp(speed, 0, maxSpeed);
                 rotationAngle = Mathf.Sqrt(Mathf.Pow(mobileBaseRotation[0], 2.0f)) * sensitivity;
@@ -106,9 +118,50 @@ namespace TeleopReachy
                     AddToQueue(previousRotationAngleQueue, rotationAngle);
                 }
 
+                if (ClickMode)
+                {
+                    if(simulateFakeConstantMovement)
+                    {
+                        speed = maxSpeed;
+                        rotationAngle = sensitivity;
+                    }
+
+                    else if(simulateFakeStaticMovement)
+                    {
+                        speed = 0;
+                        rotationAngle = 0;
+                    }
+                }
+
                 transform.position += speed * Time.deltaTime * Vector3.ProjectOnPlane(directional_vector, Vector3.up);
                 transform.Rotate(Vector3.up, rotationAngle);
             }
+        }
+
+        public void SetNavigationMode(bool isNavigationMode)
+        {
+            NavigationMode = isNavigationMode;
+        }
+
+        public void SetClickMode(bool isClickMode)
+        {
+            ClickMode = isClickMode;
+        }
+
+        public void AskForFakeConstantMovement(bool wantConstantMovement)
+        {
+            simulateFakeConstantMovement = wantConstantMovement;
+        }
+
+        public void AskForFakeStaticMovement(bool wantStaticMovement)
+        {
+            simulateFakeStaticMovement = wantStaticMovement;
+        }
+
+        void StopFakeMovements()
+        {
+            simulateFakeConstantMovement = false;
+            simulateFakeStaticMovement = false;
         }
     }
 }

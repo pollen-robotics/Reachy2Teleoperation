@@ -1,31 +1,29 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using GstreamerWebRTC;
 
 
 namespace TeleopReachy
 {
     public class RobotVideoStream : MonoBehaviour
     {
-        private WebRTCAVReceiver audioVideoController;
+        private GStreamerPluginCustom videoController;
 
-        public UnityEvent event_OnVideoTextureReady;
-        private Texture leftEyeStream;
 
         void Start()
         {
-            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            audioVideoController.event_OnVideoTextureReceived.AddListener(UpdateVideoStream);
+            videoController = WebRTCManager.Instance.gstreamerPlugin;
         }
 
-        void UpdateVideoStream(Texture tex)
+        public Texture GetLeftTexture()
         {
-            leftEyeStream = tex;
-            event_OnVideoTextureReady.Invoke();
+            return videoController.GetLeftTexture();
         }
 
-        public Texture GetLeftEyeTexture()
+        public Texture GetRightTexture()
         {
-            return leftEyeStream;
+            return videoController.GetRightTexture();
         }
     }
 }

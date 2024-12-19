@@ -1,30 +1,26 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
-    public class ConnectionStatus : MonoBehaviour
+    public class ConnectionStatus : Singleton<ConnectionStatus>
     {
         private bool isRobotConfigReady;
         private bool isRobotInDataRoom;
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
         private bool isRobotInAudioSenderRoom;
-        private bool isRobotInRestartRoom;
-        private bool hasRobotJustLeftDataRoom;
 
         private bool isRobotReady;
 
         private bool areRobotServicesRestarting;
 
-        private WebRTCAVReceiver audioVideoController;
-        private WebRTCAudioSender microphoneController;
-        private WebRTCData dataController;
+        private GStreamerPluginCustom gstreamerPlugin;
 
         public UnityEvent event_OnConnectionStatusHasChanged;
         public UnityEvent event_OnRobotReady;
-
         public UnityEvent event_OnRobotUnready;
 
         private bool statusChanged;
@@ -33,11 +29,12 @@ namespace TeleopReachy
 
         private Coroutine waitForConnection;
 
+        [SerializeField]
+        private bool checkVideoStream;
+
         void Start()
         {
-            dataController = WebRTCManager.Instance.webRTCDataController;
-            audioVideoController = WebRTCManager.Instance.webRTCVideoController;
-            microphoneController = WebRTCManager.Instance.webRTCAudioSender;
+            gstreamerPlugin = WebRTCManager.Instance.gstreamerPlugin;
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
 
@@ -48,23 +45,20 @@ namespace TeleopReachy
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
             isRobotInAudioSenderRoom = false;
-            isRobotInRestartRoom = false;
 
             isRobotReady = false;
-
-            hasRobotJustLeftDataRoom = false;
 
             areRobotServicesRestarting = true;
 
             statusChanged = false;
 
-            if (audioVideoController != null)
+            if (gstreamerPlugin != null)
             {
-                audioVideoController.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
-                audioVideoController.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(VideoControllerStatusHasChanged);
+                gstreamerPlugin.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
+                gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
+                gstreamerPlugin.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
             }
-            if (dataController != null) dataController.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
-            if (microphoneController != null) microphoneController.event_AudioSenderStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
 
             waitForConnection = StartCoroutine(WaitForConnection());
         }
@@ -72,16 +66,6 @@ namespace TeleopReachy
         public bool IsRobotInDataRoom()
         {
             return isRobotInDataRoom;
-        }
-
-        public bool HasRobotJustLeftDataRoom()
-        {
-            return hasRobotJustLeftDataRoom;
-        }
-
-        public bool IsRobotConfigReady()
-        {
-            return isRobotConfigReady;
         }
 
         public bool IsRobotInVideoRoom()
@@ -99,21 +83,9 @@ namespace TeleopReachy
             return isRobotInAudioSenderRoom;
         }
 
-        public bool IsRobotInRestartRoom()
-        {
-            return isRobotInRestartRoom;
-        }
-
         public bool IsRobotReady()
         {
             return isRobotReady;
-        }
-
-        public bool IsServerConnected()
-        {
-            //return isServerConnected;
-            //Todo
-            return true;
         }
 
         public bool AreRobotServicesRestarting()
@@ -151,16 +123,8 @@ namespace TeleopReachy
 
         void DataControllerStatusHasChanged(bool isRobotInRoom)
         {
-            Debug.Log("[ConnectionStatus] DataControllerStatusHasChanged");
+            Debug.Log("[ConnectionStatus] DataControllerStatusHasChanged :" + isRobotInRoom);
             isRobotInDataRoom = isRobotInRoom;
-            if (isRobotInDataRoom)
-            {
-                hasRobotJustLeftDataRoom = false;
-            }
-            else
-            {
-                hasRobotJustLeftDataRoom = true;
-            }
             statusChanged = true;
         }
 
@@ -176,7 +140,9 @@ namespace TeleopReachy
             if (statusChanged)
             {
                 statusChanged = false;
-                if (isRobotInDataRoom && isRobotConfigReady && ((robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead()))
+                if (isRobotInDataRoom && isRobotConfigReady && (
+                    (checkVideoStream && (robotConfig.HasHead() && isRobotInVideoRoom) || !robotConfig.HasHead())
+                    || !checkVideoStream))
                 {
                     if (!isRobotReady)
                     {
@@ -191,10 +157,7 @@ namespace TeleopReachy
                     isRobotReady = false;
                     event_OnRobotUnready.Invoke();
                 }
-                if (!isRobotInDataRoom)
-                {
-                    hasRobotJustLeftDataRoom = false;
-                }
+
                 event_OnConnectionStatusHasChanged.Invoke();
             }
         }

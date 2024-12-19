@@ -1,44 +1,26 @@
 using UnityEngine;
-
-
+using GstreamerWebRTC;
 
 namespace TeleopReachy
 {
     public class MiniVideoStreamDisplay : MonoBehaviour
     {
-        private RobotVideoStream videoStream;
-        private bool need_update_mini_viewer = false;
+        private RobotVideoStream videoController;
+        private Renderer screen;
 
         // Used to update display when going back in mirror scene
         void Start()
         {
-            videoStream = RobotDataManager.Instance.RobotVideoStream;
-            videoStream.event_OnVideoTextureReady.AddListener(ReadyToUpdate);
-            UpdateTexture();
-        }
-
-        void ReadyToUpdate()
-        {
-            need_update_mini_viewer = true;
-        }
-
-        void UpdateTexture()
-        {
-            Texture tex = videoStream.GetLeftEyeTexture();
-            if (tex != null)
+            screen = GetComponent<Renderer>();
+            if (Robot.IsCurrentRobotVirtual())
             {
-                GetComponent<Renderer>().material.SetTexture("_LeftTex", tex);
-                GetComponent<Renderer>().material.SetTexture("_RightTex", tex);
+                gameObject.SetActive(false);
             }
-        }
-
-        void Update()
-        {
-            // Done only on connection
-            if (need_update_mini_viewer)
+            else
             {
-                need_update_mini_viewer = false;
-                UpdateTexture();
+                videoController = RobotDataManager.Instance.RobotVideoStream;
+                screen.material.SetTexture("_LeftTex", videoController.GetLeftTexture());
+                screen.material.SetTexture("_RightTex", videoController.GetLeftTexture());
             }
         }
     }

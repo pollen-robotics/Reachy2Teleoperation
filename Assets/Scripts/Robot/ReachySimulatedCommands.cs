@@ -1,88 +1,79 @@
+using UnityEngine;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
+using Reachy.Part;
+using Reachy2Controller;
 
 namespace TeleopReachy
 {
     public class ReachySimulatedCommands : RobotCommands
     {
-        //     private HeadTracker headTracker;
-        //     private HandsTracker handsTracker;
-        //     private UserMovementsInput userMovementsInput;
+        private UserMovementsInput userMovementsInput;
 
-        //     [SerializeField]
-        //     private ReachySimulatedServer reachyFakeServer;
+        [SerializeField]
+        private ReachySimulatedServer reachyFakeServer;
 
-        //     [SerializeField]
-        //     private ReachyController reachy;
+        [SerializeField]
+        private Reachy2Controller.Reachy2Controller reachyReal;
 
-        //     [SerializeField]
-        //     private ReachyController reachyModel;
-
-        //     private JointPosition q0_left;
-        //     private JointPosition q0_right;
+        [SerializeField]
+        private Reachy2Controller.Reachy2Controller reachySimulated;
 
 
-
-        //     // Start is called before the first frame update
-        //     void Start()
-        //     {
-        //         Init();
-        //         headTracker = UserTrackerManager.Instance.HeadTracker;
-        //         handsTracker = UserTrackerManager.Instance.HandsTracker;
-        //         userMovementsInput = UserInputManager.Instance.UserMovementsInput;
-
-        //         reachy = GameObject.Find("Reachy").transform.GetComponent<ReachyController>();
-
-        //         q0_left = new JointPosition
-        //         {
-        //             Ids = { new JointId{ Name = "l_shoulder_pitch"}, new JointId{ Name = "l_shoulder_roll"}, new JointId{ Name = "l_arm_yaw"},
-        //             new JointId{ Name = "l_elbow_pitch"}, new JointId{ Name = "l_forearm_yaw"}, new JointId{ Name = "l_wrist_pitch"}, new JointId{ Name = "l_wrist_roll"} },
-        //             Positions = { 0, 0, 0, -Mathf.PI / 2, 0, 0, 0 },
-        //         };
-
-        //         q0_right = new JointPosition
-        //         {
-        //             Ids = { new JointId{ Name = "r_shoulder_pitch"}, new JointId{ Name = "r_shoulder_roll"}, new JointId{ Name = "r_arm_yaw"},
-        //             new JointId{ Name = "r_elbow_pitch"}, new JointId{ Name = "r_forearm_yaw"}, new JointId{ Name = "r_wrist_pitch"}, new JointId{ Name = "r_wrist_roll"} },
-        //             Positions = { 0, 0, 0, -Mathf.PI / 2, 0, 0, 0 },
-        //         };
-        //     }
-
-        //     // Update is called once per frame
-        //     void Update()
-        //     {
-        //         ArmEndEffector rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
-        //         ArmEndEffector leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
-
-        //         ArmIKRequest rightArmRequest = new ArmIKRequest { Target = rightEndEffector, Q0 = q0_right };
-        //         ArmIKRequest leftArmRequest = new ArmIKRequest { Target = leftEndEffector, Q0 = q0_left };
-
-        //         HeadIKRequest headTarget = headTracker.GetHeadTarget();
-
-        //         if (robotConfig.IsVirtual() || !robotStatus.IsLeftArmOn())
-        //             SetLeftArmToModelPose();
-
-        //         if (robotConfig.IsVirtual() || !robotStatus.IsRightArmOn())
-        //             SetRightArmToModelPose();
-
-        //         if (robotConfig.IsVirtual() || !robotStatus.IsHeadOn())
-        //             SetHeadToModelPose();
-        //         SendFullBodyCommands(leftArmRequest, rightArmRequest, headTarget);
-
-        //         float pos_right_gripper = userMovementsInput.GetRightGripperTarget();
-        //         float pos_left_gripper = userMovementsInput.GetLeftGripperTarget();
-        //         SendGrippersCommands(pos_left_gripper, pos_right_gripper);
-        //     }
-
-        protected override void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
+        // Start is called before the first frame update
+        void Start()
         {
-            // reachyFakeServer.SendFullBodyCartesianCommands(bodyCommand);
+            Init();
+            userMovementsInput = UserInputManager.Instance.UserMovementsInput;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            ArmCartesianGoal rightEndEffector = userMovementsInput.GetRightEndEffectorTarget();
+            ArmCartesianGoal leftEndEffector = userMovementsInput.GetLeftEndEffectorTarget();
+            NeckJointGoal headTarget = userMovementsInput.GetHeadTarget();
+
+            // if (robotConfig.IsVirtual() || !robotStatus.IsLeftArmOn())
+            //     SetLeftArmToModelPose();
+
+            // if (robotConfig.IsVirtual() || !robotStatus.IsRightArmOn())
+            //     SetRightArmToModelPose();
+
+            // if (robotConfig.IsVirtual() || !robotStatus.IsHeadOn())
+            //     SetHeadToModelPose();
+            SendArmsCommands(leftEndEffector, rightEndEffector);
+            SendNeckCommands(headTarget);
+
+            float pos_right_gripper = userMovementsInput.GetRightGripperTarget(robotStatus.IsGraspingLockActivated());
+            float pos_left_gripper = userMovementsInput.GetLeftGripperTarget(robotStatus.IsGraspingLockActivated());
+            SendGrippersCommands(pos_left_gripper, pos_right_gripper);
+        }
+
+        protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
+        {
+            rightArmRequest.Id = new PartId { Name = "r_arm" };
+            leftArmRequest.Id = new PartId { Name = "l_arm" };
+
+            reachyFakeServer.SendArmCommand(leftArmRequest);
+            reachyFakeServer.SendArmCommand(rightArmRequest);
+        }
+
+        protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)
+        {
+            neckRequest.Id = new PartId { Name = "head" };
+
+            reachyFakeServer.SendNeckCommand(neckRequest);
         }
 
         protected override void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand)
         {
-            // reachyFakeServer.SendJointsCommands(gripperCommand);
+            leftGripperCommand.Id = new PartId { Name = "l_hand" };
+            rightGripperCommand.Id = new PartId { Name = "r_hand" };
+
+            if(leftGripperCommand.Id != null) reachyFakeServer.SetHandPosition(leftGripperCommand);
+            if(rightGripperCommand.Id != null) reachyFakeServer.SetHandPosition(rightGripperCommand);
         }
 
         //     void SetHeadToModelPose()
@@ -99,7 +90,7 @@ namespace TeleopReachy
         //         joint.Name = "neck_yaw";
         //         headJoints.Add(joint, field);
 
-        //         List<SerializableMotor> headMotors = reachyModel.GetCurrentMotorsState(headJoints);
+        //         List<SerializableMotor> headMotors = reachySimulated.GetCurrentMotorsState(headJoints);
 
         //         Dictionary<JointId, float> headTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < headMotors.Count; i++)
@@ -110,7 +101,7 @@ namespace TeleopReachy
         //             headTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(headTarget);
+        //         reachyReal.HandleCommand(headTarget);
         //     }
 
         //     void SetLeftArmToModelPose()
@@ -142,7 +133,7 @@ namespace TeleopReachy
         //         joint.Name = "l_gripper";
         //         leftJoints.Add(joint, field);
 
-        //         List<SerializableMotor> leftArmMotors = reachyModel.GetCurrentMotorsState(leftJoints);
+        //         List<SerializableMotor> leftArmMotors = reachySimulated.GetCurrentMotorsState(leftJoints);
 
         //         Dictionary<JointId, float> leftArmTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < leftArmMotors.Count; i++)
@@ -153,7 +144,7 @@ namespace TeleopReachy
         //             leftArmTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(leftArmTarget);
+        //         reachyReal.HandleCommand(leftArmTarget);
         //     }
 
         //     void SetRightArmToModelPose()
@@ -185,7 +176,7 @@ namespace TeleopReachy
         //         joint.Name = "r_gripper";
         //         rightJoints.Add(joint, field);
 
-        //         List<SerializableMotor> rightArmMotors = reachyModel.GetCurrentMotorsState(rightJoints);
+        //         List<SerializableMotor> rightArmMotors = reachySimulated.GetCurrentMotorsState(rightJoints);
 
         //         Dictionary<JointId, float> rightArmTarget = new Dictionary<JointId, float>();
         //         for (int i = 0; i < rightArmMotors.Count; i++)
@@ -196,14 +187,7 @@ namespace TeleopReachy
         //             rightArmTarget.Add(joint, goal);
         //         }
 
-        //         reachy.HandleCommand(rightArmTarget);
+        //         reachyReal.HandleCommand(rightArmTarget);
         //     }
-
-        //     protected override void SendJointsCommands(JointsCommand jointsCommand)
-        //     {
-        //         reachyFakeServer.SendJointsCommands(jointsCommand);
-        //     }
-
     }
 }
-
