@@ -6,17 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace TeleopReachy
 {
-    public class EmotionMessageUIManager : LazyFollow
+    public class EmotionMessageUIManager : InformationalPanel
     {
-        //private RobotStatus robotStatus;
-
-        private Coroutine limitDisplayInTime;
-
-        [SerializeField]
-        private Text infoMessage;
-
-        //private OnlineMenuManager onlineMenuManager;
-
         [SerializeField]
         private Texture sadImage;
 
@@ -29,75 +20,63 @@ namespace TeleopReachy
         [SerializeField]
         private Texture confusedImage;
 
-        [SerializeField]
-        private RawImage image;
-        private ControllersManager controllers;
+        private Texture emojiToDisplay;
 
+        [SerializeField]
+        private RawImage emoji;
 
         private Dictionary<Emotion, Texture> emotionImages;
 
         void Start()
         {
-            controllers = ActiveControllerManager.Instance.ControllersManager;
-            if (controllers.headsetType == ControllersManager.SupportedDevices.Oculus) // If oculus 2
-            {
-                targetOffset = new Vector3(0, -0.24f, 0.8f);
-            }
-            else
-            {
-                targetOffset = new Vector3(0, -0.24f, 0.7f);
-            }
-            maxDistanceAllowed = 0;
-            transform.ActivateChildren(false);
+            SetOculusTargetOffset(new Vector3(0, -0.24f, 0.8f));
+
             emotionImages = new Dictionary<Emotion, Texture>();
             emotionImages.Add(Emotion.Sad, sadImage);
             emotionImages.Add(Emotion.Happy, happyImage);
             emotionImages.Add(Emotion.Angry, angryImage);
             emotionImages.Add(Emotion.Confused, confusedImage);
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+
+            HideInfoMessage();
         }
 
         void Init()
         {
             // onlineMenuManager = GameObject.Find("CanvaOnlineMenu").GetComponent<OnlineMenuManager>();
-            // onlineMenuManager.event_OnAskEmotion.AddListener(ShowMessage);
+            // onlineMenuManager.event_OnAskEmotion.AddListener(ChooseEmotionAndShow);
         }
 
+        protected override void Update()
+        {
+            if(needInfoPanelUpdate) emoji.texture = emojiToDisplay;
+            base.Update();
+        }
 
-        void ShowMessage(Emotion emotion)
+        void ChooseEmotionAndShow(Emotion emotion)
         {
             switch (emotion)
             {
                 case Emotion.Sad:
-                    infoMessage.text = "Emotion sad is playing";
-                    image.texture = emotionImages[Emotion.Sad];
+                    textToDisplay = "Emotion sad is playing";
+                    emojiToDisplay = emotionImages[Emotion.Sad];
                     break;
 
                 case Emotion.Happy:
-                    infoMessage.text = "Emotion happy is playing";
-                    image.texture = emotionImages[Emotion.Happy];
+                    textToDisplay = "Emotion happy is playing";
+                    emojiToDisplay = emotionImages[Emotion.Happy];
                     break;
 
                 case Emotion.Angry:
-                    infoMessage.text = "Emotion angry is playing";
-                    image.texture = emotionImages[Emotion.Angry];
+                    textToDisplay = "Emotion angry is playing";
+                    emojiToDisplay = emotionImages[Emotion.Angry];
                     break;
 
                 case Emotion.Confused:
-                    infoMessage.text = "Emotion confused is playing";
-                    image.texture = emotionImages[Emotion.Confused];
+                    textToDisplay = "Emotion confused is playing";
+                    emojiToDisplay = emotionImages[Emotion.Confused];
                     break;
             }
-
-            if (limitDisplayInTime != null) StopCoroutine(limitDisplayInTime);
-            limitDisplayInTime = StartCoroutine(DisplayLimitedInTime());
-        }
-
-        IEnumerator DisplayLimitedInTime()
-        {
-            transform.ActivateChildren(true);
-            yield return new WaitForSeconds(3);
-            transform.ActivateChildren(false);
+            ShowInfoMessage();
         }
     }
 }

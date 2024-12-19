@@ -1,37 +1,24 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Reachy.Part.Arm;
 
 namespace TeleopReachy
 {
     public class RobotStatus : MonoBehaviour
     {
-        private bool isRobotTeleoperationActive;
-
-        private bool isRobotArmTeleoperationActive;
-
         private bool areRobotMovementsSuspended;
 
-        private bool isRobotCompliant;
+        private bool isRobotCompliant= true;
 
-        private bool isMobilityInCloseLoop; // true if mobile base in close-loop, false if mobile base in idle
-
-        private bool isMobilityInBreakMode;
-
-        private bool isMobilityOn = true; // true if operator want to have control of the mobile base, false otherwise
-
-        private bool isLeftArmOn = true; // true if operator want to have control of the left arm, false otherwise
-
-        private bool isRightArmOn = true; // true if operator want to have control of the right arm, false otherwise
-
-        private bool isHeadOn = true; // true if operator want to have control of the head, false otherwise
-
-        private bool isMobilityActive; // true if panel must be shown, false otherwise
-
-        private bool areEmotionsActive;
+        // Parts are "On" if operators want to have control on it, false otherwise
+        private bool isMobileBaseOn = true;
+        private bool isLeftArmOn = true;
+        private bool isLeftGripperOn = true;
+        private bool isRightArmOn = true;
+        private bool isRightGripperOn = true;
+        private bool isHeadOn = true;
 
         private bool isEmotionPlaying;
-
-        private bool statusChanged;
 
         private bool hasMotorsSpeedLimited;
 
@@ -40,22 +27,19 @@ namespace TeleopReachy
         private bool isLeftGripperClosed = false;
         private bool isRightGripperClosed = false;
 
+        private IKConstrainedMode armIkMode = IKConstrainedMode.LowElbow;
+
         public bool IsRobotPositionLocked { get; private set; }
 
-        public UnityEvent event_OnStartTeleoperation;
-        public UnityEvent event_OnStartArmTeleoperation;
-        public UnityEvent event_OnStopTeleoperation;
-        public UnityEvent event_OnSuspendTeleoperation;
-        public UnityEvent event_OnResumeTeleoperation;
-
-        public UnityEvent event_OnInitializeRobotStateRequested;
-        public UnityEvent event_OnRobotStiffRequested;
         public UnityEvent<bool> event_OnGraspingLock;
-        public UnityEvent event_OnRobotSmoothlyCompliantRequested;
-        public UnityEvent event_OnRobotCompliantRequested;
         public UnityEvent event_OnRobotFullyCompliant;
 
-        public UnityEvent<bool> event_OnSwitchMobilityOn;
+        private void Start()
+        {
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartRobotTeleoperation);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, SuspendRobotTeleoperation);
+            EventManager.StartListening(EventNames.OnResumeTeleoperation, ResumeRobotTeleoperation);
+        }
 
         public void LeftGripperClosed(bool isclosed)
         {
@@ -77,16 +61,6 @@ namespace TeleopReachy
             return isLeftGripperClosed;
         }
 
-        public bool IsRobotTeleoperationActive()
-        {
-            return isRobotTeleoperationActive;
-        }
-
-        public bool IsRobotArmTeleoperationActive()
-        {
-            return isRobotArmTeleoperationActive;
-        }
-
         public bool AreRobotMovementsSuspended()
         {
             return areRobotMovementsSuspended;
@@ -97,14 +71,25 @@ namespace TeleopReachy
             return isRobotCompliant;
         }
 
-        public bool AreEmotionsActive()
+        public bool IsPartOn(Part part)
         {
-            return areEmotionsActive;
-        }
-
-        public bool IsMobilityOn()
-        {
-            return isMobilityOn;
+            switch (part)
+            {
+                case Part.LeftArm:
+                    return IsLeftArmOn();
+                case Part.RightArm:
+                    return IsRightArmOn();
+                case Part.LeftGripper:
+                    return IsLeftGripperOn();
+                case Part.RightGripper:
+                    return IsRightGripperOn();
+                case Part.Head:
+                    return IsHeadOn();
+                case Part.MobileBase:
+                    return IsMobileBaseOn();
+                default:
+                    return false;
+            }
         }
 
         public bool IsLeftArmOn()
@@ -112,9 +97,19 @@ namespace TeleopReachy
             return isLeftArmOn;
         }
 
+        public bool IsLeftGripperOn()
+        {
+            return isLeftGripperOn;
+        }
+
         public bool IsRightArmOn()
         {
             return isRightArmOn;
+        }
+
+        public bool IsRightGripperOn()
+        {
+            return isRightGripperOn;
         }
 
         public bool IsHeadOn()
@@ -122,24 +117,14 @@ namespace TeleopReachy
             return isHeadOn;
         }
 
-        public bool IsMobilityInCloseLoop()
+        public bool IsMobileBaseOn()
         {
-            return isMobilityInCloseLoop;
-        }
-
-        public bool IsMobilityInBreakMode()
-        {
-            return isMobilityInBreakMode;
+            return isMobileBaseOn;
         }
 
         public bool IsEmotionPlaying()
         {
             return isEmotionPlaying;
-        }
-
-        public bool IsMobilityActive()
-        {
-            return isMobilityActive;
         }
 
         public bool HasMotorsSpeedLimited()
@@ -164,25 +149,36 @@ namespace TeleopReachy
             isEmotionPlaying = isPlaying;
         }
 
-        public void SetMobilityActive(bool isActive)
+        public void SetPartOn(Part part, bool isOn, bool subPartManaged=false)
         {
-            isMobilityActive = isActive;
+            switch (part)
+            {
+                case Part.LeftArm:
+                    SetLeftArmOn(isOn);
+                    if (subPartManaged) SetLeftGripperOn(isOn);
+                    break;
+                case Part.RightArm:
+                    SetRightArmOn(isOn);
+                    if (subPartManaged) SetRightGripperOn(isOn);
+                    break;
+                case Part.LeftGripper:
+                    SetLeftGripperOn(isOn);
+                    break;
+                case Part.RightGripper:
+                    SetRightGripperOn(isOn);
+                    break;
+                case Part.Head:
+                    SetHeadOn(isOn);
+                    break;
+                case Part.MobileBase:
+                    SetMobileBaseOn(isOn);
+                    break;
+            }
         }
 
-        public void SetMobilityInBreakMode(bool inBreakMode)
+        public void SetMobileBaseOn(bool isOn)
         {
-            isMobilityInBreakMode = inBreakMode;
-        }
-
-        public void SetEmotionsActive(bool isActive)
-        {
-            areEmotionsActive = isActive;
-        }
-
-        public void SetMobilityOn(bool isOn)
-        {
-            isMobilityOn = isOn;
-            event_OnSwitchMobilityOn.Invoke(isOn);
+            isMobileBaseOn = isOn;
         }
 
         public void SetLeftArmOn(bool isOn)
@@ -190,9 +186,19 @@ namespace TeleopReachy
             isLeftArmOn = isOn;
         }
 
+        public void SetLeftGripperOn(bool isOn)
+        {
+            isLeftGripperOn = isOn;
+        }
+
         public void SetRightArmOn(bool isOn)
         {
             isRightArmOn = isOn;
+        }
+
+        public void SetRightGripperOn(bool isOn)
+        {
+            isRightGripperOn = isOn;
         }
 
         public void SetHeadOn(bool isOn)
@@ -200,14 +206,14 @@ namespace TeleopReachy
             isHeadOn = isOn;
         }
 
-        public void SetMobilityInCloseLoop(bool isCloseLoop)
+        public void SetIKMode(IKConstrainedMode mode)
         {
-            isMobilityInCloseLoop = isCloseLoop;
+            armIkMode = mode;
         }
 
-        public void InitializeRobotState()
+        public IKConstrainedMode GetIKMode()
         {
-            event_OnInitializeRobotStateRequested.Invoke();
+            return armIkMode;
         }
 
         public void LockRobotPosition()
@@ -215,27 +221,11 @@ namespace TeleopReachy
             IsRobotPositionLocked = true;
         }
 
-        public void StartRobotTeleoperation()
+        private void StartRobotTeleoperation()
         {
             Debug.Log("[RobotStatus]: Start teleoperation");
-            isRobotTeleoperationActive = true;
+            areRobotMovementsSuspended = false;
             IsRobotPositionLocked = false;
-            event_OnStartTeleoperation.Invoke();
-        }
-
-        public void StartArmTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Start arm teleoperation");
-            isRobotArmTeleoperationActive = true;
-            event_OnStartArmTeleoperation.Invoke();
-        }
-
-        public void StopRobotTeleoperation()
-        {
-            Debug.Log("[RobotStatus]: Stop teleoperation");
-            isRobotTeleoperationActive = false;
-            isRobotArmTeleoperationActive = false;
-            event_OnStopTeleoperation.Invoke();
         }
 
         public void SetMotorsSpeedLimited(bool isLimited)
@@ -252,55 +242,29 @@ namespace TeleopReachy
             }
         }
 
-        public void SuspendRobotTeleoperation()
+        private void SuspendRobotTeleoperation()
         {
             areRobotMovementsSuspended = true;
-            event_OnSuspendTeleoperation.Invoke();
         }
 
-        public void ResumeRobotTeleoperation()
+        private void ResumeRobotTeleoperation()
         {
             areRobotMovementsSuspended = false;
-            event_OnResumeTeleoperation.Invoke();
-        }
-
-        public void TurnRobotStiff()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Stiff");
-            event_OnRobotStiffRequested.Invoke();
-        }
-
-        public void TurnRobotCompliant()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Compliant");
-            event_OnRobotCompliantRequested.Invoke();
-        }
-
-        public void TurnRobotSmoothlyCompliant()
-        {
-            Debug.Log("[RobotStatus]: Turn Robot Smoothly Compliant");
-            event_OnRobotSmoothlyCompliantRequested.Invoke();
         }
 
         public override string ToString()
         {
-            return string.Format(@"isRobotTeleoperationActive = {0},
-             areRobotMovementsSuspended= {1},
-             isRobotCompliant= {2},
-             isMobilityInCloseLoop= {3},
-             isMobilityInBreakMode= {4},
-             isMobilityOn= {5},
-             isLeftArmOn= {6},
-             isRightArmOn= {7},
-             isHeadOn= {8},
-             isMobilityActive= {9},
-             areEmotionsActive= {10},
-             isEmotionPlaying= {11},
-             statusChanged= {12},
-             hasMotorsSpeedLimited= {13}",
-             isRobotTeleoperationActive, areRobotMovementsSuspended, isRobotCompliant,
-              isMobilityInCloseLoop, isMobilityInBreakMode, isMobilityOn, isLeftArmOn, isRightArmOn, isHeadOn,
-               isMobilityActive, areEmotionsActive, isEmotionPlaying, statusChanged, isGraspingLockActivated);
+            return string.Format(@"areRobotMovementsSuspended= {0},
+             isRobotCompliant= {1},
+             isMobileBaseOn= {2},
+             isLeftArmOn= {3},
+             isRightArmOn= {4},
+             isHeadOn= {5},
+             isEmotionPlaying= {6},
+             hasMotorsSpeedLimited= {7}",
+             areRobotMovementsSuspended, isRobotCompliant,
+              isMobileBaseOn, isLeftArmOn, isRightArmOn, isHeadOn,
+              isEmotionPlaying, isGraspingLockActivated);
         }
     }
 }

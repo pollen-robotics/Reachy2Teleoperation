@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,10 +13,11 @@ using Reachy.Part.Hand;
 using Reachy.Kinematics;
 using Component.Orbita2D;
 using Component.Orbita3D;
-using Mobile.Base.Mobility;
-using Mobile.Base.Utility;
-using Mobile.Base.Lidar;
+using Reachy.Part.Mobile.Base.Mobility;
+using Reachy.Part.Mobile.Base.Utility;
+using Reachy.Part.Mobile.Base.Lidar;
 using Bridge;
+using GstreamerWebRTC;
 
 
 namespace TeleopReachy
@@ -25,27 +28,25 @@ namespace TeleopReachy
 
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdateTemperature;
         public UnityEvent<Dictionary<string, float>> event_OnStateUpdatePresentPositions;
+        public UnityEvent<Dictionary<int, List<ReachabilityAnswer>>> event_OnStateUpdateReachability;
+        public UnityEvent<Dictionary<string, string>> event_OnAuditUpdate;
         public UnityEvent<float> event_OnBatteryUpdate;
         public UnityEvent<LidarObstacleDetectionEnum> event_OnLidarDetectionUpdate;
 
-        private WebRTCData webRTCDataController;
+        protected GStreamerPluginCustom webRTCController;
+        protected AnyCommands commands = new AnyCommands { };
 
-        //private HandCommand lastRightHandCommand;
-        //private HandCommand lastLeftHandCommand;
-        //private ArmCommand lastRightArmCommand;
-        //private ArmCommand lastLeftArmCommand;
-        //private MobileBaseCommand lastMobileBaseCommand;
-
-        private AnyCommands commands = new AnyCommands { };
-
-        void Start()
+        protected virtual void Start()
         {
-            webRTCDataController = WebRTCManager.Instance.webRTCDataController;
+            webRTCController = WebRTCManager.Instance.gstreamerPlugin;
         }
 
-        void Update()
+        protected void Update()
         {
-            if (commands.Commands.Count != 0) webRTCDataController.SendCommandMessage(commands);
+            if (commands.Commands.Count != 0)
+            {
+                webRTCController.SendCommandMessage(commands);
+            }
             commands = new AnyCommands { };
         }
 
@@ -63,6 +64,7 @@ namespace TeleopReachy
 
             Dictionary<string, float> present_position = new Dictionary<string, float>();
             Dictionary<string, float> temperatures = new Dictionary<string, float>();
+            Dictionary<int, List<ReachabilityAnswer>> reachability = new Dictionary<int, List<ReachabilityAnswer>>();
             float batteryLevel;
             LidarObstacleDetectionEnum obstacleDetection;
 
@@ -86,6 +88,29 @@ namespace TeleopReachy
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
+                            
+                        }
+                        PartId partId = new PartId();
+                        var armId = partState.Descriptor.FindFieldByName("id");
+                        if (armId != null)
+                        {
+                            partId = (PartId)armId.Accessor.GetValue(partState);
+                        }
+                        var reachabilityAnswer = partState.Descriptor.FindFieldByName("reachability");
+                        if (reachabilityAnswer != null)
+                        {
+                            var reachabilityObject = reachabilityAnswer.Accessor.GetValue(partState);
+                            IEnumerable reachabilityValues = reachabilityObject as IEnumerable;
+                            List<ReachabilityAnswer> answers = new List<ReachabilityAnswer>();
+                            if (reachabilityValues != null)
+                            {
+                                foreach(var reachabilityValue in reachabilityValues)
+                                {
+                                    ReachabilityAnswer reachable = (ReachabilityAnswer)reachabilityValue;
+                                    answers.Add(reachable);
+                                }
+                            }
+                            reachability.Add((int)partId.Id, answers);
                         }
                     }
                     if (partState is HeadState)
@@ -116,11 +141,12 @@ namespace TeleopReachy
                             event_OnBatteryUpdate.Invoke(batteryLevel);
                         }
 
-                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_obstacle_detection_status");
+                        var lidarDetectionField = partState.Descriptor.FindFieldByName("lidar_safety");
                         var lidarDetectionValue = lidarDetectionField.Accessor.GetValue(partState);
                         if (lidarDetectionValue != null)
                         {
-                            LidarObstacleDetectionStatus lidarDetectionStatus = (LidarObstacleDetectionStatus)lidarDetectionValue;
+                            LidarSafety lidarSafety = (LidarSafety)lidarDetectionValue;
+                            LidarObstacleDetectionStatus lidarDetectionStatus = lidarSafety.ObstacleDetectionStatus;
                             obstacleDetection = lidarDetectionStatus.Status;
                             if (obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedSlowdown || obstacleDetection == LidarObstacleDetectionEnum.ObjectDetectedStop)
                             {
@@ -130,11 +156,74 @@ namespace TeleopReachy
                     }
                 }
             }
+
             event_OnStateUpdatePresentPositions.Invoke(present_position);
             event_OnStateUpdateTemperature.Invoke(temperatures);
+            event_OnStateUpdateReachability.Invoke(reachability);
         }
 
-        public void SetHandPosition(HandPositionRequest gripperPosition)
+        public void StreamReachyStatus(ReachyStatus reachyStatus)
+        {
+            var auditDescriptor = ReachyStatus.Descriptor;
+            var armDescriptor = ArmStatus.Descriptor;
+            var headDescriptor = HeadStatus.Descriptor;
+            var handDescriptor = HandStatus.Descriptor;
+
+            Dictionary<string, string> components_status = new Dictionary<string, string>();
+
+            foreach (var partField in auditDescriptor.Fields.InDeclarationOrder())
+            {
+                var partStatus = partField.Accessor.GetValue(reachyStatus) as IMessage;
+                if (partStatus != null)
+                {
+                    if (partStatus is ArmStatus)
+                    {
+                        foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+                        {
+                            var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
+                            if (componentStatus != null)  
+                            {
+                                string[] errorDetails = new string[0];
+                                if(componentStatus is Orbita2dStatus status2d)
+                                {
+                                    errorDetails = status2d.Errors.Select(e => e.Details).ToArray();
+                                }
+                                if(componentStatus is Orbita3dStatus status3d)
+                                {
+                                    errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
+                                }
+                                string[] side = partField.Name.Split("status");
+                                string[] component = componentField.Name.Split("_status");
+                                string component_name = side[0] + component[0];
+                                components_status.Add(component_name, errorDetails[0]);
+                            }
+                        }
+                    }
+                    if (partStatus is HeadStatus)
+                    {
+                        foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
+                        {
+                            var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
+                            if (componentStatus != null) 
+                            {
+                                if(componentStatus is Orbita3dStatus status3d)
+                                {
+                                    string[] errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
+                                    string[] side = partField.Name.Split("status");
+                                    string[] component = componentField.Name.Split("_status");
+                                    string component_name = side[0] + component[0];
+                                    components_status.Add(component_name, errorDetails[0]);
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            event_OnAuditUpdate.Invoke(components_status);
+        }
+
+        public virtual void SetHandPosition(HandPositionRequest gripperPosition)
         {
             Bridge.AnyCommand handCommand = new Bridge.AnyCommand
             {
@@ -146,7 +235,7 @@ namespace TeleopReachy
             commands.Commands.Add(handCommand);
         }
 
-        public void SendArmCommand(ArmCartesianGoal armGoal)
+        public virtual void SendArmCommand(ArmCartesianGoal armGoal)
         {
             Bridge.AnyCommand armCommand = new Bridge.AnyCommand
             {
@@ -158,7 +247,7 @@ namespace TeleopReachy
             commands.Commands.Add(armCommand);
         }
 
-        public void SendNeckCommand(NeckJointGoal neckGoal)
+        public virtual void SendNeckCommand(NeckJointGoal neckGoal)
         {
             Bridge.AnyCommand neckCommand = new Bridge.AnyCommand
             {
@@ -170,7 +259,7 @@ namespace TeleopReachy
             commands.Commands.Add(neckCommand);
         }
 
-        public void SendMobileBaseCommand(TargetDirectionCommand direction)
+        public virtual void SendMobileBaseCommand(TargetDirectionCommand direction)
         {
             Bridge.AnyCommand mobileBaseCommand = new Bridge.AnyCommand
             {
@@ -195,7 +284,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessage(armCommand);
         }
 
         public void TurnHeadOff(PartId id)
@@ -211,7 +300,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessage(neckCommand);
         }
 
         public void TurnHandOff(PartId id)
@@ -227,12 +316,15 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(handCommand);
+            webRTCController.SendCommandMessage(handCommand);
         }
 
-        public void TurnMobileBaseOff()
+        public void TurnMobileBaseOff(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.FreeWheel };
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+                Id = id,
+                Mode = ZuuuModePossiblities.FreeWheel 
+            };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
             {
@@ -245,7 +337,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+            webRTCController.SendCommandMessage(mobileBaseCommand);
         }
 
         public void TurnArmOn(PartId id)
@@ -261,7 +353,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessage(armCommand);
         }
 
         public void TurnHeadOn(PartId id)
@@ -277,7 +369,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessage(neckCommand);
         }
 
         public void TurnHandOn(PartId id)
@@ -293,12 +385,15 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(handCommand);
+            webRTCController.SendCommandMessage(handCommand);
         }
 
-        public void TurnMobileBaseOn()
+        public void TurnMobileBaseOn(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { Mode = ZuuuModePossiblities.CmdVel };
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+                Id = id,
+                Mode = ZuuuModePossiblities.CmdVel 
+            };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
             {
@@ -311,7 +406,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(mobileBaseCommand);
+            webRTCController.SendCommandMessage(mobileBaseCommand);
         }
 
         public void SetArmTorqueLimit(Reachy.Part.Arm.TorqueLimitRequest request)
@@ -327,7 +422,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessage(armCommand);
         }
 
         public void SetArmSpeedLimit(Reachy.Part.Arm.SpeedLimitRequest request)
@@ -343,7 +438,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessage(armCommand);
         }
 
         public void SetHeadSpeedLimit(Reachy.Part.Head.SpeedLimitRequest request)
@@ -359,7 +454,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessage(neckCommand);
         }
 
         public void SetHeadTorqueLimit(Reachy.Part.Head.TorqueLimitRequest request)
@@ -375,10 +470,10 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCDataController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessage(neckCommand);
         }
 
-        private void GetOrbita3D_PresentPosition(
+        protected void GetOrbita3D_PresentPosition(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -405,7 +500,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita2D_PresentPosition(
+        protected void GetOrbita2D_PresentPosition(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -431,7 +526,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita2D_Temperature(
+        protected void GetOrbita2D_Temperature(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -457,7 +552,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetOrbita3D_Temperature(
+        protected void GetOrbita3D_Temperature(
             Dictionary<string, float> dict,
             IMessage componentState,
             Google.Protobuf.Reflection.FieldDescriptor partField,
@@ -483,7 +578,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetParallelGripper_PresentPosition(
+        protected void GetParallelGripper_PresentPosition(
             Dictionary<string, float> dict,
             IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField
@@ -502,7 +597,7 @@ namespace TeleopReachy
             }
         }
 
-        private void GetParallelGripper_Temperature(
+        protected void GetParallelGripper_Temperature(
             Dictionary<string, float> dict,
             IMessage partState,
             Google.Protobuf.Reflection.FieldDescriptor partField

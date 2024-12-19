@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using Mobile.Base.Mobility;
+using Reachy.Part.Mobile.Base.Mobility;
 
 
 namespace TeleopReachy
@@ -18,16 +18,17 @@ namespace TeleopReachy
 
             robotConfig = transform.GetComponent<RobotConfig>();
             robotStatus = transform.GetComponent<RobotStatus>();
-            robotStatus.event_OnStartTeleoperation.AddListener(StartMobility);
-            robotStatus.event_OnStopTeleoperation.AddListener(StopMobility);
-            robotStatus.event_OnSuspendTeleoperation.AddListener(StopMobileBaseMovements);
+
+            EventManager.StartListening(EventNames.OnStartTeleoperation, StartMobility);
+            EventManager.StartListening(EventNames.OnStopTeleoperation, StopMobility);
+            EventManager.StartListening(EventNames.OnSuspendTeleoperation, StopMobileBaseMovements);
         }
 
         private void StartMobility()
         {
-            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
-                dataController.TurnMobileBaseOn();
+                dataController.TurnMobileBaseOn(robotConfig.partsId["mobile_base"]);
             }
         }
 
@@ -41,16 +42,20 @@ namespace TeleopReachy
 
         public void SendMobileBaseDirection(Vector3 direction)
         {
-            TargetDirectionCommand command = new TargetDirectionCommand
+            if (robotConfig.HasMobileBase() && robotStatus.IsMobileBaseOn())
             {
-                Direction = new DirectionVector
+                TargetDirectionCommand command = new TargetDirectionCommand
                 {
-                    X = direction[0],
-                    Y = direction[1],
-                    Theta = direction[2],
-                }
-            };
-            dataController.SendMobileBaseCommand(command);
+                    Id = robotConfig.partsId["mobile_base"],
+                    Direction = new DirectionVector
+                    {
+                        X = direction[0],
+                        Y = direction[1],
+                        Theta = direction[2],
+                    }
+                };
+                dataController.SendMobileBaseCommand(command);
+            }
         }
 
         void StopMobileBaseMovements()
@@ -61,7 +66,7 @@ namespace TeleopReachy
                 {
                     Vector2 direction = new Vector2(0, 0);
                     SendMobileBaseDirection(direction);
-                    dataController.TurnMobileBaseOff();
+                    dataController.TurnMobileBaseOff(robotConfig.partsId["mobile_base"]);
                 }
             }
             catch (Exception exc)

@@ -23,7 +23,6 @@ namespace TeleopReachy
         protected void Init()
         {
             robotConfig = RobotDataManager.Instance.RobotConfig;
-
             robotStatus = RobotDataManager.Instance.RobotStatus;
         }
 
@@ -43,26 +42,39 @@ namespace TeleopReachy
 
         // protected abstract void SendJointsCommands(JointsCommand jointsCommand);
         protected abstract void ActualSendGrippersCommands(HandPositionRequest leftGripperCommand, HandPositionRequest rightGripperCommand);
-        protected abstract void ActualSendBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest);
-
-        public void SendFullBodyCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest, NeckJointGoal neckRequest)
+        protected abstract void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest);
+        protected abstract void ActualSendNeckCommands(NeckJointGoal neckRequest);
+        
+        public void SendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
-            if (robotConfig.HasLeftArm()) leftArmRequest.Id = robotConfig.partsId["l_arm"];
-            if (robotConfig.HasRightArm()) rightArmRequest.Id = robotConfig.partsId["r_arm"];
-            if (robotConfig.HasHead()) neckRequest.Id = robotConfig.partsId["head"];
+            if (robotConfig.HasLeftArm())
+            {
+                leftArmRequest.Id = robotConfig.partsId["l_arm"];
+                leftArmRequest.ConstrainedMode = robotStatus.GetIKMode();
+            }
+            if (robotConfig.HasRightArm())
+            {
+                rightArmRequest.Id = robotConfig.partsId["r_arm"];
+                rightArmRequest.ConstrainedMode = robotStatus.GetIKMode();
+            }
+            ActualSendArmsCommands(leftArmRequest, rightArmRequest);
+        }
 
-            ActualSendBodyCommands(leftArmRequest, rightArmRequest, neckRequest);
+        public void SendNeckCommands(NeckJointGoal neckRequest)
+        {
+            if (robotConfig.HasHead()) neckRequest.Id = robotConfig.partsId["head"];
+            ActualSendNeckCommands(neckRequest);
         }
 
         public void SendGrippersCommands(float leftGripperOpening, float rightGripperOpening)
         {
             HandPositionRequest leftHandPositionRequest = new HandPositionRequest();
             if (robotConfig.HasLeftGripper()) leftHandPositionRequest.Id = robotConfig.partsId["l_hand"];
-            leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = leftGripperOpening } };
+            leftHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { OpeningPercentage = leftGripperOpening } };
 
             HandPositionRequest rightHandPositionRequest = new HandPositionRequest();
             if (robotConfig.HasRightGripper()) rightHandPositionRequest.Id = robotConfig.partsId["r_hand"];
-            rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { Position = rightGripperOpening } };
+            rightHandPositionRequest.Position = new HandPosition { ParallelGripper = new ParallelGripperPosition { OpeningPercentage = rightGripperOpening } };
 
             ActualSendGrippersCommands(leftHandPositionRequest, rightHandPositionRequest);
         }

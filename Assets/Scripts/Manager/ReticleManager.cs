@@ -6,97 +6,62 @@ namespace TeleopReachy
     public class ReticleManager : MonoBehaviour
     {
         [SerializeField]
-        public Button reticleButton;
+        public Button alwaysButton;
 
         [SerializeField]
-        public Toggle reticleToggle;
+        public Button neverButton;
 
-        private RobotConfig robotConfig;
-        private RobotStatus robotStatus;
+        private bool needUpdateButtons = false;
+        private ColorBlock alwaysColor;
+        private ColorBlock neverColor;
 
-        //private bool needUpdateButton = false;
-        private bool needUpdateToggle = false;
-        //private bool isButtonInteractable = false;
-        private bool isToggleInteractable = false;
-        //private ColorBlock buttonColor;
-        //private string buttonText;
-
-        private MotionSicknessManager motionSicknessManager;
+        private OptionsManager optionsManager;
 
         void Start()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
+            optionsManager = OptionsManager.Instance;
+
             ChooseButtonMode();
 
-            reticleButton.onClick.AddListener(SwitchButtonMode);
-            reticleToggle.onValueChanged.AddListener(SwitchToggleMode);
-
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-
-            robotConfig.event_OnConfigChanged.AddListener(CheckToggleInteractibility);
-
-            CheckToggleInteractibility();
+            alwaysButton.onClick.AddListener(SwitchToAlwaysMode);
+            neverButton.onClick.AddListener(SwitchToNeverMode);
         }
 
         void ChooseButtonMode()
         {
-            if (motionSicknessManager.IsReticleOn)
+            if (optionsManager.isReticleOn)
             {
-                reticleButton.colors = ColorsManager.colorsActivated;
-                reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle ON";
+                alwaysButton.colors = ColorsManager.colorsActivated;
+                neverButton.colors = ColorsManager.colorsDeactivated;
             }
             else
             {
-                reticleButton.colors = ColorsManager.colorsDeactivated;
-                reticleButton.transform.GetChild(0).GetComponent<Text>().text = "Reticle OFF";
+                alwaysButton.colors = ColorsManager.colorsDeactivated;
+                neverButton.colors = ColorsManager.colorsActivated;
             }
         }
 
-        void SwitchToggleMode(bool value)
+        void SwitchToAlwaysMode()
         {
-            motionSicknessManager.IsReticleAlwaysShown = value;
+            optionsManager.SetReticleOn(true);
+
+            needUpdateButtons = true;
         }
 
-        void SwitchButtonMode()
+        void SwitchToNeverMode()
         {
-            motionSicknessManager.IsReticleOn = !motionSicknessManager.IsReticleOn;
-            ChooseButtonMode();
-            CheckToggleInteractibility();
+            optionsManager.SetReticleOn(false);
+
+            needUpdateButtons = true;
         }
 
         void Update()
         {
-            if (needUpdateToggle)
+            if(needUpdateButtons)
             {
-                reticleToggle.interactable = isToggleInteractable;
-                if (!isToggleInteractable) reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
-                else reticleToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
-                needUpdateToggle = false;
+                needUpdateButtons = false;
+                ChooseButtonMode();
             }
-        }
-
-        void CheckToggleInteractibility()
-        {
-            if (motionSicknessManager.IsReticleOn)
-            {
-                if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
-                {
-                    reticleToggle.isOn = motionSicknessManager.IsReticleAlwaysShown;
-                    isToggleInteractable = true;
-                }
-                else
-                {
-                    reticleToggle.isOn = true;
-                    isToggleInteractable = false;
-                }
-            }
-            else
-            {
-                reticleToggle.isOn = false;
-                isToggleInteractable = false;
-            }
-            needUpdateToggle = true;
         }
     }
 }

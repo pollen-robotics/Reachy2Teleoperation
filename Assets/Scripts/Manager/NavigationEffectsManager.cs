@@ -6,150 +6,168 @@ namespace TeleopReachy
     public class NavigationEffectsManager : MonoBehaviour
     {
         [SerializeField]
-        public Button noEffectButton;
+        private Button noEffectAutoButton;
 
         [SerializeField]
-        public Button tunnellingButton;
+        private Button tunnellingAutoButton;
 
         [SerializeField]
-        public Button reducedScreenButton;
+        private Button reducedScreenAutoButton;
 
         [SerializeField]
-        public Toggle onDemandToggle;
+        private Button noEffectOnClickButton;
 
-        private RobotConfig robotConfig;
-        private RobotStatus robotStatus;
+        [SerializeField]
+        private Button tunnellingOnClickButton;
 
-        private bool needUpdateButtons = false;
-        private bool needUpdateToggle = false;
-        private bool areButtonsInteractable = false;
-        private bool isToggleInteractable = false;
-        private ColorBlock noEffectButtonColor;
-        private ColorBlock tunnellingButtonColor;
-        private ColorBlock reducedScreenButtonColor;
+        [SerializeField]
+        private Button reducedScreenOnClickButton;
 
-        private MotionSicknessManager motionSicknessManager;
+        private bool needUpdateButtons;
+
+        private ColorBlock noEffectAutoButtonColor;
+        private ColorBlock tunnellingAutoButtonColor;
+        private ColorBlock reducedScreenAutoButtonColor;
+
+        private ColorBlock noEffectOnClickButtonColor;
+        private ColorBlock tunnellingOnClickButtonColor;
+        private ColorBlock reducedScreenOnClickButtonColor;
+
+        private OptionsManager optionsManager;
 
         void Start()
         {
-            motionSicknessManager = MotionSicknessManager.Instance;
+            optionsManager = OptionsManager.Instance;
+
+            noEffectAutoButton?.onClick.AddListener(SwitchToNoEffectAutoMode);
+            tunnellingAutoButton?.onClick.AddListener(SwitchToTunnellingAutoMode);
+            reducedScreenAutoButton?.onClick.AddListener(SwitchToReducedScreenAutoMode);
+
+            noEffectOnClickButton?.onClick.AddListener(SwitchToNoEffectOnClickMode);
+            tunnellingOnClickButton?.onClick.AddListener(SwitchToTunnellingOnClickMode);
+            reducedScreenOnClickButton?.onClick.AddListener(SwitchToReducedScreenOnClickMode);
+
+            tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenAutoButtonColor = ColorsManager.colorsDeactivated;
+            noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
+
+            tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
+            noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
+
             ChooseButtonsMode();
-            onDemandToggle.isOn = motionSicknessManager.IsNavigationEffectOnDemand;
-
-            noEffectButton.onClick.AddListener(SwitchToNoEffectMode);
-            tunnellingButton.onClick.AddListener(SwitchToTunnellingMode);
-            reducedScreenButton.onClick.AddListener(SwitchToReducedScreenMode);
-            onDemandToggle.onValueChanged.AddListener(SwitchToggleMode);
-
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-
-            robotConfig.event_OnConfigChanged.AddListener(CheckMobileBasePresence);
-
-            onDemandToggle.interactable = false;
-
-            CheckMobileBasePresence();
         }
 
         void ChooseButtonsMode()
         {
-            if (motionSicknessManager.IsTunnellingOn) SwitchToTunnellingMode();
-            else if (motionSicknessManager.IsReducedScreenOn) SwitchToReducedScreenMode();
-            else SwitchToNoEffectMode();
+            if (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.Tunnelling) SwitchToTunnellingAutoMode();
+            else if (optionsManager.motionSicknessEffectAuto == OptionsManager.MotionSicknessEffect.ReducedScreen) SwitchToReducedScreenAutoMode();
+            else SwitchToNoEffectAutoMode();
+
+            if (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.Tunnelling) SwitchToTunnellingOnClickMode();
+            else if (optionsManager.motionSicknessEffectOnClick == OptionsManager.MotionSicknessEffect.ReducedScreen) SwitchToReducedScreenOnClickMode();
+            else SwitchToNoEffectOnClickMode();
         }
 
-        void SwitchToggleMode(bool value)
+        void SwitchToNoEffectAutoMode()
         {
-            motionSicknessManager.IsNavigationEffectOnDemand = value;
-        }
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.None);
 
-        void SwitchToNoEffectMode()
-        {
-            motionSicknessManager.IsTunnellingOn = false;
-            motionSicknessManager.IsReducedScreenOn = false;
+            noEffectAutoButtonColor = ColorsManager.colorsActivated;
+            tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenAutoButtonColor = ColorsManager.colorsDeactivated;
 
-            noEffectButtonColor = ColorsManager.colorsActivated;
-            tunnellingButtonColor = ColorsManager.colorsDeactivated;
-            reducedScreenButtonColor = ColorsManager.colorsDeactivated;
+            tunnellingOnClickButton.interactable = true;
+            reducedScreenOnClickButton.interactable = true;
 
-            isToggleInteractable = false;
-            needUpdateToggle = true;
             needUpdateButtons = true;
         }
 
-        void SwitchToTunnellingMode()
+        void SwitchToTunnellingAutoMode()
         {
-            motionSicknessManager.IsTunnellingOn = true;
-            motionSicknessManager.IsReducedScreenOn = false;
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.Tunnelling);
 
-            noEffectButtonColor = ColorsManager.colorsDeactivated;
-            tunnellingButtonColor = ColorsManager.colorsActivated;
-            reducedScreenButtonColor = ColorsManager.colorsDeactivated;
+            noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
+            tunnellingAutoButtonColor = ColorsManager.colorsActivated;
+            reducedScreenAutoButtonColor = ColorsManager.colorsDeactivated;
 
-            isToggleInteractable = true;
-            needUpdateToggle = true;
+            tunnellingOnClickButton.interactable = false;
+            reducedScreenOnClickButton.interactable = true;
+
+            needUpdateButtons = true;
+            
+        }
+
+        void SwitchToReducedScreenAutoMode()
+        {
+            optionsManager.SetMotionSicknessEffectAuto(OptionsManager.MotionSicknessEffect.ReducedScreen);
+
+            noEffectAutoButtonColor = ColorsManager.colorsDeactivated;
+            tunnellingAutoButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenAutoButtonColor = ColorsManager.colorsActivated;
+
+            tunnellingOnClickButton.interactable = true ;
+            reducedScreenOnClickButton.interactable = false;
+
             needUpdateButtons = true;
         }
 
-        void SwitchToReducedScreenMode()
+        void SwitchToNoEffectOnClickMode()
         {
-            motionSicknessManager.IsTunnellingOn = false;
-            motionSicknessManager.IsReducedScreenOn = true;
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.None);
 
-            noEffectButtonColor = ColorsManager.colorsDeactivated;
-            tunnellingButtonColor = ColorsManager.colorsDeactivated;
-            reducedScreenButtonColor = ColorsManager.colorsActivated;
+            noEffectOnClickButtonColor = ColorsManager.colorsActivated;
+            tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
 
-            isToggleInteractable = true;
-            needUpdateToggle = true;
+            tunnellingAutoButton.interactable = true;
+            reducedScreenAutoButton.interactable = true;
+
+            needUpdateButtons = true;
+        }
+
+        void SwitchToTunnellingOnClickMode()
+        {
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.Tunnelling);
+
+            noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
+            tunnellingOnClickButtonColor = ColorsManager.colorsActivated;
+            reducedScreenOnClickButtonColor = ColorsManager.colorsDeactivated;
+
+            tunnellingAutoButton.interactable = false;
+            reducedScreenAutoButton.interactable = true;
+
+            needUpdateButtons = true;
+        }
+
+        void SwitchToReducedScreenOnClickMode()
+        {
+            optionsManager.SetMotionSicknessEffectOnClick(OptionsManager.MotionSicknessEffect.ReducedScreen);
+
+            noEffectOnClickButtonColor = ColorsManager.colorsDeactivated;
+            tunnellingOnClickButtonColor = ColorsManager.colorsDeactivated;
+            reducedScreenOnClickButtonColor = ColorsManager.colorsActivated;
+
+            tunnellingAutoButton.interactable = true;
+            reducedScreenAutoButton.interactable = false;
+
             needUpdateButtons = true;
         }
 
         void Update()
         {
-            if (needUpdateToggle)
-            {
-                onDemandToggle.interactable = isToggleInteractable;
-                if (!isToggleInteractable) onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.grey;
-                else onDemandToggle.transform.GetChild(1).GetComponent<Text>().color = ColorsManager.white;
-                needUpdateToggle = false;
-            }
             if (needUpdateButtons)
             {
-                tunnellingButton.interactable = areButtonsInteractable;
-                tunnellingButton.colors = tunnellingButtonColor;
-                reducedScreenButton.interactable = areButtonsInteractable;
-                reducedScreenButton.colors = reducedScreenButtonColor;
-                noEffectButton.colors = noEffectButtonColor;
+                if(tunnellingAutoButton != null) tunnellingAutoButton.colors = tunnellingAutoButtonColor;
+                if(reducedScreenAutoButton != null) reducedScreenAutoButton.colors = reducedScreenAutoButtonColor;
+                if(noEffectAutoButton != null) noEffectAutoButton.colors = noEffectAutoButtonColor;
+
+                if(tunnellingOnClickButton != null) tunnellingOnClickButton.colors = tunnellingOnClickButtonColor;
+                if(reducedScreenOnClickButton != null) reducedScreenOnClickButton.colors = reducedScreenOnClickButtonColor;
+                if(noEffectOnClickButton != null) noEffectOnClickButton.colors = noEffectOnClickButtonColor;
+
                 needUpdateButtons = false;
             }
-        }
-
-        void CheckMobileBasePresence()
-        {
-            if (robotConfig.HasMobileBase() && robotStatus.IsMobilityOn())
-            {
-                areButtonsInteractable = true;
-            }
-            else
-            {
-                areButtonsInteractable = false;
-                motionSicknessManager.IsTunnellingOn = false;
-                motionSicknessManager.IsReducedScreenOn = false;
-                tunnellingButtonColor = ColorsManager.colorsDeactivated;
-                reducedScreenButtonColor = ColorsManager.colorsDeactivated;
-                noEffectButtonColor = ColorsManager.colorsActivated;
-            }
-            if (motionSicknessManager.IsTunnellingOn || motionSicknessManager.IsReducedScreenOn)
-            {
-                isToggleInteractable = true;
-            }
-            else
-            {
-                isToggleInteractable = false;
-            }
-            needUpdateToggle = true;
-            needUpdateButtons = true;
         }
     }
 }

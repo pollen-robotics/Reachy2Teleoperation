@@ -7,11 +7,16 @@ using Reachy.Part;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
 using Reachy.Part.Hand;
-using Mobile.Base.Utility;
+using Reachy.Part.Mobile.Base.Utility;
 using Component;
 
 namespace TeleopReachy
 {
+    public enum Part
+    {
+        LeftArm, LeftGripper, RightArm, RightGripper, Head, MobileBase, 
+    }
+
     public class RobotConfig : MonoBehaviour
     {
         private DataMessageManager dataController;
@@ -38,7 +43,7 @@ namespace TeleopReachy
         void Start()
         {
             dataController = DataMessageManager.Instance;
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
+            connectionStatus = ConnectionStatus.Instance;
 
             dataController.event_OnRobotReceived.AddListener(GetPartsId);
             connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckConfig);
@@ -73,7 +78,7 @@ namespace TeleopReachy
         void CheckConfig()
         {
             Debug.Log("[Robot config]: CheckConfig");
-            if (connectionStatus.HasRobotJustLeftDataRoom())
+            if (!connectionStatus.IsRobotInDataRoom())
             {
                 ResetConfig();
             }
@@ -87,7 +92,7 @@ namespace TeleopReachy
             foreach (var field in descriptor.Fields.InDeclarationOrder())
             {
                 var value = field.Accessor.GetValue(reachy) as IMessage;
-                if (value != null && (value is Arm || value is Head || value is Hand))
+                if (value != null)
                 {
                     var idField = value.Descriptor.FindFieldByName("part_id");
                     if (idField != null)
@@ -95,11 +100,6 @@ namespace TeleopReachy
                         PartId id = (PartId)idField.Accessor.GetValue(value);
                         partsId.Add(field.Name, id);
                     }
-                }
-                if (value != null && value is MobileBase)
-                {
-                    PartId id = new PartId { Name = "mobile_base" };
-                    partsId.Add(field.Name, id);
                 }
             }
 
@@ -119,6 +119,27 @@ namespace TeleopReachy
             has_robot_config = true;
 
             event_OnConfigChanged.Invoke();
+        }
+
+        public bool HasPart(Part part)
+        {
+            switch (part)
+            {
+                case Part.LeftArm:
+                    return HasLeftArm();
+                case Part.RightArm:
+                    return HasRightArm();
+                case Part.LeftGripper:
+                    return HasLeftGripper();
+                case Part.RightGripper:
+                    return HasRightGripper();
+                case Part.Head:
+                    return HasHead();
+                case Part.MobileBase:
+                    return HasMobileBase();
+                default:
+                    return false;
+            }
         }
 
         public bool HasRightArm()

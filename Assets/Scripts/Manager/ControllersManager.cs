@@ -22,6 +22,9 @@ namespace TeleopReachy
         public SupportedDevices controllerDeviceType;
         public SupportedDevices headsetType;
 
+        public bool rightHandDeviceIsTracked { get; private set; }
+        public bool leftHandDeviceIsTracked { get; private set; }
+
         public UnityEvent event_OnDevicesUpdate;
 
         void Start()
@@ -29,6 +32,8 @@ namespace TeleopReachy
             UpdateDevicesList();
 
             UnityEngine.XR.InputDevices.deviceConnected += UpdateDevicesList;
+            rightHandDeviceIsTracked = false;
+            leftHandDeviceIsTracked = false;
         }
 
         private void UpdateDevicesList(UnityEngine.XR.InputDevice device)
@@ -74,6 +79,53 @@ namespace TeleopReachy
             }
 
             event_OnDevicesUpdate.Invoke();
+        }
+
+        private void Update()
+        {
+            if (rightHandDevice != null)
+            {
+                if (rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool isTracked))
+                {
+                    if (isTracked != rightHandDeviceIsTracked)
+                    {
+                        rightHandDeviceIsTracked = isTracked;
+                        if (rightHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.RightControllerTrackingRetrieved);
+                        else EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
+                    }
+                }
+                else
+                {
+                    if (rightHandDeviceIsTracked)
+                    {
+                        rightHandDeviceIsTracked = false;
+                        EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
+                    }
+                }
+            }
+            if (leftHandDevice != null)
+            {
+                if (leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked, out bool isTracked))
+                {
+                    if (isTracked != leftHandDeviceIsTracked)
+                    {
+                        if (isTracked != leftHandDeviceIsTracked)
+                        {
+                            leftHandDeviceIsTracked = isTracked;
+                            if (leftHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.LeftControllerTrackingRetrieved);
+                            else EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
+                        }
+                    }
+                }
+                else
+                {
+                    if (leftHandDeviceIsTracked)
+                    {
+                        leftHandDeviceIsTracked = false;
+                        EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
+                    }
+                }
+            }
         }
     }
 }

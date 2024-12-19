@@ -10,74 +10,33 @@ namespace TeleopReachy
         private DataMessageManager dataController;
         private ConnectionStatus connectionStatus;
 
-        //private RobotStatus robotStatus;
-
-        private List<GameObject> actuators;
-
         private Dictionary<string, float> panelTemperature;
+        private Dictionary<string, string> panelStatus;
 
         private bool isStatePanelStatusActive;
-        private bool needUpdatePanel;
+        private bool needUpdatePanelInfo;
 
-        void Awake()
+        void OnEnable()
         {
+            needUpdatePanelInfo = false;
+
             if (Robot.IsCurrentRobotVirtual())
             {
                 isStatePanelStatusActive = false;
-                UpdateStatePanelStatus();
+                needUpdatePanelInfo = true;
                 return;
             }
+            connectionStatus = ConnectionStatus.Instance;
+            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckMotorsInfo);
 
-            dataController = DataMessageManager.Instance;
-            dataController.event_OnStateUpdateTemperature.AddListener(UpdateTemperatures);
-
-            connectionStatus = WebRTCManager.Instance.ConnectionStatus;
-            connectionStatus.event_OnConnectionStatusHasChanged.AddListener(CheckTemperatureInfo);
-
-            actuators = new List<GameObject>();
-            foreach (Transform child in transform.GetChild(1))
-            {
-                actuators.Add(child.gameObject);
-            }
-
-            CheckTemperatureInfo();
-
-            isStatePanelStatusActive = true;
-            needUpdatePanel = false;
+            CheckMotorsInfo();
         }
 
-        private void UpdateTemperatures(Dictionary<string, float> Temperatures)
-        {
-            panelTemperature = new Dictionary<string, float>();
-            foreach (KeyValuePair<string, float> motor in Temperatures)
-            {
-                if (motor.Key.Contains("hand"))
-                {
-                    string[] nameParsed = motor.Key.Split("_hand_");
-                    string actuatorName = nameParsed[0] + "_hand_temperature";
-
-                    string panelName = actuatorName + "_child_" + nameParsed[1] + "_temperature";
-
-                    panelTemperature.Add(panelName, motor.Value);
-                }
-                else
-                {
-                    string[] nameParsed = motor.Key.Split("_motor_");
-                    string actuatorName = nameParsed[0] + "_temperature";
-
-                    string panelName = actuatorName + "_child_" + "motor_" + nameParsed[1] + "_temperature";
-
-                    panelTemperature.Add(panelName, motor.Value);
-                }
-            }
-            needUpdatePanel = true;
-        }
-
-        private void CheckTemperatureInfo()
+        private void CheckMotorsInfo()
         {
             if (connectionStatus.AreRobotServicesRestarting())
             {
-                transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "Waiting for temperatures...";
+                transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "Waiting for motors info...";
                 transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.blue;
                 isStatePanelStatusActive = true;
             }
@@ -85,7 +44,7 @@ namespace TeleopReachy
             {
                 if (!connectionStatus.IsRobotInDataRoom())
                 {
-                    transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No temperature information";
+                    transform.GetChild(2).GetChild(1).GetComponent<Text>().text = "No motors information";
                     transform.GetChild(2).GetChild(1).GetComponent<Text>().color = ColorsManager.red;
                     isStatePanelStatusActive = true;
                 }
@@ -94,53 +53,16 @@ namespace TeleopReachy
                     isStatePanelStatusActive = false;
                 }
             }
-            UpdateStatePanelStatus();
-        }
-
-        private void UpdateStatePanelStatus()
-        {
-            transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
+            needUpdatePanelInfo = true;
         }
 
         void Update()
         {
-            if (needUpdatePanel)
+            if(needUpdatePanelInfo)
             {
-                needUpdatePanel = false;
-
-                foreach (KeyValuePair<string, float> motor in panelTemperature)
-                {
-                    string[] nameParsed = motor.Key.Split("_child_");
-
-                    GameObject currentActuator = actuators.Find(act => act.name == nameParsed[0]);
-                    Transform currentMotor = currentActuator.transform.Find(nameParsed[1]);
-
-                    string[] typeParsed = nameParsed[1].Split("_");
-                    if (nameParsed[0].Contains("hand"))
-                    {
-                        currentMotor.GetComponent<Text>().text = typeParsed[0] + ": " + Mathf.Round(motor.Value).ToString();
-                    }
-                    else
-                    {
-                        currentMotor.GetComponent<Text>().text = typeParsed[0] + " " + typeParsed[1] + ": " + Mathf.Round(motor.Value).ToString();
-                    }
-
-                    if (motor.Value >= ErrorManager.THRESHOLD_ERROR_MOTOR_TEMPERATURE)
-                    {
-                        currentActuator.transform.GetChild(1).gameObject.SetActive(true);
-                    }
-                    else
-                    {
-                        if (motor.Value >= ErrorManager.THRESHOLD_WARNING_MOTOR_TEMPERATURE)
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(true);
-                        }
-                        else
-                        {
-                            currentActuator.transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                    }
-                }
+                needUpdatePanelInfo = false;
+                transform.GetChild(1).ActivateChildren(!isStatePanelStatusActive);
+                transform.GetChild(2).gameObject.SetActive(isStatePanelStatusActive);
             }
         }
     }

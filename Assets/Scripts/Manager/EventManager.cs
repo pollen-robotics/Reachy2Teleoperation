@@ -7,17 +7,46 @@ namespace TeleopReachy
 {
     public enum EventNames
     {
+        EnterConnectionScene,
+        EnterMirrorScene,
+        EnterTeleoperationScene,
+
+        QuitConnectionScene,
         QuitMirrorScene,
-        BackToMirrorScene,
-        MirrorSceneLoaded,
-        StartMirrorScene,
-        LoadConnectionScene,
-        TeleoperationSceneLoaded,
+        QuitTeleoperationScene,
         QuitApplication,
+
+        RobotDataSceneLoaded,
+        MirrorSceneLoaded,
+        TeleoperationSceneLoaded,
+
         ShowXRay,
         HideXRay,
         HeadsetRemoved,
         HeadsetReset,
+        LeftControllerTrackingLost,
+        LeftControllerTrackingRetrieved,
+        RightControllerTrackingLost,
+        RightControllerTrackingRetrieved,
+
+        OnStartTeleoperation,
+        OnStartArmTeleoperation,
+        OnStartMobileBaseTeleoperation,
+        OnStopMobileBaseTeleoperation,
+        OnStopTeleoperation,
+        OnSuspendTeleoperation,
+        OnResumeTeleoperation,
+
+        OnInitializeRobotStateRequested,
+        OnReinitializeLimitsRequested,
+        OnRobotStiffRequested,
+        OnRobotCompliantRequested,
+        OnRobotSmoothlyCompliantRequested,
+        OnGraspingLock,
+
+        OnEmergencyStop,
+
+        OnFixUserOrigin,
     }
 
     public class EventManager : Singleton<EventManager>
