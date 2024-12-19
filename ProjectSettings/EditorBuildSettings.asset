@@ -23,14 +23,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TeleoperationScene.unity
     guid: beec81ff035a3f347b87646c46367e9b
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnitTests/Scenes/Test_GaelleGhost/Test_GaelleGhostBaseScene.unity
     guid: 6a858fb8edcf4934a89d92177fbad962
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnitTests/Scenes/Test_GaelleGhost/Test_GaelleGhostMirrorScene.unity
     guid: c77a45a46515e3b47a61fb91ae46b0eb
-  - enabled: 1
+  - enabled: 0
     path: Assets/UnitTests/Scenes/Test_GaelleGhost/Test_GaelleGhostTeleoperationScene.unity
     guid: 04a2f10131efbb849866e35c58c45a82
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e9cb3d265523773438c00c9c7d792dc8, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f6b7baabb12ab194bbbb25c4070439d4, type: 2}
