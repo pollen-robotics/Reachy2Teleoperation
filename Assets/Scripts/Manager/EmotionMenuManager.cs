@@ -51,14 +51,11 @@ namespace TeleopReachy
 
         void ActivateEmotion()
         {
-            Debug.LogError("ActivateEmotion");
             canMenuOpen = true;
         }
 
         void DeactivateEmotion()
         {
-            Debug.LogError("DeactivateEmotion");
-
             canMenuOpen = false;
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
@@ -137,6 +134,7 @@ namespace TeleopReachy
                 child.gameObject.SetActive(false);
             }
             isEmotionMenuOpen = false;
+            canMenuOpen = true;
         }
     }
 }
