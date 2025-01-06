@@ -4,9 +4,9 @@ Unity-based application that allows to control a Reachy 2 robot with a VR headse
 
 ## Requirements
 
-The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2 and 3. The Oculus Quest headsets needs the Oculus link for the app to work properly.
+The app should run with any VR headset compatible with Unity. It has been tested with the Oculus Quest 2 and 3. The Oculus Quest headsets need the Oculus link for the app to work properly.
 
-For any custom development, we recommend to use Unity LTS 2022.3, which has been used for development (*2022.3.20f1* and *2022.3.41f1*).
+For any custom development, we recommend to use Unity LTS 2022.3, which has been used for development.
 
 The project relies on GStreamer. It will be installed directly with the app if you use the installer (see below). Otherwise, please install the [Windows Runtime](
 https://gstreamer.freedesktop.org/data/pkg/windows/1.24.8/msvc/gstreamer-1.0-msvc-x86_64-1.24.8.msi) (make sure you select the **complete** installation), and the [development files](https://gstreamer.freedesktop.org/data/pkg/windows/1.24.8/msvc/gstreamer-1.0-devel-msvc-x86_64-1.24.8.msi). 
@@ -15,7 +15,7 @@ https://gstreamer.freedesktop.org/data/pkg/windows/1.24.8/msvc/gstreamer-1.0-msv
 <summary>Check that the environment variable PATH contains <i>C:\gstreamer\1.0\msvc_x86_64\bin</i> (default installation). </summary>
 
 For that, look for “Edit the system environment variables” in the Windows search bar. Then, click on Environment variables. A new window shows up : double click on "Path" in the user variables. If you don't see the gstreamer variable, select "New" and add the pathway above. 
-<img src="Docs/img/env_variables.jpg" alt="My cool logo"/>
+<img src="Docs/img/env_variables.jpg" alt="setting env variables"/>
 
 </details>
 
@@ -25,7 +25,7 @@ Reboot after the installation.
 
 ### Using a [release build](https://github.com/pollen-robotics/Reachy2Teleoperation/releases) [recommended]
 
-For Windows and Android platforms, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). You can use the installer to install the application on your computer, as well as GStreamer, or download the zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used.
+For Windows platform, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). You can use the installer to install the application on your computer, as well as GStreamer, or download the zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used.
 
 
 ### From source
@@ -43,13 +43,13 @@ In Unity Editor, check the settings are well set : go to Edit > Project Settings
 
 ## Usage
 
-This is the quick-start documentation. For a detailed manual, please visit the [main documentation website](https://docs.pollen-robotics.com/vr/introduction/introduction/).
+This is the quick-start documentation. For a detailed manual, please visit the [main documentation website](https://pollen-robotics.github.io/reachy2-docs/teleoperation/).
 
 Teleoperating a robot takes place in three basic steps:
 
 ### 1. Connect to a robot
 
-The first step is to select the robot you want to control. For that you'll need the IP address of the robot (please refer to the [robot documentation](https://docs.pollen-robotics.com/dashboard/introduction/first-connection/) for the first connection). Press *new robot button* and add your robot.
+The first step is to select the robot you want to control. For that you'll need the IP address of the robot (please refer to the [robot documentation](https://pollen-robotics.github.io/reachy2-docs/teleoperation/getting-started-teleoperation/connect-reachy2/) for the first connection). Press *new robot button* and add your robot.
 
 <p align="center"> 
     <img src="Docs/img/change_robot.jpg" alt="change robot" width='40%; margin-right: 10px;'/>
