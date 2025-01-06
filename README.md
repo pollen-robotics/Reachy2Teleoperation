@@ -1,6 +1,6 @@
 # Reachy2Teleoperation
 
-Unity-based application that allows to control a Reachy 2 robot with a VR headset. The user documentation is available [here](https://docs.pollen-robotics.com/vr/introduction/introduction/).
+Unity-based application that allows to control a Reachy 2 robot with a VR headset. The user documentation is available [here](https://pollen-robotics.github.io/reachy2-docs/teleoperation/).
 
 ## Requirements
 
@@ -25,8 +25,6 @@ Reboot after the installation.
 
 ### Using a [release build](https://github.com/pollen-robotics/Reachy2Teleoperation/releases) [recommended]
 
-For the Oculus Quest 2 or 3, you may ask to join the list of beta users to install the app directly from the app store. Please contact us on our [discord channel](https://discord.com/channels/519098054377340948/991321051835404409)!
-
 For Windows and Android platforms, the simplest way to use the application is to download a [release here](https://github.com/pollen-robotics/ReachyTeleoperation/releases) (*Assets* section). You can use the installer to install the application on your computer, as well as GStreamer, or download the zip file that contains the .exe to run. Your VR headset should be plugged in and ready to be used.
 
 
@@ -38,6 +36,8 @@ git clone --recurse-submodules -b master https://github.com/pollen-robotics/Reac
 ```
 
 Make sure you have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed on your computer.
+
+Then, you will be able to open the project in Unity.
 
 In Unity Editor, check the settings are well set : go to Edit > Project Settings > XR Plugin Management, and check that your device is selected. 
 
