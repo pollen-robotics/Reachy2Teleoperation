@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "com.pollenrobotics.gstreamerwebrtc": {
-      "version": "https://github.com/pollen-robotics/GstreamerWebRTCUnityPlugin.git?path=/UnityProject/Packages/com.pollenrobotics.gstreamerwebrtc#main",
+      "version": "file:com.pollenrobotics.gstreamerwebrtc",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "c3fb39ef1dbd90189b5a1e0c7c648204008e8b8a"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

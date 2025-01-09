@@ -36,6 +36,7 @@ namespace GstreamerWebRTC
 
             renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
             renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
+            GStreamerRenderingPlugin.event_OnFrameDrawn.AddListener(FrameRendered);
 
             renderingPlugin.Connect();
         }
@@ -88,6 +89,16 @@ namespace GstreamerWebRTC
             event_AudioSenderStatusHasChanged.Invoke(false);
             event_DataControllerStatusHasChanged.Invoke(false);
             base.OnDisable();
+        }
+
+        public bool IsFrameRendered()
+        {
+            return frameRendered;
+        }
+
+        public void ResetFrameRendered()
+        {
+            frameRendered = false;
         }
 
         public Texture GetLeftTexture()
