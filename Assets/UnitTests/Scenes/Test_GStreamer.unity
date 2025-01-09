@@ -250,8 +250,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftRawImage: {fileID: 0}
   rightRawImage: {fileID: 0}
-  ip_address: 10.0.1.36
-  screen: {fileID: 1713835167}
+  ip_address: 10.0.1.30
+  event_OnPipelineRenderingRunning:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnPipelineDataRunning:
+    m_PersistentCalls:
+      m_Calls: []
   event_OnVideoRoomStatusHasChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -262,6 +267,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   event_DataControllerStatusHasChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  event_LeftVideoTextureReady:
+    m_PersistentCalls:
+      m_Calls: []
+  event_RightVideoTextureReady:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &949731232
@@ -283,6 +294,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   event_OnStateUpdatePresentPositions:
+    m_PersistentCalls:
+      m_Calls: []
+  event_OnStateUpdateReachability:
     m_PersistentCalls:
       m_Calls: []
   event_OnAuditUpdate:
@@ -315,6 +329,7 @@ MonoBehaviour:
   event_OnRobotUnready:
     m_PersistentCalls:
       m_Calls: []
+  checkVideoStream: 0
 --- !u!114 &949731234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6299365401b7ea3408d597e8d48f9b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reachy: {fileID: 0}
+  event_OnPresentPositionsChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1518172961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,40 +481,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9f543f11b1126f449a11cee7e9945b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  event_OnStartTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnStartArmTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnStopTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnSuspendTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnResumeTeleoperation:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnInitializeRobotStateRequested:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotStiffRequested:
-    m_PersistentCalls:
-      m_Calls: []
   event_OnGraspingLock:
     m_PersistentCalls:
       m_Calls: []
-  event_OnRobotSmoothlyCompliantRequested:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnRobotCompliantRequested:
-    m_PersistentCalls:
-      m_Calls: []
   event_OnRobotFullyCompliant:
-    m_PersistentCalls:
-      m_Calls: []
-  event_OnSwitchMobilityOn:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1518172963

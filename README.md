@@ -9,7 +9,7 @@ The app should run with any VR headset compatible with Unity. It has been tested
 For any custom development, we recommend to use Unity LTS 2022.3, which has been used for development.
 
 The project relies on GStreamer. It will be installed directly with the app if you use the installer (see below). Otherwise, please install the [Windows Runtime](
-https://gstreamer.freedesktop.org/data/pkg/windows/1.24.8/msvc/gstreamer-1.0-msvc-x86_64-1.24.8.msi) (make sure you select the **complete** installation), and the [development files](https://gstreamer.freedesktop.org/data/pkg/windows/1.24.8/msvc/gstreamer-1.0-devel-msvc-x86_64-1.24.8.msi). 
+https://gstreamer.freedesktop.org/data/pkg/windows/1.24.11/msvc/gstreamer-1.0-msvc-x86_64-1.24.11.msi) (make sure you select the **complete** installation), and the [development files](https://gstreamer.freedesktop.org/data/pkg/windows/1.24.11/msvc/gstreamer-1.0-devel-msvc-x86_64-1.24.11.msi). 
 
 <details>
 <summary>Check that the environment variable PATH contains <i>C:\gstreamer\1.0\msvc_x86_64\bin</i> (default installation). </summary>
