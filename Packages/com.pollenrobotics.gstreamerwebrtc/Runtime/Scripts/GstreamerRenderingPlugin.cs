@@ -7,6 +7,7 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine.Rendering;
 using UnityEngine.Events;
+using AOT;
 
 namespace GstreamerWebRTC
 {
@@ -65,6 +66,13 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
+        private static extern void RegisterDrawnCallback(drawnCallback cb);
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
         private static extern IntPtr GetTextureUpdateCallback();
 
         private IntPtr leftTextureNativePtr;
@@ -82,6 +90,7 @@ namespace GstreamerWebRTC
 
         public UnityEvent event_OnPipelineStarted;
         public UnityEvent event_OnPipelineStopped;
+        static public UnityEvent event_OnFrameDrawn;
 
         CommandBuffer _command = null;
 
@@ -101,6 +110,8 @@ namespace GstreamerWebRTC
 
             event_OnPipelineStarted = new UnityEvent();
             event_OnPipelineStopped = new UnityEvent();
+            event_OnFrameDrawn = new UnityEvent();
+            RegisterDrawnCallback(OnDrawnCallback);
             _command = new CommandBuffer();
 
             CreateDevice();
@@ -176,6 +187,13 @@ namespace GstreamerWebRTC
                 _command.IssuePluginEvent(GetRenderEventFunc(), 1);
                 Graphics.ExecuteCommandBuffer(_command);
             }
+        }
+
+        delegate void drawnCallback();
+        [MonoPInvokeCallback(typeof(drawnCallback))]
+        static void OnDrawnCallback()
+        {
+            event_OnFrameDrawn.Invoke();
         }
 
     }

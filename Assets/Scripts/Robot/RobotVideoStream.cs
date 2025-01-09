@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using GstreamerWebRTC;
+using UnityEngine.Rendering;
 
 
 namespace TeleopReachy
@@ -9,6 +10,7 @@ namespace TeleopReachy
     public class RobotVideoStream : MonoBehaviour
     {
         private GStreamerPluginCustom videoController;
+
 
 
         void Start()
@@ -24,6 +26,16 @@ namespace TeleopReachy
         public Texture GetRightTexture()
         {
             return videoController.GetRightTexture();
+        }
+
+        public bool IsFrameRendered()
+        {
+            return videoController.IsFrameRendered();
+        }
+
+        public void ResetFrameRendered()
+        {
+            videoController.ResetFrameRendered();
         }
     }
 }
