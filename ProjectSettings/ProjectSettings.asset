@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Pollen Robotics
-  productName: Reachy2Teleoperation
+  productName: Reachy2Teleoperation_RoadShow
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13697045, g: 0.14667343, b: 0.16981131, a: 1}
@@ -139,7 +139,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0.5
+  bundleVersion: RoadShow
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}

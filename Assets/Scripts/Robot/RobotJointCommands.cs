@@ -370,6 +370,32 @@ namespace TeleopReachy
 
         }
 
+        public void ModifyLeftArmTorqueLimit(uint torqueLimit)
+        {
+            if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
+            {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
+                    Id = robotConfig.partsId["l_arm"],
+                    Limit = torqueLimit,
+                };
+                dataController.SetArmTorqueLimit(torqueRequest);
+            }
+        }
+
+        public void ModifyRightArmTorqueLimit(uint torqueLimit)
+        {
+            if (robotConfig.HasRightArm() && robotStatus.IsRightArmOn())
+            {
+                Reachy.Part.Arm.TorqueLimitRequest torqueRequest = new Reachy.Part.Arm.TorqueLimitRequest
+                {
+                    Id = robotConfig.partsId["r_arm"],
+                    Limit = torqueLimit,
+                };
+                dataController.SetArmTorqueLimit(torqueRequest);
+            }
+        }
+
         private void ModifyArmTorqueLimit(uint torqueLimit)
         {
             if (robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn())
@@ -501,7 +527,7 @@ namespace TeleopReachy
             Debug.Log("[RobotJointCommands]: ResetReachyMotorsFullSpeed");
             yield return new WaitForSeconds(3);
 
-            uint speedLimit = 100;
+            uint speedLimit = (uint)PlayerPrefs.GetInt("SpeedLimit");
             ModifyArmSpeedLimit(speedLimit);
             robotStatus.SetMotorsSpeedLimited(false);
         }
@@ -511,7 +537,7 @@ namespace TeleopReachy
             Debug.Log("[RobotJointCommands]: ResetLeftArmFullSpeed");
             yield return new WaitForSeconds(4);
 
-            uint speedLimit = 100;
+            uint speedLimit = (uint)PlayerPrefs.GetInt("SpeedLimit");
             ModifyLeftArmSpeedLimit(speedLimit);
             robotStatus.SetMotorsSpeedLimited(false);
         }
@@ -521,7 +547,7 @@ namespace TeleopReachy
             Debug.Log("[RobotJointCommands]: ResetRightArmFullSpeed");
             yield return new WaitForSeconds(4);
 
-            uint speedLimit = 100;
+            uint speedLimit = (uint)PlayerPrefs.GetInt("SpeedLimit");
             ModifyRightArmSpeedLimit(speedLimit);
             robotStatus.SetMotorsSpeedLimited(false);
         }
