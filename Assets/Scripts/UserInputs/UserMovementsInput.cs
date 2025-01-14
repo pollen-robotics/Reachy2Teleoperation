@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Reachy.Part.Arm;
 using Reachy.Part.Head;
@@ -18,6 +19,9 @@ namespace TeleopReachy
 
         private float reachyArmSize = 0.6375f;
         private float reachyShoulderWidth = 0.19f;
+
+        private bool reducedLeftTorque = false;
+        private bool reducedRightTorque = false;
 
         private void OnEnable()
         {
@@ -47,17 +51,29 @@ namespace TeleopReachy
                 ArmCartesianGoal rightEndEffector;
                 if (UserSize.Instance.UserArmSize == 0)
                 {
-                    rightEndEffector = new ArmCartesianGoal
+                    Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
+                    if (right_target_pos_calibrated.Data[11] < -TableHeight.Instance.Height / 100 && !reducedRightTorque)
                     {
-                        GoalPose = handsTracker.rightHand.target_pos,
-                    };
+                        reducedRightTorque = true;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyRightArmTorqueLimit(30);
+                    }
+                    if (right_target_pos_calibrated.Data[11] > -TableHeight.Instance.Height / 100 && reducedRightTorque)
+                    {
+                        reducedRightTorque = false;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyRightArmTorqueLimit(100);
+                    }
+                    if (TableHeight.Instance.SafetyActivated)
+                    {
+                        right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
+                    }
+                    rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
                 }
                 else
                 {
                     Reachy.Kinematics.Matrix4x4 right_target_pos_calibrated = handsTracker.rightHand.target_pos;
                     right_target_pos_calibrated.Data[3] = right_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                     right_target_pos_calibrated.Data[7] = (right_target_pos_calibrated.Data[7] + UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize - reachyShoulderWidth;
-                    right_target_pos_calibrated.Data[11] = right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+                    right_target_pos_calibrated.Data[11] = Math.Max(right_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height / 100);
 
                     rightEndEffector = new ArmCartesianGoal { GoalPose = right_target_pos_calibrated };
                 }
@@ -77,17 +93,29 @@ namespace TeleopReachy
                 ArmCartesianGoal leftEndEffector;
                 if (UserSize.Instance.UserArmSize == 0)
                 {
-                    leftEndEffector = new ArmCartesianGoal
+                    Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
+                    if (left_target_pos_calibrated.Data[11] < -TableHeight.Instance.Height / 100 && !reducedLeftTorque)
                     {
-                        GoalPose = handsTracker.leftHand.target_pos,
-                    };
+                        reducedLeftTorque = true;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyLeftArmTorqueLimit(30);
+                    }
+                    if (left_target_pos_calibrated.Data[11] > -TableHeight.Instance.Height / 100 && reducedLeftTorque)
+                    {
+                        reducedLeftTorque = false;
+                        RobotDataManager.Instance.RobotJointCommands.ModifyLeftArmTorqueLimit(100);
+                    }
+                    if (TableHeight.Instance.SafetyActivated)
+                    {
+                        left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11], -TableHeight.Instance.Height / 100);
+                    }
+                    leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
                 }
                 else
                 {
                     Reachy.Kinematics.Matrix4x4 left_target_pos_calibrated = handsTracker.leftHand.target_pos;
                     left_target_pos_calibrated.Data[3] = left_target_pos_calibrated.Data[3] * reachyArmSize / UserSize.Instance.UserArmSize;
                     left_target_pos_calibrated.Data[7] = (left_target_pos_calibrated.Data[7] - UserSize.Instance.UserShoulderWidth) * reachyArmSize / UserSize.Instance.UserArmSize + reachyShoulderWidth;
-                    left_target_pos_calibrated.Data[11] = left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize;
+                    left_target_pos_calibrated.Data[11] = Math.Max(left_target_pos_calibrated.Data[11] * reachyArmSize / UserSize.Instance.UserArmSize, -TableHeight.Instance.Height / 100);
 
                     leftEndEffector = new ArmCartesianGoal { GoalPose = left_target_pos_calibrated };
                 }
