@@ -1,0 +1,19 @@
+{
+    "name": "PollenRobotics.GstreamerWebRTC",
+    "rootNamespace": "",
+    "references": [
+        "GUID:04376767bc1f3b428aefa3d20743e819"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WindowsStandalone64"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
