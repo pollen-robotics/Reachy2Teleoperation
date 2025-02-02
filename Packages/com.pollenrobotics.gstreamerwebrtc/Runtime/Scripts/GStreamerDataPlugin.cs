@@ -54,7 +54,14 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        public static extern void SendBytesChannelCommand(byte[] array, int size);
+        public static extern void SendBytesChannelReliableCommand(byte[] array, int size);
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
+        public static extern void SendBytesChannelLossyCommand(byte[] array, int size);
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -85,8 +92,16 @@ namespace GstreamerWebRTC
 #else
         [DllImport("UnityGStreamerPlugin")]
 #endif
-        static extern void RegisterChannelCommandOpenCallback(channelCommandOpenCallback cb);
-        delegate void channelCommandOpenCallback();
+        static extern void RegisterChannelReliableCommandOpenCallback(channelReliableCommandOpenCallback cb);
+        delegate void channelReliableCommandOpenCallback();
+
+#if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
+    [DllImport("__Internal")]
+#else
+        [DllImport("UnityGStreamerPlugin")]
+#endif
+        static extern void RegisterChannelLossyCommandOpenCallback(channelLossyCommandOpenCallback cb);
+        delegate void channelLossyCommandOpenCallback();
 
 #if (PLATFORM_IOS || PLATFORM_TVOS || PLATFORM_BRATWURST || PLATFORM_SWITCH) && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -125,7 +140,8 @@ namespace GstreamerWebRTC
 
         private static UnityEvent<string, int> event_OnICE;
         public static UnityEvent event_OnChannelServiceOpen;
-        public static UnityEvent event_OnChannelCommandOpen;
+        public static UnityEvent event_OnChannelReliableCommandOpen;
+        public static UnityEvent event_OnChannelLossyCommandOpen;
         public static UnityEvent<byte[]> event_OnChannelServiceData;
         public static UnityEvent<byte[]> event_OnChannelStateData;
         public static UnityEvent<byte[]> event_OnChannelAuditData;
@@ -138,7 +154,8 @@ namespace GstreamerWebRTC
             RegisterICECallback(OnICECallback);
             RegisterSDPCallback(OnSDPCallback);
             RegisterChannelServiceOpenCallback(OnChannelServiceOpenCallback);
-            RegisterChannelCommandOpenCallback(OnChannelCommandOpenCallback);
+            RegisterChannelReliableCommandOpenCallback(OnChannelReliableCommandOpenCallback);
+            RegisterChannelLossyCommandOpenCallback(OnChannelLossyCommandOpenCallback);
             RegisterChannelServiceDataCallback(OnChannelServiceDataCallback);
             RegisterChannelStateDataCallback(OnChannelStateDataCallback);
             RegisterChannelAuditDataCallback(OnChannelAuditDataCallback);
@@ -162,7 +179,8 @@ namespace GstreamerWebRTC
             event_OnICE.AddListener(OnICE);
 
             event_OnChannelServiceOpen = new UnityEvent();
-            event_OnChannelCommandOpen = new UnityEvent();
+            event_OnChannelReliableCommandOpen = new UnityEvent();
+            event_OnChannelLossyCommandOpen = new UnityEvent();
             event_OnChannelServiceData = new UnityEvent<byte[]>();
             event_OnChannelStateData = new UnityEvent<byte[]>();
             event_OnChannelAuditData = new UnityEvent<byte[]>();
@@ -236,10 +254,16 @@ namespace GstreamerWebRTC
             event_OnChannelServiceOpen.Invoke();
         }
 
-        [MonoPInvokeCallback(typeof(channelCommandOpenCallback))]
-        static void OnChannelCommandOpenCallback()
+        [MonoPInvokeCallback(typeof(channelReliableCommandOpenCallback))]
+        static void OnChannelReliableCommandOpenCallback()
         {
-            event_OnChannelCommandOpen.Invoke();
+            event_OnChannelReliableCommandOpen.Invoke();
+        }
+
+        [MonoPInvokeCallback(typeof(channelLossyCommandOpenCallback))]
+        static void OnChannelLossyCommandOpenCallback()
+        {
+            event_OnChannelLossyCommandOpen.Invoke();
         }
 
         [MonoPInvokeCallback(typeof(channelServiceDataCallback))]

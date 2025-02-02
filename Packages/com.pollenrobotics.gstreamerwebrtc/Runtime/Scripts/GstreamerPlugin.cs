@@ -152,9 +152,14 @@ namespace GstreamerWebRTC
             GStreamerDataPlugin.SendBytesChannelService(bytes, bytes.Length);
         }
 
-        protected void SendCommandToChannel(byte[] commands)
+        protected void SendCommandToChannelReliable(byte[] commands)
         {
-            GStreamerDataPlugin.SendBytesChannelCommand(commands, commands.Length);
+            GStreamerDataPlugin.SendBytesChannelReliableCommand(commands, commands.Length);
+        }
+
+        protected void SendCommandToChannelLossy(byte[] commands)
+        {
+            GStreamerDataPlugin.SendBytesChannelLossyCommand(commands, commands.Length);
         }
     }
 }
