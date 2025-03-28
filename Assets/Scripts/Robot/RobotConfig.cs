@@ -37,6 +37,8 @@ namespace TeleopReachy
 
         private bool has_robot_config;
 
+        private string robot_api_version;
+
         public UnityEvent event_OnConfigChanged;
 
         // Awake is called before Start functions
@@ -100,9 +102,16 @@ namespace TeleopReachy
                         PartId id = (PartId)idField.Accessor.GetValue(value);
                         partsId.Add(field.Name, id);
                     }
+                    else 
+                    {
+                        var apiVersion = value.Descriptor.FindFieldByName("api_version");
+                        if (apiVersion !=null)
+                        {
+                            robot_api_version = (string)apiVersion.Accessor.GetValue(value);
+                        }
+                    }
                 }
             }
-
             GetReachyConfig();
         }
 
@@ -119,6 +128,11 @@ namespace TeleopReachy
             has_robot_config = true;
 
             event_OnConfigChanged.Invoke();
+        }
+
+        public string GetRobotAPIVersion()
+        {
+            return robot_api_version;
         }
 
         public bool HasPart(Part part)

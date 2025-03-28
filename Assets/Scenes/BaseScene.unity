@@ -1248,6 +1248,7 @@ GameObject:
   - component: {fileID: 1794126929}
   - component: {fileID: 1794126930}
   - component: {fileID: 1794126931}
+  - component: {fileID: 1794126932}
   m_Layer: 0
   m_Name: ApplicationManager
   m_TagString: Untagged
@@ -1307,8 +1308,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   userTracker: {fileID: 121870476}
-  canvasOnlineMenu: {fileID: 5745522331450096041}
-  menuParent: {fileID: 1906032148}
   userInput: {fileID: 4826978605613812945}
   ground: {fileID: 6389971055515736630}
   XROrigin: {fileID: 595309022}
@@ -1337,6 +1336,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33ce875cfa3db8b4ab097c9801342305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1794126932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794126923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9124055d15d419b4a92151aacc2ff1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1877841883
