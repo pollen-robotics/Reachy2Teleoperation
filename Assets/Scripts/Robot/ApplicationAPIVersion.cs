@@ -67,7 +67,7 @@ namespace TeleopReachy
                         string[] parts = line.Split('=');
                         if (parts.Length >= 2)
                         {
-                            appVersion = parts[1].Trim(' ', '"');
+                            appVersion = parts[1].Trim(' ', '"', '\n');
                             Debug.Log($"App version found: {appVersion}");
                         }
                     }
