@@ -33,4 +33,5 @@ EditorBuildSettings:
     path: Assets/UnitTests/Scenes/Test_GaelleGhost/Test_GaelleGhostTeleoperationScene.unity
     guid: 04a2f10131efbb849866e35c58c45a82
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 72790e52d0a1ccc4db97fe7e0fd2bf91, type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: fcf61aeb8489d694fa08508ab0d389d8, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b891d9ddf6ea98f4096d737588da18cf, type: 2}
