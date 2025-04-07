@@ -25,7 +25,7 @@
 /[Aa]ssets/WebSocket*
 /[Aa]ssets/SteamVR*
 /[Aa]ssets/StreamingAssets/SteamVR*
-/[Aa]ssets/StreamingAssets/__init__*
+/[Aa]ssets/StreamingAssets*
 /[Aa]ssets/XR*
 /[Aa]ssets/TextMesh*
 /[Aa]ssets/Oculus*
