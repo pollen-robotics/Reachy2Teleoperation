@@ -25,10 +25,10 @@
 /[Aa]ssets/WebSocket*
 /[Aa]ssets/SteamVR*
 /[Aa]ssets/StreamingAssets/SteamVR*
+/[Aa]ssets/StreamingAssets*
 /[Aa]ssets/XR*
 /[Aa]ssets/TextMesh*
 /[Aa]ssets/Oculus*
-# /[Aa]ssets/VrTunnellingPro*
 
 # Visual Studio cache directory
 .vs/

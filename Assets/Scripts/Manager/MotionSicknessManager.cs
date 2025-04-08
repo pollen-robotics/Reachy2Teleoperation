@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using Sigtrap.VrTunnellingPro;
 
 
 namespace TeleopReachy
@@ -48,7 +47,7 @@ namespace TeleopReachy
         void ActivateDeactivateTunnelling(bool value)
         {
             GameObject camera = GameObject.Find("Main Camera");
-            camera.transform.GetComponent<TunnellingMobile>().enabled = value;
+            camera.transform.GetComponent<TunnelingEffect>().enabled = value;
             mobilityFakeMovement.SetClickMode(IsTunnellingOnClickOn);
             mobilityFakeMovement.SetNavigationMode(IsTunnellingAutoOn);
         }
