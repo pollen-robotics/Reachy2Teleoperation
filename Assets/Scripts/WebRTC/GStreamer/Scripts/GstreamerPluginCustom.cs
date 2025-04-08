@@ -46,7 +46,9 @@ namespace GstreamerWebRTC
             dataPlugin.event_OnPipelineStarted.AddListener(PipelineDataStarted);
             dataPlugin.event_OnPipelineStopped.AddListener(PipelineDataStopped);
             GStreamerDataPlugin.event_OnChannelServiceOpen.AddListener(OnChannelServiceOpen);
-            GStreamerDataPlugin.event_OnChannelCommandOpen.AddListener(OnChannelCommandOpen);
+            GStreamerDataPlugin.event_OnChannelReliableCommandOpen.AddListener(OnChannelCommandOpen);
+            // assuming data channel are both opened at the same time
+            //GStreamerDataPlugin.event_OnChannelLossyCommandOpen.AddListener(OnChannelCommandOpen);
             GStreamerDataPlugin.event_OnChannelServiceData.AddListener(OnChannelServiceData);
             GStreamerDataPlugin.event_OnChannelStateData.AddListener(OnDataChannelStateMessage);
             GStreamerDataPlugin.event_OnChannelAuditData.AddListener(OnDataChannelAuditMessage);
@@ -151,9 +153,14 @@ namespace GstreamerWebRTC
             }
         }
 
-        public void SendCommandMessage(AnyCommands commands)
+        public void SendCommandMessageReliable(AnyCommands commands)
         {
-            SendCommandToChannel(Google.Protobuf.MessageExtensions.ToByteArray(commands));
+            SendCommandToChannelReliable(Google.Protobuf.MessageExtensions.ToByteArray(commands));
+        }
+
+        public void SendCommandMessageLossy(AnyCommands commands)
+        {
+            SendCommandToChannelLossy(Google.Protobuf.MessageExtensions.ToByteArray(commands));
         }
 
         void OnDataChannelStateMessage(byte[] data)

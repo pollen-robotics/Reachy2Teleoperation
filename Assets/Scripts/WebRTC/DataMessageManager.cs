@@ -45,7 +45,7 @@ namespace TeleopReachy
         {
             if (commands.Commands.Count != 0)
             {
-                webRTCController.SendCommandMessage(commands);
+                webRTCController.SendCommandMessageLossy(commands);
             }
             commands = new AnyCommands { };
         }
@@ -88,7 +88,7 @@ namespace TeleopReachy
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
                             }
-                            
+
                         }
                         PartId partId = new PartId();
                         var armId = partState.Descriptor.FindFieldByName("id");
@@ -104,7 +104,7 @@ namespace TeleopReachy
                             List<ReachabilityAnswer> answers = new List<ReachabilityAnswer>();
                             if (reachabilityValues != null)
                             {
-                                foreach(var reachabilityValue in reachabilityValues)
+                                foreach (var reachabilityValue in reachabilityValues)
                                 {
                                     ReachabilityAnswer reachable = (ReachabilityAnswer)reachabilityValue;
                                     answers.Add(reachable);
@@ -181,14 +181,14 @@ namespace TeleopReachy
                         foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
-                            if (componentStatus != null)  
+                            if (componentStatus != null)
                             {
                                 string[] errorDetails = new string[0];
-                                if(componentStatus is Orbita2dStatus status2d)
+                                if (componentStatus is Orbita2dStatus status2d)
                                 {
                                     errorDetails = status2d.Errors.Select(e => e.Details).ToArray();
                                 }
-                                if(componentStatus is Orbita3dStatus status3d)
+                                if (componentStatus is Orbita3dStatus status3d)
                                 {
                                     errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
                                 }
@@ -204,9 +204,9 @@ namespace TeleopReachy
                         foreach (var componentField in headDescriptor.Fields.InDeclarationOrder())
                         {
                             var componentStatus = componentField.Accessor.GetValue(partStatus) as IMessage;
-                            if (componentStatus != null) 
+                            if (componentStatus != null)
                             {
-                                if(componentStatus is Orbita3dStatus status3d)
+                                if (componentStatus is Orbita3dStatus status3d)
                                 {
                                     string[] errorDetails = status3d.Errors.Select(e => e.Details).ToArray();
                                     string[] side = partField.Name.Split("status");
@@ -214,7 +214,7 @@ namespace TeleopReachy
                                     string component_name = side[0] + component[0];
                                     components_status.Add(component_name, errorDetails[0]);
                                 }
-                                
+
                             }
                         }
                     }
@@ -284,7 +284,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessageReliable(armCommand);
         }
 
         public void TurnHeadOff(PartId id)
@@ -300,7 +300,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessageReliable(neckCommand);
         }
 
         public void TurnHandOff(PartId id)
@@ -316,14 +316,15 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(handCommand);
+            webRTCController.SendCommandMessageReliable(handCommand);
         }
 
         public void TurnMobileBaseOff(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand
+            {
                 Id = id,
-                Mode = ZuuuModePossiblities.FreeWheel 
+                Mode = ZuuuModePossiblities.FreeWheel
             };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
@@ -337,7 +338,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(mobileBaseCommand);
+            webRTCController.SendCommandMessageReliable(mobileBaseCommand);
         }
 
         public void TurnArmOn(PartId id)
@@ -353,7 +354,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessageReliable(armCommand);
         }
 
         public void TurnHeadOn(PartId id)
@@ -369,7 +370,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessageReliable(neckCommand);
         }
 
         public void TurnHandOn(PartId id)
@@ -385,14 +386,15 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(handCommand);
+            webRTCController.SendCommandMessageReliable(handCommand);
         }
 
         public void TurnMobileBaseOn(PartId id)
         {
-            ZuuuModeCommand zuuuMode = new ZuuuModeCommand { 
+            ZuuuModeCommand zuuuMode = new ZuuuModeCommand
+            {
                 Id = id,
-                Mode = ZuuuModePossiblities.CmdVel 
+                Mode = ZuuuModePossiblities.CmdVel
             };
 
             Bridge.AnyCommands mobileBaseCommand = new Bridge.AnyCommands
@@ -406,7 +408,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(mobileBaseCommand);
+            webRTCController.SendCommandMessageReliable(mobileBaseCommand);
         }
 
         public void SetArmTorqueLimit(Reachy.Part.Arm.TorqueLimitRequest request)
@@ -422,7 +424,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessageReliable(armCommand);
         }
 
         public void SetArmSpeedLimit(Reachy.Part.Arm.SpeedLimitRequest request)
@@ -438,7 +440,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(armCommand);
+            webRTCController.SendCommandMessageReliable(armCommand);
         }
 
         public void SetHeadSpeedLimit(Reachy.Part.Head.SpeedLimitRequest request)
@@ -454,7 +456,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessageReliable(neckCommand);
         }
 
         public void SetHeadTorqueLimit(Reachy.Part.Head.TorqueLimitRequest request)
@@ -470,7 +472,7 @@ namespace TeleopReachy
                     }
                 }
             };
-            webRTCController.SendCommandMessage(neckCommand);
+            webRTCController.SendCommandMessageReliable(neckCommand);
         }
 
         protected void GetOrbita3D_PresentPosition(
