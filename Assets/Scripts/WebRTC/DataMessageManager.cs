@@ -13,6 +13,7 @@ using Reachy.Part.Hand;
 using Reachy.Kinematics;
 using Component.Orbita2D;
 using Component.Orbita3D;
+using Component.DynamixelMotor;
 using Reachy.Part.Mobile.Base.Mobility;
 using Reachy.Part.Mobile.Base.Utility;
 using Reachy.Part.Mobile.Base.Lidar;
@@ -122,6 +123,10 @@ namespace TeleopReachy
                             {
                                 GetOrbita3D_PresentPosition(present_position, componentState, partField, componentField);
                                 GetOrbita3D_Temperature(temperatures, componentState, partField, componentField);
+                            }
+                            if (componentState is DynamixelMotorState)
+                            {
+                                GetDynamixelMotor_PresentPosition(present_position, componentState, partField, componentField);
                             }
                         }
                     }
@@ -471,6 +476,28 @@ namespace TeleopReachy
                 }
             };
             webRTCController.SendCommandMessage(neckCommand);
+        }
+
+        protected void GetDynamixelMotor_PresentPosition(
+            Dictionary<string, float> dict,
+            IMessage componentState,
+            Google.Protobuf.Reflection.FieldDescriptor partField,
+            Google.Protobuf.Reflection.FieldDescriptor componentField
+            )
+        {
+            var eulerAnglesDescriptor = ExtEulerAngles.Descriptor;
+
+            var pres_pos = componentState.Descriptor.FindFieldByName("present_position");
+            if (pres_pos != null)
+            {
+                float value = (float)pres_pos.Accessor.GetValue(componentState);
+
+                string[] side = partField.Name.Split("state");
+                string[] component = componentField.Name.Split("_state");
+                string joint_name = side[0] + component[0];
+
+                dict.Add(joint_name, Mathf.Rad2Deg * value);
+            }
         }
 
         protected void GetOrbita3D_PresentPosition(
