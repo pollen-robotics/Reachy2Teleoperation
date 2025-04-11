@@ -7,7 +7,7 @@ namespace TeleopReachy
 
         protected override void Init()
         {
-            ControllersManager = GetComponent<ControllersManager>();
+            ControllersManager = ControllersManager.Instance;
             ControllersVibrations = GetComponent<ControllersVibrations>();
         }
     }

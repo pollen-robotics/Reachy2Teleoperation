@@ -22,12 +22,12 @@ namespace TeleopReachy
         public SupportedDevices controllerDeviceType;
         public SupportedDevices headsetType;
 
-        public bool rightHandDeviceIsTracked { get; private set; }
-        public bool leftHandDeviceIsTracked { get; private set; }
+        public bool rightHandDeviceIsTracked { get; protected set; }
+        public bool leftHandDeviceIsTracked { get; protected set; }
 
         public UnityEvent event_OnDevicesUpdate;
 
-        void Start()
+        protected virtual void Start()
         {
             UpdateDevicesList();
 
@@ -36,12 +36,12 @@ namespace TeleopReachy
             leftHandDeviceIsTracked = false;
         }
 
-        private void UpdateDevicesList(UnityEngine.XR.InputDevice device)
+        protected void UpdateDevicesList(UnityEngine.XR.InputDevice device)
         {
             UpdateDevicesList();
         }
 
-        private void UpdateDevicesList()
+        protected void UpdateDevicesList()
         {
             var rightDevices = new List<UnityEngine.XR.InputDevice>();
             var leftDevices = new List<UnityEngine.XR.InputDevice>();
@@ -81,7 +81,7 @@ namespace TeleopReachy
             event_OnDevicesUpdate.Invoke();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (rightHandDevice != null)
             {

@@ -25,6 +25,7 @@ namespace TeleopReachy
 
         void StartTeleoperation()
         {
+            EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
             EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
         }
     }
