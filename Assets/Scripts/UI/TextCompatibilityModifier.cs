@@ -35,7 +35,9 @@ namespace TeleopReachy
         public void ChangeText(string stringToChange)
         {
             stringToChange = stringToChange.Replace(appVersion, ApplicationAPIVersion.Instance.GetApplicationAPIVersion());
-            newText = stringToChange.Replace(robotVersion, robotConfig.GetRobotAPIVersion());
+            bool api_filled = (robotConfig.GetRobotAPIVersion() != null) && (robotConfig.GetRobotAPIVersion() != "");
+            string robot_api = api_filled ? robotConfig.GetRobotAPIVersion() : "<1.0.16";
+            newText = stringToChange.Replace(robotVersion, robot_api);
             needUpdate = true;
         }
     }

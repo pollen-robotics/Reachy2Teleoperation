@@ -105,7 +105,7 @@ namespace TeleopReachy
                     else 
                     {
                         var apiVersion = value.Descriptor.FindFieldByName("api_version");
-                        if (apiVersion !=null)
+                        if (apiVersion != null)
                         {
                             robot_api_version = (string)apiVersion.Accessor.GetValue(value);
                         }
