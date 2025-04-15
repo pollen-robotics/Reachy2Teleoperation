@@ -13,6 +13,7 @@ namespace GstreamerWebRTC
         public UnityEvent<bool> event_OnAudioReceiverRoomStatusHasChanged;
         public UnityEvent<bool> event_AudioSenderStatusHasChanged;
         public UnityEvent<bool> event_DataControllerStatusHasChanged;
+        public UnityEvent<bool> event_DataCommandChannelStatusHasChanged;
         public UnityEvent<Texture> event_LeftVideoTextureReady;
         public UnityEvent<Texture> event_RightVideoTextureReady;
 
@@ -106,6 +107,7 @@ namespace GstreamerWebRTC
         {
             Debug.Log("Pipeline data started Custom");
             event_DataControllerStatusHasChanged.Invoke(true);
+            event_DataCommandChannelStatusHasChanged.Invoke(true);
         }
 
         protected override void OnChannelServiceOpen()

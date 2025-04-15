@@ -8605,7 +8605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205519225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfb0d2cf8310ec54fa9f865bd2538842, type: 3}
+  m_Script: {fileID: 11500000, guid: f500023dcb865f840a9dd302dcefc2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1223158826
@@ -16035,7 +16035,7 @@ GameObject:
   - component: {fileID: 2105319309}
   - component: {fileID: 2105319310}
   m_Layer: 14
-  m_Name: APICompatibilityInformation
+  m_Name: CompatibilityInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16082,10 +16082,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2105319306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a539fe65a612ad24593e0b6cc0159a49, type: 3}
+  m_Script: {fileID: 11500000, guid: ffd7f57df6c52b14ca20682448e2c137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   resolution: {fileID: 1056268703}
+  explanation: {fileID: 1205519227}
 --- !u!1 &2112036200
 GameObject:
   m_ObjectHideFlags: 0

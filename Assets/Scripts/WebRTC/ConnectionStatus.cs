@@ -12,6 +12,7 @@ namespace TeleopReachy
         private bool isRobotInVideoRoom;
         private bool isRobotInAudioReceiverRoom;
         private bool isRobotInAudioSenderRoom;
+        private bool isCommandChannelReady;
 
         private bool isRobotReady;
 
@@ -45,6 +46,7 @@ namespace TeleopReachy
             isRobotInVideoRoom = false;
             isRobotInAudioReceiverRoom = false;
             isRobotInAudioSenderRoom = false;
+            isCommandChannelReady = false;
 
             isRobotReady = false;
 
@@ -58,9 +60,15 @@ namespace TeleopReachy
                 gstreamerPlugin.event_OnAudioReceiverRoomStatusHasChanged.AddListener(AudioReceiverControllerStatusHasChanged);
                 gstreamerPlugin.event_OnVideoRoomStatusHasChanged.AddListener(AudioSenderStatusHasChanged);
                 gstreamerPlugin.event_DataControllerStatusHasChanged.AddListener(DataControllerStatusHasChanged);
+                gstreamerPlugin.event_DataCommandChannelStatusHasChanged.AddListener(DataCommandChannelStatusHasChanged);
             }
 
             waitForConnection = StartCoroutine(WaitForConnection());
+        }
+
+        public bool IsCommandChannelReady()
+        {
+            return isCommandChannelReady;
         }
 
         public bool IsRobotInDataRoom()
@@ -125,6 +133,12 @@ namespace TeleopReachy
         {
             Debug.Log("[ConnectionStatus] DataControllerStatusHasChanged :" + isRobotInRoom);
             isRobotInDataRoom = isRobotInRoom;
+            statusChanged = true;
+        }
+
+        void DataCommandChannelStatusHasChanged(bool isChannelOpen)
+        {
+            Debug.Log("[ConnectionStatus] DataCommandChannelStatusHasChanged :" + isChannelOpen);
             statusChanged = true;
         }
 
