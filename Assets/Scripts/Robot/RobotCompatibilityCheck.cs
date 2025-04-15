@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,12 +43,12 @@ namespace TeleopReachy
         }
 
         public void CheckCompatibility()
-        {       
+        {
             if (connectionStatus.IsRobotReady() && !connectionStatus.IsCommandChannelReady())
             {
                 explanation_str = "The teleoperation app is sending data on new channels that the robot doesn't recognize.";
                 resolution_str = "Please update your robot webrtc service (or download an older version of the teleoperation app).";
-                needUpdate = true;
+                StartCoroutine(WaitToCheckChannelStatus(2));
             }
 
             if (robotConfig.GotReachyConfig())
@@ -71,6 +72,12 @@ namespace TeleopReachy
                         break;
                 }
             }
+        }
+
+        IEnumerator WaitToCheckChannelStatus(int seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            if (connectionStatus.IsRobotReady() && !connectionStatus.IsCommandChannelReady()) needUpdate = true;
         }
     }
 }

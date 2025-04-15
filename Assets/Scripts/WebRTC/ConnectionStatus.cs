@@ -139,6 +139,7 @@ namespace TeleopReachy
         void DataCommandChannelStatusHasChanged(bool isChannelOpen)
         {
             Debug.Log("[ConnectionStatus] DataCommandChannelStatusHasChanged :" + isChannelOpen);
+            isCommandChannelReady = isChannelOpen;
             statusChanged = true;
         }
 
