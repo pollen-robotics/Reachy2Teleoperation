@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace TeleopReachy
 {
-    public class TextAPIModifier : MonoBehaviour
+    public class TextCompatibilityModifier : MonoBehaviour
     {
         private Text textToChange;
         private string newText;
