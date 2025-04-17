@@ -6514,6 +6514,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reachy2RealRobot
       objectReference: {fileID: 0}
+    - target: {fileID: 8845456646765881398, guid: a734758b660ccb34b8eb4f636746f320, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9044202933298314858, guid: a734758b660ccb34b8eb4f636746f320, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -8258,6 +8262,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6480257225473330607, guid: 23e793a54aa60cc49820f341271d8af8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bb783f75a104dd64abb15bae1c732bf4, type: 2}
+    - target: {fileID: 6480257225473330607, guid: 23e793a54aa60cc49820f341271d8af8, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a8d5fd0d597673a46adbe3a490df0e0a, type: 2}
     - target: {fileID: 6726137593735423035, guid: 23e793a54aa60cc49820f341271d8af8, type: 3}
       propertyPath: m_Layer
       value: 7
