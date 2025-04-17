@@ -85,6 +85,7 @@ namespace TeleopReachy
 
         void InitBackInc()
         {
+            commands = new AnyCommands { };
             isReady = false;
             right_arm_inc = 0;
             right_gripper_inc = 0;
