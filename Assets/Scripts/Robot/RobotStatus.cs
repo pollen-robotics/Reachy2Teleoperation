@@ -34,6 +34,9 @@ namespace TeleopReachy
         public UnityEvent<bool> event_OnGraspingLock;
         public UnityEvent event_OnRobotFullyCompliant;
 
+        public UnityEvent event_OnEmotionStart;
+        public UnityEvent event_OnEmotionOver;
+
         private void Start()
         {
             EventManager.StartListening(EventNames.OnStartTeleoperation, StartRobotTeleoperation);
@@ -147,6 +150,8 @@ namespace TeleopReachy
         public void SetEmotionPlaying(bool isPlaying)
         {
             isEmotionPlaying = isPlaying;
+            if (isEmotionPlaying) event_OnEmotionStart.Invoke();
+            else event_OnEmotionOver.Invoke();
         }
 
         public void SetPartOn(Part part, bool isOn, bool subPartManaged=false)

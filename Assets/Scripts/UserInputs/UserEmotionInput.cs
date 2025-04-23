@@ -1,82 +1,76 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace TeleopReachy
 {
     public enum Emotion
     {
-        Happy, Sad, Confused, Angry, NoEmotion
+        Happy, Sad, Confused, Angry
     }
 
     public class UserEmotionInput : MonoBehaviour
     {
-        public OnlineMenuManager onlineMenuManager;
+        private ControllersManager controllers;
+        
+        private Vector2 selectedDirection;
 
-        public ControllersManager controllers;
+        private Emotion selectedEmotion;
 
-        private RobotConfig robotConfig;
-        private RobotJointCommands robotCommands;
+        private bool isEmotionSelected;
+
+        private float previousR;
+
+        public UnityEvent<Emotion> event_OnEmotionSelected;
 
         // private ReachySimulatedCommands robotSimulatedCommands;
-        private RobotStatus robotStatus;
 
-
-        private void OnEnable()
+        void Awake()
         {
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
+            controllers = ActiveControllerManager.Instance.ControllersManager;
+            isEmotionSelected = false;
+            previousR = 0;
+
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
         }
 
-        private void OnDisable()
+        void Init()
         {
-            EventManager.StopListening(EventNames.MirrorSceneLoaded, Init);
+            RobotDataManager.Instance.RobotStatus.event_OnEmotionStart.AddListener(SetEmotionSelected);
+            RobotDataManager.Instance.RobotStatus.event_OnEmotionOver.AddListener(EmotionIsOver);
+        }
+ 
+        void Update()
+        {
+            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
+
+            float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
+            float r = Mathf.Sqrt(Mathf.Pow(selectedDirection[0], 2) + Mathf.Pow(selectedDirection[1], 2));
+
+            if (!isEmotionSelected)
+            {
+                if (Mathf.Abs(phi) < (Mathf.PI / 8)) selectedEmotion = Emotion.Confused;
+                else if ((phi > (Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.Happy;
+                else if (Mathf.Abs(phi) > (Mathf.PI - Mathf.PI / 8)) selectedEmotion = Emotion.Angry;
+                else if ((phi > (-Mathf.PI / 2 - Mathf.PI / 8)) && (phi < (-Mathf.PI / 2 + Mathf.PI / 8))) selectedEmotion = Emotion.Sad;
+                if (r >= 0.5f && previousR < 0.5f) event_OnEmotionSelected.Invoke(selectedEmotion);
+                previousR = r;
+            }
         }
 
-        private void Init()
+        private void EmotionIsOver()
         {
-            robotCommands = RobotDataManager.Instance.RobotJointCommands;
-            robotCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
-            // robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            // robotSimulatedCommands.event_OnEmotionOver.AddListener(EmotionIsOver);
-            robotStatus = RobotDataManager.Instance.RobotStatus;
-            robotConfig = RobotDataManager.Instance.RobotConfig;
-            onlineMenuManager.event_OnAskEmotion.AddListener(AskToPlayEmotion);
+            isEmotionSelected = false;
         }
 
-
-        private void AskToPlayEmotion(Emotion emotion)
+        private void SetEmotionSelected()
         {
-            // RobotCommands robot;
-            // if (robotConfig.HasHead() && robotStatus.IsRobotTeleoperationActive() && robotStatus.AreEmotionsActive() && !robotStatus.IsEmotionPlaying() && !robotStatus.AreRobotMovementsSuspended())
-            // {
-            //     robot = robotCommands;
-            // }
-            // else
-            // {
-            //     // robot = robotSimulatedCommands;
-            // }
-            robotStatus.SetEmotionPlaying(true);
-            // switch (emotion)
-            // {
-            //     case Emotion.Sad:
-            //         robot.ReachySad();
-            //         break;
-
-            //     case Emotion.Happy:
-            //         robot.ReachyHappy();
-            //         break;
-            //     case Emotion.Angry:
-            //         robot.ReachyAngry();
-            //         break;
-
-            //     case Emotion.Confused:
-            //         robot.ReachyConfused();
-            //         break;
-            // }
+            isEmotionSelected = true;
         }
 
-        public void EmotionIsOver(Emotion emotion)
+        public Emotion GetSelectedEmotion()
         {
-            robotStatus.SetEmotionPlaying(false);
+            return selectedEmotion;
         }
     }
 }

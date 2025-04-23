@@ -15,17 +15,21 @@ namespace TeleopReachy
         private Texture happyImage;
 
         [SerializeField]
-        private Texture angryImage;
+        private Texture confusedImage;
 
         [SerializeField]
-        private Texture confusedImage;
+        private Texture angryImage;
 
         private Texture emojiToDisplay;
 
         [SerializeField]
         private RawImage emoji;
 
+        private RobotStatus robotStatus;
+
         private Dictionary<Emotion, Texture> emotionImages;
+
+        private EmotionMenuManager emotionMenuManager;
 
         void Start()
         {
@@ -34,16 +38,13 @@ namespace TeleopReachy
             emotionImages = new Dictionary<Emotion, Texture>();
             emotionImages.Add(Emotion.Sad, sadImage);
             emotionImages.Add(Emotion.Happy, happyImage);
-            emotionImages.Add(Emotion.Angry, angryImage);
             emotionImages.Add(Emotion.Confused, confusedImage);
+            emotionImages.Add(Emotion.Angry, angryImage);
+
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnEmotionStart.AddListener(ChooseEmotionAndShow);
 
             HideInfoMessage();
-        }
-
-        void Init()
-        {
-            // onlineMenuManager = GameObject.Find("CanvaOnlineMenu").GetComponent<OnlineMenuManager>();
-            // onlineMenuManager.event_OnAskEmotion.AddListener(ChooseEmotionAndShow);
         }
 
         protected override void Update()
@@ -52,8 +53,9 @@ namespace TeleopReachy
             base.Update();
         }
 
-        void ChooseEmotionAndShow(Emotion emotion)
+        void ChooseEmotionAndShow()
         {
+            Emotion emotion = UserInputManager.Instance.UserEmotionInput.GetSelectedEmotion();
             switch (emotion)
             {
                 case Emotion.Sad:
@@ -66,14 +68,14 @@ namespace TeleopReachy
                     emojiToDisplay = emotionImages[Emotion.Happy];
                     break;
 
-                case Emotion.Angry:
-                    textToDisplay = "Emotion angry is playing";
-                    emojiToDisplay = emotionImages[Emotion.Angry];
-                    break;
-
                 case Emotion.Confused:
                     textToDisplay = "Emotion confused is playing";
                     emojiToDisplay = emotionImages[Emotion.Confused];
+                    break;
+
+                case Emotion.Angry:
+                    textToDisplay = "Emotion angry is playing";
+                    emojiToDisplay = emotionImages[Emotion.Angry];
                     break;
             }
             ShowInfoMessage();

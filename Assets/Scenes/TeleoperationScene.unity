@@ -3633,10 +3633,10 @@ MonoBehaviour:
   m_TimeUntilThresholdReachesMaxAngle: 3
   infoText: {fileID: 0}
   infoBackground: {fileID: 0}
-  sadImage: {fileID: 2800000, guid: 1ad1ae9c1bd3cc14ca03672b0515c3af, type: 3}
-  happyImage: {fileID: 2800000, guid: 378cff144e7fc2442aec1678ce4a5599, type: 3}
-  angryImage: {fileID: 2800000, guid: f9aa17d7fab40c04bb82a4d4f494fe94, type: 3}
-  confusedImage: {fileID: 2800000, guid: 28e9450586afde34e9253d2f100e5598, type: 3}
+  sadImage: {fileID: 2800000, guid: a2ac9320b7528f048b423e5f736079e1, type: 3}
+  happyImage: {fileID: 2800000, guid: 4c6ee976363bb8446b1c5526a6623744, type: 3}
+  confusedImage: {fileID: 2800000, guid: 762f7caa4cf88fc41a845a267d1a3e51, type: 3}
+  angryImage: {fileID: 2800000, guid: 424d9bd6574ccf14dbbddf07e6b7e2b1, type: 3}
   emoji: {fileID: 556633460}
 --- !u!222 &935331312
 CanvasRenderer:

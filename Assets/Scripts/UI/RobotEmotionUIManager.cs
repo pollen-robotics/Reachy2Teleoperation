@@ -6,57 +6,45 @@ namespace TeleopReachy
 {
     public class RobotEmotionUIManager : MonoBehaviour
     {
-        private RobotJointCommands robotCommands;
-        //private RobotStatus robotStatus;
-        //private UserEmotionInput userEmotionInput;
-        // private ReachySimulatedCommands robotSimulatedCommands;
+        private RobotStatus robotStatus;
+        private UserEmotionInput userEmotionInput;
 
-        void Awake()
+        void Start()
         {
             EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
         }
 
+        void OnEnable()
+        {
+            if (robotStatus != null)
+            {
+                if (robotStatus.IsEmotionPlaying()) HighlightSelectedEmotion();
+                else HighlightNoEmotion();
+            }
+        }
+
         private void Init()
         {
-            robotCommands = RobotDataManager.Instance.RobotJointCommands;
-            //robotStatus = RobotDataManager.Instance.RobotStatus;
-            //userEmotionInput = UserInputManager.Instance.UserEmotionInput;
-            robotCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
-            // robotSimulatedCommands = ReachySimulatedManager.Instance.ReachySimulatedCommands;
-            // robotSimulatedCommands.event_OnEmotionOver.AddListener(RemoveEmotionShown);
+            robotStatus = RobotDataManager.Instance.RobotStatus;
+            robotStatus.event_OnEmotionStart.AddListener(HighlightSelectedEmotion);
+            robotStatus.event_OnEmotionOver.AddListener(HighlightNoEmotion);
+
+            userEmotionInput = UserInputManager.Instance.UserEmotionInput;
         }
 
-        public void ShowSelectedEmotion(Emotion emotion)
-        {
-            foreach (Transform child in transform)
-            {
-                child.GetComponent<RawImage>().color = new Color(0.3f, 0.3f, 0.3f, 0.5f);
-            }
-            transform.GetChild((int)emotion).GetComponent<RawImage>().color = new Color(1.0f, 1.0f, 1.0f, 0.8f);
-        }
-
-        public void HighlightSelectedEmotion(Emotion emotion)
+        void HighlightSelectedEmotion()
         {
             HighlightNoEmotion();
+            Emotion emotion = userEmotionInput.GetSelectedEmotion();
             transform.GetChild((int)emotion).localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
 
-
-        public void HighlightNoEmotion()
+        void HighlightNoEmotion()
         {
             foreach (Transform child in transform)
             {
                 child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
-        }
-
-        void RemoveEmotionShown(Emotion emotion)
-        {
-            foreach (Transform child in transform)
-            {
-                child.GetComponent<RawImage>().color = new Color(1.0f, 1.0f, 1.0f, 0.8f);
-            }
-            Debug.Log($"[RobotEmotionUIManager]: RemoveEmotionShown {emotion}");
         }
     }
 }

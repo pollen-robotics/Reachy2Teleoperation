@@ -4,6 +4,8 @@ using Reachy.Part.Head;
 using Reachy.Part.Hand;
 using Reachy.Part;
 using Reachy2Controller;
+using Component.DynamixelMotor;
+
 
 namespace TeleopReachy
 {
@@ -74,6 +76,11 @@ namespace TeleopReachy
 
             if(leftGripperCommand.Id != null) reachyFakeServer.SetHandPosition(leftGripperCommand);
             if(rightGripperCommand.Id != null) reachyFakeServer.SetHandPosition(rightGripperCommand);
+        }
+
+        protected override void ActualSendAntennasCommands(DynamixelMotorsCommand antennasRequest)
+        {
+
         }
 
         //     void SetHeadToModelPose()
