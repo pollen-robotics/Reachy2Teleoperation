@@ -80,7 +80,19 @@ namespace TeleopReachy
 
         protected override void ActualSendAntennasCommands(DynamixelMotorsCommand antennasRequest)
         {
-
+            foreach (DynamixelMotorCommand cmd in antennasRequest.Cmd)
+            {
+                if (cmd.Id.Name == "antenna_left")
+                {
+                    cmd.Id.Name = "head_l_antenna";
+                    reachyFakeServer.SetAntennaPosition(cmd);
+                }
+                if (cmd.Id.Name == "antenna_right")
+                {
+                    cmd.Id.Name = "head_r_antenna";
+                    reachyFakeServer.SetAntennaPosition(cmd);
+                }
+            }
         }
 
         //     void SetHeadToModelPose()
