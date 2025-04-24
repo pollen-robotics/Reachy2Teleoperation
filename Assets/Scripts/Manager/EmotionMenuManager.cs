@@ -25,17 +25,14 @@ namespace TeleopReachy
 
         private void Init()
         {
-            // Headset = HeadsetPermanentTrackerWorldManager.Instance.transform;
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideImmediatelyEmotionMenu);
             robotStatus.event_OnEmotionStart.AddListener(HideAfterSeconds);
-            // UserInputManager.Instance.UserEmotionInput.event_OnEmotionSelected.AddListener(CheckCancel);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
             canMenuOpen = true;
         }
 
-        // Start is called before the first frame update
         void Start()
         {
             canMenuOpen = false;
@@ -71,16 +68,6 @@ namespace TeleopReachy
             menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
         }
 
-        // void CheckCancel(Emotion emotion)
-        // {
-        //     if (emotion == Emotion.NoEmotion)
-        //     {
-        //         if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
-        //         menuHidingCoroutine = StartCoroutine(HideEmotionMenu());
-        //     }
-        // }
-
-        // Update is called once per frame
         void Update()
         {
             bool leftPrimaryButtonPressed = false;

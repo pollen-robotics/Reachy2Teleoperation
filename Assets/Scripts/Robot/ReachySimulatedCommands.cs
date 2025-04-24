@@ -12,6 +12,12 @@ namespace TeleopReachy
     public class ReachySimulatedCommands : RobotCommands
     {
         private UserMovementsInput userMovementsInput;
+        private UserEmotionInput userEmotionInput;
+
+        private bool needCheckEmotion;
+        private bool isEmotionMode;
+
+        Emotion emotionToPlay;
 
         [SerializeField]
         private ReachySimulatedServer reachyFakeServer;
@@ -27,7 +33,13 @@ namespace TeleopReachy
         void Start()
         {
             Init();
+            needCheckEmotion = false;
+            isEmotionMode = false;
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
+            userEmotionInput = UserInputManager.Instance.UserEmotionInput;
+            userEmotionInput.event_OnEmotionSelected.AddListener(CheckEmotion);
+            EventManager.StartListening(EventNames.OnEmotionMode, ActivateEmotionMode);
+            EventManager.StartListening(EventNames.OnMobilityMode, ActivateMobilityMode);
         }
 
         // Update is called once per frame
@@ -51,6 +63,45 @@ namespace TeleopReachy
             float pos_right_gripper = userMovementsInput.GetRightGripperTarget(robotStatus.IsGraspingLockActivated());
             float pos_left_gripper = userMovementsInput.GetLeftGripperTarget(robotStatus.IsGraspingLockActivated());
             SendGrippersCommands(pos_left_gripper, pos_right_gripper);
+
+            if (needCheckEmotion)
+            {
+                needCheckEmotion = false;
+                switch (emotionToPlay)
+                {
+                    case Emotion.Sad:
+                        ReachySad();
+                        break;
+                    case Emotion.Happy:
+                        ReachyHappy();
+                        break;
+                    case Emotion.Confused:
+                        ReachyConfused();
+                        break;
+                    case Emotion.Angry:
+                        ReachyAngry();
+                        break;
+                }
+            }
+        }
+
+        void ActivateEmotionMode()
+        {
+            isEmotionMode = true;
+        }
+
+        void ActivateMobilityMode()
+        {
+            isEmotionMode = false;
+        }
+
+        void CheckEmotion(Emotion emotion)
+        {
+            if(isEmotionMode)
+            {
+                emotionToPlay = emotion;
+                needCheckEmotion = true;
+            }
         }
 
         protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
