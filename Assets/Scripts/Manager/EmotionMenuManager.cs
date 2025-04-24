@@ -35,10 +35,9 @@ namespace TeleopReachy
 
         void Start()
         {
-            canMenuOpen = false;
-
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
             EventManager.StartListening(EventNames.EnterConnectionScene, DisableEmotionMenu);
+            EventManager.StartListening(EventNames.EnterTeleoperationScene, HideImmediatelyEmotionMenu);
 
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
@@ -46,14 +45,15 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnStopEmotionTeleoperation, DeactivateEmotion);
 
             HideImmediatelyEmotionMenu();
+            canMenuOpen = false;
             menuHidingRequested = false;
         }
 
         private void DisableEmotionMenu()
         {
-            canMenuOpen = false;
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             HideImmediatelyEmotionMenu();
+            canMenuOpen = false;
         }
 
         void ActivateEmotion()

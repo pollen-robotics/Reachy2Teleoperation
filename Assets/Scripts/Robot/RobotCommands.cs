@@ -117,7 +117,7 @@ namespace TeleopReachy
                                             .Select(i => (float)(i / (float)sampleRate))
                                             .ToArray();
 
-                float[] positions = tValues.Select(t => (float)(20 * Math.Sin(2 * Math.PI * t) + target1)).ToArray();
+                float[] positions = tValues.Select(t => (float)(10 * Math.Sin(2 * Math.PI * t) + target1)).ToArray();
 
                 foreach (var p in positions)
                 {
@@ -274,7 +274,7 @@ namespace TeleopReachy
 
                 for (int nb_repetition = 0; nb_repetition < 2; nb_repetition++)
                 {
-                    foreach (var t in Enumerable.Range(0, 15).Select(i => (float)(i / 14.0)))
+                    foreach (var t in Enumerable.Range(0, 10).Select(i => (float)(i / 9.0)))
                     {
                         float interpolatedLeft = (1 - t) * origin + t * targetLeft;
                         float interpolatedRight = (1 - t) * origin + t * targetRight;
