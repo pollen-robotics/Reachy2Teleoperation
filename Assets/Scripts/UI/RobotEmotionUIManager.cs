@@ -9,13 +9,12 @@ namespace TeleopReachy
         private RobotStatus robotStatus;
         private UserEmotionInput userEmotionInput;
 
-        void Start()
-        {
-            EventManager.StartListening(EventNames.MirrorSceneLoaded, Init);
-        }
-
         void OnEnable()
         {
+            if (robotStatus == null && RobotDataManager.Instance != null)
+            {
+                Init();
+            }
             if (robotStatus != null)
             {
                 if (robotStatus.IsEmotionPlaying()) HighlightSelectedEmotion();

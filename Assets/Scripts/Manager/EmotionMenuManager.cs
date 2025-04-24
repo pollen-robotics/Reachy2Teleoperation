@@ -32,14 +32,17 @@ namespace TeleopReachy
             // UserInputManager.Instance.UserEmotionInput.event_OnEmotionSelected.AddListener(CheckCancel);
 
             robotConfig = RobotDataManager.Instance.RobotConfig;
+            canMenuOpen = true;
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
+            canMenuOpen = false;
 
-            canMenuOpen = true;
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
+            EventManager.StartListening(EventNames.EnterConnectionScene, DisableEmotionMenu);
+
             controllers = ActiveControllerManager.Instance.ControllersManager;
 
             EventManager.StartListening(EventNames.OnStartEmotionTeleoperation, ActivateEmotion);
@@ -47,6 +50,13 @@ namespace TeleopReachy
 
             HideImmediatelyEmotionMenu();
             menuHidingRequested = false;
+        }
+
+        private void DisableEmotionMenu()
+        {
+            canMenuOpen = false;
+            if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
+            HideImmediatelyEmotionMenu();
         }
 
         void ActivateEmotion()

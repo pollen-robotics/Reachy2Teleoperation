@@ -3631,7 +3631,7 @@ MonoBehaviour:
   m_MinAngleAllowed: 0.1
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
-  infoText: {fileID: 0}
+  infoText: {fileID: 1181464249}
   infoBackground: {fileID: 0}
   sadImage: {fileID: 2800000, guid: a2ac9320b7528f048b423e5f736079e1, type: 3}
   happyImage: {fileID: 2800000, guid: 4c6ee976363bb8446b1c5526a6623744, type: 3}
