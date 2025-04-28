@@ -2542,8 +2542,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -167, y: 0}
-  m_SizeDelta: {x: 30, y: 30}
+  m_AnchoredPosition: {x: -148.9, y: 0}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &556633460
 MonoBehaviour:
@@ -3631,12 +3631,12 @@ MonoBehaviour:
   m_MinAngleAllowed: 0.1
   m_MaxAngleAllowed: 5
   m_TimeUntilThresholdReachesMaxAngle: 3
-  infoText: {fileID: 0}
+  infoText: {fileID: 1181464249}
   infoBackground: {fileID: 0}
-  sadImage: {fileID: 2800000, guid: 1ad1ae9c1bd3cc14ca03672b0515c3af, type: 3}
-  happyImage: {fileID: 2800000, guid: 378cff144e7fc2442aec1678ce4a5599, type: 3}
-  angryImage: {fileID: 2800000, guid: f9aa17d7fab40c04bb82a4d4f494fe94, type: 3}
-  confusedImage: {fileID: 2800000, guid: 28e9450586afde34e9253d2f100e5598, type: 3}
+  sadImage: {fileID: 2800000, guid: a2ac9320b7528f048b423e5f736079e1, type: 3}
+  happyImage: {fileID: 2800000, guid: 4c6ee976363bb8446b1c5526a6623744, type: 3}
+  confusedImage: {fileID: 2800000, guid: 762f7caa4cf88fc41a845a267d1a3e51, type: 3}
+  angryImage: {fileID: 2800000, guid: 424d9bd6574ccf14dbbddf07e6b7e2b1, type: 3}
   emoji: {fileID: 556633460}
 --- !u!222 &935331312
 CanvasRenderer:
@@ -5105,7 +5105,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 377, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1308660179
 MonoBehaviour:

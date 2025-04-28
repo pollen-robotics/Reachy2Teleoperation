@@ -6,6 +6,8 @@ using Reachy.Part.Head;
 using Reachy.Part.Hand;
 using Component.Orbita2D;
 using Reachy.Kinematics;
+using Component.DynamixelMotor;
+
 
 namespace Reachy2Controller
 {
@@ -115,6 +117,11 @@ namespace Reachy2Controller
 
             float targetPosition = (1 - opening) * closed_gripper + opening * open_gripper;
             present_position[gripperPosition.Id.Name] = targetPosition;
+        }
+
+        public void SetAntennaPosition(DynamixelMotorCommand antennaCommand)
+        {
+            present_position[antennaCommand.Id.Name] = Mathf.Rad2Deg * (float)antennaCommand.GoalPosition;
         }
 
         private List<double> ComputeArmIK(ArmIKRequest ikRequest)

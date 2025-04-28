@@ -15,6 +15,13 @@ namespace TeleopReachy
 
         private UserMovementsInput userMovementsInput;
         private UserMobilityInput userMobilityInput;
+        private UserEmotionInput userEmotionInput;
+
+        private enum JoystickMode
+        {
+            Emotion, Mobility
+        }
+        private JoystickMode joystickMode;
 
         public bool IsRobotTeleoperationActive { get; private set; }
         public bool IsArmTeleoperationActive { get; private set; }
@@ -34,6 +41,7 @@ namespace TeleopReachy
             IsRobotTeleoperationActive = false;
             IsArmTeleoperationActive = false;
             IsMobileBaseTeleoperationActive = false;
+            joystickMode = JoystickMode.Mobility;
 
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartTeleoperation);
             EventManager.StartListening(EventNames.MirrorSceneLoaded, InitUserInputs);
@@ -44,6 +52,8 @@ namespace TeleopReachy
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartArmTeleoperation);
             EventManager.StartListening(EventNames.OnStartMobileBaseTeleoperation, StartMobileBaseTeleoperation);
             EventManager.StartListening(EventNames.OnStopMobileBaseTeleoperation, StopMobileBaseTeleoperation);
+            EventManager.StartListening(EventNames.OnEmotionMode, ActivateEmotionMode);
+            EventManager.StartListening(EventNames.OnMobilityMode, ActivateMobilityMode);
 
             EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitRobotData);
         }
@@ -52,6 +62,7 @@ namespace TeleopReachy
         {
             userMovementsInput = UserInputManager.Instance.UserMovementsInput;
             userMobilityInput = UserInputManager.Instance.UserMobilityInput;
+            userEmotionInput = UserInputManager.Instance.UserEmotionInput;
         }
 
         void InitRobotData()
@@ -95,6 +106,42 @@ namespace TeleopReachy
             {
                 event_OnTriedToSendMobilityCommands.Invoke();
             }
+        }
+
+        private void ActivateEmotionMode()
+        {
+            joystickMode = JoystickMode.Emotion;
+            userEmotionInput.event_OnEmotionSelected.AddListener(PlayEmotion);
+            StopMobileBaseTeleoperation();
+        }
+
+        private void PlayEmotion(Emotion emotion)
+        {
+            if(robotStatus != null && IsRobotTeleoperationActive && !robotStatus.AreRobotMovementsSuspended())
+            {
+                switch (emotion)
+                {
+                    case Emotion.Sad:
+                        jointsCommands.ReachySad();
+                        break;
+                    case Emotion.Happy:
+                        jointsCommands.ReachyHappy();
+                        break;
+                    case Emotion.Confused:
+                        jointsCommands.ReachyConfused();
+                        break;
+                    case Emotion.Angry:
+                        jointsCommands.ReachyAngry();
+                        break;
+                }
+            }
+        }
+
+        private void ActivateMobilityMode()
+        {
+            joystickMode = JoystickMode.Mobility;
+            userEmotionInput.event_OnEmotionSelected.RemoveListener(PlayEmotion);
+            StartMobileBaseTeleoperation();
         }
 
         void StartTeleoperation()

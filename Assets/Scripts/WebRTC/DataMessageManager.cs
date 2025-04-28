@@ -276,6 +276,15 @@ namespace TeleopReachy
             commands.Commands.Add(mobileBaseCommand);
         }
 
+        public virtual void SendAntennasCommand(DynamixelMotorsCommand motorCommand)
+        {
+            Bridge.AnyCommand antennasCommand = new Bridge.AnyCommand
+            {
+                AntennasCommand = motorCommand 
+            };
+            commands.Commands.Add(antennasCommand);
+        }
+
         public void TurnArmOff(PartId id)
         {
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
