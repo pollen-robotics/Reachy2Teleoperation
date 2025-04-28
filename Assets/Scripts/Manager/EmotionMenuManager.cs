@@ -23,7 +23,7 @@ namespace TeleopReachy
         private Coroutine menuHidingCoroutine;
         private bool menuHidingRequested;
 
-        private void Init()
+        private void InitManager()
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             EventManager.StartListening(EventNames.OnStopTeleoperation, HideImmediatelyEmotionMenu);
@@ -35,7 +35,7 @@ namespace TeleopReachy
 
         void Start()
         {
-            EventManager.StartListening(EventNames.RobotDataSceneLoaded, Init);
+            EventManager.StartListening(EventNames.RobotDataSceneLoaded, InitManager);
             EventManager.StartListening(EventNames.EnterConnectionScene, DisableEmotionMenu);
             EventManager.StartListening(EventNames.EnterTeleoperationScene, HideImmediatelyEmotionMenu);
 
@@ -92,10 +92,7 @@ namespace TeleopReachy
             }
             if (menuHidingRequested)
             {
-                foreach (Transform child in transform)
-                {
-                    child.gameObject.SetActive(false);
-                }
+                transform.ActivateChildren(false);
                 isEmotionMenuOpen = false;
                 menuHidingRequested = false;
                 EventManager.TriggerEvent(EventNames.OnMobilityMode);
@@ -112,7 +109,7 @@ namespace TeleopReachy
         {
             if (robotConfig.IsVirtual() || robotConfig.HasHead())
             {
-                transform.GetChild(0).gameObject.SetActive(true);
+                transform.ActivateChildren(true);
             }
             isEmotionMenuOpen = true;
         }
@@ -126,10 +123,7 @@ namespace TeleopReachy
         void HideImmediatelyEmotionMenu()
         {
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
-            foreach (Transform child in transform)
-            {
-                child.gameObject.SetActive(false);
-            }
+            transform.ActivateChildren(false);
             isEmotionMenuOpen = false;
             canMenuOpen = true;
         }

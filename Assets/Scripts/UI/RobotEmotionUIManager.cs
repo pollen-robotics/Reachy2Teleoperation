@@ -26,23 +26,32 @@ namespace TeleopReachy
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotStatus.event_OnEmotionStart.AddListener(HighlightSelectedEmotion);
-            robotStatus.event_OnEmotionOver.AddListener(HighlightNoEmotion);
+            robotStatus.event_OnEmotionOver.AddListener(delegate { HighlightNoEmotion(true); });
 
             userEmotionInput = UserInputManager.Instance.UserEmotionInput;
         }
 
         void HighlightSelectedEmotion()
         {
-            HighlightNoEmotion();
+            HighlightNoEmotion(false);
             Emotion emotion = userEmotionInput.GetSelectedEmotion();
             transform.GetChild((int)emotion).localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            transform.GetChild((int)emotion).GetComponent<RawImage>().color = new Color32(255, 255, 255, 150);
         }
 
-        void HighlightNoEmotion()
+        void HighlightNoEmotion(bool setEmotionsInteractable=true)
         {
             foreach (Transform child in transform)
             {
                 child.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                if (setEmotionsInteractable)
+                {
+                    child.GetComponent<RawImage>().color = new Color32(255, 255, 255, 150);
+                }
+                else
+                {
+                    child.GetComponent<RawImage>().color = new Color32(70, 70, 70, 150);
+                }
             }
         }
     }
