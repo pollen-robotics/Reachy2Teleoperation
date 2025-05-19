@@ -46,6 +46,6 @@ public class PreBuildFileCopier : IPreprocessBuildWithReport
         }
 
         File.WriteAllText(destinationPath, versionLine + "\n");
-        Debug.Log($"Version written to version.txt: {versionLine}");
+        Debug.Log($"Version written to version.txt: {versionLine}. Copied to {destinationPath}");
     }
 }

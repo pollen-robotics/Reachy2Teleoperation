@@ -68,8 +68,8 @@ namespace GstreamerWebRTC
             //GStreamerRenderingPlugin has to run in main thread
             InitAV();
 
-            //init_thread = new Thread(InitData);
-            //init_thread.Start();
+            init_thread = new Thread(InitData);
+            init_thread.Start();
         }
 
         protected virtual void InitAV()

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.IO;
+using System.Collections;
+using UnityEngine.Networking;
 
 
 namespace TeleopReachy
@@ -12,13 +14,15 @@ namespace TeleopReachy
 
         void Start()
         {
-            #if UNITY_EDITOR_WIN
+#if UNITY_EDITOR_WIN
                 string path = "Assets/Scripts/reachy2-sdk-api/python/reachy2_sdk_api/__init__.py";
                 ParsePythonFile(path);
-            #elif UNITY_STANDALONE_WIN
-                string path = Application.streamingAssetsPath + "/api_version.txt";
-                ParseTxtFile(path);
-            #endif
+#elif (UNITY_STANDALONE_WIN)
+            string path = Application.streamingAssetsPath + "/api_version.txt";
+            ParseTxtFile(path);
+#elif UNITY_ANDROID
+            StartCoroutine(ParseTxtFileAndroid("api_version.txt"));
+#endif
         }
 
         public string GetApplicationAPIVersion()
@@ -75,24 +79,56 @@ namespace TeleopReachy
             try
             {
                 line = File.ReadAllText(path);
-                if (line.StartsWith("__version__"))
-                {
-                    string[] parts = line.Split('=');
-                    if (parts.Length >= 2)
-                    {
-                        appVersion = parts[1].Trim(' ', '"', '\n');
-                        Debug.Log($"App version found: {appVersion}");
-                    }
-                }
-                else
-                {
-                    Debug.LogError("App version not found");
-                }
+                ParseString(line);
             }
             catch (System.Exception ex)
             {
                 Debug.LogError($"Failed to read version file: {ex.Message}");
             }
         }
+
+        private void ParseString(string str)
+        {
+            if (str.StartsWith("__version__"))
+            {
+                string[] parts = str.Split('=');
+                if (parts.Length >= 2)
+                {
+                    appVersion = parts[1].Trim(' ', '"', '\n');
+                    Debug.Log($"App version found: {appVersion}");
+                }
+            }
+            else
+            {
+                Debug.LogError("App version not found");
+            }
+        }
+
+        IEnumerator ParseTxtFileAndroid(string filename)
+        {
+            string jsonData = "";
+            string filePath = Path.Combine(Application.streamingAssetsPath, filename);
+
+            if (filePath.StartsWith("jar") || filePath.StartsWith("http"))
+            {
+                // Special case to access StreamingAsset content on Android and Web
+                UnityWebRequest request = UnityWebRequest.Get(filePath);
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    jsonData = request.downloadHandler.text;
+                }
+            }
+            else
+            {
+                // This is a regular file path on most platforms and in playmode of the editor
+                jsonData = System.IO.File.ReadAllText(filePath);
+            }
+
+            Debug.Log("Loaded JSON Data: " + jsonData);
+            ParseString(jsonData);
+        }
+
     }
 }
