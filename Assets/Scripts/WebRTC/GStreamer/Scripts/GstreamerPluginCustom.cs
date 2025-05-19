@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using Bridge;
 using TeleopReachy;
 using Reachy;
+using System.Collections;
 
 namespace GstreamerWebRTC
 {
@@ -30,6 +31,9 @@ namespace GstreamerWebRTC
             dataMessageManager = DataMessageManager.Instance;
 
             renderingPlugin = new GStreamerRenderingPlugin(ip_address, ref left, ref right);
+#if UNITY_ANDROID
+            StartCoroutine(WaitForNativePointer(renderingPlugin));
+#elif (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
             event_LeftVideoTextureReady.Invoke(left);
             event_RightVideoTextureReady.Invoke(right);
             // screen.material.SetTexture("_LeftTex", left);
@@ -39,7 +43,20 @@ namespace GstreamerWebRTC
             renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
 
             renderingPlugin.Connect();
+#endif
         }
+
+#if UNITY_ANDROID
+        protected override IEnumerator WaitForNativePointer(GStreamerRenderingPlugin renderingPlugin)
+        {
+            left = renderingPlugin.SetTextures(true);
+            right = renderingPlugin.SetTextures(false);
+            yield return new WaitUntil(() => renderingPlugin.IsNativePtrSet());
+            renderingPlugin.event_OnPipelineStarted.AddListener(PipelineStarted);
+            renderingPlugin.event_OnPipelineStopped.AddListener(PipelineStopped);
+            renderingPlugin.Connect();
+        }
+#endif
 
         override protected void InitData()
         {

@@ -23,27 +23,27 @@ namespace Reachy2Controller
             Right,
         }
 
-        #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+#elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+        [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
-        // #elif UNITY_ANDROID
-        //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
-        #endif
-            private static extern void setup();
+#elif UNITY_ANDROID
+            [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
+#endif
+        private static extern void setup();
 
-        #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             [DllImport("Arm_kinematics.dll", CallingConvention = CallingConvention.Cdecl)]
-        #elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
-            [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
+#elif UNITY_STANDALONE_LINUX || UNITY_EDITOR_LINUX
+        [DllImport("libArm_kinematics.so", CallingConvention = CallingConvention.Cdecl)]
         // #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         //     [DllImport("libArm_kinematics.dylib", CallingConvention = CallingConvention.Cdecl)]
-        // #elif UNITY_ANDROID
-        //     [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
-        #endif
-            private static extern void inverse(ArmSide side, double[] M, double[] q);
+#elif UNITY_ANDROID
+            [DllImport("libArm_kinematics.android.so", CallingConvention = CallingConvention.Cdecl)]
+#endif
+        private static extern void inverse(ArmSide side, double[] M, double[] q);
 
         void Start()
         {
@@ -60,15 +60,17 @@ namespace Reachy2Controller
 
         public void SendArmCommand(ArmCartesianGoal armGoal)
         {
-            ArmIKRequest ikRequest = new ArmIKRequest {
+            ArmIKRequest ikRequest = new ArmIKRequest
+            {
                 Id = armGoal.Id,
-                Target = new ArmEndEffector {
+                Target = new ArmEndEffector
+                {
                     Pose = armGoal.GoalPose,
                 }
             };
             List<double> armSolution = ComputeArmIK(ikRequest);
-            
-            if(armGoal.Id.Name == "l_arm")
+
+            if (armGoal.Id.Name == "l_arm")
             {
                 present_position["l_arm_shoulder_axis_1"] = Mathf.Rad2Deg * (float)armSolution[0];
                 present_position["l_arm_shoulder_axis_2"] = Mathf.Rad2Deg * (float)armSolution[1];
@@ -100,9 +102,9 @@ namespace Reachy2Controller
 
             Vector3 neck_commands = headRotation.eulerAngles;
 
-            if(neck_commands[2] > 180) neck_commands[2] = neck_commands[2]-360;
-            if(neck_commands[0] > 180) neck_commands[0] = neck_commands[0]-360;
-            if(neck_commands[1] > 180) neck_commands[1] = neck_commands[1]-360;
+            if (neck_commands[2] > 180) neck_commands[2] = neck_commands[2] - 360;
+            if (neck_commands[0] > 180) neck_commands[0] = neck_commands[0] - 360;
+            if (neck_commands[1] > 180) neck_commands[1] = neck_commands[1] - 360;
 
             present_position["head_neck_roll"] = -neck_commands[2];
             present_position["head_neck_pitch"] = neck_commands[0];
@@ -139,10 +141,10 @@ namespace Reachy2Controller
             double[] q = new double[7];
 
             ArmSide side;
-            if(ikRequest.Id.Name == "l_arm")
+            if (ikRequest.Id.Name == "l_arm")
             {
                 side = ArmSide.Left;
-            } 
+            }
             else { side = ArmSide.Right; }
 
             inverse(side, M, q);
