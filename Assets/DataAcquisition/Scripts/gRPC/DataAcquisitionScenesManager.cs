@@ -11,6 +11,8 @@ namespace DataAcquisition
         {
             SessionType.Instance.event_onDataAcquisitionSessionSelected.AddListener(LoadDataAcquisitionScene);
             SessionType.Instance.event_onBasicControlSessionSelected.AddListener(UnloadDataAcquisitionScene);
+
+            TeleopReachy.EventManager.StartListening(TeleopReachy.EventNames.EnterConnectionScene, UnloadDataAcquisitionScene);
         }
 
         public void LoadDataAcquisitionScene()

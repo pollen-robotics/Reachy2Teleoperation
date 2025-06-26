@@ -25,11 +25,15 @@ namespace DataAcquisition
         void SetupDataAcquisitionMenus()
         {
             TeleopReachy.TeleoperationUIMenusManager.Instance.SpeedTimerUIManager.enabled = false;
+            TeleopReachy.TeleoperationUIMenusManager.Instance.TeleoperationExitMenuUIManager.enabled = false;
+            TeleopReachy.TeleoperationSceneManager.Instance.DisableTeleoperationExitMenu();
         }
 
         void SetupBasicMenus()
         {
             TeleopReachy.TeleoperationUIMenusManager.Instance.SpeedTimerUIManager.enabled = true;
+            TeleopReachy.TeleoperationUIMenusManager.Instance.TeleoperationExitMenuUIManager.enabled = true;
+            TeleopReachy.TeleoperationSceneManager.Instance.EnableTeleoperationExitMenu();
         }
     }
 }

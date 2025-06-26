@@ -23,6 +23,7 @@ namespace TeleopReachy
 
         public TeleoperationExitMenuItem teleoperationExitSelectedOption { get; private set; }
         public bool IsTeleoperationExitMenuActive { get; private set; }
+        public bool TeleoperationExitMenuEnabled { get; private set; }
 
         public UnityEvent event_OnAskForTeleoperationMenu;
         public UnityEvent event_OnLeaveTeleoperationMenu;
@@ -48,6 +49,7 @@ namespace TeleopReachy
             // For exit menu
             teleoperationExitSelectedOption = TeleoperationExitMenuItem.Cancel;
             IsTeleoperationExitMenuActive = false;
+            TeleoperationExitMenuEnabled = true;
             indicatorTimer = 0.0f;
 
             // For start arm teleop input
@@ -90,54 +92,57 @@ namespace TeleopReachy
 
         void CheckTeleoperationExitMenuState(bool rightPrimaryButtonPressed, bool leftPrimaryButtonPressed, Vector2 leftJoystickValue)
         {
-            if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
+            if (TeleoperationExitMenuEnabled)
             {
-                teleoperationExitSelectedOption = TeleoperationExitMenuItem.Home;
-                if (!IsTeleoperationExitMenuActive)
+                if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                 {
-                    event_OnAskForTeleoperationMenu.Invoke();
-                    EventManager.TriggerEvent(EventNames.OnStopMobileBaseTeleoperation);
-                    IsTeleoperationExitMenuActive = true;
+                    teleoperationExitSelectedOption = TeleoperationExitMenuItem.Home;
+                    if (!IsTeleoperationExitMenuActive)
+                    {
+                        event_OnAskForTeleoperationMenu.Invoke();
+                        EventManager.TriggerEvent(EventNames.OnStopMobileBaseTeleoperation);
+                        IsTeleoperationExitMenuActive = true;
+                    }
                 }
-            }
 
-            if (IsTeleoperationExitMenuActive)
-            {
-                if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
+                if (IsTeleoperationExitMenuActive)
                 {
-                    float r = Mathf.Sqrt(Mathf.Pow(leftJoystickValue[0], 2) + Mathf.Pow(leftJoystickValue[1], 2));
-
-                    if (r != 0)
+                    if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
                     {
-                        indicatorTimer += Time.deltaTime * 2 * r;
-                    }
-                    else
-                    {
-                        indicatorTimer += Time.deltaTime / 2;
-                    }
+                        float r = Mathf.Sqrt(Mathf.Pow(leftJoystickValue[0], 2) + Mathf.Pow(leftJoystickValue[1], 2));
 
-                    if (indicatorTimer >= 1.0f)
+                        if (r != 0)
+                        {
+                            indicatorTimer += Time.deltaTime * 2 * r;
+                        }
+                        else
+                        {
+                            indicatorTimer += Time.deltaTime / 2;
+                        }
+
+                        if (indicatorTimer >= 1.0f)
+                        {
+                            CloseTeleoperationExitMenu();
+                            if (teleoperationExitSelectedOption == TeleoperationExitMenuItem.LockAndHome)
+                                robotStatus.LockRobotPosition();
+                            EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                        }
+
+                        if (leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)
+                        {
+                            teleoperationExitSelectedOption = TeleoperationExitMenuItem.LockAndHome;
+                        }
+                        else if (!leftPrimaryButtonPressed && leftPrimaryButtonPreviouslyPressed)
+                        {
+                            teleoperationExitSelectedOption = TeleoperationExitMenuItem.Home;
+                        }
+
+                    }
+                    else if (!rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
                     {
                         CloseTeleoperationExitMenu();
-                        if (teleoperationExitSelectedOption == TeleoperationExitMenuItem.LockAndHome)
-                            robotStatus.LockRobotPosition();
-                        EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+                        EventManager.TriggerEvent(EventNames.OnStartMobileBaseTeleoperation);
                     }
-
-                    if (leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)
-                    {
-                        teleoperationExitSelectedOption = TeleoperationExitMenuItem.LockAndHome;
-                    }
-                    else if (!leftPrimaryButtonPressed && leftPrimaryButtonPreviouslyPressed)
-                    {
-                        teleoperationExitSelectedOption = TeleoperationExitMenuItem.Home;
-                    }
-
-                }
-                else if (!rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
-                {
-                    CloseTeleoperationExitMenu();
-                    EventManager.TriggerEvent(EventNames.OnStartMobileBaseTeleoperation);
                 }
             }
         }
@@ -188,6 +193,16 @@ namespace TeleopReachy
         void BackToMirrorScene()
         {
             EventManager.TriggerEvent(EventNames.QuitTeleoperationScene);
+        }
+
+        public void DisableTeleoperationExitMenu()
+        {
+            TeleoperationExitMenuEnabled = false;
+        }
+
+        public void EnableTeleoperationExitMenu()
+        {
+            TeleoperationExitMenuEnabled = true;
         }
     }
 }
