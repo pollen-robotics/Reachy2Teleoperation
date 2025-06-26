@@ -1,0 +1,325 @@
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Events;
+
+using Data.Acquisition;
+
+namespace DataAcquisition
+{
+    public class RecordingSessionManager : PagesManager
+    {
+        private int currentEpisode = 0;
+        private bool skipRequested = false;
+        private bool endRequested = false;
+
+        private bool suspendTime = false;
+        private bool saveEpisode = false;
+        private bool pushSession = true;
+
+        private Coroutine saveEpisodeCoroutine = null;
+        private bool episodeSaved = false;
+
+        private bool sessionCycleStarted = false;
+
+        private TeleopReachy.ControllersManager controllers;
+        private bool rightPrimaryButtonPreviouslyPressed;
+        private bool rightSecondaryButtonPreviouslyPressed;
+        private bool leftPrimaryButtonPreviouslyPressed;
+
+        public UnityEvent<bool> event_OnPushOver;
+        public UnityEvent<bool> event_OnConsolidationOver;
+        public UnityEvent<bool> event_OnStartSessionOver;
+        public UnityEvent event_OnEpisodeSaved;
+        public UnityEvent event_OnEpisodeSavingStart;
+
+        public bool pushRequested = false;
+        public bool sessionStartSucceeded = false;
+
+        public bool FirstCycle {get; private set; }
+
+        private Phase currentPhase = Phase.None;
+
+        protected enum Phase 
+        {
+            EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, None
+        }
+
+        void Start()
+        {
+            FirstCycle = true;
+            controllers = TeleopReachy.ControllersManager.Instance;
+            rightPrimaryButtonPreviouslyPressed = true;
+            rightSecondaryButtonPreviouslyPressed = true;
+
+            TeleopReachy.EventManager.StartListening(TeleopReachy.EventNames.OnStartArmTeleoperation, StartRecordingCycle);
+        }
+
+        public async void StartRecordingSession()
+        {
+            ActionAck ack = await DataAcquisitionManager.Instance.DataController.StartSession();
+            sessionStartSucceeded = ack.SuccessAck;
+            event_OnStartSessionOver.Invoke(sessionStartSucceeded);
+        }
+
+        public void StartRecordingCycle()
+        {
+            currentEpisode = 0;
+            if (sessionStartSucceeded)
+            {
+                // if (TeleopReachy.RobotDataManager.Instance.RobotStatus.HasMotorsSpeedLimited())
+                // {
+                //     TeleopReachy.RobotDataManager.Instance.RobotStatus.event_OnRobotMotorsFullSpeed.AddListener(RunSessionCycle);
+                // }
+                // else
+                // {
+                    StartCoroutine(SessionCycle());
+                // }
+            }
+
+            // StartCoroutine(RunSessionCycle()); // For test only
+        }
+
+        void Update()
+        {
+            if (sessionCycleStarted)
+            {
+                bool rightPrimaryButtonPressed = false;
+                bool rightSecondaryButtonPressed = false;
+
+                // Press space to skip current phase
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) skipRequested = true;
+                }
+
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    endRequested = true;
+                }
+
+                // Press A to skip current phase
+                if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
+                {
+                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) skipRequested = true;
+                }
+                if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out rightSecondaryButtonPressed) && rightSecondaryButtonPressed && !rightSecondaryButtonPreviouslyPressed)
+                {
+                    endRequested = true;
+                }
+                rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
+                rightSecondaryButtonPreviouslyPressed = rightSecondaryButtonPressed;
+            }
+
+            if (episodeSaved)
+            {
+                episodeSaved = false;
+                saveEpisodeCoroutine = null;
+                event_OnEpisodeSaved.Invoke();
+            }
+
+            bool leftPrimaryButtonPressed = false;
+            if (currentPhase == Phase.BreakTime)
+            {
+                if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed) && leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)
+                {
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
+                }
+                else if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed) && !leftPrimaryButtonPressed && leftPrimaryButtonPreviouslyPressed)
+                {
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                }
+                leftPrimaryButtonPreviouslyPressed = leftPrimaryButtonPressed;
+            }
+        }
+
+        private void RunSessionCycle()
+        {
+            StartCoroutine(SessionCycle());
+        }
+
+        IEnumerator SessionCycle()
+        {
+            FirstCycle = true;
+            TeleopReachy.RobotDataManager.Instance.RobotStatus.event_OnRobotMotorsFullSpeed.RemoveListener(RunSessionCycle);
+            sessionCycleStarted = true;
+
+            while (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal && !endRequested)
+            {
+                float startDelay = RecordingSessionParameters.Instance.StartDelay + 0.5f;
+                if (FirstCycle) 
+                {
+                    startDelay += 3.0f;
+                }
+                yield return RunPhase(
+                    Phase.EpisodeStartDelay,
+                    "RecordingStart", 
+                    startDelay
+                    );
+                yield return RunPhase(Phase.EpisodeRecording, "RecordingTimer", RecordingSessionParameters.Instance.EpisodeDuration); // hide all during episode
+                FirstCycle = false;
+                currentEpisode++;
+
+                yield return RunPhase(Phase.EpisodeSaving, "SaveEpisode", 5.0f);
+                if (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal)
+                {
+                    yield return RunPhase(Phase.BreakTime, "BreakTime", RecordingSessionParameters.Instance.BreakTimeDuration);
+                }
+            }
+            OpenPageByName("GoalCompleted"); // Final panel
+            if (currentEpisode == RecordingSessionParameters.Instance.NbEpisodesGoal)
+            {   
+                TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
+                Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
+                yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
+                if (saveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                while (saveEpisodeCoroutine != null)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        IEnumerator RunPhase(Phase phase, string panelToShow, float duration)
+        {
+            currentPhase = phase;
+            OpenPageByName(panelToShow);
+
+            if (phase == Phase.EpisodeStartDelay)
+            {
+                TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.HideXRay);
+                TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
+            }
+            if (phase == Phase.EpisodeRecording) 
+            {
+                TeleopReachy.EmotionMenuManager.Instance.ActivateEmotion();
+                Task startEpisodeTask = DataAcquisitionManager.Instance.DataController.StartEpisode();
+                yield return new WaitUntil(() => startEpisodeTask.IsCompleted);
+                saveEpisode = true;
+            }
+            else if (phase == Phase.EpisodeSaving)
+            {
+                TeleopReachy.EmotionMenuManager.Instance.DeactivateEmotion();
+                TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
+                TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
+                yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
+            }
+            else if (phase == Phase.BreakTime) 
+            {
+                if (saveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+            }
+            float elapsed = 0f;
+            skipRequested = false;
+            endRequested = false;
+
+            while (elapsed < duration && !skipRequested)
+            {
+                if (!suspendTime) elapsed += Time.deltaTime;
+                if (phase == Phase.BreakTime && endRequested)
+                {
+                    SuspendCurrentPhase();
+                    OpenPanelByName("PushSessionDataPanel");
+                }
+                yield return null;
+            }
+            while (saveEpisodeCoroutine != null)
+            {
+                yield return null;
+            }
+        }
+
+        IEnumerator DelayedSaveEpisode()
+        {
+            // yield return new WaitForSeconds(5.0f);
+            if (saveEpisode) 
+            {
+                Task saveEpisodeTask = DataAcquisitionManager.Instance.DataController.SaveEpisode();
+                event_OnEpisodeSavingStart.Invoke();
+                yield return new WaitUntil(() => saveEpisodeTask.IsCompleted);
+                episodeSaved = true;
+            }
+        }
+
+        public void SuspendCurrentPhase()
+        {
+            suspendTime = true;
+            currentOpenPage.GetComponentInChildren<CountdownWithPulse>().SuspendCountdown();
+        }
+
+        public void ResumeCurrentPhase()
+        {
+            suspendTime = false;
+            endRequested = false;
+            if(currentOpenPage.GetComponentInChildren<CountdownWithPulse>() != null) currentOpenPage.GetComponentInChildren<CountdownWithPulse>().ResumeCountdown();
+        }
+
+        public int GetCurrentEpisode()
+        {
+            return currentEpisode;
+        }
+
+        public void SetBackPreviousEpisode()
+        {
+            currentEpisode--;
+            saveEpisode = false;
+        }
+
+        public void DoNotPushSession()
+        {
+            pushSession = false;
+        }
+
+        public void PushSession()
+        {
+            pushSession = true;
+        }
+
+        public async void StopSession()
+        {
+            endRequested = true;
+            if (pushSession) 
+            {
+                if (saveEpisodeCoroutine == null) StopAndPushDataFromSession();
+                else this.event_OnEpisodeSaved.AddListener(StopAndPushDataFromSession);
+            }
+            else 
+            {
+                if (saveEpisodeCoroutine == null) StopWithoutPushingDataFromSession();
+                else this.event_OnEpisodeSaved.AddListener(StopWithoutPushingDataFromSession);
+            }
+        }
+
+        public async void StopWithoutPushingDataFromSession()
+        {
+            this.event_OnEpisodeSaved.AddListener(StopWithoutPushingDataFromSession);
+            ActionAck ack = await DataAcquisitionManager.Instance.DataController.StopSession();
+            event_OnConsolidationOver.Invoke(ack.SuccessAck);
+            DataAcquisitionManager.Instance.DataController.UpdateDataset(DatasetPushState.LocalOnly);
+        }
+
+        public async void StopAndPushDataFromSession()
+        {
+            this.event_OnEpisodeSaved.AddListener(StopAndPushDataFromSession);
+            pushRequested = true;
+            ActionAck ack = await DataAcquisitionManager.Instance.DataController.StopSession();
+            event_OnConsolidationOver.Invoke(ack.SuccessAck);
+            ActionAck pushAck = await DataAcquisitionManager.Instance.DataController.PushDataFromSession();
+            event_OnPushOver.Invoke(pushAck.SuccessAck);
+            DataAcquisitionManager.Instance.DataController.UpdateDataset(DatasetPushState.Pushed);
+        }
+
+        public void RequestSkip()
+        {
+            skipRequested = true;
+        }
+
+        public void LeaveTeleoperationScene()
+        {
+            TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.QuitTeleoperationScene);
+        }
+    }
+}
