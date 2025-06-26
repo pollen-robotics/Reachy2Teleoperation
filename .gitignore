@@ -78,6 +78,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /[Aa]ssets/Plugins/Grpc*
+/[Aa]ssets/DataAcquisition/Plugins/*
 
 /[Aa]ssets/left*
 /[Aa]ssets/right*
