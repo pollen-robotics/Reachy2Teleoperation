@@ -15,6 +15,8 @@ namespace TeleopReachy
 
         public GameObject XROrigin = null;
 
+        public bool FirstMirrorSceneAccess { get; private set; }
+
         void Start()
         {
             SceneManager.LoadScene("ConnectionScene", LoadSceneMode.Additive);
@@ -32,6 +34,8 @@ namespace TeleopReachy
 
             EventManager.StartListening(EventNames.ShowXRay, ShowXRay);
             EventManager.StartListening(EventNames.HideXRay, HideXRay);
+
+            FirstMirrorSceneAccess = true;
         }
 
         void QuitApplication()
@@ -47,6 +51,7 @@ namespace TeleopReachy
 
         private void LoadConnectionSceneEndUnloadMirrorScene()
         {
+            FirstMirrorSceneAccess = true;
             if(SceneManager.GetSceneByName("RobotDataScene").isLoaded)
             {
                 UnloadRobotDataScene();
@@ -106,6 +111,7 @@ namespace TeleopReachy
 
         private void LoadTeleoperationSceneAndUnloadMirrorScene()
         {
+            FirstMirrorSceneAccess = false;
             StartCoroutine(LoadTeleoperationRoom());
             UnloadMirrorScene();
         }
@@ -136,8 +142,15 @@ namespace TeleopReachy
         private void ToogleXRRayInteractors(bool activated)
         {
             XRInteractorLineVisual[] xrlines = XROrigin.GetComponentsInChildren<XRInteractorLineVisual>();
+            XRRayInteractor[] xrinteractors = XROrigin.GetComponentsInChildren<XRRayInteractor>();
             foreach (XRInteractorLineVisual xr in xrlines)
+            {
                 xr.enabled = activated;
+            }
+            foreach (XRRayInteractor xr in xrinteractors)
+            {
+                xr.enabled = activated;
+            }
         }
     }
 }

@@ -49,19 +49,19 @@ namespace TeleopReachy
             menuHidingRequested = false;
         }
 
-        private void DisableEmotionMenu()
+        void DisableEmotionMenu()
         {
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);
             HideImmediatelyEmotionMenu();
             canMenuOpen = false;
         }
 
-        void ActivateEmotion()
+        public void ActivateEmotion()
         {
             canMenuOpen = true;
         }
 
-        void DeactivateEmotion()
+        public void DeactivateEmotion()
         {
             canMenuOpen = false;
             if (menuHidingCoroutine != null) StopCoroutine(menuHidingCoroutine);

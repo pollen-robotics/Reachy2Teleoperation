@@ -18,10 +18,10 @@ namespace TeleopReachy
             timerCoroutine = null;
             rotateLoader = null;
 
+            transform.ActivateChildren(false);
+
             EventManager.StartListening(EventNames.OnStartArmTeleoperation, StartTimer);
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, StopTimer);
-
-            transform.ActivateChildren(false);
         }
 
         IEnumerator TimerCountdown()
@@ -69,6 +69,13 @@ namespace TeleopReachy
                 StopCoroutine(rotateLoader);
                 StopCoroutine(timerCoroutine);
             }
+            transform.ActivateChildren(false);
+        }
+
+        void OnDisable()
+        {
+            EventManager.StopListening(EventNames.OnStartArmTeleoperation, StartTimer);
+            EventManager.StopListening(EventNames.OnSuspendTeleoperation, StopTimer);
             transform.ActivateChildren(false);
         }
     }

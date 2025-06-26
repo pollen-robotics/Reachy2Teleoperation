@@ -33,6 +33,7 @@ namespace TeleopReachy
 
         public UnityEvent<bool> event_OnGraspingLock;
         public UnityEvent event_OnRobotFullyCompliant;
+        public UnityEvent event_OnRobotMotorsFullSpeed;
 
         public UnityEvent event_OnEmotionStart;
         public UnityEvent event_OnEmotionOver;
@@ -236,6 +237,10 @@ namespace TeleopReachy
         public void SetMotorsSpeedLimited(bool isLimited)
         {
             hasMotorsSpeedLimited = isLimited;
+            if (!isLimited)
+            {
+                event_OnRobotMotorsFullSpeed.Invoke();
+            }
         }
 
         public void SetRobotCompliant(bool isCompliant)
@@ -247,12 +252,12 @@ namespace TeleopReachy
             }
         }
 
-        private void SuspendRobotTeleoperation()
+        public void SuspendRobotTeleoperation()
         {
             areRobotMovementsSuspended = true;
         }
 
-        private void ResumeRobotTeleoperation()
+        public void ResumeRobotTeleoperation()
         {
             areRobotMovementsSuspended = false;
         }
