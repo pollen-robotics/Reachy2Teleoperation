@@ -15,7 +15,7 @@ namespace GstreamerWebRTC
     public class GStreamerRenderingPlugin
     {
         [DllImport("UnityGStreamerPlugin")]
-        private static extern void CreatePipeline(string uri, string remote_peer_id);
+        private static extern void CreatePipeline(string uri, string remote_peer_id, int latency);
 
         [DllImport("UnityGStreamerPlugin")]
         private static extern void CreateDevice();
@@ -167,7 +167,7 @@ namespace GstreamerWebRTC
         void StartPipeline(string remote_peer_id)
         {
             Debug.Log("start rendering pipe " + remote_peer_id);
-            CreatePipeline(_signallingServerURL, remote_peer_id);
+            CreatePipeline(_signallingServerURL, remote_peer_id, 170);
             event_OnPipelineStarted.Invoke();
         }
 
