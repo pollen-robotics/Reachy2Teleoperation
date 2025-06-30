@@ -9,35 +9,10 @@ namespace DataAcquisition
 {
     public class EpisodeEvaluationUIElement : MonoBehaviour
     {
-        private bool mustBeDisplayed = false;
-        private bool needActivationChange = false;
-        private RecordingSessionManager sessionManager;
-
         void OnEnable()
         {
-            if (DataAcquisitionManager.Instance.RecordingSessionManager.SaveEpisode) StartSaving();
-            else NoSaving();
-        }
-
-        public void StartSaving()
-        {
-            mustBeDisplayed = true;
-            needActivationChange = true;
-        }
-
-        public void NoSaving()
-        {
-            mustBeDisplayed = false;
-            needActivationChange = true;
-        }
-
-        void Update()
-        {
-            if (needActivationChange) 
-            {
-                needActivationChange = false;
-                ActivateChildren(mustBeDisplayed);
-            }
+            if (DataAcquisitionManager.Instance.RecordingSessionManager.SaveEpisode) ActivateChildren(true);
+            else ActivateChildren(false);
         }
 
         void ActivateChildren(bool enabled)

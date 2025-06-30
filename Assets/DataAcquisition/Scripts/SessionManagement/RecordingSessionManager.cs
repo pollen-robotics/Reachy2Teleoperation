@@ -51,7 +51,7 @@ namespace DataAcquisition
         void Start()
         {
             FirstCycle = true;
-            SaveEpisode = false;
+            SaveEpisode = true;
             controllers = TeleopReachy.ControllersManager.Instance;
             rightPrimaryButtonPreviouslyPressed = true;
             rightSecondaryButtonPreviouslyPressed = true;
@@ -86,7 +86,7 @@ namespace DataAcquisition
 
         void Update()
         {
-            if (sessionCycleStarted)
+            if (sessionCycleStarted && !suspendTime)
             {
                 bool rightPrimaryButtonPressed = false;
                 bool rightSecondaryButtonPressed = false;
@@ -155,7 +155,6 @@ namespace DataAcquisition
                 {
                     startDelay += 3.0f;
                 }
-                if (SaveEpisode) currentEpisode++;
                 yield return RunPhase(
                     Phase.EpisodeStartDelay,
                     "RecordingStart", 
@@ -165,11 +164,13 @@ namespace DataAcquisition
                 FirstCycle = false;
 
                 yield return RunPhase(Phase.EpisodeSaving, "SaveEpisode", 5.0f);
-                if (currentEpisode <= RecordingSessionParameters.Instance.NbEpisodesGoal)
+                if (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal)
                 {
                     yield return RunPhase(Phase.BreakTime, "BreakTime", RecordingSessionParameters.Instance.BreakTimeDuration);
                 }
+                if (SaveEpisode) currentEpisode++;
             }
+            if (!endRequested) currentEpisode--;
             OpenPageByName("GoalCompleted"); // Final panel
             if (currentEpisode == RecordingSessionParameters.Instance.NbEpisodesGoal)
             {   
@@ -231,7 +232,6 @@ namespace DataAcquisition
             {
                 yield return null;
             }
-            Debug.LogError("the end");
         }
 
         IEnumerator DelayedSaveEpisode()

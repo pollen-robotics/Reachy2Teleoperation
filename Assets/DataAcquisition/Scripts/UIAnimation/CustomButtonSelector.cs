@@ -29,17 +29,6 @@ namespace DataAcquisition
             if (successButton != null) shape.localPosition = successButton.localPosition;
         }
 
-        void Start()
-        {
-            isSuccess = true;
-            if (successButton == null || failButton == null || shape == null)
-            {
-                Debug.LogError("CustomButtonSelector not set up properly!");
-                return;
-            }
-            shape.localPosition = successButton.localPosition;
-        }
-
         public void SelectFailButton()
         {
             isSuccess = false;
@@ -71,7 +60,7 @@ namespace DataAcquisition
                 isTranslating = false;
             }
 
-            if (successButton == null || failButton == null || shape == null) TranslateShape();
+            if (successButton != null && failButton != null && shape != null) TranslateShape();
         }
         
 
