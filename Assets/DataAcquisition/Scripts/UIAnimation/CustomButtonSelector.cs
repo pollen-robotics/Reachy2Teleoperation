@@ -26,7 +26,7 @@ namespace DataAcquisition
         void OnEnable()
         {
             isSuccess = true;
-            shape.localPosition = successButton.localPosition;
+            if (successButton != null) shape.localPosition = successButton.localPosition;
         }
 
         void Start()
@@ -67,11 +67,11 @@ namespace DataAcquisition
 
             if (timer <= 0f)
             {
-                timer = translationDuration; // Reset timer **first**
+                timer = translationDuration;
                 isTranslating = false;
             }
 
-            TranslateShape();
+            if (successButton == null || failButton == null || shape == null) TranslateShape();
         }
         
 

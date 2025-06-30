@@ -12,7 +12,6 @@ namespace DataAcquisition
         private bool isSaving = false;
         private bool isEpisodeSaved = false;
         private bool needActivationChange = false;
-        private RecordingSessionManager sessionManager;
 
         [SerializeField]
         private Sprite validateIcon;
@@ -21,8 +20,7 @@ namespace DataAcquisition
 
         void Start()
         {
-            sessionManager = DataAcquisitionManager.Instance.RecordingSessionManager;
-            sessionManager.event_OnEpisodeSaved.AddListener(EpisodeSaved);
+            DataAcquisitionManager.Instance.RecordingSessionManager.event_OnEpisodeSaved.AddListener(EpisodeSaved);
         }
 
         void OnEnable()
@@ -31,12 +29,19 @@ namespace DataAcquisition
             transform.GetChild(1).GetComponent<Image>().sprite = savingIcon;
             transform.GetChild(1).localRotation = Quaternion.identity;
 
-            StartSaving();
+            if (DataAcquisitionManager.Instance.RecordingSessionManager.SaveEpisode) StartSaving();
+            else NoSaving();
         }
 
         public void StartSaving()
         {
             isSaving = true;
+            needActivationChange = true;
+        }
+
+        public void NoSaving()
+        {
+            isSaving = false;
             needActivationChange = true;
         }
 

@@ -17,7 +17,6 @@ namespace DataAcquisition
         private bool endRequested = false;
 
         private bool suspendTime = false;
-        private bool saveEpisode = false;
         private bool pushSession = true;
 
         private Coroutine saveEpisodeCoroutine = null;
@@ -39,7 +38,8 @@ namespace DataAcquisition
         public bool pushRequested = false;
         public bool sessionStartSucceeded = false;
 
-        public bool FirstCycle {get; private set; }
+        public bool FirstCycle { get; private set; }
+        public bool SaveEpisode { get; private set; }
 
         private Phase currentPhase = Phase.None;
 
@@ -51,6 +51,7 @@ namespace DataAcquisition
         void Start()
         {
             FirstCycle = true;
+            SaveEpisode = false;
             controllers = TeleopReachy.ControllersManager.Instance;
             rightPrimaryButtonPreviouslyPressed = true;
             rightSecondaryButtonPreviouslyPressed = true;
@@ -67,7 +68,7 @@ namespace DataAcquisition
 
         public void StartRecordingCycle()
         {
-            currentEpisode = 0;
+            currentEpisode = 1;
             if (sessionStartSucceeded)
             {
                 // if (TeleopReachy.RobotDataManager.Instance.RobotStatus.HasMotorsSpeedLimited())
@@ -147,13 +148,14 @@ namespace DataAcquisition
             TeleopReachy.RobotDataManager.Instance.RobotStatus.event_OnRobotMotorsFullSpeed.RemoveListener(RunSessionCycle);
             sessionCycleStarted = true;
 
-            while (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal && !endRequested)
+            while (currentEpisode <= RecordingSessionParameters.Instance.NbEpisodesGoal && !endRequested)
             {
                 float startDelay = RecordingSessionParameters.Instance.StartDelay + 0.5f;
                 if (FirstCycle) 
                 {
                     startDelay += 3.0f;
                 }
+                if (SaveEpisode) currentEpisode++;
                 yield return RunPhase(
                     Phase.EpisodeStartDelay,
                     "RecordingStart", 
@@ -161,10 +163,9 @@ namespace DataAcquisition
                     );
                 yield return RunPhase(Phase.EpisodeRecording, "RecordingTimer", RecordingSessionParameters.Instance.EpisodeDuration); // hide all during episode
                 FirstCycle = false;
-                currentEpisode++;
 
                 yield return RunPhase(Phase.EpisodeSaving, "SaveEpisode", 5.0f);
-                if (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal)
+                if (currentEpisode <= RecordingSessionParameters.Instance.NbEpisodesGoal)
                 {
                     yield return RunPhase(Phase.BreakTime, "BreakTime", RecordingSessionParameters.Instance.BreakTimeDuration);
                 }
@@ -175,7 +176,7 @@ namespace DataAcquisition
                 TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
                 Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
                 yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
-                if (saveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
                 while (saveEpisodeCoroutine != null)
                 {
                     yield return null;
@@ -193,12 +194,12 @@ namespace DataAcquisition
                 TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.HideXRay);
                 TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
             }
-            if (phase == Phase.EpisodeRecording) 
+            else if (phase == Phase.EpisodeRecording) 
             {
                 TeleopReachy.EmotionMenuManager.Instance.ActivateEmotion();
                 Task startEpisodeTask = DataAcquisitionManager.Instance.DataController.StartEpisode();
                 yield return new WaitUntil(() => startEpisodeTask.IsCompleted);
-                saveEpisode = true;
+                SaveEpisode = true;
             }
             else if (phase == Phase.EpisodeSaving)
             {
@@ -210,7 +211,7 @@ namespace DataAcquisition
             }
             else if (phase == Phase.BreakTime) 
             {
-                if (saveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
             }
             float elapsed = 0f;
             skipRequested = false;
@@ -230,12 +231,13 @@ namespace DataAcquisition
             {
                 yield return null;
             }
+            Debug.LogError("the end");
         }
 
         IEnumerator DelayedSaveEpisode()
         {
             // yield return new WaitForSeconds(5.0f);
-            if (saveEpisode) 
+            if (SaveEpisode) 
             {
                 Task saveEpisodeTask = DataAcquisitionManager.Instance.DataController.SaveEpisode();
                 event_OnEpisodeSavingStart.Invoke();
@@ -264,8 +266,7 @@ namespace DataAcquisition
 
         public void SetBackPreviousEpisode()
         {
-            currentEpisode--;
-            saveEpisode = false;
+            SaveEpisode = false;
         }
 
         public void DoNotPushSession()
