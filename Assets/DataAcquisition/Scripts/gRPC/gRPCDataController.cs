@@ -104,8 +104,9 @@ namespace DataAcquisition
                 Dataset dataset = new Dataset {
                     DatasetName = datasetName,
                     Pushed = state,
+                    NbEpisodes = DataAcquisitionManager.Instance.RecordingSessionManager.GetCurrentEpisode(),
                 };
-                ActionAck ack = await client.AddDatasetAsync(dataset);
+                ActionAck ack = await client.UpdateDatasetAsync(dataset);
                 return ack;
             }
             catch (RpcException e)
