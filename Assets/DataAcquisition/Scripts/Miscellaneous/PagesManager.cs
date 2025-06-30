@@ -12,13 +12,17 @@ public class PagesManager : MonoBehaviour
     public List<Transform> panels;
 
     protected Transform currentOpenPage;
+    protected int currentPageIndex = -1;
 
     public void OpenPage(Transform pageToOpen)
     {
+        int currentIndex = 0;
         foreach (var page in pages)
         {
             if (page == null) continue;
             page.gameObject.SetActive(page == pageToOpen);
+            if (page == pageToOpen) currentPageIndex = currentIndex;
+            currentIndex++;
         }
         currentOpenPage = pageToOpen;
     }
@@ -30,7 +34,6 @@ public class PagesManager : MonoBehaviour
             Debug.LogWarning("Invalid page index: " + index);
             return;
         }
-
         OpenPage(pages[index]);
     }
 

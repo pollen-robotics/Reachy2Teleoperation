@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class OrderedPagesManager : MonoBehaviour
+public class OrderedPagesManager : PagesManager
 {
-    [Header("Pages Setup")]
-    public List<Transform> pages; // List of page Transforms
+    // [Header("Pages Setup")]
+    // public List<Transform> pages; // List of page Transforms
 
     protected int currentPageIndex = -1;
 

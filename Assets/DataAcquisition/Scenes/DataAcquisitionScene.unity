@@ -265,12 +265,36 @@ PrefabInstance:
       value: StopWithoutPushingDataFromSession
       objectReference: {fileID: 0}
     - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6383181005585632462}
     - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenPanelByName
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OpenPageByName
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PagesManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: StopSession
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321680956959501599, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1330932657936514382, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1481838655881376512, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -623,6 +647,10 @@ PrefabInstance:
     - target: {fileID: 8197896925251714704, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8893463375647094901, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9185896585679603284, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
