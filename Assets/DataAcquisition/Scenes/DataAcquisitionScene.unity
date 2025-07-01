@@ -564,6 +564,42 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 6383181005585632462}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseAllPages
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PushSession
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PagesManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DataAcquisition.RecordingSessionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4917994773074963302, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5165144285070061807, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 

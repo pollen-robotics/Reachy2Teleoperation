@@ -23,6 +23,7 @@ namespace DataAcquisition
         private Vector3 originalScale;
         private float timer;
         private bool isCounting = false;
+        private bool firstTimeEnabled = true;
 
         public enum SessionPanel {
             StartDelay, BreakTime, RecordingTimer, EpisodeSaving, Other
@@ -38,6 +39,7 @@ namespace DataAcquisition
             else if (panel == SessionPanel.BreakTime) startingCount = RecordingSessionParameters.Instance.BreakTimeDuration;
             else if (panel == SessionPanel.RecordingTimer) startingCount = RecordingSessionParameters.Instance.EpisodeDuration;
             else if (panel == SessionPanel.EpisodeSaving) startingCount = 5;
+            if (!firstTimeEnabled) pulseImage.localScale = originalScale;
             StartCountdown();
         }
 
@@ -49,8 +51,8 @@ namespace DataAcquisition
                 enabled = false;
                 return;
             }
-
             originalScale = pulseImage.localScale;
+            firstTimeEnabled = false;
         }
 
         void Update()
