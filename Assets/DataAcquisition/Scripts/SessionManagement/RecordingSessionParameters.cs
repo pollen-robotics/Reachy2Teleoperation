@@ -35,5 +35,10 @@ namespace DataAcquisition
             IsNewDataset = sessionSetup.isNewDataset;
             IsDatasetOnline = sessionSetup.IsDatasetOnline();
         }
+
+        public void UpdateNbEpisodeGoal(int newNbOfEpisodes)
+        {
+            NbEpisodesGoal += newNbOfEpisodes;
+        }
     }
 }

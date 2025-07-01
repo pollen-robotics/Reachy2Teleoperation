@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 public class OrderedPagesManager : PagesManager
 {
-    // [Header("Pages Setup")]
-    // public List<Transform> pages; // List of page Transforms
-
-    protected int currentPageIndex = -1;
-
     protected virtual void Start()
     {
         ShowPage(0); // Optionally show the first page on start

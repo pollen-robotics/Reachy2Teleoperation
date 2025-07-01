@@ -139,13 +139,17 @@ namespace DataAcquisition
 
         private void RunSessionCycle()
         {
+            FirstCycle = true;
             StartCoroutine(SessionCycle());
         }
 
         IEnumerator SessionCycle()
         {
-            FirstCycle = true;
-            TeleopReachy.RobotDataManager.Instance.RobotStatus.event_OnRobotMotorsFullSpeed.RemoveListener(RunSessionCycle);
+            // TeleopReachy.RobotDataManager.Instance.RobotStatus.event_OnRobotMotorsFullSpeed.RemoveListener(RunSessionCycle);
+            while (saveEpisodeCoroutine != null)
+            {
+                yield return null;
+            }
             sessionCycleStarted = true;
 
             while (currentEpisode <= RecordingSessionParameters.Instance.NbEpisodesGoal && !endRequested)
@@ -257,6 +261,13 @@ namespace DataAcquisition
             suspendTime = false;
             endRequested = false;
             if(currentOpenPage.GetComponentInChildren<CountdownWithPulse>() != null) currentOpenPage.GetComponentInChildren<CountdownWithPulse>().ResumeCountdown();
+        }
+
+        public void ContinueRecordingSession(int nbAdditionalEpisodes)
+        {
+            DataAcquisitionManager.Instance.RecordingSessionParameters.UpdateNbEpisodeGoal(nbAdditionalEpisodes);
+            currentEpisode++;
+            StartCoroutine(SessionCycle());
         }
 
         public int GetCurrentEpisode()
