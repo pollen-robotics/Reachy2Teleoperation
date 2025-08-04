@@ -20,6 +20,13 @@ namespace DataAcquisition
             channel = new Channel(address, ChannelCredentials.Insecure);
         }
 
+        // To remove later
+        protected void InitCustomChannel(string ip_address, string port)
+        {
+            string address = ip_address + ":" + port;
+            channel = new Channel(address, ChannelCredentials.Insecure);
+        }
+
         protected virtual void RecoverFromNetWorkIssue()
         {
 

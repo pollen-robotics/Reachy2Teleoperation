@@ -22,7 +22,10 @@ namespace DataAcquisition
             // PlayerPrefs.SetString("robot_ip", "192.168.1.10");
             PlayerPrefs.SetString("server_data_port", "50062");
 
-            InitChannel("server_data_port");
+            // InitChannel("server_data_port");
+
+            // IP ADDRESS, to remove
+            InitCustomChannel("192.168.1.200", "50062");
             if (channel != null)
             {
                 client = new DataAcquisitionService.DataAcquisitionServiceClient(channel);
@@ -33,18 +36,26 @@ namespace DataAcquisition
         {
             try
             {
-                SessionParams sessionParams = new SessionParams {
-                    SessionName="test_session_from_unity",
-                    TaskDescription=recordingParams.TaskDescription,
-                    DatasetName=recordingParams.DatasetName,
-                    WarmupTimeDuration=3,
-                    NbEpisodesGoal=recordingParams.NbEpisodesGoal,
-                    BreakTimeDuration=recordingParams.BreakTimeDuration,
-                    EpisodeDuration=recordingParams.EpisodeDuration,
-                    Resume=!recordingParams.IsNewDataset,
-                    Offline=!recordingParams.IsDatasetOnline,
+                Robot reachy2 = new Robot {
+                    RobotType = RobotType.Reachy2,
+                    IpAddress = PlayerPrefs.GetString("robot_ip"),
+                    RobotId = "reachy2-pvt02",
                 };
-                return await client.StartSessionAsync(sessionParams);
+
+                SessionParams sessionParams = new SessionParams {
+                    Robot=reachy2,
+                    DatasetName=recordingParams.DatasetName,
+                    TaskDescription=recordingParams.TaskDescription,
+                    NbEpisodesGoal=recordingParams.NbEpisodesGoal,
+                    EpisodeDuration=recordingParams.EpisodeDuration,
+                    BreakTimeDuration=recordingParams.BreakTimeDuration,
+                    // UseVideos = true,
+                    // Resume=!recordingParams.IsNewDataset,
+                    // Offline=!recordingParams.IsDatasetOnline,
+                };
+                var test = await client.StartSessionAsync(sessionParams);
+                Debug.LogError(test);
+                return test;
             }
             catch (RpcException e)
             {

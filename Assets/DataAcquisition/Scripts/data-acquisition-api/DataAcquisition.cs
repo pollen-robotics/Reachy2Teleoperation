@@ -26,60 +26,61 @@ namespace Data.Acquisition {
           string.Concat(
             "ChZkYXRhLWFjcXVpc2l0aW9uLnByb3RvEhBkYXRhLmFjcXVpc2l0aW9uGhtn",
             "b29nbGUvcHJvdG9idWYvZW1wdHkucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90",
-            "aW1lc3RhbXAucHJvdG8i0AIKDVNlc3Npb25QYXJhbXMSJgoFcm9ib3QYASAB",
-            "KA4yFy5kYXRhLmFjcXVpc2l0aW9uLlJvYm90EhQKDHNlc3Npb25fbmFtZRgC",
-            "IAEoCRIYChBuYl9lcGlzb2Rlc19nb2FsGAMgASgFEhgKEGVwaXNvZGVfZHVy",
-            "YXRpb24YBCABKAUSGwoTYnJlYWtfdGltZV9kdXJhdGlvbhgFIAEoBRIcChR3",
-            "YXJtdXBfdGltZV9kdXJhdGlvbhgGIAEoBRIQCgNmcHMYByABKAVIAIgBARIS",
-            "Cgp1c2VfdmlkZW9zGAggASgIEhgKEHRhc2tfZGVzY3JpcHRpb24YCiABKAkS",
-            "FAoMZGF0YXNldF9uYW1lGA8gASgJEg4KBnJlc3VtZRgQIAEoCBITCgtwdXNo",
-            "X3RvX2h1YhgUIAEoCBIPCgdvZmZsaW5lGBUgASgIQgYKBF9mcHMibgoHU2Vz",
-            "c2lvbhIUCgxzZXNzaW9uX25hbWUYASABKAkSHAoUbmJfZXBpc29kZXNfcmVj",
-            "b3JkZWQYAiABKAUSLwoLbGFzdF91cGRhdGUYAyABKAsyGi5nb29nbGUucHJv",
-            "dG9idWYuVGltZXN0YW1wImgKB0RhdGFzZXQSFAoMZGF0YXNldF9uYW1lGAEg",
-            "ASgJEjIKBnB1c2hlZBgCIAEoDjIiLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNl",
-            "dFB1c2hTdGF0ZRITCgtuYl9lcGlzb2RlcxgDIAEoBSI6CgtEYXRhc2V0TGlz",
-            "dBIrCghkYXRhc2V0cxgBIAMoCzIZLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNl",
-            "dCIgCglBY3Rpb25BY2sSEwoLc3VjY2Vzc19hY2sYASABKAgiIAoNRXBpc29k",
-            "ZVJhdGluZxIPCgdzdWNjZXNzGAEgASgIInEKB0VwaXNvZGUSFwoKZXBpc29k",
-            "ZV9pZBgBIAEoBUgAiAEBEhAKCGR1cmF0aW9uGAIgASgFEhcKD2VwaXNvZGVf",
-            "c3VjY2VzcxgDIAEoCBITCgtkZXNjcmlwdGlvbhgEIAEoCUINCgtfZXBpc29k",
-            "ZV9pZCIWCgVMb2dpbhINCgV0b2tlbhgBIAEoCSpEChBEYXRhc2V0UHVzaFN0",
-            "YXRlEg4KCkxPQ0FMX09OTFkQABIUChBQQVJUSUFMTFlfUFVTSEVEEAESCgoG",
-            "UFVTSEVEEAIqHgoFUm9ib3QSCAoETk9ORRAAEgsKB1JFQUNIWTIQATLIBwoW",
-            "RGF0YUFjcXVpc2l0aW9uU2VydmljZRJHCg5HZXREYXRhc2V0TGlzdBIWLmdv",
-            "b2dsZS5wcm90b2J1Zi5FbXB0eRodLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNl",
-            "dExpc3QSRAoKQWRkRGF0YXNldBIZLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNl",
-            "dBobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEkcKDVJlbW92ZURhdGFz",
-            "ZXQSGS5kYXRhLmFjcXVpc2l0aW9uLkRhdGFzZXQaGy5kYXRhLmFjcXVpc2l0",
-            "aW9uLkFjdGlvbkFjaxJHCg1VcGRhdGVEYXRhc2V0EhkuZGF0YS5hY3F1aXNp",
-            "dGlvbi5EYXRhc2V0GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSRwoQ",
-            "Q2xlYXJBbGxEYXRhc2V0cxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRobLmRh",
-            "dGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEkwKDFN0YXJ0U2Vzc2lvbhIfLmRh",
-            "dGEuYWNxdWlzaXRpb24uU2Vzc2lvblBhcmFtcxobLmRhdGEuYWNxdWlzaXRp",
-            "b24uQWN0aW9uQWNrEkIKC1N0b3BTZXNzaW9uEhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSQwoMU3RhcnRF",
-            "cGlzb2RlEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNp",
-            "dGlvbi5BY3Rpb25BY2sSQgoLU3RvcEVwaXNvZGUSFi5nb29nbGUucHJvdG9i",
-            "dWYuRW1wdHkaGy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJLCgtTYXZl",
-            "RXBpc29kZRIfLmRhdGEuYWNxdWlzaXRpb24uRXBpc29kZVJhdGluZxobLmRh",
-            "dGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEkQKDVVwbG9hZFNlc3Npb24SFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHkaGy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlv",
-            "bkFjaxJNCg1SZW1vdmVTZXNzaW9uEh8uZGF0YS5hY3F1aXNpdGlvbi5TZXNz",
-            "aW9uUGFyYW1zGhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSRwoQQ2xl",
-            "YXJBbGxTZXNzaW9ucxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRobLmRhdGEu",
-            "YWNxdWlzaXRpb24uQWN0aW9uQWNrYgZwcm90bzM="));
+            "aW1lc3RhbXAucHJvdG8inAIKDVNlc3Npb25QYXJhbXMSJgoFcm9ib3QYASAB",
+            "KAsyFy5kYXRhLmFjcXVpc2l0aW9uLlJvYm90EhQKDGRhdGFzZXRfbmFtZRgC",
+            "IAEoCRIYChB0YXNrX2Rlc2NyaXB0aW9uGAMgASgJEhgKEG5iX2VwaXNvZGVz",
+            "X2dvYWwYBCABKAUSGAoQZXBpc29kZV9kdXJhdGlvbhgFIAEoBRIbChNicmVh",
+            "a190aW1lX2R1cmF0aW9uGAYgASgFEhAKA2ZwcxgHIAEoBUgAiAEBEhIKCnVz",
+            "ZV92aWRlb3MYCCABKAgSDgoGcmVzdW1lGA8gASgIEhMKC3B1c2hfdG9faHVi",
+            "GBQgASgIEg8KB29mZmxpbmUYFSABKAhCBgoEX2ZwcyJuCgdTZXNzaW9uEhQK",
+            "DGRhdGFzZXRfbmFtZRgBIAEoCRIcChRuYl9lcGlzb2Rlc19yZWNvcmRlZBgC",
+            "IAEoBRIvCgtsYXN0X3VwZGF0ZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
+            "aW1lc3RhbXAiaAoHRGF0YXNldBIUCgxkYXRhc2V0X25hbWUYASABKAkSMgoG",
+            "cHVzaGVkGAIgASgOMiIuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0UHVzaFN0",
+            "YXRlEhMKC25iX2VwaXNvZGVzGAMgASgFIjoKC0RhdGFzZXRMaXN0EisKCGRh",
+            "dGFzZXRzGAEgAygLMhkuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0IiAKCUFj",
+            "dGlvbkFjaxITCgtzdWNjZXNzX2FjaxgBIAEoCCIgCg1FcGlzb2RlUmF0aW5n",
+            "Eg8KB3N1Y2Nlc3MYASABKAgicQoHRXBpc29kZRIXCgplcGlzb2RlX2lkGAEg",
+            "ASgFSACIAQESEAoIZHVyYXRpb24YAiABKAUSFwoPZXBpc29kZV9zdWNjZXNz",
+            "GAMgASgIEhMKC2Rlc2NyaXB0aW9uGAQgASgJQg0KC19lcGlzb2RlX2lkIl4K",
+            "BVJvYm90Ei8KCnJvYm90X3R5cGUYASABKA4yGy5kYXRhLmFjcXVpc2l0aW9u",
+            "LlJvYm90VHlwZRISCgppcF9hZGRyZXNzGAIgASgJEhAKCHJvYm90X2lkGAMg",
+            "ASgJKkQKEERhdGFzZXRQdXNoU3RhdGUSDgoKTE9DQUxfT05MWRAAEhQKEFBB",
+            "UlRJQUxMWV9QVVNIRUQQARIKCgZQVVNIRUQQAioiCglSb2JvdFR5cGUSCAoE",
+            "Tk9ORRAAEgsKB1JFQUNIWTIQATLIBwoWRGF0YUFjcXVpc2l0aW9uU2Vydmlj",
+            "ZRJHCg5HZXREYXRhc2V0TGlzdBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRod",
+            "LmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldExpc3QSRAoKQWRkRGF0YXNldBIZ",
+            "LmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldBobLmRhdGEuYWNxdWlzaXRpb24u",
+            "QWN0aW9uQWNrEkcKDVJlbW92ZURhdGFzZXQSGS5kYXRhLmFjcXVpc2l0aW9u",
+            "LkRhdGFzZXQaGy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJHCg1VcGRh",
+            "dGVEYXRhc2V0EhkuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0GhsuZGF0YS5h",
+            "Y3F1aXNpdGlvbi5BY3Rpb25BY2sSRwoQQ2xlYXJBbGxEYXRhc2V0cxIWLmdv",
+            "b2dsZS5wcm90b2J1Zi5FbXB0eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9u",
+            "QWNrEkwKDFN0YXJ0U2Vzc2lvbhIfLmRhdGEuYWNxdWlzaXRpb24uU2Vzc2lv",
+            "blBhcmFtcxobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEkIKC1N0b3BT",
+            "ZXNzaW9uEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNp",
+            "dGlvbi5BY3Rpb25BY2sSQwoMU3RhcnRFcGlzb2RlEhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSQgoLU3Rv",
+            "cEVwaXNvZGUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGy5kYXRhLmFjcXVp",
+            "c2l0aW9uLkFjdGlvbkFjaxJLCgtTYXZlRXBpc29kZRIfLmRhdGEuYWNxdWlz",
+            "aXRpb24uRXBpc29kZVJhdGluZxobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9u",
+            "QWNrEkQKDVVwbG9hZFNlc3Npb24SFi5nb29nbGUucHJvdG9idWYuRW1wdHka",
+            "Gy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJNCg1SZW1vdmVTZXNzaW9u",
+            "Eh8uZGF0YS5hY3F1aXNpdGlvbi5TZXNzaW9uUGFyYW1zGhsuZGF0YS5hY3F1",
+            "aXNpdGlvbi5BY3Rpb25BY2sSRwoQQ2xlYXJBbGxTZXNzaW9ucxIWLmdvb2ds",
+            "ZS5wcm90b2J1Zi5FbXB0eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNr",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Data.Acquisition.DatasetPushState), typeof(global::Data.Acquisition.Robot), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.SessionParams), global::Data.Acquisition.SessionParams.Parser, new[]{ "Robot", "SessionName", "NbEpisodesGoal", "EpisodeDuration", "BreakTimeDuration", "WarmupTimeDuration", "Fps", "UseVideos", "TaskDescription", "DatasetName", "Resume", "PushToHub", "Offline" }, new[]{ "Fps" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Session), global::Data.Acquisition.Session.Parser, new[]{ "SessionName", "NbEpisodesRecorded", "LastUpdate" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Data.Acquisition.DatasetPushState), typeof(global::Data.Acquisition.RobotType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.SessionParams), global::Data.Acquisition.SessionParams.Parser, new[]{ "Robot", "DatasetName", "TaskDescription", "NbEpisodesGoal", "EpisodeDuration", "BreakTimeDuration", "Fps", "UseVideos", "Resume", "PushToHub", "Offline" }, new[]{ "Fps" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Session), global::Data.Acquisition.Session.Parser, new[]{ "DatasetName", "NbEpisodesRecorded", "LastUpdate" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Dataset), global::Data.Acquisition.Dataset.Parser, new[]{ "DatasetName", "Pushed", "NbEpisodes" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.DatasetList), global::Data.Acquisition.DatasetList.Parser, new[]{ "Datasets" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.ActionAck), global::Data.Acquisition.ActionAck.Parser, new[]{ "SuccessAck" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.EpisodeRating), global::Data.Acquisition.EpisodeRating.Parser, new[]{ "Success" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Episode), global::Data.Acquisition.Episode.Parser, new[]{ "EpisodeId", "Duration", "EpisodeSuccess", "Description" }, new[]{ "EpisodeId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Login), global::Data.Acquisition.Login.Parser, new[]{ "Token" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Robot), global::Data.Acquisition.Robot.Parser, new[]{ "RobotType", "IpAddress", "RobotId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -92,7 +93,7 @@ namespace Data.Acquisition {
     [pbr::OriginalName("PUSHED")] Pushed = 2,
   }
 
-  public enum Robot {
+  public enum RobotType {
     [pbr::OriginalName("NONE")] None = 0,
     [pbr::OriginalName("REACHY2")] Reachy2 = 1,
   }
@@ -136,16 +137,14 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public SessionParams(SessionParams other) : this() {
       _hasBits0 = other._hasBits0;
-      robot_ = other.robot_;
-      sessionName_ = other.sessionName_;
+      robot_ = other.robot_ != null ? other.robot_.Clone() : null;
+      datasetName_ = other.datasetName_;
+      taskDescription_ = other.taskDescription_;
       nbEpisodesGoal_ = other.nbEpisodesGoal_;
       episodeDuration_ = other.episodeDuration_;
       breakTimeDuration_ = other.breakTimeDuration_;
-      warmupTimeDuration_ = other.warmupTimeDuration_;
       fps_ = other.fps_;
       useVideos_ = other.useVideos_;
-      taskDescription_ = other.taskDescription_;
-      datasetName_ = other.datasetName_;
       resume_ = other.resume_;
       pushToHub_ = other.pushToHub_;
       offline_ = other.offline_;
@@ -160,7 +159,7 @@ namespace Data.Acquisition {
 
     /// <summary>Field number for the "robot" field.</summary>
     public const int RobotFieldNumber = 1;
-    private global::Data.Acquisition.Robot robot_ = global::Data.Acquisition.Robot.None;
+    private global::Data.Acquisition.Robot robot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Data.Acquisition.Robot Robot {
@@ -170,20 +169,32 @@ namespace Data.Acquisition {
       }
     }
 
-    /// <summary>Field number for the "session_name" field.</summary>
-    public const int SessionNameFieldNumber = 2;
-    private string sessionName_ = "";
+    /// <summary>Field number for the "dataset_name" field.</summary>
+    public const int DatasetNameFieldNumber = 2;
+    private string datasetName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SessionName {
-      get { return sessionName_; }
+    public string DatasetName {
+      get { return datasetName_; }
       set {
-        sessionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        datasetName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "task_description" field.</summary>
+    public const int TaskDescriptionFieldNumber = 3;
+    private string taskDescription_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string TaskDescription {
+      get { return taskDescription_; }
+      set {
+        taskDescription_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "nb_episodes_goal" field.</summary>
-    public const int NbEpisodesGoalFieldNumber = 3;
+    public const int NbEpisodesGoalFieldNumber = 4;
     private int nbEpisodesGoal_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -195,7 +206,7 @@ namespace Data.Acquisition {
     }
 
     /// <summary>Field number for the "episode_duration" field.</summary>
-    public const int EpisodeDurationFieldNumber = 4;
+    public const int EpisodeDurationFieldNumber = 5;
     private int episodeDuration_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -207,7 +218,7 @@ namespace Data.Acquisition {
     }
 
     /// <summary>Field number for the "break_time_duration" field.</summary>
-    public const int BreakTimeDurationFieldNumber = 5;
+    public const int BreakTimeDurationFieldNumber = 6;
     private int breakTimeDuration_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -215,18 +226,6 @@ namespace Data.Acquisition {
       get { return breakTimeDuration_; }
       set {
         breakTimeDuration_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "warmup_time_duration" field.</summary>
-    public const int WarmupTimeDurationFieldNumber = 6;
-    private int warmupTimeDuration_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int WarmupTimeDuration {
-      get { return warmupTimeDuration_; }
-      set {
-        warmupTimeDuration_ = value;
       }
     }
 
@@ -269,32 +268,8 @@ namespace Data.Acquisition {
       }
     }
 
-    /// <summary>Field number for the "task_description" field.</summary>
-    public const int TaskDescriptionFieldNumber = 10;
-    private string taskDescription_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string TaskDescription {
-      get { return taskDescription_; }
-      set {
-        taskDescription_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "dataset_name" field.</summary>
-    public const int DatasetNameFieldNumber = 15;
-    private string datasetName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string DatasetName {
-      get { return datasetName_; }
-      set {
-        datasetName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "resume" field.</summary>
-    public const int ResumeFieldNumber = 16;
+    public const int ResumeFieldNumber = 15;
     private bool resume_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -344,16 +319,14 @@ namespace Data.Acquisition {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Robot != other.Robot) return false;
-      if (SessionName != other.SessionName) return false;
+      if (!object.Equals(Robot, other.Robot)) return false;
+      if (DatasetName != other.DatasetName) return false;
+      if (TaskDescription != other.TaskDescription) return false;
       if (NbEpisodesGoal != other.NbEpisodesGoal) return false;
       if (EpisodeDuration != other.EpisodeDuration) return false;
       if (BreakTimeDuration != other.BreakTimeDuration) return false;
-      if (WarmupTimeDuration != other.WarmupTimeDuration) return false;
       if (Fps != other.Fps) return false;
       if (UseVideos != other.UseVideos) return false;
-      if (TaskDescription != other.TaskDescription) return false;
-      if (DatasetName != other.DatasetName) return false;
       if (Resume != other.Resume) return false;
       if (PushToHub != other.PushToHub) return false;
       if (Offline != other.Offline) return false;
@@ -364,16 +337,14 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Robot != global::Data.Acquisition.Robot.None) hash ^= Robot.GetHashCode();
-      if (SessionName.Length != 0) hash ^= SessionName.GetHashCode();
+      if (robot_ != null) hash ^= Robot.GetHashCode();
+      if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
+      if (TaskDescription.Length != 0) hash ^= TaskDescription.GetHashCode();
       if (NbEpisodesGoal != 0) hash ^= NbEpisodesGoal.GetHashCode();
       if (EpisodeDuration != 0) hash ^= EpisodeDuration.GetHashCode();
       if (BreakTimeDuration != 0) hash ^= BreakTimeDuration.GetHashCode();
-      if (WarmupTimeDuration != 0) hash ^= WarmupTimeDuration.GetHashCode();
       if (HasFps) hash ^= Fps.GetHashCode();
       if (UseVideos != false) hash ^= UseVideos.GetHashCode();
-      if (TaskDescription.Length != 0) hash ^= TaskDescription.GetHashCode();
-      if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
       if (Resume != false) hash ^= Resume.GetHashCode();
       if (PushToHub != false) hash ^= PushToHub.GetHashCode();
       if (Offline != false) hash ^= Offline.GetHashCode();
@@ -395,29 +366,29 @@ namespace Data.Acquisition {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Robot != global::Data.Acquisition.Robot.None) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) Robot);
+      if (robot_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Robot);
       }
-      if (SessionName.Length != 0) {
+      if (DatasetName.Length != 0) {
         output.WriteRawTag(18);
-        output.WriteString(SessionName);
+        output.WriteString(DatasetName);
+      }
+      if (TaskDescription.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(TaskDescription);
       }
       if (NbEpisodesGoal != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteInt32(NbEpisodesGoal);
       }
       if (EpisodeDuration != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt32(EpisodeDuration);
       }
       if (BreakTimeDuration != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(BreakTimeDuration);
-      }
-      if (WarmupTimeDuration != 0) {
         output.WriteRawTag(48);
-        output.WriteInt32(WarmupTimeDuration);
+        output.WriteInt32(BreakTimeDuration);
       }
       if (HasFps) {
         output.WriteRawTag(56);
@@ -427,16 +398,8 @@ namespace Data.Acquisition {
         output.WriteRawTag(64);
         output.WriteBool(UseVideos);
       }
-      if (TaskDescription.Length != 0) {
-        output.WriteRawTag(82);
-        output.WriteString(TaskDescription);
-      }
-      if (DatasetName.Length != 0) {
-        output.WriteRawTag(122);
-        output.WriteString(DatasetName);
-      }
       if (Resume != false) {
-        output.WriteRawTag(128, 1);
+        output.WriteRawTag(120);
         output.WriteBool(Resume);
       }
       if (PushToHub != false) {
@@ -457,29 +420,29 @@ namespace Data.Acquisition {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Robot != global::Data.Acquisition.Robot.None) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) Robot);
+      if (robot_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Robot);
       }
-      if (SessionName.Length != 0) {
+      if (DatasetName.Length != 0) {
         output.WriteRawTag(18);
-        output.WriteString(SessionName);
+        output.WriteString(DatasetName);
+      }
+      if (TaskDescription.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(TaskDescription);
       }
       if (NbEpisodesGoal != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteInt32(NbEpisodesGoal);
       }
       if (EpisodeDuration != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt32(EpisodeDuration);
       }
       if (BreakTimeDuration != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(BreakTimeDuration);
-      }
-      if (WarmupTimeDuration != 0) {
         output.WriteRawTag(48);
-        output.WriteInt32(WarmupTimeDuration);
+        output.WriteInt32(BreakTimeDuration);
       }
       if (HasFps) {
         output.WriteRawTag(56);
@@ -489,16 +452,8 @@ namespace Data.Acquisition {
         output.WriteRawTag(64);
         output.WriteBool(UseVideos);
       }
-      if (TaskDescription.Length != 0) {
-        output.WriteRawTag(82);
-        output.WriteString(TaskDescription);
-      }
-      if (DatasetName.Length != 0) {
-        output.WriteRawTag(122);
-        output.WriteString(DatasetName);
-      }
       if (Resume != false) {
-        output.WriteRawTag(128, 1);
+        output.WriteRawTag(120);
         output.WriteBool(Resume);
       }
       if (PushToHub != false) {
@@ -519,11 +474,14 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Robot != global::Data.Acquisition.Robot.None) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Robot);
+      if (robot_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Robot);
       }
-      if (SessionName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
+      if (DatasetName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
+      }
+      if (TaskDescription.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(TaskDescription);
       }
       if (NbEpisodesGoal != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(NbEpisodesGoal);
@@ -534,23 +492,14 @@ namespace Data.Acquisition {
       if (BreakTimeDuration != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(BreakTimeDuration);
       }
-      if (WarmupTimeDuration != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(WarmupTimeDuration);
-      }
       if (HasFps) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Fps);
       }
       if (UseVideos != false) {
         size += 1 + 1;
       }
-      if (TaskDescription.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(TaskDescription);
-      }
-      if (DatasetName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
-      }
       if (Resume != false) {
-        size += 2 + 1;
+        size += 1 + 1;
       }
       if (PushToHub != false) {
         size += 2 + 1;
@@ -570,11 +519,17 @@ namespace Data.Acquisition {
       if (other == null) {
         return;
       }
-      if (other.Robot != global::Data.Acquisition.Robot.None) {
-        Robot = other.Robot;
+      if (other.robot_ != null) {
+        if (robot_ == null) {
+          Robot = new global::Data.Acquisition.Robot();
+        }
+        Robot.MergeFrom(other.Robot);
       }
-      if (other.SessionName.Length != 0) {
-        SessionName = other.SessionName;
+      if (other.DatasetName.Length != 0) {
+        DatasetName = other.DatasetName;
+      }
+      if (other.TaskDescription.Length != 0) {
+        TaskDescription = other.TaskDescription;
       }
       if (other.NbEpisodesGoal != 0) {
         NbEpisodesGoal = other.NbEpisodesGoal;
@@ -585,20 +540,11 @@ namespace Data.Acquisition {
       if (other.BreakTimeDuration != 0) {
         BreakTimeDuration = other.BreakTimeDuration;
       }
-      if (other.WarmupTimeDuration != 0) {
-        WarmupTimeDuration = other.WarmupTimeDuration;
-      }
       if (other.HasFps) {
         Fps = other.Fps;
       }
       if (other.UseVideos != false) {
         UseVideos = other.UseVideos;
-      }
-      if (other.TaskDescription.Length != 0) {
-        TaskDescription = other.TaskDescription;
-      }
-      if (other.DatasetName.Length != 0) {
-        DatasetName = other.DatasetName;
       }
       if (other.Resume != false) {
         Resume = other.Resume;
@@ -624,28 +570,31 @@ namespace Data.Acquisition {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            Robot = (global::Data.Acquisition.Robot) input.ReadEnum();
+          case 10: {
+            if (robot_ == null) {
+              Robot = new global::Data.Acquisition.Robot();
+            }
+            input.ReadMessage(Robot);
             break;
           }
           case 18: {
-            SessionName = input.ReadString();
+            DatasetName = input.ReadString();
             break;
           }
-          case 24: {
-            NbEpisodesGoal = input.ReadInt32();
+          case 26: {
+            TaskDescription = input.ReadString();
             break;
           }
           case 32: {
-            EpisodeDuration = input.ReadInt32();
+            NbEpisodesGoal = input.ReadInt32();
             break;
           }
           case 40: {
-            BreakTimeDuration = input.ReadInt32();
+            EpisodeDuration = input.ReadInt32();
             break;
           }
           case 48: {
-            WarmupTimeDuration = input.ReadInt32();
+            BreakTimeDuration = input.ReadInt32();
             break;
           }
           case 56: {
@@ -656,15 +605,7 @@ namespace Data.Acquisition {
             UseVideos = input.ReadBool();
             break;
           }
-          case 82: {
-            TaskDescription = input.ReadString();
-            break;
-          }
-          case 122: {
-            DatasetName = input.ReadString();
-            break;
-          }
-          case 128: {
+          case 120: {
             Resume = input.ReadBool();
             break;
           }
@@ -691,28 +632,31 @@ namespace Data.Acquisition {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 8: {
-            Robot = (global::Data.Acquisition.Robot) input.ReadEnum();
+          case 10: {
+            if (robot_ == null) {
+              Robot = new global::Data.Acquisition.Robot();
+            }
+            input.ReadMessage(Robot);
             break;
           }
           case 18: {
-            SessionName = input.ReadString();
+            DatasetName = input.ReadString();
             break;
           }
-          case 24: {
-            NbEpisodesGoal = input.ReadInt32();
+          case 26: {
+            TaskDescription = input.ReadString();
             break;
           }
           case 32: {
-            EpisodeDuration = input.ReadInt32();
+            NbEpisodesGoal = input.ReadInt32();
             break;
           }
           case 40: {
-            BreakTimeDuration = input.ReadInt32();
+            EpisodeDuration = input.ReadInt32();
             break;
           }
           case 48: {
-            WarmupTimeDuration = input.ReadInt32();
+            BreakTimeDuration = input.ReadInt32();
             break;
           }
           case 56: {
@@ -723,15 +667,7 @@ namespace Data.Acquisition {
             UseVideos = input.ReadBool();
             break;
           }
-          case 82: {
-            TaskDescription = input.ReadString();
-            break;
-          }
-          case 122: {
-            DatasetName = input.ReadString();
-            break;
-          }
-          case 128: {
+          case 120: {
             Resume = input.ReadBool();
             break;
           }
@@ -784,7 +720,7 @@ namespace Data.Acquisition {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public Session(Session other) : this() {
-      sessionName_ = other.sessionName_;
+      datasetName_ = other.datasetName_;
       nbEpisodesRecorded_ = other.nbEpisodesRecorded_;
       lastUpdate_ = other.lastUpdate_ != null ? other.lastUpdate_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -796,15 +732,15 @@ namespace Data.Acquisition {
       return new Session(this);
     }
 
-    /// <summary>Field number for the "session_name" field.</summary>
-    public const int SessionNameFieldNumber = 1;
-    private string sessionName_ = "";
+    /// <summary>Field number for the "dataset_name" field.</summary>
+    public const int DatasetNameFieldNumber = 1;
+    private string datasetName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SessionName {
-      get { return sessionName_; }
+    public string DatasetName {
+      get { return datasetName_; }
       set {
-        sessionName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        datasetName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -847,7 +783,7 @@ namespace Data.Acquisition {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (SessionName != other.SessionName) return false;
+      if (DatasetName != other.DatasetName) return false;
       if (NbEpisodesRecorded != other.NbEpisodesRecorded) return false;
       if (!object.Equals(LastUpdate, other.LastUpdate)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -857,7 +793,7 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (SessionName.Length != 0) hash ^= SessionName.GetHashCode();
+      if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
       if (NbEpisodesRecorded != 0) hash ^= NbEpisodesRecorded.GetHashCode();
       if (lastUpdate_ != null) hash ^= LastUpdate.GetHashCode();
       if (_unknownFields != null) {
@@ -878,9 +814,9 @@ namespace Data.Acquisition {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (SessionName.Length != 0) {
+      if (DatasetName.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(SessionName);
+        output.WriteString(DatasetName);
       }
       if (NbEpisodesRecorded != 0) {
         output.WriteRawTag(16);
@@ -900,9 +836,9 @@ namespace Data.Acquisition {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (SessionName.Length != 0) {
+      if (DatasetName.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(SessionName);
+        output.WriteString(DatasetName);
       }
       if (NbEpisodesRecorded != 0) {
         output.WriteRawTag(16);
@@ -922,8 +858,8 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (SessionName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionName);
+      if (DatasetName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
       }
       if (NbEpisodesRecorded != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(NbEpisodesRecorded);
@@ -943,8 +879,8 @@ namespace Data.Acquisition {
       if (other == null) {
         return;
       }
-      if (other.SessionName.Length != 0) {
-        SessionName = other.SessionName;
+      if (other.DatasetName.Length != 0) {
+        DatasetName = other.DatasetName;
       }
       if (other.NbEpisodesRecorded != 0) {
         NbEpisodesRecorded = other.NbEpisodesRecorded;
@@ -971,7 +907,7 @@ namespace Data.Acquisition {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            SessionName = input.ReadString();
+            DatasetName = input.ReadString();
             break;
           }
           case 16: {
@@ -1001,7 +937,7 @@ namespace Data.Acquisition {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            SessionName = input.ReadString();
+            DatasetName = input.ReadString();
             break;
           }
           case 16: {
@@ -2158,16 +2094,16 @@ namespace Data.Acquisition {
 
   }
 
-  public sealed partial class Login : pb::IMessage<Login>
+  public sealed partial class Robot : pb::IMessage<Robot>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Login> _parser = new pb::MessageParser<Login>(() => new Login());
+    private static readonly pb::MessageParser<Robot> _parser = new pb::MessageParser<Robot>(() => new Robot());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Login> Parser { get { return _parser; } }
+    public static pb::MessageParser<Robot> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2183,7 +2119,7 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Login() {
+    public Robot() {
       OnConstruction();
     }
 
@@ -2191,45 +2127,73 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Login(Login other) : this() {
-      token_ = other.token_;
+    public Robot(Robot other) : this() {
+      robotType_ = other.robotType_;
+      ipAddress_ = other.ipAddress_;
+      robotId_ = other.robotId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Login Clone() {
-      return new Login(this);
+    public Robot Clone() {
+      return new Robot(this);
     }
 
-    /// <summary>Field number for the "token" field.</summary>
-    public const int TokenFieldNumber = 1;
-    private string token_ = "";
+    /// <summary>Field number for the "robot_type" field.</summary>
+    public const int RobotTypeFieldNumber = 1;
+    private global::Data.Acquisition.RobotType robotType_ = global::Data.Acquisition.RobotType.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Token {
-      get { return token_; }
+    public global::Data.Acquisition.RobotType RobotType {
+      get { return robotType_; }
       set {
-        token_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        robotType_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ip_address" field.</summary>
+    public const int IpAddressFieldNumber = 2;
+    private string ipAddress_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string IpAddress {
+      get { return ipAddress_; }
+      set {
+        ipAddress_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "robot_id" field.</summary>
+    public const int RobotIdFieldNumber = 3;
+    private string robotId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RobotId {
+      get { return robotId_; }
+      set {
+        robotId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Login);
+      return Equals(other as Robot);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Login other) {
+    public bool Equals(Robot other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Token != other.Token) return false;
+      if (RobotType != other.RobotType) return false;
+      if (IpAddress != other.IpAddress) return false;
+      if (RobotId != other.RobotId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2237,7 +2201,9 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Token.Length != 0) hash ^= Token.GetHashCode();
+      if (RobotType != global::Data.Acquisition.RobotType.None) hash ^= RobotType.GetHashCode();
+      if (IpAddress.Length != 0) hash ^= IpAddress.GetHashCode();
+      if (RobotId.Length != 0) hash ^= RobotId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2256,9 +2222,17 @@ namespace Data.Acquisition {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Token.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Token);
+      if (RobotType != global::Data.Acquisition.RobotType.None) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) RobotType);
+      }
+      if (IpAddress.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(IpAddress);
+      }
+      if (RobotId.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RobotId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2270,9 +2244,17 @@ namespace Data.Acquisition {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Token.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(Token);
+      if (RobotType != global::Data.Acquisition.RobotType.None) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) RobotType);
+      }
+      if (IpAddress.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(IpAddress);
+      }
+      if (RobotId.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RobotId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2284,8 +2266,14 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Token.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
+      if (RobotType != global::Data.Acquisition.RobotType.None) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) RobotType);
+      }
+      if (IpAddress.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(IpAddress);
+      }
+      if (RobotId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RobotId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2295,12 +2283,18 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Login other) {
+    public void MergeFrom(Robot other) {
       if (other == null) {
         return;
       }
-      if (other.Token.Length != 0) {
-        Token = other.Token;
+      if (other.RobotType != global::Data.Acquisition.RobotType.None) {
+        RobotType = other.RobotType;
+      }
+      if (other.IpAddress.Length != 0) {
+        IpAddress = other.IpAddress;
+      }
+      if (other.RobotId.Length != 0) {
+        RobotId = other.RobotId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2317,8 +2311,16 @@ namespace Data.Acquisition {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            Token = input.ReadString();
+          case 8: {
+            RobotType = (global::Data.Acquisition.RobotType) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            IpAddress = input.ReadString();
+            break;
+          }
+          case 26: {
+            RobotId = input.ReadString();
             break;
           }
         }
@@ -2336,8 +2338,16 @@ namespace Data.Acquisition {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            Token = input.ReadString();
+          case 8: {
+            RobotType = (global::Data.Acquisition.RobotType) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            IpAddress = input.ReadString();
+            break;
+          }
+          case 26: {
+            RobotId = input.ReadString();
             break;
           }
         }
