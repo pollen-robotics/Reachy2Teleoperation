@@ -16,7 +16,7 @@ namespace TeleopReachy
                 if (ipAddress == "localhost" || ipAddress == Robot.VIRTUAL_ROBOT_IP)
                     return true;
 
-                else if ((Regex.IsMatch(ipAddress, @"^reachy2-\w+\.local$")))
+                else if (Regex.IsMatch(ipAddress, @"^reachy2-\w+\.local$") || Regex.IsMatch(ipAddress, @"^r2-\w+\.local$"))
                     return true;
 
                 else 
