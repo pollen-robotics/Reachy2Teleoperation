@@ -94,7 +94,7 @@ namespace GstreamerWebRTC
         }
 
 #if UNITY_ANDROID
-        private IEnumerator WaitForNativePointer(GStreamerRenderingPlugin renderingPlugin)
+        protected virtual IEnumerator WaitForNativePointer(GStreamerRenderingPlugin renderingPlugin)
         {
             leftRawImage.texture = renderingPlugin.SetTextures(true);
             rightRawImage.texture = renderingPlugin.SetTextures(false);
