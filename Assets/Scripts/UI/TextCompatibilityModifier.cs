@@ -40,5 +40,10 @@ namespace TeleopReachy
             newText = stringToChange.Replace(robotVersion, robot_api);
             needUpdate = true;
         }
+
+        public void ModifyCompatibilityText()
+        {
+            ChangeText(textToChange.text);
+        }
     }
 }

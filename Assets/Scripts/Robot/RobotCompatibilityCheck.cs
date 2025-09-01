@@ -39,6 +39,11 @@ namespace TeleopReachy
                 transform.ActivateChildren(true);
                 resolution.text = resolution_str;
                 needUpdate = false;
+                TextCompatibilityModifier modifier = explanation.transform.GetComponent<TextCompatibilityModifier>();
+                if (modifier != null) 
+                {
+                    modifier.ModifyCompatibilityText();
+                }
             }
         }
 
