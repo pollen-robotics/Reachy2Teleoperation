@@ -42,7 +42,7 @@ namespace TeleopReachy
             webRTCController = WebRTCManager.Instance.gstreamerPlugin;
         }
 
-        protected void Update()
+        protected virtual void Update()
         {
             if (commands.Commands.Count != 0)
             {
