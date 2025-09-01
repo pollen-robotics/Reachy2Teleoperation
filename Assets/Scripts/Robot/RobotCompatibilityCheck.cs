@@ -35,8 +35,8 @@ namespace TeleopReachy
         {
             if (needUpdate)
             {
-                explanation.text = explanation_str;
                 transform.ActivateChildren(true);
+                explanation.text = explanation_str;
                 resolution.text = resolution_str;
                 needUpdate = false;
                 TextCompatibilityModifier modifier = explanation.transform.GetComponent<TextCompatibilityModifier>();
