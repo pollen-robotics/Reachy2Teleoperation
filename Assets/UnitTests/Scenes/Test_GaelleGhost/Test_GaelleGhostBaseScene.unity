@@ -226,6 +226,7 @@ MonoBehaviour:
   LeftGripperTextFile: {fileID: 4900000, guid: af345d390b8f32a4daa68b24fd9028da, type: 3}
   NeckTextFile: {fileID: 4900000, guid: 1a8fdfbce4b94004f8ddb58c98b74f6e, type: 3}
   MobileBaseTextFile: {fileID: 4900000, guid: 14f6124286bd4d4479d073aae1189800, type: 3}
+  AntennasTextFile: {fileID: 4900000, guid: 4e5cffb88eca71341855a14a3237a546, type: 3}
 --- !u!4 &679389687
 Transform:
   m_ObjectHideFlags: 0

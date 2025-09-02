@@ -16,6 +16,7 @@ using Reachy.Part.Hand;
 using Reachy.Kinematics;
 using Component.Orbita2D;
 using Component.Orbita3D;
+using Component.DynamixelMotor;
 using Reachy.Part.Mobile.Base.Mobility;
 using Reachy.Part.Mobile.Base.Utility;
 using Reachy.Part.Mobile.Base.Lidar;
@@ -38,6 +39,7 @@ namespace TeleopReachy
         public TextAsset LeftGripperTextFile;
         public TextAsset NeckTextFile;
         public TextAsset MobileBaseTextFile;
+        public TextAsset AntennasTextFile;
 
         string[] RightArm;
         int right_arm_inc = 0;
@@ -51,12 +53,16 @@ namespace TeleopReachy
         int neck_inc = 0;
         string[] MobileBase;
         int mobile_base_inc = 0;
+        string[] Antennas;
+        int antennas_inc = 0;
 
         private bool isReady = false;
         private bool isFirst = true;
 
         private bool keep_gripper_command = true;
         private bool keep_arm_command = true;
+
+        private bool startUpdate = false;
 
         protected override void Start()
         {
@@ -66,8 +72,22 @@ namespace TeleopReachy
             LeftGripper = LeftGripperTextFile.text.Split('\n');
             Neck = NeckTextFile.text.Split('\n');
             MobileBase = MobileBaseTextFile.text.Split('\n');
+            Antennas = AntennasTextFile.text.Split('\n');
             
             ghostApplicationManager.event_BaseSceneLoaded.AddListener(OnBaseSceneLoaded);
+            startUpdate = false;
+        }
+
+        protected override void Update()
+        {
+            if (startUpdate)
+            {
+                if(teleoperationManager.IsRobotTeleoperationActive && robotStatus.IsHeadOn())
+                {
+                    SendAntennasCommand();
+                }
+                base.Update();
+            }
         }
 
         void OnBaseSceneLoaded()
@@ -81,6 +101,7 @@ namespace TeleopReachy
         {
             robotStatus = RobotDataManager.Instance.RobotStatus;
             webRTCController = WebRTCManager.Instance.gstreamerPlugin;
+            startUpdate = true;
         }
 
         void InitBackInc()
@@ -323,6 +344,29 @@ namespace TeleopReachy
                 mobile_base_inc++;
             }
             commands.Commands.Add(mobileBaseCommand);
+        }
+
+        public void SendAntennasCommand()
+        {
+            Bridge.AnyCommand antennasCommand;
+            try
+            {
+                string n_line = Antennas[antennas_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
+
+                var n_json = JObject.Parse(n_line);
+                antennasCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(n_json.ToString());
+                antennas_inc++;
+            }
+            catch
+            {
+                antennas_inc = 0;
+                string n_line = Antennas[antennas_inc].Trim('[', ']', ' ', '\t', '\n', '\r');
+
+                var n_json = JObject.Parse(n_line);
+                antennasCommand = JsonParser.Default.Parse<Bridge.AnyCommand>(n_json.ToString());
+                antennas_inc++;
+            }
+            commands.Commands.Add(antennasCommand);
         }
     }
 }
