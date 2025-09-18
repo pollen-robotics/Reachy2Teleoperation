@@ -19,6 +19,7 @@ using Reachy.Part.Mobile.Base.Utility;
 using Reachy.Part.Mobile.Base.Lidar;
 using Bridge;
 using GstreamerWebRTC;
+using UnityEditor.UI;
 
 
 namespace TeleopReachy
@@ -36,6 +37,8 @@ namespace TeleopReachy
 
         protected GStreamerPluginCustom webRTCController;
         protected AnyCommands commands = new AnyCommands { };
+        protected Dictionary<int, bool> arm_stiffness = new Dictionary<int, bool>();
+        protected bool commandToTurnArmOnAndOff = false;
 
         protected virtual void Start()
         {
@@ -112,6 +115,11 @@ namespace TeleopReachy
                                 }
                             }
                             reachability.Add((int)partId.Id, answers);
+
+                            if (commandToTurnArmOnAndOff)
+                            {
+                                CheckArmStiffness((ArmState)partState, partId, arm_stiffness);
+                            }
                         }
                     }
                     if (partState is HeadState)
@@ -287,6 +295,8 @@ namespace TeleopReachy
 
         public void TurnArmOff(PartId id)
         {
+            commandToTurnArmOnAndOff = true;
+            
             Bridge.AnyCommands armCommand = new Bridge.AnyCommands
             {
                 Commands = {
@@ -299,6 +309,11 @@ namespace TeleopReachy
                 }
             };
             webRTCController.SendCommandMessageReliable(armCommand);
+            Debug.Log("[DataMessageManager] Turn off part " + id );
+            System.Threading.Thread.Sleep(100);
+        
+
+            commandToTurnArmOnAndOff = false;
         }
 
         public void TurnHeadOff(PartId id)
@@ -357,18 +372,29 @@ namespace TeleopReachy
 
         public void TurnArmOn(PartId id)
         {
-            Bridge.AnyCommands armCommand = new Bridge.AnyCommands
+            commandToTurnArmOnAndOff = true;
+            int ite = 0;
+
+            while (!arm_stiffness.ContainsKey((int)id.Id) || !arm_stiffness[(int)id.Id])
             {
-                Commands = {
-                    new Bridge.AnyCommand
-                    {
-                        ArmCommand = new Bridge.ArmCommand{
-                            TurnOn = id
+                Bridge.AnyCommands armCommand = new Bridge.AnyCommands
+                {
+                    Commands = {
+                        new Bridge.AnyCommand
+                        {
+                            ArmCommand = new Bridge.ArmCommand{
+                                TurnOn = id
+                            }
                         }
                     }
-                }
-            };
-            webRTCController.SendCommandMessageReliable(armCommand);
+                };
+                webRTCController.SendCommandMessageReliable(armCommand);
+                Debug.Log("[DataMessageManager] Turn on part " + id + " : iteration " + ite);
+                System.Threading.Thread.Sleep(100);
+                ite += 1;
+            }
+
+            commandToTurnArmOnAndOff = false;
         }
 
         public void TurnHeadOn(PartId id)
@@ -658,5 +684,55 @@ namespace TeleopReachy
                 }
             }
         }
+
+        private void CheckArmStiffness(ArmState armState, PartId partId, Dictionary<int, bool> arm_stiffness)
+        {
+            bool isArmStiff = true;
+            var armDescriptor = ArmState.Descriptor;
+
+            foreach (var componentField in armDescriptor.Fields.InDeclarationOrder())
+            {
+                var componentState = componentField.Accessor.GetValue(armState) as IMessage;
+                if (componentState is Orbita2dState)
+                {
+                    var compliantField = componentState.Descriptor.FindFieldByName("compliant");
+                    if (compliantField != null)
+                    {
+                        bool isCompliant = (bool)compliantField.Accessor.GetValue(componentState);
+                        if (isCompliant)
+                        {
+                            isArmStiff = false;
+                        }
+                    }
+                }
+                else if (componentState is Orbita3dState)
+                {
+                    var compliantField = componentState.Descriptor.FindFieldByName("compliant");
+                    if (compliantField != null)
+                    {
+                        bool isCompliant = (bool)compliantField.Accessor.GetValue(componentState);
+                        if (isCompliant)
+                        {
+                            isArmStiff = false;
+                        }
+                    }
+                }
+            }
+
+            var arm_id = (int)partId.Id;
+            if (arm_stiffness.ContainsKey(arm_id))
+            {
+                if (arm_stiffness[arm_id] != isArmStiff)
+                {
+                    arm_stiffness[arm_id] = isArmStiff;
+                }
+            }
+            else
+            {
+                arm_stiffness.Add(arm_id, isArmStiff);
+            }
+            
+        }
+
     }
 }
