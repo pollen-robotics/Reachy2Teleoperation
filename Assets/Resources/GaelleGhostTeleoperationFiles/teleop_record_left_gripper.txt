@@ -358,7 +358,6 @@
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
-[ { "armCommand": { "speedLimit": { "id": { "id": 2, "name": "l_arm" }, "limit": 100 } } } ]
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
 [ { "handCommand": { "handGoal": { "id": { "id": 4, "name": "l_hand" }, "position": { "parallelGripper": { "openingPercentage": 1 } } } } } ]
