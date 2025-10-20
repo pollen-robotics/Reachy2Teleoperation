@@ -117,7 +117,7 @@ jobs:
 
           git submodule update --init --recursive -- "$SUB_PATH"
 
-          [ -d "$SUB_PATH" ] || { echo "::error::Dossier introuvable: $SUB_PATH"; exit 1; }
+          [ -d "$SUB_PATH" ] || { echo "::error::Folder not found: $SUB_PATH"; exit 1; }
 
           echo "SUB_PATH=$SUB_PATH" >> "$GITHUB_OUTPUT"
 
@@ -128,12 +128,12 @@ jobs:
           set -euo pipefail
           SUB_PATH="${{ steps.locate.outputs.SUB_PATH }}"
           INIT_FILE="$SUB_PATH/python/reachy2_sdk_api/__init__.py"
-          [ -f "$INIT_FILE" ] || { echo "::error::Introuvable: $INIT_FILE"; exit 1; }
+          [ -f "$INIT_FILE" ] || { echo "::error::Not found: $INIT_FILE"; exit 1; }
 
           SDK_API_VERSION="$(sed -nE 's/^[[:space:]]*__version__[[:space:]]*=[[:space:]]*["'"'"']([^"'"'"']+)["'"'"'].*/\1/p' "$INIT_FILE" | head -n1)"
 
           echo "Parsed version: $SDK_API_VERSION"
-          [ -n "$SDK_API_VERSION" ] || { echo "::error::__version__ non trouvé dans $INIT_FILE"; exit 1; }
+          [ -n "$SDK_API_VERSION" ] || { echo "::error::__version__ not found in $INIT_FILE"; exit 1; }
           echo "SDK_API_VERSION=$SDK_API_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Update Notion select property "reachy2-sdk-api"
