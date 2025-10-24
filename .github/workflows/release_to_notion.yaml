@@ -27,7 +27,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          QUERY_PAYLOAD=$(jq -n --arg tag "$TAG_NAME" '{filter:{property:"Version tag (le yaml)", title:{equals:$tag}}}')
+          QUERY_PAYLOAD=$(jq -n --arg tag "$TAG_NAME" '{filter:{property:"Version Tag", title:{equals:$tag}}}')
           QUERY_RESULT=$(curl -s -X POST "https://api.notion.com/v1/databases/$DATABASE_ID/query" \
             -H "Authorization: Bearer $NOTION_TOKEN" \
             -H "Content-Type: application/json" \
