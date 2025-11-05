@@ -26,61 +26,62 @@ namespace Data.Acquisition {
           string.Concat(
             "ChZkYXRhLWFjcXVpc2l0aW9uLnByb3RvEhBkYXRhLmFjcXVpc2l0aW9uGhtn",
             "b29nbGUvcHJvdG9idWYvZW1wdHkucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90",
-            "aW1lc3RhbXAucHJvdG8inAIKDVNlc3Npb25QYXJhbXMSJgoFcm9ib3QYASAB",
-            "KAsyFy5kYXRhLmFjcXVpc2l0aW9uLlJvYm90EhQKDGRhdGFzZXRfbmFtZRgC",
-            "IAEoCRIYChB0YXNrX2Rlc2NyaXB0aW9uGAMgASgJEhgKEG5iX2VwaXNvZGVz",
-            "X2dvYWwYBCABKAUSGAoQZXBpc29kZV9kdXJhdGlvbhgFIAEoBRIbChNicmVh",
-            "a190aW1lX2R1cmF0aW9uGAYgASgFEhAKA2ZwcxgHIAEoBUgAiAEBEhIKCnVz",
-            "ZV92aWRlb3MYCCABKAgSDgoGcmVzdW1lGA8gASgIEhMKC3B1c2hfdG9faHVi",
-            "GBQgASgIEg8KB29mZmxpbmUYFSABKAhCBgoEX2ZwcyJuCgdTZXNzaW9uEhQK",
-            "DGRhdGFzZXRfbmFtZRgBIAEoCRIcChRuYl9lcGlzb2Rlc19yZWNvcmRlZBgC",
-            "IAEoBRIvCgtsYXN0X3VwZGF0ZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
-            "aW1lc3RhbXAiaAoHRGF0YXNldBIUCgxkYXRhc2V0X25hbWUYASABKAkSMgoG",
-            "cHVzaGVkGAIgASgOMiIuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0UHVzaFN0",
-            "YXRlEhMKC25iX2VwaXNvZGVzGAMgASgFIjoKC0RhdGFzZXRMaXN0EisKCGRh",
-            "dGFzZXRzGAEgAygLMhkuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0IiAKCUFj",
-            "dGlvbkFjaxITCgtzdWNjZXNzX2FjaxgBIAEoCCIgCg1FcGlzb2RlUmF0aW5n",
-            "Eg8KB3N1Y2Nlc3MYASABKAgicQoHRXBpc29kZRIXCgplcGlzb2RlX2lkGAEg",
-            "ASgFSACIAQESEAoIZHVyYXRpb24YAiABKAUSFwoPZXBpc29kZV9zdWNjZXNz",
-            "GAMgASgIEhMKC2Rlc2NyaXB0aW9uGAQgASgJQg0KC19lcGlzb2RlX2lkIl4K",
-            "BVJvYm90Ei8KCnJvYm90X3R5cGUYASABKA4yGy5kYXRhLmFjcXVpc2l0aW9u",
-            "LlJvYm90VHlwZRISCgppcF9hZGRyZXNzGAIgASgJEhAKCHJvYm90X2lkGAMg",
-            "ASgJKkQKEERhdGFzZXRQdXNoU3RhdGUSDgoKTE9DQUxfT05MWRAAEhQKEFBB",
-            "UlRJQUxMWV9QVVNIRUQQARIKCgZQVVNIRUQQAioiCglSb2JvdFR5cGUSCAoE",
-            "Tk9ORRAAEgsKB1JFQUNIWTIQATLIBwoWRGF0YUFjcXVpc2l0aW9uU2Vydmlj",
-            "ZRJHCg5HZXREYXRhc2V0TGlzdBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRod",
-            "LmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldExpc3QSRAoKQWRkRGF0YXNldBIZ",
-            "LmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldBobLmRhdGEuYWNxdWlzaXRpb24u",
-            "QWN0aW9uQWNrEkcKDVJlbW92ZURhdGFzZXQSGS5kYXRhLmFjcXVpc2l0aW9u",
-            "LkRhdGFzZXQaGy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJHCg1VcGRh",
-            "dGVEYXRhc2V0EhkuZGF0YS5hY3F1aXNpdGlvbi5EYXRhc2V0GhsuZGF0YS5h",
-            "Y3F1aXNpdGlvbi5BY3Rpb25BY2sSRwoQQ2xlYXJBbGxEYXRhc2V0cxIWLmdv",
-            "b2dsZS5wcm90b2J1Zi5FbXB0eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9u",
-            "QWNrEkwKDFN0YXJ0U2Vzc2lvbhIfLmRhdGEuYWNxdWlzaXRpb24uU2Vzc2lv",
-            "blBhcmFtcxobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEkIKC1N0b3BT",
-            "ZXNzaW9uEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNp",
-            "dGlvbi5BY3Rpb25BY2sSQwoMU3RhcnRFcGlzb2RlEhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSQgoLU3Rv",
-            "cEVwaXNvZGUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGy5kYXRhLmFjcXVp",
-            "c2l0aW9uLkFjdGlvbkFjaxJLCgtTYXZlRXBpc29kZRIfLmRhdGEuYWNxdWlz",
-            "aXRpb24uRXBpc29kZVJhdGluZxobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9u",
-            "QWNrEkQKDVVwbG9hZFNlc3Npb24SFi5nb29nbGUucHJvdG9idWYuRW1wdHka",
-            "Gy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJNCg1SZW1vdmVTZXNzaW9u",
-            "Eh8uZGF0YS5hY3F1aXNpdGlvbi5TZXNzaW9uUGFyYW1zGhsuZGF0YS5hY3F1",
-            "aXNpdGlvbi5BY3Rpb25BY2sSRwoQQ2xlYXJBbGxTZXNzaW9ucxIWLmdvb2ds",
-            "ZS5wcm90b2J1Zi5FbXB0eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNr",
-            "YgZwcm90bzM="));
+            "aW1lc3RhbXAucHJvdG8aC3JvYm90LnByb3RvGhJ0ZWxlb3BlcmF0b3IucHJv",
+            "dG8i7wQKDVNlc3Npb25QYXJhbXMSLAoFcm9ib3QYASABKAsyHS5kYXRhLmFj",
+            "cXVpc2l0aW9uLnJvYm90LlJvYm90EkEKDHRlbGVvcGVyYXRvchgCIAEoCzIr",
+            "LmRhdGEuYWNxdWlzaXRpb24udGVsZW9wZXJhdG9yLlRlbGVvcGVyYXRvchIP",
+            "CgdyZXBvX2lkGAMgASgJEhgKEHRhc2tfZGVzY3JpcHRpb24YBCABKAkSGAoQ",
+            "bmJfZXBpc29kZXNfZ29hbBgFIAEoBRIWCg5lcGlzb2RlX3RpbWVfcxgGIAEo",
+            "BRIUCgxyZXNldF90aW1lX3MYByABKAUSEAoDZnBzGAggASgFSACIAQESFwoK",
+            "dXNlX3ZpZGVvcxgJIAEoCEgBiAEBEhEKBHJvb3QYDyABKAlIAogBARIOCgZy",
+            "ZXN1bWUYECABKAgSEwoLcHVzaF90b19odWIYFCABKAgSDwoHcHJpdmF0ZRgV",
+            "IAEoCBInChpudW1faW1hZ2Vfd3JpdGVyX3Byb2Nlc3NlcxgZIAEoBUgDiAEB",
+            "EjAKI251bV9pbWFnZV93cml0ZXJfdGhyZWFkc19wZXJfY2FtZXJhGBogASgF",
+            "SASIAQESJgoZdmlkZW9fZW5jb2RpbmdfYmF0Y2hfc2l6ZRgbIAEoBUgFiAEB",
+            "QgYKBF9mcHNCDQoLX3VzZV92aWRlb3NCBwoFX3Jvb3RCHQobX251bV9pbWFn",
+            "ZV93cml0ZXJfcHJvY2Vzc2VzQiYKJF9udW1faW1hZ2Vfd3JpdGVyX3RocmVh",
+            "ZHNfcGVyX2NhbWVyYUIcChpfdmlkZW9fZW5jb2RpbmdfYmF0Y2hfc2l6ZSIp",
+            "CgtEYXRhc2V0Um9vdBIRCgRyb290GAEgASgJSACIAQFCBwoFX3Jvb3QilQEK",
+            "B0RhdGFzZXQSFAoMZGF0YXNldF9uYW1lGAEgASgJEjIKBnB1c2hlZBgCIAEo",
+            "DjIiLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldFB1c2hTdGF0ZRITCgtuYl9l",
+            "cGlzb2RlcxgDIAEoBRIrCgRyb290GAogASgLMh0uZGF0YS5hY3F1aXNpdGlv",
+            "bi5EYXRhc2V0Um9vdCI6CgtEYXRhc2V0TGlzdBIrCghkYXRhc2V0cxgBIAMo",
+            "CzIZLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldCIgCglBY3Rpb25BY2sSEwoL",
+            "c3VjY2Vzc19hY2sYASABKAgiIAoNRXBpc29kZVJhdGluZxIPCgdzdWNjZXNz",
+            "GAEgASgIKlEKEERhdGFzZXRQdXNoU3RhdGUSCwoHVU5LTk9XThAAEg4KCkxP",
+            "Q0FMX09OTFkQARIUChBQQVJUSUFMTFlfUFVTSEVEEAISCgoGUFVTSEVEEAMy",
+            "6gcKFkRhdGFBY3F1aXNpdGlvblNlcnZpY2USTgoOR2V0RGF0YXNldExpc3QS",
+            "HS5kYXRhLmFjcXVpc2l0aW9uLkRhdGFzZXRSb290Gh0uZGF0YS5hY3F1aXNp",
+            "dGlvbi5EYXRhc2V0TGlzdBJKChBBZGREYXRhc2V0VG9MaXN0EhkuZGF0YS5h",
+            "Y3F1aXNpdGlvbi5EYXRhc2V0GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25B",
+            "Y2sSTwoVUmVtb3ZlRGF0YXNldEZyb21MaXN0EhkuZGF0YS5hY3F1aXNpdGlv",
+            "bi5EYXRhc2V0GhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rpb25BY2sSTQoTVXBk",
+            "YXRlRGF0YXNldEluTGlzdBIZLmRhdGEuYWNxdWlzaXRpb24uRGF0YXNldBob",
+            "LmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEk4KEENsZWFyRGF0YXNldExp",
+            "c3QSHS5kYXRhLmFjcXVpc2l0aW9uLkRhdGFzZXRSb290GhsuZGF0YS5hY3F1",
+            "aXNpdGlvbi5BY3Rpb25BY2sSTAoMU3RhcnRTZXNzaW9uEh8uZGF0YS5hY3F1",
+            "aXNpdGlvbi5TZXNzaW9uUGFyYW1zGhsuZGF0YS5hY3F1aXNpdGlvbi5BY3Rp",
+            "b25BY2sSQgoLU3RvcFNlc3Npb24SFi5nb29nbGUucHJvdG9idWYuRW1wdHka",
+            "Gy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJDCgxTdGFydEVwaXNvZGUS",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkaGy5kYXRhLmFjcXVpc2l0aW9uLkFj",
+            "dGlvbkFjaxJCCgtTdG9wRXBpc29kZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEksKC1NhdmVFcGlzb2Rl",
+            "Eh8uZGF0YS5hY3F1aXNpdGlvbi5FcGlzb2RlUmF0aW5nGhsuZGF0YS5hY3F1",
+            "aXNpdGlvbi5BY3Rpb25BY2sSRAoNVXBsb2FkU2Vzc2lvbhIWLmdvb2dsZS5w",
+            "cm90b2J1Zi5FbXB0eRobLmRhdGEuYWNxdWlzaXRpb24uQWN0aW9uQWNrEk0K",
+            "DVJlbW92ZVNlc3Npb24SHy5kYXRhLmFjcXVpc2l0aW9uLlNlc3Npb25QYXJh",
+            "bXMaGy5kYXRhLmFjcXVpc2l0aW9uLkFjdGlvbkFjaxJHChBDbGVhckFsbFNl",
+            "c3Npb25zEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuZGF0YS5hY3F1aXNp",
+            "dGlvbi5BY3Rpb25BY2tiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Data.Acquisition.DatasetPushState), typeof(global::Data.Acquisition.RobotType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.SessionParams), global::Data.Acquisition.SessionParams.Parser, new[]{ "Robot", "DatasetName", "TaskDescription", "NbEpisodesGoal", "EpisodeDuration", "BreakTimeDuration", "Fps", "UseVideos", "Resume", "PushToHub", "Offline" }, new[]{ "Fps" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Session), global::Data.Acquisition.Session.Parser, new[]{ "DatasetName", "NbEpisodesRecorded", "LastUpdate" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Dataset), global::Data.Acquisition.Dataset.Parser, new[]{ "DatasetName", "Pushed", "NbEpisodes" }, null, null, null, null),
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Data.Acquisition.Robot.RobotReflection.Descriptor, global::Data.Acquisition.Teleoperator.TeleoperatorReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Data.Acquisition.DatasetPushState), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.SessionParams), global::Data.Acquisition.SessionParams.Parser, new[]{ "Robot", "Teleoperator", "RepoId", "TaskDescription", "NbEpisodesGoal", "EpisodeTimeS", "ResetTimeS", "Fps", "UseVideos", "Root", "Resume", "PushToHub", "Private", "NumImageWriterProcesses", "NumImageWriterThreadsPerCamera", "VideoEncodingBatchSize" }, new[]{ "Fps", "UseVideos", "Root", "NumImageWriterProcesses", "NumImageWriterThreadsPerCamera", "VideoEncodingBatchSize" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.DatasetRoot), global::Data.Acquisition.DatasetRoot.Parser, new[]{ "Root" }, new[]{ "Root" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Dataset), global::Data.Acquisition.Dataset.Parser, new[]{ "DatasetName", "Pushed", "NbEpisodes", "Root" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.DatasetList), global::Data.Acquisition.DatasetList.Parser, new[]{ "Datasets" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.ActionAck), global::Data.Acquisition.ActionAck.Parser, new[]{ "SuccessAck" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.EpisodeRating), global::Data.Acquisition.EpisodeRating.Parser, new[]{ "Success" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Episode), global::Data.Acquisition.Episode.Parser, new[]{ "EpisodeId", "Duration", "EpisodeSuccess", "Description" }, new[]{ "EpisodeId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.Robot), global::Data.Acquisition.Robot.Parser, new[]{ "RobotType", "IpAddress", "RobotId" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Data.Acquisition.EpisodeRating), global::Data.Acquisition.EpisodeRating.Parser, new[]{ "Success" }, null, null, null, null)
           }));
     }
     #endregion
@@ -88,14 +89,10 @@ namespace Data.Acquisition {
   }
   #region Enums
   public enum DatasetPushState {
-    [pbr::OriginalName("LOCAL_ONLY")] LocalOnly = 0,
-    [pbr::OriginalName("PARTIALLY_PUSHED")] PartiallyPushed = 1,
-    [pbr::OriginalName("PUSHED")] Pushed = 2,
-  }
-
-  public enum RobotType {
-    [pbr::OriginalName("NONE")] None = 0,
-    [pbr::OriginalName("REACHY2")] Reachy2 = 1,
+    [pbr::OriginalName("UNKNOWN")] Unknown = 0,
+    [pbr::OriginalName("LOCAL_ONLY")] LocalOnly = 1,
+    [pbr::OriginalName("PARTIALLY_PUSHED")] PartiallyPushed = 2,
+    [pbr::OriginalName("PUSHED")] Pushed = 3,
   }
 
   #endregion
@@ -138,16 +135,21 @@ namespace Data.Acquisition {
     public SessionParams(SessionParams other) : this() {
       _hasBits0 = other._hasBits0;
       robot_ = other.robot_ != null ? other.robot_.Clone() : null;
-      datasetName_ = other.datasetName_;
+      teleoperator_ = other.teleoperator_ != null ? other.teleoperator_.Clone() : null;
+      repoId_ = other.repoId_;
       taskDescription_ = other.taskDescription_;
       nbEpisodesGoal_ = other.nbEpisodesGoal_;
-      episodeDuration_ = other.episodeDuration_;
-      breakTimeDuration_ = other.breakTimeDuration_;
+      episodeTimeS_ = other.episodeTimeS_;
+      resetTimeS_ = other.resetTimeS_;
       fps_ = other.fps_;
       useVideos_ = other.useVideos_;
+      root_ = other.root_;
       resume_ = other.resume_;
       pushToHub_ = other.pushToHub_;
-      offline_ = other.offline_;
+      private_ = other.private_;
+      numImageWriterProcesses_ = other.numImageWriterProcesses_;
+      numImageWriterThreadsPerCamera_ = other.numImageWriterThreadsPerCamera_;
+      videoEncodingBatchSize_ = other.videoEncodingBatchSize_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -159,30 +161,42 @@ namespace Data.Acquisition {
 
     /// <summary>Field number for the "robot" field.</summary>
     public const int RobotFieldNumber = 1;
-    private global::Data.Acquisition.Robot robot_;
+    private global::Data.Acquisition.Robot.Robot robot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Data.Acquisition.Robot Robot {
+    public global::Data.Acquisition.Robot.Robot Robot {
       get { return robot_; }
       set {
         robot_ = value;
       }
     }
 
-    /// <summary>Field number for the "dataset_name" field.</summary>
-    public const int DatasetNameFieldNumber = 2;
-    private string datasetName_ = "";
+    /// <summary>Field number for the "teleoperator" field.</summary>
+    public const int TeleoperatorFieldNumber = 2;
+    private global::Data.Acquisition.Teleoperator.Teleoperator teleoperator_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string DatasetName {
-      get { return datasetName_; }
+    public global::Data.Acquisition.Teleoperator.Teleoperator Teleoperator {
+      get { return teleoperator_; }
       set {
-        datasetName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        teleoperator_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "repo_id" field.</summary>
+    public const int RepoIdFieldNumber = 3;
+    private string repoId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RepoId {
+      get { return repoId_; }
+      set {
+        repoId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "task_description" field.</summary>
-    public const int TaskDescriptionFieldNumber = 3;
+    public const int TaskDescriptionFieldNumber = 4;
     private string taskDescription_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -194,7 +208,7 @@ namespace Data.Acquisition {
     }
 
     /// <summary>Field number for the "nb_episodes_goal" field.</summary>
-    public const int NbEpisodesGoalFieldNumber = 4;
+    public const int NbEpisodesGoalFieldNumber = 5;
     private int nbEpisodesGoal_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -205,32 +219,32 @@ namespace Data.Acquisition {
       }
     }
 
-    /// <summary>Field number for the "episode_duration" field.</summary>
-    public const int EpisodeDurationFieldNumber = 5;
-    private int episodeDuration_;
+    /// <summary>Field number for the "episode_time_s" field.</summary>
+    public const int EpisodeTimeSFieldNumber = 6;
+    private int episodeTimeS_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int EpisodeDuration {
-      get { return episodeDuration_; }
+    public int EpisodeTimeS {
+      get { return episodeTimeS_; }
       set {
-        episodeDuration_ = value;
+        episodeTimeS_ = value;
       }
     }
 
-    /// <summary>Field number for the "break_time_duration" field.</summary>
-    public const int BreakTimeDurationFieldNumber = 6;
-    private int breakTimeDuration_;
+    /// <summary>Field number for the "reset_time_s" field.</summary>
+    public const int ResetTimeSFieldNumber = 7;
+    private int resetTimeS_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int BreakTimeDuration {
-      get { return breakTimeDuration_; }
+    public int ResetTimeS {
+      get { return resetTimeS_; }
       set {
-        breakTimeDuration_ = value;
+        resetTimeS_ = value;
       }
     }
 
     /// <summary>Field number for the "fps" field.</summary>
-    public const int FpsFieldNumber = 7;
+    public const int FpsFieldNumber = 8;
     private readonly static int FpsDefaultValue = 0;
 
     private int fps_;
@@ -257,19 +271,60 @@ namespace Data.Acquisition {
     }
 
     /// <summary>Field number for the "use_videos" field.</summary>
-    public const int UseVideosFieldNumber = 8;
+    public const int UseVideosFieldNumber = 9;
+    private readonly static bool UseVideosDefaultValue = false;
+
     private bool useVideos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool UseVideos {
-      get { return useVideos_; }
+      get { if ((_hasBits0 & 2) != 0) { return useVideos_; } else { return UseVideosDefaultValue; } }
       set {
+        _hasBits0 |= 2;
         useVideos_ = value;
       }
     }
+    /// <summary>Gets whether the "use_videos" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasUseVideos {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "use_videos" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearUseVideos() {
+      _hasBits0 &= ~2;
+    }
+
+    /// <summary>Field number for the "root" field.</summary>
+    public const int RootFieldNumber = 15;
+    private readonly static string RootDefaultValue = "";
+
+    private string root_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Root {
+      get { return root_ ?? RootDefaultValue; }
+      set {
+        root_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "root" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasRoot {
+      get { return root_ != null; }
+    }
+    /// <summary>Clears the value of the "root" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearRoot() {
+      root_ = null;
+    }
 
     /// <summary>Field number for the "resume" field.</summary>
-    public const int ResumeFieldNumber = 15;
+    public const int ResumeFieldNumber = 16;
     private bool resume_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -292,16 +347,97 @@ namespace Data.Acquisition {
       }
     }
 
-    /// <summary>Field number for the "offline" field.</summary>
-    public const int OfflineFieldNumber = 21;
-    private bool offline_;
+    /// <summary>Field number for the "private" field.</summary>
+    public const int PrivateFieldNumber = 21;
+    private bool private_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Offline {
-      get { return offline_; }
+    public bool Private {
+      get { return private_; }
       set {
-        offline_ = value;
+        private_ = value;
       }
+    }
+
+    /// <summary>Field number for the "num_image_writer_processes" field.</summary>
+    public const int NumImageWriterProcessesFieldNumber = 25;
+    private readonly static int NumImageWriterProcessesDefaultValue = 0;
+
+    private int numImageWriterProcesses_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int NumImageWriterProcesses {
+      get { if ((_hasBits0 & 4) != 0) { return numImageWriterProcesses_; } else { return NumImageWriterProcessesDefaultValue; } }
+      set {
+        _hasBits0 |= 4;
+        numImageWriterProcesses_ = value;
+      }
+    }
+    /// <summary>Gets whether the "num_image_writer_processes" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasNumImageWriterProcesses {
+      get { return (_hasBits0 & 4) != 0; }
+    }
+    /// <summary>Clears the value of the "num_image_writer_processes" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearNumImageWriterProcesses() {
+      _hasBits0 &= ~4;
+    }
+
+    /// <summary>Field number for the "num_image_writer_threads_per_camera" field.</summary>
+    public const int NumImageWriterThreadsPerCameraFieldNumber = 26;
+    private readonly static int NumImageWriterThreadsPerCameraDefaultValue = 0;
+
+    private int numImageWriterThreadsPerCamera_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int NumImageWriterThreadsPerCamera {
+      get { if ((_hasBits0 & 8) != 0) { return numImageWriterThreadsPerCamera_; } else { return NumImageWriterThreadsPerCameraDefaultValue; } }
+      set {
+        _hasBits0 |= 8;
+        numImageWriterThreadsPerCamera_ = value;
+      }
+    }
+    /// <summary>Gets whether the "num_image_writer_threads_per_camera" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasNumImageWriterThreadsPerCamera {
+      get { return (_hasBits0 & 8) != 0; }
+    }
+    /// <summary>Clears the value of the "num_image_writer_threads_per_camera" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearNumImageWriterThreadsPerCamera() {
+      _hasBits0 &= ~8;
+    }
+
+    /// <summary>Field number for the "video_encoding_batch_size" field.</summary>
+    public const int VideoEncodingBatchSizeFieldNumber = 27;
+    private readonly static int VideoEncodingBatchSizeDefaultValue = 0;
+
+    private int videoEncodingBatchSize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int VideoEncodingBatchSize {
+      get { if ((_hasBits0 & 16) != 0) { return videoEncodingBatchSize_; } else { return VideoEncodingBatchSizeDefaultValue; } }
+      set {
+        _hasBits0 |= 16;
+        videoEncodingBatchSize_ = value;
+      }
+    }
+    /// <summary>Gets whether the "video_encoding_batch_size" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasVideoEncodingBatchSize {
+      get { return (_hasBits0 & 16) != 0; }
+    }
+    /// <summary>Clears the value of the "video_encoding_batch_size" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearVideoEncodingBatchSize() {
+      _hasBits0 &= ~16;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -320,16 +456,21 @@ namespace Data.Acquisition {
         return true;
       }
       if (!object.Equals(Robot, other.Robot)) return false;
-      if (DatasetName != other.DatasetName) return false;
+      if (!object.Equals(Teleoperator, other.Teleoperator)) return false;
+      if (RepoId != other.RepoId) return false;
       if (TaskDescription != other.TaskDescription) return false;
       if (NbEpisodesGoal != other.NbEpisodesGoal) return false;
-      if (EpisodeDuration != other.EpisodeDuration) return false;
-      if (BreakTimeDuration != other.BreakTimeDuration) return false;
+      if (EpisodeTimeS != other.EpisodeTimeS) return false;
+      if (ResetTimeS != other.ResetTimeS) return false;
       if (Fps != other.Fps) return false;
       if (UseVideos != other.UseVideos) return false;
+      if (Root != other.Root) return false;
       if (Resume != other.Resume) return false;
       if (PushToHub != other.PushToHub) return false;
-      if (Offline != other.Offline) return false;
+      if (Private != other.Private) return false;
+      if (NumImageWriterProcesses != other.NumImageWriterProcesses) return false;
+      if (NumImageWriterThreadsPerCamera != other.NumImageWriterThreadsPerCamera) return false;
+      if (VideoEncodingBatchSize != other.VideoEncodingBatchSize) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -338,16 +479,21 @@ namespace Data.Acquisition {
     public override int GetHashCode() {
       int hash = 1;
       if (robot_ != null) hash ^= Robot.GetHashCode();
-      if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
+      if (teleoperator_ != null) hash ^= Teleoperator.GetHashCode();
+      if (RepoId.Length != 0) hash ^= RepoId.GetHashCode();
       if (TaskDescription.Length != 0) hash ^= TaskDescription.GetHashCode();
       if (NbEpisodesGoal != 0) hash ^= NbEpisodesGoal.GetHashCode();
-      if (EpisodeDuration != 0) hash ^= EpisodeDuration.GetHashCode();
-      if (BreakTimeDuration != 0) hash ^= BreakTimeDuration.GetHashCode();
+      if (EpisodeTimeS != 0) hash ^= EpisodeTimeS.GetHashCode();
+      if (ResetTimeS != 0) hash ^= ResetTimeS.GetHashCode();
       if (HasFps) hash ^= Fps.GetHashCode();
-      if (UseVideos != false) hash ^= UseVideos.GetHashCode();
+      if (HasUseVideos) hash ^= UseVideos.GetHashCode();
+      if (HasRoot) hash ^= Root.GetHashCode();
       if (Resume != false) hash ^= Resume.GetHashCode();
       if (PushToHub != false) hash ^= PushToHub.GetHashCode();
-      if (Offline != false) hash ^= Offline.GetHashCode();
+      if (Private != false) hash ^= Private.GetHashCode();
+      if (HasNumImageWriterProcesses) hash ^= NumImageWriterProcesses.GetHashCode();
+      if (HasNumImageWriterThreadsPerCamera) hash ^= NumImageWriterThreadsPerCamera.GetHashCode();
+      if (HasVideoEncodingBatchSize) hash ^= VideoEncodingBatchSize.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -370,45 +516,65 @@ namespace Data.Acquisition {
         output.WriteRawTag(10);
         output.WriteMessage(Robot);
       }
-      if (DatasetName.Length != 0) {
+      if (teleoperator_ != null) {
         output.WriteRawTag(18);
-        output.WriteString(DatasetName);
+        output.WriteMessage(Teleoperator);
+      }
+      if (RepoId.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RepoId);
       }
       if (TaskDescription.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(TaskDescription);
       }
       if (NbEpisodesGoal != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt32(NbEpisodesGoal);
       }
-      if (EpisodeDuration != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(EpisodeDuration);
-      }
-      if (BreakTimeDuration != 0) {
+      if (EpisodeTimeS != 0) {
         output.WriteRawTag(48);
-        output.WriteInt32(BreakTimeDuration);
+        output.WriteInt32(EpisodeTimeS);
+      }
+      if (ResetTimeS != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(ResetTimeS);
       }
       if (HasFps) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(64);
         output.WriteInt32(Fps);
       }
-      if (UseVideos != false) {
-        output.WriteRawTag(64);
+      if (HasUseVideos) {
+        output.WriteRawTag(72);
         output.WriteBool(UseVideos);
       }
+      if (HasRoot) {
+        output.WriteRawTag(122);
+        output.WriteString(Root);
+      }
       if (Resume != false) {
-        output.WriteRawTag(120);
+        output.WriteRawTag(128, 1);
         output.WriteBool(Resume);
       }
       if (PushToHub != false) {
         output.WriteRawTag(160, 1);
         output.WriteBool(PushToHub);
       }
-      if (Offline != false) {
+      if (Private != false) {
         output.WriteRawTag(168, 1);
-        output.WriteBool(Offline);
+        output.WriteBool(Private);
+      }
+      if (HasNumImageWriterProcesses) {
+        output.WriteRawTag(200, 1);
+        output.WriteInt32(NumImageWriterProcesses);
+      }
+      if (HasNumImageWriterThreadsPerCamera) {
+        output.WriteRawTag(208, 1);
+        output.WriteInt32(NumImageWriterThreadsPerCamera);
+      }
+      if (HasVideoEncodingBatchSize) {
+        output.WriteRawTag(216, 1);
+        output.WriteInt32(VideoEncodingBatchSize);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -424,45 +590,65 @@ namespace Data.Acquisition {
         output.WriteRawTag(10);
         output.WriteMessage(Robot);
       }
-      if (DatasetName.Length != 0) {
+      if (teleoperator_ != null) {
         output.WriteRawTag(18);
-        output.WriteString(DatasetName);
+        output.WriteMessage(Teleoperator);
+      }
+      if (RepoId.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RepoId);
       }
       if (TaskDescription.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(TaskDescription);
       }
       if (NbEpisodesGoal != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt32(NbEpisodesGoal);
       }
-      if (EpisodeDuration != 0) {
-        output.WriteRawTag(40);
-        output.WriteInt32(EpisodeDuration);
-      }
-      if (BreakTimeDuration != 0) {
+      if (EpisodeTimeS != 0) {
         output.WriteRawTag(48);
-        output.WriteInt32(BreakTimeDuration);
+        output.WriteInt32(EpisodeTimeS);
+      }
+      if (ResetTimeS != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(ResetTimeS);
       }
       if (HasFps) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(64);
         output.WriteInt32(Fps);
       }
-      if (UseVideos != false) {
-        output.WriteRawTag(64);
+      if (HasUseVideos) {
+        output.WriteRawTag(72);
         output.WriteBool(UseVideos);
       }
+      if (HasRoot) {
+        output.WriteRawTag(122);
+        output.WriteString(Root);
+      }
       if (Resume != false) {
-        output.WriteRawTag(120);
+        output.WriteRawTag(128, 1);
         output.WriteBool(Resume);
       }
       if (PushToHub != false) {
         output.WriteRawTag(160, 1);
         output.WriteBool(PushToHub);
       }
-      if (Offline != false) {
+      if (Private != false) {
         output.WriteRawTag(168, 1);
-        output.WriteBool(Offline);
+        output.WriteBool(Private);
+      }
+      if (HasNumImageWriterProcesses) {
+        output.WriteRawTag(200, 1);
+        output.WriteInt32(NumImageWriterProcesses);
+      }
+      if (HasNumImageWriterThreadsPerCamera) {
+        output.WriteRawTag(208, 1);
+        output.WriteInt32(NumImageWriterThreadsPerCamera);
+      }
+      if (HasVideoEncodingBatchSize) {
+        output.WriteRawTag(216, 1);
+        output.WriteInt32(VideoEncodingBatchSize);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -477,8 +663,11 @@ namespace Data.Acquisition {
       if (robot_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Robot);
       }
-      if (DatasetName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
+      if (teleoperator_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Teleoperator);
+      }
+      if (RepoId.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RepoId);
       }
       if (TaskDescription.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(TaskDescription);
@@ -486,26 +675,38 @@ namespace Data.Acquisition {
       if (NbEpisodesGoal != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(NbEpisodesGoal);
       }
-      if (EpisodeDuration != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EpisodeDuration);
+      if (EpisodeTimeS != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EpisodeTimeS);
       }
-      if (BreakTimeDuration != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(BreakTimeDuration);
+      if (ResetTimeS != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ResetTimeS);
       }
       if (HasFps) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Fps);
       }
-      if (UseVideos != false) {
+      if (HasUseVideos) {
         size += 1 + 1;
       }
+      if (HasRoot) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Root);
+      }
       if (Resume != false) {
-        size += 1 + 1;
+        size += 2 + 1;
       }
       if (PushToHub != false) {
         size += 2 + 1;
       }
-      if (Offline != false) {
+      if (Private != false) {
         size += 2 + 1;
+      }
+      if (HasNumImageWriterProcesses) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(NumImageWriterProcesses);
+      }
+      if (HasNumImageWriterThreadsPerCamera) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(NumImageWriterThreadsPerCamera);
+      }
+      if (HasVideoEncodingBatchSize) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(VideoEncodingBatchSize);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -521,12 +722,18 @@ namespace Data.Acquisition {
       }
       if (other.robot_ != null) {
         if (robot_ == null) {
-          Robot = new global::Data.Acquisition.Robot();
+          Robot = new global::Data.Acquisition.Robot.Robot();
         }
         Robot.MergeFrom(other.Robot);
       }
-      if (other.DatasetName.Length != 0) {
-        DatasetName = other.DatasetName;
+      if (other.teleoperator_ != null) {
+        if (teleoperator_ == null) {
+          Teleoperator = new global::Data.Acquisition.Teleoperator.Teleoperator();
+        }
+        Teleoperator.MergeFrom(other.Teleoperator);
+      }
+      if (other.RepoId.Length != 0) {
+        RepoId = other.RepoId;
       }
       if (other.TaskDescription.Length != 0) {
         TaskDescription = other.TaskDescription;
@@ -534,17 +741,20 @@ namespace Data.Acquisition {
       if (other.NbEpisodesGoal != 0) {
         NbEpisodesGoal = other.NbEpisodesGoal;
       }
-      if (other.EpisodeDuration != 0) {
-        EpisodeDuration = other.EpisodeDuration;
+      if (other.EpisodeTimeS != 0) {
+        EpisodeTimeS = other.EpisodeTimeS;
       }
-      if (other.BreakTimeDuration != 0) {
-        BreakTimeDuration = other.BreakTimeDuration;
+      if (other.ResetTimeS != 0) {
+        ResetTimeS = other.ResetTimeS;
       }
       if (other.HasFps) {
         Fps = other.Fps;
       }
-      if (other.UseVideos != false) {
+      if (other.HasUseVideos) {
         UseVideos = other.UseVideos;
+      }
+      if (other.HasRoot) {
+        Root = other.Root;
       }
       if (other.Resume != false) {
         Resume = other.Resume;
@@ -552,8 +762,17 @@ namespace Data.Acquisition {
       if (other.PushToHub != false) {
         PushToHub = other.PushToHub;
       }
-      if (other.Offline != false) {
-        Offline = other.Offline;
+      if (other.Private != false) {
+        Private = other.Private;
+      }
+      if (other.HasNumImageWriterProcesses) {
+        NumImageWriterProcesses = other.NumImageWriterProcesses;
+      }
+      if (other.HasNumImageWriterThreadsPerCamera) {
+        NumImageWriterThreadsPerCamera = other.NumImageWriterThreadsPerCamera;
+      }
+      if (other.HasVideoEncodingBatchSize) {
+        VideoEncodingBatchSize = other.VideoEncodingBatchSize;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -572,40 +791,51 @@ namespace Data.Acquisition {
             break;
           case 10: {
             if (robot_ == null) {
-              Robot = new global::Data.Acquisition.Robot();
+              Robot = new global::Data.Acquisition.Robot.Robot();
             }
             input.ReadMessage(Robot);
             break;
           }
           case 18: {
-            DatasetName = input.ReadString();
+            if (teleoperator_ == null) {
+              Teleoperator = new global::Data.Acquisition.Teleoperator.Teleoperator();
+            }
+            input.ReadMessage(Teleoperator);
             break;
           }
           case 26: {
+            RepoId = input.ReadString();
+            break;
+          }
+          case 34: {
             TaskDescription = input.ReadString();
             break;
           }
-          case 32: {
+          case 40: {
             NbEpisodesGoal = input.ReadInt32();
             break;
           }
-          case 40: {
-            EpisodeDuration = input.ReadInt32();
-            break;
-          }
           case 48: {
-            BreakTimeDuration = input.ReadInt32();
+            EpisodeTimeS = input.ReadInt32();
             break;
           }
           case 56: {
-            Fps = input.ReadInt32();
+            ResetTimeS = input.ReadInt32();
             break;
           }
           case 64: {
+            Fps = input.ReadInt32();
+            break;
+          }
+          case 72: {
             UseVideos = input.ReadBool();
             break;
           }
-          case 120: {
+          case 122: {
+            Root = input.ReadString();
+            break;
+          }
+          case 128: {
             Resume = input.ReadBool();
             break;
           }
@@ -614,7 +844,19 @@ namespace Data.Acquisition {
             break;
           }
           case 168: {
-            Offline = input.ReadBool();
+            Private = input.ReadBool();
+            break;
+          }
+          case 200: {
+            NumImageWriterProcesses = input.ReadInt32();
+            break;
+          }
+          case 208: {
+            NumImageWriterThreadsPerCamera = input.ReadInt32();
+            break;
+          }
+          case 216: {
+            VideoEncodingBatchSize = input.ReadInt32();
             break;
           }
         }
@@ -634,40 +876,51 @@ namespace Data.Acquisition {
             break;
           case 10: {
             if (robot_ == null) {
-              Robot = new global::Data.Acquisition.Robot();
+              Robot = new global::Data.Acquisition.Robot.Robot();
             }
             input.ReadMessage(Robot);
             break;
           }
           case 18: {
-            DatasetName = input.ReadString();
+            if (teleoperator_ == null) {
+              Teleoperator = new global::Data.Acquisition.Teleoperator.Teleoperator();
+            }
+            input.ReadMessage(Teleoperator);
             break;
           }
           case 26: {
+            RepoId = input.ReadString();
+            break;
+          }
+          case 34: {
             TaskDescription = input.ReadString();
             break;
           }
-          case 32: {
+          case 40: {
             NbEpisodesGoal = input.ReadInt32();
             break;
           }
-          case 40: {
-            EpisodeDuration = input.ReadInt32();
-            break;
-          }
           case 48: {
-            BreakTimeDuration = input.ReadInt32();
+            EpisodeTimeS = input.ReadInt32();
             break;
           }
           case 56: {
-            Fps = input.ReadInt32();
+            ResetTimeS = input.ReadInt32();
             break;
           }
           case 64: {
+            Fps = input.ReadInt32();
+            break;
+          }
+          case 72: {
             UseVideos = input.ReadBool();
             break;
           }
-          case 120: {
+          case 122: {
+            Root = input.ReadString();
+            break;
+          }
+          case 128: {
             Resume = input.ReadBool();
             break;
           }
@@ -676,7 +929,19 @@ namespace Data.Acquisition {
             break;
           }
           case 168: {
-            Offline = input.ReadBool();
+            Private = input.ReadBool();
+            break;
+          }
+          case 200: {
+            NumImageWriterProcesses = input.ReadInt32();
+            break;
+          }
+          case 208: {
+            NumImageWriterThreadsPerCamera = input.ReadInt32();
+            break;
+          }
+          case 216: {
+            VideoEncodingBatchSize = input.ReadInt32();
             break;
           }
         }
@@ -686,16 +951,16 @@ namespace Data.Acquisition {
 
   }
 
-  public sealed partial class Session : pb::IMessage<Session>
+  public sealed partial class DatasetRoot : pb::IMessage<DatasetRoot>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<Session> _parser = new pb::MessageParser<Session>(() => new Session());
+    private static readonly pb::MessageParser<DatasetRoot> _parser = new pb::MessageParser<DatasetRoot>(() => new DatasetRoot());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Session> Parser { get { return _parser; } }
+    public static pb::MessageParser<DatasetRoot> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -711,7 +976,7 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Session() {
+    public DatasetRoot() {
       OnConstruction();
     }
 
@@ -719,73 +984,59 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Session(Session other) : this() {
-      datasetName_ = other.datasetName_;
-      nbEpisodesRecorded_ = other.nbEpisodesRecorded_;
-      lastUpdate_ = other.lastUpdate_ != null ? other.lastUpdate_.Clone() : null;
+    public DatasetRoot(DatasetRoot other) : this() {
+      root_ = other.root_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Session Clone() {
-      return new Session(this);
+    public DatasetRoot Clone() {
+      return new DatasetRoot(this);
     }
 
-    /// <summary>Field number for the "dataset_name" field.</summary>
-    public const int DatasetNameFieldNumber = 1;
-    private string datasetName_ = "";
+    /// <summary>Field number for the "root" field.</summary>
+    public const int RootFieldNumber = 1;
+    private readonly static string RootDefaultValue = "";
+
+    private string root_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string DatasetName {
-      get { return datasetName_; }
+    public string Root {
+      get { return root_ ?? RootDefaultValue; }
       set {
-        datasetName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        root_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
-
-    /// <summary>Field number for the "nb_episodes_recorded" field.</summary>
-    public const int NbEpisodesRecordedFieldNumber = 2;
-    private int nbEpisodesRecorded_;
+    /// <summary>Gets whether the "root" field is set</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int NbEpisodesRecorded {
-      get { return nbEpisodesRecorded_; }
-      set {
-        nbEpisodesRecorded_ = value;
-      }
+    public bool HasRoot {
+      get { return root_ != null; }
     }
-
-    /// <summary>Field number for the "last_update" field.</summary>
-    public const int LastUpdateFieldNumber = 3;
-    private global::Google.Protobuf.WellKnownTypes.Timestamp lastUpdate_;
+    /// <summary>Clears the value of the "root" field</summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Google.Protobuf.WellKnownTypes.Timestamp LastUpdate {
-      get { return lastUpdate_; }
-      set {
-        lastUpdate_ = value;
-      }
+    public void ClearRoot() {
+      root_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as Session);
+      return Equals(other as DatasetRoot);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Session other) {
+    public bool Equals(DatasetRoot other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (DatasetName != other.DatasetName) return false;
-      if (NbEpisodesRecorded != other.NbEpisodesRecorded) return false;
-      if (!object.Equals(LastUpdate, other.LastUpdate)) return false;
+      if (Root != other.Root) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -793,9 +1044,7 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
-      if (NbEpisodesRecorded != 0) hash ^= NbEpisodesRecorded.GetHashCode();
-      if (lastUpdate_ != null) hash ^= LastUpdate.GetHashCode();
+      if (HasRoot) hash ^= Root.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -814,17 +1063,9 @@ namespace Data.Acquisition {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (DatasetName.Length != 0) {
+      if (HasRoot) {
         output.WriteRawTag(10);
-        output.WriteString(DatasetName);
-      }
-      if (NbEpisodesRecorded != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(NbEpisodesRecorded);
-      }
-      if (lastUpdate_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(LastUpdate);
+        output.WriteString(Root);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -836,17 +1077,9 @@ namespace Data.Acquisition {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (DatasetName.Length != 0) {
+      if (HasRoot) {
         output.WriteRawTag(10);
-        output.WriteString(DatasetName);
-      }
-      if (NbEpisodesRecorded != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(NbEpisodesRecorded);
-      }
-      if (lastUpdate_ != null) {
-        output.WriteRawTag(26);
-        output.WriteMessage(LastUpdate);
+        output.WriteString(Root);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -858,14 +1091,8 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (DatasetName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
-      }
-      if (NbEpisodesRecorded != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(NbEpisodesRecorded);
-      }
-      if (lastUpdate_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(LastUpdate);
+      if (HasRoot) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Root);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -875,21 +1102,12 @@ namespace Data.Acquisition {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Session other) {
+    public void MergeFrom(DatasetRoot other) {
       if (other == null) {
         return;
       }
-      if (other.DatasetName.Length != 0) {
-        DatasetName = other.DatasetName;
-      }
-      if (other.NbEpisodesRecorded != 0) {
-        NbEpisodesRecorded = other.NbEpisodesRecorded;
-      }
-      if (other.lastUpdate_ != null) {
-        if (lastUpdate_ == null) {
-          LastUpdate = new global::Google.Protobuf.WellKnownTypes.Timestamp();
-        }
-        LastUpdate.MergeFrom(other.LastUpdate);
+      if (other.HasRoot) {
+        Root = other.Root;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -907,18 +1125,7 @@ namespace Data.Acquisition {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            DatasetName = input.ReadString();
-            break;
-          }
-          case 16: {
-            NbEpisodesRecorded = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            if (lastUpdate_ == null) {
-              LastUpdate = new global::Google.Protobuf.WellKnownTypes.Timestamp();
-            }
-            input.ReadMessage(LastUpdate);
+            Root = input.ReadString();
             break;
           }
         }
@@ -937,18 +1144,7 @@ namespace Data.Acquisition {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            DatasetName = input.ReadString();
-            break;
-          }
-          case 16: {
-            NbEpisodesRecorded = input.ReadInt32();
-            break;
-          }
-          case 26: {
-            if (lastUpdate_ == null) {
-              LastUpdate = new global::Google.Protobuf.WellKnownTypes.Timestamp();
-            }
-            input.ReadMessage(LastUpdate);
+            Root = input.ReadString();
             break;
           }
         }
@@ -995,6 +1191,7 @@ namespace Data.Acquisition {
       datasetName_ = other.datasetName_;
       pushed_ = other.pushed_;
       nbEpisodes_ = other.nbEpisodes_;
+      root_ = other.root_ != null ? other.root_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1018,7 +1215,7 @@ namespace Data.Acquisition {
 
     /// <summary>Field number for the "pushed" field.</summary>
     public const int PushedFieldNumber = 2;
-    private global::Data.Acquisition.DatasetPushState pushed_ = global::Data.Acquisition.DatasetPushState.LocalOnly;
+    private global::Data.Acquisition.DatasetPushState pushed_ = global::Data.Acquisition.DatasetPushState.Unknown;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Data.Acquisition.DatasetPushState Pushed {
@@ -1040,6 +1237,18 @@ namespace Data.Acquisition {
       }
     }
 
+    /// <summary>Field number for the "root" field.</summary>
+    public const int RootFieldNumber = 10;
+    private global::Data.Acquisition.DatasetRoot root_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Data.Acquisition.DatasetRoot Root {
+      get { return root_; }
+      set {
+        root_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -1058,6 +1267,7 @@ namespace Data.Acquisition {
       if (DatasetName != other.DatasetName) return false;
       if (Pushed != other.Pushed) return false;
       if (NbEpisodes != other.NbEpisodes) return false;
+      if (!object.Equals(Root, other.Root)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1066,8 +1276,9 @@ namespace Data.Acquisition {
     public override int GetHashCode() {
       int hash = 1;
       if (DatasetName.Length != 0) hash ^= DatasetName.GetHashCode();
-      if (Pushed != global::Data.Acquisition.DatasetPushState.LocalOnly) hash ^= Pushed.GetHashCode();
+      if (Pushed != global::Data.Acquisition.DatasetPushState.Unknown) hash ^= Pushed.GetHashCode();
       if (NbEpisodes != 0) hash ^= NbEpisodes.GetHashCode();
+      if (root_ != null) hash ^= Root.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1090,13 +1301,17 @@ namespace Data.Acquisition {
         output.WriteRawTag(10);
         output.WriteString(DatasetName);
       }
-      if (Pushed != global::Data.Acquisition.DatasetPushState.LocalOnly) {
+      if (Pushed != global::Data.Acquisition.DatasetPushState.Unknown) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Pushed);
       }
       if (NbEpisodes != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(NbEpisodes);
+      }
+      if (root_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(Root);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1112,13 +1327,17 @@ namespace Data.Acquisition {
         output.WriteRawTag(10);
         output.WriteString(DatasetName);
       }
-      if (Pushed != global::Data.Acquisition.DatasetPushState.LocalOnly) {
+      if (Pushed != global::Data.Acquisition.DatasetPushState.Unknown) {
         output.WriteRawTag(16);
         output.WriteEnum((int) Pushed);
       }
       if (NbEpisodes != 0) {
         output.WriteRawTag(24);
         output.WriteInt32(NbEpisodes);
+      }
+      if (root_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(Root);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1133,11 +1352,14 @@ namespace Data.Acquisition {
       if (DatasetName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DatasetName);
       }
-      if (Pushed != global::Data.Acquisition.DatasetPushState.LocalOnly) {
+      if (Pushed != global::Data.Acquisition.DatasetPushState.Unknown) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Pushed);
       }
       if (NbEpisodes != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(NbEpisodes);
+      }
+      if (root_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Root);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1154,11 +1376,17 @@ namespace Data.Acquisition {
       if (other.DatasetName.Length != 0) {
         DatasetName = other.DatasetName;
       }
-      if (other.Pushed != global::Data.Acquisition.DatasetPushState.LocalOnly) {
+      if (other.Pushed != global::Data.Acquisition.DatasetPushState.Unknown) {
         Pushed = other.Pushed;
       }
       if (other.NbEpisodes != 0) {
         NbEpisodes = other.NbEpisodes;
+      }
+      if (other.root_ != null) {
+        if (root_ == null) {
+          Root = new global::Data.Acquisition.DatasetRoot();
+        }
+        Root.MergeFrom(other.Root);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1187,6 +1415,13 @@ namespace Data.Acquisition {
             NbEpisodes = input.ReadInt32();
             break;
           }
+          case 82: {
+            if (root_ == null) {
+              Root = new global::Data.Acquisition.DatasetRoot();
+            }
+            input.ReadMessage(Root);
+            break;
+          }
         }
       }
     #endif
@@ -1212,6 +1447,13 @@ namespace Data.Acquisition {
           }
           case 24: {
             NbEpisodes = input.ReadInt32();
+            break;
+          }
+          case 82: {
+            if (root_ == null) {
+              Root = new global::Data.Acquisition.DatasetRoot();
+            }
+            input.ReadMessage(Root);
             break;
           }
         }
@@ -1768,586 +2010,6 @@ namespace Data.Acquisition {
             break;
           case 8: {
             Success = input.ReadBool();
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Episode : pb::IMessage<Episode>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Episode> _parser = new pb::MessageParser<Episode>(() => new Episode());
-    private pb::UnknownFieldSet _unknownFields;
-    private int _hasBits0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Episode> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.Acquisition.DataAcquisitionReflection.Descriptor.MessageTypes[6]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Episode() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Episode(Episode other) : this() {
-      _hasBits0 = other._hasBits0;
-      episodeId_ = other.episodeId_;
-      duration_ = other.duration_;
-      episodeSuccess_ = other.episodeSuccess_;
-      description_ = other.description_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Episode Clone() {
-      return new Episode(this);
-    }
-
-    /// <summary>Field number for the "episode_id" field.</summary>
-    public const int EpisodeIdFieldNumber = 1;
-    private readonly static int EpisodeIdDefaultValue = 0;
-
-    private int episodeId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int EpisodeId {
-      get { if ((_hasBits0 & 1) != 0) { return episodeId_; } else { return EpisodeIdDefaultValue; } }
-      set {
-        _hasBits0 |= 1;
-        episodeId_ = value;
-      }
-    }
-    /// <summary>Gets whether the "episode_id" field is set</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool HasEpisodeId {
-      get { return (_hasBits0 & 1) != 0; }
-    }
-    /// <summary>Clears the value of the "episode_id" field</summary>
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void ClearEpisodeId() {
-      _hasBits0 &= ~1;
-    }
-
-    /// <summary>Field number for the "duration" field.</summary>
-    public const int DurationFieldNumber = 2;
-    private int duration_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int Duration {
-      get { return duration_; }
-      set {
-        duration_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "episode_success" field.</summary>
-    public const int EpisodeSuccessFieldNumber = 3;
-    private bool episodeSuccess_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool EpisodeSuccess {
-      get { return episodeSuccess_; }
-      set {
-        episodeSuccess_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "description" field.</summary>
-    public const int DescriptionFieldNumber = 4;
-    private string description_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Description {
-      get { return description_; }
-      set {
-        description_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override bool Equals(object other) {
-      return Equals(other as Episode);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Episode other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (EpisodeId != other.EpisodeId) return false;
-      if (Duration != other.Duration) return false;
-      if (EpisodeSuccess != other.EpisodeSuccess) return false;
-      if (Description != other.Description) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (HasEpisodeId) hash ^= EpisodeId.GetHashCode();
-      if (Duration != 0) hash ^= Duration.GetHashCode();
-      if (EpisodeSuccess != false) hash ^= EpisodeSuccess.GetHashCode();
-      if (Description.Length != 0) hash ^= Description.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (HasEpisodeId) {
-        output.WriteRawTag(8);
-        output.WriteInt32(EpisodeId);
-      }
-      if (Duration != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Duration);
-      }
-      if (EpisodeSuccess != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(EpisodeSuccess);
-      }
-      if (Description.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Description);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (HasEpisodeId) {
-        output.WriteRawTag(8);
-        output.WriteInt32(EpisodeId);
-      }
-      if (Duration != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Duration);
-      }
-      if (EpisodeSuccess != false) {
-        output.WriteRawTag(24);
-        output.WriteBool(EpisodeSuccess);
-      }
-      if (Description.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(Description);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int CalculateSize() {
-      int size = 0;
-      if (HasEpisodeId) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(EpisodeId);
-      }
-      if (Duration != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Duration);
-      }
-      if (EpisodeSuccess != false) {
-        size += 1 + 1;
-      }
-      if (Description.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Description);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Episode other) {
-      if (other == null) {
-        return;
-      }
-      if (other.HasEpisodeId) {
-        EpisodeId = other.EpisodeId;
-      }
-      if (other.Duration != 0) {
-        Duration = other.Duration;
-      }
-      if (other.EpisodeSuccess != false) {
-        EpisodeSuccess = other.EpisodeSuccess;
-      }
-      if (other.Description.Length != 0) {
-        Description = other.Description;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 8: {
-            EpisodeId = input.ReadInt32();
-            break;
-          }
-          case 16: {
-            Duration = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            EpisodeSuccess = input.ReadBool();
-            break;
-          }
-          case 34: {
-            Description = input.ReadString();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 8: {
-            EpisodeId = input.ReadInt32();
-            break;
-          }
-          case 16: {
-            Duration = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            EpisodeSuccess = input.ReadBool();
-            break;
-          }
-          case 34: {
-            Description = input.ReadString();
-            break;
-          }
-        }
-      }
-    }
-    #endif
-
-  }
-
-  public sealed partial class Robot : pb::IMessage<Robot>
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      , pb::IBufferMessage
-  #endif
-  {
-    private static readonly pb::MessageParser<Robot> _parser = new pb::MessageParser<Robot>(() => new Robot());
-    private pb::UnknownFieldSet _unknownFields;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<Robot> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Data.Acquisition.DataAcquisitionReflection.Descriptor.MessageTypes[7]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Robot() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Robot(Robot other) : this() {
-      robotType_ = other.robotType_;
-      ipAddress_ = other.ipAddress_;
-      robotId_ = other.robotId_;
-      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public Robot Clone() {
-      return new Robot(this);
-    }
-
-    /// <summary>Field number for the "robot_type" field.</summary>
-    public const int RobotTypeFieldNumber = 1;
-    private global::Data.Acquisition.RobotType robotType_ = global::Data.Acquisition.RobotType.None;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Data.Acquisition.RobotType RobotType {
-      get { return robotType_; }
-      set {
-        robotType_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "ip_address" field.</summary>
-    public const int IpAddressFieldNumber = 2;
-    private string ipAddress_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string IpAddress {
-      get { return ipAddress_; }
-      set {
-        ipAddress_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    /// <summary>Field number for the "robot_id" field.</summary>
-    public const int RobotIdFieldNumber = 3;
-    private string robotId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string RobotId {
-      get { return robotId_; }
-      set {
-        robotId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override bool Equals(object other) {
-      return Equals(other as Robot);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(Robot other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (RobotType != other.RobotType) return false;
-      if (IpAddress != other.IpAddress) return false;
-      if (RobotId != other.RobotId) return false;
-      return Equals(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (RobotType != global::Data.Acquisition.RobotType.None) hash ^= RobotType.GetHashCode();
-      if (IpAddress.Length != 0) hash ^= IpAddress.GetHashCode();
-      if (RobotId.Length != 0) hash ^= RobotId.GetHashCode();
-      if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode();
-      }
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void WriteTo(pb::CodedOutputStream output) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      output.WriteRawMessage(this);
-    #else
-      if (RobotType != global::Data.Acquisition.RobotType.None) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) RobotType);
-      }
-      if (IpAddress.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(IpAddress);
-      }
-      if (RobotId.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(RobotId);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(output);
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (RobotType != global::Data.Acquisition.RobotType.None) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) RobotType);
-      }
-      if (IpAddress.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(IpAddress);
-      }
-      if (RobotId.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(RobotId);
-      }
-      if (_unknownFields != null) {
-        _unknownFields.WriteTo(ref output);
-      }
-    }
-    #endif
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int CalculateSize() {
-      int size = 0;
-      if (RobotType != global::Data.Acquisition.RobotType.None) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) RobotType);
-      }
-      if (IpAddress.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(IpAddress);
-      }
-      if (RobotId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RobotId);
-      }
-      if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize();
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(Robot other) {
-      if (other == null) {
-        return;
-      }
-      if (other.RobotType != global::Data.Acquisition.RobotType.None) {
-        RobotType = other.RobotType;
-      }
-      if (other.IpAddress.Length != 0) {
-        IpAddress = other.IpAddress;
-      }
-      if (other.RobotId.Length != 0) {
-        RobotId = other.RobotId;
-      }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(pb::CodedInputStream input) {
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-      input.ReadRawMessage(this);
-    #else
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-            break;
-          case 8: {
-            RobotType = (global::Data.Acquisition.RobotType) input.ReadEnum();
-            break;
-          }
-          case 18: {
-            IpAddress = input.ReadString();
-            break;
-          }
-          case 26: {
-            RobotId = input.ReadString();
-            break;
-          }
-        }
-      }
-    #endif
-    }
-
-    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-            break;
-          case 8: {
-            RobotType = (global::Data.Acquisition.RobotType) input.ReadEnum();
-            break;
-          }
-          case 18: {
-            IpAddress = input.ReadString();
-            break;
-          }
-          case 26: {
-            RobotId = input.ReadString();
             break;
           }
         }

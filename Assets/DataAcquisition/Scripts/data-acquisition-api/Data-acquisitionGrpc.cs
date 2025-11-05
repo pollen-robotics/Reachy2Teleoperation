@@ -46,7 +46,7 @@ namespace Data.Acquisition {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
+    static readonly grpc::Marshaller<global::Data.Acquisition.DatasetRoot> __Marshaller_data_acquisition_DatasetRoot = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.DatasetRoot.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Data.Acquisition.DatasetList> __Marshaller_data_acquisition_DatasetList = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.DatasetList.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -56,46 +56,48 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Data.Acquisition.SessionParams> __Marshaller_data_acquisition_SessionParams = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.SessionParams.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Data.Acquisition.EpisodeRating> __Marshaller_data_acquisition_EpisodeRating = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.EpisodeRating.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.DatasetList> __Method_GetDatasetList = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.DatasetList>(
+    static readonly grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.DatasetList> __Method_GetDatasetList = new grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.DatasetList>(
         grpc::MethodType.Unary,
         __ServiceName,
         "GetDatasetList",
-        __Marshaller_google_protobuf_Empty,
+        __Marshaller_data_acquisition_DatasetRoot,
         __Marshaller_data_acquisition_DatasetList);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_AddDataset = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
+    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_AddDatasetToList = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "AddDataset",
+        "AddDatasetToList",
         __Marshaller_data_acquisition_Dataset,
         __Marshaller_data_acquisition_ActionAck);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_RemoveDataset = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
+    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_RemoveDatasetFromList = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "RemoveDataset",
+        "RemoveDatasetFromList",
         __Marshaller_data_acquisition_Dataset,
         __Marshaller_data_acquisition_ActionAck);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_UpdateDataset = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
+    static readonly grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck> __Method_UpdateDatasetInList = new grpc::Method<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "UpdateDataset",
+        "UpdateDatasetInList",
         __Marshaller_data_acquisition_Dataset,
         __Marshaller_data_acquisition_ActionAck);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck> __Method_ClearAllDatasets = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(
+    static readonly grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.ActionAck> __Method_ClearDatasetList = new grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.ActionAck>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "ClearAllDatasets",
-        __Marshaller_google_protobuf_Empty,
+        "ClearDatasetList",
+        __Marshaller_data_acquisition_DatasetRoot,
         __Marshaller_data_acquisition_ActionAck);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -173,31 +175,31 @@ namespace Data.Acquisition {
     public abstract partial class DataAcquisitionServiceBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.DatasetList> GetDatasetList(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.DatasetList> GetDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> AddDataset(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> AddDatasetToList(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> RemoveDataset(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> RemoveDatasetFromList(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> UpdateDataset(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> UpdateDatasetInList(global::Data.Acquisition.Dataset request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> ClearAllDatasets(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> ClearDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -280,104 +282,104 @@ namespace Data.Acquisition {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.DatasetList GetDatasetList(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Data.Acquisition.DatasetList GetDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetDatasetList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.DatasetList GetDatasetList(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual global::Data.Acquisition.DatasetList GetDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_GetDatasetList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.DatasetList> GetDatasetListAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.DatasetList> GetDatasetListAsync(global::Data.Acquisition.DatasetRoot request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetDatasetListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.DatasetList> GetDatasetListAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.DatasetList> GetDatasetListAsync(global::Data.Acquisition.DatasetRoot request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetDatasetList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck AddDataset(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Data.Acquisition.ActionAck AddDatasetToList(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return AddDataset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return AddDatasetToList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck AddDataset(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual global::Data.Acquisition.ActionAck AddDatasetToList(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_AddDataset, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_AddDatasetToList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> AddDatasetAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> AddDatasetToListAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return AddDatasetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return AddDatasetToListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> AddDatasetAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> AddDatasetToListAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_AddDataset, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_AddDatasetToList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck RemoveDataset(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Data.Acquisition.ActionAck RemoveDatasetFromList(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return RemoveDataset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return RemoveDatasetFromList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck RemoveDataset(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual global::Data.Acquisition.ActionAck RemoveDatasetFromList(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_RemoveDataset, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_RemoveDatasetFromList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> RemoveDatasetAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> RemoveDatasetFromListAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return RemoveDatasetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return RemoveDatasetFromListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> RemoveDatasetAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> RemoveDatasetFromListAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_RemoveDataset, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_RemoveDatasetFromList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck UpdateDataset(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Data.Acquisition.ActionAck UpdateDatasetInList(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return UpdateDataset(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return UpdateDatasetInList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck UpdateDataset(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual global::Data.Acquisition.ActionAck UpdateDatasetInList(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_UpdateDataset, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_UpdateDatasetInList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> UpdateDatasetAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> UpdateDatasetInListAsync(global::Data.Acquisition.Dataset request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return UpdateDatasetAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return UpdateDatasetInListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> UpdateDatasetAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> UpdateDatasetInListAsync(global::Data.Acquisition.Dataset request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_UpdateDataset, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_UpdateDatasetInList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck ClearAllDatasets(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Data.Acquisition.ActionAck ClearDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return ClearAllDatasets(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return ClearDatasetList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Data.Acquisition.ActionAck ClearAllDatasets(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual global::Data.Acquisition.ActionAck ClearDatasetList(global::Data.Acquisition.DatasetRoot request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_ClearAllDatasets, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_ClearDatasetList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> ClearAllDatasetsAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> ClearDatasetListAsync(global::Data.Acquisition.DatasetRoot request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return ClearAllDatasetsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return ClearDatasetListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> ClearAllDatasetsAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.ActionAck> ClearDatasetListAsync(global::Data.Acquisition.DatasetRoot request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_ClearAllDatasets, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_ClearDatasetList, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Data.Acquisition.ActionAck StartSession(global::Data.Acquisition.SessionParams request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
@@ -554,10 +556,10 @@ namespace Data.Acquisition {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetDatasetList, serviceImpl.GetDatasetList)
-          .AddMethod(__Method_AddDataset, serviceImpl.AddDataset)
-          .AddMethod(__Method_RemoveDataset, serviceImpl.RemoveDataset)
-          .AddMethod(__Method_UpdateDataset, serviceImpl.UpdateDataset)
-          .AddMethod(__Method_ClearAllDatasets, serviceImpl.ClearAllDatasets)
+          .AddMethod(__Method_AddDatasetToList, serviceImpl.AddDatasetToList)
+          .AddMethod(__Method_RemoveDatasetFromList, serviceImpl.RemoveDatasetFromList)
+          .AddMethod(__Method_UpdateDatasetInList, serviceImpl.UpdateDatasetInList)
+          .AddMethod(__Method_ClearDatasetList, serviceImpl.ClearDatasetList)
           .AddMethod(__Method_StartSession, serviceImpl.StartSession)
           .AddMethod(__Method_StopSession, serviceImpl.StopSession)
           .AddMethod(__Method_StartEpisode, serviceImpl.StartEpisode)
@@ -575,11 +577,11 @@ namespace Data.Acquisition {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, DataAcquisitionServiceBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_GetDatasetList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.DatasetList>(serviceImpl.GetDatasetList));
-      serviceBinder.AddMethod(__Method_AddDataset, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.AddDataset));
-      serviceBinder.AddMethod(__Method_RemoveDataset, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.RemoveDataset));
-      serviceBinder.AddMethod(__Method_UpdateDataset, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.UpdateDataset));
-      serviceBinder.AddMethod(__Method_ClearAllDatasets, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.ClearAllDatasets));
+      serviceBinder.AddMethod(__Method_GetDatasetList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.DatasetList>(serviceImpl.GetDatasetList));
+      serviceBinder.AddMethod(__Method_AddDatasetToList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.AddDatasetToList));
+      serviceBinder.AddMethod(__Method_RemoveDatasetFromList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.RemoveDatasetFromList));
+      serviceBinder.AddMethod(__Method_UpdateDatasetInList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.Dataset, global::Data.Acquisition.ActionAck>(serviceImpl.UpdateDatasetInList));
+      serviceBinder.AddMethod(__Method_ClearDatasetList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.ActionAck>(serviceImpl.ClearDatasetList));
       serviceBinder.AddMethod(__Method_StartSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.SessionParams, global::Data.Acquisition.ActionAck>(serviceImpl.StartSession));
       serviceBinder.AddMethod(__Method_StopSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.StopSession));
       serviceBinder.AddMethod(__Method_StartEpisode, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.StartEpisode));

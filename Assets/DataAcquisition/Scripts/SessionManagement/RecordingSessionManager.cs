@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 
 using Data.Acquisition;
+using TeleopReachy;
 
 namespace DataAcquisition
 {
@@ -28,6 +29,7 @@ namespace DataAcquisition
         private bool rightPrimaryButtonPreviouslyPressed;
         private bool rightSecondaryButtonPreviouslyPressed;
         private bool leftPrimaryButtonPreviouslyPressed;
+        private float leftGripPreviousValue;
 
         public UnityEvent<bool> event_OnPushOver;
         public UnityEvent<bool> event_OnConsolidationOver;
@@ -43,7 +45,7 @@ namespace DataAcquisition
 
         private Phase currentPhase = Phase.None;
 
-        protected enum Phase 
+        protected enum Phase
         {
             EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, None
         }
@@ -56,7 +58,9 @@ namespace DataAcquisition
             rightPrimaryButtonPreviouslyPressed = true;
             rightSecondaryButtonPreviouslyPressed = true;
 
-            TeleopReachy.EventManager.StartListening(TeleopReachy.EventNames.OnStartArmTeleoperation, StartRecordingCycle);
+            EventManager.StartListening(TeleopReachy.EventNames.OnStartArmTeleoperation, StartRecordingCycle);
+            EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
+            EventManager.StartListening(EventNames.OnEmergencyStop, EmergencyStopActivated);
         }
 
         public async void StartRecordingSession()
@@ -77,7 +81,7 @@ namespace DataAcquisition
                 // }
                 // else
                 // {
-                    StartCoroutine(SessionCycle());
+                StartCoroutine(SessionCycle());
                 // }
             }
 
@@ -94,7 +98,7 @@ namespace DataAcquisition
                 // Press space to skip current phase
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) skipRequested = true;
+                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) RequestSkip();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape))
@@ -105,7 +109,7 @@ namespace DataAcquisition
                 // Press A to skip current phase
                 if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                 {
-                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) skipRequested = true;
+                    if (!(currentPhase == Phase.EpisodeSaving && suspendTime)) RequestSkip();
                 }
                 if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out rightSecondaryButtonPressed) && rightSecondaryButtonPressed && !rightSecondaryButtonPreviouslyPressed)
                 {
@@ -123,6 +127,7 @@ namespace DataAcquisition
             }
 
             bool leftPrimaryButtonPressed = false;
+            float leftGripValue;
             if (currentPhase == Phase.BreakTime)
             {
                 if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed) && leftPrimaryButtonPressed && !leftPrimaryButtonPreviouslyPressed)
@@ -134,6 +139,16 @@ namespace DataAcquisition
                     TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
                 }
                 leftPrimaryButtonPreviouslyPressed = leftPrimaryButtonPressed;
+
+                if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out leftGripValue) && (leftGripPreviousValue <= 0.5f) && (leftGripValue > 0.5f))
+                {
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
+                }
+                else if (controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out leftGripValue) && (leftGripPreviousValue > 0.5f) && (leftGripValue <= 0.5f))
+                {
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                }
+                leftGripPreviousValue = leftGripValue;
             }
         }
 
@@ -155,13 +170,13 @@ namespace DataAcquisition
             while (currentEpisode <= RecordingSessionParameters.Instance.NbEpisodesGoal && !endRequested)
             {
                 float startDelay = RecordingSessionParameters.Instance.StartDelay + 0.5f;
-                if (FirstCycle) 
+                if (FirstCycle)
                 {
                     startDelay += 3.0f;
                 }
                 yield return RunPhase(
                     Phase.EpisodeStartDelay,
-                    "RecordingStart", 
+                    "RecordingStart",
                     startDelay
                     );
                 yield return RunPhase(Phase.EpisodeRecording, "RecordingTimer", RecordingSessionParameters.Instance.EpisodeDuration); // hide all during episode
@@ -177,7 +192,7 @@ namespace DataAcquisition
             if (!endRequested) currentEpisode--;
             OpenPageByName("GoalCompleted"); // Final panel
             if (currentEpisode == RecordingSessionParameters.Instance.NbEpisodesGoal)
-            {   
+            {
                 TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
                 Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
                 yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
@@ -193,31 +208,40 @@ namespace DataAcquisition
         {
             currentPhase = phase;
             OpenPageByName(panelToShow);
+            do
+            {
+                if (phase == Phase.EpisodeStartDelay)
+                {
+                    TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.HideXRay);
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
+                }
+                else if (phase == Phase.EpisodeRecording)
+                {
+                    if (RobotDataManager.Instance.RobotStatus.AreRobotMovementsSuspended())
+                    {
+                        skipRequested = true;
+                        break;
+                    }
+                    TeleopReachy.EmotionMenuManager.Instance.ActivateEmotion();
+                    Task startEpisodeTask = DataAcquisitionManager.Instance.DataController.StartEpisode();
+                    yield return new WaitUntil(() => startEpisodeTask.IsCompleted);
+                    SaveEpisode = true;
+                }
+                else if (phase == Phase.EpisodeSaving)
+                {
+                    TeleopReachy.EmotionMenuManager.Instance.DeactivateEmotion();
+                    TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                    Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
+                    yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
+                }
+                else if (phase == Phase.BreakTime)
+                {
+                    if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                }
+            }
+            while (false);
 
-            if (phase == Phase.EpisodeStartDelay)
-            {
-                TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.HideXRay);
-                TeleopReachy.RobotDataManager.Instance.RobotStatus.ResumeRobotTeleoperation();
-            }
-            else if (phase == Phase.EpisodeRecording) 
-            {
-                TeleopReachy.EmotionMenuManager.Instance.ActivateEmotion();
-                Task startEpisodeTask = DataAcquisitionManager.Instance.DataController.StartEpisode();
-                yield return new WaitUntil(() => startEpisodeTask.IsCompleted);
-                SaveEpisode = true;
-            }
-            else if (phase == Phase.EpisodeSaving)
-            {
-                TeleopReachy.EmotionMenuManager.Instance.DeactivateEmotion();
-                TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
-                TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
-                Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
-                yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
-            }
-            else if (phase == Phase.BreakTime) 
-            {
-                if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
-            }
             float elapsed = 0f;
             skipRequested = false;
             endRequested = false;
@@ -241,7 +265,7 @@ namespace DataAcquisition
         IEnumerator DelayedSaveEpisode()
         {
             // yield return new WaitForSeconds(5.0f);
-            if (SaveEpisode) 
+            if (SaveEpisode)
             {
                 Task saveEpisodeTask = DataAcquisitionManager.Instance.DataController.SaveEpisode();
                 event_OnEpisodeSavingStart.Invoke();
@@ -260,7 +284,7 @@ namespace DataAcquisition
         {
             suspendTime = false;
             endRequested = false;
-            if(currentOpenPage.GetComponentInChildren<CountdownWithPulse>() != null) currentOpenPage.GetComponentInChildren<CountdownWithPulse>().ResumeCountdown();
+            if (currentOpenPage.GetComponentInChildren<CountdownWithPulse>() != null) currentOpenPage.GetComponentInChildren<CountdownWithPulse>().ResumeCountdown();
         }
 
         public void ContinueRecordingSession(int nbAdditionalEpisodes)
@@ -293,12 +317,12 @@ namespace DataAcquisition
         public async void StopSession()
         {
             endRequested = true;
-            if (pushSession) 
+            if (pushSession)
             {
                 if (saveEpisodeCoroutine == null) StopAndPushDataFromSession();
                 else this.event_OnEpisodeSaved.AddListener(StopAndPushDataFromSession);
             }
-            else 
+            else
             {
                 if (saveEpisodeCoroutine == null) StopWithoutPushingDataFromSession();
                 else this.event_OnEpisodeSaved.AddListener(StopWithoutPushingDataFromSession);
@@ -332,6 +356,53 @@ namespace DataAcquisition
         public void LeaveTeleoperationScene()
         {
             TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.QuitTeleoperationScene);
+        }
+
+        void EmergencyStopActivated()
+        {
+            SuspendTeleoperation();
+        }
+
+        void HeadsetRemoved()
+        {
+            switch (currentPhase)
+            {
+                case Phase.BreakTime:
+                    SuspendCurrentPhase();
+                    break;
+                case Phase.EpisodeSaving:
+                    SuspendCurrentPhase();
+                    break;
+                case Phase.EpisodeRecording:
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                    GoToSafePose();
+                    SetBackPreviousEpisode();
+                    RequestSkip();
+                    // TODO
+                    // Skip, don't save and go to BreakTime in pause
+                    break;
+                case Phase.EpisodeStartDelay:
+                    TeleopReachy.RobotDataManager.Instance.RobotStatus.SuspendRobotTeleoperation();
+                    GoToSafePose();
+                    SetBackPreviousEpisode();
+                    RequestSkip();
+                    // TODO
+                    // Skip, don't save and go to BreakTime in pause
+                    break;
+                case Phase.None:
+                    SuspendTeleoperation();
+                    break;
+            }
+        }
+
+        void SuspendTeleoperation()
+        {
+            if (TeleoperationManager.Instance.IsRobotTeleoperationActive) EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
+        }
+
+        void GoToSafePose()
+        {
+            // Here goto elbow_90 pose for example
         }
     }
 }

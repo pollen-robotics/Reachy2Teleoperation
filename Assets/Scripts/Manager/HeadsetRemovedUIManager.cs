@@ -29,9 +29,10 @@ namespace TeleopReachy
 
         void ShowResetPosition()
         {
-            headsetRemovedMenu.gameObject.SetActive(true);
-            Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer(mirrorLayer));
-            Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer(reachyLayer));
+            // headsetRemovedMenu.gameObject.SetActive(true);
+            // Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer(mirrorLayer));
+            // Camera.main.cullingMask &= ~(1 << LayerMask.NameToLayer(reachyLayer));
+            DataAcquisition.DataAcquisitionManager.Instance.RecordingSessionManager.ResumeCurrentPhase();
         }
 
         void HideResetPosition()

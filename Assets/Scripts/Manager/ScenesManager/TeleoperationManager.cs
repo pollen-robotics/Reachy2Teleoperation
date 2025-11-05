@@ -26,8 +26,10 @@ namespace TeleopReachy
         public bool IsRobotTeleoperationActive { get; private set; }
         public bool IsArmTeleoperationActive { get; private set; }
         public bool IsMobileBaseTeleoperationActive { get; private set; }
+        
+        public bool CustomSuspensionImplemented { get; set; }
 
-        public enum TeleoperationSuspensionCase 
+        public enum TeleoperationSuspensionCase
         {
             None, HeadsetRemoved, EmergencyStopActivated,
         }
@@ -41,6 +43,7 @@ namespace TeleopReachy
             IsRobotTeleoperationActive = false;
             IsArmTeleoperationActive = false;
             IsMobileBaseTeleoperationActive = false;
+            CustomSuspensionImplemented = false;
             joystickMode = JoystickMode.Mobility;
 
             EventManager.StartListening(EventNames.TeleoperationSceneLoaded, StartTeleoperation);
@@ -177,7 +180,7 @@ namespace TeleopReachy
 
         void SuspendTeleoperation()
         {
-            if(IsRobotTeleoperationActive) EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
+            if(IsRobotTeleoperationActive && !CustomSuspensionImplemented) EventManager.TriggerEvent(EventNames.OnSuspendTeleoperation);
         }
 
         public void AskForResumingTeleoperation()

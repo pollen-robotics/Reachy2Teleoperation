@@ -7,6 +7,8 @@ using Grpc.Core;
 using System.Threading.Tasks;
 
 using Data.Acquisition;
+using Data.Acquisition.Robot;
+using Data.Acquisition.Teleoperator;
 
 
 namespace DataAcquisition
@@ -25,7 +27,7 @@ namespace DataAcquisition
             // InitChannel("server_data_port");
 
             // IP ADDRESS, to remove
-            InitCustomChannel("192.168.1.200", "50062");
+            InitCustomChannel("192.168.0.198", "50062");
             if (channel != null)
             {
                 client = new DataAcquisitionService.DataAcquisitionServiceClient(channel);
@@ -36,25 +38,57 @@ namespace DataAcquisition
         {
             try
             {
-                Robot reachy2 = new Robot {
+                Robot reachy2 = new Robot
+                {
                     RobotType = RobotType.Reachy2,
-                    IpAddress = PlayerPrefs.GetString("robot_ip"),
-                    RobotId = "reachy2-pvt02",
+                    RobotId = "reachy2-pvt04",
+                    Reachy2 = new Reachy2
+                    {
+                        IpAddress = PlayerPrefs.GetString("robot_ip"),
+                        UseExternalCommands = true,
+                        WithMobileBase = false,
+                        WithLArm = false,
+                        WithRArm = true,
+                        WithNeck = false,
+                        WithAntennas = false,
+                        WithLeftTeleopCamera = false,
+                        WithRightTeleopCamera = false,
+                        WithTorsoCamera = true,
+                        DisableTorqueOnDisconnect = false,
+                    }
                 };
 
-                SessionParams sessionParams = new SessionParams {
-                    Robot=reachy2,
-                    DatasetName=recordingParams.DatasetName,
-                    TaskDescription=recordingParams.TaskDescription,
-                    NbEpisodesGoal=recordingParams.NbEpisodesGoal,
-                    EpisodeDuration=recordingParams.EpisodeDuration,
-                    BreakTimeDuration=recordingParams.BreakTimeDuration,
+                Teleoperator reachy2_teleop = new Teleoperator {
+                    TeleoperatorType = TeleoperatorType.Reachy2,
+                    Reachy2 = new Reachy2Teleoperator
+                    {
+                        IpAddress = PlayerPrefs.GetString("robot_ip"),
+                        UsePresentPosition = false,
+                        WithMobileBase = false,
+                        WithLArm = false,
+                        WithRArm = true,
+                        WithNeck = false,
+                        WithAntennas = false,
+                    }
+                };
+
+                SessionParams sessionParams = new SessionParams
+                {
+                    Robot = reachy2,
+                    Teleoperator = reachy2_teleop,
+                    // RepoId = recordingParams.DatasetName,
+                    RepoId = "glannuzel/test_torso_cam",
+                    TaskDescription = "Grab a white box and put in ReachyMini black box",
+                    NbEpisodesGoal = recordingParams.NbEpisodesGoal,
+                    EpisodeTimeS = recordingParams.EpisodeDuration,
+                    ResetTimeS = recordingParams.BreakTimeDuration,
+                    Fps = 15,
                     // UseVideos = true,
-                    // Resume=!recordingParams.IsNewDataset,
+                    Resume=!recordingParams.IsNewDataset,
                     // Offline=!recordingParams.IsDatasetOnline,
                 };
                 var test = await client.StartSessionAsync(sessionParams);
-                Debug.LogError(test);
+                Debug.LogError(sessionParams);
                 return test;
             }
             catch (RpcException e)
@@ -69,7 +103,7 @@ namespace DataAcquisition
         {
             try
             {
-                DatasetList datasetList = await client.GetDatasetListAsync(new Google.Protobuf.WellKnownTypes.Empty());
+                DatasetList datasetList = await client.GetDatasetListAsync(new DatasetRoot {});
                 return datasetList;
             }
             catch (RpcException e)
@@ -93,7 +127,7 @@ namespace DataAcquisition
                     DatasetName = datasetName,
                     Pushed = DatasetPushState.LocalOnly,
                 };
-                return await client.AddDatasetAsync(dataset);
+                return await client.AddDatasetToListAsync(dataset);
             }
             catch (RpcException e)
             {
@@ -117,7 +151,7 @@ namespace DataAcquisition
                     Pushed = state,
                     NbEpisodes = DataAcquisitionManager.Instance.RecordingSessionManager.GetCurrentEpisode(),
                 };
-                ActionAck ack = await client.UpdateDatasetAsync(dataset);
+                ActionAck ack = await client.UpdateDatasetInListAsync(dataset);
                 return ack;
             }
             catch (RpcException e)
@@ -187,7 +221,7 @@ namespace DataAcquisition
         public async Task<ActionAck> PushDataFromSession()
         {
             try
-            { 
+            {
                 ActionAck ack = await client.UploadSessionAsync(new Google.Protobuf.WellKnownTypes.Empty());
                 return ack;
             }
