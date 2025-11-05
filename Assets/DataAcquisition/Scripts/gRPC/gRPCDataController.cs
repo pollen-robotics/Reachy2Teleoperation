@@ -27,7 +27,7 @@ namespace DataAcquisition
             // InitChannel("server_data_port");
 
             // IP ADDRESS, to remove
-            InitCustomChannel("192.168.0.198", "50062");
+            InitCustomChannel("192.168.10.142", "50062");
             if (channel != null)
             {
                 client = new DataAcquisitionService.DataAcquisitionServiceClient(channel);
