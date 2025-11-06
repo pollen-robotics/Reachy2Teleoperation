@@ -21,13 +21,9 @@ namespace DataAcquisition
         void Start()
         {
             recordingParams = DataAcquisitionManager.Instance.RecordingSessionParameters;
-            // PlayerPrefs.SetString("robot_ip", "192.168.1.10");
-            PlayerPrefs.SetString("server_data_port", "50062");
 
-            // InitChannel("server_data_port");
-
-            // IP ADDRESS, to remove
-            InitCustomChannel("192.168.10.142", "50062");
+            Debug.LogError("Data controller grpc setup");
+            InitCustomChannel(DataAcquisitionServer.Instance.GetServerIpAddress(), DataAcquisitionServer.Instance.GetServerDataPort());
             if (channel != null)
             {
                 client = new DataAcquisitionService.DataAcquisitionServiceClient(channel);
@@ -46,14 +42,14 @@ namespace DataAcquisition
                     {
                         IpAddress = PlayerPrefs.GetString("robot_ip"),
                         UseExternalCommands = true,
-                        WithMobileBase = false,
-                        WithLArm = false,
-                        WithRArm = true,
-                        WithNeck = false,
-                        WithAntennas = false,
-                        WithLeftTeleopCamera = false,
-                        WithRightTeleopCamera = false,
-                        WithTorsoCamera = true,
+                        WithMobileBase = recordingParams.IsMobileBaseRecorded,
+                        WithLArm = recordingParams.IsLArmRecorded,
+                        WithRArm = recordingParams.IsRArmRecorded,
+                        WithNeck = recordingParams.IsNeckRecorded,
+                        WithAntennas = recordingParams.AreAntennasRecorded,
+                        WithLeftTeleopCamera = recordingParams.IsLTeleopCamRecorded,
+                        WithRightTeleopCamera = recordingParams.IsRTeleopCamRecorded,
+                        WithTorsoCamera = recordingParams.IsTorsoCamRecorded,
                         DisableTorqueOnDisconnect = false,
                     }
                 };
@@ -64,11 +60,11 @@ namespace DataAcquisition
                     {
                         IpAddress = PlayerPrefs.GetString("robot_ip"),
                         UsePresentPosition = false,
-                        WithMobileBase = false,
-                        WithLArm = false,
-                        WithRArm = true,
-                        WithNeck = false,
-                        WithAntennas = false,
+                        WithMobileBase = recordingParams.IsMobileBaseRecorded,
+                        WithLArm = recordingParams.IsLArmRecorded,
+                        WithRArm = recordingParams.IsRArmRecorded,
+                        WithNeck = recordingParams.IsNeckRecorded,
+                        WithAntennas = recordingParams.AreAntennasRecorded,
                     }
                 };
 
@@ -78,12 +74,13 @@ namespace DataAcquisition
                     Teleoperator = reachy2_teleop,
                     // RepoId = recordingParams.DatasetName,
                     RepoId = "glannuzel/test_torso_cam",
+                    // TaskDescription = recordingParams.TaskDescription,
                     TaskDescription = "Grab a white box and put in ReachyMini black box",
                     NbEpisodesGoal = recordingParams.NbEpisodesGoal,
                     EpisodeTimeS = recordingParams.EpisodeDuration,
                     ResetTimeS = recordingParams.BreakTimeDuration,
-                    Fps = 15,
-                    // UseVideos = true,
+                    Fps = recordingParams.RecordFrequency,
+                    // UseVideos = recordingParams.UseVideos,
                     Resume=!recordingParams.IsNewDataset,
                     // Offline=!recordingParams.IsDatasetOnline,
                 };

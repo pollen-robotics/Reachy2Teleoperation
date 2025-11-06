@@ -8,6 +8,7 @@ namespace DataAcquisition
     public class SessionType : Singleton<SessionType>
     {
         public UnityEvent event_onDataAcquisitionSessionSelected;
+        public UnityEvent event_onDataAcquisitionSessionLaunched;
         public UnityEvent event_onBasicControlSessionSelected;
 
         public void SelectDataAcquisitionSession()
@@ -20,6 +21,11 @@ namespace DataAcquisition
         {
             event_onBasicControlSessionSelected.Invoke();
             TeleopReachy.EventManager.StartListening(TeleopReachy.EventNames.TeleoperationSceneLoaded, SetupBasicMenus);
+        }
+
+        public void LaunchDataAcquisitionSession()
+        {
+            event_onDataAcquisitionSessionLaunched.Invoke();
         }
 
         void SetupDataAcquisitionMenus()

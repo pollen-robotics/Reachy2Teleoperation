@@ -17,16 +17,28 @@ namespace DataAcquisition
 
         [Header("Session Parameters")]
         public TMP_InputField nbEpisodesGoalField;
+        public TMP_InputField recordFrequencyField;
 
-        public TMP_InputField breakTimeDurationHHField;
         public TMP_InputField breakTimeDurationMMField;
         public TMP_InputField breakTimeDurationSSField;
 
-        public TMP_InputField episodeDurationHHField;
         public TMP_InputField episodeDurationMMField;
         public TMP_InputField episodeDurationSSField;
 
         public TMP_InputField startDelayField;
+
+        [Header("Recorded Parts")]
+        public Toggle lArmRecorded;
+        public Toggle rArmRecorded;
+        public Toggle neckRecorded;
+        public Toggle antennasRecorded;
+        public Toggle mobileBaseRecorded;
+    
+        [Header("Recorded Cameras")]
+        public Toggle lTeleopCamRecorded;
+        public Toggle rTeleopCamRecorded;
+        public Toggle torsoCamRecorded;
+        public Toggle useVideos;
 
         public bool isNewDataset;
 
@@ -64,20 +76,68 @@ namespace DataAcquisition
             return Int32.Parse(nbEpisodesGoalField.GetComponent<TMP_InputField>().text);
         }
 
+        public int GetRecordFrequency()
+        {
+            return Int32.Parse(recordFrequencyField.GetComponent<TMP_InputField>().text);
+        }
+
         public int GetBreakTimeDuration()
         {
-            int hours = Int32.Parse(breakTimeDurationHHField.GetComponent<TMP_InputField>().text);
             int minutes = Int32.Parse(breakTimeDurationMMField.GetComponent<TMP_InputField>().text);
             int seconds = Int32.Parse(breakTimeDurationSSField.GetComponent<TMP_InputField>().text);
-            return hours * 3600 + minutes * 60 + seconds;
+            return minutes * 60 + seconds;
         }
 
         public int GetEpisodeDuration()
         {
-            int hours = Int32.Parse(episodeDurationHHField.GetComponent<TMP_InputField>().text);
             int minutes = Int32.Parse(episodeDurationMMField.GetComponent<TMP_InputField>().text);
             int seconds = Int32.Parse(episodeDurationSSField.GetComponent<TMP_InputField>().text);
-            return hours * 3600 + minutes * 60 + seconds;
+            return minutes * 60 + seconds;
+        }
+
+        public bool IsRArmRecorded()
+        {
+            return rArmRecorded.isOn;
+        }
+
+        public bool IsLArmRecorded()
+        {
+            return lArmRecorded.isOn;
+        }
+
+        public bool IsNeckRecorded()
+        {
+            return neckRecorded.isOn;
+        }
+
+        public bool AreAntennasRecorded()
+        {
+            return antennasRecorded.isOn;
+        }
+
+        public bool IsMobileBaseRecorded()
+        {
+            return mobileBaseRecorded.isOn;
+        }
+
+        public bool IsLTeleopCamRecorded()
+        {
+            return lTeleopCamRecorded.isOn;
+        }
+
+        public bool IsRTeleopCamRecorded()
+        {
+            return rTeleopCamRecorded.isOn;
+        }
+
+        public bool IsTorsoCamRecorded()
+        {
+            return torsoCamRecorded.isOn;
+        }
+
+        public bool UseVideos()
+        {
+            return useVideos.isOn;
         }
 
         public int GetStartDelay()

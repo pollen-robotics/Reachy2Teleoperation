@@ -24,5 +24,10 @@ namespace DataAcquisition
         {
             if(SessionType.Instance != null) SessionType.Instance.SelectBasicControlSession();
         }
+
+        public void LaunchDataAcquisitionSession()
+        {
+            if(SessionType.Instance != null) SessionType.Instance.LaunchDataAcquisitionSession();
+        }
     }
 }
