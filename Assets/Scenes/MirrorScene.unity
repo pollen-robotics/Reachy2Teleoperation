@@ -886,6 +886,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1120371467574908001, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_text
+      value: 4/5
+      objectReference: {fileID: 0}
     - target: {fileID: 1126403167757977859, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -1013,6 +1017,10 @@ PrefabInstance:
     - target: {fileID: 1861511057287187033, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1862046717928815830, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_Name
+      value: FooterExistingDataset
       objectReference: {fileID: 0}
     - target: {fileID: 1880444557677536459, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
@@ -1450,6 +1458,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 4029773362673165928, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_text
+      value: 1/5
+      objectReference: {fileID: 0}
     - target: {fileID: 4072553115578545834, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -1670,6 +1682,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5003850946791434058, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_text
+      value: 3/5
+      objectReference: {fileID: 0}
     - target: {fileID: 5010727112523252101, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -1781,6 +1797,10 @@ PrefabInstance:
     - target: {fileID: 5147403521985338295, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218800054335423914, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_Name
+      value: FooterExistingDataset
       objectReference: {fileID: 0}
     - target: {fileID: 5226655881970197091, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
@@ -1986,6 +2006,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 6318748712270199343, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_text
+      value: 2/5
+      objectReference: {fileID: 0}
     - target: {fileID: 6347789793130602491, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -2081,6 +2105,10 @@ PrefabInstance:
     - target: {fileID: 6937078156196809458, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6965126986898424583, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_Name
+      value: FooterNewDataset
       objectReference: {fileID: 0}
     - target: {fileID: 6979574086040622946, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
@@ -2314,6 +2342,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8493480590774620770, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+      propertyPath: m_Name
+      value: FooterNewDataset
+      objectReference: {fileID: 0}
     - target: {fileID: 8495076208164762597, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
       propertyPath: m_Layer
       value: 9
@@ -2411,7 +2443,9 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8324070105050648216, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
+    - {fileID: 6067037547420193038, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88977acbb1a6ae146a29df83c0c5a7c4, type: 3}

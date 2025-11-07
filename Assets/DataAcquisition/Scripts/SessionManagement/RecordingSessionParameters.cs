@@ -60,6 +60,11 @@ namespace DataAcquisition
             UseVideos = sessionSetup.UseVideos();
         }
 
+        public void SetDatasetType(bool isNewDataset)
+        {
+            IsNewDataset = isNewDataset;
+        }
+
         public void UpdateNbEpisodeGoal(int newNbOfEpisodes)
         {
             NbEpisodesGoal += newNbOfEpisodes;

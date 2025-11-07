@@ -1,12 +1,15 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace DataAcquisition
 {
     public class DataAcquisitionScenesManager : Singleton<DataAcquisitionScenesManager>
     {
+        public UnityEvent event_DataAcquisitionSceneLoaded;
+
         void Start()
         {
             SessionType.Instance.event_onDataAcquisitionSessionLaunched.AddListener(LoadDataAcquisitionScene);
@@ -17,7 +20,14 @@ namespace DataAcquisition
 
         public void LoadDataAcquisitionScene()
         {
-            SceneManager.LoadSceneAsync("DataAcquisitionScene", LoadSceneMode.Additive);
+            StartCoroutine(LoadDataAcquisitionSceneCoroutine());
+        }
+
+        IEnumerator LoadDataAcquisitionSceneCoroutine()
+        {
+            SceneManager.LoadScene("DataAcquisitionScene", LoadSceneMode.Additive);
+            yield return null;
+            event_DataAcquisitionSceneLoaded.Invoke();
         }
 
         private void UnloadDataAcquisitionScene()

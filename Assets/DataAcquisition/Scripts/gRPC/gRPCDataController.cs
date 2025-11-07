@@ -22,7 +22,6 @@ namespace DataAcquisition
         {
             recordingParams = DataAcquisitionManager.Instance.RecordingSessionParameters;
 
-            Debug.LogError("Data controller grpc setup");
             InitCustomChannel(DataAcquisitionServer.Instance.GetServerIpAddress(), DataAcquisitionServer.Instance.GetServerDataPort());
             if (channel != null)
             {
@@ -90,7 +89,7 @@ namespace DataAcquisition
             }
             catch (RpcException e)
             {
-                Debug.LogWarning("Communication RPC failed: in StartSession():" + e);
+                Debug.LogError("Communication RPC failed: in StartSession():" + e);
                 rpcException = "Error in StartSession():\n" + e.ToString();
                 return new ActionAck { SuccessAck=false };
             }
@@ -98,15 +97,17 @@ namespace DataAcquisition
 
         public async Task<DatasetList> GetDatasetList()
         {
+            Debug.LogError("[gRPCDataController] GetDatasetList");
             try
             {
                 DatasetList datasetList = await client.GetDatasetListAsync(new DatasetRoot {});
+                print("datasetList: " + datasetList);
                 return datasetList;
             }
             catch (RpcException e)
             {
-                Debug.LogWarning("Communication RPC failed: in StopSession():" + e);
-                rpcException = "Error in StopSession():\n" + e.ToString();
+                Debug.LogError("Communication RPC failed: in GetDatasetList():" + e);
+                rpcException = "Error in GetDatasetList():\n" + e.ToString();
                 return null;
             }
         }
