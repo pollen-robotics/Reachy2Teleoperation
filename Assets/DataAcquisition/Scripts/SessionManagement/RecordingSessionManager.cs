@@ -58,6 +58,8 @@ namespace DataAcquisition
             rightPrimaryButtonPreviouslyPressed = true;
             rightSecondaryButtonPreviouslyPressed = true;
 
+            TeleopReachy.TeleoperationManager.Instance.CustomSuspensionImplemented = true;
+
             EventManager.StartListening(TeleopReachy.EventNames.OnStartArmTeleoperation, StartRecordingCycle);
             EventManager.StartListening(EventNames.HeadsetRemoved, HeadsetRemoved);
             EventManager.StartListening(EventNames.OnEmergencyStop, EmergencyStopActivated);
