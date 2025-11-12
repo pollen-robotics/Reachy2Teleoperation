@@ -7338,7 +7338,7 @@ MonoBehaviour:
   - {fileID: 5162864794670090975}
   - {fileID: 462191036964989510}
   - {fileID: 5271240775139757303}
-  advancedSettings: {fileID: 6559676053155259082}
+  panels: []
 --- !u!1 &3404387307638025693
 GameObject:
   m_ObjectHideFlags: 0
@@ -9640,13 +9640,21 @@ MonoBehaviour:
   existingDatasetList: {fileID: 4575502574394731214}
   taskDescriptionField: {fileID: 5403712182269090064}
   nbEpisodesGoalField: {fileID: 1007297726685466668}
-  breakTimeDurationHHField: {fileID: 4004716419222701324}
+  recordFrequencyField: {fileID: 0}
   breakTimeDurationMMField: {fileID: 5524611478444422704}
   breakTimeDurationSSField: {fileID: 7043428423074418098}
-  episodeDurationHHField: {fileID: 322572435550750073}
   episodeDurationMMField: {fileID: 2133563897440751561}
   episodeDurationSSField: {fileID: 657406141482665904}
   startDelayField: {fileID: 6848921582773168042}
+  lArmRecorded: {fileID: 0}
+  rArmRecorded: {fileID: 0}
+  neckRecorded: {fileID: 0}
+  antennasRecorded: {fileID: 0}
+  mobileBaseRecorded: {fileID: 0}
+  lTeleopCamRecorded: {fileID: 0}
+  rTeleopCamRecorded: {fileID: 0}
+  torsoCamRecorded: {fileID: 0}
+  useVideos: {fileID: 0}
   isNewDataset: 0
 --- !u!1 &4656229608234771578
 GameObject:
@@ -16378,6 +16386,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datasetItemPrefab: {fileID: 3655655613865160003, guid: 614c0d1fd89952e418fc8d3ee6a58ed0, type: 3}
   contentParent: {fileID: 5085676387457609698}
+  continueButton: {fileID: 0}
+  invalidAddress: {fileID: 0}
 --- !u!1 &7920259705060005108
 GameObject:
   m_ObjectHideFlags: 0
