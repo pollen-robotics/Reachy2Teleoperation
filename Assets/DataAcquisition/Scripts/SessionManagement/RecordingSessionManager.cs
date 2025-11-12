@@ -248,16 +248,32 @@ namespace DataAcquisition
             skipRequested = false;
             endRequested = false;
 
-            while (elapsed < duration && !skipRequested)
+            if (duration != 0)
             {
-                if (!suspendTime) elapsed += Time.deltaTime;
-                if (phase == Phase.BreakTime && endRequested)
+                while (elapsed < duration && !skipRequested)
                 {
-                    SuspendCurrentPhase();
-                    OpenPanelByName("PushSessionDataPanel");
+                    if (!suspendTime) elapsed += Time.deltaTime;
+                    if (phase == Phase.BreakTime && endRequested)
+                    {
+                        SuspendCurrentPhase();
+                        OpenPanelByName("PushSessionDataPanel");
+                    }
+                    yield return null;
                 }
-                yield return null;
             }
+            else
+            {
+                while (!skipRequested)
+                {
+                    if (phase == Phase.BreakTime && endRequested)
+                    {
+                        SuspendCurrentPhase();
+                        OpenPanelByName("PushSessionDataPanel");
+                    }
+                    yield return null;
+                }
+            }
+            
             while (saveEpisodeCoroutine != null)
             {
                 yield return null;

@@ -23,6 +23,9 @@ namespace DataAcquisition
             recordingParams = DataAcquisitionManager.Instance.RecordingSessionParameters;
 
             InitCustomChannel(DataAcquisitionServer.Instance.GetServerIpAddress(), DataAcquisitionServer.Instance.GetServerDataPort());
+            PlayerPrefs.SetString("server_ip", DataAcquisitionServer.Instance.GetServerIpAddress());
+            PlayerPrefs.SetString("server_data_port", DataAcquisitionServer.Instance.GetServerDataPort());
+
             if (channel != null)
             {
                 client = new DataAcquisitionService.DataAcquisitionServiceClient(channel);
@@ -71,10 +74,10 @@ namespace DataAcquisition
                 {
                     Robot = reachy2,
                     Teleoperator = reachy2_teleop,
-                    // RepoId = recordingParams.DatasetName,
-                    RepoId = "glannuzel/test_torso_cam",
-                    // TaskDescription = recordingParams.TaskDescription,
-                    TaskDescription = "Grab a white box and put in ReachyMini black box",
+                    RepoId = recordingParams.DatasetName,
+                    // RepoId = "glannuzel/test_torso_cam",
+                    TaskDescription = recordingParams.TaskDescription,
+                    // TaskDescription = "Grab a white box and put in ReachyMini black box",
                     NbEpisodesGoal = recordingParams.NbEpisodesGoal,
                     EpisodeTimeS = recordingParams.EpisodeDuration,
                     ResetTimeS = recordingParams.BreakTimeDuration,

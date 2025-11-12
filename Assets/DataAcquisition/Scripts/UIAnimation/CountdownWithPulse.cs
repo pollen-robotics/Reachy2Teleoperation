@@ -74,8 +74,12 @@ namespace DataAcquisition
                 }
                 else
                 {
-                    isCounting = false;
-                    if (countdownText != null)  countdownText.text = "Go";
+                    if (startingCount != 0) isCounting = false;
+                    if (countdownText != null)
+                    {
+                        if (startingCount != 0) countdownText.text = "Go";
+                        else countdownText.text = "∞";
+                    }
                 }
             }
 
@@ -92,7 +96,11 @@ namespace DataAcquisition
 
         void UpdateCountdownText()
         {
-            if (countdownText != null) countdownText.text = currentCount.ToString();
+            if (countdownText != null) 
+            {
+                if (startingCount != 0) countdownText.text = currentCount.ToString();
+                else countdownText.text = "∞";
+            }
         }
 
         void PulseImage()
