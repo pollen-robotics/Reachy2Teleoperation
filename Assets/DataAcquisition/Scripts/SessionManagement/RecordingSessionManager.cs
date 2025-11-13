@@ -14,6 +14,7 @@ namespace DataAcquisition
     public class RecordingSessionManager : PagesManager
     {
         private int currentEpisode = 0;
+        private bool skipAllowed = true;
         private bool skipRequested = false;
         private bool endRequested = false;
 
@@ -128,7 +129,6 @@ namespace DataAcquisition
                     if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
                     {
                         GetPanelByName("HeadsetRemovedPanel").GetComponent<OrderedPagesManager>().NextPage();
-                        Debug.LogError("Coucou");
                         EventManager.TriggerEvent(EventNames.OnFixUserOrigin);
                         UserTrackerManager.Instance.ShowXAxis(true);
                         currentPhase = Phase.HeadsetRemovedStep2;
@@ -147,7 +147,6 @@ namespace DataAcquisition
                         int layerUI = LayerMask.NameToLayer("UI");
                         currentOpenPage.parent.switchLayer(layerUI);
                         ResumeCurrentPhase();
-                        Debug.LogError("Hello");
                     }
                     rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
                 }
@@ -156,6 +155,8 @@ namespace DataAcquisition
             if (episodeSaved)
             {
                 episodeSaved = false;
+                skipAllowed = true;
+                Debug.LogError("Skip Allowed set to true");
                 saveEpisodeCoroutine = null;
                 event_OnEpisodeSaved.Invoke();
             }
@@ -230,7 +231,12 @@ namespace DataAcquisition
                 TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.ShowXRay);
                 Task stopEpisodeTask = DataAcquisitionManager.Instance.DataController.StopEpisode();
                 yield return new WaitUntil(() => stopEpisodeTask.IsCompleted);
-                if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                if (SaveEpisode) 
+                {
+                    skipAllowed = false;
+                    Debug.LogError("Skip Allowed set to false");
+                    saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                }
                 while (saveEpisodeCoroutine != null)
                 {
                     yield return null;
@@ -271,7 +277,11 @@ namespace DataAcquisition
                 }
                 else if (phase == Phase.BreakTime)
                 {
-                    if (SaveEpisode) saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                    if (SaveEpisode) 
+                    {
+                        skipAllowed = false;
+                        saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
+                    }
                 }
             }
             while (false);
@@ -400,7 +410,8 @@ namespace DataAcquisition
 
         public void RequestSkip()
         {
-            skipRequested = true;
+            Debug.LogError("skipAllowed: " + skipAllowed);
+            if (skipAllowed) skipRequested = true;
         }
 
         public void LeaveTeleoperationScene()
