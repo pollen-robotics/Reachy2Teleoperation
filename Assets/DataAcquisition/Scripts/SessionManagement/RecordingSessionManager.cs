@@ -45,10 +45,16 @@ namespace DataAcquisition
         public bool SaveEpisode { get; private set; }
 
         private Phase currentPhase = Phase.None;
+        private HeadsetRemovedStep currentHeadsetRemovedStep = HeadsetRemovedStep.None;
 
         protected enum Phase
         {
-            EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, HeadsetRemovedStep1, HeadsetRemovedStep2, None
+            EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, None
+        }
+
+        protected enum HeadsetRemovedStep
+        {
+            Step1, Step2, None
         }
 
         void Start()
@@ -123,7 +129,7 @@ namespace DataAcquisition
             }
             else
             {
-                if (currentPhase == Phase.HeadsetRemovedStep1)
+                if (currentHeadsetRemovedStep == HeadsetRemovedStep.Step1)
                 {
                     bool rightPrimaryButtonPressed = false;
                     if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
@@ -131,11 +137,11 @@ namespace DataAcquisition
                         GetPanelByName("HeadsetRemovedPanel").GetComponent<OrderedPagesManager>().NextPage();
                         EventManager.TriggerEvent(EventNames.OnFixUserOrigin);
                         UserTrackerManager.Instance.ShowXAxis(true);
-                        currentPhase = Phase.HeadsetRemovedStep2;
+                        currentHeadsetRemovedStep = HeadsetRemovedStep.Step2;
                     }
                     rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
                 }
-                if (currentPhase == Phase.HeadsetRemovedStep2)
+                if (currentHeadsetRemovedStep == HeadsetRemovedStep.Step2)
                 {
                     bool rightPrimaryButtonPressed = false;
                     if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
@@ -143,7 +149,7 @@ namespace DataAcquisition
                         UserTrackerManager.Instance.ShowXAxis(false);
                         GetPanelByName("HeadsetRemovedPanel").GetComponent<OrderedPagesManager>().NextPage();
                         ClosePanelByName("HeadsetRemovedPanel");
-                        currentPhase = Phase.BreakTime;
+                        currentHeadsetRemovedStep = HeadsetRemovedStep.None;
                         int layerUI = LayerMask.NameToLayer("UI");
                         currentOpenPage.parent.switchLayer(layerUI);
                         ResumeCurrentPhase();
@@ -430,7 +436,7 @@ namespace DataAcquisition
                     OpenPanelByName("HeadsetRemovedPanel");
                     int layerNotVisible = LayerMask.NameToLayer("NotVisible");
                     currentOpenPage.parent.switchLayer(layerNotVisible);
-                    currentPhase = Phase.HeadsetRemovedStep1;
+                    currentHeadsetRemovedStep = HeadsetRemovedStep.Step1;
                     break;
                 case Phase.EpisodeSaving:
                     SuspendCurrentPhase();
