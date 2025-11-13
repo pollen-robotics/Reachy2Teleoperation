@@ -72,6 +72,18 @@ public class PagesManager : MonoBehaviour
         }
     }
 
+    public GameObject GetPanelByName(string name)
+    {
+        foreach (var panel in panels)
+        {
+            if (panel != null && panel.name == name)
+            {
+                return panel.gameObject;
+            }
+        }
+        return null;
+    }
+
     public void ClosePanelByName(string name)
     {
         foreach (var panel in panels)

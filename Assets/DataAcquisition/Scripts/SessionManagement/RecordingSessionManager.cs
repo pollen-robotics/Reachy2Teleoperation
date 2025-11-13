@@ -47,7 +47,7 @@ namespace DataAcquisition
 
         protected enum Phase
         {
-            EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, None
+            EpisodeRecording, BreakTime, EpisodeStartDelay, EpisodeSaving, HeadsetRemovedStep1, HeadsetRemovedStep2, None
         }
 
         void Start()
@@ -120,6 +120,38 @@ namespace DataAcquisition
                 rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
                 rightSecondaryButtonPreviouslyPressed = rightSecondaryButtonPressed;
             }
+            else
+            {
+                if (currentPhase == Phase.HeadsetRemovedStep1)
+                {
+                    bool rightPrimaryButtonPressed = false;
+                    if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
+                    {
+                        GetPanelByName("HeadsetRemovedPanel").GetComponent<OrderedPagesManager>().NextPage();
+                        Debug.LogError("Coucou");
+                        EventManager.TriggerEvent(EventNames.OnFixUserOrigin);
+                        UserTrackerManager.Instance.ShowXAxis(true);
+                        currentPhase = Phase.HeadsetRemovedStep2;
+                    }
+                    rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
+                }
+                if (currentPhase == Phase.HeadsetRemovedStep2)
+                {
+                    bool rightPrimaryButtonPressed = false;
+                    if (controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed) && rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
+                    {
+                        UserTrackerManager.Instance.ShowXAxis(false);
+                        GetPanelByName("HeadsetRemovedPanel").GetComponent<OrderedPagesManager>().NextPage();
+                        ClosePanelByName("HeadsetRemovedPanel");
+                        currentPhase = Phase.BreakTime;
+                        int layerUI = LayerMask.NameToLayer("UI");
+                        currentOpenPage.parent.switchLayer(layerUI);
+                        ResumeCurrentPhase();
+                        Debug.LogError("Hello");
+                    }
+                    rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
+                }
+            }
 
             if (episodeSaved)
             {
@@ -181,7 +213,7 @@ namespace DataAcquisition
                     "RecordingStart",
                     startDelay
                     );
-                yield return RunPhase(Phase.EpisodeRecording, "RecordingTimer", RecordingSessionParameters.Instance.EpisodeDuration); // hide all during episode
+                yield return RunPhase(Phase.EpisodeRecording, "RecordingTimer", RecordingSessionParameters.Instance.EpisodeDuration);
                 FirstCycle = false;
 
                 yield return RunPhase(Phase.EpisodeSaving, "SaveEpisode", 5.0f);
@@ -387,6 +419,10 @@ namespace DataAcquisition
             {
                 case Phase.BreakTime:
                     SuspendCurrentPhase();
+                    OpenPanelByName("HeadsetRemovedPanel");
+                    int layerNotVisible = LayerMask.NameToLayer("NotVisible");
+                    currentOpenPage.parent.switchLayer(layerNotVisible);
+                    currentPhase = Phase.HeadsetRemovedStep1;
                     break;
                 case Phase.EpisodeSaving:
                     SuspendCurrentPhase();

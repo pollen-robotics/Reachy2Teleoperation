@@ -7,6 +7,7 @@ namespace TeleopReachy
     {
         public HandsTracker HandsTracker { get; private set; }
         public HeadTracker HeadTracker { get; private set; }
+        public Transform XAxis { get; private set; }
 
         [SerializeField]
         private Transform headset;
@@ -15,6 +16,7 @@ namespace TeleopReachy
         {
             HeadTracker = transform.GetChild(0).GetComponent<HeadTracker>();
             HandsTracker = transform.GetChild(1).GetComponent<HandsTracker>();
+            XAxis = transform.GetChild(3);
         }
 
         protected void Start()
@@ -34,6 +36,11 @@ namespace TeleopReachy
             // Origin of the coordinate system is placed 15cm under the headset y position
             Vector3 headPosition = headset.position - headset.forward * 0.1f;
             transform.position = new Vector3(headPosition.x, headPosition.y - UserSize.Instance.UserShoulderHeadDistance, headPosition.z);
+        }
+
+        public void ShowXAxis(bool activate)
+        {
+            XAxis.ActivateChildren(activate);
         }
     }
 }

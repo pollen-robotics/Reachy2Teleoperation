@@ -30,4 +30,17 @@ namespace TeleopReachy
             }
         }
     }
+
+    public static class ChangeLayer
+    {
+        // Activate of deactivate all children of a gameObject (but not the gameObject)
+        public static void switchLayer(this Transform t, int layer)
+        {
+            foreach (Transform child in t)
+            {
+                switchLayer(child, layer);
+            }
+            t.gameObject.layer = layer;
+        }
+    }
 }

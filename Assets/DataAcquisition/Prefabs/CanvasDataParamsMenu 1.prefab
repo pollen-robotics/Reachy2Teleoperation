@@ -4939,6 +4939,7 @@ GameObject:
   - component: {fileID: 5107001264527791044}
   - component: {fileID: 4109622427649009349}
   - component: {fileID: 4264630958552670097}
+  - component: {fileID: 3301904877030682580}
   m_Layer: 5
   m_Name: EpisodeDurationMMInputField
   m_TagString: Untagged
@@ -5114,6 +5115,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0322b2e3d8be2724cb989e9c4c48ddd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3301904877030682580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486385290712978292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b16a7cb5e0499469a7ba16b2741c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultValue: 05
 --- !u!1 &1500512215734278006
 GameObject:
   m_ObjectHideFlags: 0
@@ -19475,6 +19489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1491653780347615890}
   - component: {fileID: 6294496364338935216}
+  - component: {fileID: 5338979174902664826}
   m_Layer: 5
   m_Name: SetMaximumResetToggle
   m_TagString: Untagged
@@ -19551,6 +19566,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &5338979174902664826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096667927499040161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ca3f99ecac46f49933deb39839013e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputFields:
+  - {fileID: 190053013532177256}
+  - {fileID: 1765990218434757684}
 --- !u!1 &5147403521985338295
 GameObject:
   m_ObjectHideFlags: 0
@@ -23191,6 +23221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1805613148190407826}
   - component: {fileID: 6861452932345802289}
+  - component: {fileID: 8548560538141981054}
   m_Layer: 5
   m_Name: SetMaximumDurationToggle
   m_TagString: Untagged
@@ -23267,6 +23298,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!114 &8548560538141981054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106319725958749934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2ca3f99ecac46f49933deb39839013e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputFields:
+  - {fileID: 4109622427649009349}
+  - {fileID: 1179992618406483999}
 --- !u!1 &6170395614975094959
 GameObject:
   m_ObjectHideFlags: 0
