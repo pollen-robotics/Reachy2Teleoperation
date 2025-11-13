@@ -156,7 +156,6 @@ namespace DataAcquisition
             {
                 episodeSaved = false;
                 skipAllowed = true;
-                Debug.LogError("Skip Allowed set to true");
                 saveEpisodeCoroutine = null;
                 event_OnEpisodeSaved.Invoke();
             }
@@ -234,7 +233,6 @@ namespace DataAcquisition
                 if (SaveEpisode) 
                 {
                     skipAllowed = false;
-                    Debug.LogError("Skip Allowed set to false");
                     saveEpisodeCoroutine = StartCoroutine(DelayedSaveEpisode());
                 }
                 while (saveEpisodeCoroutine != null)
@@ -410,7 +408,6 @@ namespace DataAcquisition
 
         public void RequestSkip()
         {
-            Debug.LogError("skipAllowed: " + skipAllowed);
             if (skipAllowed) skipRequested = true;
         }
 
