@@ -16,7 +16,7 @@ namespace DataAcquisition
 
         private void ConfigurationOver(bool success)
         {
-            if (success) NextPage();
+            if (success) OpenPageByIndex(5);
         }
     }
 }
