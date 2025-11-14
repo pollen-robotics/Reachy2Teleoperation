@@ -16,6 +16,7 @@ namespace TeleopReachy
         private string explanation_str;
 
         private bool needUpdate;
+        private bool startCoroutine;
 
         private RobotConfig robotConfig;
 
@@ -24,6 +25,8 @@ namespace TeleopReachy
         void Start()
         {
             needUpdate = false;
+            startCoroutine = false;
+
             robotConfig = RobotDataManager.Instance.RobotConfig;
             connectionStatus = ConnectionStatus.Instance;
 
@@ -40,6 +43,11 @@ namespace TeleopReachy
                 resolution.text = resolution_str;
                 needUpdate = false;
             }
+            if (startCoroutine)
+            {
+                startCoroutine = false;
+                StartCoroutine(WaitToCheckChannelStatus(2));
+            }
         }
 
         public void CheckCompatibility()
@@ -48,7 +56,7 @@ namespace TeleopReachy
             {
                 explanation_str = "The teleoperation app is sending data on new channels that the robot doesn't recognize.";
                 resolution_str = "Please update your robot webrtc service (or download an older version of the teleoperation app).";
-                StartCoroutine(WaitToCheckChannelStatus(2));
+                startCoroutine = true;
             }
 
             if (robotConfig.GotReachyConfig())
