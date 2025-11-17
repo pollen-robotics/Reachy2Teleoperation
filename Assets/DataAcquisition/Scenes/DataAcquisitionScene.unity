@@ -1624,6 +1624,10 @@ PrefabInstance:
       value: DataAcquisitionManager1
       objectReference: {fileID: 0}
     - target: {fileID: 1658877045371822277, guid: 4c874ab04ceb46c40a7f44587090bcdc, type: 3}
+      propertyPath: failButton
+      value: 
+      objectReference: {fileID: 2100536297}
+    - target: {fileID: 1658877045371822277, guid: 4c874ab04ceb46c40a7f44587090bcdc, type: 3}
       propertyPath: pages.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -3206,6 +3210,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6557421579372629792, guid: 26e1c251e55420c40aaff33f5007a429, type: 3}
   m_PrefabInstance: {fileID: 1980165984}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2100536297 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 325322078411969152, guid: 26e1c251e55420c40aaff33f5007a429, type: 3}
+  m_PrefabInstance: {fileID: 1980165984}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1484295339661875749 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1438590895713635004, guid: 959bf6a07b56d2142887061c6c52a3a3, type: 3}

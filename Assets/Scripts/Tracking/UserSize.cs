@@ -11,7 +11,7 @@ namespace TeleopReachy
 
         protected override void Init()
         {
-            UserShoulderHeadDistance = 0.15f;
+            UserShoulderHeadDistance = 0.2f;
         }
 
         public void UpdateUserSize(float userSize)
