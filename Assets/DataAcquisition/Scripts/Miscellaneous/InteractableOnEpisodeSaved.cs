@@ -16,7 +16,8 @@ namespace DataAcquisition
 
         void OnEnable()
         {
-            GetComponent<Button>().interactable = false;
+            if (DataAcquisitionManager.Instance.RecordingSessionManager.SaveEpisode) GetComponent<Button>().interactable = false;
+            else GetComponent<Button>().interactable = true;
         }
 
         void SkipBreakPossible()
