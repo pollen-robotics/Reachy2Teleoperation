@@ -17,6 +17,7 @@ namespace DataAcquisition
         private bool skipAllowed = true;
         private bool skipRequested = false;
         private bool endRequested = false;
+        private bool earlyEndAlreadyAsked = false;
 
         private bool suspendTime = false;
         private bool pushSession = true;
@@ -312,8 +313,7 @@ namespace DataAcquisition
                     if (!suspendTime) elapsed += Time.deltaTime;
                     if (phase == Phase.BreakTime && endRequested)
                     {
-                        SuspendCurrentPhase();
-                        OpenPanelByName("PushSessionDataPanel");
+                        EarlyEndSession();
                     }
                     yield return null;
                 }
@@ -324,8 +324,7 @@ namespace DataAcquisition
                 {
                     if (phase == Phase.BreakTime && endRequested)
                     {
-                        SuspendCurrentPhase();
-                        OpenPanelByName("PushSessionDataPanel");
+                        EarlyEndSession();
                     }
                     yield return null;
                 }
@@ -349,6 +348,16 @@ namespace DataAcquisition
             }
         }
 
+        private void EarlyEndSession()
+        {
+            if (!earlyEndAlreadyAsked)
+            {
+                earlyEndAlreadyAsked = true;
+                SuspendCurrentPhase();
+                OpenPanelByName("PushSessionDataPanel");
+            }
+        }
+
         public void SuspendCurrentPhase()
         {
             suspendTime = true;
@@ -359,6 +368,7 @@ namespace DataAcquisition
         {
             suspendTime = false;
             endRequested = false;
+            earlyEndAlreadyAsked = false;
             if (currentOpenPage.GetComponentInChildren<CountdownWithPulse>() != null) currentOpenPage.GetComponentInChildren<CountdownWithPulse>().ResumeCountdown();
         }
 
