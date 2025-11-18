@@ -4559,6 +4559,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3901576277294917373}
+  - component: {fileID: 2665183412093491638}
   m_Layer: 5
   m_Name: AfterPush
   m_TagString: Untagged
@@ -4590,6 +4591,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2665183412093491638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256676550335145364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a51d7298300ec4c91dd228d0dcc0ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushDatasetText: {fileID: 2889816785833237566}
+  noPushDatasetText: {fileID: 6889201792550186861}
 --- !u!1 &2305080698211145226
 GameObject:
   m_ObjectHideFlags: 0
@@ -5804,7 +5819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<numEpisode> episodes have been saved. \nCongrats!"
+  m_text: "<numEpisode> episodes have been saved in <datasetName> . \nCongrats!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
