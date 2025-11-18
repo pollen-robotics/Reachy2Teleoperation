@@ -2140,10 +2140,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2565905234204239214, guid: 26e1c251e55420c40aaff33f5007a429, type: 3}
-      propertyPath: m_text
-      value: "<numEpisode> episodes have been saved for <datasetName>. \nCongrats!"
-      objectReference: {fileID: 0}
     - target: {fileID: 2597491385426251213, guid: 26e1c251e55420c40aaff33f5007a429, type: 3}
       propertyPath: m_Layer
       value: 5
