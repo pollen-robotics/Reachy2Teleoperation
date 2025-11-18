@@ -23,15 +23,8 @@ namespace DataAcquisition
 
         private void IndicateConsolidationIsOver(bool state)
         {
-            NextPage();
-            StartCoroutine(PrepareNextPage());
-        }
-
-        IEnumerator PrepareNextPage()
-        {
-            yield return new WaitForSeconds(1.0f);
-            if (sessionManager.pushRequested) NextPage();
-            else sessionManager.ClosePanelByName("PushSessionDataPanel");
+            if (sessionManager.pushRequested) NextPage(); 
+            else OpenPanelByName("AfterPush");
         }
     }
 }
