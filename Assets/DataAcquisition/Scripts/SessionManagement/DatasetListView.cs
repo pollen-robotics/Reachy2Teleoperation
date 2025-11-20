@@ -61,10 +61,17 @@ namespace DataAcquisition
                     GameObject item = Instantiate(datasetItemPrefab, contentParent);
 
                     // Set the button text
-                    var text = item.GetComponentInChildren<TMP_Text>();
+                    var text = item.transform.GetChild(0).GetComponent<TMP_Text>();
                     if (text != null)
                     {
                         text.text = dataset.DatasetName;
+                    }
+
+                    // Set the nbEpisodes text
+                    var nbEpisodes = item.transform.GetChild(1).GetComponent<TMP_Text>();
+                    if (nbEpisodes != null)
+                    {
+                        nbEpisodes.text = dataset.NbEpisodes + " episodes";
                     }
 
                     // Add a listener to the button
