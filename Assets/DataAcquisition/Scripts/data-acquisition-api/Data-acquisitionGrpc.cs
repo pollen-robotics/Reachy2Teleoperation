@@ -59,6 +59,8 @@ namespace Data.Acquisition {
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Data.Acquisition.EpisodeRating> __Marshaller_data_acquisition_EpisodeRating = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.EpisodeRating.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Data.Acquisition.Error> __Marshaller_data_acquisition_Error = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Data.Acquisition.Error.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.DatasetList> __Method_GetDatasetList = new grpc::Method<global::Data.Acquisition.DatasetRoot, global::Data.Acquisition.DatasetList>(
@@ -139,6 +141,14 @@ namespace Data.Acquisition {
         "SaveEpisode",
         __Marshaller_data_acquisition_EpisodeRating,
         __Marshaller_data_acquisition_ActionAck);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.Error> __Method_AuditSession = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.Error>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "AuditSession",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_data_acquisition_Error);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck> __Method_UploadSession = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(
@@ -230,6 +240,12 @@ namespace Data.Acquisition {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.ActionAck> SaveEpisode(global::Data.Acquisition.EpisodeRating request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Data.Acquisition.Error> AuditSession(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -482,6 +498,26 @@ namespace Data.Acquisition {
         return CallInvoker.AsyncUnaryCall(__Method_SaveEpisode, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Data.Acquisition.Error AuditSession(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AuditSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Data.Acquisition.Error AuditSession(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_AuditSession, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.Error> AuditSessionAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AuditSessionAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Data.Acquisition.Error> AuditSessionAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_AuditSession, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::Data.Acquisition.ActionAck UploadSession(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return UploadSession(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -565,6 +601,7 @@ namespace Data.Acquisition {
           .AddMethod(__Method_StartEpisode, serviceImpl.StartEpisode)
           .AddMethod(__Method_StopEpisode, serviceImpl.StopEpisode)
           .AddMethod(__Method_SaveEpisode, serviceImpl.SaveEpisode)
+          .AddMethod(__Method_AuditSession, serviceImpl.AuditSession)
           .AddMethod(__Method_UploadSession, serviceImpl.UploadSession)
           .AddMethod(__Method_RemoveSession, serviceImpl.RemoveSession)
           .AddMethod(__Method_ClearAllSessions, serviceImpl.ClearAllSessions).Build();
@@ -587,6 +624,7 @@ namespace Data.Acquisition {
       serviceBinder.AddMethod(__Method_StartEpisode, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.StartEpisode));
       serviceBinder.AddMethod(__Method_StopEpisode, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.StopEpisode));
       serviceBinder.AddMethod(__Method_SaveEpisode, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.EpisodeRating, global::Data.Acquisition.ActionAck>(serviceImpl.SaveEpisode));
+      serviceBinder.AddMethod(__Method_AuditSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.Error>(serviceImpl.AuditSession));
       serviceBinder.AddMethod(__Method_UploadSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.UploadSession));
       serviceBinder.AddMethod(__Method_RemoveSession, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Data.Acquisition.SessionParams, global::Data.Acquisition.ActionAck>(serviceImpl.RemoveSession));
       serviceBinder.AddMethod(__Method_ClearAllSessions, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Google.Protobuf.WellKnownTypes.Empty, global::Data.Acquisition.ActionAck>(serviceImpl.ClearAllSessions));
