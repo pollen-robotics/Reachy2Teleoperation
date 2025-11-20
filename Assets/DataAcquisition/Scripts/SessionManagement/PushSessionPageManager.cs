@@ -24,7 +24,7 @@ namespace DataAcquisition
         private void IndicateConsolidationIsOver(bool state)
         {
             if (sessionManager.pushRequested) NextPage(); 
-            else OpenPanelByName("AfterPush");
+            else OpenPageByName("AfterPush");
         }
     }
 }

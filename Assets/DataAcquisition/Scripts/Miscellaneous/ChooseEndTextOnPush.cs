@@ -14,8 +14,8 @@ namespace DataAcquisition
 
         void OnEnable()
         {
-            pushDatasetText.ActivateChildren(DataAcquisitionManager.Instance.RecordingSessionManager.pushRequested);
-            noPushDatasetText.ActivateChildren(!DataAcquisitionManager.Instance.RecordingSessionManager.pushRequested);
+            pushDatasetText.GetComponent<TextMeshProUGUI>().enabled = DataAcquisitionManager.Instance.RecordingSessionManager.pushRequested;
+            noPushDatasetText.GetComponent<TextMeshProUGUI>().enabled = !DataAcquisitionManager.Instance.RecordingSessionManager.pushRequested;
         }
     }
 }
