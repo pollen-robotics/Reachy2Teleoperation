@@ -16,6 +16,12 @@ namespace DataAcquisition
             sessionManager.event_OnConsolidationOver.AddListener(IndicateConsolidationIsOver);
         }
 
+        protected void OnEnable()
+        {
+            if (DataAcquisitionManager.Instance.RecordingSessionManager.GetCurrentEpisode() == RecordingSessionParameters.Instance.NbEpisodesGoal) OpenPageByIndex(1);
+            else OpenPageByIndex(0);
+        }
+
         private void IndicatePushIsOver(bool state)
         {
             NextPage();

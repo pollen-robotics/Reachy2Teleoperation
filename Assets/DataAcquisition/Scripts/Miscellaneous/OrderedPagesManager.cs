@@ -5,7 +5,7 @@ public class OrderedPagesManager : PagesManager
 {
     protected virtual void Start()
     {
-        ShowPage(0); // Optionally show the first page on start
+        ShowPage(0);
     }
 
     public void ShowPage(int pageIndex)
