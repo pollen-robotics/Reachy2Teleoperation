@@ -441,6 +441,7 @@ namespace DataAcquisition
         public void LeaveTeleoperationScene()
         {
             TeleopReachy.EventManager.TriggerEvent(TeleopReachy.EventNames.QuitTeleoperationScene);
+            SessionType.Instance.SelectBasicControlSession();
         }
 
         void EmergencyStopActivated()
