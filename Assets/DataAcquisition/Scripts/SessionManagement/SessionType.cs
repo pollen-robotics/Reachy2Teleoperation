@@ -9,6 +9,7 @@ namespace DataAcquisition
     {
         public UnityEvent event_onDataAcquisitionSessionSelected;
         public UnityEvent event_onDataAcquisitionSessionLaunched;
+        public UnityEvent event_onDataAcquisitionSessionAborted;
         public UnityEvent event_onBasicControlSessionSelected;
 
         public void SelectDataAcquisitionSession()
@@ -26,6 +27,11 @@ namespace DataAcquisition
         public void LaunchDataAcquisitionSession()
         {
             event_onDataAcquisitionSessionLaunched.Invoke();
+        }
+
+        public void AbortDataAcquisitionSession()
+        {
+            event_onDataAcquisitionSessionAborted.Invoke();
         }
 
         void SetupDataAcquisitionMenus()
