@@ -45,8 +45,6 @@ namespace DataAcquisition
         public bool FirstCycle { get; private set; }
         public bool SaveEpisode { get; private set; }
 
-        public Button failButton;
-
         private Phase currentPhase = Phase.None;
         private HeadsetRemovedStep currentHeadsetRemovedStep = HeadsetRemovedStep.None;
 
@@ -116,15 +114,6 @@ namespace DataAcquisition
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     endRequested = true;
-                }
-
-                if (currentPhase == Phase.EpisodeSaving)
-                {
-                    Vector2 selectedDirection;
-                    controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out selectedDirection);
-                    float phi = Mathf.Atan2(selectedDirection[1], selectedDirection[0]);
-                    float r = Mathf.Sqrt(Mathf.Pow(selectedDirection[0], 2) + Mathf.Pow(selectedDirection[1], 2));
-                    if (r >= 0.5f && (Mathf.Abs(phi) < (Mathf.PI / 8))) failButton.onClick?.Invoke();
                 }
 
                 // Press A to skip current phase
