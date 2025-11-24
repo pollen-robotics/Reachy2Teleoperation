@@ -47,6 +47,7 @@ namespace DataAcquisition
             if (SessionType.Instance != null)
             {
                 SessionType.Instance.event_onDataAcquisitionSessionSelected.AddListener(delegate{OpenPageByName("IntroPage");});
+                SessionType.Instance.event_onBasicControlSessionSelected.AddListener(delegate{CloseAllPages();});
             }
         }
 

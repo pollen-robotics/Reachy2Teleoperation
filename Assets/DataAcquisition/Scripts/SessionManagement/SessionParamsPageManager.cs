@@ -14,6 +14,11 @@ namespace DataAcquisition
             }
         }
 
+        protected void OnEnable()
+        {
+            OpenPageByIndex(0);
+        }
+
         private void ConfigurationOver(bool success)
         {
             if (success) OpenPageByIndex(5);

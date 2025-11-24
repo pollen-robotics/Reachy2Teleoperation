@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Only if you use TextMeshPro
+using TMPro;
 
 namespace DataAcquisition
 {
