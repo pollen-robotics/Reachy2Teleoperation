@@ -3,38 +3,20 @@ using System.Collections.Generic;
 
 public class OrderedPagesManager : PagesManager
 {
-    protected virtual void Start()
+    protected virtual void OnEnable()
     {
-        ShowPage(0);
-    }
-
-    public void ShowPage(int pageIndex)
-    {
-        if (pageIndex < 0 || pageIndex >= pages.Count)
-        {
-            Debug.LogWarning("Page index out of range: " + pageIndex);
-            return;
-        }
-
-        for (int i = 0; i < pages.Count; i++)
-        {
-            bool shouldBeActive = (i == pageIndex);
-            if (pages[i] != null)
-                pages[i].gameObject.SetActive(shouldBeActive);
-        }
-
-        currentPageIndex = pageIndex;
+        OpenPageByIndex(0);
     }
 
     public void NextPage()
     {
         int nextPage = (currentPageIndex + 1) % pages.Count;
-        ShowPage(nextPage);
+        OpenPageByIndex(nextPage);
     }
 
     public void PreviousPage()
     {
         int prevPage = (currentPageIndex - 1 + pages.Count) % pages.Count;
-        ShowPage(prevPage);
+        OpenPageByIndex(prevPage);
     }
 }

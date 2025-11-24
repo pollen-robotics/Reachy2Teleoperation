@@ -8,15 +8,14 @@ namespace DataAcquisition
     {
         private RecordingSessionManager sessionManager;
 
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
             sessionManager = DataAcquisitionManager.Instance.RecordingSessionManager;
             sessionManager.event_OnPushOver.AddListener(IndicatePushIsOver);
             sessionManager.event_OnConsolidationOver.AddListener(IndicateConsolidationIsOver);
         }
 
-        protected void OnEnable()
+        protected override void OnEnable()
         {
             if (DataAcquisitionManager.Instance.RecordingSessionManager.GetCurrentEpisode() == RecordingSessionParameters.Instance.NbEpisodesGoal) OpenPageByIndex(1);
             else OpenPageByIndex(0);
