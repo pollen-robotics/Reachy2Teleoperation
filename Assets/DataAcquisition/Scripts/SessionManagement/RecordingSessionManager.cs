@@ -224,11 +224,18 @@ namespace DataAcquisition
                 FirstCycle = false;
 
                 yield return RunPhase(Phase.EpisodeSaving, "SaveEpisode", 5.0f);
-                if (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal)
+                if (SaveEpisode)
+                {
+                    if (currentEpisode < RecordingSessionParameters.Instance.NbEpisodesGoal)
+                    {
+                        yield return RunPhase(Phase.BreakTime, "BreakTime", RecordingSessionParameters.Instance.BreakTimeDuration);
+                    }
+                    currentEpisode++;
+                }
+                else
                 {
                     yield return RunPhase(Phase.BreakTime, "BreakTime", RecordingSessionParameters.Instance.BreakTimeDuration);
                 }
-                if (SaveEpisode) currentEpisode++;
             }
             if (!endRequested) currentEpisode--;
             OpenPageByName("GoalCompleted"); // Final panel
