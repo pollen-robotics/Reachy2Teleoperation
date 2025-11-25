@@ -24,5 +24,14 @@ namespace DataAcquisition
         {
             if (isLoading) transform.GetChild(1).Rotate(0, 0, -2.0f);
         }
+
+        void OnDisable()
+        {
+            isLoading = false;
+            transform.GetComponent<Button>().interactable = true;
+            transform.GetChild(0).localPosition = new Vector3(0, 0, 0);
+            transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Access session recording";
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
     }
 }
