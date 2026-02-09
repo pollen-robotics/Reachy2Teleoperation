@@ -104,8 +104,16 @@ namespace TeleopReachy
 
         private void CheckTrackingState()
         {
-            if (armSide == Arm.Left && !ControllersManager.Instance.leftHandDeviceIsTracked) TrackingLost();
-            if (armSide == Arm.Right && !ControllersManager.Instance.rightHandDeviceIsTracked) TrackingLost();
+            if (!RealHandTracking.Instance.IsHandTrackingUsed())
+            {
+                if (armSide == Arm.Left && !ControllersManager.Instance.leftHandDeviceIsTracked) TrackingLost();
+                if (armSide == Arm.Right && !ControllersManager.Instance.rightHandDeviceIsTracked) TrackingLost();
+            }
+            else
+            {
+                if (armSide == Arm.Left && !RealHandTracking.Instance.IsLeftHandTracked) TrackingLost();
+                if (armSide == Arm.Right && !RealHandTracking.Instance.IsRightHandTracked) TrackingLost();
+            }
         }
 
         private void TrackingLost()

@@ -90,8 +90,8 @@ namespace TeleopReachy
                     if (isTracked != rightHandDeviceIsTracked)
                     {
                         rightHandDeviceIsTracked = isTracked;
-                        if (rightHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.RightControllerTrackingRetrieved);
-                        else EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
+                        // if (rightHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.RightControllerTrackingRetrieved);
+                        // else EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
                     }
                 }
                 else
@@ -99,7 +99,7 @@ namespace TeleopReachy
                     if (rightHandDeviceIsTracked)
                     {
                         rightHandDeviceIsTracked = false;
-                        EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
+                        // EventManager.TriggerEvent(EventNames.RightControllerTrackingLost);
                     }
                 }
             }
@@ -109,12 +109,9 @@ namespace TeleopReachy
                 {
                     if (isTracked != leftHandDeviceIsTracked)
                     {
-                        if (isTracked != leftHandDeviceIsTracked)
-                        {
-                            leftHandDeviceIsTracked = isTracked;
-                            if (leftHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.LeftControllerTrackingRetrieved);
-                            else EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
-                        }
+                        leftHandDeviceIsTracked = isTracked;
+                        // if (leftHandDeviceIsTracked) EventManager.TriggerEvent(EventNames.LeftControllerTrackingRetrieved);
+                        // else EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
                     }
                 }
                 else
@@ -122,7 +119,7 @@ namespace TeleopReachy
                     if (leftHandDeviceIsTracked)
                     {
                         leftHandDeviceIsTracked = false;
-                        EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
+                        // EventManager.TriggerEvent(EventNames.LeftControllerTrackingLost);
                     }
                 }
             }

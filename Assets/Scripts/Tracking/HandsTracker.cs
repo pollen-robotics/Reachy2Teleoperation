@@ -36,11 +36,6 @@ namespace TeleopReachy
             device = handDevice;
         }
 
-        public HandController(string side)
-        {
-            InitDevice(side);
-        }
-
         void InitDevice(string side)
         {
             handSide = side;
@@ -68,6 +63,9 @@ namespace TeleopReachy
         public HandController rightHand;
         public HandController leftHand;
 
+        [SerializeField]
+        private RealHandTracking realHandTracking;
+
         public ControllersManager controllers;
 
         void Awake()
@@ -80,8 +78,10 @@ namespace TeleopReachy
 
         void Start()
         {
-            GetTransforms(rightHand);
-            GetTransforms(leftHand);
+            // GetTransforms(rightHand);
+            // GetTransforms(leftHand);
+            GetHandPose(rightHand);
+            GetHandPose(leftHand);
         }
 
         private void UpdateDevices()
@@ -92,11 +92,13 @@ namespace TeleopReachy
 
         void Update()
         {
-            GetTransforms(rightHand);
-            GetTransforms(leftHand);
+            // GetTransforms(rightHand);
+            // GetTransforms(leftHand);
+            GetHandPose(rightHand);
+            GetHandPose(leftHand);
 
-            AdaptativeCloseHand(rightHand);
-            AdaptativeCloseHand(leftHand);
+            // AdaptativeCloseHand(rightHand);
+            // AdaptativeCloseHand(leftHand);
         }
 
         private void GetTransforms(HandController hand)
@@ -128,15 +130,46 @@ namespace TeleopReachy
             };
         }
 
-        private void AdaptativeCloseHand(HandController hand)
+        void GetHandPose(HandController hand)
         {
-            // Get value of how much trigger is pushed
-            float trigger;
-            if (hand.device.isValid)
+            Pose handPose = (hand.handSide == "right") ? realHandTracking.GetRightHandPose() : realHandTracking.GetLeftHandPose();
+
+            // Position
+            Vector3 positionHeadset = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * (handPose.position - transform.parent.position);
+            Vector3 positionReachy = new Vector3(positionHeadset.z, -positionHeadset.x, positionHeadset.y);
+            Vector4 positionVect = new Vector4(positionReachy.x, positionReachy.y, positionReachy.z, 1);
+
+            // Rotation
+            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * handPose.rotation;
+            hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
+
+            // matrice de passage
+            UnityEngine.Matrix4x4 mP = new UnityEngine.Matrix4x4(new Vector4(0, -1, 0, 0),
+                                            new Vector4(0, 0, 1, 0),
+                                            new Vector4(1, 0, 0, 0),
+                                            new Vector4(0, 0, 0, 1));
+            hand.handPose = (mP * hand.handPose) * mP.inverse;
+
+            hand.handPose.SetColumn(3, positionVect);
+
+            hand.target_pos = new Reachy.Kinematics.Matrix4x4
             {
-                hand.device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out trigger);
-                hand.trigger = trigger;
-            }
+                Data = { hand.handPose[0,0], hand.handPose[0,1], hand.handPose[0,2], hand.handPose[0,3],
+                            hand.handPose[1,0], hand.handPose[1,1], hand.handPose[1,2], hand.handPose[1,3],
+                            hand.handPose[2,0], hand.handPose[2,1], hand.handPose[2,2], hand.handPose[2,3],
+                            hand.handPose[3,0], hand.handPose[3,1], hand.handPose[3,2], hand.handPose[3,3] }
+            };
         }
+
+        // private void AdaptativeCloseHand(HandController hand)
+        // {
+        //     // Get value of how much trigger is pushed
+        //     float trigger;
+        //     if (hand.device.isValid)
+        //     {
+        //         hand.device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out trigger);
+        //         hand.trigger = trigger;
+        //     }
+        // }
     }
 }

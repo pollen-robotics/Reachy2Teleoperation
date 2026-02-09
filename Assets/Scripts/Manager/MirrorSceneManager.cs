@@ -36,6 +36,8 @@ namespace TeleopReachy
 
         private ControllersManager controllers;
 
+        private RealHandTracking handTracking;
+
         public float indicatorTimer { get; private set; }
         private const float minIndicatorTimer = 0.0f;
 
@@ -61,6 +63,7 @@ namespace TeleopReachy
             readyButton.onClick.AddListener(ValidateUserOrigin);
 
             controllers = ActiveControllerManager.Instance.ControllersManager;
+            handTracking = RealHandTracking.Instance;
 
             leaveMirrorSceneButton.onClick.AddListener(CheckIfLockedBeforeQuittingScene);
             leaveMirrorSceneButtonRobotLocked.onClick.AddListener(SetRobotCompliantBeforeQuittingScene);
@@ -127,23 +130,54 @@ namespace TeleopReachy
         {
             if (initializationState == InitializationState.ReadyForTeleop)
             {
-                bool rightPrimaryButtonPressed;
-                controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
-
-                if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
+                if (handTracking.IsHandTrackingUsed())
                 {
-                    indicatorTimer += Time.deltaTime;
-                    if (indicatorTimer >= 1.0f)
+                    if (handTracking.IsOkPosePerformed)
                     {
-                        EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
-                        EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
+                        indicatorTimer += Time.deltaTime;
+                        if (indicatorTimer >= 1.0f)
+                        {
+                            EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
+                            EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
+                        }
+                    }
+                    else
+                    {
+                        indicatorTimer = minIndicatorTimer;
                     }
                 }
+
+                // else we use the controllers as usual
                 else
                 {
-                    indicatorTimer = minIndicatorTimer;
+                    bool rightPrimaryButtonPressed;
+                    controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
+
+                    if (rightPrimaryButtonPressed && rightPrimaryButtonPreviouslyPressed)
+                    {
+                        indicatorTimer += Time.deltaTime;
+                        if (indicatorTimer >= 1.0f)
+                        {
+                            handTracking.PoseStopped();
+                            EventManager.TriggerEvent(EventNames.OnInitializeRobotStateRequested);
+                            EventManager.TriggerEvent(EventNames.EnterTeleoperationScene);
+                        }
+                    }
+                    else
+                    {
+                        indicatorTimer = minIndicatorTimer;
+                    }
+                    rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
+                }               
+            }
+
+            if (initializationState == InitializationState.WaitingForUserOriginValidation && handTracking.IsHandTrackingUsed())
+            {
+                if (handTracking.IsOkPosePerformed)
+                {
+                    ValidateUserOrigin();
+                    handTracking.PoseStopped();
                 }
-                rightPrimaryButtonPreviouslyPressed = rightPrimaryButtonPressed;
             }
         }
 
@@ -153,7 +187,6 @@ namespace TeleopReachy
             initializationState = InitializationState.ReadyForTeleop;
             event_OnTeleopInitializationStepChanged.Invoke();
             resetPositionButton.gameObject.SetActive(true);
-
         }
 
         protected void AbortTeleopInitialization()
