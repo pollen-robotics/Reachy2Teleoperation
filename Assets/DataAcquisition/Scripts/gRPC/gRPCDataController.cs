@@ -18,13 +18,13 @@ namespace DataAcquisition
         RecordingSessionParameters recordingParams;
         DataAcquisitionService.DataAcquisitionServiceClient client;
 
+        public UnityEvent event_DataAcquisitionServerConnectionFailed;
+
         void Start()
         {
             recordingParams = DataAcquisitionManager.Instance.RecordingSessionParameters;
 
             InitCustomChannel(DataAcquisitionServer.Instance.GetServerIpAddress(), DataAcquisitionServer.Instance.GetServerDataPort());
-            PlayerPrefs.SetString("server_ip", DataAcquisitionServer.Instance.GetServerIpAddress());
-            PlayerPrefs.SetString("server_data_port", DataAcquisitionServer.Instance.GetServerDataPort());
 
             if (channel != null)
             {
@@ -76,12 +76,13 @@ namespace DataAcquisition
                     Teleoperator = reachy2_teleop,
                     RepoId = recordingParams.DatasetName,
                     // RepoId = "glannuzel/test_torso_cam",
-                    TaskDescription = recordingParams.TaskDescription,
-                    // TaskDescription = "Grab a white box and put in ReachyMini black box",
+                    // TaskDescription = recordingParams.TaskDescription,
+                    TaskDescription = "White box in black container",
                     NbEpisodesGoal = recordingParams.NbEpisodesGoal,
                     EpisodeTimeS = recordingParams.EpisodeDuration,
                     ResetTimeS = recordingParams.BreakTimeDuration,
-                    Fps = recordingParams.RecordFrequency,
+                    // Fps = recordingParams.RecordFrequency,
+                    Fps = 10,
                     // UseVideos = recordingParams.UseVideos,
                     Resume=!recordingParams.IsNewDataset,
                     // Offline=!recordingParams.IsDatasetOnline,
@@ -94,6 +95,7 @@ namespace DataAcquisition
             {
                 Debug.LogError("Communication RPC failed: in StartSession():" + e);
                 rpcException = "Error in StartSession():\n" + e.ToString();
+                event_DataAcquisitionServerConnectionFailed.Invoke();
                 return new ActionAck { SuccessAck=false };
             }
         }
@@ -104,13 +106,14 @@ namespace DataAcquisition
             try
             {
                 DatasetList datasetList = await client.GetDatasetListAsync(new DatasetRoot {});
-                print("datasetList: " + datasetList);
+                Debug.LogError("datasetList: " + datasetList);
                 return datasetList;
             }
             catch (RpcException e)
             {
                 Debug.LogError("Communication RPC failed: in GetDatasetList():" + e);
                 rpcException = "Error in GetDatasetList():\n" + e.ToString();
+                event_DataAcquisitionServerConnectionFailed.Invoke();
                 return null;
             }
         }
@@ -231,6 +234,21 @@ namespace DataAcquisition
                 Debug.LogWarning("Communication RPC failed: in PushDataFromSession():" + e);
                 rpcException = "Error in PushDataFromSession():\n" + e.ToString();
                 return new ActionAck { SuccessAck = false };
+            }
+        }
+
+        public async Task<Data.Acquisition.Error> AuditSession()
+        {
+            try
+            {
+                Data.Acquisition.Error error = await client.AuditSessionAsync(new Google.Protobuf.WellKnownTypes.Empty());
+                return error;
+            }
+            catch (RpcException e)
+            {
+                Debug.LogWarning("Communication RPC failed: in AuditSession():" + e);
+                rpcException = "Error in AuditSession():\n" + e.ToString();
+                return new Data.Acquisition.Error {};
             }
         }
     }

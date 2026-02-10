@@ -13,18 +13,18 @@ namespace DataAcquisition
 
         void Start()
         {
-            serverIpAddress.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString("server_ip", "localhost");
-            serverDataPort.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString("server_data_port", "50062");
+            serverIpAddress.text = PlayerPrefs.GetString("server_ip", "localhost");
+            serverDataPort.text = PlayerPrefs.GetString("server_data_port", "50062");
         }
 
         public string GetServerIpAddress()
         {
-            return serverIpAddress.GetComponent<TMP_InputField>().text;
+            return serverIpAddress.text;
         }
 
         public string GetServerDataPort()
         {
-            return serverDataPort.GetComponent<TMP_InputField>().text;
+            return serverDataPort.text;
         }
     }
 }
