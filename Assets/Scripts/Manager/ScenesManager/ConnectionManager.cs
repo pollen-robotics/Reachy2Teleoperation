@@ -44,6 +44,8 @@ namespace TeleopReachy
         private Robot selectedRobot;
         const float TIMEOUT = 5.0f;
 
+        private RealHandTracking handTracking;
+
         void Start()
         {
             isRobotSelectionMenuOpen = false;
@@ -51,6 +53,8 @@ namespace TeleopReachy
             isDeleteRobotMenuOpen = false;
             isModifyRobotMenuOpen = false;
             isContentInitialized = false;
+
+            handTracking = RealHandTracking.Instance;
 
             has_robot_selected = false;
             //has_robot_available = false;
@@ -66,6 +70,15 @@ namespace TeleopReachy
             GenerateRobotScrollViewContent();
 
             UpdateSelectedRobot();
+        }
+
+        private void Update()
+        {
+            if (handTracking.IsOkPosePerformed)
+            {
+                handTracking.PoseStopped();
+                ConnectToRobot();
+            }
         }
 
         public void ConnectToRobot()

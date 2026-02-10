@@ -13,10 +13,38 @@ MonoBehaviour:
   m_Name: Ok
   m_EditorClassIdentifier: 
   m_FingerShapeConditions:
-  - m_FingerID: 1
+  - m_FingerID: 0
     m_Targets:
-    - m_ShapeType: 3
+    - m_ShapeType: 1
       m_UpperTolerance: 1
-      m_LowerTolerance: 0.999
+      m_LowerTolerance: 0.6
       m_Tolerance: 0
       m_Desired: 1
+  - m_FingerID: 1
+    m_Targets:
+    - m_ShapeType: 2
+      m_UpperTolerance: 0.3
+      m_LowerTolerance: 0
+      m_Tolerance: 0
+      m_Desired: 0
+  - m_FingerID: 2
+    m_Targets:
+    - m_ShapeType: 1
+      m_UpperTolerance: 1
+      m_LowerTolerance: 0.4
+      m_Tolerance: 0
+      m_Desired: 1
+  - m_FingerID: 3
+    m_Targets:
+    - m_ShapeType: 1
+      m_UpperTolerance: 1
+      m_LowerTolerance: 0.4
+      m_Tolerance: 0
+      m_Desired: 1
+  - m_FingerID: 4
+    m_Targets:
+    - m_ShapeType: 1
+      m_UpperTolerance: 0.6
+      m_LowerTolerance: 0
+      m_Tolerance: 0
+      m_Desired: 0

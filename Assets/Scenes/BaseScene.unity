@@ -2562,7 +2562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HandTrackingEvents: {fileID: 1992588315}
-  m_HandShapeOrPose: {fileID: 11400000, guid: e8e8f82d9324dd84ea5c336f79b74f40, type: 2}
+  m_HandShapeOrPose: {fileID: 11400000, guid: 6a217e9582b214d4997c6988b4758a27, type: 2}
   m_TargetTransform: {fileID: 0}
   m_Background: {fileID: 308562089}
   m_GesturePerformed:
@@ -2570,11 +2570,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1992588313}
         m_TargetAssemblyTypeName: TeleopReachy.RealHandTracking, Assembly-CSharp
-        m_MethodName: PoseDetected
+        m_MethodName: ShapeDetected
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: e8e8f82d9324dd84ea5c336f79b74f40, type: 2}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.XR.Hands.Gestures.XRHandPose,
+          m_ObjectArgument: {fileID: 11400000, guid: 6a217e9582b214d4997c6988b4758a27, type: 2}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.XR.Hands.Gestures.XRHandShape,
             Unity.XR.Hands
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2597,7 +2597,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_MinimumHoldTime: 0.1
-  m_GestureDetectionInterval: 1
+  m_GestureDetectionInterval: 0.2
   m_StaticGestures:
   - {fileID: 1992588316}
   m_Highlight: {fileID: 0}

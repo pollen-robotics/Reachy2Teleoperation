@@ -140,7 +140,9 @@ namespace TeleopReachy
             Vector4 positionVect = new Vector4(positionReachy.x, positionReachy.y, positionReachy.z, 1);
 
             // Rotation
-            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * handPose.rotation;
+            UnityEngine.Quaternion rotation = handPose.rotation * Quaternion.AngleAxis(-90f, Vector3.right);
+            rotation = (hand.handSide == "right") ? rotation * Quaternion.AngleAxis(-90f, Vector3.up) : rotation * Quaternion.AngleAxis(90f, Vector3.up);
+            rotation = UnityEngine.Quaternion.Inverse(transform.parent.rotation) * rotation;
             hand.handPose.SetTRS(new Vector3(0, 0, 0), rotation, new Vector3(1, 1, 1));
 
             // matrice de passage

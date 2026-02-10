@@ -96,8 +96,11 @@ namespace TeleopReachy
 
         protected override void ActualSendArmsCommands(ArmCartesianGoal leftArmRequest, ArmCartesianGoal rightArmRequest)
         {
-            if (controllers.leftHandDeviceIsTracked && robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
-            if (controllers.rightHandDeviceIsTracked && robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
+            bool leftHandtracked = RealHandTracking.Instance.IsHandTrackingUsed() ? RealHandTracking.Instance.IsLeftHandTracked : controllers.leftHandDeviceIsTracked;
+            bool rightHandtracked = RealHandTracking.Instance.IsHandTrackingUsed() ? RealHandTracking.Instance.IsRightHandTracked : controllers.rightHandDeviceIsTracked;
+
+            if (leftHandtracked && robotConfig.HasLeftArm() && robotStatus.IsLeftArmOn()) dataController.SendArmCommand(leftArmRequest);
+            if (rightHandtracked && robotConfig.HasRightArm() && robotStatus.IsRightArmOn()) dataController.SendArmCommand(rightArmRequest);
         }
 
         protected override void ActualSendNeckCommands(NeckJointGoal neckRequest)

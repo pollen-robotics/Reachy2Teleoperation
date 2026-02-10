@@ -109,9 +109,18 @@ namespace TeleopReachy
                 rightPalm.TryGetPose(out rightHandPose);
             }
 
-            float fullCurl;
-            XRFingerShapeMath.CalculateFingerShape(rightHand, fingerId, XRFingerShapeTypes.Pinch).TryGetPinch(out fullCurl);
-            // Debug.Log(fullCurl);
+            // float thumb_BaseCurl;
+            // XRFingerShapeMath.CalculateFingerShape(rightHand, XRHandFingerID.Thumb, XRFingerShapeTypes.BaseCurl).TryGetBaseCurl(out thumb_BaseCurl);
+            // float index_TipCurl;
+            // XRFingerShapeMath.CalculateFingerShape(rightHand, XRHandFingerID.Index, XRFingerShapeTypes.TipCurl).TryGetTipCurl(out index_TipCurl);
+            // float middle_TipCurl;
+            // XRFingerShapeMath.CalculateFingerShape(rightHand, XRHandFingerID.Middle, XRFingerShapeTypes.TipCurl).TryGetTipCurl(out middle_TipCurl);
+            // float ring_TipCurl;
+            // XRFingerShapeMath.CalculateFingerShape(rightHand, XRHandFingerID.Ring, XRFingerShapeTypes.TipCurl).TryGetTipCurl(out ring_TipCurl);
+            // float little_TipCurl;
+            // XRFingerShapeMath.CalculateFingerShape(rightHand, XRHandFingerID.Little, XRFingerShapeTypes.TipCurl).TryGetTipCurl(out little_TipCurl);
+
+            // Debug.LogError(middle_TipCurl);
         }
 
         public Pose GetRightHandPose()
@@ -126,6 +135,13 @@ namespace TeleopReachy
 
         public void PoseDetected(XRHandPose pose)
         {
+            Debug.LogError("pose detected");
+            IsOkPosePerformed = true;
+        }
+
+        public void ShapeDetected(XRHandShape shape)
+        {
+            Debug.LogError("shape detected");
             IsOkPosePerformed = true;
         }
 

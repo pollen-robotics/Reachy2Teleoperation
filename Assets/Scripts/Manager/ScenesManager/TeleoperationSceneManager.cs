@@ -17,6 +17,7 @@ namespace TeleopReachy
 
         private ControllersManager controllers;
         private TeleoperationManager teleoperationManager;
+        private RealHandTracking handTracking;
 
         private RobotStatus robotStatus;
         private RobotConfig robotConfig;
@@ -39,6 +40,7 @@ namespace TeleopReachy
         {
             EventManager.StartListening(EventNames.OnSuspendTeleoperation, CloseTeleoperationExitMenu);
             controllers = ControllersManager.Instance;
+            handTracking = RealHandTracking.Instance;
 
             robotStatus = RobotDataManager.Instance.RobotStatus;
             robotConfig = RobotDataManager.Instance.RobotConfig;
@@ -57,11 +59,18 @@ namespace TeleopReachy
         void Update()
         {
             bool rightPrimaryButtonPressed = false;
-            controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
-
             bool leftPrimaryButtonPressed = false;
-            controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
 
+            if (handTracking.IsHandTrackingUsed())
+            {
+                rightPrimaryButtonPressed = handTracking.IsOkPosePerformed;
+            }
+            else
+            {
+                controllers.rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out rightPrimaryButtonPressed);
+                controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out leftPrimaryButtonPressed);
+            }
+            
             Vector2 leftJoystickValue;
             controllers.leftHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out leftJoystickValue);
 
@@ -151,6 +160,7 @@ namespace TeleopReachy
             else if (rightPrimaryButtonPressed && !rightPrimaryButtonPreviouslyPressed)
             {
                 TeleoperationManager.Instance.AskForStartingArmTeleoperation();
+                handTracking.PoseStopped();
             }
         }
 
