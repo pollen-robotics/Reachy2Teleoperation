@@ -29,6 +29,7 @@
 /[Aa]ssets/XR*
 /[Aa]ssets/TextMesh*
 /[Aa]ssets/Oculus*
+/[Aa]ssets/Samples*
 
 # Visual Studio cache directory
 .vs/

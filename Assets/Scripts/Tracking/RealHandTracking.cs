@@ -57,6 +57,7 @@ namespace TeleopReachy
 
         void OnTrackingAcquired(XRHand hand)
         {
+            Debug.LogError("Tracking");
             switch (hand.handedness)
             {
                 case Handedness.Left:
@@ -71,6 +72,8 @@ namespace TeleopReachy
 
         void OnTrackingLost(XRHand hand)
         {
+            Debug.LogError("Lost");
+
             switch (hand.handedness)
             {
                 case Handedness.Left:
