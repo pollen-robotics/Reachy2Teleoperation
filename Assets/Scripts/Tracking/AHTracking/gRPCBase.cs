@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections;
 using Grpc.Core;
 
@@ -8,16 +11,23 @@ public class gRPCBase : MonoBehaviour
 {
     protected Channel channel = null;
     AHTeleoperationService.AHTeleoperationServiceClient client;
+    private CancellationTokenSource _cts;
+
+    private bool needUpdateCommand;
+
 
     [SerializeField] private HandJoints r_handJoints;
     [SerializeField] private HandJoints l_handJoints;
 
     void Start()
     {
-        string ip_address = "192.168.0.200";
+        needUpdateCommand = true;
+
+        string ip_address = "192.168.0.199";
         string port = "50065";
         string address = ip_address + ":" + port;
         channel = new Channel(address, ChannelCredentials.Insecure);
+        _cts = new CancellationTokenSource();
       
         if (channel != null)
         {
@@ -25,15 +35,39 @@ public class gRPCBase : MonoBehaviour
         }
     }
 
-    public void SendHandCommands(HandTeleoperationCommand commands)
+    public async void SendHandCommands(HandTeleoperationCommand commands)
     {
         try
         {
-            client.SendHandCommand(commands);
+            if (needUpdateCommand)
+            {
+                needUpdateCommand = false;
+                var options = new CallOptions(
+                    deadline: DateTime.UtcNow.AddSeconds(10),
+                    cancellationToken: _cts.Token
+                );
+                await client.SendHandCommandAsync(commands, options);
+                needUpdateCommand = true;
+            }
         }
         catch (RpcException e)
         {
             Debug.LogError("Communication RPC failed: in SendHandCommands():" + e);
+        }
+    }
+
+    private async Task StopGrpcAsync()
+    {
+        if (_cts == null) return;
+
+        _cts.Cancel();
+        _cts.Dispose();
+        _cts = null;
+
+        if (channel != null)
+        {
+            await channel.ShutdownAsync();
+            channel = null;
         }
     }
 
@@ -139,4 +173,7 @@ public class gRPCBase : MonoBehaviour
             );
         }
     }
+
+    async void OnApplicationQuit() => await StopGrpcAsync();
+    async void OnDestroy() => await StopGrpcAsync();
 }
